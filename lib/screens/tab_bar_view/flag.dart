@@ -53,11 +53,7 @@ class _FlagState extends State<Flag> {
                     fontWeight: FontWeight.bold,
                     letterSpacing: -1.2),
               ),
-              actions: [
-                CustomIconButton(iconName: Icons.search, onPressed: () {}),
-                CustomIconButton(
-                    iconName: MdiIcons.facebookMessenger, onPressed: () {}),
-              ],
+              
             ),
             body: NestedScrollView(
               scrollDirection: Axis.vertical,

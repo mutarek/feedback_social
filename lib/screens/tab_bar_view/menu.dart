@@ -52,16 +52,7 @@ class _MenuState extends State<Menu> {
                 fontWeight: FontWeight.bold,
                 letterSpacing: -1.2),
           ),
-          actions: [
-            Consumer<LoginProvider>(builder: (context, provider, child) {
-              return CustomIconButton(iconName: Icons.search, onPressed: () {});
-            }),
-            CustomIconButton(
-                iconName: MdiIcons.facebookMessenger,
-                onPressed: () {
-                  DatabaseProvider().logout(context);
-                }),
-          ],
+          
         ),
         body: SafeArea(
           child: Consumer<ProfileDetailsProvider>(

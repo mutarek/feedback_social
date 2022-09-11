@@ -65,11 +65,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   Get.to(() => const SearchScreen());
                 });
           }),
-          CustomIconButton(
-              iconName: MdiIcons.facebookMessenger,
-              onPressed: () {
-                DatabaseProvider().logout(context);
-              }),
         ],
       ),
       body: SingleChildScrollView(

@@ -55,20 +55,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     fontWeight: FontWeight.bold,
                     letterSpacing: -1.2),
               ),
-              actions: [
-                Consumer<LoginProvider>(builder: (context, provider, child) {
-                  return CustomIconButton(
-                      iconName: Icons.search,
-                      onPressed: () {
-                        Get.to(() => const SearchScreen());
-                      });
-                }),
-                CustomIconButton(
-                    iconName: MdiIcons.facebookMessenger,
-                    onPressed: () {
-                      DatabaseProvider().logout(context);
-                    }),
-              ],
             ),
             body: SingleChildScrollView(
               child: Column(
