@@ -110,7 +110,7 @@ class PostContainer extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                         left: width * 0.04, bottom: height * 0.02),
-                    child: Text(description!),
+                    child: Text(description!, style: GoogleFonts.lato(),),
                   ),
                   (imageCount == true)
                       ? SizedBox(

@@ -1,8 +1,8 @@
 import 'package:als_frontend/provider/provider.dart';
-import 'package:als_frontend/screens/authentication/registration_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
+
 import 'package:provider/provider.dart';
 
 class EmailVerify extends StatefulWidget {
@@ -135,9 +135,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                         onPressed: () {
                           provider.verifyEmail(
                               provider.email, codeController.text);
-                          if (provider.success == true) {
-                            Get.to(const RegistrationScreen());
-                          }
+                          if (provider.success == true) {}
                         },
                       )),
                 ],

@@ -1,7 +1,6 @@
 import 'package:als_frontend/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../const/palette.dart';
@@ -19,8 +18,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   void initState() {
     final value = Provider.of<NotificationsProvider>(context, listen: false);
+    value.notificationCount = 0;
     value.getData();
-
     value.check();
     value.notificationRead();
     super.initState();
@@ -84,12 +83,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                     "friend_request") {
                                   publicProfileProvider.id =
                                       provider.data[index].actor!.id!;
-                                  publicProfileProvider.id = provider.data[index].actor!.id!;
+                                  publicProfileProvider.id =
+                                      provider.data[index].actor!.id!;
                                   Get.to(
                                       () => const PublicProfileDetailsScreen());
                                 }
 
-                                if (provider.data[index].verb == "like" || provider.data[index].verb == "comment" || provider.data[index].verb == "post") {
+                                if (provider.data[index].verb == "like" ||
+                                    provider.data[index].verb == "comment" ||
+                                    provider.data[index].verb == "post") {
                                   singlePostProvider.url =
                                       provider.data[index].url!;
                                   singlePostProvider.getUserData();

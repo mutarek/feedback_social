@@ -70,10 +70,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(
                               width * 0.07, 00, width * 0.07, height * 0.004),
-                          child: CustomTextField(
-                            label: const Text("E-mail"),
-                            controller: emailController,
-                            height: height * 0.06,
+                          child: LoginTextFiled(
+                            h: height * 0.05,
+                            w: width * 0.9,
+                            child: CustomTextField(
+                              hintText: "E-mail",
+                              controller: emailController,
+                              height: height * 0.06,
+                            ),
                           ),
                         ),
                         Padding(
@@ -81,16 +85,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               height * 0.007, width * 0.07, height * 0.0),
                           child: Consumer<ShowPasswordProvider>(
                               builder: (context, value, child) {
-                            return CustomTextField(
-                              label: const Text("Password"),
-                              controller: passwordController,
-                              height: height * 0.06,
-                              obsecureText: value.obsecureText,
-                              suffixIconButton: IconButton(
-                                  icon: (value.obsecureText == true)
-                                      ? const Icon(Icons.visibility_off)
-                                      : const Icon(Icons.visibility),
-                                  onPressed: () => value.showPassword()),
+                            return LoginTextFiled(
+                              h: height * 0.05,
+                              w: width * 0.9,
+                              child: CustomTextField(
+                                hintText: "Password",
+                                controller: passwordController,
+                                height: height * 0.06,
+                                obsecureText: value.obsecureText,
+                                suffixIconButton: IconButton(
+                                    icon: (value.obsecureText == true)
+                                        ? const Icon(Icons.visibility_off)
+                                        : const Icon(Icons.visibility),
+                                    onPressed: () => value.showPassword()),
+                              ),
                             );
                           }),
                         ),
@@ -160,7 +168,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               auth.login(emailController.text,
                                   passwordController.text);
                             }
-                          
                           }),
                     );
                   }),

@@ -54,7 +54,7 @@ class NotificationsProvider extends ChangeNotifier {
     var uri = Uri.parse(apiUrl), headers = {'Authorization': 'token $token'};
     var response = await http.post(uri, body: mappeddata, headers: headers);
     var body = jsonDecode(response.body);
-    notificationCount = (body != null) ? body['count'] : 0;
+    notificationCount = body['count'];
     notifyListeners();
   }
 
@@ -71,8 +71,9 @@ class NotificationsProvider extends ChangeNotifier {
 
   check() {
     webSocketChannel = WebSocketChannel.connect(
-        Uri.parse("wss://als-social.com/ws/notifications/"));
+        Uri.parse("wss://als-social.com/ws/notifications/$token/"));
     webSocketChannel.stream.listen((event) {
+      print("Notification user token : $token");
       notificationUnread();
       getData();
     }, onDone: () {
