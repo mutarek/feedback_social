@@ -72,11 +72,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   Get.to(() => const SearchScreen());
                 });
           }),
-          CustomIconButton(
-              iconName: MdiIcons.facebookMessenger,
-              onPressed: () {
-                DatabaseProvider().logout(context);
-              }),
         ],
       ),
       body: SingleChildScrollView(
@@ -405,11 +400,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                         mainAxisSpacing: 2.0,
                                                       ),
                                                       itemCount:
-                                                          newsfeedProvider
+                                                          (newsfeedProvider
                                                               .results[index]
-                                                              .totalImage,
+                                                              .totalImage! < 4)?newsfeedProvider
+                                                              .results[index]
+                                                              .totalImage : 4,
                                                       itemBuilder:
                                                           (context, index2) {
+                                                            
                                                         return InkWell(
                                                           onTap: () {
                                                             postImageProvider
@@ -439,7 +437,35 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                     .center,
                                                             children: [
                                                               Expanded(
-                                                                child: Image
+                                                                child:(newsfeedProvider
+                                                                    .results[
+                                                                        index]
+                                                                    .totalImage! > 4 && index2 == 3) ?
+                                                                    Container(
+                                                                      child: const Center(
+                                                                        child: Text(
+                                                                          "More images",
+                                                                          style: TextStyle(
+                                                                            color: Colors.black,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontSize: 20,
+                                                                            
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      decoration: BoxDecoration(
+                                                                        image: DecorationImage(
+                                                                        image: NetworkImage(newsfeedProvider
+                                                                      .results[
+                                                                          index]
+                                                                      .images![
+                                                                          index2]
+                                                                      .image!),
+                                                                        fit: BoxFit.cover,
+                                                                        )
+                                                                      ),
+                                                                    )
+                                                                    :Image
                                                                     .network(
                                                                   newsfeedProvider
                                                                       .results[

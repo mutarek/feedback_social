@@ -334,38 +334,135 @@ class _SuggestedPageViewState extends State<SuggestedPageView> {
                                                                                   fit: BoxFit.contain,
                                                                                 )),
                                                                           ),
-                                                                        )
-                                                                      : Expanded(
-                                                                          child:
-                                                                              GridView.builder(
-                                                                            physics:
-                                                                                const NeverScrollableScrollPhysics(),
-                                                                            shrinkWrap:
-                                                                                true,
-                                                                            gridDelegate:
-                                                                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                                                              crossAxisCount: 2,
-                                                                              crossAxisSpacing: 2.0,
-                                                                              mainAxisSpacing: 2.0,
-                                                                            ),
-                                                                            itemCount:
-                                                                                pagePostProvider.pagePosts![index].totalImage,
-                                                                            itemBuilder:
-                                                                                (context, index2) {
-                                                                              return Column(
-                                                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                                                children: [
-                                                                                  Expanded(
-                                                                                    child: Image.network(
-                                                                                      pagePostProvider.pagePosts![index].images[index2].image,
-                                                                                      fit: BoxFit.fill,
-                                                                                    ),
-                                                                                  )
-                                                                                ],
-                                                                              );
-                                                                            },
+                                                                        ):
+                                                                      Expanded(
+                                                    child: GridView.builder(
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      shrinkWrap: true,
+                                                      gridDelegate:
+                                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount:
+                                                            (pagePostProvider
+                                                                    .pagePosts![
+                                                                        index]
+                                                                    .totalImage ==
+                                                                    1)
+                                                                ? 1
+                                                                : 2,
+                                                        crossAxisSpacing: 2.0,
+                                                        mainAxisSpacing: 2.0,
+                                                      ),
+                                                      itemCount:
+                                                          (pagePostProvider
+                                                                    .pagePosts![
+                                                                        index]
+                                                                    .totalImage < 4)?pagePostProvider
+                                                                    .pagePosts![
+                                                                        index]
+                                                                    .totalImage : 4,
+                                                      itemBuilder:
+                                                          (context, index2) {
+                                                            
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            postImageProvider
+                                                                    .iamges = [];
+                                                                for (int i = 0;
+                                                                    i <
+                                                                        pagePostProvider
+                                                                    .pagePosts![
+                                                                        index]
+                                                                    .images
+                                                                            .length;
+                                                                    i++) {
+                                                                  postImageProvider.iamges.add(pagePostProvider
+                                                                            .pagePosts![index]
+                                                                            .images[i]
+                                                                            .image);
+                                                                  Get.to(() =>
+                                                                      const PostImagesPreview());
+                                                                }
+                                                            },
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Expanded(
+                                                                child:(pagePostProvider
+                                                                    .pagePosts![
+                                                                        index]
+                                                                    .totalImage > 4 && index2 == 3) ?
+                                                                    Container(
+                                                                      child: const Center(
+                                                                        child: Text(
+                                                                          "More images",
+                                                                          style: TextStyle(
+                                                                            color: Colors.black,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontSize: 20,
+                                                                            
                                                                           ),
                                                                         ),
+                                                                      ),
+                                                                      decoration: BoxDecoration(
+                                                                        image: DecorationImage(
+                                                                        image: NetworkImage(pagePostProvider
+                                                                            .pagePosts![index]
+                                                                            .images[index2]
+                                                                            .image,),
+                                                                        fit: BoxFit.cover,
+                                                                        )
+                                                                      ),
+                                                                    )
+                                                                    :Image
+                                                                    .network(
+                                                                  pagePostProvider
+                                                                            .pagePosts![index]
+                                                                            .images[index2]
+                                                                            .image,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  )
+                                                                      // : Expanded(
+                                                                      //     child:
+                                                                      //         GridView.builder(
+                                                                      //       physics:
+                                                                      //           const NeverScrollableScrollPhysics(),
+                                                                      //       shrinkWrap:
+                                                                      //           true,
+                                                                      //       gridDelegate:
+                                                                      //           const SliverGridDelegateWithFixedCrossAxisCount(
+                                                                      //         crossAxisCount: 2,
+                                                                      //         crossAxisSpacing: 2.0,
+                                                                      //         mainAxisSpacing: 2.0,
+                                                                      //       ),
+                                                                      //       itemCount:
+                                                                      //           pagePostProvider.pagePosts![index].totalImage,
+                                                                      //       itemBuilder:
+                                                                      //           (context, index2) {
+                                                                      //         return Column(
+                                                                      //           mainAxisAlignment: MainAxisAlignment.center,
+                                                                      //           children: [
+                                                                      //             Expanded(
+                                                                      //               child: Image.network(
+                                                                      //                 pagePostProvider.pagePosts![index].images[index2].image,
+                                                                      //                 fit: BoxFit.fill,
+                                                                      //               ),
+                                                                      //             )
+                                                                      //           ],
+                                                                      //         );
+                                                                      //       },
+                                                                      //     ),
+                                                                      //   ),
                                                             ),
                                                             const SizedBox(
                                                               height: 10,

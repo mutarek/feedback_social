@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/provider.dart';
 import 'package:als_frontend/screens/screens.dart';
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,6 +17,7 @@ class EmailEnterPage extends StatefulWidget {
 }
 
 class _EmailEnterPageState extends State<EmailEnterPage> {
+  final countryPicker = const FlCountryCodePicker();
   bool isVisible = false;
   bool emailVafification = true;
   TextEditingController emailController = TextEditingController();
@@ -24,6 +26,8 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  String countryCode = "+1";
 
   DateTime _dateTime = DateTime.now();
   String dateTime = "";
@@ -216,16 +220,41 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                             controller: emailController,
                           ),
                         ),
-                        Positioned(
-                          top: height * 0.2,
-                          left: width * 0.04,
-                          child: LoginTextFiled(
-                            h: height * 0.05,
-                            w: width * 0.9,
-                            child: CustomTextField(
-                              hintText: "Enter your phone number",
-                              controller: numberController,
-                            ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: ()async{
+                                  final code = await countryPicker.showPicker(context: context);
+                                  setState(() {
+                                    countryCode = code!.dialCode.toString();
+                                  });
+                                },
+                                child: Container
+                                (
+                                  decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(5)
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(countryCode, style: const TextStyle(color: Colors.white),),
+                                  ))
+                              ),
+                              Positioned(
+                                top: height * 0.2,
+                                left: width * 0.04,
+                                child: LoginTextFiled(
+                                  h: height * 0.05,
+                                  w: width * 0.75,
+                                  child: CustomTextField(
+                                    hintText: "Enter your phone number",
+                                    controller: numberController,
+                                    keybordType: TextInputType.number,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ]),
@@ -251,17 +280,17 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                   provider.email = emailController.text;
                                   provider.getCode(emailController.text);
                                 } else {
-                                  provider.phone = numberController.text;
-                                  provider.getCode2(numberController.text);
+                                  provider.phone = "$countryCode${numberController.text}";
+                                  provider.getCode2("$countryCode${numberController.text}");
                                 }
 
-                                if (provider.success2 == false) {
+                                if (provider.success2 == true) {
                                   Fluttertoast.showToast(
                                       msg:
                                           "succesfully send code please chick your email");
                                 } else {
                                   Fluttertoast.showToast(
-                                      msg: "Email is already registered");
+                                      msg: "Something went wrong!");
                                 }
                               },
                               child: Text(

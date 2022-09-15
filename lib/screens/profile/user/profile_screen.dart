@@ -312,7 +312,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         .authorPosts![index]
                                                         .totalImage !=
                                                     0)
-                                                ? 200
+                                                ? (userPostProvider
+                                                        .authorPosts![index]
+                                                        .totalImage < 3)?200:400
                                                 : 0,
                                             child: (userPostProvider
                                                     .authorPosts![index]
@@ -345,28 +347,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         )
                                                   ),
                                                 ),
-                                              )
-                                                    
-                                              :Expanded(
-                                              child: GridView.builder(
-                                                physics:
-                                                    const NeverScrollableScrollPhysics(),
-                                                shrinkWrap: true,
-                                                gridDelegate:
-                                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  crossAxisSpacing: 0.0,
-                                                  mainAxisSpacing: 0.0,
-                                                ),
-                                                itemCount: userPostProvider
+                                              ):
+                                              Expanded(
+                                                    child: GridView.builder(
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      shrinkWrap: true,
+                                                      gridDelegate:
+                                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount:
+                                                            (userPostProvider
                                                     .authorPosts![index]
-                                                    .totalImage,
-                                                itemBuilder: (context, index2) {
-                                                  return Column(
-                                                    children: [
-                                                      InkWell(
-                                                        onTap: () {
-                                                                postImageProvider
+                                                    .totalImage ==
+                                                                    1)
+                                                                ? 1
+                                                                : 2,
+                                                        crossAxisSpacing: 2.0,
+                                                        mainAxisSpacing: 2.0,
+                                                      ),
+                                                      itemCount:
+                                                          (userPostProvider
+                                                    .authorPosts![index]
+                                                    .totalImage < 4)?userPostProvider
+                                                    .authorPosts![index]
+                                                    .totalImage : 4,
+                                                      itemBuilder:
+                                                          (context, index2) {
+                                                            
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            postImageProvider
                                                                     .iamges = [];
                                                                 for (int i = 0;
                                                                     i <
@@ -386,29 +396,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                   Get.to(() =>
                                                                       const PostImagesPreview());
                                                                 }
-                                                              },
-                                                              child: Expanded(
-                                                                child: SizedBox(
-                                                                  height: 100,
-                                                                  child: Image
-                                                                      .network(
-                                                                    userPostProvider
+                                                            },
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Expanded(
+                                                                child:(userPostProvider
+                                                    .authorPosts![index]
+                                                    .totalImage > 4 && index2 == 3) ?
+                                                                    Container(
+                                                                      child: const Center(
+                                                                        child: Text(
+                                                                          "More images",
+                                                                          style: TextStyle(
+                                                                            color: Colors.black,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontSize: 20,
+                                                                            
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      decoration: BoxDecoration(
+                                                                        image: DecorationImage(
+                                                                        image: NetworkImage(userPostProvider
+                                                                        .authorPosts![
+                                                                            index]
+                                                                        .images[
+                                                                            index2]
+                                                                        .image),
+                                                                        fit: BoxFit.cover,
+                                                                        )
+                                                                      ),
+                                                                    )
+                                                                    :Image
+                                                                    .network(
+                                                                  userPostProvider
                                                                         .authorPosts![
                                                                             index]
                                                                         .images[
                                                                             index2]
                                                                         .image,
-                                                                    fit: BoxFit
-                                                                        .contain,
-                                                                  ),
+                                                                  fit: BoxFit
+                                                                      .fill,
                                                                 ),
-                                                              ),
-                                                            )
-                                                          ],
+                                                              )
+                                                            ],
+                                                          ),
                                                         );
                                                       },
-                                              ),
-                                            ),
+                                                    ),
+                                                  )
+                                                    
+                                            
                                           ),
                                           const SizedBox(height: 10,),
                                           (userPostProvider

@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
   double? height;
   bool obsecureText;
   IconButton? suffixIconButton;
+  TextInputType keybordType;
   CustomTextField(
       {Key? key,
       this.height = 50,
@@ -16,7 +17,8 @@ class CustomTextField extends StatelessWidget {
       this.label,
       required this.controller,
       this.obsecureText = false,
-      this.suffixIconButton})
+      this.suffixIconButton,
+      this.keybordType = TextInputType.emailAddress})
       : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         obscureText: obsecureText,
+        keyboardType: keybordType,
         decoration: InputDecoration(
           hintStyle: GoogleFonts.lato(color: Colors.white),
           hintText: hintText,
@@ -33,6 +36,7 @@ class CustomTextField extends StatelessWidget {
           labelStyle: GoogleFonts.lato(color: Colors.white),
           suffixIcon: suffixIconButton,
           filled: true,
+          
         ),
       ),
     );
