@@ -360,6 +360,8 @@ class _AdminPageState extends State<AdminPage> {
                                           children: [
                                             CircleAvatar(
                                               backgroundImage: NetworkImage(
+                                                 (authorPageDetailsProvider
+                                                      .pageDetails.avatar == null) ?"https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg":
                                                   authorPageDetailsProvider
                                                       .pageDetails.avatar),
                                               radius: 27,
@@ -536,67 +538,7 @@ class _AdminPageState extends State<AdminPage> {
                                                       },
                                                     ),
                                                   )
-                                                      // : Expanded(
-                                                      //     child:
-                                                      //         GridView.builder(
-                                                      //       physics:
-                                                      //           const NeverScrollableScrollPhysics(),
-                                                      //       shrinkWrap: true,
-                                                      //       gridDelegate:
-                                                      //           const SliverGridDelegateWithFixedCrossAxisCount(
-                                                      //         crossAxisCount: 2,
-                                                      //         crossAxisSpacing:
-                                                      //             5.0,
-                                                      //         mainAxisSpacing:
-                                                      //             5.0,
-                                                      //       ),
-                                                      //       itemCount:
-                                                      //           pagePostProvider
-                                                      //               .pagePosts![
-                                                      //                   index]
-                                                      //               .totalImage,
-                                                      //       itemBuilder:
-                                                      //           (context,
-                                                      //               index2) {
-                                                      //         return Column(
-                                                      //           mainAxisAlignment:
-                                                      //               MainAxisAlignment
-                                                      //                   .center,
-                                                      //           children: [
-                                                      //             InkWell(
-                                                      //               onTap: () {
-                                                      //                 postImageProvider
-                                                      //                     .iamges = [];
-                                                      //                 for (int i =
-                                                      //                         0;
-                                                      //                     i < pagePostProvider.pagePosts![index].images.length;
-                                                      //                     i++) {
-                                                      //                   postImageProvider.iamges.add(pagePostProvider
-                                                      //                       .pagePosts![index]
-                                                      //                       .images[i]
-                                                      //                       .image);
-                                                      //                   Get.to(() =>
-                                                      //                       const PostImagesPreview());
-                                                      //                 }
-                                                      //               },
-                                                      //               child:
-                                                      //                   Expanded(
-                                                      //                 child: Image
-                                                      //                     .network(
-                                                      //                   pagePostProvider
-                                                      //                       .pagePosts![index]
-                                                      //                       .images[index2]
-                                                      //                       .image,
-                                                      //                   fit: BoxFit
-                                                      //                       .fill,
-                                                      //                 ),
-                                                      //               ),
-                                                      //             )
-                                                      //           ],
-                                                      //         );
-                                                      //       },
-                                                      //     ),
-                                                      //   ),
+                                                      
                                         ),
                                         const SizedBox(
                                           height: 10,
