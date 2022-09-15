@@ -27,7 +27,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  CountryCode? countryCode;
+  String countryCode = "+1";
 
   DateTime _dateTime = DateTime.now();
   String dateTime = "";
@@ -227,7 +227,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                 onTap: ()async{
                                   final code = await countryPicker.showPicker(context: context);
                                   setState(() {
-                                    countryCode = code;
+                                    countryCode = code!.dialCode.toString();
                                   });
                                 },
                                 child: Container
@@ -238,7 +238,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(countryCode!.dialCode, style: const TextStyle(color: Colors.white),),
+                                    child: Text(countryCode, style: const TextStyle(color: Colors.white),),
                                   ))
                               ),
                               Positioned(
@@ -250,6 +250,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                   child: CustomTextField(
                                     hintText: "Enter your phone number",
                                     controller: numberController,
+                                    keybordType: TextInputType.number,
                                   ),
                                 ),
                               ),
@@ -279,17 +280,17 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                   provider.email = emailController.text;
                                   provider.getCode(emailController.text);
                                 } else {
-                                  provider.phone = "${countryCode!.dialCode}${numberController.text}";
-                                  provider.getCode2("${countryCode!.dialCode}${numberController.text}");
+                                  provider.phone = "$countryCode${numberController.text}";
+                                  provider.getCode2("$countryCode${numberController.text}");
                                 }
 
-                                if (provider.success2 == false) {
+                                if (provider.success2 == true) {
                                   Fluttertoast.showToast(
                                       msg:
                                           "succesfully send code please chick your email");
                                 } else {
                                   Fluttertoast.showToast(
-                                      msg: "Email is already registered");
+                                      msg: "Something went wrong!");
                                 }
                               },
                               child: Text(

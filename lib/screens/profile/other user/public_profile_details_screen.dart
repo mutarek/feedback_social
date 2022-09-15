@@ -603,7 +603,9 @@ class _PublicProfileDetailsScreenState
                                                         .authorPosts![index]
                                                         .totalImage !=
                                                     0)
-                                                ? 200
+                                                ? (userPostProvider
+                                                        .authorPosts![index]
+                                                        .totalImage < 3)?200:400
                                                 : 0,
                                             child: (userPostProvider
                                                         .authorPosts![index]
@@ -638,29 +640,35 @@ class _PublicProfileDetailsScreenState
                                                           )),
                                                     ),
                                                   )
-                                                : Expanded(
+                                                  :Expanded(
                                                     child: GridView.builder(
                                                       physics:
                                                           const NeverScrollableScrollPhysics(),
                                                       shrinkWrap: true,
                                                       gridDelegate:
-                                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                                        crossAxisCount: 2,
+                                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount:
+                                                            (userPostProvider
+                                                    .authorPosts![index]
+                                                    .totalImage ==
+                                                                    1)
+                                                                ? 1
+                                                                : 2,
                                                         crossAxisSpacing: 2.0,
                                                         mainAxisSpacing: 2.0,
                                                       ),
                                                       itemCount:
-                                                          userPostProvider
-                                                              .authorPosts![
-                                                                  index]
-                                                              .totalImage,
+                                                          (userPostProvider
+                                                    .authorPosts![index]
+                                                    .totalImage < 4)?userPostProvider
+                                                    .authorPosts![index]
+                                                    .totalImage : 4,
                                                       itemBuilder:
                                                           (context, index2) {
-                                                        return Column(
-                                                          children: [
-                                                            InkWell(
-                                                              onTap: () {
-                                                                postImageProvider
+                                                            
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            postImageProvider
                                                                     .iamges = [];
                                                                 for (int i = 0;
                                                                     i <
@@ -680,26 +688,59 @@ class _PublicProfileDetailsScreenState
                                                                   Get.to(() =>
                                                                       const PostImagesPreview());
                                                                 }
-                                                              },
-                                                              child: Expanded(
-                                                                child: Image
+                                                            },
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Expanded(
+                                                                child:(userPostProvider
+                                                    .authorPosts![index]
+                                                    .totalImage > 4 && index2 == 3) ?
+                                                                    Container(
+                                                                      child: const Center(
+                                                                        child: Text(
+                                                                          "More images",
+                                                                          style: TextStyle(
+                                                                            color: Colors.black,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontSize: 20,
+                                                                            
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      decoration: BoxDecoration(
+                                                                        image: DecorationImage(
+                                                                        image: NetworkImage(userPostProvider
+                                                                        .authorPosts![
+                                                                            index]
+                                                                        .images[
+                                                                            index2]
+                                                                        .image),
+                                                                        fit: BoxFit.cover,
+                                                                        )
+                                                                      ),
+                                                                    )
+                                                                    :Image
                                                                     .network(
                                                                   userPostProvider
-                                                                      .authorPosts![
-                                                                          index]
-                                                                      .images[
-                                                                          index2]
-                                                                      .image,
+                                                                        .authorPosts![
+                                                                            index]
+                                                                        .images[
+                                                                            index2]
+                                                                        .image,
                                                                   fit: BoxFit
-                                                                      .contain,
+                                                                      .fill,
                                                                 ),
-                                                              ),
-                                                            )
-                                                          ],
+                                                              )
+                                                            ],
+                                                          ),
                                                         );
                                                       },
                                                     ),
-                                                  ),
+                                                  )
+                                                
                                           ),
                                           const SizedBox(
                                             height: 10,

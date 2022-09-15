@@ -446,9 +446,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                         child: Text(
                                                                           "More images",
                                                                           style: TextStyle(
-                                                                            color: Colors.white,
+                                                                            color: Colors.black,
                                                                             fontWeight: FontWeight.bold,
-                                                                            fontSize: 16
+                                                                            fontSize: 20,
+                                                                            
                                                                           ),
                                                                         ),
                                                                       ),
