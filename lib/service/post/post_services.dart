@@ -6,13 +6,11 @@ import 'package:http/http.dart' as http;
 
 class PostService {
   String? token;
-  Future<NewsfeedModel?> getPosts() async {
+  Future<NewsfeedModel?> getPosts(int page) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = (prefs.getString('token') ?? '');
-    var uri = Uri.parse("$baseUrl/posts/newsfeeds/"),
-        headers = {
-          'Authorization': 'token $token'
-        };
+    var uri = Uri.parse("$baseUrl/posts/newsfeeds?page=$page"),
+        headers = {'Authorization': 'token $token'};
     var response = await http.get(uri, headers: headers);
 
     if (response.statusCode == 200) {

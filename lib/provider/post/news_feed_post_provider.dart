@@ -17,7 +17,7 @@ class NewsFeedPostProvider extends ChangeNotifier {
   List<String> postImages = [];
   bool connection = false;
   int? id;
-
+  int page = 1;
   void checkConnection() async {
     try {
       final result = await InternetAddress.lookup('www.google.com');
@@ -35,8 +35,10 @@ class NewsFeedPostProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     id = (prefs.getInt('id') ?? '') as int;
 
-    posts = (await PostService().getPosts())!;
-    results = posts.results;
+    posts = (await PostService().getPosts(page))!;
+    results.addAll(posts.results);
+    page = page + 1;
+    print(page);
     notifyListeners();
     if (posts != null) {
       isLoaded = true;

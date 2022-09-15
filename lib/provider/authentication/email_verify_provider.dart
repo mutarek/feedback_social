@@ -10,6 +10,7 @@ import '../../screens/screens.dart';
 
 class EmailVerifyProvider extends ChangeNotifier {
   String email = "";
+  String phone = "";
   bool success = false;
   bool success2 = false;
   String message = "";
@@ -79,6 +80,26 @@ class EmailVerifyProvider extends ChangeNotifier {
 
     http.Response response =
         await http.post(Uri.parse(apiUrl), body: mappeddata);
+    print(email);
+    print("email:${response.statusCode}");
+    notifyListeners();
+    if (response.statusCode == 200) {
+      success2 = true;
+      notifyListeners();
+    }
+  }
+
+  Future getCode2(String phone) async {
+    var apiUrl = "$baseUrl/accounts/otp/send/";
+    
+    Map mappeddata = {
+      "phone": phone,
+    };
+
+    http.Response response =
+        await http.post(Uri.parse(apiUrl), body: mappeddata);
+    print(phone);
+    print("phone:${response.statusCode}");
     notifyListeners();
     if (response.statusCode == 200) {
       success2 = true;
