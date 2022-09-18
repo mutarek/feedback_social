@@ -16,8 +16,12 @@ class EmailVerifyProvider extends ChangeNotifier {
   String message = "";
   int minutes = 5;
   int seconds = 0;
-
+  bool isEmail = true;
   late Timer _timer;
+
+  void emailLogin() {
+    isEmail = !isEmail;
+  }
 
   void startTimer() {
     seconds = 0;
@@ -71,6 +75,31 @@ class EmailVerifyProvider extends ChangeNotifier {
     }
   }
 
+  Future verifyPhone(String phone, code) async {
+    var apiUrl = "$baseUrl/accounts/otp/verify/";
+
+    Map mappeddata = {
+      "phone": phone,
+      "code": code,
+    };
+
+    http.Response response =
+        await http.post(Uri.parse(apiUrl), body: mappeddata);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      success = true;
+      message = "Email Verified";
+      notifyListeners();
+      Fluttertoast.showToast(msg: message);
+      Get.off(const RegistrationScreen());
+    } else {
+      success = false;
+      message = "Invalid otp";
+      notifyListeners();
+      Fluttertoast.showToast(msg: message);
+    }
+  }
+
   Future getCode(String email) async {
     var apiUrl = "$baseUrl/accounts/otp/send/";
 
@@ -81,17 +110,21 @@ class EmailVerifyProvider extends ChangeNotifier {
     http.Response response =
         await http.post(Uri.parse(apiUrl), body: mappeddata);
     print(email);
-    print("email:${response.statusCode}");
+    print("email:${response.body}");
     notifyListeners();
     if (response.statusCode == 200) {
       success2 = true;
       notifyListeners();
+      Fluttertoast.showToast(
+          msg: "succesfully send code please check your email");
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong!");
     }
   }
 
   Future getCode2(String phone) async {
     var apiUrl = "$baseUrl/accounts/otp/send/";
-    
+
     Map mappeddata = {
       "phone": phone,
     };
@@ -104,6 +137,10 @@ class EmailVerifyProvider extends ChangeNotifier {
     if (response.statusCode == 200) {
       success2 = true;
       notifyListeners();
+    Fluttertoast.showToast(
+          msg: "succesfully send code please check your message");
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong!");
     }
   }
 }
