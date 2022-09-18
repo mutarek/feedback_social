@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Positioned(
                   top: height * 0.71,
                   right: width * 0.62,
-                  child: const Text("Sign In",
+                  child: const Text("Login",
                       style: TextStyle(
                           fontSize: 32,
                           color: Colors.white,
@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   top: height * 0.8,
                   left: width * 0.23,
                   child: Padding(
-                    padding: EdgeInsets.only(left: width * 0.15),
+                    padding: EdgeInsets.only(left: width * 0.073),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Get.to(const EmailEnterPage());
                             },
                             child: Text(
-                              "SIGN UP",
+                              "Registration",
                               style: TextStyle(fontSize: height * 0.020),
                             ),
                           )
