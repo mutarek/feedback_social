@@ -36,7 +36,7 @@ class _PublicProfileDetailsScreenState
     final userNewsFeed =
         Provider.of<UserNewsfeedPostProvider>(context, listen: false);
     userNewsFeed.getData();
-    
+
     super.initState();
   }
 
@@ -89,13 +89,14 @@ class _PublicProfileDetailsScreenState
                                         Get.back();
                                       },
                                       viewCoverPhoto: () {
-                                        profileImageProvider.imageUrl =
-                                            provider.userprofileData.coverImage;
+                                        profileImageProvider.imageUrl = provider
+                                            .userprofileData!.coverImage!;
                                         Get.to(() => const SingleImageView());
                                       },
-                                      coverphoto: (provider.userprofileData !=
+                                      coverphoto: (provider.userprofileData! !=
                                               null)
-                                          ? provider.userprofileData.coverImage!
+                                          ? provider
+                                              .userprofileData!.coverImage!
                                           : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                                       coverphotochange: () {}),
                                   Positioned(
@@ -118,7 +119,7 @@ class _PublicProfileDetailsScreenState
                                               MainAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "${provider.userprofileData.firstName!} ${provider.userprofileData.lastName!}",
+                                              "${provider.userprofileData!.firstName!} ${provider.userprofileData!.lastName!}",
                                               style: GoogleFonts.lato(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w700),
@@ -138,10 +139,10 @@ class _PublicProfileDetailsScreenState
                                                       top: height * 0.06,
                                                       left: width * 0.02),
                                                   child: (provider
-                                                              .userprofileData
+                                                              .userprofileData!
                                                               .isFriend ==
                                                           false)
-                                                      ? (provider.userprofileData
+                                                      ? (provider.userprofileData!
                                                                   .friendRequestSent ==
                                                               true)
                                                           ? ElevatedButton(
@@ -151,13 +152,14 @@ class _PublicProfileDetailsScreenState
                                                                 confirmFriendRequest
                                                                         .id =
                                                                     provider
-                                                                        .userprofileData
+                                                                        .userprofileData!
                                                                         .friendRequestSentId;
                                                                 confirmFriendRequest
                                                                     .unSendRequest();
+                                                                refresh();
                                                               },
                                                             )
-                                                          : (provider.userprofileData
+                                                          : (provider.userprofileData!
                                                                       .friendRequestAccept ==
                                                                   true)
                                                               ? ElevatedButton(
@@ -168,11 +170,13 @@ class _PublicProfileDetailsScreenState
                                                                     confirmFriendRequest
                                                                             .id =
                                                                         provider
-                                                                            .userprofileData
-                                                                            .friendRequestAcceptId;
+                                                                            .userprofileData!
+                                                                            .friendRquestAcceptId;
 
                                                                     confirmFriendRequest
                                                                         .confirmRequest();
+
+                                                                    refresh();
                                                                   },
                                                                 )
                                                               : ElevatedButton(
@@ -183,7 +187,7 @@ class _PublicProfileDetailsScreenState
                                                                     addProvider
                                                                             .id =
                                                                         provider
-                                                                            .userprofileData
+                                                                            .userprofileData!
                                                                             .id;
                                                                     addProvider
                                                                         .addSuggestedFriend();
@@ -197,7 +201,7 @@ class _PublicProfileDetailsScreenState
                                                             unfriendProvider
                                                                     .id =
                                                                 provider
-                                                                    .userprofileData
+                                                                    .userprofileData!
                                                                     .id;
                                                             unfriendProvider
                                                                 .unFriend();
@@ -212,15 +216,16 @@ class _PublicProfileDetailsScreenState
                                   ),
                                   ProfilePhotowidget(
                                     viewProfilePhoto: () {
-                                      profileImageProvider.imageUrl =
-                                          provider.userprofileData.profileImage;
+                                      profileImageProvider.imageUrl = provider
+                                          .userprofileData!.profileImage!;
                                       Get.to(() => const SingleImageView());
                                     },
                                     isTrue: false,
                                     profilePhotoChange: () {},
                                     profileImage: (provider.userprofileData !=
                                             null)
-                                        ? provider.userprofileData.profileImage!
+                                        ? provider
+                                            .userprofileData!.profileImage!
                                         : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                                   ),
                                 ],
@@ -238,7 +243,7 @@ class _PublicProfileDetailsScreenState
                                 child: Row(
                                   children: [
                                     Text(
-                                      "${provider.userprofileData.friends!.length}",
+                                      "${provider.userprofileData!.friends!.length}",
                                       style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
@@ -252,7 +257,7 @@ class _PublicProfileDetailsScreenState
                                       width: width * 0.2,
                                     ),
                                     Text(
-                                      "${provider.userprofileData.followers!.length}",
+                                      "${provider.userprofileData!.followers!.length}",
                                       style: GoogleFonts.lato(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
@@ -280,7 +285,7 @@ class _PublicProfileDetailsScreenState
                                 child: Column(
                                   children: [
                                     Visibility(
-                                      visible: provider.userprofileData
+                                      visible: provider.userprofileData!
                                                   .presentCompany ==
                                               ""
                                           ? false
@@ -303,7 +308,7 @@ class _PublicProfileDetailsScreenState
                                                 ),
                                               ),
                                               Text(
-                                                provider.userprofileData
+                                                provider.userprofileData!
                                                     .presentCompany
                                                     .toString(),
                                                 style: GoogleFonts.lato(
@@ -320,7 +325,7 @@ class _PublicProfileDetailsScreenState
                                       ),
                                     ),
                                     Visibility(
-                                      visible: provider.userprofileData
+                                      visible: provider.userprofileData!
                                                   .presentEducation ==
                                               ""
                                           ? false
@@ -343,7 +348,7 @@ class _PublicProfileDetailsScreenState
                                                 ),
                                               ),
                                               Text(
-                                                provider.userprofileData
+                                                provider.userprofileData!
                                                     .presentEducation
                                                     .toString(),
                                                 style: GoogleFonts.lato(
@@ -361,7 +366,7 @@ class _PublicProfileDetailsScreenState
                                     ),
                                     Visibility(
                                       visible:
-                                          provider.userprofileData.gender == ""
+                                          provider.userprofileData!.gender == ""
                                               ? false
                                               : true,
                                       child: Column(
@@ -382,7 +387,7 @@ class _PublicProfileDetailsScreenState
                                                 ),
                                               ),
                                               Text(
-                                                provider.userprofileData.gender
+                                                provider.userprofileData!.gender
                                                     .toString(),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 12,
@@ -399,7 +404,7 @@ class _PublicProfileDetailsScreenState
                                     ),
                                     Visibility(
                                       visible:
-                                          provider.userprofileData.religion ==
+                                          provider.userprofileData!.religion ==
                                                   ""
                                               ? false
                                               : true,
@@ -422,7 +427,7 @@ class _PublicProfileDetailsScreenState
                                               ),
                                               Text(
                                                 provider
-                                                    .userprofileData.religion
+                                                    .userprofileData!.religion
                                                     .toString(),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 12,
@@ -438,7 +443,7 @@ class _PublicProfileDetailsScreenState
                                       ),
                                     ),
                                     Visibility(
-                                      visible: provider.userprofileData
+                                      visible: provider.userprofileData!
                                                   .livesInAddress ==
                                               ""
                                           ? false
@@ -461,7 +466,7 @@ class _PublicProfileDetailsScreenState
                                                 ),
                                               ),
                                               Text(
-                                                provider.userprofileData
+                                                provider.userprofileData!
                                                     .livesInAddress
                                                     .toString(),
                                                 style: GoogleFonts.lato(
@@ -478,7 +483,7 @@ class _PublicProfileDetailsScreenState
                                       ),
                                     ),
                                     Visibility(
-                                      visible: provider.userprofileData
+                                      visible: provider.userprofileData!
                                                   .fromAddress ==
                                               ""
                                           ? false
@@ -501,8 +506,8 @@ class _PublicProfileDetailsScreenState
                                                 ),
                                               ),
                                               Text(
-                                                provider
-                                                    .userprofileData.fromAddress
+                                                provider.userprofileData!
+                                                    .fromAddress
                                                     .toString(),
                                                 style: GoogleFonts.lato(
                                                     fontSize: 12,
@@ -558,8 +563,8 @@ class _PublicProfileDetailsScreenState
                   physics: const ScrollPhysics(),
                   child: Consumer3<UserNewsfeedPostProvider,
                           PostImagesPreviewProvider, SingleVideoShowProvider>(
-                      builder: (context, userPostProvider, postImageProvider, singleVideoShowProvider,
-                          child) {
+                      builder: (context, userPostProvider, postImageProvider,
+                          singleVideoShowProvider, child) {
                     return Column(
                       children: [
                         /*----------------------------------------Newsfeed---------------------------------*/
@@ -599,149 +604,150 @@ class _PublicProfileDetailsScreenState
                                           Text(userPostProvider
                                               .authorPosts![index].description),
                                           SizedBox(
-                                            height: (userPostProvider
-                                                        .authorPosts![index]
-                                                        .totalImage !=
-                                                    0)
-                                                ? (userPostProvider
-                                                        .authorPosts![index]
-                                                        .totalImage < 3)?200:400
-                                                : 0,
-                                            child: (userPostProvider
-                                                        .authorPosts![index]
-                                                        .totalImage ==
-                                                    1)
-                                                ? InkWell(
-                                                    onTap: () {
-                                                      postImageProvider.iamges =
-                                                          [];
-
-                                                      postImageProvider.iamges
-                                                          .add(userPostProvider
+                                              height: (userPostProvider
+                                                          .authorPosts![index]
+                                                          .totalImage !=
+                                                      0)
+                                                  ? (userPostProvider
                                                               .authorPosts![
                                                                   index]
-                                                              .images[0]
-                                                              .image);
-                                                      Get.to(() =>
-                                                          const PostImagesPreview());
-                                                    },
-                                                    child: Center(
-                                                      child: Container(
-                                                          color: Colors.white,
-                                                          height: 200,
-                                                          width: width,
-                                                          child: Image.network(
-                                                            userPostProvider
-                                                                .authorPosts![
-                                                                    index]
-                                                                .images[0]
-                                                                .image,
-                                                            fit: BoxFit.contain,
-                                                          )),
-                                                    ),
-                                                  )
-                                                  :Expanded(
-                                                    child: GridView.builder(
-                                                      physics:
-                                                          const NeverScrollableScrollPhysics(),
-                                                      shrinkWrap: true,
-                                                      gridDelegate:
-                                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                                        crossAxisCount:
-                                                            (userPostProvider
-                                                    .authorPosts![index]
-                                                    .totalImage ==
-                                                                    1)
-                                                                ? 1
-                                                                : 2,
-                                                        crossAxisSpacing: 2.0,
-                                                        mainAxisSpacing: 2.0,
-                                                      ),
-                                                      itemCount:
-                                                          (userPostProvider
-                                                    .authorPosts![index]
-                                                    .totalImage < 4)?userPostProvider
-                                                    .authorPosts![index]
-                                                    .totalImage : 4,
-                                                      itemBuilder:
-                                                          (context, index2) {
-                                                            
-                                                        return InkWell(
+                                                              .totalImage <
+                                                          3)
+                                                      ? 200
+                                                      : 400
+                                                  : 0,
+                                              child:
+                                                  (userPostProvider
+                                                              .authorPosts![
+                                                                  index]
+                                                              .totalImage ==
+                                                          1)
+                                                      ? InkWell(
                                                           onTap: () {
                                                             postImageProvider
-                                                                    .iamges = [];
-                                                                for (int i = 0;
-                                                                    i <
-                                                                        userPostProvider
-                                                                            .authorPosts![index]
-                                                                            .images
-                                                                            .length;
-                                                                    i++) {
-                                                                  postImageProvider
-                                                                      .iamges
-                                                                      .add(userPostProvider
-                                                                          .authorPosts![
-                                                                              index]
-                                                                          .images[
-                                                                              i]
-                                                                          .image);
-                                                                  Get.to(() =>
-                                                                      const PostImagesPreview());
-                                                                }
-                                                            },
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Expanded(
-                                                                child:(userPostProvider
-                                                    .authorPosts![index]
-                                                    .totalImage > 4 && index2 == 3) ?
-                                                                    Container(
-                                                                      child: const Center(
-                                                                        child: Text(
-                                                                          "More images",
-                                                                          style: TextStyle(
-                                                                            color: Colors.white,
-                                                                            fontWeight: FontWeight.bold,
-                                                                            fontSize: 20,
-                                                                            
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      decoration: BoxDecoration(
-                                                                        image: DecorationImage(
-                                                                        image: NetworkImage(userPostProvider
-                                                                        .authorPosts![
-                                                                            index]
-                                                                        .images[
-                                                                            index2]
-                                                                        .image),
-                                                                        fit: BoxFit.cover,
-                                                                        )
-                                                                      ),
-                                                                    )
-                                                                    :Image
+                                                                .iamges = [];
+
+                                                            postImageProvider
+                                                                .iamges
+                                                                .add(userPostProvider
+                                                                    .authorPosts![
+                                                                        index]
+                                                                    .images[0]
+                                                                    .image);
+                                                            Get.to(() =>
+                                                                const PostImagesPreview());
+                                                          },
+                                                          child: Center(
+                                                            child: Container(
+                                                                color: Colors
+                                                                    .white,
+                                                                height: 200,
+                                                                width: width,
+                                                                child: Image
                                                                     .network(
                                                                   userPostProvider
+                                                                      .authorPosts![
+                                                                          index]
+                                                                      .images[0]
+                                                                      .image,
+                                                                  fit: BoxFit
+                                                                      .contain,
+                                                                )),
+                                                          ),
+                                                        )
+                                                      : Expanded(
+                                                          child:
+                                                              GridView.builder(
+                                                            physics:
+                                                                const NeverScrollableScrollPhysics(),
+                                                            shrinkWrap: true,
+                                                            gridDelegate:
+                                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                              crossAxisCount:
+                                                                  (userPostProvider
+                                                                              .authorPosts![index]
+                                                                              .totalImage ==
+                                                                          1)
+                                                                      ? 1
+                                                                      : 2,
+                                                              crossAxisSpacing:
+                                                                  2.0,
+                                                              mainAxisSpacing:
+                                                                  2.0,
+                                                            ),
+                                                            itemCount: (userPostProvider
+                                                                        .authorPosts![
+                                                                            index]
+                                                                        .totalImage <
+                                                                    4)
+                                                                ? userPostProvider
+                                                                    .authorPosts![
+                                                                        index]
+                                                                    .totalImage
+                                                                : 4,
+                                                            itemBuilder:
+                                                                (context,
+                                                                    index2) {
+                                                              return InkWell(
+                                                                onTap: () {
+                                                                  postImageProvider
+                                                                      .iamges = [];
+                                                                  for (int i =
+                                                                          0;
+                                                                      i <
+                                                                          userPostProvider
+                                                                              .authorPosts![index]
+                                                                              .images
+                                                                              .length;
+                                                                      i++) {
+                                                                    postImageProvider.iamges.add(userPostProvider
                                                                         .authorPosts![
                                                                             index]
                                                                         .images[
-                                                                            index2]
-                                                                        .image,
-                                                                  fit: BoxFit
-                                                                      .fill,
+                                                                            i]
+                                                                        .image);
+                                                                    Get.to(() =>
+                                                                        const PostImagesPreview());
+                                                                  }
+                                                                },
+                                                                child: Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child: (userPostProvider.authorPosts![index].totalImage > 4 &&
+                                                                              index2 ==
+                                                                                  3)
+                                                                          ? Container(
+                                                                              child: const Center(
+                                                                                child: Text(
+                                                                                  "More images",
+                                                                                  style: TextStyle(
+                                                                                    color: Colors.white,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontSize: 20,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              decoration: BoxDecoration(
+                                                                                  image: DecorationImage(
+                                                                                image: NetworkImage(userPostProvider.authorPosts![index].images[index2].image),
+                                                                                fit: BoxFit.cover,
+                                                                              )),
+                                                                            )
+                                                                          : Image
+                                                                              .network(
+                                                                              userPostProvider.authorPosts![index].images[index2].image,
+                                                                              fit: BoxFit.fill,
+                                                                            ),
+                                                                    )
+                                                                  ],
                                                                 ),
-                                                              )
-                                                            ],
+                                                              );
+                                                            },
                                                           ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  )
-                                                
-                                          ),
+                                                        )),
                                           const SizedBox(
                                             height: 10,
                                           ),

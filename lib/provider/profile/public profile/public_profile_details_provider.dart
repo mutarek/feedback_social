@@ -1,9 +1,10 @@
 
+import 'package:als_frontend/model/model.dart';
 import 'package:als_frontend/service/profile/Public/public_profile_details_service.dart';
 import 'package:flutter/material.dart';
 
 class PublicProfileDetailsProvider extends ChangeNotifier {
-  var userprofileData;
+  UserProfileModel? userprofileData;
   var loading = false;
   int id = 0;
   List<String> postImages = [];

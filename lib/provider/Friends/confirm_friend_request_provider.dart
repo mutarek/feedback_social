@@ -22,6 +22,8 @@ class ConfirmFriendRequestProvider extends ChangeNotifier {
 
     http.Response response =
         await http.post(uri, body: mappeddata, headers: headers);
+    print(response.statusCode);
+    print(id);
     if (response.statusCode == 200 || response.statusCode == 201) {
       success = true;
       message = "Friend added successfully";

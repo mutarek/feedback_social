@@ -371,13 +371,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                       child: Container(
                                                           color: Colors.white,
                                                           height: 150,
-                                                          width: width,
-                                                          child: Image.network(
-                                                            newsfeedProvider
-                                                                .results[index]
-                                                                .images![0]
-                                                                .image!,
-                                                            fit: BoxFit.cover,
+                                                          width: width*06,
+                                                          child: Expanded(
+                                                            child: Image.network(
+                                                              newsfeedProvider
+                                                                  .results[index]
+                                                                  .images![0]
+                                                                  .image!,
+                                                                  fit: BoxFit.cover,
+                                                            ),
                                                           )),
                                                     ),
                                                   )
@@ -510,7 +512,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                     },
                                                     child: Container(
                                                         color: Colors.white,
-                                                        height: 200,
+                                                        height: 250,
                                                         width: width,
                                                         child: Image.network(
                                                           newsfeedProvider
@@ -519,7 +521,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                               .post!
                                                               .images![0]
                                                               .image!,
-                                                          fit: BoxFit.contain,
+                                                          fit: BoxFit.fill,
                                                         )),
                                                   ),
                                                 )
