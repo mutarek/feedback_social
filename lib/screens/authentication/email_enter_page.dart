@@ -203,8 +203,9 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
 
                 /*.................body...............*/
 
+                
+
                 Visibility(
-                  visible: provider.success == true ? false : emailVafification,
                   child: Positioned(
                     top: height * 0.2,
                     left: width * 0.04,
@@ -227,7 +228,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                 onTap: ()async{
                                   final code = await countryPicker.showPicker(context: context);
                                   setState(() {
-                                    countryCode = code!.dialCode.toString();
+                                    countryCode = (code!.dialCode.isNotEmpty)?code.dialCode.toString() : "+1";
                                   });
                                 },
                                 child: Container
