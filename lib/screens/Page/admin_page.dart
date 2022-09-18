@@ -505,7 +505,7 @@ class _AdminPageState extends State<AdminPage> {
                                                                         child: Text(
                                                                           "More images",
                                                                           style: TextStyle(
-                                                                            color: Colors.black,
+                                                                            color: Colors.white,
                                                                             fontWeight: FontWeight.bold,
                                                                             fontSize: 20,
                                                                             
