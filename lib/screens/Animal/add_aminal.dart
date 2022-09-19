@@ -107,6 +107,9 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
                               child: CustomTextField(
+                                fontColor: Colors.black,
+                                hintTextColor: Colors.black,
+                                labelColor: Colors.black,
                                 label: const Text("Animal name"),
                                 controller: animalNameController,
                                 height: height * 0.06,
@@ -117,6 +120,9 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
                               child: CustomTextField(
+                                fontColor: Colors.black,
+                                hintTextColor: Colors.black,
+                                labelColor: Colors.black,
                                 label: const Text("Species"),
                                 controller: speciesController,
                                 height: height * 0.06,
@@ -127,6 +133,9 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
                               child: CustomTextField(
+                                fontColor: Colors.black,
+                                hintTextColor: Colors.black,
+                                labelColor: Colors.black,
                                 label: const Text("Genus"),
                                 controller: genusController,
                                 height: height * 0.06,
@@ -137,6 +146,9 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
                               child: CustomTextField(
+                                fontColor: Colors.black,
+                                hintTextColor: Colors.black,
+                                labelColor: Colors.black,
                                 label: const Text("Given name"),
                                 controller: givenNameController,
                                 height: height * 0.06,
@@ -152,8 +164,8 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 20),
                                   ),
-                                  const SizedBox(
-                                    width: 95,
+                                  SizedBox(
+                                    width: width*0.2,
                                   ),
                                   Container(
                                     height: height * 0.045,
@@ -193,6 +205,9 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
                               child: CustomTextField(
+                                fontColor: Colors.black,
+                                hintTextColor: Colors.black,
+                                labelColor: Colors.black,
                                 label: const Text("age"),
                                 controller: ageController,
                                 height: height * 0.06,

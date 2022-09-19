@@ -23,16 +23,17 @@ class EditProfileWidget extends StatelessWidget {
           width: width * 0.9,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(5)),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: controller,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                icon: iconName,
-                hintText: hintText,
-              ),
+          child: TextField(
+            controller: controller,
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              
+
+              prefixIcon: iconName,
+              hintText: hintText,
+              hintStyle: const TextStyle(color: Colors.black)
+
             ),
           ),
         ),

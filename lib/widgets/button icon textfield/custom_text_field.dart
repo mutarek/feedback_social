@@ -10,6 +10,9 @@ class CustomTextField extends StatelessWidget {
   bool obsecureText;
   IconButton? suffixIconButton;
   TextInputType keybordType;
+  Color fontColor;
+  Color hintTextColor;
+  Color labelColor;
   CustomTextField(
       {Key? key,
       this.height = 50,
@@ -18,6 +21,9 @@ class CustomTextField extends StatelessWidget {
       required this.controller,
       this.obsecureText = false,
       this.suffixIconButton,
+      this.fontColor = Colors.white,
+      this.hintTextColor = Colors.white,
+      this.labelColor= Colors.white,
       this.keybordType = TextInputType.emailAddress})
       : super(key: key);
 
@@ -26,17 +32,17 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       height: height,
       child: TextField(
+        style: TextStyle(color: fontColor),
         controller: controller,
         obscureText: obsecureText,
         keyboardType: keybordType,
         decoration: InputDecoration(
-          hintStyle: GoogleFonts.lato(color: Colors.white),
+          hintStyle: GoogleFonts.lato(color: hintTextColor),
           hintText: hintText,
           label: label,
-          labelStyle: GoogleFonts.lato(color: Colors.white),
+          labelStyle: GoogleFonts.lato(color: labelColor),
           suffixIcon: suffixIconButton,
           filled: true,
-          
         ),
       ),
     );

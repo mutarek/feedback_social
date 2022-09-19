@@ -18,6 +18,7 @@ class RegistrationProvider extends ChangeNotifier {
   bool loading = false;
 
   String email = "";
+  String phone = "";
   String password = "";
 
   Future registration(
@@ -48,6 +49,39 @@ class RegistrationProvider extends ChangeNotifier {
       success = false;
       loading = false;
       message = "Email is already used or ${data["email"][0]}";
+      notifyListeners();
+      Fluttertoast.showToast(msg: message);
+    }
+  }
+
+  Future registrationWithPhone(
+      String firstName, lastName, phone, dob, gender, password) async {
+    var apiUrl = signUp;
+
+    Map mappeddata = {
+      "first_name": firstName,
+      "last_name": lastName,
+      "phone": phone,
+      "password": password,
+      "date_of_birth": dob,
+      "gender": gender,
+    };
+
+    http.Response response =
+        await http.post(Uri.parse(apiUrl), body: mappeddata);
+    var data = jsonDecode(response.body);
+    if (response.statusCode == 201) {
+      success = true;
+      loading = false;
+      notifyListeners();
+      LoginProvider().login(phone, password);
+      print(phone);
+      print(password);
+      Get.to(const SplashScreen());
+    } else {
+      success = false;
+      loading = false;
+      message = "Number is already used or ${data["email"][0]}";
       notifyListeners();
       Fluttertoast.showToast(msg: message);
     }

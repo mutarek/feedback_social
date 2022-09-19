@@ -1,5 +1,6 @@
 import 'package:als_frontend/const/palette.dart';
 import 'package:als_frontend/provider/Group%20Page/Group/group_images_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -470,7 +471,14 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                         .groupPosts![index]
                                                         .totalImage !=
                                                     0)
-                                                ? 200
+                                                ? (groupPostProvider
+                                                        .groupPosts![index]
+                                                        .totalImage ==
+                                                    1)?height*0.35: (groupPostProvider
+                                                              .groupPosts![
+                                                                  index]
+                                                              .totalImage ==
+                                                          2)?0.2:0.5
                                                 : 0,
                                             child: (groupPostProvider
                                                         .groupPosts![index]
@@ -505,22 +513,18 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                                   const PostImagesPreview());
                                                             }
                                                           },
-                                                          child: Container(
-                                                              color:
-                                                                  Colors.white,
-                                                              height: 150,
-                                                              width: width,
-                                                              child:
-                                                                  Image.network(
-                                                                groupPostProvider
+                                                          child: CachedNetworkImage(
+                                                                                  imageUrl: groupPostProvider
                                                                     .groupPosts![
                                                                         index]
                                                                     .images[0]
                                                                     .image,
-                                                                fit: BoxFit
-                                                                    .contain,
-                                                              )),
-                                                        ),
+                                                                                  imageBuilder: (context, imageProvider) => Container(height: height * 0.35, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                                  placeholder: ((context, url) => Container(
+                                                                                        alignment: Alignment.center,
+                                                                                        child: const CircularProgressIndicator(),
+                                                                                      )))),
+                                                        
                                                       ):Expanded(
                                                     child: GridView.builder(
                                                       physics:
@@ -586,7 +590,7 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                                         child: Text(
                                                                           "More images",
                                                                           style: TextStyle(
-                                                                            color: Colors.black,
+                                                                            color: Colors.white,
                                                                             fontWeight: FontWeight.bold,
                                                                             fontSize: 20,
                                                                             
@@ -605,17 +609,18 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                                         )
                                                                       ),
                                                                     )
-                                                                    :Image
-                                                                    .network(
-                                                                  groupPostProvider
-                                                                      .groupPosts![
-                                                                          index]
-                                                                      .images[
-                                                                          index2]
-                                                                      .image,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                ),
+                                                                    : CachedNetworkImage(
+                                                                                  imageUrl: groupPostProvider
+                                                                    .groupPosts![
+                                                                        index]
+                                                                    .images[index2]
+                                                                    .image,
+                                                                                  imageBuilder: (context, imageProvider) => Container(width: 400,
+                                                    height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                                  placeholder: ((context, url) => Container(
+                                                                                        alignment: Alignment.center,
+                                                                                        child: const CircularProgressIndicator(),
+                                                                                      ))),
                                                               )
                                                             ],
                                                           ),

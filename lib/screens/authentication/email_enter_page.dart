@@ -51,7 +51,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
   @override
   void initState() {
     final value = Provider.of<EmailVerifyProvider>(context, listen: false);
-    value.startTimer();
+    value.success2 = false;
     super.initState();
   }
 
@@ -76,30 +76,6 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
             appBar: AppBar(
               toolbarHeight: height * 0.05,
               backgroundColor: Colors.white,
-              actions: [
-                Consumer<EmailVerifyProvider>(
-                    builder: (context, provider, child) {
-                  return Visibility(
-                    visible:
-                        provider.success == true ? false : emailVafification,
-                    child: Positioned(
-                      child: SizedBox(
-                          height: height * 0.04,
-                          width: width,
-                          child: TabBar(tabs: [
-                            Text("Gmail verification",
-                                style: GoogleFonts.lato(
-                                    color: Palette.primary,
-                                    fontWeight: FontWeight.bold)),
-                            Text("Phone number verification",
-                                style: GoogleFonts.lato(
-                                    color: Palette.primary,
-                                    fontWeight: FontWeight.bold))
-                          ])),
-                    ),
-                  );
-                }),
-              ],
               elevation: 0,
             ),
             body: SafeArea(
@@ -138,7 +114,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                   child: Positioned(
                     top: height * 0.71,
                     right: width * 0.62,
-                    child: const Text("Sign Up",
+                    child: const Text("Register",
                         style: TextStyle(
                             fontSize: 32,
                             color: Colors.white,
@@ -180,16 +156,29 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                   context: context,
                                 );
                               } else {
-                                provider.password = passwordController.text;
-                                provider.loading = true;
-                                provider.registration(
-                                  firstNameController.text,
-                                  lastNameController.text,
-                                  emailVerify.email,
-                                  dateTime,
-                                  provider.drondownValue,
-                                  passwordController.text,
-                                );
+                                if (emailVerify.isEmail == true) {
+                                  provider.password = passwordController.text;
+                                  provider.loading = true;
+                                  provider.registration(
+                                    firstNameController.text,
+                                    lastNameController.text,
+                                    emailVerify.email,
+                                    dateTime,
+                                    provider.drondownValue,
+                                    passwordController.text,
+                                  );
+                                } else {
+                                  provider.password = passwordController.text;
+                                  provider.loading = true;
+                                  provider.registrationWithPhone(
+                                    firstNameController.text,
+                                    lastNameController.text,
+                                    emailVerify.phone,
+                                    dateTime,
+                                    provider.drondownValue,
+                                    passwordController.text,
+                                  );
+                                }
 
                                 if (provider.success == true) {
                                   provider.loading = false;
@@ -203,69 +192,96 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
 
                 /*.................body...............*/
 
-                
-
                 Visibility(
                   child: Positioned(
-                    top: height * 0.2,
+                    top: height * 0.15,
                     left: width * 0.04,
-                    child: SizedBox(
-                      height: height * 0.05,
-                      width: width * 0.9,
-                      child: TabBarView(children: [
-                        LoginTextFiled(
-                          h: height * 0.05,
-                          w: width * 0.9,
-                          child: CustomTextField(
-                            hintText: "Enter your  your email",
-                            controller: emailController,
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: ()async{
-                                  final code = await countryPicker.showPicker(context: context);
-                                  setState(() {
-                                    countryCode = (code!.dialCode.isNotEmpty)?code.dialCode.toString() : "+1";
-                                  });
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Register with",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  // provider.emailLogin();
+                                  // setState(() {});
                                 },
-                                child: Container
-                                (
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(5)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(countryCode, style: const TextStyle(color: Colors.white),),
-                                  ))
-                              ),
-                              Positioned(
-                                top: height * 0.2,
-                                left: width * 0.04,
-                                child: LoginTextFiled(
+                                child: Text(
+                                    (provider.isEmail == true)
+                                        ? "Email"
+                                        : "Email",
+                                    style:
+                                        const TextStyle(color: Colors.orange)))
+                          ],
+                        ),
+                        SizedBox(
+                          height: height * 0.05,
+                          width: width * 0.9,
+                          child: (provider.isEmail == true)
+                              ? LoginTextFiled(
                                   h: height * 0.05,
-                                  w: width * 0.75,
+                                  w: width * 0.9,
                                   child: CustomTextField(
-                                    hintText: "Enter your phone number",
-                                    controller: numberController,
-                                    keybordType: TextInputType.number,
+                                    hintText: "Enter your  your email",
+                                    controller: emailController,
+                                  ),
+                                )
+                              : Expanded(
+                                  child: Row(
+                                    children: [
+                                      GestureDetector(
+                                          onTap: () async {
+                                            final code = await countryPicker
+                                                .showPicker(context: context);
+                                            setState(() {
+                                              countryCode = (code != null)
+                                                  ? code.dialCode.toString()
+                                                  : "+1";
+                                            });
+                                          },
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.black,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  countryCode,
+                                                  style: const TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ))),
+                                      Positioned(
+                                        top: height * 0.2,
+                                        left: width * 0.04,
+                                        child: LoginTextFiled(
+                                          h: height * 0.05,
+                                          w: width * 0.75,
+                                          child: CustomTextField(
+                                            hintText: "Enter your phone number",
+                                            controller: numberController,
+                                            keybordType: TextInputType.number,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
                         ),
-                      ]),
+                      ],
                     ),
                   ),
                 ),
                 Visibility(
                   visible: provider.success == true ? false : emailVafification,
                   child: Positioned(
-                    top: height * 0.26,
+                    top: height * 0.31,
                     left: width * 0.04,
                     child: Row(
                       children: [
@@ -276,31 +292,34 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                               style: ElevatedButton.styleFrom(
                                 primary: Palette.scaffold,
                               ),
-                              onPressed: () {
-                                if (emailController.text != "") {
-                                  provider.email = emailController.text;
-                                  provider.getCode(emailController.text);
-                                } else {
-                                  provider.phone = "$countryCode${numberController.text}";
-                                  provider.getCode2("$countryCode${numberController.text}");
-                                }
-
-                                if (provider.success2 == true) {
-                                  Fluttertoast.showToast(
-                                      msg:
-                                          "succesfully send code please chick your email");
-                                } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Something went wrong!");
-                                }
-                              },
                               child: Text(
                                 "Get varified",
                                 style: GoogleFonts.lato(
                                   color: Colors.black,
                                   fontSize: 10,
                                 ),
-                              )),
+                              ),
+                              onPressed: () {
+                                if (provider.isEmail == true) {
+                                  if (emailController.text.isNotEmpty) {
+                                    provider.email = emailController.text;
+                                    provider.getCode(emailController.text);
+
+                                    if (provider.success2 == true) {
+                                      provider.startTimer();
+                                    }
+                                  }
+                                } else {
+                                  provider.phone =
+                                      "$countryCode${numberController.text}";
+                                  provider.getCode2(
+                                      "$countryCode${numberController.text}");
+
+                                  if (provider.success2 == true) {
+                                    provider.startTimer();
+                                  }
+                                }
+                              }),
                         ),
                         SizedBox(
                           width: width * 0.03,
@@ -329,9 +348,12 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                 size: 15,
                               ),
                               onPressed: () {
+                                (provider.isEmail == true)?
                                 provider.verifyEmail(
-                                    provider.email, codeController.text);
-                                if (provider.success == true) {}
+                                    provider.email, codeController.text):
+                                provider.verifyPhone(
+                                    provider.phone, codeController.text)
+                                ;
                               },
                             ),
                           ),
@@ -368,7 +390,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                 Visibility(
                   visible: provider.success == true ? false : emailVafification,
                   child: Positioned(
-                      top: height * 0.32,
+                      top: height * 0.27,
                       left: width * 0.04,
                       child: InkWell(
                           onTap: () {

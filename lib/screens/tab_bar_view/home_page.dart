@@ -1,3 +1,6 @@
+
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -72,6 +75,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   Get.to(() => const SearchScreen());
                 });
           }),
+          CustomIconButton(
+              iconName: MdiIcons.facebookMessenger,
+              onPressed: () {
+                Get.to(() => const CommingSoonScreen());
+              })
         ],
       ),
       body: SingleChildScrollView(
@@ -274,7 +282,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       imageHeight: (newsfeedProvider
                                                   .results[index].totalImage ==
                                               1)
-                                          ? height * 0.2
+                                          ? height * 0.35
                                           : (newsfeedProvider.results[index]
                                                       .totalImage ==
                                                   2)
@@ -368,17 +376,33 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                               const PostImagesPreview());
                                                         }
                                                       },
-                                                      child: Container(
-                                                          color: Colors.white,
-                                                          height: 150,
-                                                          width: width,
-                                                          child: Image.network(
-                                                            newsfeedProvider
-                                                                .results[index]
-                                                                .images![0]
-                                                                .image!,
-                                                            fit: BoxFit.cover,
-                                                          )),
+                                                      child: CachedNetworkImage(
+                                                          imageUrl:
+                                                              newsfeedProvider
+                                                                  .results[
+                                                                      index]
+                                                                  .images![
+                                                                      0]
+                                                                  .image!,
+                                                          imageBuilder: (context,
+                                                                  imageProvider) =>
+                                                              Container(
+                                                                  height: height*0.35,
+                                                                  decoration: BoxDecoration(
+                                                                      image: DecorationImage(
+                                                                          image:
+                                                                              imageProvider,
+                                                                          fit: BoxFit
+                                                                              .fitWidth))),
+                                                          placeholder:
+                                                              ((context, url) =>
+                                                                  Container(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    child:
+                                                                        const CircularProgressIndicator(),
+                                                                  ))),
                                                     ),
                                                   )
                                                 : Expanded(
@@ -446,7 +470,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                         child: Text(
                                                                           "More images",
                                                                           style: TextStyle(
-                                                                            color: Colors.black,
+                                                                            color: Colors.white,
                                                                             fontWeight: FontWeight.bold,
                                                                             fontSize: 20,
                                                                             
@@ -465,18 +489,29 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                         )
                                                                       ),
                                                                     )
-                                                                    :Image
-                                                                    .network(
-                                                                  newsfeedProvider
-                                                                      .results[
-                                                                          index]
-                                                                      .images![
-                                                                          index2]
-                                                                      .image!,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                ),
-                                                              )
+                                                                    :CachedNetworkImage(
+                                                  imageUrl: newsfeedProvider
+                                                                              .results[
+                                                                                  index]
+                                                                              .images![
+                                                                                  index2]
+                                                                              .image!,
+                                                  imageBuilder: (context, imageProvider)=> Container(
+                                                    width: 400,
+                                                    height: 200,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.fitWidth
+                                                      )
+                                                    )
+                                                  ),
+                                                  placeholder: ((context, url) => Container(
+                                                    alignment: Alignment.center,
+                                                    child: const CircularProgressIndicator(),
+                                                  )
+                                                )))
+                                                              
                                                             ],
                                                           ),
                                                         );

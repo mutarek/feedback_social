@@ -1,6 +1,7 @@
 import 'package:als_frontend/const/palette.dart';
 import 'package:als_frontend/provider/Group%20Page/Group/group_images_provider.dart';
 import 'package:als_frontend/provider/provider.dart';
+import 'package:als_frontend/screens/profile/user/edit_profile.dart';
 import 'package:als_frontend/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

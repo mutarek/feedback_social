@@ -51,10 +51,14 @@ class _FriendRequestState extends State<FriendRequest> {
       ),
       body: RefreshIndicator(
         onRefresh: () => _refresh(),
-        child: Consumer4<ConfirmFriendRequestProvider, FriendRequestProvider,
-                AddFriendProvider, PublicProfileDetailsProvider>(
+        child: Consumer5<
+                ConfirmFriendRequestProvider,
+                FriendRequestProvider,
+                AddFriendProvider,
+                PublicProfileDetailsProvider,
+                UserNewsfeedPostProvider>(
             builder: (context, provider2, provider, addProvider,
-                publicProfileProvider, child) {
+                userNewsfeedPostProvider, publicProfileProvider, child) {
           return Column(
             children: [
               Padding(
@@ -143,6 +147,8 @@ class _FriendRequestState extends State<FriendRequest> {
                         itemBuilder: (context, index) {
                           return FrindRequestCard(
                             ontap: () {
+                              userNewsfeedPostProvider.id =
+                                  provider.friendsSuggetions[index].id;
                               publicProfileProvider.id =
                                   provider.friendsSuggetions[index].id;
 
