@@ -1,5 +1,6 @@
 import 'package:als_frontend/const/palette.dart';
 import 'package:als_frontend/screens/Group/Tab%20items/group_videos_tab.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -529,13 +530,66 @@ class _PublicGroupViewState extends State<PublicGroupView> {
                                           Text(groupPostProvider
                                               .groupPosts![index].description),
                                           SizedBox(
-                                            height: (groupPostProvider
-                                                        .groupPosts![index]
-                                                        .totalImage !=
-                                                    0)
-                                                ? 200
-                                                : 0,
-                                            child:Expanded(
+                                            height:(groupPostProvider
+                                                          .groupPosts![index]
+                                                          .totalImage !=
+                                                      0)
+                                                  ? (groupPostProvider
+                                                              .groupPosts![
+                                                                  index]
+                                                              .totalImage ==
+                                                          1)
+                                                      ? height * 0.35
+                                                      : (groupPostProvider
+                                                                  .groupPosts![
+                                                                      index]
+                                                                  .totalImage ==
+                                                              2)
+                                                          ? 0.2
+                                                          : 0.5
+                                                  : 0,
+                                            child:
+                                                  (groupPostProvider
+                                                              .groupPosts![
+                                                                  index]
+                                                              .totalImage ==
+                                                          0)
+                                                      ? Container()
+                                                      : (groupPostProvider
+                                                                  .groupPosts![
+                                                                      index]
+                                                                  .totalImage ==
+                                                              1)
+                                                          ? Center(
+                                                              child: InkWell(
+                                                                  onTap: () {
+                                                                    postImageProvider
+                                                                        .iamges = [];
+                                                                    for (int i =
+                                                                            0;
+                                                                        i < groupPostProvider.groupPosts![index].images.length;
+                                                                        i++) {
+                                                                      postImageProvider.iamges.add(groupPostProvider
+                                                                          .groupPosts![
+                                                                              index]
+                                                                          .images[
+                                                                              0]
+                                                                          .image);
+                                                                      Get.to(() =>
+                                                                          const PostImagesPreview());
+                                                                    }
+                                                                  },
+                                                                  child: CachedNetworkImage(
+                                                                      imageUrl: groupPostProvider.groupPosts![index].images[0].image,
+                                                                      imageBuilder: (context, imageProvider) => Container(height: height * 0.35, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                      placeholder: ((context, url) => Container(
+                                                                            alignment:
+                                                                                Alignment.center,
+                                                                            child:
+                                                                                const CircularProgressIndicator(),
+                                                                          )))),
+                                                            )
+                                                          : Expanded(
                                                     child: GridView.builder(
                                                       physics:
                                                           const NeverScrollableScrollPhysics(),
@@ -619,17 +673,28 @@ class _PublicGroupViewState extends State<PublicGroupView> {
                                                                         )
                                                                       ),
                                                                     )
-                                                                    :Image
-                                                                    .network(
-                                                                  groupPostProvider
-                                                                      .groupPosts![
-                                                                          index]
-                                                                      .images[
-                                                                          index2]
-                                                                      .image,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                ),
+                                                                    : CachedNetworkImage(
+                                                                    imageUrl: groupPostProvider
+                                                                        .groupPosts![
+                                                                            index]
+                                                                        .images[
+                                                                            index2]
+                                                                        .image,
+                                                                    imageBuilder: (context, imageProvider) => Container(
+                                                                        width: 400, height: 200,
+                                                                        decoration: BoxDecoration(
+                                                                            image: DecorationImage(
+                                                                                image:
+                                                                                    imageProvider,
+                                                                                fit: BoxFit
+                                                                                    .fitWidth))),
+                                                                    placeholder:
+                                                                        ((context,
+                                                                                url) =>
+                                                                            Container(
+                                                                              alignment: Alignment.center,
+                                                                              child: const CircularProgressIndicator(),
+                                                                            ))),
                                                               )
                                                             ],
                                                           ),

@@ -71,7 +71,7 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
                     final data = Provider.of<NewsFeedPostProvider>(context,
                         listen: false);
                     data.getData();
-                    Get.to(() => const NavScreen());
+                    Get.off(() => const NavScreen());
                   },
                 );
               }),

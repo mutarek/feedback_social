@@ -151,6 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.only(
                           top: height * 0.009, right: width * 0.07),
                       child: CustomConatinerButton(
+                        
                           child: (auth.loading == false)
                               ? const Icon(
                                   Icons.arrow_forward,
@@ -158,6 +159,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 )
                               : const CircularProgressIndicator(),
                           ontap: () {
+                            auth.loading = true;
+                            setState(() {
+                              
+                            });
                             if (emailController.text.isEmpty ||
                                 passwordController.text.isEmpty) {
                               showMessage(
@@ -194,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Get.to(const EmailEnterPage());
                             },
                             child: Text(
-                              "Registration",
+                              "Create account",
                               style: TextStyle(fontSize: height * 0.020),
                             ),
                           )

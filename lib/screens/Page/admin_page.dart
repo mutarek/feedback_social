@@ -2,6 +2,7 @@ import 'package:als_frontend/const/palette.dart';
 import 'package:als_frontend/screens/Page/page_images_tab.dart';
 import 'package:als_frontend/screens/Page/page_videos_tab.dart';
 import 'package:als_frontend/screens/screens.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
@@ -396,7 +397,14 @@ class _AdminPageState extends State<AdminPage> {
                                                       .pagePosts![index]
                                                       .totalImage !=
                                                   0)
-                                              ? 200
+                                              ? (pagePostProvider
+                                                      .pagePosts![index]
+                                                      .totalImage !=
+                                                  0)?height*0.35:
+                                                  (pagePostProvider
+                                                            .pagePosts![index]
+                                                            .totalImage !=
+                                                        2)?height*0.2 : height*0.5
                                               : 0,
                                           child:
                                               (pagePostProvider
@@ -424,21 +432,24 @@ class _AdminPageState extends State<AdminPage> {
                                                               Get.to(() =>
                                                                   const PostImagesPreview());
                                                             },
-                                                            child: Container(
-                                                                color: Colors
-                                                                    .white,
-                                                                height: 150,
-                                                                width: width,
-                                                                child: Image
-                                                                    .network(
-                                                                  pagePostProvider
-                                                                      .pagePosts![
-                                                                          index]
-                                                                      .images[0]
-                                                                      .image,
-                                                                  fit: BoxFit
-                                                                      .contain,
-                                                                )),
+                                                            child: CachedNetworkImage(
+                                                                      imageUrl: pagePostProvider
+                                                                          .pagePosts![
+                                                                              index]
+                                                                          .images[
+                                                                              0]
+                                                                          .image,
+                                                                      imageBuilder: (context, imageProvider) => Container(
+                                                                          height:
+                                                                              height*0.35,
+                                                                          decoration:
+                                                                              BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                      placeholder: ((context, url) => Container(
+                                                                            alignment:
+                                                                                Alignment.center,
+                                                                            child:
+                                                                                const CircularProgressIndicator(),
+                                                                          ))),
                                                           ),
                                                         )
                                                       :Expanded(
@@ -522,15 +533,14 @@ class _AdminPageState extends State<AdminPage> {
                                                                         )
                                                                       ),
                                                                     )
-                                                                    :Image
-                                                                    .network(
-                                                                  pagePostProvider
-                                                                            .pagePosts![index]
-                                                                            .images[index2]
-                                                                            .image,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                ),
+                                                                    : CachedNetworkImage(
+                                                                            imageUrl:
+                                                                               pagePostProvider.pagePosts![index].images[index2].image,
+                                                                            imageBuilder: (context, imageProvider) => Container(width: 400, height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                            placeholder: ((context, url) => Container(
+                                                                                  alignment: Alignment.center,
+                                                                                  child: const CircularProgressIndicator(),
+                                                                                ))),
                                                               )
                                                             ],
                                                           ),

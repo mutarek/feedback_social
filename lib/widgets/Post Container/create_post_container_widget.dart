@@ -74,41 +74,7 @@ class _CreatePostContainerWidgetState extends State<CreatePostContainerWidget> {
         SizedBox(
           height: height * 0.02,
         ),
-        SizedBox(
-          height: height * 0.4,
-          child: Consumer<CreatePostProvider>(
-              builder: (context, postProvider, snapshot) {
-            return (postProvider.image.isEmpty)
-                ? Container()
-                : SingleChildScrollView(
-                  child: Expanded(
-                      child: GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: postProvider.image.length == 1 ? 1 : 2,
-                          crossAxisSpacing: 2.0,
-                          mainAxisSpacing: 2.0,
-                        ),
-                        itemCount: postProvider.image.length,
-                        itemBuilder: (context, index2) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Image.file(
-                                  File(postProvider.image[index2].path),
-                                  fit: BoxFit.fill,
-                                ),
-                              )
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                );
-          }),
-        ),
+       
         SizedBox(
           height: height * 0.04,
         ),
@@ -153,7 +119,44 @@ class _CreatePostContainerWidgetState extends State<CreatePostContainerWidget> {
               ),
             ],
           ),
-        )
+        ),
+         SizedBox(
+          height: height * 0.4,
+          child: Consumer<CreatePostProvider>(
+              builder: (context, postProvider, snapshot) {
+            return (postProvider.image.isEmpty)
+                ? Container()
+                : SingleChildScrollView(
+                    child: GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:
+                            postProvider.image.length == 1 ? 1 : 2,
+                        crossAxisSpacing: 2.0,
+                        mainAxisSpacing: 2.0,
+                      ),
+                      itemCount: postProvider.image.length,
+                      itemBuilder: (context, index2) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Image.file(
+                                File(postProvider.image[index2].path),
+                                height: (postProvider.image.length == 1)
+                                    ? height * 0.3
+                                    : height * 0.2,
+                                fit: BoxFit.fill,
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  );
+          }),
+        ),
       ]),
     );
   }

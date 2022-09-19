@@ -2,6 +2,7 @@ import 'package:als_frontend/const/palette.dart';
 import 'package:als_frontend/screens/profile/user_photos_tab.dart';
 import 'package:als_frontend/screens/profile/user_videos_tab.dart';
 import 'package:als_frontend/screens/screens.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/route_manager.dart';
@@ -309,13 +310,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               .authorPosts![index].description),
                                           SizedBox(
                                             height: (userPostProvider
-                                                        .authorPosts![index]
-                                                        .totalImage !=
-                                                    0)
-                                                ? (userPostProvider
-                                                        .authorPosts![index]
-                                                        .totalImage < 3)?200:400
-                                                : 0,
+                                                          .authorPosts![index]
+                                                          .totalImage !=
+                                                      0)
+                                                  ? (userPostProvider
+                                                              .authorPosts![
+                                                                  index]
+                                                              .totalImage ==
+                                                          1)
+                                                      ? height * 0.35
+                                                      : ((userPostProvider
+                                                                  .authorPosts![
+                                                                      index]
+                                                                  .totalImage ==
+                                                              1))
+                                                          ? height * 0.2
+                                                          : height * 0.5
+                                                  : 0,
                                             child: (userPostProvider
                                                     .authorPosts![index]
                                                     .totalImage == 1)?
@@ -333,21 +344,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       Get.to(() =>
                                                           const PostImagesPreview());
                                                 },
-                                                child: Center(
-                                                  child: Container(
-                                                    color: Colors.white,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: userPostProvider
+                                                                          .authorPosts![
+                                                                              index]
+                                                                          .images[0]
+                                                                          .image,
+                                                  imageBuilder: (context, imageProvider)=> Container(
+                                                    width: 400,
                                                     height: 200,
-                                                    width: width,
-                                                    child: Image.network(
-                                                        userPostProvider
-                                                            .authorPosts![index]
-                                                            .images[0]
-                                                            .image,
-                                                        fit: BoxFit.contain,
-                                                        )
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.fitWidth
+                                                      )
+                                                    )
                                                   ),
-                                                ),
-                                              ):
+                                                  placeholder: ((context, url) => Container(
+                                                    alignment: Alignment.center,
+                                                    child: const CircularProgressIndicator(),
+                                                  )
+                                                ))):
+                                                
+                                                // Container(
+                                                //           color: Colors.white,
+                                                //           width: width,
+                                                //           child: Image.network(
+                                                //             userPostProvider
+                                                //                 .authorPosts![
+                                                //                     index]
+                                                //                 .images[0]
+                                                //                 .image,
+                                                //             height:
+                                                //                 height * 0.32,
+                                                //             fit: BoxFit.cover,
+                                                //           )),
+                                              // ):
                                               Expanded(
                                                     child: GridView.builder(
                                                       physics:
@@ -430,17 +462,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                         )
                                                                       ),
                                                                     )
-                                                                    :Image
-                                                                    .network(
-                                                                  userPostProvider
-                                                                        .authorPosts![
-                                                                            index]
-                                                                        .images[
-                                                                            index2]
-                                                                        .image,
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                ),
+                                                                    :CachedNetworkImage(
+                                                  imageUrl: userPostProvider
+                                                                          .authorPosts![
+                                                                              index]
+                                                                          .images[index2]
+                                                                          .image,
+                                                  imageBuilder: (context, imageProvider)=> Container(
+                                                    width: 400,
+                                                    height: 200,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.fitWidth
+                                                      )
+                                                    )
+                                                  ),
+                                                  placeholder: ((context, url) => Container(
+                                                    alignment: Alignment.center,
+                                                    child: const CircularProgressIndicator(),
+                                                  )
+                                                ))
                                                               )
                                                             ],
                                                           ),

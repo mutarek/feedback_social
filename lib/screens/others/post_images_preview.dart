@@ -18,7 +18,7 @@ class PostImagesPreview extends StatelessWidget {
                 child: InkWell(
                 onTap: () {
                   imagePreviewProvider.image = imagePreviewProvider.iamges[0];
-                  Get.to(() => const SingleImagePreview());
+                  Get.to(() =>  SingleImagePreview(urlImages: imagePreviewProvider.iamges));
                 },
                 child: SizedBox(
                     height: 400,
@@ -34,7 +34,8 @@ class PostImagesPreview extends StatelessWidget {
                       imagePreviewProvider.image =
                           imagePreviewProvider.iamges[index];
                           
-                      Get.to(() => const SingleImagePreview());
+                      Get.to(() =>  SingleImagePreview(
+                          urlImages: imagePreviewProvider.iamges));
                     },
                     child: SizedBox(
                         height: 400,
