@@ -24,7 +24,8 @@ class _UserVideoTabState extends State<UserVideoTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ProfileVideosProvider, SingleVideoShowProvider>(builder: (context, provider,singleVideoProvider, child) {
+    return Consumer2<ProfileVideosProvider, SingleVideoShowProvider>(
+        builder: (context, provider, singleVideoProvider, child) {
       return (provider.videos == null)
           ? const Center(
               child: CircularProgressIndicator(),
@@ -41,8 +42,10 @@ class _UserVideoTabState extends State<UserVideoTab> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    singleVideoProvider.videoUrl = provider.videos![index].video;
+                    singleVideoProvider.videoUrl =
+                        provider.videos![index].video;
                     Get.to(() => const ShowVideoPage());
+                    print(singleVideoProvider.videoUrl);
                   },
                   child: Container(
                       color: Colors.grey,

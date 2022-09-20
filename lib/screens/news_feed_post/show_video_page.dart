@@ -1,8 +1,6 @@
-import 'package:als_frontend/provider/provider.dart';
+import 'package:als_frontend/provider/post/single_video_show_provider.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 class ShowVideoPage extends StatefulWidget {
@@ -13,13 +11,40 @@ class ShowVideoPage extends StatefulWidget {
 }
 
 class _ShowVideoPageState extends State<ShowVideoPage> {
+  String videoUrl = "";
+
+  @override
+  void initState() {
+    final value = Provider.of<SingleVideoShowProvider>(context, listen: false);
+    videoUrl = value.videoUrl;
+    print(videoUrl);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer<SingleVideoShowProvider>(
-        builder: (context, singleVideoShowProvider, child) {
-          return BetterPlayer.network(singleVideoShowProvider.videoUrl);
-        }
+    BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
+      BetterPlayerDataSourceType.network,
+      videoUrl,
+      cacheConfiguration: const BetterPlayerCacheConfiguration(
+        useCache: true,
+        preCacheSize: 2 * 1024 * 1024,
+        maxCacheSize: 2 * 1024 * 1024,
+        maxCacheFileSize: 2 * 1024 * 1024,
+
+        ///Android only option to use cached video between app sessions
+        key: "testCacheKey",
+      ),
+    );
+
+    BetterPlayerController _betterPlayerController = BetterPlayerController(
+        const BetterPlayerConfiguration(),
+        betterPlayerDataSource: betterPlayerDataSource);
+
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: BetterPlayer(
+        controller: _betterPlayerController,
       ),
     );
   }
