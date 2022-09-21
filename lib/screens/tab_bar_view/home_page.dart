@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -45,6 +46,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
     notification.getData();
     notification.check();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -412,8 +419,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                     alignment:
                                                                         Alignment
                                                                             .center,
-                                                                    child:
-                                                                        const CircularProgressIndicator(),
+                                                                    child: Image
+                                                                        .asset(
+                                                                      "assets/background/loading.gif",
+                                                                      height:
+                                                                          200,
+                                                                    ),
                                                                   ))),
                                                     ),
                                                   )
@@ -513,7 +524,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                               decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
                                                                           placeholder: ((context, url) => Container(
                                                                                 alignment: Alignment.center,
-                                                                                child: const CircularProgressIndicator(),
+                                                                                child: Image.asset(
+                                                                                  "assets/background/loading.gif",
+                                                                                  height: 200,
+                                                                                ),
                                                                               ))))
                                                             ],
                                                           ),
@@ -711,7 +725,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   return const Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Center(
-                                        child: CircularProgressIndicator()),
+                                        child: CupertinoActivityIndicator()),
                                   );
                                 }
                               }),
