@@ -13,20 +13,18 @@ class ReportPostProvider extends ChangeNotifier {
     var apiUrl;
     if (postFrom == "newsfeed") {
       apiUrl = "$baseUrl/posts/post-report/$postId/";
-    }else if(postFrom == "page"){
+    } else if (postFrom == "page") {
       apiUrl = "$baseUrl/posts/page-post-report/$postId/";
-    }else if(postFrom == "group"){
+    } else if (postFrom == "group") {
       apiUrl = "$baseUrl/posts/group-post-report/$postId/";
     }
 
     Map mappeddata;
-    if(postFrom == "newsfeed"){
+    if (postFrom == "newsfeed") {
       mappeddata = {"report_note": reportNote};
-    }else{
-      mappeddata = {"report_note": reportNote, "id": 1};
+    } else {
+      mappeddata = {"report_note": reportNote, "id": "1"};
     }
-
-    
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = (prefs.getString('token') ?? '');
@@ -35,6 +33,7 @@ class ReportPostProvider extends ChangeNotifier {
     http.Response response =
         await http.post(uri, body: mappeddata, headers: headers);
     print(response.body);
+    print(apiUrl);
     if (response.statusCode == 201) {
       success = true;
       Fluttertoast.showToast(
