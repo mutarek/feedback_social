@@ -656,9 +656,12 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                   ),
                                                 )
                                               : Container(),
-                                          Consumer<ProfileDetailsProvider>(
+                                          Consumer2<ProfileDetailsProvider,
+                                          ReportPostProvider
+                                          >(
                                               builder: (context,
                                                   profileDetailsProvider,
+                                                  reportPostProvider,
                                                   child) {
                                             return LikeCommentCount(
                                               editOnPressed: (groupPostProvider
@@ -687,8 +690,16 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                           const EditGroupPostScreen());
                                                     }
                                                   : () {
+                                                      reportPostProvider
+                                                              .postId =
+                                                          groupPostProvider
+                                                              .groupPosts![
+                                                                  index]
+                                                              .id;
+                                                      reportPostProvider
+                                                          .postFrom = "group";
                                                       Get.to(() =>
-                                                          const ReportPagePostScreen());
+                                                          const ReportPostScreen());
                                                     },
                                               editText: (groupPostProvider
                                                           .groupPosts![index]

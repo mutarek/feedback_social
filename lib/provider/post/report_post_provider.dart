@@ -23,7 +23,7 @@ class ReportPostProvider extends ChangeNotifier {
     if (postFrom == "newsfeed") {
       mappeddata = {"report_note": reportNote};
     } else {
-      mappeddata = {"report_note": reportNote, "id": "1"};
+      mappeddata = {"report_note": reportNote, "report_type": "1"};
     }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
