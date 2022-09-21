@@ -168,7 +168,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                             left: width * 0.03, right: width * 0.08),
                         child: LikeCommentCount(
                           editOnPressed: (){},
-                          editText: "Edit",
+                          editText: const Icon(Icons.edit),
                           likeCount: singlePostProvider.post.totalLike,
                           commentCount: singlePostProvider.post.totalComment,
                           likeCountColor:

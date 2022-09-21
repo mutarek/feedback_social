@@ -591,7 +591,7 @@ class _AdminPageState extends State<AdminPage> {
                                             Get.to(() =>
                                                 const EditPagePostScreen());
                                           },
-                                          editText: "Edit",
+                                          editText: const Icon(Icons.edit),
                                           likeText: (pagePostProvider
                                                       .pagePosts![index].like ==
                                                   false)

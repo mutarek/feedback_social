@@ -755,8 +755,11 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                           .id ==
                                                       profileDetailsProvider
                                                           .userId)
-                                                  ? "Edit"
-                                                  : "Report this post",
+                                                  ? const Icon(Icons.edit)
+                                                  : const Icon(
+                                                      Icons.report,
+                                                      color: Colors.orange,
+                                                    ),
                                               likeText: (groupPostProvider
                                                           .groupPosts![index]
                                                           .like ==

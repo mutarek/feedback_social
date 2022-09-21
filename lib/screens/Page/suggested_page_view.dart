@@ -530,8 +530,8 @@ class _SuggestedPageViewState extends State<SuggestedPageView> {
                                                                             .id ==
                                                                         profileDetailsProvider
                                                                             .userId)
-                                                                    ? "Edit"
-                                                                    : "Report this post",
+                                                                    ? const Icon(Icons.edit)
+                                                                    : const Icon(Icons.edit),
                                                                 likeText: (pagePostProvider
                                                                             .pagePosts![index]
                                                                             .like ==

@@ -11,7 +11,7 @@ class LikeCommentCount extends StatelessWidget {
   final Color likeCountColor;
   final String likeText;
   final VoidCallback editOnPressed;
-  final String editText;
+  final Icon editText;
   const LikeCommentCount(
       {required this.likeCount,
       required this.commentCount,
@@ -65,7 +65,7 @@ class LikeCommentCount extends StatelessWidget {
                   )
                 ],
               ),
-              TextButton(onPressed: editOnPressed, child: Text(editText)),
+              TextButton(onPressed: editOnPressed, child: editText),
               Row(
                 children: [
                   Text(commentCount.toString(),

@@ -37,7 +37,7 @@ class PostContainer extends StatelessWidget {
   final bool isLiked;
   final VoidCallback moreOnPressed;
   final VoidCallback editOnPressed;
-  final String editText;
+  final Icon editText;
   final int hasVideo;
   final VoidCallback onVideoTap;
 
