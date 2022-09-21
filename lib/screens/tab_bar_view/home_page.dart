@@ -1,5 +1,3 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -132,18 +130,20 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               "              Nothing to show. \n Add new friends to see new posts."),
                         ),
                       )
-                    : Consumer5<
+                    : Consumer6<
                             UserNewsfeedPostProvider,
                             CreatePostProvider,
                             CreateGroupPost,
                             CreatePagePost,
-                            SingleVideoShowProvider>(
+                            SingleVideoShowProvider,
+                            ReportPostProvider>(
                         builder: (context,
                             userNewsfeedPostProvider,
                             createPostProvider,
                             createGroupPost,
                             createPagePost,
                             singleVideoShowProvider,
+                            reportPostProvider,
                             child) {
                         return NotificationListener(
                           child: ListView.builder(
@@ -237,14 +237,25 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                           const EditPagePostScreen());
                                                     }
                                           : () {
+                                              reportPostProvider.postId =
+                                                  newsfeedProvider
+                                                      .results[index].id;
+                                              reportPostProvider.postFrom =
+                                                  "newsfeed";
                                               Get.to(() =>
-                                                  const ReportPagePostScreen());
+                                                  const ReportPostScreen());
                                             },
                                       editText: (newsfeedProvider
                                                   .results[index].author!.id ==
                                               profileProvider.userId)
-                                          ? const Icon(Icons.edit, color: Palette.primary,)
-                                          : const Icon(Icons.report, color: Colors.orange,),
+                                          ? const Icon(
+                                              Icons.edit,
+                                              color: Palette.primary,
+                                            )
+                                          : const Icon(
+                                              Icons.report,
+                                              color: Colors.orange,
+                                            ),
                                       moreOnPressed: () {},
                                       pageImage: (newsfeedProvider
                                                   .results[index].postType ==
@@ -381,13 +392,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                               newsfeedProvider
                                                                   .results[
                                                                       index]
-                                                                  .images![
-                                                                      0]
+                                                                  .images![0]
                                                                   .image!,
                                                           imageBuilder: (context,
                                                                   imageProvider) =>
                                                               Container(
-                                                                  height: height*0.35,
+                                                                  height:
+                                                                      height *
+                                                                          0.35,
                                                                   decoration: BoxDecoration(
                                                                       image: DecorationImage(
                                                                           image:
@@ -423,15 +435,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                         crossAxisSpacing: 2.0,
                                                         mainAxisSpacing: 2.0,
                                                       ),
-                                                      itemCount:
-                                                          (newsfeedProvider
+                                                      itemCount: (newsfeedProvider
+                                                                  .results[
+                                                                      index]
+                                                                  .totalImage! <
+                                                              4)
+                                                          ? newsfeedProvider
                                                               .results[index]
-                                                              .totalImage! < 4)?newsfeedProvider
-                                                              .results[index]
-                                                              .totalImage : 4,
+                                                              .totalImage
+                                                          : 4,
                                                       itemBuilder:
                                                           (context, index2) {
-                                                            
                                                         return InkWell(
                                                           onTap: () {
                                                             postImageProvider
@@ -461,57 +475,46 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                     .center,
                                                             children: [
                                                               Expanded(
-                                                                child:(newsfeedProvider
-                                                                    .results[
-                                                                        index]
-                                                                    .totalImage! > 4 && index2 == 3) ?
-                                                                    Container(
-                                                                      child: const Center(
-                                                                        child: Text(
-                                                                          "More images",
-                                                                          style: TextStyle(
-                                                                            color: Colors.white,
-                                                                            fontWeight: FontWeight.bold,
-                                                                            fontSize: 20,
-                                                                            
+                                                                  child: (newsfeedProvider.results[index].totalImage! >
+                                                                              4 &&
+                                                                          index2 ==
+                                                                              3)
+                                                                      ? Container(
+                                                                          child:
+                                                                              const Center(
+                                                                            child:
+                                                                                Text(
+                                                                              "More images",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 20,
+                                                                              ),
+                                                                            ),
                                                                           ),
-                                                                        ),
-                                                                      ),
-                                                                      decoration: BoxDecoration(
-                                                                        image: DecorationImage(
-                                                                        image: NetworkImage(newsfeedProvider
-                                                                      .results[
-                                                                          index]
-                                                                      .images![
-                                                                          index2]
-                                                                      .image!),
-                                                                        fit: BoxFit.cover,
+                                                                          decoration: BoxDecoration(
+                                                                              image: DecorationImage(
+                                                                            image:
+                                                                                NetworkImage(newsfeedProvider.results[index].images![index2].image!),
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          )),
                                                                         )
-                                                                      ),
-                                                                    )
-                                                                    :CachedNetworkImage(
-                                                  imageUrl: newsfeedProvider
+                                                                      : CachedNetworkImage(
+                                                                          imageUrl: newsfeedProvider
                                                                               .results[
                                                                                   index]
                                                                               .images![
                                                                                   index2]
                                                                               .image!,
-                                                  imageBuilder: (context, imageProvider)=> Container(
-                                                    width: 400,
-                                                    height: 200,
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.fitWidth
-                                                      )
-                                                    )
-                                                  ),
-                                                  placeholder: ((context, url) => Container(
-                                                    alignment: Alignment.center,
-                                                    child: const CircularProgressIndicator(),
-                                                  )
-                                                )))
-                                                              
+                                                                          imageBuilder: (context, imageProvider) => Container(
+                                                                              width: 400,
+                                                                              height: 200,
+                                                                              decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                          placeholder: ((context, url) => Container(
+                                                                                alignment: Alignment.center,
+                                                                                child: const CircularProgressIndicator(),
+                                                                              ))))
                                                             ],
                                                           ),
                                                         );
