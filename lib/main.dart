@@ -119,6 +119,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => SettingsAudienceTagProvider()),
           ChangeNotifierProvider(
               create: (_) => SettingsDrectMassagesProvider()),
+          ChangeNotifierProvider(
+              create: (_) => ReportPostProvider()),
      
     ],
     child: GetMaterialApp(

@@ -562,10 +562,10 @@ class _PublicProfileDetailsScreenState
                 // OtherUserPostTab(height: height,),
                 SingleChildScrollView(
                   physics: const ScrollPhysics(),
-                  child: Consumer3<UserNewsfeedPostProvider,
-                          PostImagesPreviewProvider, SingleVideoShowProvider>(
+                  child: Consumer4<UserNewsfeedPostProvider,
+                          PostImagesPreviewProvider, SingleVideoShowProvider, ReportPostProvider>(
                       builder: (context, userPostProvider, postImageProvider,
-                          singleVideoShowProvider, child) {
+                          singleVideoShowProvider, reportPostProvider, child) {
                     return Column(
                       children: [
                         /*----------------------------------------Newsfeed---------------------------------*/
@@ -792,10 +792,15 @@ class _PublicProfileDetailsScreenState
                                               : Container(),
                                           LikeCommentCount(
                                             editOnPressed: () {
+                                              reportPostProvider.postId =
+                                                  userPostProvider
+                                                      .authorPosts![index].id;
+                                              reportPostProvider.postFrom =
+                                                  "newsfeed";
                                               Get.to(() =>
-                                                  const ReportPagePostScreen());
+                                                  const ReportPostScreen());
                                             },
-                                            editText: const Icon(Icons.edit),
+                                            editText: const Icon(Icons.report, color: Colors.orange,),
                                             likeCount: userPostProvider
                                                 .authorPosts![index].totalLike,
                                             commentCount: userPostProvider

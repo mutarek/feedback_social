@@ -87,3 +87,4 @@ export 'settings/value/notificationget.dart';
 export 'settings/value/security.dart';
 export 'settings/value/settings_audience_tag_provider.dart';
 export 'settings/value/drect_massege.dart';
+export 'post/report_post_provider.dart';
