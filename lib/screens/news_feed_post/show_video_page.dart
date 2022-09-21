@@ -17,9 +17,10 @@ class _ShowVideoPageState extends State<ShowVideoPage> {
   void initState() {
     final value = Provider.of<SingleVideoShowProvider>(context, listen: false);
     videoUrl = value.videoUrl;
-    print(videoUrl);
+
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class _ShowVideoPageState extends State<ShowVideoPage> {
     BetterPlayerController _betterPlayerController = BetterPlayerController(
         const BetterPlayerConfiguration(),
         betterPlayerDataSource: betterPlayerDataSource);
+    _betterPlayerController.play();
 
     return AspectRatio(
       aspectRatio: 16 / 9,
