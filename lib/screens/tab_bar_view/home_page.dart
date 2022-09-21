@@ -243,8 +243,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       editText: (newsfeedProvider
                                                   .results[index].author!.id ==
                                               profileProvider.userId)
-                                          ? "Edit"
-                                          : "Report this post",
+                                          ? const Icon(Icons.edit, color: Palette.primary,)
+                                          : const Icon(Icons.report, color: Colors.orange,),
                                       moreOnPressed: () {},
                                       pageImage: (newsfeedProvider
                                                   .results[index].postType ==

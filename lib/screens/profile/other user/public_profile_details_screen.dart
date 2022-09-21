@@ -795,7 +795,7 @@ class _PublicProfileDetailsScreenState
                                               Get.to(() =>
                                                   const ReportPagePostScreen());
                                             },
-                                            editText: "Report this post",
+                                            editText: const Icon(Icons.edit),
                                             likeCount: userPostProvider
                                                 .authorPosts![index].totalLike,
                                             commentCount: userPostProvider

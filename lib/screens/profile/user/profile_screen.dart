@@ -523,7 +523,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               Get.to(
                                                   () => const EditPostScreen());
                                             },
-                                            editText: "Edit",
+                                            editText: const Icon(Icons.edit),
                                             likeCount: userPostProvider
                                                 .authorPosts![index].totalLike,
                                             commentCount: userPostProvider
