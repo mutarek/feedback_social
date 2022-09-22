@@ -803,8 +803,31 @@ class _PublicProfileDetailsScreenState
                                                     child: Container(
                                                       height: 150,
                                                       width: width,
-                                                      child: Image.asset(
-                                                          "assets/background/video_pause.jpg"),
+                                                      child: (userPostProvider
+                                                                  .authorPostResults[
+                                                                      index]
+                                                                  .videos![0]
+                                                                  .thumbnail !=
+                                                              null)
+                                                          ? Container(
+                                                              child: const Icon(
+                                                                Icons
+                                                                    .play_circle_fill,
+                                                                size: 60,
+                                                                color:
+                                                                    Colors.grey,
+                                                              ),
+                                                              decoration: BoxDecoration(
+                                                                  image: DecorationImage(
+                                                                      image: NetworkImage(userPostProvider
+                                                                          .authorPostResults[
+                                                                              index]
+                                                                          .videos![
+                                                                              0]
+                                                                          .thumbnail))),
+                                                            )
+                                                          : Image.asset(
+                                                              "assets/background/video_pause.jpg"),
                                                       color: Colors.black,
                                                     ),
                                                   )
