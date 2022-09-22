@@ -207,8 +207,8 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                             ),
                             TextButton(
                                 onPressed: () {
-                                  // provider.emailLogin();
-                                  // setState(() {});
+                                  provider.emailLogin();
+                                  setState(() {});
                                 },
                                 child: Text(
                                     (provider.isEmail == true)
