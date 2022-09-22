@@ -678,6 +678,25 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                 .videos![0].video!;
                                         Get.to(() => const ShowVideoPage());
                                       },
+                                      videoThumnail: (newsfeedProvider
+                                                  .results[index].totalVideo !=
+                                              1)? Container()
+                                      :(newsfeedProvider.results[index]
+                                                .videos![0].thumbnail != null)?
+                                      Container(
+                                        width: width*0.8,
+                                        child: Icon(Icons.play_circle_fill, size: 60, color: Colors.grey,),
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                          newsfeedProvider
+                                                              .results[index]
+                                                              .videos![0]
+                                                              .thumbnail!)
+                                          )
+                                        ),
+                                      )  
+                                      :Image.asset("assets/background/video_pause.jpg", width: width*0.7,),
                                       likeCount: (newsfeedProvider
                                                   .results[index].totalLike !=
                                               null)

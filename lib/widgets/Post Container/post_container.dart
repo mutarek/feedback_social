@@ -40,7 +40,7 @@ class PostContainer extends StatelessWidget {
   final Icon editText;
   final int hasVideo;
   final VoidCallback onVideoTap;
-
+  final Widget videoThumnail;
   const PostContainer(
       {required this.delete,
       required this.edit,
@@ -78,6 +78,7 @@ class PostContainer extends StatelessWidget {
       required this.editText,
       required this.hasVideo,
       required this.onVideoTap,
+      required this.videoThumnail,
       Key? key})
       : super(key: key);
 
@@ -110,7 +111,10 @@ class PostContainer extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                         left: width * 0.04, bottom: height * 0.02),
-                    child: Text(description!, style: GoogleFonts.lato(),),
+                    child: Text(
+                      description!,
+                      style: GoogleFonts.lato(),
+                    ),
                   ),
                   (imageCount == true)
                       ? SizedBox(
@@ -458,13 +462,16 @@ class PostContainer extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 06,
+                      ),
         (hasVideo == 1)
             ? InkWell(
                 onTap: onVideoTap,
                 child: Container(
                   height: 200,
-                  child: Image.asset("assets/background/video_pause.jpg"),
-                  color: Colors.red,
+                  child: videoThumnail,
+                  color: Colors.white10,
                 ),
               )
             : Container(),

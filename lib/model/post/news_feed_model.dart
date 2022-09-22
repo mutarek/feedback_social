@@ -83,7 +83,7 @@ class Result {
   Group? page;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
-    newsfeedId: json["newsfeed_id"],
+        newsfeedId: json["newsfeed_id"],
         id: json["id"],
         description: json["description"],
         author: Author.fromJson(json["author"]),
@@ -365,19 +365,23 @@ class Video {
   Video({
     this.id,
     this.video,
+    this.thumbnail,
   });
 
   int? id;
   String? video;
+  String? thumbnail;
 
   factory Video.fromJson(Map<String, dynamic> json) => Video(
         id: json["id"],
         video: json["video"],
+        thumbnail: json["thumbnail"]
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "video": video,
+        "thumbnail": thumbnail
       };
 }
 
