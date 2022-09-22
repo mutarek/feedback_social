@@ -117,7 +117,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                         child: const Text("Resend"),
                         onPressed: () {
                           provider.getCode(provider.email);
-                          if (provider.success == true) {
+                          if (provider.getCodeSuccess == true) {
                             provider.resetTime();
                             Fluttertoast.showToast(
                                 msg: "An OPT has been send to your email");
@@ -135,7 +135,7 @@ class _EmailVerifyState extends State<EmailVerify> {
                         onPressed: () {
                           provider.verifyEmail(
                               provider.email, codeController.text);
-                          if (provider.success == true) {}
+                          if (provider.getCodeSuccess == true) {}
                         },
                       )),
                 ],

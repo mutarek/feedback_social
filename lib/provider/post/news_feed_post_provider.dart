@@ -32,17 +32,21 @@ class NewsFeedPostProvider extends ChangeNotifier {
   }
 
   Future<void> getData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    id = (prefs.getInt('id') ?? '') as int;
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      id = (prefs.getInt('id') ?? '') as int;
 
-    posts = (await PostService().getPosts(page))!;
-    results.addAll(posts.results);
-    page = page + 1;
-    print(page);
-    notifyListeners();
-    if (posts != null) {
-      isLoaded = true;
+      posts = (await PostService().getPosts(page))!;
+      results.addAll(posts.results);
+      page = page + 1;
+      print(page);
       notifyListeners();
+      if (posts != null) {
+        isLoaded = true;
+        notifyListeners();
+      }
+    } catch (e) {
+      print("Newsfeed exception : $e");
     }
   }
 

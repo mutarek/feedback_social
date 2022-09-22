@@ -2,7 +2,6 @@ export 'tab_bar_view/flag.dart';
 export 'tab_bar_view/friends_request.dart';
 export 'tab_bar_view/menu.dart';
 export 'tab_bar_view/notifications_screen.dart';
-export 'authentication/registration_screen.dart';
 export 'authentication/login_screen.dart';
 export 'others/splash_screen.dart';
 export 'tab_bar_view/nav_screen.dart';

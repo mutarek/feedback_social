@@ -51,7 +51,8 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
   @override
   void initState() {
     final value = Provider.of<EmailVerifyProvider>(context, listen: false);
-    value.success2 = false;
+    value.getCodeSuccess = false;
+    value.codeVerifySuccess = false;
     super.initState();
   }
 
@@ -81,7 +82,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
               },
               child: Consumer<EmailVerifyProvider>(
                     builder: (context, provider, child) {
-                  return (provider.success2 == false)?
+                  return (provider.codeVerifySuccess == false)?
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -103,7 +104,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                         SizedBox(
                           height: height * 0.2,
                         ),
-                        (provider.success == true)?LoginTextFiled(
+                        (provider.getCodeSuccess == true)?LoginTextFiled(
                           h: height * 0.04,
                           w: width * 0.9,
                           child: Center(
@@ -201,7 +202,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                         InkWell(
                           onTap: () {
                             provider.getCode(provider.email);
-                            if (provider.success == true) {
+                            if (provider.getCodeSuccess == true) {
                               provider.resetTime();
                               Fluttertoast.showToast(
                                   msg: "An OPT has been send to your email");
@@ -235,8 +236,11 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                     provider.email = emailController.text;
                                     provider.getCode(emailController.text);
 
-                                    if (provider.success2 == true) {
-                                      provider.startTimer();
+                                    if (provider.getCodeSuccess == true) {
+                                      
+                                      setState(() {
+                                        provider.resetTime();
+                                      });
                                     }
                                   }
                                 } else {
@@ -245,8 +249,11 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                   provider.getCode2(
                                       "$countryCode${numberController.text}");
 
-                                  if (provider.success2 == true) {
-                                    provider.startTimer();
+                                  if (provider.getCodeSuccess == true) {
+                                    
+                                    setState(() {
+                                      provider.startTimer();
+                                    });
                                   }
                                 }
                               }),

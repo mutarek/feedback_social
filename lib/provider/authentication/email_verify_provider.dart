@@ -11,8 +11,8 @@ import '../../screens/screens.dart';
 class EmailVerifyProvider extends ChangeNotifier {
   String email = "";
   String phone = "";
-  bool success = false;
-  bool success2 = false;
+  bool codeVerifySuccess = true;
+  bool getCodeSuccess = true;
   String message = "";
   int minutes = 5;
   int seconds = 0;
@@ -62,13 +62,12 @@ class EmailVerifyProvider extends ChangeNotifier {
         await http.post(Uri.parse(apiUrl), body: mappeddata);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      success = true;
+      codeVerifySuccess = true;
       message = "Email Verified";
       notifyListeners();
       Fluttertoast.showToast(msg: message);
-      Get.off(const RegistrationScreen());
     } else {
-      success = false;
+      codeVerifySuccess = true;
       message = "Invalid otp";
       notifyListeners();
       Fluttertoast.showToast(msg: message);
@@ -87,13 +86,12 @@ class EmailVerifyProvider extends ChangeNotifier {
         await http.post(Uri.parse(apiUrl), body: mappeddata);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      success = true;
       message = "Email Verified";
+      codeVerifySuccess = true;
       notifyListeners();
       Fluttertoast.showToast(msg: message);
-      Get.off(const RegistrationScreen());
     } else {
-      success = false;
+      codeVerifySuccess = true;
       message = "Invalid otp";
       notifyListeners();
       Fluttertoast.showToast(msg: message);
@@ -112,8 +110,8 @@ class EmailVerifyProvider extends ChangeNotifier {
     print(email);
     print("email:${response.body}");
     notifyListeners();
-    if (response.statusCode == 200) {
-      success2 = true;
+    if (response.statusCode == 500) {
+      getCodeSuccess = true;
       notifyListeners();
       Fluttertoast.showToast(
           msg: "succesfully send code please check your email");
@@ -135,9 +133,9 @@ class EmailVerifyProvider extends ChangeNotifier {
     print("phone:${response.statusCode}");
     notifyListeners();
     if (response.statusCode == 200) {
-      success2 = true;
+      getCodeSuccess = true;
       notifyListeners();
-    Fluttertoast.showToast(
+      Fluttertoast.showToast(
           msg: "succesfully send code please check your message");
     } else {
       Fluttertoast.showToast(msg: "Something went wrong!");
