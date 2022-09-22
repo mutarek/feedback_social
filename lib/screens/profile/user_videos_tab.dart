@@ -49,7 +49,17 @@ class _UserVideoTabState extends State<UserVideoTab> {
                   },
                   child: Container(
                       color: Colors.grey,
-                      child: Image.asset("assets/background/video_pause.jpg")),
+                      child: (provider.videos![index].thumbnail != null)?Container(
+                                        child: const Icon(Icons.play_circle_fill, size: 60, color: Colors.grey,),
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                          provider.videos![index].thumbnail!)
+                                          )
+                                        ),
+                                      )  
+                                      :Image.asset("assets/background/video_pause.jpg"),
+                                ),
                 );
               },
             );

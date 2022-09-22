@@ -15,19 +15,24 @@ class ProfileVideoModel {
   ProfileVideoModel({
     required this.id,
     required this.video,
+    this.thumbnail
   });
 
   int id;
   String video;
+  String? thumbnail;
 
   factory ProfileVideoModel.fromJson(Map<String, dynamic> json) =>
       ProfileVideoModel(
         id: json["id"],
         video: json["video"],
+        thumbnail: json["thum"]
+
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "video": video,
+        "thumbnail": thumbnail
       };
 }

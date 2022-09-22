@@ -685,7 +685,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                 .videos![0].thumbnail != null)?
                                       Container(
                                         width: width*0.8,
-                                        child: Icon(Icons.play_circle_fill, size: 60, color: Colors.grey,),
+                                        child: const Icon(Icons.play_circle_fill, size: 60, color: Colors.grey,),
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             image: NetworkImage(
