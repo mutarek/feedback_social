@@ -196,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextButton(
                             onPressed: () {
-                              Get.to(const EmailEnterPage());
+                              Get.to(const EnterEmailOrPhone());
                             },
                             child: Text(
                               "Create account",

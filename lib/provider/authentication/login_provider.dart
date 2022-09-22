@@ -46,7 +46,7 @@ class LoginProvider extends ChangeNotifier {
         DatabaseProvider().saveLastName(lastName);
         DatabaseProvider().saveCode(code);
         DatabaseProvider().saveProfileImage(image);
-        Get.off(const NavScreen());
+        Get.off(const GetTokenScreen());
         loading = false;
         notifyListeners();
       } else {
