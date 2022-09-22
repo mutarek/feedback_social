@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/provider.dart';
 import 'package:als_frontend/screens/profile/user_photos_tab.dart';
 import 'package:als_frontend/screens/profile/user_videos_tab.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
@@ -21,6 +22,7 @@ class PublicProfileDetailsScreen extends StatefulWidget {
 
 class _PublicProfileDetailsScreenState
     extends State<PublicProfileDetailsScreen> {
+  ScrollController controller = ScrollController();
   @override
   void initState() {
     final value =
@@ -37,6 +39,12 @@ class _PublicProfileDetailsScreenState
     final userNewsFeed =
         Provider.of<UserNewsfeedPostProvider>(context, listen: false);
     userNewsFeed.getData();
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange) {
+        userNewsFeed.getData();
+      }
+    });
 
     super.initState();
   }
@@ -59,6 +67,7 @@ class _PublicProfileDetailsScreenState
         body: DefaultTabController(
           length: 3,
           child: NestedScrollView(
+            controller: controller,
             scrollDirection: Axis.vertical,
             physics: const NeverScrollableScrollPhysics(),
             // Setting floatHeaderSlivers to true is required in order to float
@@ -76,7 +85,7 @@ class _PublicProfileDetailsScreenState
                           (context, provider, profileImageProvider, child) {
                     return (provider.loading == false)
                         ? const Center(
-                            child: CircularProgressIndicator(),
+                            child: CupertinoActivityIndicator(),
                           )
                         : SingleChildScrollView(
                             child: Column(children: [
@@ -562,309 +571,329 @@ class _PublicProfileDetailsScreenState
                 // OtherUserPostTab(height: height,),
                 SingleChildScrollView(
                   physics: const ScrollPhysics(),
-                  child: Consumer4<UserNewsfeedPostProvider,
-                          PostImagesPreviewProvider, SingleVideoShowProvider, ReportPostProvider>(
+                  child: Consumer3<UserNewsfeedPostProvider,
+                          PostImagesPreviewProvider, SingleVideoShowProvider>(
                       builder: (context, userPostProvider, postImageProvider,
-                          singleVideoShowProvider, reportPostProvider, child) {
+                          singleVideoShowProvider, child) {
                     return Column(
                       children: [
                         /*----------------------------------------Newsfeed---------------------------------*/
                         ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: userPostProvider.authorPosts!.length,
+                            itemCount:
+                                userPostProvider.authorPostResults.length + 1,
                             itemBuilder: ((context, index) {
-                              return (userPostProvider.authorPosts!.isEmpty)
-                                  ? const Center(child: Text("Loading..."))
-                                  : Padding(
-                                      padding: EdgeInsets.only(
-                                          left: width * 0.04,
-                                          right: width * 0.04),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          PostHeader(
-                                              moreOnPressed: () {},
-                                              postType: "timeline",
-                                              delete: () {},
-                                              edit: () {},
-                                              reportThisPost: () {},
-                                              name: userPostProvider
-                                                  .authorPosts![index]
-                                                  .author
-                                                  .fullName,
-                                              time: userPostProvider
-                                                  .authorPosts![index]
-                                                  .timestamp,
-                                              profileImage: userPostProvider
-                                                  .authorPosts![index]
-                                                  .author
-                                                  .profileImage,
-                                              onProfileTap: () {}),
-                                          Text(userPostProvider
-                                              .authorPosts![index].description),
-                                          SizedBox(
-                                              height: (userPostProvider
-                                                          .authorPosts![index]
-                                                          .totalImage !=
-                                                      0)
-                                                  ? (userPostProvider
-                                                              .authorPosts![
-                                                                  index]
-                                                              .totalImage == 1)
-                                                      ? height * 0.35
-                                                      : ((userPostProvider
-                                                              .authorPosts![
-                                                                  index]
-                                                              .totalImage == 2))?height * 0.2
-                                              : height * 0.5
-                                                  : 0,
-                                              child:
-                                                  (userPostProvider
-                                                              .authorPosts![
-                                                                  index]
-                                                              .totalImage ==
-                                                          1)
-                                                      ? InkWell(
-                                                          onTap: () {
-                                                            postImageProvider
-                                                                .iamges = [];
+                              if (index <
+                                  userPostProvider.authorPostResults.length) {
+                                return (userPostProvider
+                                        .authorPostResults.isEmpty)
+                                    ? const Center(child: Text("Loading..."))
+                                    : Padding(
+                                        padding: EdgeInsets.only(
+                                            left: width * 0.04,
+                                            right: width * 0.04),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            PostHeader(
+                                                moreOnPressed: () {},
+                                                postType: "timeline",
+                                                delete: () {},
+                                                edit: () {},
+                                                reportThisPost: () {},
+                                                name: userPostProvider
+                                                    .authorPostResults[index]
+                                                    .author!
+                                                    .fullName,
+                                                time: userPostProvider
+                                                    .authorPostResults[index]
+                                                    .timestamp,
+                                                profileImage: userPostProvider
+                                                    .authorPostResults[index]
+                                                    .author!
+                                                    .profileImage,
+                                                onProfileTap: () {}),
+                                            Text(userPostProvider
+                                                .authorPostResults[index]
+                                                .description!),
+                                            SizedBox(
+                                                height: (userPostProvider
+                                                            .authorPostResults[
+                                                                index]
+                                                            .totalImage !=
+                                                        0)
+                                                    ? (userPostProvider
+                                                                .authorPostResults[
+                                                                    index]
+                                                                .totalImage ==
+                                                            1)
+                                                        ? height * 0.35
+                                                        : ((userPostProvider
+                                                                    .authorPostResults[
+                                                                        index]
+                                                                    .totalImage ==
+                                                                2))
+                                                            ? height * 0.2
+                                                            : height * 0.5
+                                                    : 0,
+                                                child: (userPostProvider
+                                                            .authorPostResults[
+                                                                index]
+                                                            .totalImage ==
+                                                        1)
+                                                    ? InkWell(
+                                                        onTap: () {
+                                                          postImageProvider
+                                                              .iamges = [];
 
-                                                            postImageProvider
-                                                                .iamges
-                                                                .add(userPostProvider
-                                                                    .authorPosts![
+                                                          postImageProvider
+                                                              .iamges
+                                                              .add(userPostProvider
+                                                                  .authorPostResults[
+                                                                      index]
+                                                                  .images![0]
+                                                                  .image);
+                                                          Get.to(() =>
+                                                              const PostImagesPreview());
+                                                        },
+                                                        child:
+                                                            CachedNetworkImage(
+                                                                imageUrl: userPostProvider
+                                                                    .authorPostResults[
                                                                         index]
-                                                                    .images[0]
-                                                                    .image);
-                                                            Get.to(() =>
-                                                                const PostImagesPreview());
-                                                          },
-                                                          child: CachedNetworkImage(
-                                                                  imageUrl: userPostProvider
-                                                                      .authorPosts![
+                                                                    .images![0]
+                                                                    .image!,
+                                                                imageBuilder: (context, imageProvider) => Container(
+                                                                    height: 250,
+                                                                    decoration: BoxDecoration(
+                                                                        image: DecorationImage(
+                                                                            image:
+                                                                                imageProvider,
+                                                                            fit: BoxFit
+                                                                                .fitWidth))),
+                                                                placeholder:
+                                                                    ((context,
+                                                                            url) =>
+                                                                        Container(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              const CupertinoActivityIndicator(),
+                                                                        ))),
+                                                      )
+                                                    : Expanded(
+                                                        child: GridView.builder(
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          shrinkWrap: true,
+                                                          gridDelegate:
+                                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                            crossAxisCount:
+                                                                (userPostProvider
+                                                                            .authorPostResults[index]
+                                                                            .totalImage ==
+                                                                        1)
+                                                                    ? 1
+                                                                    : 2,
+                                                            crossAxisSpacing:
+                                                                2.0,
+                                                            mainAxisSpacing:
+                                                                2.0,
+                                                          ),
+                                                          itemCount: (userPostProvider
+                                                                      .authorPostResults[
                                                                           index]
-                                                                      .images[0]
-                                                                      .image,
-                                                                  imageBuilder: (context, imageProvider) => Container(
-                                                                      
-                                                                      height:
-                                                                          250,
-                                                                      decoration: BoxDecoration(
-                                                                          image: DecorationImage(
-                                                                              image:
-                                                                                  imageProvider,
-                                                                              fit: BoxFit
-                                                                                  .fitWidth))),
-                                                                  placeholder:
-                                                                      ((context,
-                                                                              url) =>
-                                                                          Container(
-                                                                            alignment:
-                                                                                Alignment.center,
-                                                                            child:
-                                                                                const CircularProgressIndicator(),
-                                                                          ))),
-                                                        )
-                                                      : Expanded(
-                                                          child:
-                                                              GridView.builder(
-                                                            physics:
-                                                                const NeverScrollableScrollPhysics(),
-                                                            shrinkWrap: true,
-                                                            gridDelegate:
-                                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                              crossAxisCount:
-                                                                  (userPostProvider
-                                                                              .authorPosts![index]
-                                                                              .totalImage ==
-                                                                          1)
-                                                                      ? 1
-                                                                      : 2,
-                                                              crossAxisSpacing:
-                                                                  2.0,
-                                                              mainAxisSpacing:
-                                                                  2.0,
-                                                            ),
-                                                            itemCount: (userPostProvider
-                                                                        .authorPosts![
-                                                                            index]
-                                                                        .totalImage <
-                                                                    4)
-                                                                ? userPostProvider
-                                                                    .authorPosts![
-                                                                        index]
-                                                                    .totalImage
-                                                                : 4,
-                                                            itemBuilder:
-                                                                (context,
-                                                                    index2) {
-                                                              return InkWell(
-                                                                onTap: () {
+                                                                      .totalImage! <
+                                                                  4)
+                                                              ? userPostProvider
+                                                                  .authorPostResults[
+                                                                      index]
+                                                                  .totalImage
+                                                              : 4,
+                                                          itemBuilder: (context,
+                                                              index2) {
+                                                            return InkWell(
+                                                              onTap: () {
+                                                                postImageProvider
+                                                                    .iamges = [];
+                                                                for (int i = 0;
+                                                                    i <
+                                                                        userPostProvider
+                                                                            .authorPostResults[index]
+                                                                            .images!
+                                                                            .length;
+                                                                    i++) {
                                                                   postImageProvider
-                                                                      .iamges = [];
-                                                                  for (int i =
-                                                                          0;
-                                                                      i <
-                                                                          userPostProvider
-                                                                              .authorPosts![index]
-                                                                              .images
-                                                                              .length;
-                                                                      i++) {
-                                                                    postImageProvider.iamges.add(userPostProvider
-                                                                        .authorPosts![
-                                                                            index]
-                                                                        .images[
-                                                                            i]
-                                                                        .image);
-                                                                    Get.to(() =>
-                                                                        const PostImagesPreview());
-                                                                  }
-                                                                },
-                                                                child: Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child: (userPostProvider.authorPosts![index].totalImage > 4 &&
-                                                                              index2 ==
-                                                                                  3)
-                                                                          ? Container(
-                                                                              child: const Center(
-                                                                                child: Text(
-                                                                                  "More images",
-                                                                                  style: TextStyle(
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    fontSize: 20,
-                                                                                  ),
+                                                                      .iamges
+                                                                      .add(userPostProvider
+                                                                          .authorPostResults[
+                                                                              index]
+                                                                          .images![
+                                                                              i]
+                                                                          .image);
+                                                                  Get.to(() =>
+                                                                      const PostImagesPreview());
+                                                                }
+                                                              },
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: (userPostProvider.authorPostResults[index].totalImage! >
+                                                                                4 &&
+                                                                            index2 ==
+                                                                                3)
+                                                                        ? Container(
+                                                                            child:
+                                                                                const Center(
+                                                                              child: Text(
+                                                                                "More images",
+                                                                                style: TextStyle(
+                                                                                  color: Colors.white,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  fontSize: 20,
                                                                                 ),
                                                                               ),
-                                                                              decoration: BoxDecoration(
-                                                                                  image: DecorationImage(
-                                                                                image: NetworkImage(userPostProvider.authorPosts![index].images[index2].image),
-                                                                                
-                                                                                fit: BoxFit.cover,
-                                                                              )),
-                                                                            )
-                                                                          : CachedNetworkImage(
-                                                                              imageUrl: userPostProvider.authorPosts![index].images[index2].image,
-                                                                              imageBuilder: (context, imageProvider) => Container(width: 400, height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                              placeholder: ((context, url) => Container(
-                                                                                    
-                                                                                    alignment: Alignment.center,
-                                                                                    child: const CircularProgressIndicator(),
-                                                                                  ))),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                        )),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          (userPostProvider.authorPosts![index]
-                                                      .totalVideo !=
-                                                  0)
-                                              ? InkWell(
-                                                  onTap: () {
-                                                    singleVideoShowProvider
-                                                            .videoUrl =
-                                                        userPostProvider
-                                                            .authorPosts![index]
-                                                            .videos[0]
-                                                            .video;
-                                                    Get.to(() =>
-                                                        const ShowVideoPage());
-                                                  },
-                                                  child: Container(
-                                                    height: 150,
-                                                    width: width,
-                                                    child: Image.asset(
-                                                        "assets/background/video_pause.jpg"),
-                                                    color: Colors.black,
-                                                  ),
-                                                )
-                                              : Container(),
-                                          LikeCommentCount(
-                                            editOnPressed: () {
-                                              reportPostProvider.postId =
-                                                  userPostProvider
-                                                      .authorPosts![index].id;
-                                              reportPostProvider.postFrom =
-                                                  "newsfeed";
-                                              Get.to(() =>
-                                                  const ReportPostScreen());
-                                            },
-                                            editText: const Icon(Icons.report, color: Colors.orange,),
-                                            likeCount: userPostProvider
-                                                .authorPosts![index].totalLike,
-                                            commentCount: userPostProvider
-                                                .authorPosts![index]
-                                                .totalComment,
-                                            likeCountColor: (userPostProvider
-                                                        .authorPosts![index]
-                                                        .like ==
-                                                    false)
-                                                ? Colors.black
-                                                : Colors.red,
-                                            likeText: (userPostProvider
-                                                        .authorPosts![index]
-                                                        .like ==
-                                                    true)
-                                                ? "Liked"
-                                                : "like",
-                                          ),
-                                          Consumer<LikeCommentShareProvider>(
-                                              builder: (context, likeComment,
-                                                  child) {
-                                            return LikeCommentShare(
-                                              likeText: "Liked",
-                                              like: () {
-                                                likeComment.postId =
-                                                    userPostProvider
-                                                        .authorPosts![index].id
-                                                        .toString();
-                                                likeComment.like();
-                                                refresh();
+                                                                            ),
+                                                                            decoration: BoxDecoration(
+                                                                                image: DecorationImage(
+                                                                              image: NetworkImage(userPostProvider.authorPostResults[index].images![index2].image!),
+                                                                              fit: BoxFit.cover,
+                                                                            )),
+                                                                          )
+                                                                        : CachedNetworkImage(
+                                                                            imageUrl:
+                                                                                userPostProvider.authorPostResults[index].images![index2].image!,
+                                                                            imageBuilder: (context, imageProvider) => Container(width: 400, height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                            placeholder: ((context, url) => Container(
+                                                                                  alignment: Alignment.center,
+                                                                                  child: const CupertinoActivityIndicator(),
+                                                                                ))),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                      )),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            (userPostProvider
+                                                        .authorPostResults[
+                                                            index]
+                                                        .totalVideo !=
+                                                    0)
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      singleVideoShowProvider
+                                                              .videoUrl =
+                                                          userPostProvider
+                                                              .authorPostResults[
+                                                                  index]
+                                                              .videos![0]
+                                                              .video;
+                                                      Get.to(() =>
+                                                          const ShowVideoPage());
+                                                    },
+                                                    child: Container(
+                                                      height: 150,
+                                                      width: width,
+                                                      child: Image.asset(
+                                                          "assets/background/video_pause.jpg"),
+                                                      color: Colors.black,
+                                                    ),
+                                                  )
+                                                : Container(),
+                                            LikeCommentCount(
+                                              editOnPressed: () {
+                                                Get.to(() =>
+                                                    const ReportPagePostScreen());
                                               },
-                                              comment: () {
-                                                likeComment.postId =
-                                                    userPostProvider
-                                                        .authorPosts![index].id
-                                                        .toString();
-                                                userPostProvider.index = index;
-                                                Get.to(
-                                                    const UserPostCommentsScreen());
-                                              },
-                                              share: () {
-                                                // likeComment.pageId =
-                                                //     userPostProvider
-                                                //         .authorPosts![index]
-                                                //         .page
-                                                //         .id;
-                                                // likeComment.postId =
-                                                //     userPostProvider
-                                                //         .authorPosts![index].id
-                                                //         .toString();
-                                                // Get.to(
-                                                //     const authorPostshareScreen());
-                                              },
-                                              likeIconColor: (userPostProvider
-                                                          .authorPosts![index]
+                                              editText: const Icon(
+                                                Icons.report,
+                                                color: Colors.orange,
+                                              ),
+                                              likeCount: userPostProvider
+                                                  .authorPostResults[index]
+                                                  .totalLike,
+                                              commentCount: userPostProvider
+                                                  .authorPostResults[index]
+                                                  .totalComment,
+                                              likeCountColor: (userPostProvider
+                                                          .authorPostResults[
+                                                              index]
                                                           .like ==
                                                       false)
                                                   ? Colors.black
                                                   : Colors.red,
-                                            );
-                                          })
-                                        ],
-                                      ),
-                                    );
+                                              likeText: (userPostProvider
+                                                          .authorPostResults[
+                                                              index]
+                                                          .like ==
+                                                      true)
+                                                  ? "Liked"
+                                                  : "like",
+                                            ),
+                                            Consumer<LikeCommentShareProvider>(
+                                                builder: (context, likeComment,
+                                                    child) {
+                                              return LikeCommentShare(
+                                                likeText: "Liked",
+                                                like: () {
+                                                  likeComment.postId =
+                                                      userPostProvider
+                                                          .authorPostResults[
+                                                              index]
+                                                          .id
+                                                          .toString();
+                                                  likeComment.like();
+                                                  refresh();
+                                                },
+                                                comment: () {
+                                                  likeComment.postId =
+                                                      userPostProvider
+                                                          .authorPostResults[
+                                                              index]
+                                                          .id
+                                                          .toString();
+                                                  userPostProvider.index =
+                                                      index;
+                                                  Get.to(
+                                                      const UserPostCommentsScreen());
+                                                },
+                                                share: () {
+                                                  // likeComment.pageId =
+                                                  //     userPostProvider
+                                                  //         .authorPostResults![index]
+                                                  //         .page
+                                                  //         .id;
+                                                  // likeComment.postId =
+                                                  //     userPostProvider
+                                                  //         .authorPostResults![index].id
+                                                  //         .toString();
+                                                  // Get.to(
+                                                  //     const authorPostResultshareScreen());
+                                                },
+                                                likeIconColor: (userPostProvider
+                                                            .authorPostResults[
+                                                                index]
+                                                            .like ==
+                                                        false)
+                                                    ? Colors.black
+                                                    : Colors.red,
+                                              );
+                                            })
+                                          ],
+                                        ),
+                                      );
+                              } else {
+                                return const Center(child: CupertinoActivityIndicator());
+                              }
                             }))
                       ],
                     );
