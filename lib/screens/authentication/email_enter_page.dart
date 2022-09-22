@@ -51,7 +51,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
   @override
   void initState() {
     final value = Provider.of<EmailVerifyProvider>(context, listen: false);
-    value.success2 = false;
+    value.getCodeSuccess = false;
     super.initState();
   }
 
@@ -110,7 +110,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                   ],
                 ),
                 Visibility(
-                  visible: provider.success2 == true ? true : isVisible,
+                  visible: provider.getCodeSuccess == true ? true : isVisible,
                   child: Positioned(
                     top: height * 0.71,
                     right: width * 0.62,
@@ -134,7 +134,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                   ),
                 ),
                 Visibility(
-                  visible: provider.success2 == true ? true : isVisible,
+                  visible: provider.getCodeSuccess == true ? true : isVisible,
                   child: Positioned(
                     top: height * 0.69,
                     left: width * 0.685,
@@ -279,7 +279,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                   ),
                 ),
                 Visibility(
-                  visible: provider.success == true ? false : emailVafification,
+                  visible: provider.getCodeSuccess == true ? false : emailVafification,
                   child: Positioned(
                     top: height * 0.31,
                     left: width * 0.04,
@@ -305,7 +305,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                     provider.email = emailController.text;
                                     provider.getCode(emailController.text);
 
-                                    if (provider.success2 == true) {
+                                    if (provider.getCodeSuccess == true) {
                                       provider.startTimer();
                                     }
                                   }
@@ -315,7 +315,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                                   provider.getCode2(
                                       "$countryCode${numberController.text}");
 
-                                  if (provider.success2 == true) {
+                                  if (provider.getCodeSuccess == true) {
                                     provider.startTimer();
                                   }
                                 }
@@ -363,12 +363,12 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                   ),
                 ),
                 Visibility(
-                  visible: provider.success == true ? false : emailVafification,
+                  visible: provider.getCodeSuccess == true ? false : emailVafification,
                   child: Positioned(
                     top: height * 0.155,
                     left: width * 0.04,
                     child: Visibility(
-                      visible: provider.success2 == true ? true : isVisible,
+                      visible: provider.getCodeSuccess == true ? true : isVisible,
                       child: LoginTextFiled(
                         h: height * 0.04,
                         w: width * 0.9,
@@ -388,14 +388,14 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                   ),
                 ),
                 Visibility(
-                  visible: provider.success == true ? false : emailVafification,
+                  visible: provider.getCodeSuccess == true ? false : emailVafification,
                   child: Positioned(
                       top: height * 0.27,
                       left: width * 0.04,
                       child: InkWell(
                           onTap: () {
                             provider.getCode(provider.email);
-                            if (provider.success == true) {
+                            if (provider.getCodeSuccess == true) {
                               provider.resetTime();
                               Fluttertoast.showToast(
                                   msg: "An OPT has been send to your email");
@@ -411,7 +411,7 @@ class _EmailEnterPageState extends State<EmailEnterPage> {
                           ))),
                 ),
                 Visibility(
-                  visible: provider.success == true ? true : false,
+                  visible: provider.getCodeSuccess == true ? true : false,
                   child: Padding(
                     padding: EdgeInsets.only(top: height * 0.25),
                     child: Column(

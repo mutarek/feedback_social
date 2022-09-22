@@ -180,7 +180,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 onPressed: () {
                                   provider2.changePassword(otpController.text,
                                       newPasswordController.text);
-                                  if (provider.success2 == true) {
+                                  if (provider.getCodeSuccess == true) {
                                     Get.to(const LoginScreen());
                                   }
                                 },
