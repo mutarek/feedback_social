@@ -67,7 +67,7 @@ class EmailVerifyProvider extends ChangeNotifier {
       notifyListeners();
       Fluttertoast.showToast(msg: message);
     } else {
-      codeVerifySuccess = true;
+      codeVerifySuccess = false;
       message = "Invalid otp";
       notifyListeners();
       Fluttertoast.showToast(msg: message);
