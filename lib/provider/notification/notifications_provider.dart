@@ -71,7 +71,7 @@ class NotificationsProvider extends ChangeNotifier {
 
   check() {
     webSocketChannel = WebSocketChannel.connect(
-        Uri.parse("wss://als-social.com/ws/notifications/$token/"));
+        Uri.parse("wss://als-social.com/ws/notifications/962732e0143eda2bc396867e1ef589f76edad975/"));
     webSocketChannel.stream.listen((event) {
       print("Notification user token : $token");
       notificationUnread();

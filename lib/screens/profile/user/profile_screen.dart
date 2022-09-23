@@ -1,15 +1,14 @@
-import 'package:als_frontend/const/palette.dart';
-import 'package:als_frontend/screens/profile/user_photos_tab.dart';
-import 'package:als_frontend/screens/profile/user_videos_tab.dart';
-import 'package:als_frontend/screens/screens.dart';
+// import 'package:als_frontend/screens/profile/user/profile_details_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import '../../../const/palette.dart';
 import '../../../provider/provider.dart';
 import '../../../widgets/widgets.dart';
+import '../../screens.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -19,7 +18,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final bool togglevalue = false;
   ScrollController controller = ScrollController();
   @override
   void initState() {
@@ -53,251 +51,190 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-            body: DefaultTabController(
-          length: 3,
-          child: NestedScrollView(
-            controller: controller,
-            scrollDirection: Axis.vertical,
-            physics: const NeverScrollableScrollPhysics(),
-            // Setting floatHeaderSlivers to true is required in order to float
-            // the outer slivers over the inner scrollable.
-            floatHeaderSlivers: true,
+    return SafeArea(
+      child: Scaffold(
+          backgroundColor: Palette.scaffold,
+          body: Consumer6<
+                  UserProfileProvider,
+                  UpdateProfileImageProvider,
+                  PostImagesPreviewProvider,
+                  UpdateCoverPhotProvider,
+                  ProfileImagesProvider,
+                  UserNewsfeedPostProvider>(
+              builder: (context,
+                  provider,
+                  profileImageProvider,
+                  postImageProvider,
+                  coverPhotoProvider,
+                  profileImages,
+                  userPostProvider,
+                  child) {
+            return (provider.loading == true)
+                ? const Center(
+                    child: CupertinoActivityIndicator(),
+                  )
+                : SingleChildScrollView(
+                    physics: ScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          children: [
+                            Container(
+                                height: height * 0.26,
+                                width: width,
+                                color: Palette.scaffold),
+                            ProfileCoverPhotoWidget(
+                                back: () {
+                                  Get.to(const NavScreen());
+                                },
+                                viewCoverPhoto: (() {
+                                  profileImages.imageUrl =
+                                      provider.userprofileData.coverImage!;
+                                  Get.to(() => const SingleImageView());
+                                }),
+                                coverphoto: (provider.loading == false)
+                                    ? provider.userprofileData.coverImage!
+                                    : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
+                                coverphotochange: (() {
+                                  coverPhotoProvider.imageUrl =
+                                      provider.userprofileData.coverImage!;
+                                  Get.to(() => const UpdateCoverPhoto());
+                                })),
+                            ProfilePhotowidget(
+                                profilePhotoChange: () {
+                                  profileImageProvider.imageUrl =
+                                      provider.userprofileData.profileImage!;
+                                  Get.to(() => const UpdateProfileImage());
+                                },
+                                profileImage: (provider.loading == false)
+                                    ? provider.userprofileData.profileImage!
+                                    : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
+                                viewProfilePhoto: () {
+                                  profileImages.imageUrl =
+                                      provider.userprofileData.profileImage!;
+                                  Get.to(() => const SingleImageView());
+                                })
+                          ],
+                        ),
 
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return [
-                SliverList(
-                    delegate: SliverChildListDelegate([
-                  SafeArea(child: Consumer4<
-                          UserProfileProvider,
-                          UpdateProfileImageProvider,
-                          UpdateCoverPhotProvider,
-                          ProfileImagesProvider>(
-                      builder: (context, provider, profileImageProvider,
-                          coverPhotoProvider, profileImages, child) {
-                    return (provider.loading == true)
-                        ? const Center(
-                            child: CupertinoActivityIndicator(),
-                          )
-                        : SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Column(
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: height * 0.01, left: width * 0.05),
+                          child: Text(
+                            "${provider.userprofileData.firstName!} ${provider.userprofileData.lastName!}",
+                            style: GoogleFonts.lato(
+                                fontSize: width * 0.05,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: height * 0.01,
+                              left: width * 0.04,
+                              right: width * 0.04),
+                          child: Container(
+                            height: height * 0.043,
+                            width: width * 0.92,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(4))),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: width * 0.1),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "${provider.userprofileData.friends!.length}",
+                                    style: GoogleFonts.lato(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Palette.notificationColor),
+                                  ),
+                                  Text(" Friends",
+                                      style: GoogleFonts.lato(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500)),
+                                  SizedBox(
+                                    width: width * 0.2,
+                                  ),
+                                  Text(
+                                    "${provider.userprofileData.followers!.length}",
+                                    style: GoogleFonts.lato(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Palette.notificationColor),
+                                  ),
+                                  Text(
+                                    " Followers",
+                                    style: GoogleFonts.lato(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ), //following
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: height * 0.01,
+                              left: width * 0.04,
+                              right: width * 0.04),
+                          child: ProfileDetailsCard(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: height * 0.01,
+                              left: width * 0.04,
+                              right: width * 0.04),
+                          child: Container(
+                            height: height * 0.04,
+                            width: width * 0.94,
+                            color: Colors.white,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Container(
-                                  height: height * 0.3,
-                                  width: width,
-                                  color: Palette.notificationColor,
-                                  child: Stack(
-                                    children: [
-                                      CoverPhotoWidget(
-                                          back: () {
-                                            Get.to(const NavScreen());
-                                          },
-                                          viewCoverPhoto: () {
-                                            profileImages.imageUrl = provider
-                                                .userprofileData.coverImage!;
-                                            Get.to(
-                                                () => const SingleImageView());
-                                          },
-                                          coverphoto: (provider.loading ==
-                                                  false)
-                                              ? provider
-                                                  .userprofileData.coverImage!
-                                              : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
-                                          coverphotochange: () {
-                                            coverPhotoProvider.imageUrl =
-                                                provider.userprofileData
-                                                    .coverImage!;
-                                            Get.to(
-                                                () => const UpdateCoverPhoto());
-                                          }),
-                                      Positioned(
-                                        top: height * 0.21,
-                                        child: Container(
-                                          height: height * 0.1,
-                                          width: width,
-                                          decoration: const BoxDecoration(
-                                            color: Palette.scaffold,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15)),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: height * 0.045,
-                                                          left: width * 0.02),
-                                                      child: Text(
-                                                        "${provider.userprofileData.firstName!} ${provider.userprofileData.lastName!}",
-                                                        style: GoogleFonts.lato(
-                                                            fontSize: 20,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w700),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ), //name and lock bottun
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      ProfilePhotowidget(
-                                        viewProfilePhoto: () {
-                                          profileImages.imageUrl = provider
-                                              .userprofileData.profileImage!;
-                                          Get.to(() => const SingleImageView());
-                                        },
-                                        profilePhotoChange: () {
-                                          profileImageProvider.imageUrl =
-                                              provider.userprofileData
-                                                  .profileImage!;
-                                          Get.to(
-                                              () => const UpdateProfileImage());
-                                        },
-                                        profileImage: (provider.loading ==
-                                                false)
-                                            ? provider
-                                                .userprofileData.profileImage!
-                                            : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
-                                      ),
-                                    ],
-                                  ),
+                                  height: height * 0.03,
+                                  width: width * 0.4,
+                                  decoration: BoxDecoration(
+                                      color: Palette.scaffold,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Center(
+                                      child: Text(
+                                    "Photos",
+                                    style:
+                                        GoogleFonts.lato(color: Colors.black),
+                                  )),
                                 ),
-
                                 Container(
-                                  height: height * 0.043,
-                                  width: width * 0.92,
-                                  decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(4))),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: width * 0.1),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "${provider.userprofileData.friends!.length}",
-                                          style: GoogleFonts.lato(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Palette.notificationColor),
-                                        ),
-                                        Text(" Friends",
-                                            style: GoogleFonts.lato(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500)),
-                                        SizedBox(
-                                          width: width * 0.2,
-                                        ),
-                                        Text(
-                                          "${provider.userprofileData.followers!.length}",
-                                          style: GoogleFonts.lato(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Palette.notificationColor),
-                                        ),
-                                        Text(
-                                          " Followers",
-                                          style: GoogleFonts.lato(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ), //following
-                                SizedBox(
-                                  height: height * 0.009,
+                                  height: height * 0.03,
+                                  width: width * 0.4,
+                                  decoration: BoxDecoration(
+                                      color: Palette.scaffold,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Center(
+                                      child: Text(
+                                    "Vedios",
+                                    style:
+                                        GoogleFonts.lato(color: Colors.black),
+                                  )),
                                 ),
-                                const ProfileDetailsCard(),
-                                Card(
-                                  color: Palette.scaffold,
-                                  child: Container(
-                                    width: width * .92,
-                                    color: Palette.scaffold,
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            height: height * 0.035,
-                                            width: width,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(7),
-                                              color: Colors.white60,
-                                            ),
-                                            child: TabBar(
-                                                labelColor: Colors.black,
-                                                tabs: [
-                                                  Text(
-                                                    "Posts",
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            height * 0.013),
-                                                  ),
-                                                  Text(
-                                                    "Photos",
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            height * 0.013),
-                                                  ),
-                                                  Text(
-                                                    "videos",
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            height * 0.013),
-                                                  ),
-                                                ]),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
-                          );
-                  })),
-                ]))
-              ];
-            },
-            body: TabBarView(
-              children: [
-                SingleChildScrollView(
-                  physics: const ScrollPhysics(),
-                  child: Consumer5<
-                          UserNewsfeedPostProvider,
-                          PostImagesPreviewProvider,
-                          CreatePostProvider,
-                          SinglePostProvider,
-                          SingleVideoShowProvider>(
-                      builder: (context,
-                          userPostProvider,
-                          postImageProvider,
-                          createPostProvider,
-                          singlePostProvider,
-                          singleVideoShowProvider,
-                          child) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          left: width * 0.04, right: width * 0.04),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          /*----------------------------------------Newsfeed---------------------------------*/
-                          ListView.builder(
+                          ),
+                        ),
+                        Consumer3<CreatePostProvider, SinglePostProvider,
+                                SingleVideoShowProvider>(
+                            builder: (context,
+                                createPostProvider,
+                                singlePostProvider,
+                                singleVideoShowProvider,
+                                child) {
+                          return ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount:
@@ -503,24 +440,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     child: Container(
                                                       height: 150,
                                                       width: width,
-                                                      child: (userPostProvider
-                                                              .authorPostResults[
-                                                                  index]
-                                                              .videos![0]
-                                                              .thumbnail != null)?Container(
-                                        child: const Icon(Icons.play_circle_fill, size: 60, color: Colors.grey,),
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                                          userPostProvider
-                                                              .authorPostResults[
-                                                                  index]
-                                                              .videos![0]
-                                                              .thumbnail)
-                                          )
-                                        ),
-                                      )  
-                                      :Image.asset("assets/background/video_pause.jpg"),
+                                                      //                 child: (userPostProvider
+                                                      //                         .authorPostResults[
+                                                      //                             index]
+                                                      //                         .videos![0]
+                                                      //                         .thumbnail != null)?Container(
+                                                      //   child: const Icon(Icons.play_circle_fill, size: 60, color: Colors.grey,),
+                                                      //   decoration: BoxDecoration(
+                                                      //     image: DecorationImage(
+                                                      //       image: NetworkImage(
+                                                      //                     userPostProvider
+                                                      //                         .authorPostResults[
+                                                      //                             index]
+                                                      //                         .videos![0]
+                                                      //                         .thumbnail)
+                                                      //     )
+                                                      //   ),
+                                                      // )
+                                                      // :
+                                                      child: Image.asset(
+                                                          "assets/background/video_pause.jpg"),
                                                       color: Colors.black,
                                                     ),
                                                   )
@@ -540,7 +479,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 Get.to(() =>
                                                     const EditPostScreen());
                                               },
-                                              editText:const Icon(Icons.edit, color: Palette.primary,),
+                                              editText: const Icon(
+                                                Icons.edit,
+                                                color: Palette.primary,
+                                              ),
                                               likeCount: userPostProvider
                                                   .authorPostResults[index]
                                                   .totalLike,
@@ -614,22 +556,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ],
                                         );
                                 } else {
-                                  return const Center(child: CupertinoActivityIndicator());
+                                  return const Center(
+                                      child: CupertinoActivityIndicator());
                                 }
-                              }))
-                        ],
-                      ),
-                    );
-                  }),
-                ),
-                // UserPostTab(height: height),
-                //  UserVideoTab(), //vedios //vedios
-                const UserPhotosTab(), //photos
-                // const Text("Photos Tab"),
-                const UserVideoTab()
-              ],
-            ),
-          ),
-        )));
+                              }));
+                        })
+                      ],
+                    ),
+                  );
+          })),
+    );
   }
 }
