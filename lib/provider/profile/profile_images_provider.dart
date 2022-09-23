@@ -11,6 +11,7 @@ class ProfileImagesProvider extends ChangeNotifier {
   Future<void> getData() async {
     images = (await ProfileImagesService(userId: userId).getProfileImages())!;
     notifyListeners();
+    print(userId);
     if (images != null) {
       isLoaded = true;
       notifyListeners();
