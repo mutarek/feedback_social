@@ -316,7 +316,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                             null)
                                         ? newsfeedProvider.results[index]
                                             .sharePost!.post!.author!.fullName
-                                        : "hello",
+                                        : "",
                                     sharerImage: (newsfeedProvider
                                                 .results[index].sharePost !=
                                             null)
