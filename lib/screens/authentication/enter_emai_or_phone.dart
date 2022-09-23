@@ -53,6 +53,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
     final value = Provider.of<EmailVerifyProvider>(context, listen: false);
     value.getCodeSuccess = false;
     value.codeVerifySuccess = false;
+    value.isEmail = true;
     super.initState();
   }
 
@@ -71,238 +72,21 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
     return DefaultTabController(
       length: 2,
       child: SafeArea(
-        child: Scaffold(
-            backgroundColor: Palette.primary,
-            resizeToAvoidBottomInset: false,
-            body: SafeArea(
-              child: GestureDetector(
-              onTap: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-              
-              },
-              child: Consumer<EmailVerifyProvider>(
+          child: Scaffold(
+              backgroundColor: Palette.primary,
+              resizeToAvoidBottomInset: false,
+              body: SafeArea(
+                  child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                },
+                child: Consumer<EmailVerifyProvider>(
                     builder: (context, provider, child) {
-                  return (provider.codeVerifySuccess == false)?
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                          height: height * 0.2,
-                          width: width,
-                          child: Padding(
-                            padding:
-                                EdgeInsets.only(top: height * 0.05, left: width * 0.1),
-                            child: Text(
-                              "Registration",
-                              style: TextStyle(
-                                  fontSize: height * 0.035,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: height * 0.2,
-                        ),
-                        (provider.getCodeSuccess == true)?LoginTextFiled(
-                          h: height * 0.04,
-                          w: width * 0.9,
-                          child: Center(
-                            child: Text(
-                              (provider.minutes == 0 && provider.seconds == 0)
-                                  ? "OTP is expired, resend to get OTP again"
-                                  : "00 : 0${provider.minutes} : ${(provider.seconds > 9) ? provider.seconds : "0${provider.seconds}"}",
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ): Container(),
-                        Column(
+                  return (provider.codeVerifySuccess == false)
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(left:width*0.07),
-                              child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Register with",
-                                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500, fontSize: 16),
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      provider.emailLogin();
-                                      setState(() {});
-                                    },
-                                    child: Text(
-                                        (provider.isEmail == true)
-                                            ? "Phone"
-                                            : "Email",
-                                        style: const TextStyle(
-                                            color: Colors.orange, fontWeight: FontWeight.w500, fontSize: 18)))
-                              ],
-                          ),
-                            ),
-                            SizedBox(
-                            height: height * 0.05,
-                            width: width * 0.9,
-                            child: (provider.isEmail == true)
-                                ? LoginTextFiled(
-                                    h: height * 0.05,
-                                    w: width * 0.9,
-                                    child: CustomTextField(
-                                      hintText: "Enter your  your email",
-                                      controller: emailController,
-                                    ),
-                                  )
-                                : Expanded(
-                                    child: Row(
-                                      children: [
-                                        GestureDetector(
-                                            onTap: () async {
-                                              final code = await countryPicker
-                                                  .showPicker(context: context);
-                                              setState(() {
-                                                countryCode = (code != null)
-                                                    ? code.dialCode.toString()
-                                                    : "+1";
-                                              });
-                                            },
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    borderRadius:
-                                                        BorderRadius.circular(5)),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    countryCode,
-                                                    style: const TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                ))),
-                                        LoginTextFiled(
-                                            h: height * 0.05,
-                                            w: width * 0.75,
-                                            child: CustomTextField(
-                                              hintText: "Enter your phone number",
-                                              controller: numberController,
-                                              keybordType: TextInputType.number,
-                                            ),
-                                          ),
-                                        
-                                      ],
-                                    ),
-                                  ),
-                      ),
-                          ],
-                        ),
-                        InkWell(
-                          onTap: () {
-                            provider.getCode(provider.email);
-                            if (provider.getCodeSuccess == true) {
-                              provider.resetTime();
-                              Fluttertoast.showToast(
-                                  msg: "An OPT has been send to your email");
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "Something went wrong!");
-                            }
-                          },
-                          child: Text(
-                            "Didn't get code resend here",
-                            style: GoogleFonts.lato(
-                                color: Palette.notificationColor),
-                          )),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Palette.scaffold,
-                              ),
-                              child: Text(
-                                "Get varified",
-                                style: GoogleFonts.lato(
-                                  color: Colors.black,
-                                  fontSize: 10,
-                                ),
-                              ),
-                              onPressed: () {
-                                if (provider.isEmail == true) {
-                                  if (emailController.text.isNotEmpty) {
-                                    provider.email = emailController.text;
-                                    provider.getCode(emailController.text);
-
-                                    if (provider.getCodeSuccess == true) {
-                                      
-                                      setState(() {
-                                        provider.resetTime();
-                                      });
-                                    }
-                                  }
-                                } else {
-                                  provider.phone =
-                                      "$countryCode${numberController.text}";
-                                  provider.getCode2(
-                                      "$countryCode${numberController.text}");
-
-                                  if (provider.getCodeSuccess == true) {
-                                    
-                                    setState(() {
-                                      provider.startTimer();
-                                    });
-                                  }
-                                }
-                              }),
-                            
-                          Row(
-                            children: [
-                              LoginTextFiled(
-                                h: height * 0.05,
-                                w: width * 0.36,
-                                child: CustomTextField(
-                                  hintText: "Enter code",
-                                  controller: codeController,
-                                ),
-                              ),
-
-                              CircleAvatar(
-                                radius: 17,
-                                backgroundColor: Colors.white,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Palette.primary,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      FontAwesomeIcons.arrowRight,
-                                      color: Colors.white,
-                                      size: 15,
-                                    ),
-                                    onPressed: () {
-                                      (provider.isEmail == true)
-                                          ? provider.verifyEmail(provider.email,
-                                              codeController.text)
-                                          : provider.verifyPhone(provider.phone,
-                                              codeController.text);
-                                    },
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          
-                          ],
-                        ),
-                    ],
-                  ):
-                  
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
+                            Container(
                               height: height * 0.2,
                               width: width,
                               child: Padding(
@@ -317,7 +101,271 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                 ),
                               ),
                             ),
-                      Padding(
+                            SizedBox(
+                              height: height * 0.2,
+                            ),
+                            (provider.getCodeSuccess == true)
+                                ? LoginTextFiled(
+                                    h: height * 0.04,
+                                    w: width * 0.9,
+                                    child: Center(
+                                      child: Text(
+                                        (provider.minutes == 0 &&
+                                                provider.seconds == 0)
+                                            ? "OTP is expired, resend to get OTP again"
+                                            : "00 : 0${provider.minutes} : ${(provider.seconds > 9) ? provider.seconds : "0${provider.seconds}"}",
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: width * 0.07),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Register with",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            provider.emailLogin();
+                                            setState(() {});
+                                          },
+                                          child: Text(
+                                              (provider.isEmail == true)
+                                                  ? "Phone"
+                                                  : "Email",
+                                              style: const TextStyle(
+                                                  color: Colors.orange,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 18)))
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                    height: height * 0.05,
+                                    width: width * 0.9,
+                                    child:
+                                        // (provider.isEmail == true)?
+                                        Row(
+                                      children: [
+                                        (provider.isEmail == true)
+                                            ? Container()
+                                            : GestureDetector(
+                                                onTap: () async {
+                                                  final code =
+                                                      await countryPicker
+                                                          .showPicker(
+                                                              context: context);
+                                                  setState(() {
+                                                    countryCode = (code != null)
+                                                        ? code.dialCode
+                                                            .toString()
+                                                        : "+1";
+                                                  });
+                                                },
+                                                child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.black,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5)),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Text(
+                                                        countryCode,
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    ))),
+                                        LoginTextFiled(
+                                          h: height * 0.05,
+                                          w: width * 0.8,
+                                          child: CustomTextField(
+                                            hintText: (provider.isEmail == true)
+                                                ? "Enter your  your email"
+                                                : "Enter phone number",
+                                            controller:
+                                                (provider.isEmail == true)
+                                                    ? emailController
+                                                    : numberController,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                    // : Expanded(
+                                    //     child: Row(
+                                    //       children: [
+                                    //         GestureDetector(
+                                    //             onTap: () async {
+                                    //               final code = await countryPicker
+                                    //                   .showPicker(context: context);
+                                    //               setState(() {
+                                    //                 countryCode = (code != null)
+                                    //                     ? code.dialCode.toString()
+                                    //                     : "+1";
+                                    //               });
+                                    //             },
+                                    //             child: Container(
+                                    //                 decoration: BoxDecoration(
+                                    //                     color: Colors.black,
+                                    //                     borderRadius:
+                                    //                         BorderRadius.circular(5)),
+                                    //                 child: Padding(
+                                    //                   padding:
+                                    //                       const EdgeInsets.all(8.0),
+                                    //                   child: Text(
+                                    //                     countryCode,
+                                    //                     style: const TextStyle(
+                                    //                         color: Colors.white),
+                                    //                   ),
+                                    //                 ))),
+                                    //         LoginTextFiled(
+                                    //             h: height * 0.05,
+                                    //             w: width * 0.75,
+                                    //             child: CustomTextField(
+                                    //               hintText: "Enter your phone number",
+                                    //               controller: numberController,
+                                    //               keybordType: TextInputType.number,
+                                    //             ),
+                                    //           ),
+
+                                    //       ],
+                                    //     ),
+                                    //   ),
+                                    ),
+                              ],
+                            ),
+                            InkWell(
+                                onTap: () {
+                                  provider.getCode(provider.email);
+                                  if (provider.getCodeSuccess == true) {
+                                    provider.resetTime();
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "An OPT has been send to your email");
+                                  } else {
+                                    Fluttertoast.showToast(
+                                        msg: "Something went wrong!");
+                                  }
+                                },
+                                child: Text(
+                                  "Didn't get code resend here",
+                                  style: GoogleFonts.lato(
+                                      color: Palette.notificationColor),
+                                )),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Palette.scaffold,
+                                    ),
+                                    child: Text(
+                                      "Get varified",
+                                      style: GoogleFonts.lato(
+                                        color: Colors.black,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      if (provider.isEmail == true) {
+                                        if (emailController.text.isNotEmpty) {
+                                          provider.email = emailController.text;
+                                          provider
+                                              .getCode(emailController.text);
+
+                                          if (provider.getCodeSuccess == true) {
+                                            setState(() {
+                                              provider.resetTime();
+                                            });
+                                          }
+                                        }
+                                      } else {
+                                        provider.phone =
+                                            "$countryCode${numberController.text}";
+                                        provider.getCode2(
+                                            "$countryCode${numberController.text}");
+
+                                        if (provider.getCodeSuccess == true) {
+                                          setState(() {
+                                            provider.startTimer();
+                                          });
+                                        }
+                                      }
+                                    }),
+                                Row(
+                                  children: [
+                                    LoginTextFiled(
+                                      h: height * 0.05,
+                                      w: width * 0.36,
+                                      child: CustomTextField(
+                                        hintText: "Enter code",
+                                        controller: codeController,
+                                      ),
+                                    ),
+                                    CircleAvatar(
+                                      radius: 17,
+                                      backgroundColor: Colors.white,
+                                      child: CircleAvatar(
+                                        radius: 15,
+                                        backgroundColor: Palette.primary,
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            FontAwesomeIcons.arrowRight,
+                                            color: Colors.white,
+                                            size: 15,
+                                          ),
+                                          onPressed: () {
+                                            (provider.isEmail == true)
+                                                ? provider.verifyEmail(
+                                                    provider.email,
+                                                    codeController.text)
+                                                : provider.verifyPhone(
+                                                    provider.phone,
+                                                    codeController.text);
+                                          },
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: height * 0.2,
+                              width: width,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: height * 0.05, left: width * 0.1),
+                                child: Text(
+                                  "Registration",
+                                  style: TextStyle(
+                                      fontSize: height * 0.035,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            Padding(
                               padding:
                                   const EdgeInsets.fromLTRB(25.0, 0, 25, 10),
                               child: LoginTextFiled(
@@ -447,20 +495,22 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                     ),
                                   );
                                 })),
-                          Consumer2<RegistrationProvider,
+                            Consumer2<RegistrationProvider,
                                     EmailVerifyProvider>(
                                 builder:
                                     (context, provider, emailVerify, child) {
                               return Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                   const Text("Register",
+                                  const Text("Register",
                                       style: TextStyle(
                                           fontSize: 32,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold)),
                                   Padding(
-                                    padding: EdgeInsets.only(right: width * 0.07),
+                                    padding:
+                                        EdgeInsets.only(right: width * 0.07),
                                     child: CustomConatinerButton(
                                         child: (provider.loading == false)
                                             ? const Icon(
@@ -471,7 +521,8 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                         ontap: () {
                                           if (passwordController.text.isEmpty) {
                                             showMessage(
-                                              message: "Please fill all ther form",
+                                              message:
+                                                  "Please fill all ther form",
                                               context: context,
                                             );
                                           } else {
@@ -507,19 +558,13 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                           }
                                         }),
                                   ),
-                                 
-                              
                                 ],
                               );
                             }),
-                    ],
-                  );
-                }
-              ),
-            )
-            )
-          )
-        ),
-      );
+                          ],
+                        );
+                }),
+              )))),
+    );
   }
 }

@@ -32,6 +32,10 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
     compileSdkVersion 32
 
     compileOptions {
