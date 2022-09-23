@@ -3,6 +3,7 @@ import 'package:als_frontend/screens/Page/page_images_tab.dart';
 import 'package:als_frontend/screens/Page/page_videos_tab.dart';
 import 'package:als_frontend/screens/screens.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
@@ -83,10 +84,11 @@ class _AdminPageState extends State<AdminPage> {
                             editPageProvider,
                             child) {
                       return (authorPageDetailsProvider.pageDetails == null)
-                          ? const Center(child: CircularProgressIndicator())
+                          ? const Center(child: CupertinoActivityIndicator())
                           : SingleChildScrollView(
                               child: Column(
                                 children: [
+                                  
                                   SizedBox(
                                     height: height * 0.36,
                                     child: Stack(
@@ -348,7 +350,12 @@ class _AdminPageState extends State<AdminPage> {
                                     ),
                                   )),
                               /*----------------------------------------Newsfeed---------------------------------*/
-                              ListView.builder(
+                              (authorPageDetailsProvider.pageDetails == null)
+                                  ? const Center(
+                                      child: CupertinoActivityIndicator(),
+                                    )
+                              
+                              :ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: pagePostProvider.pagePosts!.length,
