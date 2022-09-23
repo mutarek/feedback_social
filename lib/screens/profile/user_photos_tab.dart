@@ -1,4 +1,5 @@
 import 'package:als_frontend/provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -29,27 +30,44 @@ class _UserPhotosTabState extends State<UserPhotosTab> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 5.0,
-                mainAxisSpacing: 5.0,
+          : Scaffold(
+            body: GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 5.0,
+                  mainAxisSpacing: 5.0,
+                ),
+                itemCount: provider.images!.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      provider.imageUrl = provider.images![index].image;
+                      Get.to(() => const SingleImageView());
+                    },
+                    child: Container(
+                        color: Colors.grey,
+                        child:  CachedNetworkImage(
+                                    imageUrl: provider.images![index].image,
+                                    imageBuilder: (context, imageProvider) => Container(
+                                    width: 400,
+                                    height: 200,
+                                    decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                    placeholder: ((context, url) => Container(
+                                    alignment: Alignment.center,
+                                    child: Image.asset(
+                                    "assets/background/loading.gif",
+                                    height: 200,
+                                    ),
+                                  )
+                                )
+                              ),
+                    )
+                  );
+                }
               ),
-              itemCount: provider.images!.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    provider.imageUrl = provider.images![index].image;
-                    Get.to(() => const SingleImageView());
-                  },
-                  child: Container(
-                      color: Colors.grey,
-                      child: Image.network(provider.images![index].image)),
-                );
-              },
-            );
+          );
     });
   }
 }

@@ -1,4 +1,6 @@
 // import 'package:als_frontend/screens/profile/user/profile_details_card.dart';
+import 'package:als_frontend/screens/profile/user_photos_tab.dart';
+import 'package:als_frontend/screens/profile/user_videos_tab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -74,6 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: CupertinoActivityIndicator(),
                   )
                 : SingleChildScrollView(
+                  controller: controller,
                     physics: ScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,31 +200,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Container(
-                                  height: height * 0.03,
-                                  width: width * 0.4,
-                                  decoration: BoxDecoration(
-                                      color: Palette.scaffold,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Center(
-                                      child: Text(
-                                    "Photos",
-                                    style:
-                                        GoogleFonts.lato(color: Colors.black),
-                                  )),
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(()=> const UserPhotosTab());
+                                  },
+                                  child: Container(
+                                    height: height * 0.03,
+                                    width: width * 0.4,
+                                    decoration: BoxDecoration(
+                                        color: Palette.scaffold,
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: Center(
+                                        child: Text(
+                                      "Photos",
+                                      style:
+                                          GoogleFonts.lato(color: Colors.black),
+                                    )),
+                                  ),
                                 ),
-                                Container(
-                                  height: height * 0.03,
-                                  width: width * 0.4,
-                                  decoration: BoxDecoration(
-                                      color: Palette.scaffold,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Center(
-                                      child: Text(
-                                    "Vedios",
-                                    style:
-                                        GoogleFonts.lato(color: Colors.black),
-                                  )),
+                                InkWell(
+                                  onTap: (){
+                                    Get.to(() => const UserVideoTab());
+                                  },
+                                  child: Container(
+                                    height: height * 0.03,
+                                    width: width * 0.4,
+                                    decoration: BoxDecoration(
+                                        color: Palette.scaffold,
+                                        borderRadius: BorderRadius.circular(15)),
+                                    child: Center(
+                                        child: Text(
+                                      "videos",
+                                      style:
+                                          GoogleFonts.lato(color: Colors.black),
+                                    )),
+                                  ),
                                 ),
                               ],
                             ),
@@ -392,7 +406,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                               child: Text(
                                                                                 "More images",
                                                                                 style: TextStyle(
-                                                                                  color: Colors.black,
+                                                                                  color: Colors.white70,
                                                                                   fontWeight: FontWeight.bold,
                                                                                   fontSize: 20,
                                                                                 ),
