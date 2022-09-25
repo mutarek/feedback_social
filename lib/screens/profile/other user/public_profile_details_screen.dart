@@ -933,8 +933,12 @@ class _PublicProfileDetailsScreenState
                                         ),
                                       );
                               } else {
-                                return const Center(
-                                    child: CupertinoActivityIndicator());
+                                return  Center(
+                                  
+                                  child: (userPostProvider.hasdata)?
+                                  const CupertinoActivityIndicator():
+                                  const Text("No more data to post")
+                                );
                               }
                             }))
                       ],
