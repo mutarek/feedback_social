@@ -428,7 +428,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                       .asset(
                                                                     "assets/background/loading.gif",
                                                                     height:
-                                                                        200,
+                                                                        height*0.2,
                                                                   ),
                                                                 ))),
                                                   ),
@@ -532,7 +532,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                       alignment: Alignment.center,
                                                                       child: Image.asset(
                                                                         "assets/background/loading.gif",
-                                                                        height: 200,
+                                                                        height: height*0.2,
                                                                       ),
                                                                     )))
                                                       ],

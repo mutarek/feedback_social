@@ -32,7 +32,6 @@ export 'profile/other user/other_user_post_tab.dart';
 export 'authentication/forgot_passoword.dart';
 export 'Group/Tab items/group_images_tab.dart';
 export 'Group/Tab items/group_members_tab.dart';
-export 'tab_bar_view/index.dart';
 export 'news_feed_post/share_post_screen.dart';
 export 'profile/other user/other_user_profile_screen.dart';
 export 'profile/user/cover_photo.dart';

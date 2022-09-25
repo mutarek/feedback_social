@@ -4,6 +4,7 @@ import 'package:als_frontend/provider/provider.dart';
 import 'package:als_frontend/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,6 +18,8 @@ class _SplashScreenState extends State<SplashScreen> {
   bool connection = false;
   @override
   void initState() {
+    final version = Provider.of<LatestVersionProvider>(context, listen: false);
+    version.getData();
     navigate();
     super.initState();
   }
