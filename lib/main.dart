@@ -121,6 +121,8 @@ class MyApp extends StatelessWidget {
               create: (_) => SettingsDrectMassagesProvider()),
           ChangeNotifierProvider(
               create: (_) => ReportPostProvider()),
+          ChangeNotifierProvider(create: (_) => LatestVersionProvider()),
+          ChangeNotifierProvider(create: (_) => PublicNewsfeedPostProvider()),
      
     ],
     child: GetMaterialApp(

@@ -20,3 +20,4 @@ export 'settings/drrect_massages_model.dart';
 export 'settings/notidication.dart';
 export 'settings/security_model.dart';
 export 'Block/blocklist.dart';
+export 'version/latest_version_model.dart';

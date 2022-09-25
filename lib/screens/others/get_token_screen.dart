@@ -1,9 +1,7 @@
+import 'package:als_frontend/screens/others/update_screen.dart';
 import 'package:als_frontend/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +17,8 @@ class GetTokenScreen extends StatefulWidget {
 class _GetTokenScreenState extends State<GetTokenScreen> {
   @override
   void initState() {
-    
+    final version = Provider.of<LatestVersionProvider>(context, listen: false);
+    version.getData();
     Future.delayed(const Duration(seconds: 1), () {
       DatabaseProvider().getToken().then((value) {
         if (value == '') {
@@ -28,23 +27,23 @@ class _GetTokenScreenState extends State<GetTokenScreen> {
               MaterialPageRoute(builder: (_) => const LoginScreen()),
               (route) => false);
         } else {
-          final value =
-              Provider.of<NotificationsProvider>(context, listen: false);
-          value.getData();
-          Get.to(() => NavScreen());
+          // final value =
+          //     Provider.of<NotificationsProvider>(context, listen: false);
+          // value.getData();
+          // Get.to(() => const NavScreen());
+          version.chekVersion();
         }
       });
     });
-    
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: CupertinoActivityIndicator(),
-      ),
-    );
+        body: Center(
+      child: CupertinoActivityIndicator(),
+    ));
   }
 }

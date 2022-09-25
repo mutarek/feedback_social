@@ -39,7 +39,6 @@ class NewsFeedPostProvider extends ChangeNotifier {
       posts = (await PostService().getPosts(page))!;
       results.addAll(posts.results);
       page = page + 1;
-      print(page);
       notifyListeners();
       if (posts != null) {
         isLoaded = true;
