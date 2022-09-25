@@ -25,6 +25,9 @@ class _PublicProfileDetailsScreenState
   ScrollController controller = ScrollController();
   @override
   void initState() {
+    final publicNewsfeedPostProvider =
+        Provider.of<PublicNewsfeedPostProvider>(context, listen: false);
+    publicNewsfeedPostProvider.authorPostResults = [];
     final value =
         Provider.of<PublicProfileDetailsProvider>(context, listen: false);
     value.getUserData();
@@ -37,7 +40,7 @@ class _PublicProfileDetailsScreenState
     profileVideo.userId = value.id;
 
     final userNewsFeed =
-        Provider.of<UserNewsfeedPostProvider>(context, listen: false);
+        Provider.of<PublicNewsfeedPostProvider>(context, listen: false);
     userNewsFeed.getData();
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
@@ -45,7 +48,6 @@ class _PublicProfileDetailsScreenState
         userNewsFeed.getData();
       }
     });
-
     super.initState();
   }
 
@@ -54,7 +56,7 @@ class _PublicProfileDetailsScreenState
         Provider.of<PublicProfileDetailsProvider>(context, listen: false);
     value.getUserData();
     final userNewsFeed =
-        Provider.of<UserNewsfeedPostProvider>(context, listen: false);
+        Provider.of<PublicNewsfeedPostProvider>(context, listen: false);
     userNewsFeed.getData();
   }
 
@@ -571,7 +573,7 @@ class _PublicProfileDetailsScreenState
                 // OtherUserPostTab(height: height,),
                 SingleChildScrollView(
                   physics: const ScrollPhysics(),
-                  child: Consumer3<UserNewsfeedPostProvider,
+                  child: Consumer3<PublicNewsfeedPostProvider,
                           PostImagesPreviewProvider, SingleVideoShowProvider>(
                       builder: (context, userPostProvider, postImageProvider,
                           singleVideoShowProvider, child) {
@@ -666,7 +668,9 @@ class _PublicProfileDetailsScreenState
                                                                     .images![0]
                                                                     .image!,
                                                                 imageBuilder: (context, imageProvider) => Container(
-                                                                    height: height*0.35,
+                                                                    height:
+                                                                        height *
+                                                                            0.35,
                                                                     decoration: BoxDecoration(
                                                                         image: DecorationImage(
                                                                             image:
@@ -684,99 +688,116 @@ class _PublicProfileDetailsScreenState
                                                                         ))),
                                                       )
                                                     : GridView.builder(
-                                                      physics:
-                                                          const NeverScrollableScrollPhysics(),
-                                                      shrinkWrap: true,
-                                                      gridDelegate:
-                                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                                        crossAxisCount:
-                                                            (userPostProvider
-                                                                        .authorPostResults[index]
-                                                                        .totalImage ==
-                                                                    1)
-                                                                ? 1
-                                                                : 2,
-                                                        crossAxisSpacing:
-                                                            2.0,
-                                                        mainAxisSpacing:
-                                                            2.0,
-                                                      ),
-                                                      itemCount: (userPostProvider
-                                                                  .authorPostResults[
-                                                                      index]
-                                                                  .totalImage! <
-                                                              4)
-                                                          ? userPostProvider
-                                                              .authorPostResults[
-                                                                  index]
-                                                              .totalImage
-                                                          : 4,
-                                                      itemBuilder: (context,
-                                                          index2) {
-                                                        return InkWell(
-                                                          onTap: () {
-                                                            postImageProvider
-                                                                .iamges = [];
-                                                            for (int i = 0;
-                                                                i <
-                                                                    userPostProvider
-                                                                        .authorPostResults[index]
-                                                                        .images!
-                                                                        .length;
-                                                                i++) {
-                                                              postImageProvider
-                                                                  .iamges
-                                                                  .add(userPostProvider
+                                                        physics:
+                                                            const NeverScrollableScrollPhysics(),
+                                                        shrinkWrap: true,
+                                                        gridDelegate:
+                                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                          crossAxisCount: (userPostProvider
                                                                       .authorPostResults[
                                                                           index]
-                                                                      .images![
-                                                                          i]
-                                                                      .image);
-                                                              Get.to(() =>
-                                                                  const PostImagesPreview());
-                                                            }
-                                                          },
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              (userPostProvider.authorPostResults[index].totalImage! >
-                                                                          4 &&
-                                                                      index2 ==
-                                                                          3)
-                                                                  ? Container(
-                                                                    height: height*0.22,
-                                                                      child:
-                                                                          const Center(
-                                                                        child: Text(
-                                                                          "More images",
-                                                                          style: TextStyle(
-                                                                            color: Colors.white,
-                                                                            fontWeight: FontWeight.bold,
-                                                                            fontSize: 20,
+                                                                      .totalImage ==
+                                                                  1)
+                                                              ? 1
+                                                              : 2,
+                                                          crossAxisSpacing: 2.0,
+                                                          mainAxisSpacing: 2.0,
+                                                        ),
+                                                        itemCount: (userPostProvider
+                                                                    .authorPostResults[
+                                                                        index]
+                                                                    .totalImage! <
+                                                                4)
+                                                            ? userPostProvider
+                                                                .authorPostResults[
+                                                                    index]
+                                                                .totalImage
+                                                            : 4,
+                                                        itemBuilder:
+                                                            (context, index2) {
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              postImageProvider
+                                                                  .iamges = [];
+                                                              for (int i = 0;
+                                                                  i <
+                                                                      userPostProvider
+                                                                          .authorPostResults[
+                                                                              index]
+                                                                          .images!
+                                                                          .length;
+                                                                  i++) {
+                                                                postImageProvider
+                                                                    .iamges
+                                                                    .add(userPostProvider
+                                                                        .authorPostResults[
+                                                                            index]
+                                                                        .images![
+                                                                            i]
+                                                                        .image);
+                                                                Get.to(() =>
+                                                                    const PostImagesPreview());
+                                                              }
+                                                            },
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                (userPostProvider.authorPostResults[index].totalImage! >
+                                                                            4 &&
+                                                                        index2 ==
+                                                                            3)
+                                                                    ? Container(
+                                                                        height: height *
+                                                                            0.22,
+                                                                        child:
+                                                                            const Center(
+                                                                          child:
+                                                                              Text(
+                                                                            "More images",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Colors.white,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              fontSize: 20,
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      decoration: BoxDecoration(
-                                                                          image: DecorationImage(
-                                                                        image: NetworkImage(userPostProvider.authorPostResults[index].images![index2].image!),
-                                                                        fit: BoxFit.cover,
-                                                                      )),
-                                                                    )
-                                                                  : CachedNetworkImage(
-                                                                      imageUrl:
-                                                                          userPostProvider.authorPostResults[index].images![index2].image!,
-                                                                      imageBuilder: (context, imageProvider) => Container(width: 400, height: height*0.22, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                      placeholder: ((context, url) => Container(
-                                                                            alignment: Alignment.center,
-                                                                            child: const CupertinoActivityIndicator(),
-                                                                          )))
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    )),
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                                image: DecorationImage(
+                                                                          image: NetworkImage(userPostProvider
+                                                                              .authorPostResults[index]
+                                                                              .images![index2]
+                                                                              .image!),
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        )),
+                                                                      )
+                                                                    : CachedNetworkImage(
+                                                                        imageUrl: userPostProvider
+                                                                            .authorPostResults[
+                                                                                index]
+                                                                            .images![
+                                                                                index2]
+                                                                            .image!,
+                                                                        imageBuilder: (context, imageProvider) => Container(
+                                                                            width:
+                                                                                400,
+                                                                            height: height *
+                                                                                0.22,
+                                                                            decoration:
+                                                                                BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                        placeholder: ((context, url) => Container(
+                                                                              alignment: Alignment.center,
+                                                                              child: const CupertinoActivityIndicator(),
+                                                                            )))
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                      )),
                                             const SizedBox(
                                               height: 10,
                                             ),
@@ -912,7 +933,8 @@ class _PublicProfileDetailsScreenState
                                         ),
                                       );
                               } else {
-                                return const Center(child: CupertinoActivityIndicator());
+                                return const Center(
+                                    child: CupertinoActivityIndicator());
                               }
                             }))
                       ],

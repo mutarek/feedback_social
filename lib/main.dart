@@ -122,6 +122,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (_) => ReportPostProvider()),
           ChangeNotifierProvider(create: (_) => LatestVersionProvider()),
+          ChangeNotifierProvider(create: (_) => PublicNewsfeedPostProvider()),
      
     ],
     child: GetMaterialApp(
