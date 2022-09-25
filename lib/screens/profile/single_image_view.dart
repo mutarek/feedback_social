@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:provider/provider.dart';
@@ -27,10 +29,24 @@ class SingleImageView extends StatelessWidget {
                       Navigator.pop(context);
                     }));
           },
-          child: Center(
-            child: Image.network(imageProvider.imageUrl),
-            
-          ),
+          child: CachedNetworkImage(
+                imageUrl: imageProvider.imageUrl,
+                imageBuilder: (context, imageProvider) => Container(
+                                                                    
+                decoration: BoxDecoration(
+                image: DecorationImage(
+                image:imageProvider,
+                fit: BoxFit.fitWidth
+                )
+              )
+            ),
+            placeholder:
+            ((context, url) =>
+              Container(
+              alignment: Alignment.center,
+              child: const CupertinoActivityIndicator(),
+              ))),
+          
         );
       }),
     );
