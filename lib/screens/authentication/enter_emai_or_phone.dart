@@ -206,46 +206,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                         ),
                                       ],
                                     )
-                                    // : Expanded(
-                                    //     child: Row(
-                                    //       children: [
-                                    //         GestureDetector(
-                                    //             onTap: () async {
-                                    //               final code = await countryPicker
-                                    //                   .showPicker(context: context);
-                                    //               setState(() {
-                                    //                 countryCode = (code != null)
-                                    //                     ? code.dialCode.toString()
-                                    //                     : "+1";
-                                    //               });
-                                    //             },
-                                    //             child: Container(
-                                    //                 decoration: BoxDecoration(
-                                    //                     color: Colors.black,
-                                    //                     borderRadius:
-                                    //                         BorderRadius.circular(5)),
-                                    //                 child: Padding(
-                                    //                   padding:
-                                    //                       const EdgeInsets.all(8.0),
-                                    //                   child: Text(
-                                    //                     countryCode,
-                                    //                     style: const TextStyle(
-                                    //                         color: Colors.white),
-                                    //                   ),
-                                    //                 ))),
-                                    //         LoginTextFiled(
-                                    //             h: height * 0.05,
-                                    //             w: width * 0.75,
-                                    //             child: CustomTextField(
-                                    //               hintText: "Enter your phone number",
-                                    //               controller: numberController,
-                                    //               keybordType: TextInputType.number,
-                                    //             ),
-                                    //           ),
-
-                                    //       ],
-                                    //     ),
-                                    //   ),
+                                    
                                     ),
                               ],
                             ),

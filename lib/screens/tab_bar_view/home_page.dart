@@ -34,6 +34,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
     // final data2 =
     //     Provider.of<ProfileNewsFeedPostProvider>(context, listen: false);
     // data2.getData();
+    final video = Provider.of<SingleVideoShowProvider>(context, listen: false);
+    video.videoUrl = "";
     final profileDetails =
         Provider.of<ProfileDetailsProvider>(context, listen: false);
     profileDetails.getUserData();
@@ -679,6 +681,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       singleVideoShowProvider.videoUrl =
                                           newsfeedProvider.results[index]
                                               .videos![0].video!;
+                                      
                                       Get.to(() => const ShowVideoPage());
                                     },
                                     videoThumnail: (newsfeedProvider
