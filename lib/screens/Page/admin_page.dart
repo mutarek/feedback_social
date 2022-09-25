@@ -406,11 +406,11 @@ class _AdminPageState extends State<AdminPage> {
                                                   0)
                                               ? (pagePostProvider
                                                       .pagePosts![index]
-                                                      .totalImage !=
-                                                  0)?height*0.35:
+                                                      .totalImage ==
+                                                  1)?height*0.35:
                                                   (pagePostProvider
                                                             .pagePosts![index]
-                                                            .totalImage !=
+                                                            .totalImage ==
                                                         2)?height*0.2 : height*0.5
                                               : 0,
                                           child:
@@ -459,62 +459,60 @@ class _AdminPageState extends State<AdminPage> {
                                                                           ))),
                                                           ),
                                                         )
-                                                      :Expanded(
-                                                    child: GridView.builder(
-                                                      physics:
-                                                          const NeverScrollableScrollPhysics(),
-                                                      shrinkWrap: true,
-                                                      gridDelegate:
-                                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                                        crossAxisCount:
+                                                      :GridView.builder(
+                                                        physics:
+                                                            const NeverScrollableScrollPhysics(),
+                                                        shrinkWrap: true,
+                                                        gridDelegate:
+                                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                          crossAxisCount:
+                                                              (pagePostProvider
+                                                                      .pagePosts![
+                                                                          index]
+                                                                      .totalImage ==
+                                                                      1)
+                                                                  ? 1
+                                                                  : 2,
+                                                          crossAxisSpacing: 2.0,
+                                                          mainAxisSpacing: 2.0,
+                                                        ),
+                                                        itemCount:
                                                             (pagePostProvider
-                                                                    .pagePosts![
-                                                                        index]
-                                                                    .totalImage ==
-                                                                    1)
-                                                                ? 1
-                                                                : 2,
-                                                        crossAxisSpacing: 2.0,
-                                                        mainAxisSpacing: 2.0,
-                                                      ),
-                                                      itemCount:
-                                                          (pagePostProvider
-                                                                    .pagePosts![
-                                                                        index]
-                                                                    .totalImage < 4)?pagePostProvider
-                                                                    .pagePosts![
-                                                                        index]
-                                                                    .totalImage : 4,
-                                                      itemBuilder:
-                                                          (context, index2) {
-                                                            
-                                                        return InkWell(
-                                                          onTap: () {
-                                                            postImageProvider
-                                                                    .iamges = [];
-                                                                for (int i = 0;
-                                                                    i <
-                                                                        pagePostProvider
-                                                                    .pagePosts![
-                                                                        index]
-                                                                    .images
-                                                                            .length;
-                                                                    i++) {
-                                                                  postImageProvider.iamges.add(pagePostProvider
-                                                                            .pagePosts![index]
-                                                                            .images[i]
-                                                                            .image);
-                                                                  Get.to(() =>
-                                                                      const PostImagesPreview());
-                                                                }
-                                                            },
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Expanded(
-                                                                child:(pagePostProvider
+                                                                      .pagePosts![
+                                                                          index]
+                                                                      .totalImage < 4)?pagePostProvider
+                                                                      .pagePosts![
+                                                                          index]
+                                                                      .totalImage : 4,
+                                                        itemBuilder:
+                                                            (context, index2) {
+                                                              
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              postImageProvider
+                                                                      .iamges = [];
+                                                                  for (int i = 0;
+                                                                      i <
+                                                                          pagePostProvider
+                                                                      .pagePosts![
+                                                                          index]
+                                                                      .images
+                                                                              .length;
+                                                                      i++) {
+                                                                    postImageProvider.iamges.add(pagePostProvider
+                                                                              .pagePosts![index]
+                                                                              .images[i]
+                                                                              .image);
+                                                                    Get.to(() =>
+                                                                        const PostImagesPreview());
+                                                                  }
+                                                              },
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                (pagePostProvider
                                                                     .pagePosts![
                                                                         index]
                                                                     .totalImage > 4 && index2 == 3) ?
@@ -547,14 +545,12 @@ class _AdminPageState extends State<AdminPage> {
                                                                             placeholder: ((context, url) => Container(
                                                                                   alignment: Alignment.center,
                                                                                   child: const CircularProgressIndicator(),
-                                                                                ))),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  )
+                                                                                )))
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                      )
                                                       
                                         ),
                                         const SizedBox(
