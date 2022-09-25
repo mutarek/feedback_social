@@ -110,7 +110,7 @@ class EmailVerifyProvider extends ChangeNotifier {
     print(email);
     print("email:${response.body}");
     notifyListeners();
-    if (response.statusCode == 500) {
+    if (response.statusCode == 200) {
       getCodeSuccess = true;
       notifyListeners();
       Fluttertoast.showToast(
