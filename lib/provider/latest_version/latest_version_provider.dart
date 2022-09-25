@@ -8,7 +8,7 @@ import '../../screens/others/update_screen.dart';
 class LatestVersionProvider extends ChangeNotifier {
   var latestVersion;
   String? latestVer;
-  String oldVersion = "1.0.4";
+  String oldVersion = "1.0.5";
 
   Future<void> getData() async {
     try {
