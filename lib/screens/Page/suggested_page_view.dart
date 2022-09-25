@@ -308,11 +308,11 @@ class _SuggestedPageViewState extends State<SuggestedPageView> {
                                                                                 index]
                                                                             .totalImage !=
                                                                         0)
-                                                                    ? (pagePostProvider.pagePosts![index].totalImage !=
-                                                                            0)
+                                                                    ? (pagePostProvider.pagePosts![index].totalImage ==
+                                                                            1)
                                                                         ? height *
                                                                             0.35
-                                                                        : (pagePostProvider.pagePosts![index].totalImage !=
+                                                                        : (pagePostProvider.pagePosts![index].totalImage ==
                                                                                 2)
                                                                             ? height *
                                                                                 0.2
@@ -345,64 +345,59 @@ class _SuggestedPageViewState extends State<SuggestedPageView> {
                                                                                       ))),
                                                                             ),
                                                                           )
-                                                                        : Expanded(
-                                                                            child:
-                                                                                GridView.builder(
+                                                                        : GridView.builder(
                                                                               physics: const NeverScrollableScrollPhysics(),
                                                                               shrinkWrap: true,
                                                                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                                                crossAxisCount: (pagePostProvider.pagePosts![index].totalImage == 1) ? 1 : 2,
-                                                                                crossAxisSpacing: 2.0,
-                                                                                mainAxisSpacing: 2.0,
+                                                                        crossAxisCount: (pagePostProvider.pagePosts![index].totalImage == 1) ? 1 : 2,
+                                                                        crossAxisSpacing: 2.0,
+                                                                        mainAxisSpacing: 2.0,
                                                                               ),
                                                                               itemCount: (pagePostProvider.pagePosts![index].totalImage < 4) ? pagePostProvider.pagePosts![index].totalImage : 4,
                                                                               itemBuilder: (context, index2) {
-                                                                                return InkWell(
-                                                                                  onTap: () {
-                                                                                    postImageProvider.iamges = [];
-                                                                                    for (int i = 0; i < pagePostProvider.pagePosts![index].images.length; i++) {
-                                                                                      postImageProvider.iamges.add(pagePostProvider.pagePosts![index].images[i].image);
-                                                                                      Get.to(() => const PostImagesPreview());
-                                                                                    }
-                                                                                  },
-                                                                                  child: Column(
-                                                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                                                    children: [
-                                                                                      Expanded(
-                                                                                        child: (pagePostProvider.pagePosts![index].totalImage > 4 && index2 == 3)
-                                                                                            ? Container(
-                                                                                                child: const Center(
-                                                                                                  child: Text(
-                                                                                                    "More images",
-                                                                                                    style: TextStyle(
-                                                                                                      color: Colors.white,
-                                                                                                      fontWeight: FontWeight.bold,
-                                                                                                      fontSize: 20,
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                                decoration: BoxDecoration(
-                                                                                                    image: DecorationImage(
-                                                                                                  image: NetworkImage(
-                                                                                                    pagePostProvider.pagePosts![index].images[index2].image,
-                                                                                                  ),
-                                                                                                  fit: BoxFit.cover,
-                                                                                                )),
-                                                                                              )
-                                                                                            : CachedNetworkImage(
-                                                                                                imageUrl: pagePostProvider.pagePosts![index].images[index2].image,
-                                                                                                imageBuilder: (context, imageProvider) => Container(width: 400, height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                                                placeholder: ((context, url) => Container(
-                                                                                                      alignment: Alignment.center,
-                                                                                                      child: const CircularProgressIndicator(),
-                                                                                                    ))),
-                                                                                      )
-                                                                                    ],
-                                                                                  ),
-                                                                                );
+                                                                        return InkWell(
+                                                                          onTap: () {
+                                                                            postImageProvider.iamges = [];
+                                                                            for (int i = 0; i < pagePostProvider.pagePosts![index].images.length; i++) {
+                                                                              postImageProvider.iamges.add(pagePostProvider.pagePosts![index].images[i].image);
+                                                                              Get.to(() => const PostImagesPreview());
+                                                                            }
+                                                                          },
+                                                                          child: Column(
+                                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                                            children: [
+                                                                              (pagePostProvider.pagePosts![index].totalImage > 4 && index2 == 3)
+                                                                                  ? Container(
+                                                                                      child: const Center(
+                                                                                        child: Text(
+                                                                                          "More images",
+                                                                                          style: TextStyle(
+                                                                                            color: Colors.white,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                            fontSize: 20,
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                      decoration: BoxDecoration(
+                                                                                          image: DecorationImage(
+                                                                                        image: NetworkImage(
+                                                                                          pagePostProvider.pagePosts![index].images[index2].image,
+                                                                                        ),
+                                                                                        fit: BoxFit.cover,
+                                                                                      )),
+                                                                                    )
+                                                                                  : CachedNetworkImage(
+                                                                                      imageUrl: pagePostProvider.pagePosts![index].images[index2].image,
+                                                                                      imageBuilder: (context, imageProvider) => Container(width: 400, height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                                      placeholder: ((context, url) => Container(
+                                                                                            alignment: Alignment.center,
+                                                                                            child: const CircularProgressIndicator(),
+                                                                                          )))
+                                                                            ],
+                                                                          ),
+                                                                        );
                                                                               },
-                                                                            ),
-                                                                          )),
+                                                                            )),
                                                             const SizedBox(
                                                               height: 10,
                                                             ),
