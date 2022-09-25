@@ -309,7 +309,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                         : (newsfeedProvider.results[index]
                                                     .totalImage ==
                                                 2)
-                                            ? height * 0.2
+                                            ? height * 0.23
                                             : height * 0.5,
                                     isShare: newsfeedProvider
                                         .results[index].isShare,
@@ -433,113 +433,113 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                 ))),
                                                   ),
                                                 )
-                                              : Expanded(
-                                                  child: GridView.builder(
-                                                    physics:
-                                                        const NeverScrollableScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                    gridDelegate:
-                                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                                      crossAxisCount:
-                                                          (newsfeedProvider
-                                                                      .results[
-                                                                          index]
-                                                                      .totalImage ==
-                                                                  1)
-                                                              ? 1
-                                                              : 2,
-                                                      crossAxisSpacing: 2.0,
-                                                      mainAxisSpacing: 2.0,
-                                                    ),
-                                                    itemCount: (newsfeedProvider
+                                              : GridView.builder(
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                shrinkWrap: true,
+                                                gridDelegate:
+                                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount:
+                                                      (newsfeedProvider
+                                                                  .results[
+                                                                      index]
+                                                                  .totalImage ==
+                                                              1)
+                                                          ? 1
+                                                          : 2,
+                                                  crossAxisSpacing: 2.0,
+                                                  mainAxisSpacing: 2.0,
+                                                ),
+                                                itemCount: (newsfeedProvider
+                                                            .results[
+                                                                index]
+                                                            .totalImage! <
+                                                        4)
+                                                    ? newsfeedProvider
+                                                        .results[index]
+                                                        .totalImage
+                                                    : 4,
+                                                itemBuilder:
+                                                    (context, index2) {
+                                                  return InkWell(
+                                                    onTap: () {
+                                                      postImageProvider
+                                                          .iamges = [];
+                                                      for (int i = 0;
+                                                          i <
+                                                              newsfeedProvider
+                                                                  .results[
+                                                                      index]
+                                                                  .totalImage!;
+                                                          i++) {
+                                                        postImageProvider
+                                                            .iamges
+                                                            .add(newsfeedProvider
                                                                 .results[
                                                                     index]
-                                                                .totalImage! <
-                                                            4)
-                                                        ? newsfeedProvider
-                                                            .results[index]
-                                                            .totalImage
-                                                        : 4,
-                                                    itemBuilder:
-                                                        (context, index2) {
-                                                      return InkWell(
-                                                        onTap: () {
-                                                          postImageProvider
-                                                              .iamges = [];
-                                                          for (int i = 0;
-                                                              i <
-                                                                  newsfeedProvider
-                                                                      .results[
-                                                                          index]
-                                                                      .totalImage!;
-                                                              i++) {
-                                                            postImageProvider
-                                                                .iamges
-                                                                .add(newsfeedProvider
+                                                                .images![
+                                                                    i]
+                                                                .image!);
+                                                        Get.to(() =>
+                                                            const PostImagesPreview());
+                                                      }
+                                                    },
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        (newsfeedProvider.results[index].totalImage! >
+                                                                    4 &&
+                                                                index2 ==
+                                                                    3)
+                                                            ? Container(
+                                                              height: height*0.22,
+                                                                child:
+                                                                    const Center(
+                                                                  child:
+                                                                      Text(
+                                                                    "More images",
+                                                                    style: TextStyle(
+                                                                      color: Colors.white,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 20,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                decoration: BoxDecoration(
+                                                                    image: DecorationImage(
+                                                                  image:
+                                                                      NetworkImage(newsfeedProvider.results[index].images![index2].image!),
+                                                                  fit:
+                                                                      BoxFit.cover,
+                                                                )),
+                                                              )
+                                                            : CachedNetworkImage(
+                                                                imageUrl: newsfeedProvider
                                                                     .results[
                                                                         index]
                                                                     .images![
-                                                                        i]
-                                                                    .image!);
-                                                            Get.to(() =>
-                                                                const PostImagesPreview());
-                                                          }
-                                                        },
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Expanded(
-                                                                child: (newsfeedProvider.results[index].totalImage! >
-                                                                            4 &&
-                                                                        index2 ==
-                                                                            3)
-                                                                    ? Container(
-                                                                        child:
-                                                                            const Center(
-                                                                          child:
-                                                                              Text(
-                                                                            "More images",
-                                                                            style: TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              fontSize: 20,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                        decoration: BoxDecoration(
-                                                                            image: DecorationImage(
-                                                                          image:
-                                                                              NetworkImage(newsfeedProvider.results[index].images![index2].image!),
-                                                                          fit:
-                                                                              BoxFit.cover,
-                                                                        )),
-                                                                      )
-                                                                    : CachedNetworkImage(
-                                                                        imageUrl: newsfeedProvider
-                                                                            .results[
-                                                                                index]
-                                                                            .images![
-                                                                                index2]
-                                                                            .image!,
-                                                                        imageBuilder: (context, imageProvider) => Container(
-                                                                            width: 400,
-                                                                            height: 200,
-                                                                            decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                        placeholder: ((context, url) => Container(
-                                                                              alignment: Alignment.center,
-                                                                              child: Image.asset(
-                                                                                "assets/background/loading.gif",
-                                                                                height: 200,
-                                                                              ),
-                                                                            ))))
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
+                                                                        index2]
+                                                                    .image!,
+                                                                imageBuilder: (context, imageProvider) => Container(
+                                                                    width: 400,
+                                                                    height:(newsfeedProvider.results[index].totalImage == 2)? 
+                                                                              height * 0.2
+                                                                              : height * 0.22,
+                                                                    decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                placeholder: ((context, url) => Container(
+                                                                      alignment: Alignment.center,
+                                                                      child: Image.asset(
+                                                                        "assets/background/loading.gif",
+                                                                        height: 200,
+                                                                      ),
+                                                                    )))
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                              ),
                                         ],
                                       ),
                                     ),
@@ -586,53 +586,49 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                     onTap: () {
                                                       print("Hello line 309");
                                                     },
-                                                    child: Expanded(
-                                                      child: GridView.builder(
-                                                        physics:
-                                                            const NeverScrollableScrollPhysics(),
-                                                        shrinkWrap: true,
-                                                        gridDelegate:
-                                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount: 2,
-                                                          crossAxisSpacing:
-                                                              5.0,
-                                                          mainAxisSpacing:
-                                                              5.0,
-                                                        ),
-                                                        itemCount:
-                                                            newsfeedProvider
-                                                                .results[
-                                                                    index]
-                                                                .sharePost!
-                                                                .post!
-                                                                .images!
-                                                                .length,
-                                                        itemBuilder: (context,
-                                                            index2) {
-                                                          return Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Expanded(
-                                                                child: Image
-                                                                    .network(
-                                                                  newsfeedProvider
-                                                                      .results[
-                                                                          index]
-                                                                      .sharePost!
-                                                                      .post!
-                                                                      .images![
-                                                                          index2]
-                                                                      .image!,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          );
-                                                        },
+                                                    child: GridView.builder(
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      shrinkWrap: true,
+                                                      gridDelegate:
+                                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 2,
+                                                        crossAxisSpacing:
+                                                            5.0,
+                                                        mainAxisSpacing:
+                                                            5.0,
                                                       ),
+                                                      itemCount:
+                                                          newsfeedProvider
+                                                              .results[
+                                                                  index]
+                                                              .sharePost!
+                                                              .post!
+                                                              .images!
+                                                              .length,
+                                                      itemBuilder: (context,
+                                                          index2) {
+                                                        return Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Image
+                                                                .network(
+                                                              newsfeedProvider
+                                                                  .results[
+                                                                      index]
+                                                                  .sharePost!
+                                                                  .post!
+                                                                  .images![
+                                                                      index2]
+                                                                  .image!,
+                                                              fit: BoxFit
+                                                                  .cover,
+                                                            )
+                                                          ],
+                                                        );
+                                                      },
                                                     ),
                                                   ),
                                                 ],

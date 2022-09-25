@@ -82,7 +82,7 @@ class Result {
         totalImage: json["total_image"],
         images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
         totalVideo: json["total_video"],
-        videos: List<dynamic>.from(json["videos"].map((x) => x)),
+        videos: List<dynamic>.from(json["videos"].map((x) => Video.fromJson(x))),
         totalComment: json["total_comment"],
         comments: List<dynamic>.from(json["comments"].map((x) => x)),
         totalLike: json["total_like"],
@@ -153,5 +153,29 @@ class Image {
   Map<String, dynamic> toJson() => {
         "id": id,
         "image": image,
+      };
+}
+
+class Video {
+  Video({
+    this.id,
+    this.video,
+    this.thumbnail,
+  });
+
+  int? id;
+  String? video;
+  String? thumbnail;
+
+  factory Video.fromJson(Map<String, dynamic> json) => Video(
+        id: json["id"],
+        video: json["video"],
+        thumbnail: json["thumbnail"]
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "video": video,
+        "thumbnail": thumbnail,
       };
 }

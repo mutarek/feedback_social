@@ -666,7 +666,7 @@ class _PublicProfileDetailsScreenState
                                                                     .images![0]
                                                                     .image!,
                                                                 imageBuilder: (context, imageProvider) => Container(
-                                                                    height: 250,
+                                                                    height: height*0.35,
                                                                     decoration: BoxDecoration(
                                                                         image: DecorationImage(
                                                                             image:
@@ -683,103 +683,100 @@ class _PublicProfileDetailsScreenState
                                                                               const CupertinoActivityIndicator(),
                                                                         ))),
                                                       )
-                                                    : Expanded(
-                                                        child: GridView.builder(
-                                                          physics:
-                                                              const NeverScrollableScrollPhysics(),
-                                                          shrinkWrap: true,
-                                                          gridDelegate:
-                                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                            crossAxisCount:
-                                                                (userPostProvider
-                                                                            .authorPostResults[index]
-                                                                            .totalImage ==
-                                                                        1)
-                                                                    ? 1
-                                                                    : 2,
-                                                            crossAxisSpacing:
-                                                                2.0,
-                                                            mainAxisSpacing:
-                                                                2.0,
-                                                          ),
-                                                          itemCount: (userPostProvider
-                                                                      .authorPostResults[
-                                                                          index]
-                                                                      .totalImage! <
-                                                                  4)
-                                                              ? userPostProvider
+                                                    : GridView.builder(
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      shrinkWrap: true,
+                                                      gridDelegate:
+                                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount:
+                                                            (userPostProvider
+                                                                        .authorPostResults[index]
+                                                                        .totalImage ==
+                                                                    1)
+                                                                ? 1
+                                                                : 2,
+                                                        crossAxisSpacing:
+                                                            2.0,
+                                                        mainAxisSpacing:
+                                                            2.0,
+                                                      ),
+                                                      itemCount: (userPostProvider
                                                                   .authorPostResults[
                                                                       index]
-                                                                  .totalImage
-                                                              : 4,
-                                                          itemBuilder: (context,
-                                                              index2) {
-                                                            return InkWell(
-                                                              onTap: () {
-                                                                postImageProvider
-                                                                    .iamges = [];
-                                                                for (int i = 0;
-                                                                    i <
-                                                                        userPostProvider
-                                                                            .authorPostResults[index]
-                                                                            .images!
-                                                                            .length;
-                                                                    i++) {
-                                                                  postImageProvider
-                                                                      .iamges
-                                                                      .add(userPostProvider
-                                                                          .authorPostResults[
-                                                                              index]
-                                                                          .images![
-                                                                              i]
-                                                                          .image);
-                                                                  Get.to(() =>
-                                                                      const PostImagesPreview());
-                                                                }
-                                                              },
-                                                              child: Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Expanded(
-                                                                    child: (userPostProvider.authorPostResults[index].totalImage! >
-                                                                                4 &&
-                                                                            index2 ==
-                                                                                3)
-                                                                        ? Container(
-                                                                            child:
-                                                                                const Center(
-                                                                              child: Text(
-                                                                                "More images",
-                                                                                style: TextStyle(
-                                                                                  color: Colors.white,
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                  fontSize: 20,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                            decoration: BoxDecoration(
-                                                                                image: DecorationImage(
-                                                                              image: NetworkImage(userPostProvider.authorPostResults[index].images![index2].image!),
-                                                                              fit: BoxFit.cover,
-                                                                            )),
-                                                                          )
-                                                                        : CachedNetworkImage(
-                                                                            imageUrl:
-                                                                                userPostProvider.authorPostResults[index].images![index2].image!,
-                                                                            imageBuilder: (context, imageProvider) => Container(width: 400, height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                            placeholder: ((context, url) => Container(
-                                                                                  alignment: Alignment.center,
-                                                                                  child: const CupertinoActivityIndicator(),
-                                                                                ))),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            );
+                                                                  .totalImage! <
+                                                              4)
+                                                          ? userPostProvider
+                                                              .authorPostResults[
+                                                                  index]
+                                                              .totalImage
+                                                          : 4,
+                                                      itemBuilder: (context,
+                                                          index2) {
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            postImageProvider
+                                                                .iamges = [];
+                                                            for (int i = 0;
+                                                                i <
+                                                                    userPostProvider
+                                                                        .authorPostResults[index]
+                                                                        .images!
+                                                                        .length;
+                                                                i++) {
+                                                              postImageProvider
+                                                                  .iamges
+                                                                  .add(userPostProvider
+                                                                      .authorPostResults[
+                                                                          index]
+                                                                      .images![
+                                                                          i]
+                                                                      .image);
+                                                              Get.to(() =>
+                                                                  const PostImagesPreview());
+                                                            }
                                                           },
-                                                        ),
-                                                      )),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              (userPostProvider.authorPostResults[index].totalImage! >
+                                                                          4 &&
+                                                                      index2 ==
+                                                                          3)
+                                                                  ? Container(
+                                                                    height: height*0.22,
+                                                                      child:
+                                                                          const Center(
+                                                                        child: Text(
+                                                                          "More images",
+                                                                          style: TextStyle(
+                                                                            color: Colors.white,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            fontSize: 20,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      decoration: BoxDecoration(
+                                                                          image: DecorationImage(
+                                                                        image: NetworkImage(userPostProvider.authorPostResults[index].images![index2].image!),
+                                                                        fit: BoxFit.cover,
+                                                                      )),
+                                                                    )
+                                                                  : CachedNetworkImage(
+                                                                      imageUrl:
+                                                                          userPostProvider.authorPostResults[index].images![index2].image!,
+                                                                      imageBuilder: (context, imageProvider) => Container(width: 400, height: height*0.22, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                      placeholder: ((context, url) => Container(
+                                                                            alignment: Alignment.center,
+                                                                            child: const CupertinoActivityIndicator(),
+                                                                          )))
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    )),
                                             const SizedBox(
                                               height: 10,
                                             ),
