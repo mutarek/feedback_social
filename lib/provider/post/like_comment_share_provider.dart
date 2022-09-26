@@ -62,13 +62,9 @@ class LikeCommentShareProvider extends ChangeNotifier {
     }
   }
 
-  // socketComment() {
-  //   commentWebSocketChannel = WebSocketChannel.connect(Uri.parse(
-  //       "wss://als-social.com/ws/post/$postId/comment/newsfeed/"));
-  //   commentWebSocketChannel.stream.listen((event) {
-  //     commentWebSocketChannel.send
-  //   }, onDone: () {
-  //     check();
-  //   });
-  // }
+  socketComment() {
+    commentWebSocketChannel = WebSocketChannel.connect(Uri.parse(
+        "wss://als-social.com/ws/post/$postId/comment/newsfeed/"));
+    
+  }
 }

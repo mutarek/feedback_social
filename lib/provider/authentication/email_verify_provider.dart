@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/route_manager.dart';
 import 'package:http/http.dart' as http;
 
 import '../../const/url.dart';
-import '../../screens/screens.dart';
 
 class EmailVerifyProvider extends ChangeNotifier {
   String email = "";
@@ -18,6 +16,9 @@ class EmailVerifyProvider extends ChangeNotifier {
   int seconds = 0;
   bool isEmail = true;
   late Timer _timer;
+
+  bool otpSend = false;
+  bool verifiedCheck = false;
 
   void emailLogin() {
     isEmail = !isEmail;
@@ -63,10 +64,12 @@ class EmailVerifyProvider extends ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       codeVerifySuccess = true;
+      verifiedCheck = false;
       message = "Email Verified";
       notifyListeners();
       Fluttertoast.showToast(msg: message);
     } else {
+      verifiedCheck = false;
       codeVerifySuccess = false;
       message = "Invalid otp";
       notifyListeners();
@@ -87,11 +90,13 @@ class EmailVerifyProvider extends ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       message = "Email Verified";
+      verifiedCheck = false;
       codeVerifySuccess = true;
       notifyListeners();
       Fluttertoast.showToast(msg: message);
     } else {
       codeVerifySuccess = true;
+      verifiedCheck = false;
       message = "Invalid otp";
       notifyListeners();
       Fluttertoast.showToast(msg: message);
@@ -107,15 +112,17 @@ class EmailVerifyProvider extends ChangeNotifier {
 
     http.Response response =
         await http.post(Uri.parse(apiUrl), body: mappeddata);
-    print(email);
-    print("email:${response.body}");
     notifyListeners();
     if (response.statusCode == 200) {
+      otpSend = false;
       getCodeSuccess = true;
+      startTimer();
       notifyListeners();
       Fluttertoast.showToast(
           msg: "succesfully send code please check your email");
     } else {
+      otpSend = false;
+      notifyListeners();
       Fluttertoast.showToast(msg: "Something went wrong!");
     }
   }
@@ -129,15 +136,17 @@ class EmailVerifyProvider extends ChangeNotifier {
 
     http.Response response =
         await http.post(Uri.parse(apiUrl), body: mappeddata);
-    print(phone);
-    print("phone:${response.statusCode}");
     notifyListeners();
     if (response.statusCode == 200) {
+      otpSend = false;
       getCodeSuccess = true;
       notifyListeners();
+      startTimer();
       Fluttertoast.showToast(
           msg: "succesfully send code please check your message");
     } else {
+      otpSend = false;
+      notifyListeners();
       Fluttertoast.showToast(msg: "Something went wrong!");
     }
   }

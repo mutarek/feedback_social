@@ -565,8 +565,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             .toString();
                                                     userPostProvider.index =
                                                         index;
+                                                    // print(userPostProvider.authorPosts[index].comments.length);
                                                     Get.to(
-                                                        const UserPostCommentsScreen());
+                                                         UserPostCommentsScreen());
                                                   },
                                                   share: () {
                                                     // likeComment.pageId =

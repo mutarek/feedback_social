@@ -1,6 +1,7 @@
 import 'package:als_frontend/provider/provider.dart';
 import 'package:als_frontend/screens/screens.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -205,9 +206,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                           ),
                                         ),
                                       ],
-                                    )
-                                    
-                                    ),
+                                    )),
                               ],
                             ),
                             InkWell(
@@ -235,14 +234,19 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                     style: ElevatedButton.styleFrom(
                                       primary: Palette.scaffold,
                                     ),
-                                    child: Text(
-                                      "Get varified",
-                                      style: GoogleFonts.lato(
-                                        color: Colors.black,
-                                        fontSize: 10,
-                                      ),
-                                    ),
+                                    child: (provider.otpSend == true)
+                                        ? const CupertinoActivityIndicator()
+                                        : Text(
+                                            "Get varified",
+                                            style: GoogleFonts.lato(
+                                              color: Colors.black,
+                                              fontSize: 10,
+                                            ),
+                                          ),
                                     onPressed: () {
+                                      setState(() {
+                                        provider.otpSend = true;
+                                      });
                                       if (provider.isEmail == true) {
                                         if (emailController.text.isNotEmpty) {
                                           provider.email = emailController.text;
@@ -251,7 +255,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
 
                                           if (provider.getCodeSuccess == true) {
                                             setState(() {
-                                              provider.resetTime();
+                                              provider.startTimer();
                                             });
                                           }
                                         }
@@ -263,7 +267,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
 
                                         if (provider.getCodeSuccess == true) {
                                           setState(() {
-                                            provider.startTimer();
+                                            provider.resetTime();
                                           });
                                         }
                                       }
@@ -291,6 +295,9 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                             size: 15,
                                           ),
                                           onPressed: () {
+                                            setState(() {
+                                              provider.verifiedCheck = true;
+                                            });
                                             (provider.isEmail == true)
                                                 ? provider.verifyEmail(
                                                     provider.email,
@@ -487,6 +494,9 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                               context: context,
                                             );
                                           } else {
+                                            setState(() {
+                                              provider.loading = true;
+                                            });
                                             if (emailVerify.isEmail == true) {
                                               provider.password =
                                                   passwordController.text;

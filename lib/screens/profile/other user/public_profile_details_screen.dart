@@ -905,7 +905,7 @@ class _PublicProfileDetailsScreenState
                                                   userPostProvider.index =
                                                       index;
                                                   Get.to(
-                                                      const UserPostCommentsScreen());
+                                                     UserPostCommentsScreen());
                                                 },
                                                 share: () {
                                                   // likeComment.pageId =
