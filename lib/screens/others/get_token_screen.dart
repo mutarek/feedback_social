@@ -27,9 +27,9 @@ class _GetTokenScreenState extends State<GetTokenScreen> {
               MaterialPageRoute(builder: (_) => const LoginScreen()),
               (route) => false);
         } else {
-          // final value =
-          //     Provider.of<NotificationsProvider>(context, listen: false);
-          // value.getData();
+          final value =
+              Provider.of<NotificationsProvider>(context, listen: false);
+          value.getData();
           // Get.to(() => const NavScreen());
           version.chekVersion();
         }

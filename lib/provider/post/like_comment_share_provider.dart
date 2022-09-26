@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../const/url.dart';
 
@@ -13,6 +14,8 @@ class LikeCommentShareProvider extends ChangeNotifier {
   String postId = "";
   bool isLiked = true;
   String result = "";
+  String postType = "newsfeed";
+  late WebSocketChannel commentWebSocketChannel;
 
   Future like() async {
     var apiUrl = "$baseUrl/posts/$postId/like/";
@@ -59,4 +62,13 @@ class LikeCommentShareProvider extends ChangeNotifier {
     }
   }
 
+  // socketComment() {
+  //   commentWebSocketChannel = WebSocketChannel.connect(Uri.parse(
+  //       "wss://als-social.com/ws/post/$postId/comment/newsfeed/"));
+  //   commentWebSocketChannel.stream.listen((event) {
+  //     commentWebSocketChannel.send
+  //   }, onDone: () {
+  //     check();
+  //   });
+  // }
 }
