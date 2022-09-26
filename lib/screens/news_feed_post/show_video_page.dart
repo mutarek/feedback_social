@@ -11,24 +11,18 @@ class ShowVideoPage extends StatefulWidget {
 }
 
 class _ShowVideoPageState extends State<ShowVideoPage> {
-  String videoUrl = "";
+  
+  late BetterPlayerDataSource betterPlayerDataSource;
 
   @override
   void initState() {
     final value = Provider.of<SingleVideoShowProvider>(context, listen: false);
-    videoUrl = value.videoUrl;
-
-    super.initState();
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-    BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
+    
+     betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
-      videoUrl,
+      value.videoUrl,
       cacheConfiguration: const BetterPlayerCacheConfiguration(
-        useCache: true,
+        // useCache: true,
         preCacheSize: 2 * 1024 * 1024,
         maxCacheSize: 2 * 1024 * 1024,
         maxCacheFileSize: 2 * 1024 * 1024,
@@ -37,6 +31,31 @@ class _ShowVideoPageState extends State<ShowVideoPage> {
         key: "testCacheKey",
       ),
     );
+
+    super.initState();
+  }
+
+  // @override
+  // void dispose() {
+
+  //   super.dispose();
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    // BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
+    //   BetterPlayerDataSourceType.network,
+    //   videoUrl,
+    //   cacheConfiguration: const BetterPlayerCacheConfiguration(
+    //     useCache: true,
+    //     preCacheSize: 2 * 1024 * 1024,
+    //     maxCacheSize: 2 * 1024 * 1024,
+    //     maxCacheFileSize: 2 * 1024 * 1024,
+
+    //     ///Android only option to use cached video between app sessions
+    //     key: "testCacheKey",
+    //   ),
+    // );
 
     BetterPlayerController _betterPlayerController = BetterPlayerController(
         const BetterPlayerConfiguration(),

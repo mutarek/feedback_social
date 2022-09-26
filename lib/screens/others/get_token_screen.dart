@@ -18,7 +18,7 @@ class _GetTokenScreenState extends State<GetTokenScreen> {
   @override
   void initState() {
     final version = Provider.of<LatestVersionProvider>(context, listen: false);
-    version.getData();
+    
     Future.delayed(const Duration(seconds: 1), () {
       DatabaseProvider().getToken().then((value) {
         if (value == '') {
@@ -27,9 +27,9 @@ class _GetTokenScreenState extends State<GetTokenScreen> {
               MaterialPageRoute(builder: (_) => const LoginScreen()),
               (route) => false);
         } else {
-          // final value =
-          //     Provider.of<NotificationsProvider>(context, listen: false);
-          // value.getData();
+          final value =
+              Provider.of<NotificationsProvider>(context, listen: false);
+          value.getData();
           // Get.to(() => const NavScreen());
           version.chekVersion();
         }

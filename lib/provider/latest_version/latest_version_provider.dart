@@ -8,7 +8,7 @@ import '../../screens/others/update_screen.dart';
 class LatestVersionProvider extends ChangeNotifier {
   var latestVersion;
   String? latestVer;
-  String oldVersion = "1.0.5";
+  String oldVersion = "1.0.6";
 
   Future<void> getData() async {
     try {
@@ -18,14 +18,14 @@ class LatestVersionProvider extends ChangeNotifier {
     } catch (e) {
       print("Friend request provider: $e");
     }
-    
   }
-  void chekVersion() {
-    if (latestVer == oldVersion) {
-      Get.to(const NavScreen());
 
+  void chekVersion() {
+    print("new version = ${latestVer}");;
+    if (latestVer == null || latestVer == oldVersion) {
+      Get.off(const NavScreen());
     } else {
-      Get.to(() => const UpdateScreen());
+      Get.off(() => const UpdateScreen());
     }
   }
 }

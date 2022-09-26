@@ -61,7 +61,7 @@ class UpdateProfileImageProvider extends ChangeNotifier{
         Fluttertoast.showToast(msg: "Something went wrong!");
       }
     } catch (e) {
-      print("Add animal provider: $e");
+      print("Update profile Image provider: $e");
     }
   }
 

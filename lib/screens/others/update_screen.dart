@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:als_frontend/provider/latest_version/latest_version_provider.dart';
 import 'package:als_frontend/screens/others/get_token_screen.dart';
+import 'package:als_frontend/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'no_internet_screen.dart';
 
 class UpdateScreen extends StatefulWidget {
   const UpdateScreen({Key? key}) : super(key: key);
@@ -12,6 +18,7 @@ class UpdateScreen extends StatefulWidget {
 }
 
 class _UpdateScreenState extends State<UpdateScreen> {
+  bool connection = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,5 +44,27 @@ class _UpdateScreenState extends State<UpdateScreen> {
         
       
     ));
+  }
+  void navigate() async {
+    try {
+      final result = await InternetAddress.lookup('www.google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        setState(() {
+          connection = true;
+        });
+      }
+    } on SocketException catch (_) {
+      setState(() {
+        connection = false;
+      });
+    }
+    if (connection == true) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        Get.to(()=> const NavScreen());
+        });
+      
+    } else {
+      Get.to(const NoInternetScreen());
+    }
   }
 }
