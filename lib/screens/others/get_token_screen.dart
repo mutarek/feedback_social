@@ -18,7 +18,7 @@ class _GetTokenScreenState extends State<GetTokenScreen> {
   @override
   void initState() {
     final version = Provider.of<LatestVersionProvider>(context, listen: false);
-    version.getData();
+    
     Future.delayed(const Duration(seconds: 1), () {
       DatabaseProvider().getToken().then((value) {
         if (value == '') {
