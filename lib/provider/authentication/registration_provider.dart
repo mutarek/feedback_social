@@ -72,11 +72,9 @@ class RegistrationProvider extends ChangeNotifier {
     var data = jsonDecode(response.body);
     if (response.statusCode == 201) {
       success = true;
-      loading = true;
+      loading = false;
       notifyListeners();
       LoginProvider().login(phone, password);
-      print(phone);
-      print(password);
       Get.to(const SplashScreen());
     } else {
       success = false;
