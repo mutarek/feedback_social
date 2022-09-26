@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:convert';
+
 import 'package:als_frontend/const/palette.dart';
 import 'package:als_frontend/provider/provider.dart';
 import 'package:als_frontend/widgets/widgets.dart';
@@ -7,21 +9,51 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import '../screens.dart';
 
 class UserPostCommentsScreen extends StatefulWidget {
-  const UserPostCommentsScreen({Key? key}) : super(key: key);
+  final WebSocketChannel channel = IOWebSocketChannel.connect(
+      'wss://als-social.com/ws/post/10/comment/page_post/');
+
+  UserPostCommentsScreen({Key? key}) : super(key: key);
 
   @override
-  State<UserPostCommentsScreen> createState() => _UserPostCommentsScreenState();
+  State<UserPostCommentsScreen> createState() =>
+      _UserPostCommentsScreenState(channel: channel);
 }
 
 class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
+  List comments = [];
+  List<Map> comment = [
+    {
+      "name": "dasdasdas",
+      "image":
+          "https://meektecbacekend.s3.amazonaws.com/media/post/image/R_2_YGl4y7y.jpeg",
+      "comment": "asdadasdas"
+    }
+  ];
+  final WebSocketChannel channel;
+  _UserPostCommentsScreenState({required this.channel}) {
+    channel.stream.listen((data) {
+      print("websocket data: $data");
+      comment.add({
+        "name": "dasdasd",
+        "image":
+            "https://meektecbacekend.s3.amazonaws.com/media/post/image/R_2_YGl4y7y.jpeg",
+        "comment": data
+      });
+      
+  
+    }, onDone: () {
+      print("disconected");
+    });
+  }
   TextEditingController commentController = TextEditingController();
 
   Future<void> _refresh() async {
-    final data = Provider.of<UserNewsfeedPostProvider>(context, listen: false);
-    data.getData();
+    
   }
 
   @override
@@ -30,6 +62,14 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+          // body: Center(
+          //   child: ElevatedButton(
+          //     child: const Text("Press"),
+          //     onPressed: () {
+          //       channel.sink.add(jsonEncode({"description": "hello there"}));
+          //     },
+          //   ),
+          // ),
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Palette.scaffold,
@@ -60,50 +100,20 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
                             ProfileDetailsProvider>(
                         builder: (context, provider, provider2, child) {
                       return ListView.builder(
-                          itemCount: provider
-                              .authorPosts![provider.index].comments.length,
+                          itemCount: comment.length,
                           itemBuilder: (context, index) {
-                            return (provider.authorPosts![provider.index]
-                                        .comments[index] ==
-                                    null)
+                            return (comment == null)
                                 ? Container()
                                 : SingleChildScrollView(
                                     physics: const ScrollPhysics(),
                                     child: CommentWidget(
-                                        width: width,
-                                        height: height,
-                                        onTap: () {
-                                          provider.id = provider
-                                              .authorPosts![provider.index]
-                                              .comments[index]
-                                              .author
-                                              .id;
-                                          (provider
-                                                      .authorPosts![
-                                                          provider.index]
-                                                      .comments[index]
-                                                      .author
-                                                      .id ==
-                                                  provider2.userId)
-                                              ? {
-                                                  Get.to(() =>
-                                                      const ProfileScreen())
-                                                }
-                                              : Get.to(() =>
-                                                  const PublicProfileDetailsScreen());
-                                        },
-                                        image: provider
-                                            .authorPosts![provider.index]
-                                            .comments[index]
-                                            .author
-                                            .profileImage,
-                                        name:
-                                            "${provider.authorPosts![provider.index].comments[index].author.firstName.toString()} ${provider.authorPosts![provider.index].comments[index].author.lastName}",
-                                        comment: provider
-                                            .authorPosts![provider.index]
-                                            .comments[index]
-                                            .comment),
-                                  );
+                                      width: width,
+                                      height: height,
+                                      onTap: () {},
+                                      image: comment[index]["image"],
+                                      name: comment[index]["name"],
+                                      comment: comment[index]["comment"],
+                                    ));
                           });
                     }),
                   ),
@@ -148,8 +158,22 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
                                   backgroundColor: MaterialStateProperty.all(
                                       Palette.primary)),
                               onPressed: () {
-                                provider.comment(commentController.text);
-                                _refresh();
+                                channel.sink.add(
+                                  jsonEncode(
+                                  {
+                                    "data": {
+                                      "text": commentController.text
+                                    }
+                                  }
+                                ),
+                              );
+
+                                comment.add({
+                                  "name": "dasdasd",
+                                  "image":
+                                      "https://meektecbacekend.s3.amazonaws.com/media/post/image/R_2_YGl4y7y.jpeg",
+                                  "comment": commentController.text
+                                });
                                 commentController.text = "";
                                 FocusScope.of(context).unfocus();
                               },
@@ -163,5 +187,12 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
             ),
           )),
     );
+  }
+
+  @override
+  void dispose() {
+    commentController.dispose();
+    channel.sink.close();
+    super.dispose();
   }
 }

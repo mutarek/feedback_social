@@ -79,7 +79,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                                                           .comments![index].author!.id ==
                                                   provider2.userId)
                                               ? Get.to(
-                                                  () =>const OtherUserProfileScreen())
+                                                  () =>const PublicProfileDetailsScreen())
                                               : Get.to(() =>
                                                   const PublicProfileDetailsScreen());
                                         },

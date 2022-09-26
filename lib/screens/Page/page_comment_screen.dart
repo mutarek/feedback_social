@@ -90,7 +90,7 @@ class _PageCommentsScreenState extends State<PageCommentsScreen> {
                                                       .id ==
                                                   provider2.userId)
                                               ? Get.to(() =>
-                                                  const OtherUserProfileScreen())
+                                                  const PublicProfileDetailsScreen())
                                               : Get.to(() =>
                                                   const PublicProfileDetailsScreen());
                                         },
