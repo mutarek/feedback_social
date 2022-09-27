@@ -3,6 +3,8 @@
 import 'dart:convert';
 
 import 'package:als_frontend/const/palette.dart';
+import 'package:als_frontend/model/comment/socket_comment_model.dart';
+import 'package:als_frontend/model/comment/timeline_post_comment_model.dart';
 import 'package:als_frontend/provider/provider.dart';
 import 'package:als_frontend/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +17,7 @@ import '../screens.dart';
 
 class UserPostCommentsScreen extends StatefulWidget {
   final WebSocketChannel channel = IOWebSocketChannel.connect(
-      'wss://als-social.com/ws/post/10/comment/page_post/');
+      'wss://als-social.com/ws/post/10/comment/timeline_post/');
 
   UserPostCommentsScreen({Key? key}) : super(key: key);
 
@@ -25,36 +27,30 @@ class UserPostCommentsScreen extends StatefulWidget {
 }
 
 class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
-  List comments = [];
-  List<Map> comment = [
-    {
-      "name": "dasdasdas",
-      "image":
-          "https://meektecbacekend.s3.amazonaws.com/media/post/image/R_2_YGl4y7y.jpeg",
-      "comment": "asdadasdas"
-    }
-  ];
+  List socketComment = [];
+  List<Map> newComment = [];
   final WebSocketChannel channel;
   _UserPostCommentsScreenState({required this.channel}) {
     channel.stream.listen((data) {
-      print("websocket data: $data");
-      comment.add({
-        "name": "dasdasd",
-        "image":
-            "https://meektecbacekend.s3.amazonaws.com/media/post/image/R_2_YGl4y7y.jpeg",
-        "comment": data
-      });
-      
-  
+      TimelinePostCommentProvider().getData();
+      print("ll : $data");
     }, onDone: () {
       print("disconected");
     });
   }
+
+  @override
+  void initState() {
+    final commentProvider =
+        Provider.of<TimelinePostCommentProvider>(context, listen: false);
+    commentProvider.getData();
+    print(commentProvider.postId);
+    super.initState();
+  }
+
   TextEditingController commentController = TextEditingController();
 
-  Future<void> _refresh() async {
-    
-  }
+  Future<void> _refresh() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +58,6 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-          // body: Center(
-          //   child: ElevatedButton(
-          //     child: const Text("Press"),
-          //     onPressed: () {
-          //       channel.sink.add(jsonEncode({"description": "hello there"}));
-          //     },
-          //   ),
-          // ),
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Palette.scaffold,
@@ -96,24 +84,29 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
                 children: [
                   Align(
                     alignment: Alignment.topCenter,
-                    child: Consumer2<UserNewsfeedPostProvider,
-                            ProfileDetailsProvider>(
-                        builder: (context, provider, provider2, child) {
+                    child: Consumer3<
+                            UserNewsfeedPostProvider,
+                            ProfileDetailsProvider,
+                            TimelinePostCommentProvider>(
+                        builder: (context, provider, provider2,
+                            timelinePostCommentProvider, child) {
                       return ListView.builder(
-                          itemCount: comment.length,
+                          itemCount:
+                              timelinePostCommentProvider.comments.length,
                           itemBuilder: (context, index) {
-                            return (comment == null)
-                                ? Container()
-                                : SingleChildScrollView(
-                                    physics: const ScrollPhysics(),
-                                    child: CommentWidget(
-                                      width: width,
-                                      height: height,
-                                      onTap: () {},
-                                      image: comment[index]["image"],
-                                      name: comment[index]["name"],
-                                      comment: comment[index]["comment"],
-                                    ));
+                            return SingleChildScrollView(
+                                physics: const ScrollPhysics(),
+                                child: CommentWidget(
+                                  width: width,
+                                  height: height,
+                                  onTap: () {},
+                                  image: timelinePostCommentProvider
+                                      .comments[index].author!.profileImage!,
+                                  name: timelinePostCommentProvider
+                                      .comments[index].author!.fullName!,
+                                  comment: timelinePostCommentProvider
+                                      .comments[index].comment!,
+                                ));
                           });
                     }),
                   ),
@@ -147,8 +140,10 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
                   Positioned.fill(
                       child: Align(
                     alignment: Alignment.bottomRight,
-                    child: Consumer<LikeCommentShareProvider>(
-                        builder: (context, provider, child) {
+                    child: Consumer2<TimelinePostCommentProvider,
+                            UserProfileProvider>(
+                        builder:
+                            (context, provider, userProfileProvider, child) {
                       return Padding(
                         padding: EdgeInsets.only(bottom: height * 0.02),
                         child: SizedBox(
@@ -158,22 +153,19 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
                                   backgroundColor: MaterialStateProperty.all(
                                       Palette.primary)),
                               onPressed: () {
+                                provider.comment(commentController.text);
                                 channel.sink.add(
-                                  jsonEncode(
-                                  {
+                                  jsonEncode({
                                     "data": {
-                                      "text": commentController.text
+                                      "comment": commentController.text,
+                                      "full_name":
+                                          "${userProfileProvider.userprofileData.firstName!} ${userProfileProvider.userprofileData.lastName!}",
+                                      "profile_image": userProfileProvider
+                                          .userprofileData.profileImage!
                                     }
-                                  }
-                                ),
-                              );
+                                  }),
+                                );
 
-                                comment.add({
-                                  "name": "dasdasd",
-                                  "image":
-                                      "https://meektecbacekend.s3.amazonaws.com/media/post/image/R_2_YGl4y7y.jpeg",
-                                  "comment": commentController.text
-                                });
                                 commentController.text = "";
                                 FocusScope.of(context).unfocus();
                               },
