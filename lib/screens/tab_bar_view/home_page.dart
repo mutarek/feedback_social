@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +67,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
         final value = await showDialog<bool>(
             context: context,
             builder: (context) {
-              return NavScreen();
+              Fluttertoast.showToast(msg: "Press back button again to exit");
+              return const NavScreen();
             });
 
         return value == true;
@@ -173,14 +175,18 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 itemCount: newsfeedProvider.results.length + 1,
                                 itemBuilder: (context, index) {
                                   if (index < newsfeedProvider.results.length) {
-                                    return Consumer3<
+                                    return Consumer5<
                                             ShareTimeLinePostProvider,
                                             PostImagesPreviewProvider,
-                                            PublicNewsfeedPostProvider>(
+                                            PublicNewsfeedPostProvider,
+                                            GroupPostProvider,
+                                            GroupDetailsProvider>(
                                         builder: (context,
                                             sharePostProvider,
                                             postImageProvider,
                                             publicNewsfeedPostProvider,
+                                            groupPostProvider,
+                                            groupDetailsProvider,
                                             child) {
                                       return PostContainer(
                                         editOnPressed: (newsfeedProvider
@@ -676,7 +682,21 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                   )
                                             : const Text(""),
                                         onProfileTap: () {
-                                          if (profileProvider.userId ==
+                                          groupPostProvider.id =
+                                              newsfeedProvider
+                                                  .results[index].group!.id!;
+                                          groupDetailsProvider.groupIndex =
+                                              newsfeedProvider
+                                                  .results[index].group!.id!;
+                                          createGroupPost.groupId =
+                                              newsfeedProvider
+                                                  .results[index].group!.id!;
+                                          if(newsfeedProvider
+                                                    .results[index].postType == "group"){
+                                               Get.to(() => const PublicGroupView()); 
+
+                                          }else{
+                                            if (profileProvider.userId ==
                                               newsfeedProvider
                                                   .results[index].author!.id) {
                                             userNewsfeedPostProvider.id =
@@ -693,6 +713,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
                                             Get.to(() =>
                                                 const PublicProfileDetailsScreen());
+                                          }
                                           }
                                         },
                                         name: newsfeedProvider
