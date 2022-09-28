@@ -41,75 +41,86 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       return RefreshIndicator(
         onRefresh: _refresh,
         child: SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              title: const Text(
-                "FeedBack",
-                style: TextStyle(
-                    color: Palette.primary,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -1.2),
+          child: WillPopScope(
+            onWillPop: () async {
+              final value = await showDialog<bool>(
+                  context: context,
+                  builder: (context) {
+                    return NavScreen();
+                  });
+
+              return value == true;
+            },
+            child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.white,
+                elevation: 0,
+                title: const Text(
+                  "FeedBack",
+                  style: TextStyle(
+                      color: Palette.primary,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -1.2),
+                ),
               ),
-            ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Text(
-                    "Notifications",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemCount: provider.data.length,
-                      itemBuilder: ((context, index) {
-                        return Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: width * 0.02,
-                                vertical: height * 0.001),
-                            child: NotificationCard(
-                              image:
-                                  "${provider.data[index].actor!.profileImage}",
-                              ontap: () {
-                                provider.notificationId =
-                                    provider.data[index].id;
-                                provider.tappedOnNotification();
-
-                                if (provider.data[index].verb ==
-                                    "friend_request") {
-                                  publicProfileProvider.id =
-                                      provider.data[index].actor!.id!;
-                                  publicProfileProvider.id =
-                                      provider.data[index].actor!.id!;
-                                  Get.to(
-                                      () => const PublicProfileDetailsScreen());
-                                }
-
-                                if (provider.data[index].verb == "like" ||
-                                    provider.data[index].verb == "comment" ||
-                                    provider.data[index].verb == "post") {
-                                  singlePostProvider.url =
-                                      provider.data[index].url!;
-                                  singlePostProvider.getUserData();
-                                  Get.to(() => const SinglePostScreen());
-                                }
-
-                                _refresh();
-                              },
-                              textColor: Colors.black,
-                              likecmnt: "${provider.data[index].description}",
-                              containerColor:
-                                  (provider.data[index].isRead == false)
-                                      ? const Color.fromARGB(255, 175, 216, 243)
-                                      : Colors.white,
-                              time: "${provider.data[index].timestamp} ago",
-                            ));
-                      })),
-                ],
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const Text(
+                      "Notifications",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemCount: provider.data.length,
+                        itemBuilder: ((context, index) {
+                          return Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: width * 0.02,
+                                  vertical: height * 0.001),
+                              child: NotificationCard(
+                                image:
+                                    "${provider.data[index].actor!.profileImage}",
+                                ontap: () {
+                                  provider.notificationId =
+                                      provider.data[index].id;
+                                  provider.tappedOnNotification();
+          
+                                  if (provider.data[index].verb ==
+                                      "friend_request") {
+                                    publicProfileProvider.id =
+                                        provider.data[index].actor!.id!;
+                                    publicProfileProvider.id =
+                                        provider.data[index].actor!.id!;
+                                    Get.to(
+                                        () => const PublicProfileDetailsScreen());
+                                  }
+          
+                                  if (provider.data[index].verb == "like" ||
+                                      provider.data[index].verb == "comment" ||
+                                      provider.data[index].verb == "post") {
+                                    singlePostProvider.url =
+                                        provider.data[index].url!;
+                                    singlePostProvider.getUserData();
+                                    Get.to(() => const SinglePostScreen());
+                                  }
+          
+                                  _refresh();
+                                },
+                                textColor: Colors.black,
+                                likecmnt: "${provider.data[index].description}",
+                                containerColor:
+                                    (provider.data[index].isRead == false)
+                                        ? const Color.fromARGB(255, 175, 216, 243)
+                                        : Colors.white,
+                                time: "${provider.data[index].timestamp} ago",
+                              ));
+                        })),
+                  ],
+                ),
               ),
             ),
           ),
