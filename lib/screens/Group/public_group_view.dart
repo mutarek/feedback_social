@@ -487,9 +487,13 @@ class _PublicGroupViewState extends State<PublicGroupView> {
                                             children: [
                                               CircleAvatar(
                                                 backgroundImage: NetworkImage(
-                                                    groupDetailsProvider
-                                                        .groupDetails
-                                                        .coverPhoto),
+                                                     (groupDetailsProvider
+                                                                .groupDetails !=
+                                                            null)
+                                                        ? groupDetailsProvider
+                                                            .groupDetails
+                                                            .coverPhoto
+                                                        : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg"),
                                                 radius: 27,
                                                 child: Padding(
                                                   padding: EdgeInsets.only(

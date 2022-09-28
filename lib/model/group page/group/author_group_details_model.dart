@@ -15,7 +15,7 @@ class AuthorGroupDetailsModel {
     required this.id,
     required this.name,
     required this.category,
-    required this.coverPhoto,
+    this.coverPhoto,
     required this.isPrivate,
     required this.avatar,
     required this.postApprovedByAdmin,
@@ -31,7 +31,7 @@ class AuthorGroupDetailsModel {
   int id;
   String name;
   String category;
-  String coverPhoto;
+  String? coverPhoto;
   bool isPrivate;
   String avatar;
   bool postApprovedByAdmin;
@@ -85,7 +85,6 @@ class Creator {
     required this.id,
     required this.firstName,
     required this.lastName,
-    required this.email,
     required this.dateOfBirth,
     required this.gender,
     required this.isActive,
@@ -95,7 +94,7 @@ class Creator {
   int id;
   String firstName;
   String lastName;
-  String email;
+
   dynamic dateOfBirth;
   String gender;
   bool isActive;
@@ -105,7 +104,6 @@ class Creator {
         id: json["id"],
         firstName: json["first_name"],
         lastName: json["last_name"],
-        email: json["email"],
         dateOfBirth: json["date_of_birth"],
         gender: json["gender"],
         isActive: json["is_active"],
@@ -116,7 +114,6 @@ class Creator {
         "id": id,
         "first_name": firstName,
         "last_name": lastName,
-        "email": email,
         "date_of_birth": dateOfBirth,
         "gender": gender,
         "is_active": isActive,

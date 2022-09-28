@@ -1,7 +1,8 @@
-// To parse required this JSON data, do
+// To parse this JSON data, do
 //
 //     final groupPostModel = groupPostModelFromJson(jsonString);
 
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<GroupPostModel> groupPostModelFromJson(String str) =>
@@ -40,7 +41,7 @@ class GroupPostModel {
   int totalImage;
   List<Image> images;
   int totalVideo;
-  List<dynamic> videos;
+  List<Video> videos;
   int totalComment;
   List<Comment> comments;
   int totalLike;
@@ -59,7 +60,7 @@ class GroupPostModel {
         totalImage: json["total_image"],
         images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
         totalVideo: json["total_video"],
-        videos: List<dynamic>.from(json["videos"].map((x) => x)),
+        videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
         totalComment: json["total_comment"],
         comments: List<Comment>.from(
             json["comments"].map((x) => Comment.fromJson(x))),
@@ -81,14 +82,14 @@ class GroupPostModel {
         "total_image": totalImage,
         "images": List<dynamic>.from(images.map((x) => x.toJson())),
         "total_video": totalVideo,
-        "videos": List<dynamic>.from(videos.map((x) => x)),
+        "videos": List<dynamic>.from(videos.map((x) => x.toJson())),
         "total_comment": totalComment,
         "comments": List<dynamic>.from(comments.map((x) => x.toJson())),
         "total_like": totalLike,
         "liked_by": List<dynamic>.from(likedBy.map((x) => x.toJson())),
         "timestamp": timestamp,
         "is_share": isShare,
-        "post_type": postType,
+        "post_type": postTypeValues.reverse[postType],
         "like": like,
       };
 }
@@ -130,14 +131,15 @@ class Comment {
   String comment;
   int post;
   LikedBy author;
-  List<dynamic> replies;
+  List<Reply> replies;
 
   factory Comment.fromJson(Map<String, dynamic> json) => Comment(
         id: json["id"],
         comment: json["comment"],
         post: json["post"],
         author: LikedBy.fromJson(json["author"]),
-        replies: List<dynamic>.from(json["replies"].map((x) => x)),
+        replies:
+            List<Reply>.from(json["replies"].map((x) => Reply.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -145,7 +147,7 @@ class Comment {
         "comment": comment,
         "post": post,
         "author": author.toJson(),
-        "replies": List<dynamic>.from(replies.map((x) => x)),
+        "replies": List<dynamic>.from(replies.map((x) => x.toJson())),
       };
 }
 
@@ -154,9 +156,6 @@ class LikedBy {
     required this.id,
     required this.firstName,
     required this.lastName,
-    required this.email,
-    required this.dateOfBirth,
-    required this.gender,
     required this.isActive,
     required this.profileImage,
   });
@@ -164,9 +163,6 @@ class LikedBy {
   int id;
   String firstName;
   String lastName;
-  String email;
-  dynamic dateOfBirth;
-  String gender;
   bool isActive;
   String profileImage;
 
@@ -174,9 +170,6 @@ class LikedBy {
         id: json["id"],
         firstName: json["first_name"],
         lastName: json["last_name"],
-        email: json["email"],
-        dateOfBirth: json["date_of_birth"],
-        gender: json["gender"],
         isActive: json["is_active"],
         profileImage: json["profile_image"],
       );
@@ -185,11 +178,44 @@ class LikedBy {
         "id": id,
         "first_name": firstName,
         "last_name": lastName,
-        "email": email,
-        "date_of_birth": dateOfBirth,
-        "gender": gender,
         "is_active": isActive,
         "profile_image": profileImage,
+      };
+}
+
+class Reply {
+  Reply({
+    required this.id,
+    required this.comment,
+    required this.parent,
+    required this.post,
+    required this.author,
+    required this.replies,
+  });
+
+  int id;
+  String comment;
+  int parent;
+  int post;
+  LikedBy author;
+  List<dynamic> replies;
+
+  factory Reply.fromJson(Map<String, dynamic> json) => Reply(
+        id: json["id"],
+        comment: json["comment"],
+        parent: json["parent"],
+        post: json["post"],
+        author: LikedBy.fromJson(json["author"]),
+        replies: List<dynamic>.from(json["replies"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "comment": comment,
+        "parent": parent,
+        "post": post,
+        "author": author.toJson(),
+        "replies": List<dynamic>.from(replies.map((x) => x)),
       };
 }
 
@@ -243,4 +269,46 @@ class Image {
         "id": id,
         "image": image,
       };
+}
+
+enum PostType { GROUP }
+
+final postTypeValues = EnumValues({"group": PostType.GROUP});
+
+class Video {
+  Video({
+    required this.id,
+    required this.thumbnail,
+    required this.video,
+  });
+
+  int id;
+  String thumbnail;
+  String video;
+
+  factory Video.fromJson(Map<String, dynamic> json) => Video(
+        id: json["id"],
+        thumbnail: json["thumbnail"],
+        video: json["video"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "thumbnail": thumbnail,
+        "video": video,
+      };
+}
+
+class EnumValues<T> {
+  Map<String, T>? map;
+  Map<T, String>? reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    if (reverseMap == null) {
+      reverseMap = map!.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap!;
+  }
 }
