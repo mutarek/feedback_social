@@ -108,9 +108,6 @@ class LikedBy {
     required this.id,
     required this.firstName,
     required this.lastName,
-    required this.email,
-    required this.dateOfBirth,
-    required this.gender,
     required this.isActive,
     required this.profileImage,
   });
@@ -118,9 +115,6 @@ class LikedBy {
   int id;
   String firstName;
   String lastName;
-  String email;
-  dynamic dateOfBirth;
-  String gender;
   bool isActive;
   String profileImage;
 
@@ -128,9 +122,6 @@ class LikedBy {
         id: json["id"],
         firstName: json["first_name"],
         lastName: json["last_name"],
-        email: json["email"],
-        dateOfBirth: json["date_of_birth"],
-        gender: json["gender"],
         isActive: json["is_active"],
         profileImage: json["profile_image"],
       );
@@ -139,9 +130,6 @@ class LikedBy {
         "id": id,
         "first_name": firstName,
         "last_name": lastName,
-        "email": email,
-        "date_of_birth": dateOfBirth,
-        "gender": gender,
         "is_active": isActive,
         "profile_image": profileImage,
       };
