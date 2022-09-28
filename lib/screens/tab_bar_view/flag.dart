@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../screens.dart';
+
 class Flag extends StatefulWidget {
   const Flag({Key? key}) : super(key: key);
 
@@ -37,73 +39,84 @@ class _FlagState extends State<Flag> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return DefaultTabController(
-        length: 2,
-        child: Scaffold(
-            backgroundColor: Palette.scaffold,
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              title: const Text(
-                "FeedBack",
-                style: TextStyle(
-                    color: Palette.primary,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -1.2),
-              ),
-              
-            ),
-            body: NestedScrollView(
-              scrollDirection: Axis.vertical,
-              physics: const NeverScrollableScrollPhysics(),
-              // Setting floatHeaderSlivers to true is required in order to float
-              // the outer slivers over the inner scrollable.
-              floatHeaderSlivers: true,
+    return WillPopScope(
+      onWillPop: () async {
+        final value = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return NavScreen();
+            });
 
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return [
-                  SliverList(
-                      delegate: SliverChildListDelegate([
-                    SafeArea(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: height * 0.035,
-                              width: width * 0.7,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.white54),
-                              child: TabBar(
-                                tabs: [
-                                  Text("Your Pages",
-                                      style: GoogleFonts.lato(
-                                          color: Colors.black)),
-                                  Text("Your Groups",
-                                      style: GoogleFonts.lato(
-                                          color: Colors.black)),
-                                ],
+        return value == true;
+      },
+      child: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+              backgroundColor: Palette.scaffold,
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.white,
+                elevation: 0,
+                title: const Text(
+                  "FeedBack",
+                  style: TextStyle(
+                      color: Palette.primary,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -1.2),
+                ),
+                
+              ),
+              body: NestedScrollView(
+                scrollDirection: Axis.vertical,
+                physics: const NeverScrollableScrollPhysics(),
+                // Setting floatHeaderSlivers to true is required in order to float
+                // the outer slivers over the inner scrollable.
+                floatHeaderSlivers: true,
+    
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return [
+                    SliverList(
+                        delegate: SliverChildListDelegate([
+                      SafeArea(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Container(
+                                height: height * 0.035,
+                                width: width * 0.7,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.white54),
+                                child: TabBar(
+                                  tabs: [
+                                    Text("Your Pages",
+                                        style: GoogleFonts.lato(
+                                            color: Colors.black)),
+                                    Text("Your Groups",
+                                        style: GoogleFonts.lato(
+                                            color: Colors.black)),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ]))
-                ];
-              },
-              body: Container(
-                height: height,
-                width: width,
-                color: Colors.white,
-                child: TabBarView(children: [
-                  FlagPageWidget(height: height, width: width),
-                  FlagGroupWidget(height: height, width: width)
-                ]),
-              ),
-            )));
+                    ]))
+                  ];
+                },
+                body: Container(
+                  height: height,
+                  width: width,
+                  color: Colors.white,
+                  child: TabBarView(children: [
+                    FlagPageWidget(height: height, width: width),
+                    FlagGroupWidget(height: height, width: width)
+                  ]),
+                ),
+              ))),
+    );
   }
 }
