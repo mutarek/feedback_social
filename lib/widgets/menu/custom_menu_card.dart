@@ -1,33 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomMenuCard extends StatelessWidget {
   const CustomMenuCard({
     Key? key,
-    required this.icon,
+    required this.h,
+    required this.w,
+    required this.svgName,
     required this.iconColor,
     required this.iconName,
     required this.navigetion,
   }) : super(key: key);
+  final double h;
+  final double w;
   final VoidCallback navigetion;
-  final IconData icon;
+  final String svgName;
   final String iconName;
   final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
-    final double w = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: navigetion,
       child: Card(
-        elevation: 0,
+        elevation: 2,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Row(
             children: [
-              Icon(
-                icon,
-                color: iconColor,
-              ),
+              SizedBox(
+                  width: w * 0.06,
+                  height: h * 0.03,
+                  child: SvgPicture.asset(
+                    svgName,
+                    fit: BoxFit.cover,
+                  )),
               SizedBox(
                 width: w * 0.023,
               ),

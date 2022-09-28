@@ -154,56 +154,69 @@ class _MenuState extends State<Menu> {
                                   ),
                                 );
                               }),
-                              SizedBox(
-                                height: h * 0.01,
+                             SizedBox(
+                                width: h * 0.02,
                               ),
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: w * 0.02,
+                                    width: w * 0.01,
                                   ),
                                   CustomMenuCard(
-                                      icon: FontAwesomeIcons.inbox,
+                                    h: h,
+                                    w: w,
+                                      svgName:"assets/menu/group.svg" ,
                                       iconColor: Palette.primary,
-                                      iconName: "draft",
+                                      iconName: "group",
                                       navigetion: () {
                                         Get.to(const CommingSoonScreen());
                                       }),
                                   CustomMenuCard(
-                                      icon: FontAwesomeIcons.bookBookmark,
-                                      iconColor: Palette.primary,
-                                      iconName: "Saved",
+                                     h: h,
+                                      w: w,
+                                     svgName: "assets/menu/page.svg",
+                                        iconColor: Palette.primary,
+                                      iconName: "Page",
                                       navigetion: () {
                                         Get.to(const CommingSoonScreen());
                                       }),
                                   CustomMenuCard(
-                                      icon: FontAwesomeIcons.gears,
+                                     h: h,
+                                      w: w,
+                                     svgName:"assets/menu/friend.svg" ,
+                                
                                       iconColor: Palette.primary,
-                                      iconName: "Settings",
+                                      iconName: "Friends",
                                       navigetion: () {
-                                         Get.to(() => const Settings());
+                                        Get.to(() => const FriendListScreen());
                                       })
                                 ],
                               ),
                               Row(
                                 children: [
                                   SizedBox(
-                                    width: w * 0.02,
+                                    width: w * 0.01,
                                   ),
                                   CustomMenuCard(
-                                      icon: FontAwesomeIcons.cat,
+                                     h: h,
+                                      w: w,
+                                       svgName:"assets/menu/animal.svg" ,
                                       iconColor: Palette.primary,
                                       iconName: "Animal",
                                       navigetion: () {
                                         Get.to(const YourAnimalScreen());
                                       }),
                                   CustomMenuCard(
-                                      icon: FontAwesomeIcons.usersViewfinder,
+                                     h: h,
+                                      w: w,
+                                      svgName: "assets/menu/settings.svg",
                                       iconColor: Palette.primary,
-                                      iconName: "Friends",
+                                      iconName: "Settings",
                                       navigetion: () {
-                                        Get.to(() => const FriendListScreen());
+                                         Get.to(() => const Settings());
                                       }),
+                               
+                               
                                 ],
                               ),
                               Padding(
