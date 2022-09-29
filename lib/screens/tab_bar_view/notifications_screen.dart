@@ -34,9 +34,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Consumer3<NotificationsProvider, PublicProfileDetailsProvider,
-            SinglePostProvider>(
+    return Consumer4<NotificationsProvider, PublicProfileDetailsProvider,
+            SinglePostProvider, TimelinePostCommentProvider>(
         builder: (context, provider, publicProfileProvider, singlePostProvider,
+        timelinePostCommentProvider,
             child) {
       return RefreshIndicator(
         onRefresh: _refresh,
@@ -46,7 +47,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               final value = await showDialog<bool>(
                   context: context,
                   builder: (context) {
-                    return NavScreen();
+                    return const NavScreen();
                   });
 
               return value == true;
@@ -99,12 +100,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                         () => const PublicProfileDetailsScreen());
                                   }
           
-                                  if (provider.data[index].verb == "like" ||
-                                      provider.data[index].verb == "comment" ||
-                                      provider.data[index].verb == "post") {
+                                  if (provider.data[index].noticeType == "timeline") {
                                     singlePostProvider.url =
                                         provider.data[index].url!;
                                     singlePostProvider.getUserData();
+                                    // timelinePostCommentProvider.postId = 
                                     Get.to(() => const SinglePostScreen());
                                   }
           

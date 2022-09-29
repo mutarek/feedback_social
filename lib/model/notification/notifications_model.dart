@@ -19,9 +19,9 @@ class NotificationModel {
   });
 
   int? count;
-  dynamic next;
+  String? next;
   dynamic previous;
-  List<Results>? results;
+  List<Result>? results;
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>
       NotificationModel(
@@ -29,7 +29,7 @@ class NotificationModel {
         next: json["next"],
         previous: json["previous"],
         results:
-            List<Results>.from(json["results"].map((x) => Results.fromJson(x))),
+            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -40,8 +40,8 @@ class NotificationModel {
       };
 }
 
-class Results {
-  Results({
+class Result {
+  Result({
     this.id,
     this.actor,
     this.noticeType,
@@ -62,10 +62,10 @@ class Results {
   String? description;
   bool? deleted;
   bool? emailed;
-  bool?isRead;
+  bool? isRead;
   String? timestamp;
 
-  factory Results.fromJson(Map<String, dynamic> json) => Results(
+  factory Result.fromJson(Map<String, dynamic> json) => Result(
         id: json["id"],
         actor: Actor.fromJson(json["actor"]),
         noticeType: json["notice_type"],
@@ -95,43 +95,23 @@ class Results {
 class Actor {
   Actor({
     this.id,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.dateOfBirth,
-    this.gender,
-    this.isActive,
+    this.fullName,
     this.profileImage,
   });
 
   int? id;
-  String? firstName;
-  String? lastName;
-  String? email;
-  dynamic dateOfBirth;
-  String? gender;
-  bool? isActive;
+  String? fullName;
   String? profileImage;
 
   factory Actor.fromJson(Map<String, dynamic> json) => Actor(
         id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        email: json["email"],
-        dateOfBirth: json["date_of_birth"],
-        gender: json["gender"],
-        isActive: json["is_active"],
+        fullName: json["full_name"],
         profileImage: json["profile_image"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "email": email,
-        "date_of_birth": dateOfBirth,
-        "gender": gender,
-        "is_active": isActive,
+        "full_name": fullName,
         "profile_image": profileImage,
       };
 }

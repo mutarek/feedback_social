@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
                 : SingleChildScrollView(
                     controller: controller,
-                    physics: ScrollPhysics(),
+                    physics: const ScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -187,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               top: height * 0.01,
                               left: width * 0.04,
                               right: width * 0.04),
-                          child: ProfileDetailsCard(),
+                          child: const ProfileDetailsCard(),
                         ),
                         Padding(
                           padding: EdgeInsets.only(
@@ -271,7 +271,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              PostHeader(
+                                              (userPostProvider
+                                                      .authorPostResults[index].isShare == true)?
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  PostHeader(
+                                                      moreOnPressed: () {},
+                                                      postType: "timeline",
+                                                      delete: () {},
+                                                      edit: () {},
+                                                      reportThisPost: () {},
+                                                      name: userPostProvider
+                                                          .authorPostResults[index]
+                                                          .author!
+                                                          .fullName,
+                                                      time: userPostProvider
+                                                          .authorPostResults[index]
+                                                          .timestamp,
+                                                      profileImage: userPostProvider
+                                                          .authorPostResults[index]
+                                                          .author!
+                                                          .profileImage,
+                                                      onProfileTap: () {}
+                                                    ),
+                                                    Text(userPostProvider
+                                                                .authorPostResults[
+                                                            index].description!),
+                                                    Padding(
+                                                      padding:  EdgeInsets.only(left: width*0.05),
+                                                      child: PostHeader(
+                                                              moreOnPressed:
+                                                                  () {},
+                                                              postType:
+                                                                  "timeline",
+                                                              delete: () {},
+                                                              edit: () {},
+                                                              reportThisPost:
+                                                                  () {},
+                                                              name: userPostProvider
+                                                                  .authorPostResults[
+                                                                      index].sharePost!.post!.author!.fullName,
+                                                              time: userPostProvider
+                                                                  .authorPostResults[
+                                                                      index]
+                                                                  .timestamp,
+                                                              profileImage:
+                                                                  userPostProvider
+                                                                      .authorPostResults[
+                                                                          index]
+                                                                      .sharePost!
+                                                                      .post!
+                                                                      .author!
+                                                                      .profileImage,
+                                                              onProfileTap:
+                                                                  () {}),
+                                                    ),
+                                                ],
+                                              )
+
+                                              :PostHeader(
                                                   moreOnPressed: () {},
                                                   postType: "timeline",
                                                   delete: () {},
@@ -288,11 +347,208 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       .authorPostResults[index]
                                                       .author!
                                                       .profileImage,
-                                                  onProfileTap: () {}),
-                                              Text(userPostProvider
+                                                  onProfileTap: () {}
+                                                ),
+                                              (userPostProvider
+                                                          .authorPostResults[
+                                                              index]
+                                                          .isShare ==
+                                                      true)
+                                              ?Text(userPostProvider
+                                                      .authorPostResults[index]
+                                                      .sharePost!
+                                                      .post!.description!)
+                                              :Text(userPostProvider
                                                   .authorPostResults[index]
                                                   .description!),
-                                              SizedBox(
+
+                                              (userPostProvider.authorPostResults[index]
+                                                  .isShare ==  true)?
+
+/*-----------------------------------------------------share post newsfeed images -----------------------------------------------------------------------*/
+
+                                                  SizedBox(
+                                                  height: (userPostProvider
+                                                              .authorPostResults[
+                                                                  index].sharePost!.post!.totalImage !=
+                                                          0)
+                                                      ? (userPostProvider
+                                                                      .authorPostResults[
+                                                                          index]
+                                                                      .sharePost!
+                                                                      .post!
+                                                                      .totalImage! ==
+                                                              1)
+                                                          ? height * 0.35
+                                                          : (userPostProvider
+                                                                          .authorPostResults[
+                                                                              index]
+                                                                          .sharePost!
+                                                                          .post!
+                                                                          .totalImage! ==
+                                                                  2)
+                                                              ? height * 0.2
+                                                              : height * 0.5
+                                                      : 0,
+                                                  child: (userPostProvider
+                                                                  .authorPostResults[index]
+                                                                  .sharePost!
+                                                                  .post!
+                                                                  .totalImage ==
+                                                          1)
+                                                      ? InkWell(
+                                                          onTap: () {
+                                                            postImageProvider
+                                                                .iamges = [];
+
+                                                            postImageProvider
+                                                                .iamges
+                                                                .add(userPostProvider
+                                                                        .authorPostResults[
+                                                                            index]
+                                                                        .sharePost!
+                                                                        .post!
+                                                                    .images![0]
+                                                                    .image);
+                                                            Get.to(() =>
+                                                                const PostImagesPreview());
+                                                          },
+                                                          child: Center(
+                                                            child: Container(
+                                                                color: Colors
+                                                                    .white,
+                                                                height: 200,
+                                                                width: width,
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                        imageUrl: userPostProvider.authorPostResults[index].sharePost!.post!
+                                                                            .images![
+                                                                                0]
+                                                                            .image!,
+                                                                        imageBuilder: (context, imageProvider) => Container(
+                                                                            width:
+                                                                                400,
+                                                                            height: height *
+                                                                                0.35,
+                                                                            decoration:
+                                                                                BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                        placeholder: ((context, url) => Container(
+                                                                              alignment: Alignment.center,
+                                                                              child: const CupertinoActivityIndicator(),
+                                                                            )))),
+                                                          ),
+                                                        )
+                                                      : GridView.builder(
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          shrinkWrap: true,
+                                                          gridDelegate:
+                                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                            crossAxisCount:
+                                                                (userPostProvider.authorPostResults[index].sharePost!.post!.totalImage ==
+                                                                        1)
+                                                                    ? 1
+                                                                    : 2,
+                                                            crossAxisSpacing:
+                                                                2.0,
+                                                            mainAxisSpacing:
+                                                                2.0,
+                                                          ),
+                                                          itemCount: (userPostProvider
+                                                                              .authorPostResults[
+                                                                                  index]
+                                                                              .sharePost!
+                                                                              .post!
+                                                                              .totalImage! <
+                                                                  4)
+                                                              ? userPostProvider
+                                                                          .authorPostResults[
+                                                                              index]
+                                                                          .sharePost!
+                                                                          .post!
+                                                                          .totalImage
+                                                              : 4,
+                                                          itemBuilder: (context,
+                                                              index2) {
+                                                            return InkWell(
+                                                              onTap: () {
+                                                                postImageProvider
+                                                                    .iamges = [];
+                                                                for (int i = 0;
+                                                                    i <
+                                                                        userPostProvider.authorPostResults[index].sharePost!.post!.totalImage!;
+                                                                    i++) {
+                                                                  postImageProvider
+                                                                      .iamges
+                                                                      .add(userPostProvider
+                                                              .authorPostResults[
+                                                                  index].sharePost!.post!
+                                                                          .images![
+                                                                              i]
+                                                                          .image);
+                                                                  Get.to(() =>
+                                                                      const PostImagesPreview());
+                                                                }
+                                                              },
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  (userPostProvider.authorPostResults[index].sharePost!.post!.totalImage! >
+                                                                              4 &&
+                                                                          index2 ==
+                                                                              3)
+                                                                      ? Container(
+                                                                          height:
+                                                                              height * 0.22,
+                                                                          child:
+                                                                               Center(
+                                                                            child:
+                                                                                Text(
+                                                                              "+${userPostProvider.authorPostResults[index].sharePost!.post!.totalImage! - 4}",
+                                                                              style: const TextStyle(
+                                                                                color: Colors.white70,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 26,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          decoration: BoxDecoration(
+                                                                              image: DecorationImage(
+                                                                            image:
+                                                                                NetworkImage(
+                                                                              userPostProvider
+                                                              .authorPostResults[
+                                                                  index].sharePost!.post!.images![index2].image!,
+                                                                            ),
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          )),
+                                                                        )
+                                                                      : CachedNetworkImage(
+                                                                          imageUrl: userPostProvider
+                                                              .authorPostResults[
+                                                                  index].sharePost!.post!
+                                                                              .images![
+                                                                                  index2]
+                                                                              .image!,
+                                                                          imageBuilder: (context, imageProvider) => Container(
+                                                                              width: 400,
+                                                                              height: height * 0.23,
+                                                                              decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                          placeholder: ((context, url) => Container(
+                                                                                alignment: Alignment.center,
+                                                                                child: const CupertinoActivityIndicator(),
+                                                                              )))
+                                                                ],
+                                                              ),
+                                                            );
+                                                          },
+                                                        ))
+
+/*-------------------------------------------------------without share newsfeed image----------------------------------------------------------*/ 
+                                              :SizedBox(
                                                   height: (userPostProvider
                                                               .authorPostResults[
                                                                   index]
@@ -469,7 +725,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              (userPostProvider
+                                (userPostProvider.authorPostResults[index].isShare ==  true)?
+/*-----------------------------------------shared videos------------------------------------------*/
+                                           (userPostProvider
+                                                          .authorPostResults[
+                                                              index]
+                                                          .sharePost!.post!.totalVideo !=
+                                                      0)
+                                                  ? InkWell(
+                                                      onTap: () {
+                                                        singleVideoShowProvider
+                                                                .videoUrl =
+                                                            userPostProvider
+                                                          .authorPostResults[
+                                                              index]
+                                                          .sharePost!.post!
+                                                                .videos![0]
+                                                                .video!;
+                                                        Get.to(() =>
+                                                            const ShowVideoPage());
+                                                      },
+                                                      child: Container(
+                                                        height: 150,
+                                                        width: width,
+                                                                        child: (userPostProvider
+                                                                        .authorPostResults[
+                                                                            index]
+                                                                        .sharePost!
+                                                                        .post!
+                                                                                .videos![0]
+                                                                                .thumbnail != null)?Container(
+                                                          child: const Icon(Icons.play_circle_fill, size: 60, color: Colors.grey,),
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                              image: NetworkImage(
+                                                                            userPostProvider.authorPostResults[index].sharePost!.post!
+                                                                                .videos![0]
+                                                                                .thumbnail!)
+                                                            )
+                                                          ),
+                                                        )
+                                                        :
+                                                        // child: 
+                                                        Image.asset(
+                                                            "assets/background/video_pause.jpg"),
+                                                        color: Colors.black,
+                                                      ),
+                                                    ) : Container()
+                                              
+                                              
+                                              
+                                              :(userPostProvider
                                                           .authorPostResults[
                                                               index]
                                                           .totalVideo !=
@@ -482,32 +788,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                 .authorPostResults[
                                                                     index]
                                                                 .videos![0]
-                                                                .video;
+                                                                .video!;
                                                         Get.to(() =>
                                                             const ShowVideoPage());
                                                       },
                                                       child: Container(
                                                         height: 150,
                                                         width: width,
-                                                        //                 child: (userPostProvider
-                                                        //                         .authorPostResults[
-                                                        //                             index]
-                                                        //                         .videos![0]
-                                                        //                         .thumbnail != null)?Container(
-                                                        //   child: const Icon(Icons.play_circle_fill, size: 60, color: Colors.grey,),
-                                                        //   decoration: BoxDecoration(
-                                                        //     image: DecorationImage(
-                                                        //       image: NetworkImage(
-                                                        //                     userPostProvider
-                                                        //                         .authorPostResults[
-                                                        //                             index]
-                                                        //                         .videos![0]
-                                                        //                         .thumbnail)
-                                                        //     )
-                                                        //   ),
-                                                        // )
-                                                        // :
-                                                        child: Image.asset(
+                                                                        child: (userPostProvider
+                                                                                .authorPostResults[
+                                                                                    index]
+                                                                                .videos![0]
+                                                                                .thumbnail != null)?Container(
+                                                          child: const Icon(Icons.play_circle_fill, size: 60, color: Colors.grey,),
+                                                          decoration: BoxDecoration(
+                                                            image: DecorationImage(
+                                                              image: NetworkImage(
+                                                                            userPostProvider
+                                                                                .authorPostResults[
+                                                                                    index]
+                                                                                .videos![0]
+                                                                                .thumbnail!)
+                                                            )
+                                                          ),
+                                                        )
+                                                        :
+                                                        // child:
+                                                       Image.asset(
                                                             "assets/background/video_pause.jpg"),
                                                         color: Colors.black,
                                                       ),
