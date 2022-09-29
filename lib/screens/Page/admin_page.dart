@@ -517,13 +517,13 @@ class _AdminPageState extends State<AdminPage> {
                                                                         index]
                                                                     .totalImage > 4 && index2 == 3) ?
                                                                     Container(
-                                                                      child: const Center(
+                                                                      child: Center(
                                                                         child: Text(
-                                                                          "More images",
-                                                                          style: TextStyle(
+                                                                          "+${pagePostProvider.pagePosts![index].totalImage - 4}",
+                                                                          style: const TextStyle(
                                                                             color: Colors.white,
                                                                             fontWeight: FontWeight.bold,
-                                                                            fontSize: 20,
+                                                                            fontSize: 26,
                                                                             
                                                                           ),
                                                                         ),
