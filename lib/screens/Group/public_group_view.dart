@@ -766,14 +766,16 @@ class _PublicGroupViewState extends State<PublicGroupView> {
                                                 ? Colors.red
                                                 : Colors.black,
                                           ),
-                                          Consumer3<
+                                          Consumer4<
                                                   GroupPostLikeCommentProvider,
                                                   GroupDetailsProvider,
-                                                  GroupPostProvider>(
+                                                  GroupPostProvider,
+                                                  ShareGroupPagePostProvider>(
                                               builder: (context,
                                                   likeComment,
                                                   groupDetailsProvider,
                                                   groupPostProvider,
+                                                  shareGroupPagePostProvider,
                                                   child) {
                                             return LikeCommentShare(
                                               likeText: "Liked",
@@ -800,17 +802,17 @@ class _PublicGroupViewState extends State<PublicGroupView> {
                                                     const GroupCommentsScreen());
                                               },
                                               share: () {
-                                                // likeComment.pageId =
-                                                //     groupPostProvider
-                                                //         .pagePosts![index]
-                                                //         .page
-                                                //         .id;
-                                                // likeComment.postId =
-                                                //     groupPostProvider
-                                                //         .pagePosts![index].id
-                                                //         .toString();
-                                                // Get.to(
-                                                //     const PagePostShareScreen());
+                                                shareGroupPagePostProvider
+                                                        .groupPageId =
+                                                    groupDetailsProvider
+                                                        .groupDetails.id;
+                                                shareGroupPagePostProvider
+                                                        .postId =
+                                                    groupPostProvider
+                                                        .groupPosts![index].id;
+                                                shareGroupPagePostProvider
+                                                    .postType = "group";
+                                                Get.to(const GroupPostShare());
                                               },
                                               likeIconColor: (groupPostProvider
                                                           .groupPosts![index]
