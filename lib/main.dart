@@ -121,6 +121,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => LatestVersionProvider()),
           ChangeNotifierProvider(create: (_) => PublicNewsfeedPostProvider()),
           ChangeNotifierProvider(create: (_) => TimelinePostCommentProvider()),
+          ChangeNotifierProvider(create: (_) => ShareGroupPagePostProvider()),
      
     ],
     child: GetMaterialApp(
