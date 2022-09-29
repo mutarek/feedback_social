@@ -814,7 +814,7 @@ class _PublicProfileDetailsScreenState
                                                               .authorPostResults[
                                                                   index]
                                                               .videos![0]
-                                                              .video;
+                                                              .video!;
                                                       Get.to(() =>
                                                           const ShowVideoPage());
                                                     },
@@ -842,7 +842,7 @@ class _PublicProfileDetailsScreenState
                                                                               index]
                                                                           .videos![
                                                                               0]
-                                                                          .thumbnail))),
+                                                                          .thumbnail!))),
                                                             )
                                                           : Image.asset(
                                                               "assets/background/video_pause.jpg"),

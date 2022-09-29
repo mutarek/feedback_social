@@ -17,7 +17,6 @@ class TimelinePostCommentProvider extends ChangeNotifier {
     try {
       comments =
           (await TimelinePostCommentService(postId: postId).getComments())!;
-      print(comments.length);
       notifyListeners();
     } catch (e) {
       print("Friend request provider: $e");

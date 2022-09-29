@@ -3,7 +3,6 @@ export 'profile/user_profile_model.dart';
 export 'friends/friend_request_model.dart';
 export 'friends/friends_suggetions_model.dart';
 export 'group page/page/athour_pages_model.dart';
-export 'notification/notifications_model.dart';
 export 'group page/group/author_group_model.dart';
 export 'animal/owner_animal_model.dart';
 export 'animal/animal_search_result_model.dart';

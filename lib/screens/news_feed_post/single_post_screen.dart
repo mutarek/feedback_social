@@ -243,7 +243,8 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                               top: height * 0.01,
                                               left: width * 0.02),
                                           child: Text(
-                                              "${singlePostProvider.post.comments[index].author.firstName} ${singlePostProvider.post.comments[index].author.lastName}",
+                                            "Full name",
+                                              // "${singlePostProvider.post.comments[index].author.fullName}",
                                               style: GoogleFonts.lato(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 14)),

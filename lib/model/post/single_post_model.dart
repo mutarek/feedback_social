@@ -39,7 +39,7 @@ class SinglePostModel {
   int totalComment;
   List<Comment> comments;
   int totalLike;
-  List<LikedBy> likedBy;
+  List<dynamic> likedBy;
   String timestamp;
   bool isShare;
   String postType;
@@ -58,8 +58,7 @@ class SinglePostModel {
         comments: List<Comment>.from(
             json["comments"].map((x) => Comment.fromJson(x))),
         totalLike: json["total_like"],
-        likedBy: List<LikedBy>.from(
-            json["liked_by"].map((x) => LikedBy.fromJson(x))),
+        likedBy: List<dynamic>.from(json["liked_by"].map((x) => x)),
         timestamp: json["timestamp"],
         isShare: json["is_share"],
         postType: json["post_type"],
@@ -77,7 +76,7 @@ class SinglePostModel {
         "total_comment": totalComment,
         "comments": List<dynamic>.from(comments.map((x) => x.toJson())),
         "total_like": totalLike,
-        "liked_by": List<dynamic>.from(likedBy.map((x) => x.toJson())),
+        "liked_by": List<dynamic>.from(likedBy.map((x) => x)),
         "timestamp": timestamp,
         "is_share": isShare,
         "post_type": postType,
@@ -121,14 +120,14 @@ class Comment {
   int id;
   String comment;
   int post;
-  LikedBy author;
+  Author author;
   List<dynamic> replies;
 
   factory Comment.fromJson(Map<String, dynamic> json) => Comment(
         id: json["id"],
         comment: json["comment"],
         post: json["post"],
-        author: LikedBy.fromJson(json["author"]),
+        author: Author.fromJson(json["author"]),
         replies: List<dynamic>.from(json["replies"].map((x) => x)),
       );
 
@@ -138,50 +137,6 @@ class Comment {
         "post": post,
         "author": author.toJson(),
         "replies": List<dynamic>.from(replies.map((x) => x)),
-      };
-}
-
-class LikedBy {
-  LikedBy({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.dateOfBirth,
-    required this.gender,
-    required this.isActive,
-    required this.profileImage,
-  });
-
-  int id;
-  String firstName;
-  String lastName;
-  String email;
-  dynamic dateOfBirth;
-  String gender;
-  bool isActive;
-  String profileImage;
-
-  factory LikedBy.fromJson(Map<String, dynamic> json) => LikedBy(
-        id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        email: json["email"],
-        dateOfBirth: json["date_of_birth"],
-        gender: json["gender"],
-        isActive: json["is_active"],
-        profileImage: json["profile_image"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "email": email,
-        "date_of_birth": dateOfBirth,
-        "gender": gender,
-        "is_active": isActive,
-        "profile_image": profileImage,
       };
 }
 

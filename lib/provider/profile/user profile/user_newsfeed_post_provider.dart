@@ -14,7 +14,6 @@ class UserNewsfeedPostProvider extends ChangeNotifier {
     authorPosts = (await AuthorNewsfeedPostService(id: id).getAuthorPost(page));
     authorPostResults.addAll(authorPosts.results);
     page = page + 1;
-    print(page);
     notifyListeners();
 
     if (authorPostResults != null) {

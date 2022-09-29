@@ -6,13 +6,13 @@ import 'package:http/http.dart' as http;
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../const/url.dart';
-import '../../model/model.dart';
+import '../../model/notification/notifications_model.dart';
 
 class NotificationsProvider extends ChangeNotifier {
   late WebSocketChannel webSocketChannel;
 
   bool loading = true;
-  List<Results> data = [];
+  List<Result> data = [];
   String token = "";
   int? id;
   int? userId;
@@ -28,7 +28,9 @@ class NotificationsProvider extends ChangeNotifier {
         headers = {'Authorization': 'token $token'};
     var response = await http.get(uri, headers: headers);
     notificationData = NotificationModel.fromJson(json.decode(response.body));
-    data = notificationData.results as List<Results>;
+
+    data = notificationData.results as List<Result>;
+    
     loading = false;
     notifyListeners();
   }

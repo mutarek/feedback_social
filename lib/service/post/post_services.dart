@@ -12,7 +12,6 @@ class PostService {
     var uri = Uri.parse("$baseUrl/posts/newsfeeds?page=$page"),
         headers = {'Authorization': 'token $token'};
     var response = await http.get(uri, headers: headers);
-    print(response.statusCode);
     if (response.statusCode == 200) {
       var json = response.body;
       return newsfeedModelFromJson(json);
