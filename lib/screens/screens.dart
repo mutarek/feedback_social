@@ -16,7 +16,6 @@ export 'profile/user/friends_list_screen.dart';
 export 'Page/admin_page.dart';
 export 'Group/create_group.dart';
 export 'Page/single_photo_view.dart';
-export 'Page/page_post.dart';
 export 'Page/show_full_video.dart';
 export 'Animal/your_animal_screen.dart';
 export 'Animal/animal_details.dart';

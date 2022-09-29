@@ -752,15 +752,15 @@ class _PublicProfileDetailsScreenState
                                                                         height: height *
                                                                             0.22,
                                                                         child:
-                                                                            const Center(
+                                                                             Center(
                                                                           child:
                                                                               Text(
-                                                                            "More images",
+                                                                            "+${userPostProvider.authorPostResults[index].totalImage!}",
                                                                             style:
-                                                                                TextStyle(
+                                                                                const TextStyle(
                                                                               color: Colors.white,
                                                                               fontWeight: FontWeight.bold,
-                                                                              fontSize: 20,
+                                                                              fontSize: 26,
                                                                             ),
                                                                           ),
                                                                         ),
