@@ -425,14 +425,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                           height:
                                                                               height * 0.22,
                                                                           child:
-                                                                              const Center(
+                                                                               Center(
                                                                             child:
                                                                                 Text(
-                                                                              "More images",
-                                                                              style: TextStyle(
+                                                                              "+${userPostProvider.authorPostResults[index].totalImage! - 4}",
+                                                                              style: const TextStyle(
                                                                                 color: Colors.white70,
                                                                                 fontWeight: FontWeight.bold,
-                                                                                fontSize: 20,
+                                                                                fontSize: 26,
                                                                               ),
                                                                             ),
                                                                           ),
