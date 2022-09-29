@@ -530,18 +530,21 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                           height *
                                                                               0.22,
                                                                       child:
-                                                                          const Center(
+                                                                           Center(
                                                                         child:
                                                                             Text(
-                                                                          "More images",
+                                                                          "+${newsfeedProvider
+                                                                              .results[
+                                                                                  index]
+                                                                              .totalImage! - 4}",
                                                                           style:
-                                                                              TextStyle(
+                                                                              const TextStyle(
                                                                             color:
                                                                                 Colors.white,
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                             fontSize:
-                                                                                20,
+                                                                                26,
                                                                           ),
                                                                         ),
                                                                       ),
