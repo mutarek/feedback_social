@@ -35,10 +35,8 @@ class _UserGroupViewState extends State<UserGroupView> {
         Provider.of<GroupImagesProvider>(context, listen: false);
     groupImages.groupId = value1.groupIndex;
 
-    final groupVideo =
-        Provider.of<GroupVideoProvider>(context, listen: false);
+    final groupVideo = Provider.of<GroupVideoProvider>(context, listen: false);
     groupVideo.groupId = value1.groupIndex;
-
 
     final groupMembers =
         Provider.of<GroupMembersProvider>(context, listen: false);
@@ -444,14 +442,15 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                 ),
                                               ),
                                               Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  
-                                                  Text(groupPostProvider
-                                                      .groupPosts![index]
-                                                      .author
-                                                      .fullName,
-                                                      style: const TextStyle(
+                                                  Text(
+                                                    groupPostProvider
+                                                        .groupPosts![index]
+                                                        .author
+                                                        .fullName,
+                                                    style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -467,168 +466,150 @@ class _UserGroupViewState extends State<UserGroupView> {
                                           Text(groupPostProvider
                                               .groupPosts![index].description),
                                           SizedBox(
-                                            height: (groupPostProvider
-                                                        .groupPosts![index]
-                                                        .totalImage !=
-                                                    0)
-                                                ? (groupPostProvider
-                                                        .groupPosts![index]
-                                                        .totalImage ==
-                                                    1)?height*0.35: (groupPostProvider
+                                              height: (groupPostProvider
+                                                          .groupPosts![index]
+                                                          .totalImage !=
+                                                      0)
+                                                  ? (groupPostProvider
                                                               .groupPosts![
                                                                   index]
                                                               .totalImage ==
-                                                          2)?0.2:0.5
-                                                : 0,
-                                            child: (groupPostProvider
-                                                        .groupPosts![index]
-                                                        .totalImage ==
-                                                    0)
-                                                ? Container()
-                                                : (groupPostProvider
-                                                            .groupPosts![index]
-                                                            .totalImage ==
-                                                        1)
-                                                    ? Center(
-                                                        child: InkWell(
-                                                          onTap: () {
-                                                            postImageProvider
-                                                                .iamges = [];
-                                                            for (int i = 0;
-                                                                i <
-                                                                    groupPostProvider
-                                                                        .groupPosts![
-                                                                            index]
-                                                                        .images
-                                                                        .length;
-                                                                i++) {
-                                                              postImageProvider
-                                                                  .iamges
-                                                                  .add(groupPostProvider
+                                                          1)
+                                                      ? height * 0.35
+                                                      : (groupPostProvider
+                                                                  .groupPosts![
+                                                                      index]
+                                                                  .totalImage ==
+                                                              2)
+                                                          ? 0.2
+                                                          : 0.5
+                                                  : 0,
+                                              child:
+                                                  (groupPostProvider
+                                                              .groupPosts![
+                                                                  index]
+                                                              .totalImage ==
+                                                          0)
+                                                      ? Container()
+                                                      : (groupPostProvider
+                                                                  .groupPosts![
+                                                                      index]
+                                                                  .totalImage ==
+                                                              1)
+                                                          ? Center(
+                                                              child: InkWell(
+                                                                  onTap: () {
+                                                                    postImageProvider
+                                                                        .iamges = [];
+                                                                    for (int i =
+                                                                            0;
+                                                                        i < groupPostProvider.groupPosts![index].images.length;
+                                                                        i++) {
+                                                                      postImageProvider.iamges.add(groupPostProvider
+                                                                          .groupPosts![
+                                                                              index]
+                                                                          .images[
+                                                                              0]
+                                                                          .image);
+                                                                      Get.to(() =>
+                                                                          const PostImagesPreview());
+                                                                    }
+                                                                  },
+                                                                  child: CachedNetworkImage(
+                                                                      imageUrl: groupPostProvider.groupPosts![index].images[0].image,
+                                                                      imageBuilder: (context, imageProvider) => Container(height: height * 0.35, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                      placeholder: ((context, url) => Container(
+                                                                            alignment:
+                                                                                Alignment.center,
+                                                                            child:
+                                                                                const CircularProgressIndicator(),
+                                                                          )))),
+                                                            )
+                                                          : GridView.builder(
+                                                              physics:
+                                                                  const NeverScrollableScrollPhysics(),
+                                                              shrinkWrap: true,
+                                                              gridDelegate:
+                                                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                                                crossAxisCount:
+                                                                    (groupPostProvider.groupPosts![index].totalImage ==
+                                                                            1)
+                                                                        ? 1
+                                                                        : 2,
+                                                                crossAxisSpacing:
+                                                                    2.0,
+                                                                mainAxisSpacing:
+                                                                    2.0,
+                                                              ),
+                                                              itemCount: (groupPostProvider
+                                                                          .groupPosts![
+                                                                              index]
+                                                                          .totalImage <
+                                                                      4)
+                                                                  ? groupPostProvider
                                                                       .groupPosts![
                                                                           index]
-                                                                      .images[0]
-                                                                      .image);
-                                                              Get.to(() =>
-                                                                  const PostImagesPreview());
-                                                            }
-                                                          },
-                                                          child: CachedNetworkImage(
-                                                                                  imageUrl: groupPostProvider
-                                                                    .groupPosts![
-                                                                        index]
-                                                                    .images[0]
-                                                                    .image,
-                                                                                  imageBuilder: (context, imageProvider) => Container(height: height * 0.35, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                                  placeholder: ((context, url) => Container(
-                                                                                        alignment: Alignment.center,
-                                                                                        child: const CircularProgressIndicator(),
-                                                                                      )))),
-                                                        
-                                                      ):GridView.builder(
-                                                        physics:
-                                                            const NeverScrollableScrollPhysics(),
-                                                        shrinkWrap: true,
-                                                        gridDelegate:
-                                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount:
-                                                              (groupPostProvider
-                                                                    .groupPosts![
-                                                                        index]
-                                                                    .totalImage ==
-                                                                      1)
-                                                                  ? 1
-                                                                  : 2,
-                                                          crossAxisSpacing: 2.0,
-                                                          mainAxisSpacing: 2.0,
-                                                        ),
-                                                        itemCount:
-                                                            (groupPostProvider
-                                                                    .groupPosts![
-                                                                        index]
-                                                                    .totalImage < 4)?groupPostProvider
-                                                                    .groupPosts![
-                                                                        index]
-                                                                    .totalImage : 4,
-                                                        itemBuilder:
-                                                            (context, index2) {
-                                                              
-                                                          return InkWell(
-                                                            onTap: () {
-                                                              postImageProvider
-                                                                      .iamges = [];
-                                                                  for (int i = 0;
-                                                                      i <
-                                                                          groupPostProvider
-                                                                        .groupPosts![
-                                                                            index]
-                                                                        .images.length;
-                                                                      i++) {
-                                                                    postImageProvider.iamges.add(groupPostProvider
-                                                                        .groupPosts![
-                                                                            index]
-                                                                        .images[
-                                                                            index2]
-                                                                        .image);
-                                                                    Get.to(() =>
-                                                                        const PostImagesPreview());
-                                                                  }
+                                                                      .totalImage
+                                                                  : 4,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index2) {
+                                                                return InkWell(
+                                                                  onTap: () {
+                                                                    postImageProvider
+                                                                        .iamges = [];
+                                                                    for (int i =
+                                                                            0;
+                                                                        i < groupPostProvider.groupPosts![index].images.length;
+                                                                        i++) {
+                                                                      postImageProvider.iamges.add(groupPostProvider
+                                                                          .groupPosts![
+                                                                              index]
+                                                                          .images[
+                                                                              index2]
+                                                                          .image);
+                                                                      Get.to(() =>
+                                                                          const PostImagesPreview());
+                                                                    }
+                                                                  },
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      (groupPostProvider.groupPosts![index].totalImage > 4 &&
+                                                                              index2 == 3)
+                                                                          ? Container(
+                                                                              child: Center(
+                                                                                child: Text(
+                                                                                  "${groupPostProvider.groupPosts![index].totalImage - 4}",
+                                                                                  style: const TextStyle(
+                                                                                    color: Colors.white,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    fontSize: 26,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              decoration: BoxDecoration(
+                                                                                  image: DecorationImage(
+                                                                                image: NetworkImage(
+                                                                                  groupPostProvider.groupPosts![index].images[index2].image,
+                                                                                ),
+                                                                                fit: BoxFit.cover,
+                                                                              )),
+                                                                            )
+                                                                          : CachedNetworkImage(
+                                                                              imageUrl: groupPostProvider.groupPosts![index].images[index2].image,
+                                                                              imageBuilder: (context, imageProvider) => Container(width: 400, height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                              placeholder: ((context, url) => Container(
+                                                                                    alignment: Alignment.center,
+                                                                                    child: const CircularProgressIndicator(),
+                                                                                  )))
+                                                                    ],
+                                                                  ),
+                                                                );
                                                               },
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                (groupPostProvider
-                                                                  .groupPosts![
-                                                                      index]
-                                                                  .totalImage > 4 && index2 == 3) ?
-                                                                    Container(
-                                                                      child:  Center(
-                                                                        child: Text(
-                                                                          "${groupPostProvider
-                                                                  .groupPosts![
-                                                                      index]
-                                                                  .totalImage - 4}",
-                                                                          style: const TextStyle(
-                                                                            color: Colors.white,
-                                                                            fontWeight: FontWeight.bold,
-                                                                            fontSize: 26,
-                                                                            
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      decoration: BoxDecoration(
-                                                                        image: DecorationImage(
-                                                                        image: NetworkImage(groupPostProvider
-                                                                      .groupPosts![
-                                                                          index]
-                                                                      .images[
-                                                                          index2]
-                                                                      .image,),
-                                                                        fit: BoxFit.cover,
-                                                                        )
-                                                                      ),
-                                                                    )
-                                                                    : CachedNetworkImage(
-                                                                                  imageUrl: groupPostProvider
-                                                                    .groupPosts![
-                                                                        index]
-                                                                    .images[index2]
-                                                                    .image,
-                                                                                  imageBuilder: (context, imageProvider) => Container(width: 400,
-                                                      height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                                  placeholder: ((context, url) => Container(
-                                                                                        alignment: Alignment.center,
-                                                                                        child: const CircularProgressIndicator(),
-                                                                                      )))
-                                                              ],
-                                                            ),
-                                                          );
-                                                        },
-                                                      )
-                                                    
-                                          ),
+                                                            )),
                                           const SizedBox(
                                             height: 10,
                                           ),
@@ -656,8 +637,7 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                 )
                                               : Container(),
                                           Consumer2<ProfileDetailsProvider,
-                                          ReportPostProvider
-                                          >(
+                                                  ReportPostProvider>(
                                               builder: (context,
                                                   profileDetailsProvider,
                                                   reportPostProvider,
@@ -730,14 +710,16 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                   : Colors.red,
                                             );
                                           }),
-                                          Consumer3<
+                                          Consumer4<
                                                   GroupPostLikeCommentProvider,
                                                   GroupDetailsProvider,
-                                                  GroupPostProvider>(
+                                                  GroupPostProvider,
+                                                  ShareGroupPagePostProvider>(
                                               builder: (context,
                                                   likeComment,
                                                   groupDetailsProvider,
                                                   groupPostProvider,
+                                                  shareGroupPagePostProvider,
                                                   child) {
                                             return LikeCommentShare(
                                               likeText: "Liked",
@@ -764,17 +746,17 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                     const GroupCommentsScreen());
                                               },
                                               share: () {
-                                                // likeComment.pageId =
-                                                //     groupPostProvider
-                                                //         .pagePosts![index]
-                                                //         .page
-                                                //         .id;
-                                                // likeComment.postId =
-                                                //     groupPostProvider
-                                                //         .pagePosts![index].id
-                                                //         .toString();
-                                                // Get.to(
-                                                //     const PagePostShareScreen());
+                                                shareGroupPagePostProvider
+                                                        .groupPageId =
+                                                    groupDetailsProvider.groupDetails.id;
+                                                shareGroupPagePostProvider
+                                                        .postId =
+                                                    groupPostProvider
+                                                        .groupPosts![index].id;
+                                                shareGroupPagePostProvider
+                                                    .postType = "group";
+                                                Get.to(
+                                                    const GroupPostShare());
                                               },
                                               likeIconColor: (groupPostProvider
                                                           .groupPosts![index]

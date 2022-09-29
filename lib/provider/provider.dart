@@ -90,3 +90,4 @@ export 'settings/value/drect_massege.dart';
 export 'post/report_post_provider.dart';
 export 'latest_version/latest_version_provider.dart';
 export 'comment/timeline_post_comment_provider.dart';
+export 'post/share_group_page_post_provider.dart';
