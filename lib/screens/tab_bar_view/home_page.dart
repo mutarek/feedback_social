@@ -682,7 +682,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                   )
                                             : const Text(""),
                                         onProfileTap: () {
-                                          groupPostProvider.id =
+                                          
+                                          if(newsfeedProvider
+                                                    .results[index].postType == "group"){
+                                              groupPostProvider.id =
                                               newsfeedProvider
                                                   .results[index].group!.id!;
                                           groupDetailsProvider.groupIndex =
@@ -691,8 +694,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                           createGroupPost.groupId =
                                               newsfeedProvider
                                                   .results[index].group!.id!;
-                                          if(newsfeedProvider
-                                                    .results[index].postType == "group"){
                                                Get.to(() => const PublicGroupView()); 
 
                                           }else{
