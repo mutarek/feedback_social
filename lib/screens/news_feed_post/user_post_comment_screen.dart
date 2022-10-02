@@ -16,35 +16,20 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import '../screens.dart';
 
 class UserPostCommentsScreen extends StatefulWidget {
-  final WebSocketChannel channel = IOWebSocketChannel.connect(
-      'wss://als-social.com/ws/post/10/comment/timeline_post/');
+  //final WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/10/comment/timeline_post/');
 
   UserPostCommentsScreen({Key? key}) : super(key: key);
 
   @override
-  State<UserPostCommentsScreen> createState() =>
-      _UserPostCommentsScreenState(channel: channel);
+  State<UserPostCommentsScreen> createState() => _UserPostCommentsScreenState();
 }
 
 class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
-  List socketComment = [];
-  List<Map> newComment = [];
-  final WebSocketChannel channel;
-  _UserPostCommentsScreenState({required this.channel}) {
-    channel.stream.listen((data) {
-      TimelinePostCommentProvider().getData();
-      print("ll : $data");
-    }, onDone: () {
-      print("disconected");
-    });
-  }
-
   @override
   void initState() {
-    final commentProvider =
-        Provider.of<TimelinePostCommentProvider>(context, listen: false);
-    commentProvider.getData();
-    print(commentProvider.postId);
+    Provider.of<TimelinePostCommentProvider>(context, listen: false).getData();
+    Provider.of<TimelinePostCommentProvider>(context, listen: false).initializeSocket();
+
     super.initState();
   }
 
@@ -58,133 +43,124 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Palette.scaffold,
-            centerTitle: true,
-            elevation: 0,
-            leading: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: const Icon(
-                FontAwesomeIcons.arrowLeft,
-                color: Palette.primary,
-              ),
-            ),
-          ),
+        // bottomNavigationBar: Container(
+        //   height: 70,
+        //   child: Row(
+        //
+        //   ),
+        // ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Palette.scaffold,
-          body: RefreshIndicator(
-            onRefresh: _refresh,
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Consumer3<
-                            UserNewsfeedPostProvider,
-                            ProfileDetailsProvider,
-                            TimelinePostCommentProvider>(
-                        builder: (context, provider, provider2,
-                            timelinePostCommentProvider, child) {
-                      return ListView.builder(
-                          itemCount:
-                              timelinePostCommentProvider.comments.length,
-                          itemBuilder: (context, index) {
-                            return SingleChildScrollView(
-                                physics: const ScrollPhysics(),
-                                child: CommentWidget(
-                                  width: width,
-                                  height: height,
-                                  onTap: () {},
-                                  image: timelinePostCommentProvider
-                                      .comments[index].author!.profileImage!,
-                                  name: timelinePostCommentProvider
-                                      .comments[index].author!.fullName!,
-                                  comment: timelinePostCommentProvider
-                                      .comments[index].comment!,
-                                ));
-                          });
-                    }),
-                  ),
-                  Positioned.fill(
-                      child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: width * 0.03, bottom: height * 0.02),
-                      child: Container(
-                        height: height * 0.08,
-                        width: width * 0.795,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              top: height * 0.01, left: width * 0.02),
-                          child: TextField(
-                            textAlign: TextAlign.start,
-                            controller: commentController,
-                            decoration: const InputDecoration.collapsed(
-                              hintText: "Comment here..",
-                            ),
+          centerTitle: true,
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(FontAwesomeIcons.arrowLeft, color: Palette.primary),
+          ),
+        ),
+        backgroundColor: Palette.scaffold,
+        body: Consumer<TimelinePostCommentProvider>(
+            builder: (context, timelineProvider, child) => RefreshIndicator(
+                  onRefresh: _refresh,
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                    },
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Consumer3<UserNewsfeedPostProvider, ProfileDetailsProvider, TimelinePostCommentProvider>(
+                                builder: (context, provider, provider2, timelinePostCommentProvider, child) {
+                              return ListView.builder(
+                                  itemCount: timelinePostCommentProvider.comments.length,
+                                  itemBuilder: (context, index) {
+                                    return CommentWidget(
+                                      width: width,
+                                      height: height,
+                                      onTap: () {},
+                                      image: timelinePostCommentProvider.comments[index].author!.profileImage!,
+                                      name: timelinePostCommentProvider.comments[index].author!.fullName!,
+                                      comment: timelinePostCommentProvider.comments[index].comment!,
+                                    );
+                                  });
+                            }),
                           ),
                         ),
-                      ),
-                    ),
-                  )),
-                  Positioned.fill(
-                      child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Consumer2<TimelinePostCommentProvider,
-                            UserProfileProvider>(
-                        builder:
-                            (context, provider, userProfileProvider, child) {
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: height * 0.02),
-                        child: SizedBox(
-                          height: height * 0.079,
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Palette.primary)),
-                              onPressed: () {
-                                provider.comment(commentController.text);
-                                channel.sink.add(
-                                  jsonEncode({
-                                    "data": {
-                                      "comment": commentController.text,
-                                      "full_name":
-                                          "${userProfileProvider.userprofileData.firstName!} ${userProfileProvider.userprofileData.lastName!}",
-                                      "profile_image": userProfileProvider
-                                          .userprofileData.profileImage!
-                                    }
-                                  }),
-                                );
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: width * 0.03, bottom: height * 0.02),
+                                  child: Container(
+                                    height: height * 0.08,
+                                    width: width * 0.795,
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: height * 0.01, left: width * 0.02),
+                                      child: TextField(
+                                        textAlign: TextAlign.start,
+                                        controller: commentController,
+                                        decoration: const InputDecoration.collapsed(hintText: "Comment here.."),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: Consumer2<TimelinePostCommentProvider, UserProfileProvider>(
+                                  builder: (context, provider, userProfileProvider, child) {
+                                return Padding(
+                                  padding: EdgeInsets.only(bottom: height * 0.02),
+                                  child: SizedBox(
+                                    height: height * 0.079,
+                                    child: ElevatedButton(
+                                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Palette.primary)),
+                                        onPressed: () {
+                                          provider.comment(commentController.text);
 
-                                commentController.text = "";
-                                FocusScope.of(context).unfocus();
-                              },
-                              child: const Icon(FontAwesomeIcons.paperPlane)),
+                                          // timelineProvider.channel.sink.add(
+                                          //   jsonEncode({
+                                          //     "data": {
+                                          //       "comment": commentController.text,
+                                          //       "full_name":
+                                          //           "${userProfileProvider.userprofileData.firstName!} ${userProfileProvider.userprofileData.lastName!}",
+                                          //       "profile_image": userProfileProvider.userprofileData.profileImage!
+                                          //     }
+                                          //   }),
+                                          // );
+                                          // timelineProvider.userPostComments();
+                                          commentController.text = "";
+                                          // timelineProvider.channelDismiss();
+                                          FocusScope.of(context).unfocus();
+                                        },
+                                        child: const Icon(FontAwesomeIcons.paperPlane)),
+                                  ),
+                                );
+                              }),
+                            )
+                          ],
                         ),
-                      );
-                    }),
-                  ))
-                ],
-              ),
-            ),
-          )),
+                      ],
+                    ),
+                  ),
+                )),
+      ),
     );
   }
 
   @override
   void dispose() {
     commentController.dispose();
-    channel.sink.close();
+    //Provider.of<TimelinePostCommentProvider>(context, listen: false).channelDismiss(isDisposs: true);
     super.dispose();
   }
 }
