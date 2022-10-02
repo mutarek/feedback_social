@@ -17,8 +17,9 @@ import '../screens.dart';
 
 class UserPostCommentsScreen extends StatefulWidget {
   //final WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/10/comment/timeline_post/');
+  final int index;
 
-  UserPostCommentsScreen({Key? key}) : super(key: key);
+  UserPostCommentsScreen(this.index, {Key? key}) : super(key: key);
 
   @override
   State<UserPostCommentsScreen> createState() => _UserPostCommentsScreenState();
@@ -28,7 +29,7 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
   @override
   void initState() {
     Provider.of<TimelinePostCommentProvider>(context, listen: false).getData();
-    Provider.of<TimelinePostCommentProvider>(context, listen: false).initializeSocket();
+    // Provider.of<TimelinePostCommentProvider>(context, listen: false).initializeSocket();
 
     super.initState();
   }
@@ -125,7 +126,12 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
                                     child: ElevatedButton(
                                         style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Palette.primary)),
                                         onPressed: () {
-                                          provider.comment(commentController.text);
+                                          provider.comment(commentController.text).then((value) {
+                                            if (value == true) {
+                                              Provider.of<UserNewsfeedPostProvider>(context, listen: false)
+                                                  .updateCommentDataCount(widget.index);
+                                            }
+                                          });
 
                                           // timelineProvider.channel.sink.add(
                                           //   jsonEncode({

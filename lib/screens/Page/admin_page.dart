@@ -615,6 +615,7 @@ class _AdminPageState extends State<AdminPage> {
                                                 (context, likeComment, child) {
                                           return LikeCommentShare(
                                             likeText: "Liked",
+                                            index: index,
                                             like: () {
                                               likeComment.pageId =
                                                   pagePostProvider

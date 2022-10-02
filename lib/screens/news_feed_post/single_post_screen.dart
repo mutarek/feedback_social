@@ -181,6 +181,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                         ),
                       ),
                       LikeCommentShare(
+                          index: 0,
                           likeText: (singlePostProvider.post.like == false)
                               ? "Like"
                               : "liked",

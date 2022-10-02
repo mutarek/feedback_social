@@ -41,6 +41,7 @@ class PostContainer extends StatelessWidget {
   final int hasVideo;
   final VoidCallback onVideoTap;
   final Widget videoThumnail;
+
   const PostContainer(
       {required this.delete,
       required this.edit,
@@ -109,8 +110,7 @@ class PostContainer extends StatelessWidget {
                       profileImage: profileImage,
                       onProfileTap: onProfileTap),
                   Padding(
-                    padding: EdgeInsets.only(
-                        left: width * 0.04, bottom: height * 0.02),
+                    padding: EdgeInsets.only(left: width * 0.04, bottom: height * 0.02),
                     child: Text(
                       description!,
                       style: GoogleFonts.lato(),
@@ -129,9 +129,7 @@ class PostContainer extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Column(
@@ -143,28 +141,23 @@ class PostContainer extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      left: width * 0.02, top: height * 0.01),
+                                  padding: EdgeInsets.only(left: width * 0.02, top: height * 0.01),
                                   child: CircleAvatar(
                                     backgroundColor: Colors.white,
                                     backgroundImage: NetworkImage(sharerImage!),
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      top: height * 0.018, left: width * 0.02),
+                                  padding: EdgeInsets.only(top: height * 0.018, left: width * 0.02),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           Text(
                                             sharerName!,
-                                            style: GoogleFonts.lato(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
+                                            style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.bold),
                                           ),
                                           SizedBox(
                                             width: width * 0.02,
@@ -197,8 +190,7 @@ class PostContainer extends StatelessWidget {
                               height: 10,
                             ),
                             Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14)),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
                               child: PostHeader(
                                   moreOnPressed: () {},
                                   pageImage: pageImage,
@@ -240,9 +232,7 @@ class PostContainer extends StatelessWidget {
                     ? Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
+                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Column(
@@ -254,33 +244,23 @@ class PostContainer extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          left: width * 0.02,
-                                          top: height * 0.01),
+                                      padding: EdgeInsets.only(left: width * 0.02, top: height * 0.01),
                                       child: CircleAvatar(
                                         backgroundColor: Colors.white,
-                                        backgroundImage:
-                                            NetworkImage(sharerImage!),
+                                        backgroundImage: NetworkImage(sharerImage!),
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          top: height * 0.018,
-                                          left: width * 0.02),
+                                      padding: EdgeInsets.only(top: height * 0.018, left: width * 0.02),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
                                               Text(
                                                 sharerName!,
-                                                style: GoogleFonts.lato(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.bold),
                                               ),
                                               SizedBox(
                                                 width: width * 0.02,
@@ -313,8 +293,7 @@ class PostContainer extends StatelessWidget {
                                   height: 10,
                                 ),
                                 Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14)),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
                                   child: PostHeader(
                                       moreOnPressed: moreOnPressed,
                                       pageImage: pageImage,
@@ -358,9 +337,7 @@ class PostContainer extends StatelessWidget {
                     Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
+                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Column(
@@ -372,30 +349,21 @@ class PostContainer extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          left: width * 0.02,
-                                          top: height * 0.01),
+                                      padding: EdgeInsets.only(left: width * 0.02, top: height * 0.01),
                                       child: CircleAvatar(
                                         backgroundColor: Colors.white,
-                                        backgroundImage:
-                                            NetworkImage(sharerImage!),
+                                        backgroundImage: NetworkImage(sharerImage!),
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          top: height * 0.018,
-                                          left: width * 0.02),
+                                      padding: EdgeInsets.only(top: height * 0.018, left: width * 0.02),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             sharerName!,
-                                            style: GoogleFonts.lato(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold),
+                                            style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             shareTime!,
@@ -422,8 +390,7 @@ class PostContainer extends StatelessWidget {
                                   height: 10,
                                 ),
                                 Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14)),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
                                   child: PostHeader(
                                       moreOnPressed: moreOnPressed,
                                       pageImage: pageImage,
@@ -461,9 +428,9 @@ class PostContainer extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 06,
-                      ),
+        const SizedBox(
+          height: 06,
+        ),
         (hasVideo == 1)
             ? InkWell(
                 onTap: onVideoTap,
@@ -484,6 +451,7 @@ class PostContainer extends StatelessWidget {
         ),
         LikeCommentShare(
           like: like,
+          index: 0,
           comment: comment,
           share: share,
           likeIconColor: (isLiked == true) ? Colors.red : Colors.black,

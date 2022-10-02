@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class PublicNewsfeedPostProvider extends ChangeNotifier {
   var authorPosts;
-  List<Result> authorPostResults = [];
+  List<NewsfeedModels> authorPostResults = [];
   bool hasdata = true;
   var isLoaded = false;
   int? id;

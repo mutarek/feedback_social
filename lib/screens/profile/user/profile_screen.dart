@@ -558,14 +558,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     (userPostProvider.authorPostResults[index].like == false) ? Colors.black : Colors.red,
                                                 likeText: (userPostProvider.authorPostResults[index].like == true) ? "Liked" : "Like",
                                               ),
-                                              Consumer2<LikeCommentShareProvider, TimelinePostCommentProvider>(
-                                                  builder: (context, likeComment, timelinePostCommentProvider, child) {
+                                              Consumer3<LikeCommentShareProvider, TimelinePostCommentProvider,UserNewsfeedPostProvider>(
+                                                  builder: (context, likeComment, timelinePostCommentProvider,postProvider, child) {
                                                 return LikeCommentShare(
                                                   likeText: "Liked",
+                                                  index: index,
                                                   like: () {
-                                                    likeComment.postId = userPostProvider.authorPostResults[index].id.toString();
-                                                    likeComment.like();
-                                                    refresh();
+                                                    postProvider.addLike(userPostProvider.authorPostResults[index].id!, index);
+                                                    //
+                                                    // likeComment.postId = userPostProvider.authorPostResults[index].id.toString();
+                                                    // likeComment.like();
+                                                    // refresh();
                                                   },
                                                   comment: () {
                                                     timelinePostCommentProvider.postId = userPostProvider.authorPostResults[index].id!;
@@ -573,7 +576,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     likeComment.postId = userPostProvider.authorPostResults[index].id.toString();
                                                     userPostProvider.index = index;
                                                     // print(userPostProvider.authorPosts[index].comments.length);
-                                                    Get.to(UserPostCommentsScreen());
+                                                    Get.to(UserPostCommentsScreen(index));
                                                   },
                                                   share: () {
                                                     // likeComment.pageId =
@@ -589,7 +592,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     //     const authorPostResultshareScreen());
                                                   },
                                                   likeIconColor:
-                                                      (userPostProvider.authorPostResults[index].like == false) ? Colors.black : Colors.red,
+                                                      (userPostProvider.likesStatusAllData[index] == 0) ? Colors.black : Colors.red,
                                                 );
                                               })
                                             ],

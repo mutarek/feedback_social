@@ -779,6 +779,7 @@ class _PublicGroupViewState extends State<PublicGroupView> {
                                                   child) {
                                             return LikeCommentShare(
                                               likeText: "Liked",
+                                              index: index,
                                               like: () {
                                                 likeComment.groupId =
                                                     groupDetailsProvider

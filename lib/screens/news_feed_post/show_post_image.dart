@@ -86,6 +86,7 @@ class _ShowPostImageState extends State<ShowPostImage> {
                       child: Container(
                         color: Colors.black45,
                         child: LikeCommentShare(
+                          index: provider.index,
                           likeText: (provider.results[provider.index].like == true)?
                           "Liked": "Like",
                           like: (){},

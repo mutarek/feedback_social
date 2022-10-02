@@ -4,11 +4,9 @@
 
 import 'dart:convert';
 
-AuthorNewsFeedPostModel authorNewsFeedPostModelFromJson(String str) =>
-    AuthorNewsFeedPostModel.fromJson(json.decode(str));
+AuthorNewsFeedPostModel authorNewsFeedPostModelFromJson(String str) => AuthorNewsFeedPostModel.fromJson(json.decode(str));
 
-String authorNewsFeedPostModelToJson(AuthorNewsFeedPostModel data) =>
-    json.encode(data.toJson());
+String authorNewsFeedPostModelToJson(AuthorNewsFeedPostModel data) => json.encode(data.toJson());
 
 class AuthorNewsFeedPostModel {
   AuthorNewsFeedPostModel({
@@ -21,15 +19,13 @@ class AuthorNewsFeedPostModel {
   int? count;
   String? next;
   dynamic previous;
-  List<Result>? results;
+  List<NewsfeedModels>? results;
 
-  factory AuthorNewsFeedPostModel.fromJson(Map<String, dynamic> json) =>
-      AuthorNewsFeedPostModel(
+  factory AuthorNewsFeedPostModel.fromJson(Map<String, dynamic> json) => AuthorNewsFeedPostModel(
         count: json["count"],
         next: json["next"],
         previous: json["previous"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+        results: List<NewsfeedModels>.from(json["results"].map((x) => NewsfeedModels.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -40,8 +36,8 @@ class AuthorNewsFeedPostModel {
       };
 }
 
-class Result {
-  Result({
+class NewsfeedModels {
+  NewsfeedModels({
     this.id,
     this.description,
     this.author,
@@ -70,14 +66,14 @@ class Result {
   int? totalComment;
   List<dynamic>? comments;
   int? totalLike;
-  List<dynamic>? likedBy;
+  List<LikedByMeModels>? likedBy;
   String? timestamp;
   bool? isShare;
   String? postType;
   bool? like;
   SharePost? sharePost;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory NewsfeedModels.fromJson(Map<String, dynamic> json) => NewsfeedModels(
         id: json["id"],
         description: json["description"],
         author: Author.fromJson(json["author"]),
@@ -88,14 +84,12 @@ class Result {
         totalComment: json["total_comment"],
         comments: List<dynamic>.from(json["comments"].map((x) => x)),
         totalLike: json["total_like"],
-        likedBy: List<dynamic>.from(json["liked_by"].map((x) => x)),
+        likedBy: List<LikedByMeModels>.from(json["liked_by"].map((x) => x)),
         timestamp: json["timestamp"],
         isShare: json["is_share"],
         postType: json["post_type"],
         like: json["like"],
-        sharePost: json["share_post"] == null
-            ? null
-            : SharePost.fromJson(json["share_post"]),
+        sharePost: json["share_post"] == null ? null : SharePost.fromJson(json["share_post"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -252,4 +246,29 @@ class Video {
         "thumbnail": thumbnail,
         "video": video,
       };
+}
+class LikedByMeModels {
+  LikedByMeModels({
+    this.id,
+    this.fullName,
+    this.profileImage,
+  });
+
+  LikedByMeModels.fromJson(dynamic json) {
+    id = json['id'];
+    fullName = json['full_name'];
+    profileImage = json['profile_image'];
+  }
+
+  num? id;
+  String? fullName;
+  String? profileImage;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['full_name'] = fullName;
+    map['profile_image'] = profileImage;
+    return map;
+  }
 }

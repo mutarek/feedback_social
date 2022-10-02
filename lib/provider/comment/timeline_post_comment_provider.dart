@@ -27,7 +27,7 @@ class TimelinePostCommentProvider extends ChangeNotifier {
     }
   }
 
-  Future comment(String description) async {
+  Future<bool> comment(String description) async {
     var apiUrl = "$baseUrl/posts/$postId/comment/create/";
 
     Map mappeddata = {"comment": description};
@@ -41,11 +41,14 @@ class TimelinePostCommentProvider extends ChangeNotifier {
     if (response.statusCode == 201) {
       success = true;
       var json = jsonDecode(response.body);
+      print('json: $json');
       comments.add(CommentModels.fromJson(json));
       Fluttertoast.showToast(msg: "commented");
       notifyListeners();
+      return true;
     } else {
       Fluttertoast.showToast(msg: "Something went wrong");
+      return false;
     }
   }
 
