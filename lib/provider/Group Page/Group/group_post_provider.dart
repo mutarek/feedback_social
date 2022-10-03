@@ -8,6 +8,7 @@ class GroupPostProvider extends ChangeNotifier {
   var isLoaded = false;
   int id = 0;
   int index = 0;
+
   Future<void> getData() async {
     groupPosts = (await GroupPostService(id: id).getGroupPost());
     notifyListeners();

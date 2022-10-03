@@ -31,15 +31,13 @@ class _UserGroupViewState extends State<UserGroupView> {
     value.getUserData();
     final groupPost = Provider.of<GroupPostProvider>(context, listen: false);
     groupPost.getData();
-    final groupImages =
-        Provider.of<GroupImagesProvider>(context, listen: false);
+    final groupImages = Provider.of<GroupImagesProvider>(context, listen: false);
     groupImages.groupId = value1.groupIndex;
 
     final groupVideo = Provider.of<GroupVideoProvider>(context, listen: false);
     groupVideo.groupId = value1.groupIndex;
 
-    final groupMembers =
-        Provider.of<GroupMembersProvider>(context, listen: false);
+    final groupMembers = Provider.of<GroupMembersProvider>(context, listen: false);
     groupMembers.id = value1.groupIndex;
     super.initState();
   }
@@ -66,8 +64,7 @@ class _UserGroupViewState extends State<UserGroupView> {
               // Setting floatHeaderSlivers to true is required in order to float
               // the outer slivers over the inner scrollable.
               floatHeaderSlivers: true,
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
+              headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                 return [
                   SliverList(
                       delegate: SliverChildListDelegate([
@@ -76,21 +73,10 @@ class _UserGroupViewState extends State<UserGroupView> {
                         onTap: () {
                           FocusScope.of(context).requestFocus(FocusNode());
                         },
-                        child: Consumer6<
-                                AllGroupProvider,
-                                GroupDetailsProvider,
-                                GroupInviteProvider,
-                                GroupInviteFriendListProvider,
-                                ProfileImagesProvider,
-                                EditGroupProvider>(
-                            builder: (context,
-                                provider,
-                                groupDetailsProvider,
-                                groupInviteProvider,
-                                groupFriendListProvider,
-                                profileImageProvider,
-                                editGroupProvider,
-                                child) {
+                        child: Consumer6<AllGroupProvider, GroupDetailsProvider, GroupInviteProvider, GroupInviteFriendListProvider,
+                                ProfileImagesProvider, EditGroupProvider>(
+                            builder: (context, provider, groupDetailsProvider, groupInviteProvider, groupFriendListProvider,
+                                profileImageProvider, editGroupProvider, child) {
                           return (groupDetailsProvider.groupDetails == null)
                               ? const Center(
                                   child: CircularProgressIndicator(),
@@ -110,15 +96,10 @@ class _UserGroupViewState extends State<UserGroupView> {
                                               back: () {
                                                 Get.back();
                                               },
-                                              coverphoto: groupDetailsProvider
-                                                  .groupDetails.coverPhoto,
+                                              coverphoto: groupDetailsProvider.groupDetails!.coverPhoto!,
                                               viewCoverPhoto: () {
-                                                profileImageProvider.imageUrl =
-                                                    groupDetailsProvider
-                                                        .groupDetails
-                                                        .coverPhoto;
-                                                Get.to(() =>
-                                                    const SingleImageView());
+                                                profileImageProvider.imageUrl = groupDetailsProvider.groupDetails!.coverPhoto!;
+                                                Get.to(() => const SingleImageView());
                                               },
                                             ),
                                             Positioned(
@@ -128,44 +109,26 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                 width: width,
                                                 decoration: const BoxDecoration(
                                                   color: Palette.scaffold,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(15)),
+                                                  borderRadius: BorderRadius.all(Radius.circular(15)),
                                                 ),
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: height * 0.22,
-                                                  left: width * 0.03),
+                                              padding: EdgeInsets.only(top: height * 0.22, left: width * 0.03),
                                               child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        groupDetailsProvider
-                                                            .groupDetails.name,
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                height * 0.03,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                        groupDetailsProvider.groupDetails!.name!,
+                                                        style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold),
                                                       ),
                                                       Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                right: width *
-                                                                    0.227),
+                                                        padding: EdgeInsets.only(right: width * 0.227),
                                                         child: Text(
-                                                          groupDetailsProvider
-                                                              .groupDetails
-                                                              .category,
+                                                          groupDetailsProvider.groupDetails!.category!,
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -173,42 +136,19 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                       ),
                                                       InkWell(
                                                         onTap: () {
-                                                          groupFriendListProvider
-                                                              .friendsList = [];
-                                                          groupInviteProvider
-                                                                  .groupId =
-                                                              groupDetailsProvider
-                                                                  .groupDetails
-                                                                  .id;
-                                                          groupFriendListProvider
-                                                                  .groupId =
-                                                              groupDetailsProvider
-                                                                  .groupDetails
-                                                                  .id;
-                                                          Get.to(() =>
-                                                              const InviteFriendScreen());
+                                                          groupFriendListProvider.friendsList = [];
+                                                          groupInviteProvider.groupId = groupDetailsProvider.groupDetails!.id as int;
+                                                          groupFriendListProvider.groupId = groupDetailsProvider.groupDetails!.id as int;
+                                                          Get.to(() => const InviteFriendScreen());
                                                         },
                                                         child: CircleAvatar(
-                                                          backgroundColor: Palette
-                                                              .notificationColor,
+                                                          backgroundColor: Palette.notificationColor,
                                                           radius: 20,
                                                           child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
+                                                            mainAxisAlignment: MainAxisAlignment.center,
                                                             children: [
-                                                              const Icon(
-                                                                  FontAwesomeIcons
-                                                                      .plus,
-                                                                  size: 8,
-                                                                  color: Colors
-                                                                      .white),
-                                                              Text("Invite",
-                                                                  style: GoogleFonts.lato(
-                                                                      fontSize:
-                                                                          10,
-                                                                      color: Colors
-                                                                          .white))
+                                                              const Icon(FontAwesomeIcons.plus, size: 8, color: Colors.white),
+                                                              Text("Invite", style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
                                                             ],
                                                           ),
                                                         ),
@@ -217,79 +157,42 @@ class _UserGroupViewState extends State<UserGroupView> {
                                                   ),
                                                   const Spacer(),
                                                   Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
+                                                    padding: const EdgeInsets.all(8.0),
                                                     child: Column(
                                                       children: [
                                                         Text(
-                                                          groupDetailsProvider
-                                                              .groupDetails
-                                                              .totalMember
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  height * 0.03,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
+                                                          groupDetailsProvider.groupDetails!.totalMember.toString(),
+                                                          style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold),
                                                         ),
                                                         const Text("Members"),
                                                         SizedBox(
-                                                          height:
-                                                              height * 0.014,
+                                                          height: height * 0.014,
                                                         ),
-                                                        Consumer<
-                                                                GroupMembersProvider>(
-                                                            builder: (context,
-                                                                provider,
-                                                                child) {
+                                                        Consumer<GroupMembersProvider>(builder: (context, provider, child) {
                                                           return InkWell(
                                                             onTap: () {
-                                                              editGroupProvider
-                                                                      .groupId =
-                                                                  groupDetailsProvider
-                                                                      .groupDetails
-                                                                      .id;
-                                                              Get.to(() =>
-                                                                  const EditGroup());
+                                                              editGroupProvider.groupId = groupDetailsProvider.groupDetails!.id as int;
+                                                              Get.to(() => const EditGroup());
                                                             },
                                                             child: Container(
-                                                              height: height *
-                                                                  0.036,
-                                                              width:
-                                                                  width * 0.2,
+                                                              height: height * 0.036,
+                                                              width: width * 0.2,
                                                               decoration: BoxDecoration(
-                                                                  color: Palette
-                                                                      .primary,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10)),
+                                                                  color: Palette.primary, borderRadius: BorderRadius.circular(10)),
                                                               child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
+                                                                mainAxisAlignment: MainAxisAlignment.center,
                                                                 children: [
                                                                   const Icon(
-                                                                    FontAwesomeIcons
-                                                                        .penToSquare,
+                                                                    FontAwesomeIcons.penToSquare,
                                                                     size: 14,
-                                                                    color: Colors
-                                                                        .white,
+                                                                    color: Colors.white,
                                                                   ),
                                                                   SizedBox(
-                                                                    width: width *
-                                                                        0.007,
+                                                                    width: width * 0.007,
                                                                   ),
                                                                   Text(
                                                                     "Edit Group",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            height *
-                                                                                0.012,
-                                                                        color: Colors
-                                                                            .white),
+                                                                    style: TextStyle(fontSize: height * 0.012, color: Colors.white),
                                                                   )
                                                                 ],
                                                               ),
@@ -313,27 +216,19 @@ class _UserGroupViewState extends State<UserGroupView> {
                                           child: TabBar(tabs: [
                                             Text(
                                               "Discussion",
-                                              style: TextStyle(
-                                                  fontSize: height * 0.013,
-                                                  color: Colors.black),
+                                              style: TextStyle(fontSize: height * 0.013, color: Colors.black),
                                             ),
                                             Text(
                                               "Photos",
-                                              style: TextStyle(
-                                                  fontSize: height * 0.013,
-                                                  color: Colors.black),
+                                              style: TextStyle(fontSize: height * 0.013, color: Colors.black),
                                             ),
                                             Text(
                                               "Videos",
-                                              style: TextStyle(
-                                                  fontSize: height * 0.013,
-                                                  color: Colors.black),
+                                              style: TextStyle(fontSize: height * 0.013, color: Colors.black),
                                             ),
                                             Text(
                                               "Members",
-                                              style: TextStyle(
-                                                  fontSize: height * 0.013,
-                                                  color: Colors.black),
+                                              style: TextStyle(fontSize: height * 0.013, color: Colors.black),
                                             ),
                                           ]),
                                         ),
@@ -351,24 +246,12 @@ class _UserGroupViewState extends State<UserGroupView> {
                 children: [
                   Column(
                     children: [
-                      Consumer6<
-                              ProfileDetailsProvider,
-                              CreateGroupPost,
-                              GroupPostProvider,
-                              GroupDetailsProvider,
-                              PostImagesPreviewProvider,
+                      Consumer6<ProfileDetailsProvider, CreateGroupPost, GroupPostProvider, GroupDetailsProvider, PostImagesPreviewProvider,
                               SingleVideoShowProvider>(
-                          builder: (context,
-                              profileDetailsProvider,
-                              createGroupPost,
-                              groupPostProvider,
-                              groupDetailsProvider,
-                              postImageProvider,
-                              singleVideoShowProvider,
-                              child) {
+                          builder: (context, profileDetailsProvider, createGroupPost, groupPostProvider, groupDetailsProvider,
+                              postImageProvider, singleVideoShowProvider, child) {
                         return Padding(
-                          padding: EdgeInsets.only(
-                              left: width * 0.02, right: width * 0.022),
+                          padding: EdgeInsets.only(left: width * 0.02, right: width * 0.022),
                           child: SingleChildScrollView(
                             physics: const ScrollPhysics(),
                             child: Column(
@@ -378,15 +261,13 @@ class _UserGroupViewState extends State<UserGroupView> {
                                     photoPost: () {
                                       createGroupPost.pickImage();
                                     },
-                                    userProfilePhoto:
-                                        "${profileDetailsProvider.userprofileData.profileImage}",
+                                    userProfilePhoto: "${profileDetailsProvider.userprofileData.profileImage}",
                                     videoPost: () {
                                       createGroupPost.pickVideo();
                                     },
                                     share: () {
                                       if (writePostController.text.isNotEmpty) {
-                                        createGroupPost.createPost(
-                                            writePostController.text);
+                                        createGroupPost.createPost(writePostController.text);
                                         if (createGroupPost.success == true) {
                                           writePostController.text = '';
                                           refresh();
@@ -395,376 +276,222 @@ class _UserGroupViewState extends State<UserGroupView> {
                                           createGroupPost.video = null;
                                         }
                                       } else {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Please write somthing to post");
+                                        Fluttertoast.showToast(msg: "Please write somthing to post");
                                       }
                                     }),
 
                                 /*----------------------------------------Newsfeed---------------------------------*/
                                 ListView.builder(
                                     shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount:
-                                        groupPostProvider.groupPosts!.length,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    itemCount: groupPostProvider.groupPosts!.length,
                                     itemBuilder: ((context, index) {
                                       return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
                                               CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    (groupDetailsProvider
-                                                                .groupDetails ==
-                                                            null)
-                                                        ? ""
-                                                        : groupDetailsProvider
-                                                            .groupDetails
-                                                            .coverPhoto),
+                                                backgroundImage: NetworkImage((groupDetailsProvider.groupDetails == null)
+                                                    ? ""
+                                                    : groupDetailsProvider.groupDetails!.coverPhoto!),
                                                 radius: 27,
                                                 child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: width * 0.058,
-                                                      top: height * 0.02),
+                                                  padding: EdgeInsets.only(left: width * 0.058, top: height * 0.02),
                                                   child: CircleAvatar(
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                            groupPostProvider
-                                                                .groupPosts![
-                                                                    index]
-                                                                .author
-                                                                .profileImage),
+                                                    backgroundImage: NetworkImage(groupPostProvider.groupPosts![index].author.profileImage),
                                                     radius: 19,
                                                   ),
                                                 ),
                                               ),
                                               Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    groupPostProvider
-                                                        .groupPosts![index]
-                                                        .author
-                                                        .fullName,
+                                                    groupPostProvider.groupPosts![index].author.fullName,
                                                     style: const TextStyle(
                                                       fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
-                                                  Text(groupPostProvider
-                                                      .groupPosts![index]
-                                                      .timestamp)
+                                                  Text(groupPostProvider.groupPosts![index].timestamp)
                                                 ],
                                               )
                                             ],
                                           ),
-                                          Text(groupPostProvider
-                                              .groupPosts![index].description),
+                                          Text(groupPostProvider.groupPosts![index].description),
                                           SizedBox(
-                                              height: (groupPostProvider
-                                                          .groupPosts![index]
-                                                          .totalImage !=
-                                                      0)
-                                                  ? (groupPostProvider
-                                                              .groupPosts![
-                                                                  index]
-                                                              .totalImage ==
-                                                          1)
+                                              height: (groupPostProvider.groupPosts![index].totalImage != 0)
+                                                  ? (groupPostProvider.groupPosts![index].totalImage == 1)
                                                       ? height * 0.35
-                                                      : (groupPostProvider
-                                                                  .groupPosts![
-                                                                      index]
-                                                                  .totalImage ==
-                                                              2)
+                                                      : (groupPostProvider.groupPosts![index].totalImage == 2)
                                                           ? 0.2
                                                           : 0.5
                                                   : 0,
-                                              child:
-                                                  (groupPostProvider
-                                                              .groupPosts![
-                                                                  index]
-                                                              .totalImage ==
-                                                          0)
-                                                      ? Container()
-                                                      : (groupPostProvider
-                                                                  .groupPosts![
-                                                                      index]
-                                                                  .totalImage ==
-                                                              1)
-                                                          ? Center(
-                                                              child: InkWell(
-                                                                  onTap: () {
-                                                                    postImageProvider
-                                                                        .iamges = [];
-                                                                    for (int i =
-                                                                            0;
-                                                                        i < groupPostProvider.groupPosts![index].images.length;
-                                                                        i++) {
-                                                                      postImageProvider.iamges.add(groupPostProvider
-                                                                          .groupPosts![
-                                                                              index]
-                                                                          .images[
-                                                                              0]
-                                                                          .image);
-                                                                      Get.to(() =>
-                                                                          const PostImagesPreview());
-                                                                    }
-                                                                  },
-                                                                  child: CachedNetworkImage(
-                                                                      imageUrl: groupPostProvider.groupPosts![index].images[0].image,
-                                                                      imageBuilder: (context, imageProvider) => Container(height: height * 0.35, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                      placeholder: ((context, url) => Container(
-                                                                            alignment:
-                                                                                Alignment.center,
-                                                                            child:
-                                                                                const CircularProgressIndicator(),
-                                                                          )))),
-                                                            )
-                                                          : GridView.builder(
-                                                              physics:
-                                                                  const NeverScrollableScrollPhysics(),
-                                                              shrinkWrap: true,
-                                                              gridDelegate:
-                                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                                                crossAxisCount:
-                                                                    (groupPostProvider.groupPosts![index].totalImage ==
-                                                                            1)
-                                                                        ? 1
-                                                                        : 2,
-                                                                crossAxisSpacing:
-                                                                    2.0,
-                                                                mainAxisSpacing:
-                                                                    2.0,
-                                                              ),
-                                                              itemCount: (groupPostProvider
-                                                                          .groupPosts![
-                                                                              index]
-                                                                          .totalImage <
-                                                                      4)
-                                                                  ? groupPostProvider
-                                                                      .groupPosts![
-                                                                          index]
-                                                                      .totalImage
-                                                                  : 4,
-                                                              itemBuilder:
-                                                                  (context,
-                                                                      index2) {
-                                                                return InkWell(
-                                                                  onTap: () {
-                                                                    postImageProvider
-                                                                        .iamges = [];
-                                                                    for (int i =
-                                                                            0;
-                                                                        i < groupPostProvider.groupPosts![index].images.length;
-                                                                        i++) {
-                                                                      postImageProvider.iamges.add(groupPostProvider
-                                                                          .groupPosts![
-                                                                              index]
-                                                                          .images[
-                                                                              index2]
-                                                                          .image);
-                                                                      Get.to(() =>
-                                                                          const PostImagesPreview());
-                                                                    }
-                                                                  },
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      (groupPostProvider.groupPosts![index].totalImage > 4 &&
-                                                                              index2 == 3)
-                                                                          ? Container(
-                                                                              child: Center(
-                                                                                child: Text(
-                                                                                  "${groupPostProvider.groupPosts![index].totalImage - 4}",
-                                                                                  style: const TextStyle(
-                                                                                    color: Colors.white,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    fontSize: 26,
-                                                                                  ),
-                                                                                ),
+                                              child: (groupPostProvider.groupPosts![index].totalImage == 0)
+                                                  ? Container()
+                                                  : (groupPostProvider.groupPosts![index].totalImage == 1)
+                                                      ? Center(
+                                                          child: InkWell(
+                                                              onTap: () {
+                                                                postImageProvider.iamges = [];
+                                                                for (int i = 0;
+                                                                    i < groupPostProvider.groupPosts![index].images.length;
+                                                                    i++) {
+                                                                  postImageProvider.iamges
+                                                                      .add(groupPostProvider.groupPosts![index].images[0].image);
+                                                                  Get.to(() => const PostImagesPreview());
+                                                                }
+                                                              },
+                                                              child: CachedNetworkImage(
+                                                                  imageUrl: groupPostProvider.groupPosts![index].images[0].image,
+                                                                  imageBuilder: (context, imageProvider) => Container(
+                                                                      height: height * 0.35,
+                                                                      decoration: BoxDecoration(
+                                                                          image:
+                                                                              DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                  placeholder: ((context, url) => Container(
+                                                                        alignment: Alignment.center,
+                                                                        child: const CircularProgressIndicator(),
+                                                                      )))),
+                                                        )
+                                                      : GridView.builder(
+                                                          physics: const NeverScrollableScrollPhysics(),
+                                                          shrinkWrap: true,
+                                                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                            crossAxisCount: (groupPostProvider.groupPosts![index].totalImage == 1) ? 1 : 2,
+                                                            crossAxisSpacing: 2.0,
+                                                            mainAxisSpacing: 2.0,
+                                                          ),
+                                                          itemCount: (groupPostProvider.groupPosts![index].totalImage < 4)
+                                                              ? groupPostProvider.groupPosts![index].totalImage
+                                                              : 4,
+                                                          itemBuilder: (context, index2) {
+                                                            return InkWell(
+                                                              onTap: () {
+                                                                postImageProvider.iamges = [];
+                                                                for (int i = 0;
+                                                                    i < groupPostProvider.groupPosts![index].images.length;
+                                                                    i++) {
+                                                                  postImageProvider.iamges
+                                                                      .add(groupPostProvider.groupPosts![index].images[index2].image);
+                                                                  Get.to(() => const PostImagesPreview());
+                                                                }
+                                                              },
+                                                              child: Column(
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                children: [
+                                                                  (groupPostProvider.groupPosts![index].totalImage > 4 && index2 == 3)
+                                                                      ? Container(
+                                                                          child: Center(
+                                                                            child: Text(
+                                                                              "${groupPostProvider.groupPosts![index].totalImage - 4}",
+                                                                              style: const TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                fontSize: 26,
                                                                               ),
+                                                                            ),
+                                                                          ),
+                                                                          decoration: BoxDecoration(
+                                                                              image: DecorationImage(
+                                                                            image: NetworkImage(
+                                                                              groupPostProvider.groupPosts![index].images[index2].image,
+                                                                            ),
+                                                                            fit: BoxFit.cover,
+                                                                          )),
+                                                                        )
+                                                                      : CachedNetworkImage(
+                                                                          imageUrl:
+                                                                              groupPostProvider.groupPosts![index].images[index2].image,
+                                                                          imageBuilder: (context, imageProvider) => Container(
+                                                                              width: 400,
+                                                                              height: 200,
                                                                               decoration: BoxDecoration(
                                                                                   image: DecorationImage(
-                                                                                image: NetworkImage(
-                                                                                  groupPostProvider.groupPosts![index].images[index2].image,
-                                                                                ),
-                                                                                fit: BoxFit.cover,
-                                                                              )),
-                                                                            )
-                                                                          : CachedNetworkImage(
-                                                                              imageUrl: groupPostProvider.groupPosts![index].images[index2].image,
-                                                                              imageBuilder: (context, imageProvider) => Container(width: 400, height: 200, decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                              placeholder: ((context, url) => Container(
-                                                                                    alignment: Alignment.center,
-                                                                                    child: const CircularProgressIndicator(),
-                                                                                  )))
-                                                                    ],
-                                                                  ),
-                                                                );
-                                                              },
-                                                            )),
+                                                                                      image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                          placeholder: ((context, url) => Container(
+                                                                                alignment: Alignment.center,
+                                                                                child: const CircularProgressIndicator(),
+                                                                              )))
+                                                                ],
+                                                              ),
+                                                            );
+                                                          },
+                                                        )),
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          (groupPostProvider.groupPosts![index]
-                                                      .totalVideo !=
-                                                  0)
+                                          (groupPostProvider.groupPosts![index].totalVideo != 0)
                                               ? InkWell(
                                                   onTap: () {
-                                                    singleVideoShowProvider
-                                                            .videoUrl =
-                                                        groupPostProvider
-                                                            .groupPosts![index]
-                                                            .videos[0]
-                                                            .video;
-                                                    Get.to(() =>
-                                                        const ShowVideoPage());
+                                                    singleVideoShowProvider.videoUrl = groupPostProvider.groupPosts![index].videos[0].video;
+                                                    Get.to(() => const ShowVideoPage());
                                                   },
                                                   child: Container(
                                                     height: 150,
                                                     width: width,
-                                                    child: Image.asset(
-                                                        "assets/background/video_pause.jpg"),
+                                                    child: Image.asset("assets/background/video_pause.jpg"),
                                                     color: Colors.black,
                                                   ),
                                                 )
                                               : Container(),
-                                          Consumer2<ProfileDetailsProvider,
-                                                  ReportPostProvider>(
-                                              builder: (context,
-                                                  profileDetailsProvider,
-                                                  reportPostProvider,
-                                                  child) {
+                                          Consumer2<ProfileDetailsProvider, ReportPostProvider>(
+                                              builder: (context, profileDetailsProvider, reportPostProvider, child) {
                                             return LikeCommentCount(
-                                              editOnPressed: (groupPostProvider
-                                                          .groupPosts![index]
-                                                          .author
-                                                          .id ==
-                                                      profileDetailsProvider
-                                                          .userId)
-                                                  ? () {
-                                                      createGroupPost.groupId =
-                                                          groupDetailsProvider
-                                                              .groupDetails.id;
+                                              editOnPressed:
+                                                  (groupPostProvider.groupPosts![index].author.id == profileDetailsProvider.userId)
+                                                      ? () {
+                                                          createGroupPost.groupId = groupDetailsProvider.groupDetails!.id as int;
 
-                                                      createGroupPost.postId =
-                                                          groupPostProvider
-                                                              .groupPosts![
-                                                                  index]
-                                                              .id;
-                                                      createGroupPost
-                                                              .description =
-                                                          groupPostProvider
-                                                              .groupPosts![
-                                                                  index]
-                                                              .description;
-                                                      Get.to(() =>
-                                                          const EditGroupPostScreen());
-                                                    }
-                                                  : () {
-                                                      reportPostProvider
-                                                              .postId =
-                                                          groupPostProvider
-                                                              .groupPosts![
-                                                                  index]
-                                                              .id;
-                                                      reportPostProvider
-                                                          .postFrom = "group";
-                                                      Get.to(() =>
-                                                          const ReportPostScreen());
-                                                    },
-                                              editText: (groupPostProvider
-                                                          .groupPosts![index]
-                                                          .author
-                                                          .id ==
-                                                      profileDetailsProvider
-                                                          .userId)
+                                                          createGroupPost.postId = groupPostProvider.groupPosts![index].id;
+                                                          createGroupPost.description = groupPostProvider.groupPosts![index].description;
+                                                          Get.to(() => const EditGroupPostScreen());
+                                                        }
+                                                      : () {
+                                                          reportPostProvider.postId = groupPostProvider.groupPosts![index].id;
+                                                          reportPostProvider.postFrom = "group";
+                                                          Get.to(() => const ReportPostScreen());
+                                                        },
+                                              editText: (groupPostProvider.groupPosts![index].author.id == profileDetailsProvider.userId)
                                                   ? const Icon(Icons.edit)
                                                   : const Icon(
                                                       Icons.report,
                                                       color: Colors.orange,
                                                     ),
-                                              likeText: (groupPostProvider
-                                                          .groupPosts![index]
-                                                          .like ==
-                                                      true)
-                                                  ? "Liked"
-                                                  : "Like",
-                                              likeCount: groupPostProvider
-                                                  .groupPosts![index].totalLike,
-                                              commentCount: groupPostProvider
-                                                  .groupPosts![index]
-                                                  .totalComment,
-                                              likeCountColor: (groupPostProvider
-                                                          .groupPosts![index]
-                                                          .like ==
-                                                      false)
-                                                  ? Colors.black
-                                                  : Colors.red,
+                                              likeText: (groupPostProvider.groupPosts![index].like == true) ? "Liked" : "Like",
+                                              likeCount: groupPostProvider.groupPosts![index].totalLike,
+                                              commentCount: groupPostProvider.groupPosts![index].totalComment,
+                                              likeCountColor:
+                                                  (groupPostProvider.groupPosts![index].like == false) ? Colors.black : Colors.red,
                                             );
                                           }),
-                                          Consumer4<
-                                                  GroupPostLikeCommentProvider,
-                                                  GroupDetailsProvider,
-                                                  GroupPostProvider,
+                                          Consumer4<GroupPostLikeCommentProvider, GroupDetailsProvider, GroupPostProvider,
                                                   ShareGroupPagePostProvider>(
-                                              builder: (context,
-                                                  likeComment,
-                                                  groupDetailsProvider,
-                                                  groupPostProvider,
-                                                  shareGroupPagePostProvider,
-                                                  child) {
+                                              builder: (context, likeComment, groupDetailsProvider, groupPostProvider,
+                                                  shareGroupPagePostProvider, child) {
                                             return LikeCommentShare(
                                               likeText: "Liked",
                                               index: index,
                                               like: () {
-                                                likeComment.groupId =
-                                                    groupDetailsProvider
-                                                        .groupDetails.id;
-                                                likeComment.postId =
-                                                    groupPostProvider
-                                                        .groupPosts![index].id
-                                                        .toString();
+                                                likeComment.groupId = groupDetailsProvider.groupDetails!.id as int;
+                                                likeComment.postId = groupPostProvider.groupPosts![index].id.toString();
                                                 likeComment.like();
                                                 refresh();
                                               },
                                               comment: () {
-                                                likeComment.groupId =
-                                                    groupDetailsProvider
-                                                        .groupDetails.id;
-                                                likeComment.postId =
-                                                    groupPostProvider
-                                                        .groupPosts![index].id
-                                                        .toString();
-                                                Get.to(
-                                                    const GroupCommentsScreen());
+                                                likeComment.groupId = groupDetailsProvider.groupDetails!.id as int;
+                                                likeComment.postId = groupPostProvider.groupPosts![index].id.toString();
+                                                Get.to(const GroupCommentsScreen());
                                               },
                                               share: () {
-                                                shareGroupPagePostProvider
-                                                        .groupPageId =
-                                                    groupDetailsProvider.groupDetails.id;
-                                                shareGroupPagePostProvider
-                                                        .postId =
-                                                    groupPostProvider
-                                                        .groupPosts![index].id;
-                                                shareGroupPagePostProvider
-                                                    .postType = "group";
-                                                Get.to(
-                                                    const GroupPostShare());
+                                                shareGroupPagePostProvider.groupPageId = groupDetailsProvider.groupDetails!.id as int;
+                                                shareGroupPagePostProvider.postId = groupPostProvider.groupPosts![index].id;
+                                                shareGroupPagePostProvider.postType = "group";
+                                                Get.to(const GroupPostShare());
                                               },
-                                              likeIconColor: (groupPostProvider
-                                                          .groupPosts![index]
-                                                          .like ==
-                                                      false)
-                                                  ? Colors.black
-                                                  : Colors.red,
+                                              likeIconColor:
+                                                  (groupPostProvider.groupPosts![index].like == false) ? Colors.black : Colors.red,
                                             );
                                           })
                                         ],

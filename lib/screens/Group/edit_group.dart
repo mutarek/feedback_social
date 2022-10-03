@@ -22,8 +22,8 @@ class _EditiGroupState extends State<EditGroup> {
   @override
   void initState() {
     final value = Provider.of<GroupDetailsProvider>(context, listen: false);
-    nameController.text = value.groupDetails.name;
-    categoryController.text = value.groupDetails.category;
+    nameController.text = value.groupDetails!.name!;
+    categoryController.text = value.groupDetails!.category!;
     value.getData();
     super.initState();
   }

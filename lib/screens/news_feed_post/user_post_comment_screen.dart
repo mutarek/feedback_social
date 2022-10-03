@@ -15,8 +15,9 @@ class UserPostCommentsScreen extends StatefulWidget {
   final int index;
   final int postID;
   final bool isHomeScreen;
+  final bool isPublicScreen;
 
-  UserPostCommentsScreen(this.index, this.postID, {this.isHomeScreen = false, Key? key}) : super(key: key);
+  UserPostCommentsScreen(this.index, this.postID, {this.isHomeScreen = false,this.isPublicScreen = false, Key? key}) : super(key: key);
 
   @override
   State<UserPostCommentsScreen> createState() => _UserPostCommentsScreenState();
@@ -144,6 +145,9 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
                                               if (value == true) {
                                                 if (widget.isHomeScreen) {
                                                   Provider.of<NewsFeedPostProvider>(context, listen: false)
+                                                      .updateCommentDataCount(widget.index);
+                                                }else if (widget.isPublicScreen) {
+                                                  Provider.of<GroupDetailsProvider>(context, listen: false)
                                                       .updateCommentDataCount(widget.index);
                                                 } else {
                                                   Provider.of<UserNewsfeedPostProvider>(context, listen: false)

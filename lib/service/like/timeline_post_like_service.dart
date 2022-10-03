@@ -9,6 +9,9 @@ class TimelinePostLikeService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = (prefs.getString('token') ?? '');
     var uri = Uri.parse("$baseUrl/posts/$postID/like/"), headers = {'Authorization': 'token $token'};
+
+    print(uri);
+    print({'Authorization': 'token $token'});
     var response = await http.post(uri, headers: headers);
     print(response.statusCode);
     if (response.statusCode == 200) {
