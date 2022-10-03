@@ -20,8 +20,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
   TextEditingController commentController = TextEditingController();
 
   Future<void> _refresh() async {
-    final data = Provider.of<NewsFeedPostProvider>(context, listen: false);
-    data.getData();
+    // final data = Provider.of<NewsFeedPostProvider>(context, listen: false);
+    // data.getData();
   }
 
   @override

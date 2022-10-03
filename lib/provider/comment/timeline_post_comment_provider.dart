@@ -69,10 +69,16 @@ class TimelinePostCommentProvider extends ChangeNotifier {
     channel.stream.listen((data) {
       CommentModels commentData = CommentModels.fromJson(jsonDecode(data)['comment_data']);
       comments.add(commentData);
+      print("Connect: ${commentData.comment}");
       notifyListeners();
     }, onDone: () {
       print("disconected");
     });
+  }
+
+  channelDismiss() {
+    channel.sink.close();
+    notifyListeners();
   }
 
   initializeSocket(int postID) {

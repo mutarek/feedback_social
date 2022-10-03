@@ -167,11 +167,11 @@ class LikedBy {
   String profileImage;
 
   factory LikedBy.fromJson(Map<String, dynamic> json) => LikedBy(
-        id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        isActive: json["is_active"],
-        profileImage: json["profile_image"],
+        id: json["id"]??0,
+        firstName: json["first_name"]??"",
+        lastName: json["last_name"]??'',
+        isActive: json["is_active"]??false,
+        profileImage: json["profile_image"]??"",
       );
 
   Map<String, dynamic> toJson() => {
