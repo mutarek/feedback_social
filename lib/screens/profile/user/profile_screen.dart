@@ -305,9 +305,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                 mainAxisSpacing: 2.0,
                                                               ),
                                                               itemCount: (userPostProvider
-                                                                          .authorPostResults[index].sharePost!.post!.totalImage! <
+                                                                          .authorPostResults[index].sharePost!.post!.totalImage!.toInt() <
                                                                       4)
-                                                                  ? userPostProvider.authorPostResults[index].sharePost!.post!.totalImage
+                                                                  ? userPostProvider.authorPostResults[index].sharePost!.post!.totalImage!.toInt()
                                                                   : 4,
                                                               itemBuilder: (context, index2) {
                                                                 return InkWell(
@@ -417,8 +417,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                 crossAxisSpacing: 2.0,
                                                                 mainAxisSpacing: 2.0,
                                                               ),
-                                                              itemCount: (userPostProvider.authorPostResults[index].totalImage! < 4)
-                                                                  ? userPostProvider.authorPostResults[index].totalImage
+                                                              itemCount: (userPostProvider.authorPostResults[index].totalImage!.toInt() < 4)
+                                                                  ? userPostProvider.authorPostResults[index].totalImage!.toInt()
                                                                   : 4,
                                                               itemBuilder: (context, index2) {
                                                                 return InkWell(
@@ -545,15 +545,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               LikeCommentCount(
                                                 editOnPressed: () {
                                                   singlePostProvider.description = userPostProvider.authorPostResults[index].description;
-                                                  createPostProvider.postId = userPostProvider.authorPostResults[index].id;
+                                                  createPostProvider.postId = userPostProvider.authorPostResults[index].id!.toInt();
                                                   Get.to(() => const EditPostScreen());
                                                 },
                                                 editText: const Icon(
                                                   Icons.edit,
                                                   color: Palette.primary,
                                                 ),
-                                                likeCount: userPostProvider.authorPostResults[index].totalLike,
-                                                commentCount: userPostProvider.authorPostResults[index].totalComment,
+                                                likeCount: userPostProvider.authorPostResults[index].totalLike!.toInt(),
+                                                commentCount: userPostProvider.authorPostResults[index].totalComment!.toInt(),
                                                 likeCountColor:
                                                     (userPostProvider.authorPostResults[index].like == false) ? Colors.black : Colors.red,
                                                 likeText: (userPostProvider.authorPostResults[index].like == true) ? "Liked" : "Like",
@@ -564,14 +564,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   likeText: "Liked",
                                                   index: index,
                                                   like: () {
-                                                    postProvider.addLike(userPostProvider.authorPostResults[index].id!, index);
+                                                    postProvider.addLike(userPostProvider.authorPostResults[index].id!.toInt(), index);
                                                     //
                                                     // likeComment.postId = userPostProvider.authorPostResults[index].id.toString();
                                                     // likeComment.like();
                                                     // refresh();
                                                   },
                                                   comment: () {
-                                                    timelinePostCommentProvider.postId = userPostProvider.authorPostResults[index].id!;
+                                                    timelinePostCommentProvider.postId = userPostProvider.authorPostResults[index].id!.toInt();
 
                                                     likeComment.postId = userPostProvider.authorPostResults[index].id.toString();
                                                     userPostProvider.index = index;

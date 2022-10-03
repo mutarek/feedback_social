@@ -509,8 +509,8 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                                                           crossAxisSpacing: 2.0,
                                                           mainAxisSpacing: 2.0,
                                                         ),
-                                                        itemCount: (userPostProvider.authorPostResults[index].totalImage! < 4)
-                                                            ? userPostProvider.authorPostResults[index].totalImage
+                                                        itemCount: (userPostProvider.authorPostResults[index].totalImage!.toInt() < 4)
+                                                            ? userPostProvider.authorPostResults[index].totalImage!.toInt()
                                                             : 4,
                                                         itemBuilder: (context, index2) {
                                                           return InkWell(
@@ -603,8 +603,8 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                                                 Icons.report,
                                                 color: Colors.orange,
                                               ),
-                                              likeCount: userPostProvider.authorPostResults[index].totalLike,
-                                              commentCount: userPostProvider.authorPostResults[index].totalComment,
+                                              likeCount: userPostProvider.authorPostResults[index].totalLike!.toInt(),
+                                              commentCount: userPostProvider.authorPostResults[index].totalComment!.toInt(),
                                               likeCountColor:
                                                   (userPostProvider.authorPostResults[index].like == false) ? Colors.black : Colors.red,
                                               likeText: (userPostProvider.authorPostResults[index].like == true) ? "Liked" : "like",

@@ -56,104 +56,94 @@ class NewsfeedModels {
     this.sharePost,
   });
 
-  int? id;
+  NewsfeedModels.fromJson(dynamic json) {
+    id = json['id'];
+    description = json['description'];
+    author = json['author'] != null ? Author.fromJson(json['author']) : null;
+    totalImage = json['total_image'];
+    if (json['images'] != null) {
+      images = [];
+      json['images'].forEach((v) {
+        images?.add(Images.fromJson(v));
+      });
+    }
+    totalVideo = json['total_video'];
+    if (json['videos'] != null) {
+      videos = [];
+      json['videos'].forEach((v) {
+        videos?.add(Videos.fromJson(v));
+      });
+    }
+    totalComment = json['total_comment'];
+    if (json['comments'] != null) {
+      comments = [];
+      json['comments'].forEach((v) {
+        comments?.add(Comments.fromJson(v));
+      });
+    }
+    totalLike = json['total_like'];
+    if (json['liked_by'] != null) {
+      likedBy = [];
+      json['liked_by'].forEach((v) {
+        likedBy?.add(LikedBy.fromJson(v));
+      });
+    }
+    timestamp = json['timestamp'];
+    isShare = json['is_share'];
+    postType = json['post_type'];
+    like = json['like'];
+    sharePost = json['share_post'] != null ? SharePost.fromJson(json['share_post']) : null;
+  }
+
+  num? id;
   String? description;
   Author? author;
-  int? totalImage;
-  List<Image>? images;
-  int? totalVideo;
-  List<Video>? videos;
-  int? totalComment;
-  List<dynamic>? comments;
-  int? totalLike;
-  List<LikedByMeModels>? likedBy;
+  num? totalImage;
+  List<Images>? images;
+  num? totalVideo;
+  List<Videos>? videos;
+  num? totalComment;
+  List<Comments>? comments;
+  num? totalLike;
+  List<LikedBy>? likedBy;
   String? timestamp;
   bool? isShare;
   String? postType;
   bool? like;
   SharePost? sharePost;
 
-  factory NewsfeedModels.fromJson(Map<String, dynamic> json) => NewsfeedModels(
-        id: json["id"],
-        description: json["description"],
-        author: Author.fromJson(json["author"]),
-        totalImage: json["total_image"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
-        totalVideo: json["total_video"],
-        videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
-        totalComment: json["total_comment"],
-        comments: List<dynamic>.from(json["comments"].map((x) => x)),
-        totalLike: json["total_like"],
-        likedBy: List<LikedByMeModels>.from(json["liked_by"].map((x) => x)),
-        timestamp: json["timestamp"],
-        isShare: json["is_share"],
-        postType: json["post_type"],
-        like: json["like"],
-        sharePost: json["share_post"] == null ? null : SharePost.fromJson(json["share_post"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "description": description,
-        "author": author!.toJson(),
-        "total_image": totalImage,
-        "images": List<dynamic>.from(images!.map((x) => x.toJson())),
-        "total_video": totalVideo,
-        "videos": List<dynamic>.from(videos!.map((x) => x.toJson())),
-        "total_comment": totalComment,
-        "comments": List<dynamic>.from(comments!.map((x) => x)),
-        "total_like": totalLike,
-        "liked_by": List<dynamic>.from(likedBy!.map((x) => x)),
-        "timestamp": timestamp,
-        "is_share": isShare,
-        "post_type": postType,
-        "like": like,
-        "share_post": sharePost == null ? null : sharePost!.toJson(),
-      };
-}
-
-class Author {
-  Author({
-    this.id,
-    this.fullName,
-    this.profileImage,
-  });
-
-  int? id;
-  String? fullName;
-  String? profileImage;
-
-  factory Author.fromJson(Map<String, dynamic> json) => Author(
-        id: json["id"],
-        fullName: json["full_name"],
-        profileImage: json["profile_image"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "full_name": fullName,
-        "profile_image": profileImage,
-      };
-}
-
-class Image {
-  Image({
-    this.id,
-    this.image,
-  });
-
-  int? id;
-  String? image;
-
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
-        id: json["id"],
-        image: json["image"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "image": image,
-      };
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['description'] = description;
+    if (author != null) {
+      map['author'] = author?.toJson();
+    }
+    map['total_image'] = totalImage;
+    if (images != null) {
+      map['images'] = images?.map((v) => v.toJson()).toList();
+    }
+    map['total_video'] = totalVideo;
+    if (videos != null) {
+      map['videos'] = videos?.map((v) => v.toJson()).toList();
+    }
+    map['total_comment'] = totalComment;
+    if (comments != null) {
+      map['comments'] = comments?.map((v) => v.toJson()).toList();
+    }
+    map['total_like'] = totalLike;
+    if (likedBy != null) {
+      map['liked_by'] = likedBy?.map((v) => v.toJson()).toList();
+    }
+    map['timestamp'] = timestamp;
+    map['is_share'] = isShare;
+    map['post_type'] = postType;
+    map['like'] = like;
+    if (sharePost != null) {
+      map['share_post'] = sharePost?.toJson();
+    }
+    return map;
+  }
 }
 
 class SharePost {
@@ -164,24 +154,28 @@ class SharePost {
     this.timestamp,
   });
 
+  SharePost.fromJson(dynamic json) {
+    post = json['post'] != null ? Post.fromJson(json['post']) : null;
+    postUrl = json['post_url'];
+    shareFrom = json['share_from'];
+    timestamp = json['timestamp'];
+  }
+
   Post? post;
   String? postUrl;
   String? shareFrom;
   String? timestamp;
 
-  factory SharePost.fromJson(Map<String, dynamic> json) => SharePost(
-        post: Post.fromJson(json["post"]),
-        postUrl: json["post_url"],
-        shareFrom: json["share_from"],
-        timestamp: json["timestamp"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "post": post!.toJson(),
-        "post_url": postUrl,
-        "share_from": shareFrom,
-        "timestamp": timestamp,
-      };
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (post != null) {
+      map['post'] = post?.toJson();
+    }
+    map['post_url'] = postUrl;
+    map['share_from'] = shareFrom;
+    map['timestamp'] = timestamp;
+    return map;
+  }
 }
 
 class Post {
@@ -195,66 +189,109 @@ class Post {
     this.videos,
   });
 
-  int? id;
+  Post.fromJson(dynamic json) {
+    id = json['id'];
+    description = json['description'];
+    author = json['author'] != null ? Author.fromJson(json['author']) : null;
+    totalImage = json['total_image'];
+    if (json['images'] != null) {
+      images = [];
+      json['images'].forEach((v) {
+        images?.add(Images.fromJson(v));
+      });
+    }
+    totalVideo = json['total_video'];
+    if (json['videos'] != null) {
+      videos = [];
+      json['videos'].forEach((v) {
+        videos?.add(Videos.fromJson(v));
+      });
+    }
+  }
+
+  num? id;
   String? description;
   Author? author;
-  int? totalImage;
-  List<Image>? images;
-  int? totalVideo;
-  List<Video>? videos;
+  num? totalImage;
+  List<Images>? images;
+  num? totalVideo;
+  List<Videos>? videos;
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
-        id: json["id"],
-        description: json["description"],
-        author: Author.fromJson(json["author"]),
-        totalImage: json["total_image"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
-        totalVideo: json["total_video"],
-        videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "description": description,
-        "author": author!.toJson(),
-        "total_image": totalImage,
-        "images": List<dynamic>.from(images!.map((x) => x.toJson())),
-        "total_video": totalVideo,
-        "videos": List<dynamic>.from(videos!.map((x) => x.toJson())),
-      };
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['description'] = description;
+    if (author != null) {
+      map['author'] = author?.toJson();
+    }
+    map['total_image'] = totalImage;
+    if (images != null) {
+      map['images'] = images?.map((v) => v.toJson()).toList();
+    }
+    map['total_video'] = totalVideo;
+    if (videos != null) {
+      map['videos'] = videos?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
 }
 
-class Video {
-  Video({
+class Videos {
+  Videos({
     this.id,
     this.thumbnail,
     this.video,
   });
 
-  int? id;
+  Videos.fromJson(dynamic json) {
+    id = json['id'];
+    thumbnail = json['thumbnail'];
+    video = json['video'];
+  }
+
+  num? id;
   String? thumbnail;
   String? video;
 
-  factory Video.fromJson(Map<String, dynamic> json) => Video(
-        id: json["id"],
-        thumbnail: json["thumbnail"],
-        video: json["video"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "thumbnail": thumbnail,
-        "video": video,
-      };
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['thumbnail'] = thumbnail;
+    map['video'] = video;
+    return map;
+  }
 }
-class LikedByMeModels {
-  LikedByMeModels({
+
+class Images {
+  Images({
+    this.id,
+    this.image,
+  });
+
+  Images.fromJson(dynamic json) {
+    id = json['id'];
+    image = json['image'];
+  }
+
+  num? id;
+  String? image;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['image'] = image;
+    return map;
+  }
+}
+
+class Author {
+  Author({
     this.id,
     this.fullName,
     this.profileImage,
   });
 
-  LikedByMeModels.fromJson(dynamic json) {
+  Author.fromJson(dynamic json) {
     id = json['id'];
     fullName = json['full_name'];
     profileImage = json['profile_image'];
@@ -272,3 +309,75 @@ class LikedByMeModels {
     return map;
   }
 }
+
+class LikedBy {
+  LikedBy({
+    this.id,
+    this.fullName,
+    this.profileImage,
+  });
+
+  LikedBy.fromJson(dynamic json) {
+    id = json['id'];
+    fullName = json['full_name'];
+    profileImage = json['profile_image'];
+  }
+
+  num? id;
+  String? fullName;
+  String? profileImage;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['full_name'] = fullName;
+    map['profile_image'] = profileImage;
+    return map;
+  }
+}
+
+class Comments {
+  Comments({
+    this.id,
+    this.comment,
+    this.post,
+    this.author,
+    this.replies,
+  });
+
+  Comments.fromJson(dynamic json) {
+    id = json['id'];
+    comment = json['comment'];
+    post = json['post'];
+    author = json['author'] != null ? Author.fromJson(json['author']) : null;
+    if (json['replies'] != null) {
+      replies = [];
+      // json['replies'].forEach((v) {
+      //   replies?.add(Dynamic.fromJson(v));
+      // });
+    }
+  }
+
+  num? id;
+  String? comment;
+  num? post;
+  Author? author;
+  List<dynamic>? replies;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['comment'] = comment;
+    map['post'] = post;
+    if (author != null) {
+      map['author'] = author?.toJson();
+    }
+    if (replies != null) {
+      map['replies'] = replies?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+}
+
+
+
