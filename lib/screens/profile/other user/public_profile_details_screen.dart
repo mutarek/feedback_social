@@ -74,9 +74,7 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                   SafeArea(child: Consumer2<PublicProfileDetailsProvider, ProfileImagesProvider>(
                       builder: (context, provider, profileImageProvider, child) {
                     return (provider.loading == false)
-                        ? const Center(
-                            child: CupertinoActivityIndicator(),
-                          )
+                        ? const Center(child: CupertinoActivityIndicator())
                         : SingleChildScrollView(
                             child: Column(children: [
                             SizedBox(
