@@ -619,7 +619,7 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                                                 comment: () {
                                                   likeComment.postId = userPostProvider.authorPostResults[index].id.toString();
                                                   userPostProvider.index = index;
-                                                  Get.to(UserPostCommentsScreen(index));
+                                                  Get.to(UserPostCommentsScreen(index,userPostProvider.authorPostResults[index].id as int));
                                                 },
                                                 share: () {
                                                   // likeComment.pageId =

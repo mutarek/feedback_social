@@ -305,9 +305,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                 mainAxisSpacing: 2.0,
                                                               ),
                                                               itemCount: (userPostProvider
-                                                                          .authorPostResults[index].sharePost!.post!.totalImage!.toInt() <
+                                                                          .authorPostResults[index].sharePost!.post!.totalImage!
+                                                                          .toInt() <
                                                                       4)
-                                                                  ? userPostProvider.authorPostResults[index].sharePost!.post!.totalImage!.toInt()
+                                                                  ? userPostProvider.authorPostResults[index].sharePost!.post!.totalImage!
+                                                                      .toInt()
                                                                   : 4,
                                                               itemBuilder: (context, index2) {
                                                                 return InkWell(
@@ -558,8 +560,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     (userPostProvider.authorPostResults[index].like == false) ? Colors.black : Colors.red,
                                                 likeText: (userPostProvider.authorPostResults[index].like == true) ? "Liked" : "Like",
                                               ),
-                                              Consumer3<LikeCommentShareProvider, TimelinePostCommentProvider,UserNewsfeedPostProvider>(
-                                                  builder: (context, likeComment, timelinePostCommentProvider,postProvider, child) {
+                                              Consumer3<LikeCommentShareProvider, TimelinePostCommentProvider, UserNewsfeedPostProvider>(
+                                                  builder: (context, likeComment, timelinePostCommentProvider, postProvider, child) {
                                                 return LikeCommentShare(
                                                   likeText: "Liked",
                                                   index: index,
@@ -571,12 +573,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     // refresh();
                                                   },
                                                   comment: () {
-                                                    timelinePostCommentProvider.postId = userPostProvider.authorPostResults[index].id!.toInt();
+                                                    // timelinePostCommentProvider.postId = userPostProvider.authorPostResults[index].id!.toInt();
 
                                                     likeComment.postId = userPostProvider.authorPostResults[index].id.toString();
                                                     userPostProvider.index = index;
                                                     // print(userPostProvider.authorPosts[index].comments.length);
-                                                    Get.to(UserPostCommentsScreen(index));
+                                                    Get.to(
+                                                        UserPostCommentsScreen(index, userPostProvider.authorPostResults[index].id as int));
                                                   },
                                                   share: () {
                                                     // likeComment.pageId =

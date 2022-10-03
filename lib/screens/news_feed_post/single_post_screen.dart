@@ -257,7 +257,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                           EdgeInsets.only(left: width * 0.13),
                                       child: Text(
                                           singlePostProvider
-                                              .post.comments[index].comment,
+                                              .post.comments[index].addComment,
                                           style: GoogleFonts.lato(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 12)),

@@ -4,33 +4,33 @@ import 'package:als_frontend/model/comment/CommentModels.dart';
 import 'package:als_frontend/service/comment/timeline_post_comment_service.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../const/url.dart';
-import '../../model/comment/timeline_post_comment_model.dart';
-import 'package:http/http.dart' as http;
+// import '../../model/comment/timeline_post_comment_model.dart';
 
 class TimelinePostCommentProvider extends ChangeNotifier {
   List<CommentModels> comments = [];
-  int postId = 0;
+  // int postId = 0;
   String? token;
   bool success = false;
 
-  Future<void> getData() async {
+  Future<void> getData(int postID) async {
     try {
-      comments = (await TimelinePostCommentService(postId: postId).getComments());
+      comments = (await TimelinePostCommentService(postId: postID).getComments());
       notifyListeners();
     } catch (e) {
       print("Friend request provider: $e");
     }
   }
 
-  Future<bool> comment(String description) async {
-    var apiUrl = "$baseUrl/posts/$postId/comment/create/";
+  Future<bool> addComment(String comment, String fullName, String profileImage, int postID, int userID) async {
+    var apiUrl = "$baseUrl/posts/$postID/comment/create/";
 
-    Map mappeddata = {"comment": description};
+    Map mappeddata = {"comment": comment};
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = (prefs.getString('token') ?? '');
@@ -42,8 +42,18 @@ class TimelinePostCommentProvider extends ChangeNotifier {
       success = true;
       var json = jsonDecode(response.body);
       print('json: $json');
-      comments.add(CommentModels.fromJson(json));
+
       Fluttertoast.showToast(msg: "commented");
+      CommentModels c = CommentModels(
+          id: DateTime.now().microsecondsSinceEpoch,
+          comment: comment,
+          post: postID,
+          replies: [],
+          author: Author(id: userID, fullName: fullName, profileImage: profileImage));
+      channel.sink.add(
+        jsonEncode({"data": c.toJson()}),
+      );
+
       notifyListeners();
       return true;
     } else {
@@ -53,20 +63,21 @@ class TimelinePostCommentProvider extends ChangeNotifier {
   }
 
   /////  ********    comment Web Socket
-  WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/10/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/191/comment/timeline_post/');
   List socketComment = [];
   List<Map> newComment = [];
 
   userPostComments() {
     channel.stream.listen((data) {
-      getData();
-      CommentModels c = CommentModels.fromJson(data);
+      CommentModels c = CommentModels.fromJson(jsonDecode(data)['comment_data']);
       print('akak ${c.comment}');
-      print("data : $data");
+      comments.add(c);
+      // print("data : $data");
+      // print("man : ${jsonDecode(data)}");
+      notifyListeners();
     }, onDone: () {
       print("disconected");
     });
-    notifyListeners();
   }
 
   channelDismiss({bool isDisposs = false}) {
@@ -74,8 +85,9 @@ class TimelinePostCommentProvider extends ChangeNotifier {
     if (!isDisposs) notifyListeners();
   }
 
-  initializeSocket() {
-    channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/10/comment/timeline_post/');
+  initializeSocket(int postID) {
+    channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/comment/timeline_post/');
+    userPostComments();
     // notifyListeners();
   }
 }

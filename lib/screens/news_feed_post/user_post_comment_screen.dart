@@ -1,10 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
-import 'dart:convert';
-
 import 'package:als_frontend/const/palette.dart';
-import 'package:als_frontend/model/comment/socket_comment_model.dart';
-import 'package:als_frontend/model/comment/timeline_post_comment_model.dart';
 import 'package:als_frontend/provider/provider.dart';
 import 'package:als_frontend/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -13,33 +9,44 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import '../screens.dart';
 
 class UserPostCommentsScreen extends StatefulWidget {
   //final WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/10/comment/timeline_post/');
   final int index;
+  final int postID;
 
-  UserPostCommentsScreen(this.index, {Key? key}) : super(key: key);
+  UserPostCommentsScreen(this.index, this.postID, {Key? key}) : super(key: key);
 
   @override
   State<UserPostCommentsScreen> createState() => _UserPostCommentsScreenState();
 }
 
 class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
+  WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com:0/ws/post/191/comment/timeline_post/');
+
   @override
   void initState() {
-    Provider.of<TimelinePostCommentProvider>(context, listen: false).getData();
-    // Provider.of<TimelinePostCommentProvider>(context, listen: false).initializeSocket();
+    Provider.of<TimelinePostCommentProvider>(context, listen: false).getData(widget.postID);
+    Provider.of<TimelinePostCommentProvider>(context, listen: false).initializeSocket(widget.postID);
 
     super.initState();
+    //streamListener();
   }
 
   TextEditingController commentController = TextEditingController();
 
   Future<void> _refresh() async {}
 
+  streamListener() {
+    print('shuvo');
+    channel.stream.listen((event) {
+      print(event.toString());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Provider.of<TimelinePostCommentProvider>(context, listen: false).userPostComments();
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
@@ -126,7 +133,14 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
                                     child: ElevatedButton(
                                         style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Palette.primary)),
                                         onPressed: () {
-                                          provider.comment(commentController.text).then((value) {
+                                          provider
+                                              .addComment(
+                                                  commentController.text,
+                                                  "${userProfileProvider.userprofileData.firstName!} ${userProfileProvider.userprofileData.lastName!}",
+                                                  userProfileProvider.userprofileData.profileImage!,
+                                                  widget.postID,
+                                                  userProfileProvider.userprofileData.id!)
+                                              .then((value) {
                                             if (value == true) {
                                               Provider.of<UserNewsfeedPostProvider>(context, listen: false)
                                                   .updateCommentDataCount(widget.index);
