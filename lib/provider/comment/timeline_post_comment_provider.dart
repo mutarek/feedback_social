@@ -64,30 +64,19 @@ class TimelinePostCommentProvider extends ChangeNotifier {
 
   /////  ********    comment Web Socket
   WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/191/comment/timeline_post/');
-  List socketComment = [];
-  List<Map> newComment = [];
 
   userPostComments() {
     channel.stream.listen((data) {
-      CommentModels c = CommentModels.fromJson(jsonDecode(data)['comment_data']);
-      print('akak ${c.comment}');
-      comments.add(c);
-      // print("data : $data");
-      // print("man : ${jsonDecode(data)}");
+      CommentModels commentData = CommentModels.fromJson(jsonDecode(data)['comment_data']);
+      comments.add(commentData);
       notifyListeners();
     }, onDone: () {
       print("disconected");
     });
   }
 
-  channelDismiss({bool isDisposs = false}) {
-    channel.sink.close();
-    if (!isDisposs) notifyListeners();
-  }
-
   initializeSocket(int postID) {
     channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/comment/timeline_post/');
     userPostComments();
-    // notifyListeners();
   }
 }

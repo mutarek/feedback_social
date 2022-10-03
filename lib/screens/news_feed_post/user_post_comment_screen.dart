@@ -22,7 +22,6 @@ class UserPostCommentsScreen extends StatefulWidget {
 }
 
 class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
-  WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com:0/ws/post/191/comment/timeline_post/');
 
   @override
   void initState() {
@@ -37,12 +36,7 @@ class _UserPostCommentsScreenState extends State<UserPostCommentsScreen> {
 
   Future<void> _refresh() async {}
 
-  streamListener() {
-    print('shuvo');
-    channel.stream.listen((event) {
-      print(event.toString());
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
