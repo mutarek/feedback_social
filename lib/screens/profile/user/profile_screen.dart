@@ -398,12 +398,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                     child: CachedNetworkImage(
                                                                         imageUrl:
                                                                             userPostProvider.authorPostResults[index].images![0].image!,
+                                                                        fit: BoxFit.scaleDown,
                                                                         imageBuilder: (context, imageProvider) => Container(
                                                                             width: 400,
                                                                             height: height * 0.35,
                                                                             decoration: BoxDecoration(
                                                                                 image: DecorationImage(
-                                                                                    image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                                    image: imageProvider, fit: BoxFit.scaleDown))),
                                                                         placeholder: ((context, url) => Container(
                                                                               alignment: Alignment.center,
                                                                               child: const CupertinoActivityIndicator(),
@@ -463,12 +464,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                           : CachedNetworkImage(
                                                                               imageUrl: userPostProvider
                                                                                   .authorPostResults[index].images![index2].image!,
+                                                                              fit: BoxFit.fill,
                                                                               imageBuilder: (context, imageProvider) => Container(
                                                                                   width: 400,
                                                                                   height: height * 0.23,
                                                                                   decoration: BoxDecoration(
                                                                                       image: DecorationImage(
-                                                                                          image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                                          image: imageProvider, fit: BoxFit.fill))),
                                                                               placeholder: ((context, url) => Container(
                                                                                     alignment: Alignment.center,
                                                                                     child: const CupertinoActivityIndicator(),
@@ -510,7 +512,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                   )
                                                                 :
                                                                 // child:
-                                                                Image.asset("assets/background/video_pause.jpg"),
+                                                                Image.asset("assets/background/video_pause.jpg", fit: BoxFit.fill),
                                                             color: Colors.black,
                                                           ),
                                                         )

@@ -492,7 +492,7 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                                                             imageBuilder: (context, imageProvider) => Container(
                                                                 height: height * 0.35,
                                                                 decoration: BoxDecoration(
-                                                                    image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                    image: DecorationImage(image: imageProvider, fit: BoxFit.scaleDown))),
                                                             placeholder: ((context, url) => Container(
                                                                   alignment: Alignment.center,
                                                                   child: const CupertinoActivityIndicator(),
@@ -542,7 +542,7 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                                                                             image: DecorationImage(
                                                                           image: NetworkImage(userPostProvider
                                                                               .authorPostResults[index].images![index2].image!),
-                                                                          fit: BoxFit.cover,
+                                                                          fit: BoxFit.scaleDown,
                                                                         )),
                                                                       )
                                                                     : CachedNetworkImage(
@@ -553,7 +553,7 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                                                                             height: height * 0.22,
                                                                             decoration: BoxDecoration(
                                                                                 image: DecorationImage(
-                                                                                    image: imageProvider, fit: BoxFit.fitWidth))),
+                                                                                    image: imageProvider, fit: BoxFit.scaleDown))),
                                                                         placeholder: ((context, url) => Container(
                                                                               alignment: Alignment.center,
                                                                               child: const CupertinoActivityIndicator(),

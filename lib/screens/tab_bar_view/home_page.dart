@@ -90,7 +90,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
             CustomIconButton(
                 iconName: MdiIcons.facebookMessenger,
                 onPressed: () {
-                  Get.to(() => const CommingSoonScreen());
+                  //Get.to(() => const CommingSoonScreen());
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Coming soon...')));
                 })
           ],
         ),
@@ -128,9 +129,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         builder: (context, userNewsfeedPostProvider, createPostProvider, createGroupPost, createPagePost,
                             singleVideoShowProvider, reportPostProvider, child) {
                         return (newsfeedProvider.results.isEmpty)
-                            ? const Center(
-                                child: CupertinoActivityIndicator(),
-                              )
+                            ? const Center(child: CupertinoActivityIndicator())
                             : ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
@@ -231,103 +230,103 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                 newsfeedProvider.results[index].sharePost!.post!.images != null)
                                             ? true
                                             : false,
-                                        showImages: Padding(
-                                          padding: EdgeInsets.only(left: width * 0.04, right: width * 0.04),
-                                          child: Column(
-                                            children: [
-                                              (newsfeedProvider.results[index].totalImage == 1)
-                                                  ? Center(
-                                                      child: InkWell(
+                                        showImages: Column(
+                                          children: [
+                                            (newsfeedProvider.results[index].totalImage == 1)
+                                                ? Center(
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        postImageProvider.iamges = [];
+                                                        for (int i = 0; i < newsfeedProvider.results[index].totalImage!; i++) {
+                                                          postImageProvider.iamges.add(newsfeedProvider.results[index].images![0].image!);
+                                                          Get.to(() => const PostImagesPreview());
+                                                        }
+                                                      },
+                                                      child: CachedNetworkImage(
+                                                          imageUrl: newsfeedProvider.results[index].images![0].image!,
+                                                          fit: BoxFit.scaleDown,
+
+                                                          imageBuilder: (context, imageProvider) => Container(
+                                                              height: height * 0.35,
+                                                              decoration: BoxDecoration(
+                                                                  image: DecorationImage(image: imageProvider, fit: BoxFit.scaleDown))),
+                                                          placeholder: ((context, url) => Container(
+                                                                alignment: Alignment.center,
+                                                                child: Image.asset(
+                                                                  "assets/background/loading.gif",
+                                                                  height: height * 0.2,
+                                                                ),
+                                                              ))),
+                                                    ),
+                                                  )
+                                                : GridView.builder(
+                                                    physics: const NeverScrollableScrollPhysics(),
+                                                    shrinkWrap: true,
+                                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: (newsfeedProvider.results[index].totalImage == 1) ? 1 : 2,
+                                                      crossAxisSpacing: 2.0,
+                                                      mainAxisSpacing: 2.0,
+                                                    ),
+                                                    itemCount: (newsfeedProvider.results[index].totalImage! < 4)
+                                                        ? newsfeedProvider.results[index].totalImage
+                                                        : 4,
+                                                    itemBuilder: (context, index2) {
+                                                      return InkWell(
                                                         onTap: () {
                                                           postImageProvider.iamges = [];
                                                           for (int i = 0; i < newsfeedProvider.results[index].totalImage!; i++) {
-                                                            postImageProvider.iamges.add(newsfeedProvider.results[index].images![0].image!);
+                                                            postImageProvider.iamges
+                                                                .add(newsfeedProvider.results[index].images![i].image!);
                                                             Get.to(() => const PostImagesPreview());
                                                           }
                                                         },
-                                                        child: CachedNetworkImage(
-                                                            imageUrl: newsfeedProvider.results[index].images![0].image!,
-                                                            imageBuilder: (context, imageProvider) => Container(
-                                                                height: height * 0.35,
-                                                                decoration: BoxDecoration(
-                                                                    image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-                                                            placeholder: ((context, url) => Container(
-                                                                  alignment: Alignment.center,
-                                                                  child: Image.asset(
-                                                                    "assets/background/loading.gif",
-                                                                    height: height * 0.2,
-                                                                  ),
-                                                                ))),
-                                                      ),
-                                                    )
-                                                  : GridView.builder(
-                                                      physics: const NeverScrollableScrollPhysics(),
-                                                      shrinkWrap: true,
-                                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                        crossAxisCount: (newsfeedProvider.results[index].totalImage == 1) ? 1 : 2,
-                                                        crossAxisSpacing: 2.0,
-                                                        mainAxisSpacing: 2.0,
-                                                      ),
-                                                      itemCount: (newsfeedProvider.results[index].totalImage! < 4)
-                                                          ? newsfeedProvider.results[index].totalImage
-                                                          : 4,
-                                                      itemBuilder: (context, index2) {
-                                                        return InkWell(
-                                                          onTap: () {
-                                                            postImageProvider.iamges = [];
-                                                            for (int i = 0; i < newsfeedProvider.results[index].totalImage!; i++) {
-                                                              postImageProvider.iamges
-                                                                  .add(newsfeedProvider.results[index].images![i].image!);
-                                                              Get.to(() => const PostImagesPreview());
-                                                            }
-                                                          },
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            children: [
-                                                              (newsfeedProvider.results[index].totalImage! > 4 && index2 == 3)
-                                                                  ? Container(
-                                                                      height: height * 0.22,
-                                                                      child: Center(
-                                                                        child: Text(
-                                                                          "+${newsfeedProvider.results[index].totalImage! - 4}",
-                                                                          style: const TextStyle(
-                                                                            color: Colors.white,
-                                                                            fontWeight: FontWeight.bold,
-                                                                            fontSize: 26,
-                                                                          ),
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: [
+                                                            (newsfeedProvider.results[index].totalImage! > 4 && index2 == 3)
+                                                                ? Container(
+                                                                    height: height * 0.22,
+                                                                    child: Center(
+                                                                      child: Text(
+                                                                        "+${newsfeedProvider.results[index].totalImage! - 4}",
+                                                                        style: const TextStyle(
+                                                                          color: Colors.white,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          fontSize: 26,
                                                                         ),
                                                                       ),
-                                                                      decoration: BoxDecoration(
-                                                                          image: DecorationImage(
-                                                                        image: NetworkImage(
-                                                                            newsfeedProvider.results[index].images![index2].image!),
-                                                                        fit: BoxFit.cover,
-                                                                      )),
-                                                                    )
-                                                                  : CachedNetworkImage(
-                                                                      imageUrl: newsfeedProvider.results[index].images![index2].image!,
-                                                                      imageBuilder: (context, imageProvider) => Container(
-                                                                          width: 400,
-                                                                          height: (newsfeedProvider.results[index].totalImage == 2)
-                                                                              ? height * 0.2
-                                                                              : height * 0.22,
-                                                                          decoration: BoxDecoration(
-                                                                              image: DecorationImage(
-                                                                                  image: imageProvider, fit: BoxFit.fitWidth))),
-                                                                      placeholder: ((context, url) => Container(
-                                                                            alignment: Alignment.center,
-                                                                            child: Image.asset(
-                                                                              "assets/background/loading.gif",
-                                                                              height: height * 0.2,
-                                                                            ),
-                                                                          )))
-                                                            ],
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                            ],
-                                          ),
+                                                                    ),
+                                                                    decoration: BoxDecoration(
+                                                                        image: DecorationImage(
+                                                                      image: NetworkImage(
+                                                                          newsfeedProvider.results[index].images![index2].image!),
+                                                                      fit: BoxFit.scaleDown,
+                                                                    )),
+                                                                  )
+                                                                : CachedNetworkImage(
+                                                                    imageUrl: newsfeedProvider.results[index].images![index2].image!,
+                                                                    fit: BoxFit.fill,
+                                                                    imageBuilder: (context, imageProvider) => Container(
+                                                                        width: 400,
+                                                                        height: (newsfeedProvider.results[index].totalImage == 2)
+                                                                            ? height * 0.2
+                                                                            : height * 0.22,
+                                                                        decoration: BoxDecoration(
+                                                                            image:
+                                                                                DecorationImage(image: imageProvider, fit: BoxFit.scaleDown))),
+                                                                    placeholder: ((context, url) => Container(
+                                                                          alignment: Alignment.center,
+                                                                          child: Image.asset(
+                                                                            "assets/background/loading.gif",
+                                                                            height: height * 0.2,
+                                                                          ),
+                                                                        )))
+                                                          ],
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                          ],
                                         ),
                                         shareImages: (newsfeedProvider.results[index].sharePost != null &&
                                                 newsfeedProvider.results[index].sharePost!.post!.images != null)
@@ -343,7 +342,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                           width: width,
                                                           child: Image.network(
                                                             newsfeedProvider.results[index].sharePost!.post!.images![0].image!,
-                                                            fit: BoxFit.contain,
+                                                            fit: BoxFit.fill,
                                                           )),
                                                     ),
                                                   )
@@ -368,7 +367,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                               children: [
                                                                 Image.network(
                                                                   newsfeedProvider.results[index].sharePost!.post!.images![index2].image!,
-                                                                  fit: BoxFit.cover,
+                                                                  fit: BoxFit.scaleDown,
                                                                 )
                                                               ],
                                                             );
