@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -20,13 +21,44 @@ class CreatePostProvider extends ChangeNotifier {
   int? editPostId;
   String description = "";
   bool postDeleted = false;
+  //
+  // Future pickImage() async {
+  //   var pickedFile = await _picker.pickMultiImage();
+  //   if (pickedFile != null) {
+  //     image.addAll(pickedFile);
+  //     notifyListeners();
+  //   }
+  // }
 
-  Future pickImage() async {
+  List<XFile> imageFile = [];
+  List<File> afterConvertImageLists = [];
+  File? singleImage;
+
+  void pickImage() async {
+    imageFile = [];
+    afterConvertImageLists = [];
     var pickedFile = await _picker.pickMultiImage();
-    if (pickedFile != null) {
+    if (pickedFile!.isNotEmpty) {
+      imageFile.addAll(pickedFile);
       image.addAll(pickedFile);
-      notifyListeners();
+      imageFile.forEach((element) async {
+        singleImage = File(element.path);
+        afterConvertImageLists.add(await customCompressed(imagePathToCompress: singleImage!));
+
+        var sizeInBefore = singleImage!.lengthSync() / 1024;
+        debugPrint("Size in Before Compress:" + sizeInBefore.toString() + "KB");
+        File compressImage = await customCompressed(imagePathToCompress: singleImage!);
+        var sizeInAfter = compressImage.lengthSync() / 1024;
+        debugPrint("Size in After:" + sizeInAfter.toString() + "KB");
+      });
     }
+
+    notifyListeners();
+  }
+
+  Future<File> customCompressed({required File imagePathToCompress, quality = 100, percentage = 30}) async {
+    var path = await FlutterNativeImage.compressImage(imagePathToCompress.absolute.path, quality: quality, percentage: percentage);
+    return path;
   }
 
   Future pickVideo() async {
@@ -54,21 +86,15 @@ class CreatePostProvider extends ChangeNotifier {
       request.headers["Content-Type"] = "multipart/form-data";
       request.fields['description'] = description;
 
-      if (image != null) {
-        for (int i = 0; i < image.length; i++) {
-          request.files.add(http.MultipartFile(
-              'image',
-              File(image[i].path).readAsBytes().asStream(),
-              File(image[i].path).lengthSync(),
-              filename: image[i].path.split("/").last));
+      if (afterConvertImageLists.isNotEmpty) {
+        for (int i = 0; i < afterConvertImageLists.length; i++) {
+          request.files.add(http.MultipartFile('image', File(afterConvertImageLists[i].path).readAsBytes().asStream(), File(afterConvertImageLists[i].path).lengthSync(),
+              filename: afterConvertImageLists[i].path.split("/").last));
         }
       }
 
       if (video != null) {
-        request.files.add(http.MultipartFile(
-            'video',
-            File(video!.path).readAsBytes().asStream(),
-            File(video!.path).lengthSync(),
+        request.files.add(http.MultipartFile('video', File(video!.path).readAsBytes().asStream(), File(video!.path).lengthSync(),
             filename: video!.path.split("/").last));
       }
 
@@ -93,8 +119,7 @@ class CreatePostProvider extends ChangeNotifier {
     print("delete from create post provider");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = (prefs.getString('token') ?? '');
-    var uri = Uri.parse("$baseUrl/posts/newsfeeds/$postId/delete"),
-        headers = {'Authorization': 'token $token'};
+    var uri = Uri.parse("$baseUrl/posts/newsfeeds/$postId/delete"), headers = {'Authorization': 'token $token'};
     var response = await http.delete(uri, headers: headers);
     print(postId);
     print(response.statusCode);
@@ -112,8 +137,7 @@ class CreatePostProvider extends ChangeNotifier {
   void editPost(String description) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = (prefs.getString('token') ?? '');
-    var uri = Uri.parse("$baseUrl/posts/$editPostId/"),
-        headers = {'Authorization': 'token $token'};
+    var uri = Uri.parse("$baseUrl/posts/$editPostId/"), headers = {'Authorization': 'token $token'};
     Map<String, String> requestBody = <String, String>{
       'description': description,
     };

@@ -19,10 +19,10 @@ class CreateNewPostScreen extends StatefulWidget {
 class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
   TextEditingController postController = TextEditingController();
   File? image;
+
   @override
   void initState() {
-    final profileDetails =
-        Provider.of<ProfileDetailsProvider>(context, listen: false);
+    final profileDetails = Provider.of<ProfileDetailsProvider>(context, listen: false);
     profileDetails.getUserData();
 
     final createPost = Provider.of<CreatePostProvider>(context, listen: false);
@@ -42,8 +42,7 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Consumer2<CreatePostProvider, UserProfileProvider>(
-                  builder: (context, provider, profileImage, child) {
+              Consumer2<CreatePostProvider, UserProfileProvider>(builder: (context, provider, profileImage, child) {
                 return CreatePostContainerWidget(
                   imageOnTap: () => Get.to(const ProfileScreen()),
                   postController: postController,
@@ -59,7 +58,7 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
                   },
                   submit: () {
                     provider.createPost(postController.text);
-                    if(provider.success == true){
+                    if (provider.success == true) {
                       provider.image = [];
                       provider.video = null;
                     }
@@ -67,9 +66,8 @@ class _CreateNewPostScreenState extends State<CreateNewPostScreen> {
                     setState(() {
                       postController.value = TextEditingValue.empty;
                     });
-                    
-                    final data = Provider.of<NewsFeedPostProvider>(context,
-                        listen: false);
+
+                    final data = Provider.of<NewsFeedPostProvider>(context, listen: false);
                     data.getData();
                     Get.off(() => const NavScreen());
                   },
