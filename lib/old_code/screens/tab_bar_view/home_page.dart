@@ -1,3 +1,4 @@
+import 'package:als_frontend/helper/secret_key.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
   _openMap() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = (prefs.getString('token') ?? '');
-    String url = 'feedback://chatting.com/$token';
+    // String url = 'feedback://chatting.com/${encryptedText(token)}';
+    String url = 'feedback://chatting.com/${token}';
+
     if (await canLaunch(url)) {
       await launch(url);
     } else {
