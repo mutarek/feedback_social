@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../const/palette.dart';
 import '../../provider/provider.dart';
@@ -54,6 +56,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
     super.dispose();
   }
 
+  _openMap() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = (prefs.getString('token') ?? '');
+    String url = 'feedback://chatting.com/$token';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -91,6 +104,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 iconName: MdiIcons.facebookMessenger,
                 onPressed: () {
                   //Get.to(() => const CommingSoonScreen());
+                  _openMap();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Coming soon...')));
                 })
           ],
@@ -245,7 +259,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                       child: CachedNetworkImage(
                                                           imageUrl: newsfeedProvider.results[index].images![0].image!,
                                                           fit: BoxFit.scaleDown,
-
                                                           imageBuilder: (context, imageProvider) => Container(
                                                               height: height * 0.35,
                                                               decoration: BoxDecoration(
@@ -275,8 +288,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                         onTap: () {
                                                           postImageProvider.iamges = [];
                                                           for (int i = 0; i < newsfeedProvider.results[index].totalImage!; i++) {
-                                                            postImageProvider.iamges
-                                                                .add(newsfeedProvider.results[index].images![i].image!);
+                                                            postImageProvider.iamges.add(newsfeedProvider.results[index].images![i].image!);
                                                             Get.to(() => const PostImagesPreview());
                                                           }
                                                         },
@@ -312,8 +324,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                                             ? height * 0.2
                                                                             : height * 0.22,
                                                                         decoration: BoxDecoration(
-                                                                            image:
-                                                                                DecorationImage(image: imageProvider, fit: BoxFit.scaleDown))),
+                                                                            image: DecorationImage(
+                                                                                image: imageProvider, fit: BoxFit.scaleDown))),
                                                                     placeholder: ((context, url) => Container(
                                                                           alignment: Alignment.center,
                                                                           child: Image.asset(
