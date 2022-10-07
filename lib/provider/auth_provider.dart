@@ -39,7 +39,7 @@ class AuthProvider with ChangeNotifier {
           response.body['id'].toString(),
           '${response.body['first_name']} ${response.body['last_name']}',
           '${response.body['profile_image']}',
-          '${response.body['mobile']}',
+          '${response.body['code']}',
           '${response.body['email']}');
       callback(true, 'Login Successfully');
     } else {

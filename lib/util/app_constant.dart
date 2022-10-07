@@ -25,7 +25,7 @@ class AppConstant {
   static const String userID = 'userID';
   static const String userProfileImage = 'userprofile_image';
   static const String userName = 'username';
-  static const String userMobile = 'usermobile';
+  static const String usercode = 'usercode';
   static const String userEmail = 'useremail';
 
 

@@ -20,6 +20,9 @@ class ApiClient {
   Map<String, String>? _mainHeaders;
 
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
+
+    print('qiqw ${sharedPreferences.getString(AppConstant.languageCode) ?? 'jhhi'}');
+
     if (sharedPreferences.containsKey(AppConstant.token)) {
       token = sharedPreferences.getString(AppConstant.token)!;
     } else {

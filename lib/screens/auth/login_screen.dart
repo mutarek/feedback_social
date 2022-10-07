@@ -1,12 +1,14 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/old_code/provider/authentication/show_password_provider.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/widgets.dart';
+import '../../old_code/widgets/widgets.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
@@ -25,16 +27,16 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-        backgroundColor: Palette.primary,
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Text(" "),
-          elevation: 0,
-        ),
-        body: SafeArea(
-          child: GestureDetector(
+    return Builder(builder: (context) {
+      return Scaffold(
+          backgroundColor: Palette.primary,
+          // backgroundColor: Palette.primary,
+          // appBar: AppBar(
+          //   backgroundColor: Colors.white,
+          //   title: const Text(" "),
+          //   elevation: 0,
+          // ),
+          body: GestureDetector(
             onTap: () {
               FocusScope.of(context).requestFocus(FocusNode());
             },
@@ -51,8 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Padding(
                           padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                           child: Text(
-                            "Welcome",
-                            style: TextStyle(fontSize: height * 0.035, fontWeight: FontWeight.bold),
+                            getTranslated('Welcome', context)!,
+                            style: TextStyle(fontSize: height * 0.035, fontWeight: FontWeight.bold,color: Colors.black),
                           ),
                         ),
                       ),
@@ -143,7 +145,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               );
                             } else {
                               auth.signIn(emailController.text, passwordController.text, false, (bool status, String message) {
-                                print(message);
+                                if (status) {
+                                  Fluttertoast.showToast(msg: message);
+                                  Get.off(const NavScreen());
+                                } else {
+                                  Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                                }
                               });
                             }
                           }),
@@ -177,8 +184,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
-          ),
-        ));
+          ));
+    });
   }
 }
 

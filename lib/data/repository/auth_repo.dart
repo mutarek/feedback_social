@@ -75,11 +75,11 @@ class AuthRepo {
   // }
 
   //TODO: for save User Information
-  Future<void> saveUserInformation(String userID, String name, String image, String mobile, String email) async {
+  Future<void> saveUserInformation(String userID, String name, String image, String code, String email) async {
     try {
       await sharedPreferences.setString(AppConstant.userID, userID);
       await sharedPreferences.setString(AppConstant.userEmail, email);
-      await sharedPreferences.setString(AppConstant.userMobile, mobile);
+      await sharedPreferences.setString(AppConstant.usercode, code);
       await sharedPreferences.setString(AppConstant.userName, name);
       await sharedPreferences.setString(AppConstant.userProfileImage, image);
     } catch (e) {
@@ -100,8 +100,8 @@ class AuthRepo {
     return sharedPreferences.getString(AppConstant.userEmail) ?? "";
   }
 
-  String getUserMobile() {
-    return sharedPreferences.getString(AppConstant.userMobile) ?? "";
+  String getUserCode() {
+    return sharedPreferences.getString(AppConstant.usercode) ?? "";
   }
 
   String getUserProfile() {
@@ -113,7 +113,7 @@ class AuthRepo {
     await sharedPreferences.remove(AppConstant.userID);
     await sharedPreferences.remove(AppConstant.userName);
     await sharedPreferences.remove(AppConstant.userEmail);
-    await sharedPreferences.remove(AppConstant.userMobile);
+    await sharedPreferences.remove(AppConstant.usercode);
     return await sharedPreferences.remove(AppConstant.userProfileImage);
   }
 

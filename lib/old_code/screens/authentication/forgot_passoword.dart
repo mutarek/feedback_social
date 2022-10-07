@@ -1,5 +1,5 @@
 import 'package:als_frontend/old_code/provider/provider.dart';
-import 'package:als_frontend/old_code/screens/authentication/login_screen.dart';
+import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
