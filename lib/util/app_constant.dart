@@ -3,9 +3,9 @@ import 'package:als_frontend/data/model/response/language_model.dart';
 
 class AppConstant {
   // API BASE URL
-  static const String baseUrl = 'http://38.242.227.190:8080/dyqantaxi/api/';
+  static const String baseUrl = 'https://als-social.com';
+  static const String loginURI = '/accounts/signin/';
   static const String configUri = 'appSettings';
-  static const String loginURI = 'auth/login';
   static const String signUPURI = 'auth/signup';
   static const String guestLoginURI = 'auth/login-guest';
   static const String forgotPasswordURI = 'auth/forget-password';
@@ -22,16 +22,11 @@ class AppConstant {
   static const String token = 'token';
   static const String countryCode = 'country_code';
   static const String languageCode = 'language_code';
-  static const String user = 'user';
-  static const String userEmail = 'user_email';
-  static const String userEmail2 = 'user_email2';
-  static const String userPassword = 'user_password';
   static const String userID = 'userID';
-  static const String customerID = 'customerID';
-  static const String userName = 'userName';
-  static const String firstName = 'firstName';
-  static const String phoneNumber = 'phoneNumber';
-  static const String variant = 'variant';
+  static const String userProfileImage = 'userprofile_image';
+  static const String userName = 'username';
+  static const String userMobile = 'usermobile';
+  static const String userEmail = 'useremail';
 
 
   static List<LanguageModel> languagesList = [

@@ -8,7 +8,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../const/palette.dart';
 import '../../provider/provider.dart';
 import '../../widgets/widgets.dart';

@@ -1,12 +1,11 @@
 import 'package:als_frontend/old_code/const/palette.dart';
-import 'package:als_frontend/old_code/provider/authentication/login_provider.dart';
 import 'package:als_frontend/old_code/provider/authentication/show_password_provider.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
-
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+
 import '../../widgets/widgets.dart';
 
 // ignore: must_be_immutable
@@ -50,13 +49,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: width,
                         color: Colors.white,
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              top: height * 0.06, left: width * 0.1),
+                          padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                           child: Text(
                             "Welcome",
-                            style: TextStyle(
-                                fontSize: height * 0.035,
-                                fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: height * 0.035, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -68,8 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: height * 0.02,
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              width * 0.07, 00, width * 0.07, height * 0.004),
+                          padding: EdgeInsets.fromLTRB(width * 0.07, 00, width * 0.07, height * 0.004),
                           child: LoginTextFiled(
                             h: height * 0.05,
                             w: width * 0.9,
@@ -81,10 +76,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(width * 0.07,
-                              height * 0.007, width * 0.07, height * 0.0),
-                          child: Consumer<ShowPasswordProvider>(
-                              builder: (context, value, child) {
+                          padding: EdgeInsets.fromLTRB(width * 0.07, height * 0.007, width * 0.07, height * 0.0),
+                          child: Consumer<ShowPasswordProvider>(builder: (context, value, child) {
                             return LoginTextFiled(
                               h: height * 0.05,
                               w: width * 0.9,
@@ -94,9 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 height: height * 0.06,
                                 obsecureText: value.obsecureText,
                                 suffixIconButton: IconButton(
-                                    icon: (value.obsecureText == true)
-                                        ? const Icon(Icons.visibility_off)
-                                        : const Icon(Icons.visibility),
+                                    icon: (value.obsecureText == true) ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
                                     onPressed: () => value.showPassword()),
                               ),
                             );
@@ -110,8 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               child: const Text(
                                 "Forgot password?",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16),
+                                style: TextStyle(color: Colors.white, fontSize: 16),
                               )),
                         ),
                         SizedBox(
@@ -124,11 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Positioned(
                   top: height * 0.71,
                   right: width * 0.62,
-                  child: const Text("Login",
-                      style: TextStyle(
-                          fontSize: 32,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
+                  child: const Text("Login", style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
                 Positioned(
                   top: height * 0.7,
@@ -136,42 +122,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     height: height * 0.4,
                     width: width * 0.4,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(width * 4))),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
                   ),
                 ),
                 Positioned(
                   top: height * 0.69,
                   left: width * 0.685,
-                  child:
-                      Consumer<LoginProvider>(builder: (context, auth, child) {
+                  child: Consumer<AuthProvider>(builder: (context, auth, child) {
                     return Padding(
-                      padding: EdgeInsets.only(
-                          top: height * 0.009, right: width * 0.07),
+                      padding: EdgeInsets.only(top: height * 0.009, right: width * 0.07),
                       child: CustomConatinerButton(
-                        
-                          child: (auth.loading == false)
-                              ? const Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                )
+                          child: (auth.isLoading == false)
+                              ? const Icon(Icons.arrow_forward, color: Colors.white)
                               : const CircularProgressIndicator(),
                           ontap: () {
-                            auth.loading = true;
-                            setState(() {
-                              
-                            });
-                            if (emailController.text.isEmpty ||
-                                passwordController.text.isEmpty) {
+                            if (emailController.text.isEmpty || passwordController.text.isEmpty) {
                               showMessage(
                                 message: "Please fill all ther form",
                                 context: context,
                               );
                             } else {
-                              auth.login(emailController.text,
-                                  passwordController.text);
+                              auth.signIn(emailController.text, passwordController.text, false, (bool status, String message) {
+                                print(message);
+                              });
                             }
                           }),
                     );
@@ -182,28 +155,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   left: width * 0.23,
                   child: Padding(
                     padding: EdgeInsets.only(left: width * 0.073),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an acount?",
-                            style: TextStyle(
-                                color: Palette.timeColor,
-                                fontSize: height * 0.016),
-                          ),
-                          SizedBox(
-                            width: width * 0.01,
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Get.to(const EnterEmailOrPhone());
-                            },
-                            child: Text(
-                              "Create account",
-                              style: TextStyle(fontSize: height * 0.020),
-                            ),
-                          )
-                        ]),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Text(
+                        "Don't have an acount?",
+                        style: TextStyle(color: Palette.timeColor, fontSize: height * 0.016),
+                      ),
+                      SizedBox(
+                        width: width * 0.01,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Get.to(const EnterEmailOrPhone());
+                        },
+                        child: Text(
+                          "Create account",
+                          style: TextStyle(fontSize: height * 0.020),
+                        ),
+                      )
+                    ]),
                   ),
                 ),
               ],
@@ -218,8 +187,7 @@ class TsClip2 extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 80);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 120);
+    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 120);
     path.lineTo(size.width, 0);
     path.close();
     return path;
