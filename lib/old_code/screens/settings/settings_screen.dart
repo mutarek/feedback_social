@@ -10,7 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/card container/snackbar_message.dart';
+import '../../../widgets/snackbar_message.dart';
 
 import '../../widgets/settings widgets/password_update_settings.dart';
 

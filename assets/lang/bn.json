@@ -1,4 +1,10 @@
 {
-  "app_name": "ww Taxi",
-  "Welcome": "শুভ"
+  "app_name": "Dyqan Taxi",
+  "Welcome": "Welcome",
+  "Forgot password?": "Forgot password?",
+  "Password": "Password",
+  "Login": "Login",
+  "Create account": "Create account",
+  "Don't have an account?": "Don't have an account?",
+  "E-mail": "E-mail"
 }

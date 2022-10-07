@@ -1,4 +1,3 @@
-
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +13,9 @@ class CustomTextField extends StatefulWidget {
   final TextInputAction? inputAction;
   final Color? fillColor;
   final Color? textColor;
+  final String? Function(String?)? validation;
+  final String? Function(String?)? onChanged;
+  final String? Function(String?)? onSubmited;
   final int? maxLines;
   final bool? isPassword;
   final bool? isCountryPicker;
@@ -24,7 +26,6 @@ class CustomTextField extends StatefulWidget {
   final Widget? suffixWidget;
   final bool? isShowPrefixIcon;
   final VoidCallback? onTap;
-  final VoidCallback? onChanged;
   final VoidCallback? onSuffixTap;
   final String? suffixIconUrl;
   final String? prefixIconUrl;
@@ -52,7 +53,7 @@ class CustomTextField extends StatefulWidget {
       this.hintFontSize = 13,
       this.onSuffixTap,
       this.fillColor,
-        this.textColor,
+      this.textColor,
       this.onSubmit,
       this.onChanged,
       this.capitalization = TextCapitalization.none,
@@ -74,6 +75,8 @@ class CustomTextField extends StatefulWidget {
       this.horizontalSize = 22,
       this.verticalSize = 10,
       this.borderRadius = 20,
+      this.onSubmited,
+      this.validation,
       Key? key})
       : super(key: key);
 
@@ -86,12 +89,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Container(
       decoration: BoxDecoration(
         color: widget.fillColor ?? AppColors.primaryColorDark,
-        boxShadow: [BoxShadow(color: AppColors.primaryColorDark.withOpacity(.1), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)],
+        boxShadow: [
+          BoxShadow(color: AppColors.primaryColorDark.withOpacity(.1), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)
+        ],
         borderRadius: BorderRadius.circular(widget.borderRadius!),
       ),
       child: TextField(
@@ -102,38 +105,39 @@ class _CustomTextFieldState extends State<CustomTextField> {
           if (widget.isSaveAutoFillData!) TextInput.finishAutofillContext();
         },
         autofillHints: ['${widget.autoFillHints}'],
-        style: headline4.copyWith(fontSize: 16, color:widget.textColor?? AppColors.primaryColorDark),
+        style: headline4.copyWith(fontSize: 16, color: widget.textColor ?? AppColors.primaryColorLight),
         textInputAction: widget.inputAction,
         keyboardType: widget.inputType,
-        cursorColor: AppColors.primaryColorDark,
+        cursorColor: AppColors.primaryColorLight,
         textCapitalization: widget.capitalization!,
         enabled: widget.isEnabled,
         autofocus: widget.autoFocus!,
         //onChanged: widget.isSearch ? widget.languageProvider.searchLanguage : null,
         obscureText: widget.isPassword! ? _obscureText : false,
-        inputFormatters: widget.inputType == TextInputType.phone ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9+]'))] : null,
+        inputFormatters:
+            widget.inputType == TextInputType.phone ? <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp('[0-9+]'))] : null,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: widget.verticalSize!, horizontal: widget.horizontalSize!),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
-              borderSide:
-                  BorderSide(color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
+              borderSide: BorderSide(
+                  color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
-              borderSide:
-                  BorderSide(color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
+              borderSide: BorderSide(
+                  color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
-              borderSide:
-                  BorderSide(color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
+              borderSide: BorderSide(
+                  color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
-              borderSide:
-                  BorderSide(color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 1)),
+              borderSide: BorderSide(
+                  color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 1)),
           isDense: true,
           hintText: widget.hintText,
           fillColor: widget.fillColor ?? AppColors.primaryColorDark,
-          hintStyle: input.copyWith(fontSize: widget.hintFontSize, color: widget.textColor??AppColors.primaryColorDark),
+          hintStyle: input.copyWith(fontSize: widget.hintFontSize, color: widget.textColor ?? AppColors.hintTextColorLight),
           filled: true,
           prefixIcon: widget.isShowPrefixIcon!
               ? Padding(
@@ -144,21 +148,23 @@ class _CustomTextFieldState extends State<CustomTextField> {
           prefixIconConstraints: const BoxConstraints(minWidth: 23, maxHeight: 20),
           suffixIcon: widget.isShowSuffixIcon! && !widget.isShowSuffixWidget!
               ? widget.isPassword!
-                  ? IconButton(
-                      icon: Icon(!_obscureText ? Icons.visibility_off : Icons.visibility, color: AppColors.grey, size: 23), onPressed: _toggle)
+                  ? InkWell(
+                      child: Icon(!_obscureText ? Icons.visibility_off : Icons.visibility, color: AppColors.grey, size: 23), onTap: _toggle)
                   : widget.isIcon!
                       ? IconButton(
                           onPressed: widget.onSuffixTap,
-                          icon: Image.asset(widget.suffixIconUrl!, width: 15, height: 15, color: Theme.of(context).textTheme.bodyText1!.color),
+                          icon: Image.asset(widget.suffixIconUrl!,
+                              width: 15, height: 15, color: Theme.of(context).textTheme.bodyText1!.color),
                         )
                       : null
               : widget.isShowSuffixWidget!
                   ? widget.suffixWidget
                   : null,
         ),
-        onSubmitted: (String? text) => widget.nextFocus != null ? FocusScope.of(context).requestFocus(widget.nextFocus) : widget.onSubmit!(),
+        onSubmitted: (String? text) =>
+            widget.nextFocus != null ? FocusScope.of(context).requestFocus(widget.nextFocus) : FocusScope.of(context).unfocus(),
         onChanged: (String? value) {
-          if (widget.isSearch!) widget.onChanged!();
+          if (widget.isSearch!) widget.onChanged!(value);
         },
       ),
     );

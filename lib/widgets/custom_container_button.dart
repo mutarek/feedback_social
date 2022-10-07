@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../const/palette.dart';
+import '../old_code/const/palette.dart';
 
 // ignore: must_be_immutable
 class CustomConatinerButton extends StatelessWidget {
   VoidCallback ontap;
   Widget child;
+
   CustomConatinerButton({
     required this.ontap,
     required this.child,
@@ -23,10 +24,7 @@ class CustomConatinerButton extends StatelessWidget {
         decoration: BoxDecoration(
             color: Palette.primary,
             borderRadius: const BorderRadius.all(Radius.circular(30)),
-            border: Border.all(
-              color: Colors.white,
-              width: 2.5,
-            )),
+            border: Border.all(color: Colors.white, width: 2.5)),
       ),
     );
   }

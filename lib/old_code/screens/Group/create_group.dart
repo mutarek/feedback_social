@@ -1,7 +1,7 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:als_frontend/old_code/screens/tab_bar_view/flag.dart';
-import 'package:als_frontend/old_code/widgets/card%20container/snackbar_message.dart';
+import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';

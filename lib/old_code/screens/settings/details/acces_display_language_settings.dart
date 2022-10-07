@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../const/palette.dart';
 import '../../../provider/provider.dart';
-import '../../../widgets/card container/snackbar_message.dart';
+import '../../../../widgets/snackbar_message.dart';
 import '../../../widgets/settings widgets/privacy_safety_widget.dart';
 import '../../../widgets/settings widgets/setteings_widget.dart';
 

@@ -12,6 +12,7 @@ import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/util/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 
 import 'di_container.dart' as di;
@@ -140,7 +141,7 @@ class MyApp extends StatelessWidget {
       _locals.add(Locale(language.languageCode, language.countryCode));
     }
 
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Feedback',
       locale: Provider.of<LocalizationProvider>(context).locale,
       theme: Provider.of<ThemeProvider>(context).darkTheme ? AppTheme.getDarkModeTheme() : AppTheme.getLightModeTheme(),
