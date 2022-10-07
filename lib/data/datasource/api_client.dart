@@ -20,7 +20,11 @@ class ApiClient {
   Map<String, String>? _mainHeaders;
 
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
-    token = '';
+    if (sharedPreferences.containsKey(AppConstant.token)) {
+      token = sharedPreferences.getString(AppConstant.token)!;
+    } else {
+      token = '';
+    }
     debugPrint('Token: $token');
 
     updateHeader(token);
@@ -54,7 +58,6 @@ class ApiClient {
       ).timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(_response, uri);
     } catch (e) {
-      print('qj ${e.toString()}');
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
