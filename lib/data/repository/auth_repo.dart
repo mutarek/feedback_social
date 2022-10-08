@@ -9,32 +9,6 @@ class AuthRepo {
 
   AuthRepo({required this.sharedPreferences, required this.apiClient});
 
-  //
-  // Future<ApiResponse> signUp(String firstName, String lastName, String phone, String email, String password) async {
-  //   Response response = Response(requestOptions: RequestOptions(path: '22222'));
-  //   try {
-  //     response = await dioClient.post('${AppConstant.baseUrl}${AppConstant.signUPURI}', data: {
-  //       "password": password,
-  //       "email": email,
-  //       "firstname": firstName,
-  //       "lastname": lastName,
-  //       "age": "0",
-  //       "phone": phone,
-  //       "fax": phone,
-  //       "currencyID": 0,
-  //       "pushNotifications": true,
-  //       "website": "string",
-  //       "mobile": phone,
-  //       "secondMobile": phone,
-  //       "darkMode": true,
-  //       "disable": false
-  //     });
-  //     return ApiResponse.withSuccess(response);
-  //   } catch (e) {
-  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-  //   }
-  // }
-
   Future<Response> login(String email, String password) async {
     return await apiClient.postData(AppConstant.loginURI, {'email': email, 'password': password},
         headers: {'Content-Type': 'application/json; charset=UTF-8'});
@@ -65,40 +39,6 @@ class AuthRepo {
     }
     return await apiClient.postData(AppConstant.otpVerifyURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
-
-  //
-  // Future<ApiResponse> signIn(String email, String password) async {
-  //   Response response = Response(requestOptions: RequestOptions(path: '22222'));
-  //   try {
-  //     response = await dioClient.post(AppConstant.loginURI, data: {'email': email, 'password': password});
-  //     return ApiResponse.withSuccess(response);
-  //   } catch (e) {
-  //     print('apap ${e.toString()}');
-  //     return ApiResponse.withError(
-  //       ApiErrorHandler.getMessage(e),
-  //     );
-  //   }
-  // }
-  //
-  // Future<ApiResponse> forgotPassword(String emailAddress) async {
-  //   Response response = Response(requestOptions: RequestOptions(path: '22222'));
-  //   try {
-  //     response = await dioClient.post(AppConstant.forgotPasswordURI, data: {"email": emailAddress});
-  //     return ApiResponse.withSuccess(response);
-  //   } catch (e) {
-  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-  //   }
-  // }
-  //
-  // Future<ApiResponse> guestLogin() async {
-  //   Response response = Response(requestOptions: RequestOptions(path: '22222'));
-  //   try {
-  //     response = await dioClient.post('${AppConstant.baseUrl}${AppConstant.guestLoginURI}');
-  //     return ApiResponse.withSuccess(response);
-  //   } catch (e) {
-  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-  //   }
-  // }
 
   //TODO: for save User Information
   Future<void> saveUserInformation(String userID, String name, String image, String code, String email) async {
@@ -145,9 +85,6 @@ class AuthRepo {
 
   // for  user token
   Future<void> saveUserToken(String token) async {
-    // dioClient.token = token;
-    // dioClient.dio!.options.headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'};
-
     try {
       await sharedPreferences.setString(AppConstant.token, token);
     } catch (e) {
