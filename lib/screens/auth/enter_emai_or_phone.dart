@@ -7,8 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../const/palette.dart';
-import '../../widgets/widgets.dart';
+import '../../old_code/const/palette.dart';
+import '../../old_code/widgets/widgets.dart';
 
 class EnterEmailOrPhone extends StatefulWidget {
   const EnterEmailOrPhone({Key? key}) : super(key: key);
@@ -237,7 +237,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                     child: (provider.otpSend == true)
                                         ? const CupertinoActivityIndicator()
                                         : Text(
-                                            "Get varified",
+                                            "Get verified",
                                             style: GoogleFonts.lato(
                                               color: Colors.black,
                                               fontSize: 10,

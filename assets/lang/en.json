@@ -6,5 +6,15 @@
   "Login": "Login",
   "Create account": "Create account",
   "Don't have an account?": "Don't have an account?",
-  "E-mail": "E-mail"
+  "E-mail": "E-mail",
+  "Registration": "Registration",
+  "mi ago": "minute ago",
+  "ho ago": "hour ago",
+  "da ago": "day ago",
+  "mo ago": "month ago",
+  "ye ago": "year ago",
+  "Please fill all the form": "Please fill all the form",
+  "Send OTP": "Send OTP",
+  "Email/Phone No": "Email/Phone No",
+  "Please Enter your email address or phone number": "Please Enter your email address or phone number"
 }

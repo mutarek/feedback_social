@@ -3,7 +3,8 @@
  const double fontSize14 = 14.0;
  const double fontSize16 = 16.0;
  const double fontSize18 = 18.0;
- const double fontSize20 = 24.0;
+ const double fontSize20 = 20.0;
+ const double fontSize24 = 24.0;
 
  const double paddingSize5 = 5.0;
  const double paddingSize10 = 10.0;

@@ -59,8 +59,7 @@ class EmailVerifyProvider extends ChangeNotifier {
       "code": code,
     };
 
-    http.Response response =
-        await http.post(Uri.parse(apiUrl), body: mappeddata);
+    http.Response response = await http.post(Uri.parse(apiUrl), body: mappeddata);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       codeVerifySuccess = true;
@@ -85,8 +84,7 @@ class EmailVerifyProvider extends ChangeNotifier {
       "code": code,
     };
 
-    http.Response response =
-        await http.post(Uri.parse(apiUrl), body: mappeddata);
+    http.Response response = await http.post(Uri.parse(apiUrl), body: mappeddata);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       message = "Email Verified";
@@ -110,16 +108,14 @@ class EmailVerifyProvider extends ChangeNotifier {
       "email": email,
     };
 
-    http.Response response =
-        await http.post(Uri.parse(apiUrl), body: mappeddata);
+    http.Response response = await http.post(Uri.parse(apiUrl), body: mappeddata);
     notifyListeners();
     if (response.statusCode == 200) {
       otpSend = false;
       getCodeSuccess = true;
       startTimer();
       notifyListeners();
-      Fluttertoast.showToast(
-          msg: "succesfully send code please check your email");
+      Fluttertoast.showToast(msg: "succesfully send code please check your email");
     } else {
       otpSend = false;
       notifyListeners();
@@ -134,16 +130,14 @@ class EmailVerifyProvider extends ChangeNotifier {
       "phone": phone,
     };
 
-    http.Response response =
-        await http.post(Uri.parse(apiUrl), body: mappeddata);
+    http.Response response = await http.post(Uri.parse(apiUrl), body: mappeddata);
     notifyListeners();
     if (response.statusCode == 200) {
       otpSend = false;
       getCodeSuccess = true;
       notifyListeners();
       startTimer();
-      Fluttertoast.showToast(
-          msg: "succesfully send code please check your message");
+      Fluttertoast.showToast(msg: "succesfully send code please check your message");
     } else {
       otpSend = false;
       notifyListeners();

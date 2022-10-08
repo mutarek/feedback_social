@@ -14,7 +14,7 @@ class ApiClient {
   final String appBaseUrl;
   final SharedPreferences sharedPreferences;
   static const String noInternetMessage = 'Connection to API server failed due to internet connection';
-  final int timeoutInSeconds = 30000;
+  final int timeoutInSeconds = 30;
 
   String token = '';
   Map<String, String>? _mainHeaders;
@@ -125,7 +125,7 @@ class ApiClient {
       _body = jsonDecode(response.body);
     } catch (e) {}
     Response _response = Response(
-      body: _body != null ? _body : response.body,
+      body: _body ?? response.body,
       bodyString: response.body.toString(),
       request: Request(headers: response.request!.headers, method: response.request!.method, url: response.request!.url),
       headers: response.headers,
@@ -134,6 +134,11 @@ class ApiClient {
     );
     if (_response.statusCode != 200 && _response.body != null && _response.body is! String) {
       if (_response.body.toString().startsWith('{errors')) {
+        print('sksk');
+        ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
+        _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _errorResponse.error);
+      } else if (_response.body.toString().startsWith('{error')) {
+        print('sksk');
         ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
         _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _errorResponse.error);
       } else if (_response.body.toString().startsWith('{message')) {

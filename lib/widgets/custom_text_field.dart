@@ -40,6 +40,7 @@ class CustomTextField extends StatefulWidget {
   final bool? autoFocus;
   final bool? isSaveAutoFillData;
   final String autoFillHints;
+  final String autoFillHints2;
 
   const CustomTextField(
       {this.hintText = 'Write something...',
@@ -68,7 +69,8 @@ class CustomTextField extends StatefulWidget {
       this.isShowSuffixWidget = false,
       this.suffixWidget,
       this.prefixIconUrl = '',
-      this.autoFillHints = AutofillHints.name,
+      this.autoFillHints = '',
+      this.autoFillHints2 = '',
       this.isSearch = false,
       this.autoFocus = false,
       this.isSaveAutoFillData = false,
@@ -91,9 +93,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: widget.fillColor ?? AppColors.primaryColorDark,
+        color: widget.fillColor ?? AppColors.primaryColorLight,
         boxShadow: [
-          BoxShadow(color: AppColors.primaryColorDark.withOpacity(.1), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)
+          BoxShadow(color: AppColors.primaryColorLight.withOpacity(.1), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)
         ],
         borderRadius: BorderRadius.circular(widget.borderRadius!),
       ),
@@ -104,7 +106,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         onEditingComplete: () {
           if (widget.isSaveAutoFillData!) TextInput.finishAutofillContext();
         },
-        autofillHints: ['${widget.autoFillHints}'],
+        autofillHints: [(widget.autoFillHints), (widget.autoFillHints2)],
         style: headline4.copyWith(fontSize: 16, color: widget.textColor ?? AppColors.primaryColorLight),
         textInputAction: widget.inputAction,
         keyboardType: widget.inputType,

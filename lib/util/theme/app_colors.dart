@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
+const Color colorPrimaryLight = Color(0xFF06113E);
+const Color colorPrimaryDark = Color(0xFFF9C45A);
 
 class AppColors {
-
   //TODO: for Light Theme color
   static const Color primaryColorLight = Color(0xFF06113E);
   static const Color hintTextColorLight = Color(0xff9E9E9E);
   static const Color imageBGColorLight = Color(0xffE2F0FF);
   static const Color whiteColorLight = Color(0xFFFFFFFF);
   static const Color unreadColorLight = Color(0xFF00ACFF);
-
 
   //TODO: for Dark Theme Color
   static const Color primaryColorDark = Color(0xFFF9C45A);
@@ -22,8 +22,6 @@ class AppColors {
   static const LinearGradient createRoomGradient = LinearGradient(colors: [Color(0xFF496AE1), Color(0xFFCE48B1)]);
   static const Color textFont = Color(0xFF000000);
   static const Color timeColor = Color(0xFFFF8C31);
-
-
 
   static const Color HOME_BG = Color(0xffF0F0F0);
   static const Color redColor = Color(0xffFF0000);
@@ -38,6 +36,7 @@ class AppColors {
   static const Color YELLOW = Color(0xFFFFAA47);
 
   static const Color bodyTextColorOverride = Color(0xFF020202);
+
   //
   // static Color barColor = HexColor('');
   // static Color fastButtonColor = HexColor('');
@@ -67,7 +66,6 @@ class AppColors {
   // static Color fastButTextColor = HexColor('');
   // static Color menuIconActiveColor = HexColor('');
   // static Color bodyTextColor = HexColor('');
-
 
   static Map<String, Color> lightThemeColors = {
     "backgroundColor": const Color(0xFFf5f5f5),

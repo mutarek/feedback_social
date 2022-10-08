@@ -2,6 +2,7 @@ import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/screens/auth/signup_screen1.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
@@ -46,14 +47,15 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Stack(
               children: [
                 Positioned(
-                  top: height * 0.7,
+                  top: height * 0.75,
                   left: width * 0.6,
                   child: Container(
                     height: height * 0.4,
                     width: width * 0.4,
-                    decoration: BoxDecoration(color: Colors.indigo.withOpacity(.1), borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
                   ),
                 ),
+
 
                 Column(
                   children: [
@@ -154,29 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(height: 20),
 
-                                  Consumer<AuthProvider>(builder: (context, auth, child) {
-                                    return CustomConatinerButton(
-                                        child: (auth.isLoading == false)
-                                            ? const Icon(Icons.arrow_forward, color: Colors.white)
-                                            : const CircularProgressIndicator(),
-                                        ontap: () {
-                                          if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-                                            showMessage(
-                                              message: "Please fill all ther form",
-                                              context: context,
-                                            );
-                                          } else {
-                                            auth.signIn(emailController.text, passwordController.text, false, (bool status, String message) {
-                                              if (status) {
-                                                Fluttertoast.showToast(msg: message);
-                                                Get.off(const NavScreen());
-                                              } else {
-                                                Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
-                                              }
-                                            });
-                                          }
-                                        });
-                                  }),
+
                                   SizedBox(height: height * 0.02),
                                 ],
                               ),
@@ -191,7 +171,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(width: width * 0.01),
                             TextButton(
                               onPressed: () {
-                                Get.to(const EnterEmailOrPhone());
+                                Get.to( SignUpScreen1());
+                                // Get.to(const EnterEmailOrPhone());
                               },
                               child: Text(
                                 getTranslated('Create account', context)!,
@@ -205,7 +186,38 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
 
-
+                Positioned(
+                  top: height * 0.65,
+                  left: width * 0.47,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: height * 0.4,
+                    width: width * 0.4,
+                    child: Consumer<AuthProvider>(builder: (context, auth, child) {
+                      return CustomConatinerButton(
+                          child: (auth.isLoading == false)
+                              ? const Icon(Icons.arrow_forward, color: Colors.white)
+                              : const CircularProgressIndicator(),
+                          ontap: () {
+                            if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+                              showMessage(
+                                message: "Please fill all ther form",
+                                context: context,
+                              );
+                            } else {
+                              auth.signIn(emailController.text, passwordController.text, false, (bool status, String message) {
+                                if (status) {
+                                  Fluttertoast.showToast(msg: message);
+                                  Get.off(const NavScreen());
+                                } else {
+                                  Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                                }
+                              });
+                            }
+                          });
+                    }),
+                  ),
+                ),
               ],
             ),
           ));

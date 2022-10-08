@@ -40,6 +40,16 @@ class AuthRepo {
         headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
+  Future<Response> otpSend(String emailOrPhone, bool isEmail) async {
+    Map map = {};
+    if (isEmail) {
+      map = {"email": emailOrPhone};
+    } else {
+      map = {"phone": emailOrPhone};
+    }
+    return await apiClient.postData(AppConstant.otpSendURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
+  }
+
   //
   // Future<ApiResponse> signIn(String email, String password) async {
   //   Response response = Response(requestOptions: RequestOptions(path: '22222'));

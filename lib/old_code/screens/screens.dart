@@ -57,6 +57,6 @@ export 'Page/edit_page_post.dart';
 export 'Page/report_page_post_screen.dart';
 export 'Group/edit_group_post.dart';
 export 'news_feed_post/show_video_page.dart';
-export 'authentication/enter_emai_or_phone.dart';
+export '../../screens/auth/enter_emai_or_phone.dart';
 export 'others/get_token_screen.dart';
 export 'Group/group_post_share.dart';

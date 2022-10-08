@@ -1,8 +1,9 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 
-class CustomText extends StatelessWidget {
-  CustomText(
+class CustomText2 extends StatelessWidget {
+  CustomText2(
       {this.title,
       this.color = Colors.white,
       this.fontSize = 14,
@@ -31,7 +32,7 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      title ?? "",
+      getTranslated(title!, context) ?? "",
       textAlign: textAlign ?? TextAlign.left,
       maxLines: maxLines,
       overflow: overflow,
