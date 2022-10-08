@@ -20,7 +20,6 @@ class ApiClient {
   Map<String, String>? _mainHeaders;
 
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
-
     print('qiqw ${sharedPreferences.getString(AppConstant.languageCode) ?? 'jhhi'}');
 
     if (sharedPreferences.containsKey(AppConstant.token)) {
@@ -134,13 +133,14 @@ class ApiClient {
     );
     if (_response.statusCode != 200 && _response.body != null && _response.body is! String) {
       if (_response.body.toString().startsWith('{errors')) {
-        print('sksk');
         ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
         _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _errorResponse.error);
       } else if (_response.body.toString().startsWith('{error')) {
-        print('sksk');
         ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
         _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _errorResponse.error);
+      } else if (_response.body.toString().startsWith('{otp_verified')) {
+        _response =
+            Response(statusCode: _response.statusCode, body: _response.body, statusText: 'OTP Verified Failed Please Insert correct OTP');
       } else if (_response.body.toString().startsWith('{message')) {
         _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _response.body['message']);
       }

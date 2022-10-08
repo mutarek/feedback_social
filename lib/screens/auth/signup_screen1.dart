@@ -134,7 +134,7 @@ class SignUpScreen1 extends StatelessWidget {
                             auth.otpSend(emailPhoneController.text, !isNumber, (bool status, String message) {
                               if (status) {
                                 Fluttertoast.showToast(msg: message);
-                                Get.off(const OTPScreen());
+                                Get.off( OTPScreen());
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                               }

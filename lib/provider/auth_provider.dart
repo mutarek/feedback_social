@@ -47,8 +47,13 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  String data = '';
+  bool isNumber = false;
+
   Future otpSend(String emailORPhone, bool isEmail, Function callback) async {
     _isLoading = true;
+    data = emailORPhone;
+    isNumber = isEmail;
     notifyListeners();
     Response response = await authRepo.otpSend(emailORPhone, isEmail);
     _isLoading = false;
@@ -56,6 +61,20 @@ class AuthProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       startTimer();
       callback(true, response.body['message']);
+    } else {
+      callback(false, response.statusText);
+    }
+    notifyListeners();
+  }
+
+  Future otpVerify(String code, Function callback) async {
+    _isLoading = true;
+    notifyListeners();
+    Response response = await authRepo.otpVerify(data, code, isEmail);
+    _isLoading = false;
+
+    if (response.statusCode == 200) {
+      callback(true, 'Successfully');
     } else {
       callback(false, response.statusText);
     }
@@ -90,10 +109,16 @@ class AuthProvider with ChangeNotifier {
 
   void resetTime() {
     _timer.cancel();
-    seconds = 0;
-    minutes = 5;
+    // seconds = 0;
+    // minutes = 5;
+    otpSend(data, isNumber, (bool status, String message) {
+      if (status) {
+        Fluttertoast.showToast(msg: message);
+      } else {
+        Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+      }
+    });
     notifyListeners();
-    startTimer();
   }
 
 // // for Guest  Section
