@@ -17,7 +17,29 @@ class AuthProvider with ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  // for Sign in Section
+  //TODO:: for Sign Up Section
+
+  Future signup(String firstName, String lastName, String password, Function callback) async {
+    _isLoading = true;
+    notifyListeners();
+    Response response = await authRepo.signup(firstName, lastName, buttonText, selectGender, data, password);
+    _isLoading = false;
+    if (response.statusCode == 201) {
+      if (authRepo.checkTokenExist()) {
+        authRepo.clearUserInformation();
+        authRepo.clearToken();
+      }
+      //authRepo.saveUserToken(response.body['token'].toString());
+      authRepo.saveUserInformation(response.body['id'].toString(), '${response.body['first_name']} ${response.body['last_name']}',
+          '${response.body['profile_image']}', '${response.body['code']}', '${response.body['email']}');
+      callback(true, 'Signup Successfully');
+    } else {
+      callback(false, response.statusText);
+    }
+    notifyListeners();
+  }
+
+  //TODO:: for Sign in Section
 
   Future signIn(String email, String password, bool isRemember, Function callback) async {
     _isLoading = true;
@@ -74,7 +96,7 @@ class AuthProvider with ChangeNotifier {
     _isLoading = false;
 
     if (response.statusCode == 200) {
-      callback(true, 'Successfully');
+      callback(true, 'Successfully Verified');
     } else {
       callback(false, response.statusText);
     }
@@ -118,6 +140,29 @@ class AuthProvider with ChangeNotifier {
         Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
       }
     });
+    notifyListeners();
+  }
+
+  //// TODO: for send User Information
+  DateTime _dateTime = DateTime.now();
+  String dateTime = "";
+  var buttonText = "Choose time";
+
+  void showDateDialog(BuildContext context) {
+    showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(60), lastDate: DateTime.now()).then((value) {
+      _dateTime = value!;
+      buttonText = "${_dateTime.year.toString()}-${_dateTime.month.toString()}-${_dateTime.day.toString()}";
+      dateTime = buttonText;
+      notifyListeners();
+    });
+  }
+
+  List<String> genderLists = ["Male", "Female", "Other"];
+
+  String selectGender = "Male";
+
+  changeGenderStatus(String status) {
+    selectGender = status;
     notifyListeners();
   }
 

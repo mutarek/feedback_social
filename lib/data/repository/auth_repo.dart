@@ -40,6 +40,12 @@ class AuthRepo {
         headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
+  Future<Response> signup(String firstName, String lastName, String dob, String gender, String email, String password) async {
+    return await apiClient.postData(AppConstant.signupURI,
+        {"first_name": firstName, "last_name": lastName, "email": email, "password": password, "date_of_birth": dob, "gender": gender},
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
+  }
+
   Future<Response> otpSend(String emailOrPhone, bool isEmail) async {
     Map map = {};
     if (isEmail) {

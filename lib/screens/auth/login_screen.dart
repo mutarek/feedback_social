@@ -200,10 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               : const CircularProgressIndicator(),
                           ontap: () {
                             if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-                              showMessage(
-                                message: "Please fill all ther form",
-                                context: context,
-                              );
+                              showMessage(message: getTranslated('Please fill all the form', context), context: context);
                             } else {
                               auth.signIn(emailController.text, passwordController.text, false, (bool status, String message) {
                                 if (status) {

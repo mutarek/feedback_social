@@ -5,10 +5,10 @@ class AppConstant {
   // API BASE URL
   static const String baseUrl = 'https://als-social.com';
   static const String loginURI = '/accounts/signin/';
+  static const String signupURI = '/accounts/signup/';
   static const String otpSendURI = '/accounts/otp/send/';
   static const String otpVerifyURI = '/accounts/otp/verify/';
   static const String configUri = 'appSettings';
-  static const String signUPURI = 'auth/signup';
   static const String guestLoginURI = 'auth/login-guest';
   static const String forgotPasswordURI = 'auth/forget-password';
   static const String homeActiveURI = 'home/active';

@@ -95,7 +95,7 @@ class OTPScreen extends StatelessWidget {
                                   auth.otpVerify(pinController.text, (bool status, String message) {
                                     if (status) {
                                       Fluttertoast.showToast(msg: message);
-                                      Get.off(const SignupScreen2());
+                                      Get.off(SignupScreen2());
                                     } else {
                                       Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                     }
