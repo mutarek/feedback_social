@@ -4,8 +4,7 @@
 
 import 'dart:convert';
 
-NewsfeedModel newsfeedModelFromJson(String str) =>
-    NewsfeedModel.fromJson(json.decode(str));
+NewsfeedModel newsfeedModelFromJson(String str) => NewsfeedModel.fromJson(json.decode(str));
 
 String newsfeedModelToJson(NewsfeedModel data) => json.encode(data.toJson());
 
@@ -20,14 +19,13 @@ class NewsfeedModel {
   int? count;
   String? next;
   dynamic previous;
-  List<Result>? results;
+  List<NewsFeedData>? results;
 
   factory NewsfeedModel.fromJson(Map<String, dynamic> json) => NewsfeedModel(
         count: json["count"],
         next: json["next"],
         previous: json["previous"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+        results: List<NewsFeedData>.from(json["results"].map((x) => NewsFeedData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -38,8 +36,8 @@ class NewsfeedModel {
       };
 }
 
-class Result {
-  Result({
+class NewsFeedData {
+  NewsFeedData({
     this.newsfeedId,
     this.id,
     this.description,
@@ -61,6 +59,7 @@ class Result {
     this.sharePost,
     this.page,
   });
+
   int? newsfeedId;
   int? id;
   String? description;
@@ -82,7 +81,7 @@ class Result {
   SharePost? sharePost;
   Group? page;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory NewsFeedData.fromJson(Map<String, dynamic> json) => NewsFeedData(
         newsfeedId: json["newsfeed_id"],
         id: json["id"],
         description: json["description"],
@@ -94,18 +93,14 @@ class Result {
         totalVideo: json["total_video"],
         videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
         totalComment: json["total_comment"],
-        comments: List<Comment>.from(
-            json["comments"].map((x) => Comment.fromJson(x))),
+        comments: List<Comment>.from(json["comments"].map((x) => Comment.fromJson(x))),
         totalLike: json["total_like"],
-        likedBy: List<LikedBy>.from(
-            json["liked_by"].map((x) => LikedBy.fromJson(x))),
+        likedBy: List<LikedBy>.from(json["liked_by"].map((x) => LikedBy.fromJson(x))),
         timestamp: json["timestamp"],
         isShare: json["is_share"],
         postType: json["post_type"],
         like: json["like"],
-        sharePost: json["share_post"] == null
-            ? null
-            : SharePost.fromJson(json["share_post"]),
+        sharePost: json["share_post"] == null ? null : SharePost.fromJson(json["share_post"]),
         page: json["page"] == null ? null : Group.fromJson(json["page"]),
       );
 
@@ -215,9 +210,7 @@ class LikedBy {
         firstName: json["first_name"],
         lastName: json["last_name"],
         email: json["email"],
-        dateOfBirth: json["date_of_birth"] == null
-            ? null
-            : DateTime.parse(json["date_of_birth"]),
+        dateOfBirth: json["date_of_birth"] == null ? null : DateTime.parse(json["date_of_birth"]),
         gender: json["gender"],
         isActive: json["is_active"],
         profileImage: json["profile_image"],
@@ -372,17 +365,9 @@ class Video {
   String? video;
   String? thumbnail;
 
-  factory Video.fromJson(Map<String, dynamic> json) => Video(
-        id: json["id"],
-        video: json["video"],
-        thumbnail: json["thumbnail"]
-      );
+  factory Video.fromJson(Map<String, dynamic> json) => Video(id: json["id"], video: json["video"], thumbnail: json["thumbnail"]);
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "video": video,
-        "thumbnail": thumbnail
-      };
+  Map<String, dynamic> toJson() => {"id": id, "video": video, "thumbnail": thumbnail};
 }
 
 class EnumValues<T> {

@@ -8,7 +8,7 @@ class AppConstant {
   static const String signupURI = '/accounts/signup/';
   static const String otpSendURI = '/accounts/otp/send/';
   static const String otpVerifyURI = '/accounts/otp/verify/';
-  static const String configUri = 'appSettings';
+  static const String newsFeedURI = '/posts/newsfeeds?page=';
   static const String guestLoginURI = 'auth/login-guest';
   static const String forgotPasswordURI = 'auth/forget-password';
   static const String homeActiveURI = 'home/active';

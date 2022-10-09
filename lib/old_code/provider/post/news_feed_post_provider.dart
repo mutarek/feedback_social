@@ -10,7 +10,7 @@ import '../../service/post/post_services.dart';
 class NewsFeedPostProvider extends ChangeNotifier {
   // ignore: prefer_typing_uninitialized_variables
   var posts;
-  List<Result> results = [];
+  List<NewsFeedData> results = [];
   var isLoaded = false;
   int index = 0;
   int singleImageIndex = 0;
@@ -39,7 +39,7 @@ class NewsFeedPostProvider extends ChangeNotifier {
       id = (prefs.getInt('id') ?? '') as int;
 
       posts = (await PostService().getPosts(page))!;
-      results.addAll(posts.results);
+      results.addAll(posts.newsFeedLists);
       initializeLikedData();
       page = page + 1;
       notifyListeners();

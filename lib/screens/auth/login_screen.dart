@@ -3,6 +3,7 @@ import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/signup_screen1.dart';
+import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
@@ -24,8 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
-  FocusNode emailFocus=FocusNode();
-  FocusNode passwordFocus=FocusNode();
+  FocusNode emailFocus = FocusNode();
+  FocusNode passwordFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +56,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
                   ),
                 ),
-
-
                 Column(
                   children: [
                     ClipPath(
                       clipper: TsClip2(),
                       child: Container(
-                        height: height * 0.25,
+                        height: height * 0.27,
                         width: width,
                         color: Colors.white,
                         child: Padding(
@@ -156,13 +155,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(height: 20),
 
-
                                   SizedBox(height: height * 0.02),
                                 ],
                               ),
                             ),
                           ),
-
                           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                             Text(
                               getTranslated('Don\'t have an account?', context)!,
@@ -171,12 +168,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(width: width * 0.01),
                             TextButton(
                               onPressed: () {
-                                Get.to( SignUpScreen1());
+                                Get.to(SignUpScreen1());
                                 // Get.to(const EnterEmailOrPhone());
                               },
                               child: Text(
                                 getTranslated('Create account', context)!,
-                                style: latoStyle400Regular.copyWith(fontSize: 15,color: Colors.blue),
+                                style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.blue),
                               ),
                             )
                           ]),
@@ -185,7 +182,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-
                 Positioned(
                   top: height * 0.65,
                   left: width * 0.47,
@@ -205,7 +201,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               auth.signIn(emailController.text, passwordController.text, false, (bool status, String message) {
                                 if (status) {
                                   Fluttertoast.showToast(msg: message);
-                                  Get.off(const NavScreen());
+                                  // Get.off(const NavScreen());
+                                  Get.off( DashboardScreen());
                                 } else {
                                   Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                 }

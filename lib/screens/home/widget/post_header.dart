@@ -1,0 +1,34 @@
+import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
+import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
+import 'package:flutter/material.dart';
+
+class PostHeaderWidget extends StatelessWidget {
+  final NewsFeedData post;
+
+  const PostHeaderWidget({Key? key, required this.post}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ProfileAvatar(profileImageUrl: post.author!.profileImage!),
+        const SizedBox(width: 8.0),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(post.author!.fullName!, style: const TextStyle(fontWeight: FontWeight.w600)),
+              Row(
+                children: [
+                  Text('2m ago • ', style: TextStyle(color: Colors.grey[600], fontSize: 12.0)),
+                  Icon(Icons.public, color: Colors.grey[600], size: 12.0)
+                ],
+              )
+            ],
+          ),
+        ),
+        IconButton(icon: const Icon(Icons.more_horiz), onPressed: () => print('More')),
+      ],
+    );
+  }
+}
