@@ -121,7 +121,7 @@ class ApiClient {
   Response handleResponse(Http.Response response, String uri) {
     dynamic _body;
     try {
-      _body = jsonDecode(response.body);
+      _body = jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {}
     Response _response = Response(
       body: _body ?? response.body,

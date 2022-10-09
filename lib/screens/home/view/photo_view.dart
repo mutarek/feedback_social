@@ -1,4 +1,5 @@
 import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
+import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class PostPhotoContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (postImageUrl.totalImage==1) {
+    if (postImageUrl.totalImage == 1) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: CachedNetworkImage(
@@ -28,38 +29,32 @@ class PostPhotoContainer extends StatelessWidget {
         mainAxisSpacing: 10,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: postImageUrl.images!.length,
-        // staggeredTileBuilder: (index) {
-        //   return StaggeredTile.count(1, index.isOdd ? 0.9 : 1.02);
-        // },
+        itemCount: postImageUrl.images!.length > 4 ? 4 : postImageUrl.images!.length,
         itemBuilder: (context, index) {
-                  return CachedNetworkImage(
-                    imageUrl: postImageUrl.images![index].image!,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  );
+          return Stack(
+            children: [
+              CachedNetworkImage(imageUrl: postImageUrl.images![index].image!, fit: BoxFit.cover, width: double.infinity),
+              index == 3
+                  ? Container(
+                      width: double.infinity,
+                      height: 100,
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: 100,
+                        child: CustomButton(
+                          onTap: () {},
+                          btnTxt: 'View More+',
+                          fontSize: 12,
+                          backgroundColor: Colors.green.withOpacity(.7),
+                          textWhiteColor: true,
+                        ),
+                      ),
+                    )
+                  : SizedBox.shrink()
+            ],
+          );
         },
       ),
     );
-    // return Padding(
-    //   padding: const EdgeInsets.symmetric(vertical: 8.0),
-    //   child: Container(
-    //     width: double.infinity,
-    //     margin: const EdgeInsets.symmetric(horizontal: 10.0),
-    //     child: CarouselSlider.builder(
-    //       itemCount: postImageUrl.images!.length,
-    //       options: CarouselOptions(
-    //         enlargeCenterPage: true,
-    //       ),
-    //       itemBuilder: (context, index, realIndex) {
-    //         return CachedNetworkImage(
-    //           imageUrl: postImageUrl.images![index].image!,
-    //           fit: BoxFit.cover,
-    //           width: double.infinity,
-    //         );
-    //       },
-    //     ),
-    //   ),
-    // );
   }
 }

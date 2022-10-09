@@ -1,4 +1,3 @@
-
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/rounded_button.dart';
@@ -98,12 +97,10 @@ class CustomButton extends StatelessWidget {
             Expanded(
                 child: Text(
               btnTxt!,
-              style: headline5.copyWith(color: textWhiteColor! ? AppColors.whiteColorLight : AppColors.black,fontSize: fontSize),
+              style: latoStyle500Medium.copyWith(color: textWhiteColor! ? AppColors.whiteColorLight : AppColors.black, fontSize: fontSize),
               textAlign: TextAlign.center,
             )),
-            isShowRightIcon!
-                ? Icon(rightIcon(context), color: isStroked! ? Colors.red : Colors.white)
-                : const SizedBox.shrink()
+            isShowRightIcon! ? Icon(rightIcon(context), color: isStroked! ? Colors.red : Colors.white) : const SizedBox.shrink()
           ],
         ),
       ),
@@ -119,12 +116,7 @@ class IconButton1 extends StatelessWidget {
   final Color? backgroundColor;
 
   const IconButton1(
-      {required this.onTap,
-      required this.icon,
-      this.width = 43,
-      this.height = 43,
-      this.backgroundColor = Colors.red,
-      Key? key})
+      {required this.onTap, required this.icon, this.width = 43, this.height = 43, this.backgroundColor = Colors.red, Key? key})
       : super(key: key);
 
   @override
@@ -135,9 +127,10 @@ class IconButton1 extends StatelessWidget {
         width: width,
         height: height,
         padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white, boxShadow: [
-          BoxShadow(color: backgroundColor!.withOpacity(.05), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)
-        ]),
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            boxShadow: [BoxShadow(color: backgroundColor!.withOpacity(.05), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)]),
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(shape: BoxShape.circle, color: backgroundColor, boxShadow: [

@@ -137,6 +137,9 @@ flutter:
     - family: Hind Siliguri Bold
       fonts:
         - asset: fonts/Mina-Bold.ttf
+    - family: kalpurus
+      fonts:
+        - asset: fonts/Kalpurush.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

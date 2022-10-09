@@ -1,19 +1,22 @@
 import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class PostStats extends StatelessWidget {
   final NewsFeedData post;
+  final int index;
+  final NewsFeedProvider newsFeedProvider;
 
-  const PostStats({required this.post});
+  const PostStats({Key? key, required this.post, required this.index, required this.newsFeedProvider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<NewsFeedProvider>(
-      builder: (context, state,child) {
+      builder: (context, state, child) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Column(
@@ -23,31 +26,12 @@ class PostStats extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(4.0),
-                    decoration: const BoxDecoration(
-                      color: colorPrimaryDark,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.thumb_up_alt,
-                      size: 10.0,
-                      color: Colors.white,
-                    ),
+                    decoration: const BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
+                    child: const Icon(Icons.thumb_up_alt, size: 10.0, color: Colors.white),
                   ),
                   const SizedBox(width: 4.0),
-                  Expanded(
-                    child: Text(
-                      '${post.totalLike}',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  Text(
-                    '${post.totalComment} Comments',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
-                  ),
+                  Expanded(child: Text('${post.totalLike}', style: latoStyle500Medium.copyWith(color: Colors.grey[600]))),
+                  Text('${post.totalComment} Comments', style: latoStyle500Medium.copyWith(color: Colors.grey[600], fontSize: 12)),
                   const SizedBox(width: 8.0),
                   // Text(
                   //   'Share',
@@ -61,38 +45,32 @@ class PostStats extends StatelessWidget {
               Row(
                 children: [
                   _PostButton(
-                    icon: const Icon(
+                    icon: Icon(
                       MdiIcons.thumbUp,
-                      color: AppColors.primaryColorDark,
+                      color: (newsFeedProvider.likesStatusAllData[index] == 1) ? colorPrimaryDark : Colors.grey,
                       size: 20.0,
                     ),
                     label: 'Like',
-                    lableColor:  Colors.black,
+                    lableColor: Colors.black,
                     onTap: () {
-                      print('Like');
+                      newsFeedProvider.addLike(post.id!.toInt(), index);
+                      // print('Like');
                     },
                   ),
                   _PostButton(
-                    icon: Icon(
-                      MdiIcons.commentOutline,
-                      color: Colors.grey[600],
-                      size: 20.0,
-                    ),
+                    icon: Icon(MdiIcons.commentOutline, color: Colors.grey[600], size: 20.0),
                     label: 'Comment',
                     onTap: () {
-                      _commentBox(context);
                       print('Comment');
                     },
                   ),
-                  _PostButton(
-                    icon: Icon(
-                      MdiIcons.shareOutline,
-                      color: Colors.grey[600],
-                      size: 25.0,
-                    ),
-                    label: 'Share',
-                    onTap: () => print('Share'),
-                  )
+                  post.isShare!
+                      ? _PostButton(
+                          icon: Icon(MdiIcons.shareOutline, color: Colors.grey[600], size: 25.0),
+                          label: 'Share',
+                          onTap: () => print('Share'),
+                        )
+                      : const SizedBox.shrink()
                 ],
               )
             ],
@@ -101,53 +79,8 @@ class PostStats extends StatelessWidget {
       },
     );
   }
-
-  void _commentBox(BuildContext context) {
-    bool notDesktop = true;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          insetAnimationCurve: Curves.easeInOut,
-          insetAnimationDuration: const Duration(milliseconds: 200),
-          child: Container(
-              height: notDesktop ? MediaQuery.of(context).size.height * 0.98 : MediaQuery.of(context).size.height * 0.45,
-              width: notDesktop ? MediaQuery.of(context).size.width * 0.98 : MediaQuery.of(context).size.width * 0.45,
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
-                    const Spacer(),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Write your comment ...',
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.send),
-                          onPressed: () {},
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(
-                            color: Colors.blue,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: const BorderSide(
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )),
-        );
-      },
-    );
-  }
 }
+
 class _PostButton extends StatelessWidget {
   final Icon icon;
   final String label;

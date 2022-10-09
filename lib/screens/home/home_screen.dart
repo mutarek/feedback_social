@@ -2,6 +2,7 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/view/photo_view.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
               widget.refreshController.loadComplete();
               widget.refreshController.refreshCompleted();
             }
-          });
+          }, isFirstTime: false);
         },
         child: ListView.separated(
             controller: _controller,
@@ -62,14 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         PostHeaderWidget(post: newsFeedProvider.newsFeedLists[index]),
                         const SizedBox(height: 8.0),
-                        Text(newsFeedProvider.newsFeedLists[index].description!),
+                        Text(newsFeedProvider.newsFeedLists[index].description!, style: latoStyle400Regular),
                         if (newsFeedProvider.newsFeedLists[index].totalImage != 0) const SizedBox(height: 10.0),
                       ],
                     ),
                   ),
                   if (newsFeedProvider.newsFeedLists[index].totalImage != 0)
                     PostPhotoContainer(postImageUrl: newsFeedProvider.newsFeedLists[index]),
-                  PostStats(post: newsFeedProvider.newsFeedLists[index]),
+                  PostStats(post: newsFeedProvider.newsFeedLists[index], index: index, newsFeedProvider: newsFeedProvider),
                 ],
               );
             }),

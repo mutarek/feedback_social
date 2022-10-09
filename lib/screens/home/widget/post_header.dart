@@ -1,5 +1,6 @@
 import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 
 class PostHeaderWidget extends StatelessWidget {
@@ -17,10 +18,10 @@ class PostHeaderWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(post.author!.fullName!, style: const TextStyle(fontWeight: FontWeight.w600)),
+              Text(post.author!.fullName!, style:  latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
               Row(
                 children: [
-                  Text('2m ago • ', style: TextStyle(color: Colors.grey[600], fontSize: 12.0)),
+                  Text('2m ago • ', style: latoStyle400Regular.copyWith(color: Colors.grey[600], fontSize: 12.0)),
                   Icon(Icons.public, color: Colors.grey[600], size: 12.0)
                 ],
               )

@@ -10,4 +10,8 @@ class NewsfeedRepo {
   Future<Response> getNewsFeedData(int page) async {
     return await apiClient.getData(AppConstant.newsFeedURI + page.toString());
   }
+
+  Future<Response> addLike(int postID) async {
+    return await apiClient.postData('/posts/$postID/like/', {});
+  }
 }

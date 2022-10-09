@@ -166,4 +166,11 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+  //TODO: for Logout
+  Future<bool> logout()async{
+    authRepo.clearToken();
+    authRepo.clearUserInformation();
+    return true;
+  }
 }
