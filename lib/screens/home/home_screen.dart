@@ -3,6 +3,7 @@ import 'package:als_frontend/screens/home/view/photo_view.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -52,8 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
             separatorBuilder: (context, index) {
               return const SizedBox(height: 10.0);
             },
+
             itemCount: newsFeedProvider.newsFeedLists.length,
             itemBuilder: (context, index) {
+
+              if(index==newsFeedProvider.newsFeedLists.length){
+                return CupertinoActivityIndicator();
+              }
+
               return Column(
                 children: [
                   Padding(

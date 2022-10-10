@@ -2,12 +2,15 @@ import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/circle_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key? key}) : super(key: key);
@@ -24,19 +27,65 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     refreshController = RefreshController(initialRefresh: false);
+    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData((bool status) {}, page: 1);
   }
+
   @override
   void dispose() {
     refreshController.dispose();
     super.dispose();
   }
 
+  int selected = 0;
+
   @override
   Widget build(BuildContext context) {
-    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData((bool status){},page: 1);
     return Builder(builder: (context) {
       return Scaffold(
           backgroundColor: Colors.white,
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: Colors.white,
+            child: Icon(CupertinoIcons.add_circled, color: Colors.blue),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: Consumer<DashboardProvider>(
+            builder: (context, dashboardProvider, child) => StylishBottomBar(
+              items: [
+                AnimatedBarItems(
+                    icon: Icon(CupertinoIcons.home, color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey),
+                    selectedColor: Colors.blue,
+                    title: Text('Home',
+                        style: latoStyle600SemiBold.copyWith(color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey))),
+                AnimatedBarItems(
+                    icon: Icon(CupertinoIcons.person_2, color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey),
+                    selectedColor: Colors.blue,
+                    title: Text('Group',
+                        style: latoStyle600SemiBold.copyWith(color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey))),
+                AnimatedBarItems(
+                    icon: Icon(Icons.video_collection_rounded, color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey),
+                    selectedColor: Colors.blue,
+                    title: Text('Video',
+                        style: latoStyle600SemiBold.copyWith(color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey))),
+                AnimatedBarItems(
+                    icon: Icon(Icons.more_vert_sharp, color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey),
+                    backgroundColor: Colors.blue,
+                    title: Text('More',
+                        style: latoStyle600SemiBold.copyWith(color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey))),
+              ],
+              iconSize: 25,
+              barAnimation: BarAnimation.fade,
+              iconStyle: IconStyle.animated,
+              hasNotch: true,
+              fabLocation: StylishBarFabLocation.center,
+              opacity: 0.3,
+              currentIndex: dashboardProvider.selectIndex,
+              bubbleFillStyle: BubbleFillStyle.fill,
+              onTap: (index) {
+                dashboardProvider.changeSelectIndex(index!);
+              },
+            ),
+          ),
           body: SafeArea(
             child: Consumer<DashboardProvider>(
               builder: (context, dashboardProvider, child) => Column(
@@ -66,24 +115,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ],
                         )
                       : const SizedBox(),
-                  SizedBox(
-                    height: 55,
-                    child: Stack(
-                      children: [
-                        Positioned(bottom: 2, left: 0, right: 0, child: Container(height: 3, color: Colors.grey.withOpacity(.3))),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            tabItem(MdiIcons.home, 0, dashboardProvider),
-                            tabItem(Icons.groups, 1, dashboardProvider),
-                            tabItem(Icons.account_circle_outlined, 2, dashboardProvider, isCircle: true),
-                            tabItem(Icons.notifications, 3, dashboardProvider),
-                            tabItem(Icons.menu, 4, dashboardProvider),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 55,
+                  //   child: Stack(
+                  //     children: [
+                  //       Positioned(bottom: 2, left: 0, right: 0, child: Container(height: 3, color: Colors.grey.withOpacity(.3))),
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //         children: [
+                  //           tabItem(MdiIcons.home, 0, dashboardProvider),
+                  //           tabItem(Icons.groups, 1, dashboardProvider),
+                  //           tabItem(Icons.account_circle_outlined, 2, dashboardProvider, isCircle: true),
+                  //           tabItem(Icons.notifications, 3, dashboardProvider),
+                  //           tabItem(Icons.menu, 4, dashboardProvider),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Expanded(
                     child: PageView(
                       controller: controller,
@@ -94,7 +143,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         HomeScreen(refreshController),
                         Container(),
                         ProfileScreen(),
-                        Container(),
                         Container(),
                       ],
                     ),
