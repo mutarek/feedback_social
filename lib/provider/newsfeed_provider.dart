@@ -67,17 +67,13 @@ class NewsFeedProvider with ChangeNotifier {
         }
         position++;
 
-
-
         newsFeedLists.add(newsFeedData);
       });
-
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
   }
-
 
   addLike(int postID, int index) async {
     Response response = await newsFeedRepo.addLike(postID);
@@ -88,6 +84,11 @@ class NewsFeedProvider with ChangeNotifier {
       likesStatusAllData[index] = 0;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
     }
+    notifyListeners();
+  }
+
+  void updateCommentDataCount(int index) {
+    newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
     notifyListeners();
   }
 }

@@ -1,8 +1,10 @@
 import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/screens/home/view/comment_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -71,7 +73,8 @@ class PostStats extends StatelessWidget {
                     icon: Icon(MdiIcons.commentOutline, color: Colors.grey[600], size: 20.0),
                     label: 'Comment',
                     onTap: () {
-                      print('Comment');
+                      Get.to(CommentsScreen(index, post.id as int, isHomeScreen: true));
+
                     },
                   ),
                   post.isShare!

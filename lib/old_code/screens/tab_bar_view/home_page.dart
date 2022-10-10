@@ -456,8 +456,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                           // newsfeedProvider.index = index;
                                           // Get.to(const CommentsScreen());
 
-                                          Get.to(
-                                              UserPostCommentsScreen(index, newsfeedProvider.results[index].id as int, isHomeScreen: true));
+                                          // Get.to(
+                                          //     CommentsScreen(index, newsfeedProvider.results[index].id as int, isHomeScreen: true));
                                         },
                                         share: () {
                                           Get.to(() => const SharePostScreen());

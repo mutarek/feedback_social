@@ -46,7 +46,6 @@ export 'Page/page_post_share_screen.dart';
 export 'news_feed_post/single_post_screen.dart';
 export 'Group/invite_friends_screen.dart';
 export 'profile/single_image_view.dart';
-export 'news_feed_post/user_post_comment_screen.dart';
 export 'Group/group_comment_screen.dart';
 export 'tab_bar_view/create_new_post_screen.dart';
 export 'Group/edit_group.dart';

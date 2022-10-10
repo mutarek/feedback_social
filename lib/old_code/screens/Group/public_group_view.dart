@@ -471,8 +471,8 @@ class _PublicGroupViewState extends State<PublicGroupView> {
                             // likeComment.postId = groupPostProvider.groupPosts![index].id.toString();
                             // Get.to(const GroupCommentsScreen());
 
-                            Get.to(
-                                UserPostCommentsScreen(index, groupDetailsProvider.groupDetails!.posts![index].id as int, isPublicScreen: true));
+                            // Get.to(
+                            //     CommentsScreen(index, groupDetailsProvider.groupDetails!.posts![index].id as int, isPublicScreen: true));
 
                           },
                           share: () {

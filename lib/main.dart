@@ -3,6 +3,7 @@ import 'package:als_frontend/old_code/provider/Group%20Page/Group/group_images_p
 import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/language_provider.dart';
 import 'package:als_frontend/provider/localization_provider.dart';
@@ -34,6 +35,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<DashboardProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<CommentProvider>()),
       ChangeNotifierProvider(create: (_) => LoginProvider()),
       ChangeNotifierProvider(create: (_) => RegistrationProvider()),
       ChangeNotifierProvider(create: (_) => ShowPasswordProvider()),

@@ -1,10 +1,12 @@
 import 'package:als_frontend/data/datasource/api_client.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
+import 'package:als_frontend/data/repository/comment_repo.dart';
 import 'package:als_frontend/data/repository/language_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/profile_repo.dart';
 import 'package:als_frontend/data/repository/splash_repo.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/language_provider.dart';
 import 'package:als_frontend/provider/localization_provider.dart';
@@ -25,6 +27,7 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton(() => LanguageRepo());
+  sl.registerLazySingleton(() => CommentRepo(apiClient: sl()));
   sl.registerLazySingleton(() => AuthRepo(sharedPreferences: sl(),apiClient: sl()));
   sl.registerLazySingleton(() => ProfileRepo(authRepo: sl()));
   sl.registerLazySingleton(() => NewsfeedRepo(apiClient: sl()));
@@ -36,6 +39,7 @@ Future<void> init() async {
   sl.registerFactory(() => LanguageProvider(languageRepo: sl()));
   sl.registerFactory(() => AuthProvider(authRepo: sl(),sharedPreferences: sl()));
   sl.registerFactory(() => NewsFeedProvider(newsFeedRepo: sl()));
+  sl.registerFactory(() => CommentProvider(commentRepo: sl()));
   sl.registerFactory(() => SplashProvider());
   sl.registerFactory(() => DashboardProvider());
   sl.registerFactory(() => ProfileProvider());

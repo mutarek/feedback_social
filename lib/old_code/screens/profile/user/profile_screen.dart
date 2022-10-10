@@ -580,8 +580,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     likeComment.postId = userPostProvider.authorPostResults[index].id.toString();
                                                     userPostProvider.index = index;
                                                     // print(userPostProvider.authorPosts[index].comments.length);
-                                                    Get.to(
-                                                        UserPostCommentsScreen(index, userPostProvider.authorPostResults[index].id as int));
+                                                    // Get.to(
+                                                    //     CommentsScreen(index, userPostProvider.authorPostResults[index].id as int));
                                                   },
                                                   share: () {
                                                     // likeComment.pageId =

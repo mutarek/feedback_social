@@ -166,11 +166,22 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   //TODO: for Logout
-  Future<bool> logout()async{
+  Future<bool> logout() async {
     authRepo.clearToken();
     authRepo.clearUserInformation();
     return true;
+  }
+
+  // get User INFO:
+  String name = '';
+  String profileImage = '';
+  String userID = '';
+
+  void getUserInfo() {
+    name = authRepo.getUserName();
+    profileImage = authRepo.getUserProfile();
+    userID = authRepo.getUserID();
+    //notifyListeners();
   }
 }

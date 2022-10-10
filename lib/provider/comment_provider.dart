@@ -1,48 +1,42 @@
 import 'dart:convert';
 
 import 'package:als_frontend/data/model/response/CommentModels.dart';
-import 'package:als_frontend/old_code/service/comment/timeline_post_comment_service.dart';
-import 'package:flutter/material.dart';
+import 'package:als_frontend/data/repository/comment_repo.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../const/url.dart';
-// import '../../model/comment/timeline_post_comment_model.dart';
+class CommentProvider with ChangeNotifier {
+  final CommentRepo commentRepo;
 
-class TimelinePostCommentProvider extends ChangeNotifier {
+  CommentProvider({required this.commentRepo});
+
   List<CommentModels> comments = [];
-  // int postId = 0;
-  String? token;
-  bool success = false;
+  bool isLoading = false;
 
-  Future<void> getData(int postID) async {
-    try {
-      comments = (await TimelinePostCommentService(postId: postID).getComments());
-      notifyListeners();
-    } catch (e) {
-      print("Friend request provider: $e");
+  void initializeCommentData(int postID) async {
+    comments.clear();
+    comments = [];
+    isLoading = true;
+    Response response = await commentRepo.getAllCommentData(postID);
+    isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        CommentModels comment = CommentModels.fromJson(element);
+
+        comments.add(comment);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
     }
+    notifyListeners();
   }
 
   Future<bool> addComment(String comment, String fullName, String profileImage, int postID, int userID) async {
-    var apiUrl = "$baseUrl/posts/$postID/comment/create/";
-
-    Map mappeddata = {"comment": comment};
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = (prefs.getString('token') ?? '');
-    var uri = Uri.parse(apiUrl), headers = {'Authorization': 'token $token'};
-
-    http.Response response = await http.post(uri, body: mappeddata, headers: headers);
-
+    Response response = await commentRepo.addComment(postID, comment);
     if (response.statusCode == 201) {
-      success = true;
-      var json = jsonDecode(response.body);
-      print('json: $json');
-
       Fluttertoast.showToast(msg: "commented");
       CommentModels c = CommentModels(
           id: DateTime.now().microsecondsSinceEpoch,
@@ -50,9 +44,7 @@ class TimelinePostCommentProvider extends ChangeNotifier {
           post: postID,
           replies: [],
           author: Author(id: userID, fullName: fullName, profileImage: profileImage));
-      channel.sink.add(
-        jsonEncode({"data": c.toJson()}),
-      );
+      channel.sink.add(jsonEncode({"data": c.toJson()}));
 
       notifyListeners();
       return true;

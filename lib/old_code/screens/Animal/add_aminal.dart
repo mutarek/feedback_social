@@ -106,7 +106,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
-                              child: CustomTextField(
+                              child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
                                 labelColor: Colors.black,
@@ -119,7 +119,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
-                              child: CustomTextField(
+                              child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
                                 labelColor: Colors.black,
@@ -132,7 +132,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
-                              child: CustomTextField(
+                              child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
                                 labelColor: Colors.black,
@@ -145,7 +145,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
-                              child: CustomTextField(
+                              child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
                                 labelColor: Colors.black,
@@ -204,7 +204,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: width * 0.015,
                                   vertical: height * 0.01),
-                              child: CustomTextField(
+                              child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
                                 labelColor: Colors.black,

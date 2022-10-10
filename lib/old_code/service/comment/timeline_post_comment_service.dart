@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:als_frontend/old_code/const/url.dart';
-import 'package:als_frontend/old_code/model/comment/CommentModels.dart';
+import 'package:als_frontend/data/model/response/CommentModels.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

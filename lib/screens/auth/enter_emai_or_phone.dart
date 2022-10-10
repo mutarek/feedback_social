@@ -158,7 +158,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                         LoginTextFiled(
                                           h: height * 0.05,
                                           w: width * 0.8,
-                                          child: CustomTextField(
+                                          child: CustomTextField1(
                                             hintText: (provider.isEmail == true) ? "Enter your  your email" : "Enter phone number",
                                             controller: (provider.isEmail == true) ? emailController : numberController,
                                           ),
@@ -228,7 +228,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                     LoginTextFiled(
                                       h: height * 0.05,
                                       w: width * 0.36,
-                                      child: CustomTextField(
+                                      child: CustomTextField1(
                                         hintText: "Enter code",
                                         controller: codeController,
                                       ),
@@ -281,7 +281,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                               child: LoginTextFiled(
                                 h: height * 0.05,
                                 w: width * 0.9,
-                                child: CustomTextField(
+                                child: CustomTextField1(
                                   hintText: "First Name",
                                   controller: firstNameController,
                                 ),
@@ -292,7 +292,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                               child: LoginTextFiled(
                                 h: height * 0.05,
                                 w: width * 0.9,
-                                child: CustomTextField(
+                                child: CustomTextField1(
                                   hintText: "Last Name",
                                   controller: lastNameController,
                                 ),
@@ -377,7 +377,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                   return LoginTextFiled(
                                     h: height * 0.05,
                                     w: width * 0.9,
-                                    child: CustomTextField(
+                                    child: CustomTextField1(
                                       hintText: "Password",
                                       controller: passwordController,
                                       obsecureText: value.obsecureText,

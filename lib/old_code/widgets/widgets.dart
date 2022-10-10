@@ -18,7 +18,7 @@ export 'Add animal/owner_info_widget.dart';
 export 'profile/profile_cover_photo_widget.dart';
 export 'profile/profile_photo_widget.dart';
 export 'profile/profile_post_widget.dart';
-export 'Post Container/comment_widget.dart';
+export '../../screens/home/view/comment_widget.dart';
 export 'menu/custom_menu_card.dart';
 export 'menu/custom_app_bar.dart';
 export 'profile/friend_list_card.dart';
