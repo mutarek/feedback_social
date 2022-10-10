@@ -1,4 +1,5 @@
 import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
+import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,8 @@ import '../../../data/model/response/image_video_detect_model.dart';
 
 class PostPhotoContainer extends StatefulWidget {
   final NewsFeedData postImageUrl;
-
-  const PostPhotoContainer({Key? key, required this.postImageUrl}) : super(key: key);
+  final int index;
+  const PostPhotoContainer(this.index,{Key? key, required this.postImageUrl}) : super(key: key);
 
   @override
   State<PostPhotoContainer> createState() => _PostPhotoContainerState();
@@ -53,8 +54,6 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
   @override
   Widget build(BuildContext context) {
     if (imageVideoLists.length == 1) {
-      print('kkaka ${widget.postImageUrl.videos!.length}  ${imageVideoLists[0].isImage}  ${imageVideoLists[0].id}');
-      // print('kkaka ${widget.postImageUrl.videos!.length}');
       return imageVideoLists[0].isImage
           ? Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -93,42 +92,47 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: imageVideoLists.length > 4 ? 4 : imageVideoLists.length,
         itemBuilder: (context, index) {
-          return Stack(
-            children: [
-              CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity),
-              imageVideoLists[index].isImage == false
-                  ? Positioned(
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
-                        child: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
-                      ),
-                    )
-                  : SizedBox.shrink(),
-              index == 3
-                  ? Container(
-                      width: double.infinity,
-                      height: 100,
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: 100,
-                        child: CustomButton(
-                          onTap: () {},
-                          btnTxt: 'View More+',
-                          fontSize: 12,
-                          backgroundColor: Colors.green.withOpacity(.7),
-                          textWhiteColor: true,
+          return InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => PhotoViewScreen(widget.postImageUrl, imageVideoLists,widget.index)));
+            },
+            child: Stack(
+              children: [
+                CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity),
+                imageVideoLists[index].isImage == false
+                    ? Positioned(
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        child: Container(
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                          child: IconButton(
+                              onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                         ),
-                      ),
-                    )
-                  : SizedBox.shrink()
-            ],
+                      )
+                    : SizedBox.shrink(),
+                index == 3
+                    ? Container(
+                        width: double.infinity,
+                        height: 100,
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          width: 100,
+                          child: CustomButton(
+                            onTap: () {},
+                            btnTxt: 'View More+',
+                            fontSize: 12,
+                            backgroundColor: Colors.green.withOpacity(.7),
+                            textWhiteColor: true,
+                          ),
+                        ),
+                      )
+                    : SizedBox.shrink()
+              ],
+            ),
           );
         },
       ),

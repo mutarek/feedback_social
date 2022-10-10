@@ -10,22 +10,32 @@ class PostStats extends StatelessWidget {
   final NewsFeedData post;
   final int index;
   final NewsFeedProvider newsFeedProvider;
+  final double paddingHorizontal;
+  final double paddingVertical;
 
-  const PostStats({Key? key, required this.post, required this.index, required this.newsFeedProvider}) : super(key: key);
+  const PostStats(
+      {Key? key,
+      required this.post,
+      required this.index,
+      required this.newsFeedProvider,
+      this.paddingHorizontal = 12,
+      this.paddingVertical = 0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<NewsFeedProvider>(
       builder: (context, state, child) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: paddingVertical),
           child: Column(
             children: [
               const SizedBox(height: 6.0),
               Row(
                 children: [
+                  SizedBox(width: paddingHorizontal == 0 ? 8.0 : 0),
                   Container(
-                    padding: const EdgeInsets.all(4.0),
+                    padding: EdgeInsets.all(4.0),
                     decoration: const BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
                     child: const Icon(Icons.thumb_up_alt, size: 10.0, color: Colors.white),
                   ),

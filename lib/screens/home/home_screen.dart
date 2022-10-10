@@ -1,5 +1,5 @@
 import 'package:als_frontend/provider/newsfeed_provider.dart';
-import 'package:als_frontend/screens/home/view/photo_view.dart';
+import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   if ((newsFeedProvider.newsFeedLists[index].totalImage! + newsFeedProvider.newsFeedLists[index].totalVideo!) != 0)
-                    PostPhotoContainer(postImageUrl: newsFeedProvider.newsFeedLists[index]),
+                    PostPhotoContainer(index, postImageUrl: newsFeedProvider.newsFeedLists[index]),
                   PostStats(post: newsFeedProvider.newsFeedLists[index], index: index, newsFeedProvider: newsFeedProvider),
                 ],
               );
