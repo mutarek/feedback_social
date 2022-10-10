@@ -66,6 +66,9 @@ class NewsFeedProvider with ChangeNotifier {
           likesStatusAllData[position] = 1;
         }
         position++;
+
+
+
         newsFeedLists.add(newsFeedData);
       });
 

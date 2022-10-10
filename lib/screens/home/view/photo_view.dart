@@ -1,24 +1,86 @@
 import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class PostPhotoContainer extends StatelessWidget {
+import '../../../data/model/response/image_video_detect_model.dart';
+
+class PostPhotoContainer extends StatefulWidget {
   final NewsFeedData postImageUrl;
 
   const PostPhotoContainer({Key? key, required this.postImageUrl}) : super(key: key);
 
   @override
+  State<PostPhotoContainer> createState() => _PostPhotoContainerState();
+}
+
+class _PostPhotoContainerState extends State<PostPhotoContainer> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    imageVideoLists.clear();
+    imageVideoLists = [];
+    initializeAllImageVideo();
+  }
+
+  List<ImageVideoDetectModel> imageVideoLists = [];
+
+  void initializeAllImageVideo() {
+    if (widget.postImageUrl.totalImage! >= 4) {
+      for (int i = 0; i <= 3; i++) {
+        imageVideoLists
+            .add(ImageVideoDetectModel(true, widget.postImageUrl.images![i].image!, widget.postImageUrl.images![i].id!.toString()));
+      }
+    } else {
+      for (int i = 0; i < widget.postImageUrl.totalImage!; i++) {
+        imageVideoLists
+            .add(ImageVideoDetectModel(true, widget.postImageUrl.images![i].image!, widget.postImageUrl.images![i].id!.toString()));
+      }
+
+      int j = 0;
+
+      for (int i = widget.postImageUrl.totalImage!; i < widget.postImageUrl.totalImage! + widget.postImageUrl.totalVideo!; i++) {
+        imageVideoLists
+            .add(ImageVideoDetectModel(false, widget.postImageUrl.videos![j].thumbnail!, widget.postImageUrl.videos![j].id!.toString()));
+
+        j++;
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (postImageUrl.totalImage == 1) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: CachedNetworkImage(
-          imageUrl: postImageUrl.images![0].image!,
-        ),
-      );
+    if (imageVideoLists.length == 1) {
+      print('kkaka ${widget.postImageUrl.videos!.length}  ${imageVideoLists[0].isImage}  ${imageVideoLists[0].id}');
+      // print('kkaka ${widget.postImageUrl.videos!.length}');
+      return imageVideoLists[0].isImage
+          ? Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: CachedNetworkImage(imageUrl: imageVideoLists[0].url),
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Stack(
+                children: [
+                  CachedNetworkImage(imageUrl: imageVideoLists[0].url),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                      child: IconButton(
+                          onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                    ),
+                  )
+                ],
+              ),
+            );
     }
 
     return Padding(
@@ -29,11 +91,26 @@ class PostPhotoContainer extends StatelessWidget {
         mainAxisSpacing: 10,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: postImageUrl.images!.length > 4 ? 4 : postImageUrl.images!.length,
+        itemCount: imageVideoLists.length > 4 ? 4 : imageVideoLists.length,
         itemBuilder: (context, index) {
           return Stack(
             children: [
-              CachedNetworkImage(imageUrl: postImageUrl.images![index].image!, fit: BoxFit.cover, width: double.infinity),
+              CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity),
+              imageVideoLists[index].isImage == false
+                  ? Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                        child: IconButton(
+                            onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                      ),
+                    )
+                  : SizedBox.shrink(),
               index == 3
                   ? Container(
                       width: double.infinity,

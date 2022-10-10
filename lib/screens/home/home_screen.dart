@@ -53,11 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
             separatorBuilder: (context, index) {
               return const SizedBox(height: 10.0);
             },
-
             itemCount: newsFeedProvider.newsFeedLists.length,
             itemBuilder: (context, index) {
-
-              if(index==newsFeedProvider.newsFeedLists.length){
+              if (index == newsFeedProvider.newsFeedLists.length) {
                 return CupertinoActivityIndicator();
               }
 
@@ -75,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  if (newsFeedProvider.newsFeedLists[index].totalImage != 0)
+                  if ((newsFeedProvider.newsFeedLists[index].totalImage! + newsFeedProvider.newsFeedLists[index].totalVideo!) != 0)
                     PostPhotoContainer(postImageUrl: newsFeedProvider.newsFeedLists[index]),
                   PostStats(post: newsFeedProvider.newsFeedLists[index], index: index, newsFeedProvider: newsFeedProvider),
                 ],
