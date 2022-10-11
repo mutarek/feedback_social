@@ -57,13 +57,17 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
       return imageVideoLists[0].isImage
           ? Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: CachedNetworkImage(imageUrl: imageVideoLists[0].url),
+              child: ClipRRect(
+                  borderRadius:BorderRadius.circular(6),
+                  child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
             )
           : Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Stack(
                 children: [
-                  CachedNetworkImage(imageUrl: imageVideoLists[0].url),
+                  ClipRRect(
+                      borderRadius:BorderRadius.circular(6),
+                      child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
                   Positioned(
                     left: 0,
                     right: 0,
@@ -98,7 +102,9 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
             },
             child: Stack(
               children: [
-                CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity),
+                ClipRRect(
+                    borderRadius:BorderRadius.circular(4),
+                    child: CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity)),
                 imageVideoLists[index].isImage == false
                     ? Positioned(
                         left: 0,

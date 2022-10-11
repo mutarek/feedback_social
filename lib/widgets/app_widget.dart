@@ -53,7 +53,7 @@ void finishScreen(BuildContext context, [Object? result]) => Navigator.pop(conte
 
 Widget? Function(BuildContext, String) placeholderWidgetFn() => (_, s) => placeholderWidget();
 
-Widget placeholderWidget() => Image.asset(Images.placeholderImageOne, fit: BoxFit.cover);
+Widget placeholderWidget() => Image.asset(ImagesModel.placeholderImageOne, fit: BoxFit.cover);
 
 class MyAnimatedWidget extends StatelessWidget {
   const MyAnimatedWidget({this.child, this.animation, Key? key}) : super(key: key);

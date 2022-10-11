@@ -52,7 +52,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 isBackButtonExist!
                     ? IconButton(
-                        icon: Image.asset(Images.backIcon, width: 20, height: 20),
+                        icon: Image.asset(ImagesModel.backIcon, width: 20, height: 20),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

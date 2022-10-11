@@ -1,12 +1,15 @@
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/circle_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -27,6 +30,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     refreshController = RefreshController(initialRefresh: false);
+    Provider.of<AuthProvider>(context, listen: false).getUserInfo();
     Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData((bool status) {}, page: 1);
   }
 
@@ -43,47 +47,66 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Builder(builder: (context) {
       return Scaffold(
           backgroundColor: Colors.white,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: Colors.white,
-            child: Icon(CupertinoIcons.add_circled, color: Colors.blue),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {},
+          //   backgroundColor: Colors.white,
+          //   child: Icon(CupertinoIcons.add_circled, color: Colors.blue),
+          // ),
+          // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: Consumer<DashboardProvider>(
-            builder: (context, dashboardProvider, child) => StylishBottomBar(
-              items: [
-                AnimatedBarItems(
-                    icon: Icon(CupertinoIcons.home, color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey),
-                    selectedColor: Colors.blue,
-                    title: Text('Home',
-                        style: latoStyle600SemiBold.copyWith(color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey))),
-                AnimatedBarItems(
-                    icon: Icon(CupertinoIcons.person_2, color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey),
-                    selectedColor: Colors.blue,
-                    title: Text('Group',
-                        style: latoStyle600SemiBold.copyWith(color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey))),
-                AnimatedBarItems(
-                    icon: Icon(Icons.video_collection_rounded, color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey),
-                    selectedColor: Colors.blue,
-                    title: Text('Video',
-                        style: latoStyle600SemiBold.copyWith(color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey))),
-                AnimatedBarItems(
-                    icon: Icon(Icons.more_vert_sharp, color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey),
-                    backgroundColor: Colors.blue,
-                    title: Text('More',
-                        style: latoStyle600SemiBold.copyWith(color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey))),
-              ],
-              iconSize: 25,
-              barAnimation: BarAnimation.fade,
-              iconStyle: IconStyle.animated,
-              hasNotch: true,
-              fabLocation: StylishBarFabLocation.center,
-              opacity: 0.3,
-              currentIndex: dashboardProvider.selectIndex,
-              bubbleFillStyle: BubbleFillStyle.fill,
-              onTap: (index) {
-                dashboardProvider.changeSelectIndex(index!);
-              },
+            builder: (context, dashboardProvider, child) => Container(
+              height: 48,
+              child: StylishBottomBar(
+                items: [
+                  AnimatedBarItems(
+                      // icon: Icon(CupertinoIcons.home, color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey),
+                      icon: SvgPicture.asset(ImagesModel.homeURI,
+                          color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                      selectedColor: Colors.blue,
+                      title: Text('Home',
+                          style: latoStyle600SemiBold.copyWith(
+                              color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, fontSize: 12))),
+                  AnimatedBarItems(
+                      icon: SvgPicture.asset(ImagesModel.friendRequestURI,
+                          color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                      selectedColor: Colors.blue,
+                      title: Text('Group',
+                          style: latoStyle600SemiBold.copyWith(
+                              color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, fontSize: 12))),
+                  AnimatedBarItems(
+                      icon: SvgPicture.asset(ImagesModel.notificationURI,
+                          color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                      selectedColor: Colors.blue,
+                      title: Text('Notifications',
+                          style: latoStyle600SemiBold.copyWith(
+                              color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, fontSize: 12))),
+                  AnimatedBarItems(
+                      icon: SvgPicture.asset(ImagesModel.messageURI,
+                          color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                      selectedColor: Colors.blue,
+                      title: Text('Message',
+                          style: latoStyle600SemiBold.copyWith(
+                              color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, fontSize: 12))),
+                  AnimatedBarItems(
+                      icon: SvgPicture.asset(ImagesModel.menuURI,
+                          color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                      backgroundColor: Colors.blue,
+                      title: Text('More',
+                          style: latoStyle600SemiBold.copyWith(
+                              color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, fontSize: 12))),
+                ],
+                iconSize: 25,
+                barAnimation: BarAnimation.fade,
+                iconStyle: IconStyle.animated,
+                hasNotch: true,
+                opacity: 0.3,
+                currentIndex: dashboardProvider.selectIndex,
+                bubbleFillStyle: BubbleFillStyle.fill,
+                onTap: (index) {
+                  controller.animateToPage(index!, duration: Duration(seconds: 1), curve: Curves.easeOut);
+                  dashboardProvider.changeSelectIndex(index);
+                },
+              ),
             ),
           ),
           body: SafeArea(
@@ -141,6 +164,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       },
                       children: [
                         HomeScreen(refreshController),
+                        Container(),
                         Container(),
                         ProfileScreen(),
                         Container(),
