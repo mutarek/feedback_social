@@ -1,3 +1,4 @@
+import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -21,7 +22,7 @@ class PostHeaderWidget extends StatelessWidget {
               Text(post.author!.fullName!, style:  latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
               Row(
                 children: [
-                  Text('2m ago • ', style: latoStyle400Regular.copyWith(color: Colors.grey[600], fontSize: 12.0)),
+                  Text(getDate(post.timestamp!, context), style: latoStyle400Regular.copyWith(color: Colors.grey[600], fontSize: 12.0)),
                   Icon(Icons.public, color: Colors.grey[600], size: 12.0)
                 ],
               )
