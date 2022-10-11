@@ -29,20 +29,19 @@ class LikeCommentShare extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Consumer<UserNewsfeedPostProvider>(
-        builder: (context, newsfeedProvider, child) => SizedBox(
-              height: height * 0.05,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(width: width * 0.01),
-                  TextButton(onPressed: like, child: Icon(FontAwesomeIcons.heart, color: likeIconColor)),
-                  SizedBox(width: width * 0.01),
-                  TextButton(onPressed: comment, child: const Icon(FontAwesomeIcons.comment, color: Colors.black87)),
-                  SizedBox(width: width * 0.01),
-                  InkWell(onTap: share, child: Icon(FontAwesomeIcons.paperPlane, color: iconColor)),
-                ],
-              ),
-            ));
+    return SizedBox(
+      height: height * 0.05,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(width: width * 0.01),
+          TextButton(onPressed: like, child: Icon(FontAwesomeIcons.heart, color: likeIconColor)),
+          SizedBox(width: width * 0.01),
+          TextButton(onPressed: comment, child: const Icon(FontAwesomeIcons.comment, color: Colors.black87)),
+          SizedBox(width: width * 0.01),
+          InkWell(onTap: share, child: Icon(FontAwesomeIcons.paperPlane, color: iconColor)),
+        ],
+      ),
+    );
   }
 }

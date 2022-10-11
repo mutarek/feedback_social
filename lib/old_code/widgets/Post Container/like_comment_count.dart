@@ -12,6 +12,7 @@ class LikeCommentCount extends StatelessWidget {
   final String likeText;
   final VoidCallback editOnPressed;
   final Icon editText;
+
   const LikeCommentCount(
       {required this.likeCount,
       required this.commentCount,
@@ -29,53 +30,28 @@ class LikeCommentCount extends StatelessWidget {
     return Container(
       height: height * 0.045,
       width: double.maxFinite,
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(13))),
-      child: Consumer<LikeCommentShareProvider>(
-          builder: (context, provider, child) {
+      decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(13))),
+      child: Consumer<LikeCommentShareProvider>(builder: (context, provider, child) {
         return Padding(
-          padding: EdgeInsets.only(
-            left: width * 0.05,
-            right: width * 0.05,
-          ),
+          padding: EdgeInsets.only(left: width * 0.05, right: width * 0.05),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  Icon(
-                    FontAwesomeIcons.solidHeart,
-                    color: likeCountColor,
-                    size: 15,
-                  ),
-                  SizedBox(
-                    width: width * 0.01,
-                  ),
-                  Text(
-                    likeCount.toString(),
-                    style: GoogleFonts.lato(fontSize: 10),
-                  ),
-                  SizedBox(
-                    width: width * 0.02,
-                  ),
-                  Text(
-                    likeText,
-                    style: GoogleFonts.lato(
-                        fontSize: 10, fontWeight: FontWeight.bold),
-                  )
+                  Icon(FontAwesomeIcons.solidHeart, color: likeCountColor, size: 15),
+                  SizedBox(width: width * 0.01),
+                  Text(likeCount.toString(), style: GoogleFonts.lato(fontSize: 10)),
+                  SizedBox(width: width * 0.02),
+                  Text(likeText, style: GoogleFonts.lato(fontSize: 10, fontWeight: FontWeight.bold))
                 ],
               ),
               TextButton(onPressed: editOnPressed, child: editText),
               Row(
                 children: [
-                  Text(commentCount.toString(),
-                      style: GoogleFonts.lato(fontSize: 10)),
-                  SizedBox(
-                    width: width * 0.0008,
-                  ),
-                  Text(" comments",
-                      style: GoogleFonts.lato(
-                          fontSize: 10, fontWeight: FontWeight.bold)),
+                  Text(commentCount.toString(), style: GoogleFonts.lato(fontSize: 10)),
+                  SizedBox(width: width * 0.0008),
+                  Text(" comments", style: GoogleFonts.lato(fontSize: 10, fontWeight: FontWeight.bold)),
                 ],
               ),
             ],

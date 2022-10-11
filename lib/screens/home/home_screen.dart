@@ -1,4 +1,5 @@
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/screens/home/shimmer_effect/timeline_post_shimmer_widget.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
@@ -48,37 +49,39 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           }, isFirstTime: false);
         },
-        child: ListView.separated(
-            controller: _controller,
-            separatorBuilder: (context, index) {
-              return const SizedBox(height: 10.0);
-            },
-            itemCount: newsFeedProvider.newsFeedLists.length,
-            itemBuilder: (context, index) {
-              if (index == newsFeedProvider.newsFeedLists.length) {
-                return CupertinoActivityIndicator();
-              }
+        child: newsFeedProvider.isLoading
+            ? const TimeLinePostShimmerWidget(20)
+            : ListView.separated(
+                controller: _controller,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(height: 10.0);
+                },
+                itemCount: newsFeedProvider.newsFeedLists.length,
+                itemBuilder: (context, index) {
+                  if (index == newsFeedProvider.newsFeedLists.length) {
+                    return const CupertinoActivityIndicator();
+                  }
 
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PostHeaderWidget(post: newsFeedProvider.newsFeedLists[index]),
-                        const SizedBox(height: 8.0),
-                        Text(newsFeedProvider.newsFeedLists[index].description!, style: latoStyle400Regular),
-                        if (newsFeedProvider.newsFeedLists[index].totalImage != 0) const SizedBox(height: 10.0),
-                      ],
-                    ),
-                  ),
-                  if ((newsFeedProvider.newsFeedLists[index].totalImage! + newsFeedProvider.newsFeedLists[index].totalVideo!) != 0)
-                    PostPhotoContainer(index, postImageUrl: newsFeedProvider.newsFeedLists[index]),
-                  PostStats(post: newsFeedProvider.newsFeedLists[index], index: index, newsFeedProvider: newsFeedProvider),
-                ],
-              );
-            }),
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            PostHeaderWidget(post: newsFeedProvider.newsFeedLists[index]),
+                            const SizedBox(height: 8.0),
+                            Text(newsFeedProvider.newsFeedLists[index].description!, style: latoStyle400Regular),
+                            if (newsFeedProvider.newsFeedLists[index].totalImage != 0) const SizedBox(height: 10.0),
+                          ],
+                        ),
+                      ),
+                      if ((newsFeedProvider.newsFeedLists[index].totalImage! + newsFeedProvider.newsFeedLists[index].totalVideo!) != 0)
+                        PostPhotoContainer(index, postImageUrl: newsFeedProvider.newsFeedLists[index]),
+                      PostStats(post: newsFeedProvider.newsFeedLists[index], index: index, newsFeedProvider: newsFeedProvider),
+                    ],
+                  );
+                }),
       );
     });
   }
