@@ -86,6 +86,8 @@ class AuthRepo {
   // for  user token
   Future<void> saveUserToken(String token) async {
     try {
+      apiClient.token = token;
+      apiClient.updateHeader(token);
       await sharedPreferences.setString(AppConstant.token, token);
     } catch (e) {
       rethrow;
