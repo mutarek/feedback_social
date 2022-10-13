@@ -339,7 +339,7 @@ class _SuggestedPageViewState extends State<SuggestedPageView> {
                                                                     onTap: () {
                                                                       singleVideoShowProvider.videoUrl =
                                                                           pagePostProvider.pagePosts![index].videos[0].video;
-                                                                      Get.to(() => const ShowVideoPage());
+                                                                      Get.to(() => const VideoDetailsScreen());
                                                                     },
                                                                     child: Container(
                                                                       height: 150,

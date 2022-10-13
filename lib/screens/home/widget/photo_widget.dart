@@ -1,5 +1,6 @@
 import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
 import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
+import 'package:als_frontend/screens/home/view/video_details_screen.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,8 @@ import '../../../data/model/response/image_video_detect_model.dart';
 class PostPhotoContainer extends StatefulWidget {
   final NewsFeedData postImageUrl;
   final int index;
-  const PostPhotoContainer(this.index,{Key? key, required this.postImageUrl}) : super(key: key);
+
+  const PostPhotoContainer(this.index, {Key? key, required this.postImageUrl}) : super(key: key);
 
   @override
   State<PostPhotoContainer> createState() => _PostPhotoContainerState();
@@ -32,19 +34,19 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
     if (widget.postImageUrl.totalImage! >= 4) {
       for (int i = 0; i <= 3; i++) {
         imageVideoLists
-            .add(ImageVideoDetectModel(true, widget.postImageUrl.images![i].image!, widget.postImageUrl.images![i].id!.toString()));
+            .add(ImageVideoDetectModel(true, widget.postImageUrl.images![i].image!, '', widget.postImageUrl.images![i].id!.toString()));
       }
     } else {
       for (int i = 0; i < widget.postImageUrl.totalImage!; i++) {
         imageVideoLists
-            .add(ImageVideoDetectModel(true, widget.postImageUrl.images![i].image!, widget.postImageUrl.images![i].id!.toString()));
+            .add(ImageVideoDetectModel(true, widget.postImageUrl.images![i].image!, '', widget.postImageUrl.images![i].id!.toString()));
       }
 
       int j = 0;
 
       for (int i = widget.postImageUrl.totalImage!; i < widget.postImageUrl.totalImage! + widget.postImageUrl.totalVideo!; i++) {
-        imageVideoLists
-            .add(ImageVideoDetectModel(false, widget.postImageUrl.videos![j].thumbnail!, widget.postImageUrl.videos![j].id!.toString()));
+        imageVideoLists.add(ImageVideoDetectModel(false, widget.postImageUrl.videos![j].thumbnail!, widget.postImageUrl.videos![j].video!,
+            widget.postImageUrl.videos![j].id!.toString()));
 
         j++;
       }
@@ -57,31 +59,33 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
       return imageVideoLists[0].isImage
           ? Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ClipRRect(
-                  borderRadius:BorderRadius.circular(6),
-                  child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
+              child: ClipRRect(borderRadius: BorderRadius.circular(6), child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
             )
           : Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Stack(
-                children: [
-                  ClipRRect(
-                      borderRadius:BorderRadius.circular(6),
-                      child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    child: Container(
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
-                      child: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
-                    ),
-                  )
-                ],
+              child: InkWell(
+                onTap: (){
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideoLists[0].url2)));
+                },
+                child: Stack(
+                  children: [
+                    ClipRRect(borderRadius: BorderRadius.circular(6), child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                        child: IconButton(
+                            onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
     }
@@ -98,12 +102,13 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => PhotoViewScreen(widget.postImageUrl, imageVideoLists,widget.index)));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => PhotoViewScreen(widget.postImageUrl, imageVideoLists, widget.index)));
             },
             child: Stack(
               children: [
                 ClipRRect(
-                    borderRadius:BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(4),
                     child: CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity)),
                 imageVideoLists[index].isImage == false
                     ? Positioned(

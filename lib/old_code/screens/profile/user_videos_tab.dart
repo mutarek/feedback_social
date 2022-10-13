@@ -45,7 +45,7 @@ class _UserVideoTabState extends State<UserVideoTab> {
                     onTap: () {
                       singleVideoProvider.videoUrl =
                           provider.videos![index].video;
-                      Get.to(() => const ShowVideoPage());
+                      Get.to(() => const VideoDetailsScreen());
                     },
                     child: Container(
                         color: Colors.grey,

@@ -723,7 +723,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                               newsfeedProvider.results[index]
                                                   .videos![0].video!;
 
-                                          Get.to(() => const ShowVideoPage());
+                                          Get.to(() => const VideoDetailsScreen());
                                         },
                                         videoThumnail: (newsfeedProvider
                                                     .results[index]

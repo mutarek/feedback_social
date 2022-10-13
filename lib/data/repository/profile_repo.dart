@@ -1,8 +1,4 @@
-import 'dart:io';
-
 import 'package:als_frontend/data/repository/auth_repo.dart';
-import 'package:als_frontend/util/app_constant.dart';
-import 'package:http_parser/http_parser.dart';
 class ProfileRepo {
   final AuthRepo authRepo;
 

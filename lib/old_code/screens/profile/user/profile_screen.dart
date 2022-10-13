@@ -491,7 +491,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           onTap: () {
                                                             singleVideoShowProvider.videoUrl = userPostProvider
                                                                 .authorPostResults[index].sharePost!.post!.videos![0].video!;
-                                                            Get.to(() => const ShowVideoPage());
+                                                            Get.to(() => const VideoDetailsScreen());
                                                           },
                                                           child: Container(
                                                             height: 150,
@@ -522,7 +522,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           onTap: () {
                                                             singleVideoShowProvider.videoUrl =
                                                                 userPostProvider.authorPostResults[index].videos![0].video!;
-                                                            Get.to(() => const ShowVideoPage());
+                                                            Get.to(() => const VideoDetailsScreen());
                                                           },
                                                           child: Container(
                                                             height: 150,

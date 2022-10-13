@@ -3,24 +3,25 @@ import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ShowVideoPage extends StatefulWidget {
-  const ShowVideoPage({Key? key}) : super(key: key);
+class VideoDetailsScreen extends StatefulWidget {
+  final String videoURL;
+
+  const VideoDetailsScreen({this.videoURL = '', Key? key}) : super(key: key);
 
   @override
-  State<ShowVideoPage> createState() => _ShowVideoPageState();
+  State<VideoDetailsScreen> createState() => _VideoDetailsScreenState();
 }
 
-class _ShowVideoPageState extends State<ShowVideoPage> {
-  
+class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
   late BetterPlayerDataSource betterPlayerDataSource;
 
   @override
   void initState() {
     final value = Provider.of<SingleVideoShowProvider>(context, listen: false);
-    
-     betterPlayerDataSource = BetterPlayerDataSource(
+
+    betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
-      value.videoUrl,
+      widget.videoURL,
       cacheConfiguration: const BetterPlayerCacheConfiguration(
         // useCache: true,
         preCacheSize: 2 * 1024 * 1024,
@@ -57,15 +58,18 @@ class _ShowVideoPageState extends State<ShowVideoPage> {
     //   ),
     // );
 
-    BetterPlayerController _betterPlayerController = BetterPlayerController(
-        const BetterPlayerConfiguration(),
-        betterPlayerDataSource: betterPlayerDataSource);
+    BetterPlayerController _betterPlayerController =
+        BetterPlayerController(const BetterPlayerConfiguration(), betterPlayerDataSource: betterPlayerDataSource);
     _betterPlayerController.play();
 
-    return AspectRatio(
-      aspectRatio: 16 / 9,
-      child: BetterPlayer(
-        controller: _betterPlayerController,
+    return Scaffold(
+      body: SafeArea(
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: BetterPlayer(
+            controller: _betterPlayerController,
+          ),
+        ),
       ),
     );
   }

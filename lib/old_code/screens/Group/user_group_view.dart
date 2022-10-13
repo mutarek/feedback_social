@@ -426,7 +426,7 @@ class _UserGroupViewState extends State<UserGroupView> {
                                               ? InkWell(
                                                   onTap: () {
                                                     singleVideoShowProvider.videoUrl = groupPostProvider.groupPosts![index].videos[0].video;
-                                                    Get.to(() => const ShowVideoPage());
+                                                    Get.to(() => const VideoDetailsScreen());
                                                   },
                                                   child: Container(
                                                     height: 150,

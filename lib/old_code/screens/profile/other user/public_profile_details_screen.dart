@@ -571,7 +571,7 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                                                     onTap: () {
                                                       singleVideoShowProvider.videoUrl =
                                                           userPostProvider.authorPostResults[index].videos![0].video!;
-                                                      Get.to(() => const ShowVideoPage());
+                                                      Get.to(() => const VideoDetailsScreen());
                                                     },
                                                     child: Container(
                                                       height: 150,

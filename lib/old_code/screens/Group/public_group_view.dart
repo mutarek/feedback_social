@@ -420,7 +420,7 @@ class _PublicGroupViewState extends State<PublicGroupView> {
                           ? InkWell(
                               onTap: () {
                                 singleVideoShowProvider.videoUrl = groupPostProvider.groupPosts![index].videos[0].video;
-                                Get.to(() => const ShowVideoPage());
+                                Get.to(() => const VideoDetailsScreen());
                               },
                               child: Container(
                                 height: 150,
@@ -897,7 +897,7 @@ class _PublicGroupViewState extends State<PublicGroupView> {
                                               ? InkWell(
                                                   onTap: () {
                                                     singleVideoShowProvider.videoUrl = groupPostProvider.groupPosts![index].videos[0].video;
-                                                    Get.to(() => const ShowVideoPage());
+                                                    Get.to(() => const VideoDetailsScreen());
                                                   },
                                                   child: Container(
                                                     height: 150,

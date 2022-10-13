@@ -424,7 +424,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                           singleVideoShowProvider.videoUrl = "";
                                           singleVideoShowProvider.videoUrl = newsfeedProvider.results[index].videos![0].video!;
 
-                                          Get.to(() => const ShowVideoPage());
+                                          Get.to(() => const VideoDetailsScreen());
                                         },
                                         videoThumnail: (newsfeedProvider.results[index].totalVideo != 1)
                                             ? Container()

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 String getDate(String date, BuildContext context) {
   String createTime = '';
-  DateTime time = DateTime.parse("${date}");
+  DateTime time = DateTime.parse(date);
   AgeDuration age = Age.dateDifference(fromDate: time, toDate: DateTime.now(), includeToDate: true);
 
   int hourCompare = DateTime.now().hour - time.hour;
@@ -16,8 +16,8 @@ String getDate(String date, BuildContext context) {
           : age.days > 0
               ? "${age.days}${getTranslated('da ago', context)}"
               : hourCompare > 0
-                  ? "${hourCompare}${getTranslated('ho ago', context)}"
-                  : "${minuteCompare}${getTranslated('mi ago', context)}";
+                  ? "$hourCompare${getTranslated('ho ago', context)}"
+                  : "$minuteCompare${getTranslated('mi ago', context)}";
 
   return createTime;
 }

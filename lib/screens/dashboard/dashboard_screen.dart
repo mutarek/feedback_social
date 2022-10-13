@@ -159,6 +159,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Expanded(
                     child: PageView(
                       controller: controller,
+                      physics: NeverScrollableScrollPhysics(),
                       onPageChanged: (page) {
                         dashboardProvider.changeSelectIndex(page);
                       },

@@ -568,7 +568,7 @@ class _AdminPageState extends State<AdminPage> {
                                                           .videos[0]
                                                           .video;
                                                   Get.to(() =>
-                                                      const ShowVideoPage());
+                                                      const VideoDetailsScreen());
                                                 },
                                                 child: Container(
                                                   height: 150,
