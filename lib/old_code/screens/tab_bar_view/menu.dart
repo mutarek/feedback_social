@@ -11,9 +11,7 @@ import '../../provider/provider.dart';
 import '../../widgets/widgets.dart';
 
 class Menu extends StatefulWidget {
-  const Menu({
-    Key? key,
-  }) : super(key: key);
+  const Menu({Key? key}) : super(key: key);
 
   @override
   State<Menu> createState() => _MenuState();
@@ -26,8 +24,7 @@ class _MenuState extends State<Menu> {
   void initState() {
     final value = Provider.of<ProfileDetailsProvider>(context, listen: false);
     value.getUserData();
-    final notification =
-        Provider.of<NotificationsProvider>(context, listen: false);
+    final notification = Provider.of<NotificationsProvider>(context, listen: false);
     notification.getData();
     notification.check();
     super.initState();
@@ -55,17 +52,11 @@ class _MenuState extends State<Menu> {
             elevation: 0,
             title: const Text(
               "FeedBack",
-              style: TextStyle(
-                  color: Palette.primary,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -1.2),
+              style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
             ),
-            
           ),
           body: SafeArea(
-            child: Consumer<ProfileDetailsProvider>(
-                builder: (context, provider, child) {
+            child: Consumer<ProfileDetailsProvider>(builder: (context, provider, child) {
               return SingleChildScrollView(
                   child: Container(
                 height: h,
@@ -77,8 +68,7 @@ class _MenuState extends State<Menu> {
                       padding: EdgeInsets.only(left: w * 0.43),
                       child: Text(
                         "Menu",
-                        style: GoogleFonts.lato(
-                            fontSize: h * 0.03, fontWeight: FontWeight.w700),
+                        style: GoogleFonts.lato(fontSize: h * 0.03, fontWeight: FontWeight.w700),
                       ),
                     ),
                     Positioned(
@@ -89,9 +79,7 @@ class _MenuState extends State<Menu> {
                         child: Container(
                           height: h * 0.64,
                           width: w * 0.9,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
+                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -104,16 +92,12 @@ class _MenuState extends State<Menu> {
                                     ),
                                     child: Text(
                                       "${provider.userprofileData.firstName} ${provider.userprofileData.lastName}",
-                                      style: GoogleFonts.lato(
-                                          fontSize: h * 0.025,
-                                          fontWeight: FontWeight.w500),
+                                      style: GoogleFonts.lato(fontSize: h * 0.025, fontWeight: FontWeight.w500),
                                     ),
                                   ),
                                 ),
-                                Consumer2<UserProfileProvider,
-                                        UserNewsfeedPostProvider>(
-                                    builder: (context, provider,
-                                        userNewsfeedProvider, child) {
+                                Consumer2<UserProfileProvider, UserNewsfeedPostProvider>(
+                                    builder: (context, provider, userNewsfeedProvider, child) {
                                   return Center(
                                     child: Padding(
                                       padding: EdgeInsets.only(
@@ -121,16 +105,14 @@ class _MenuState extends State<Menu> {
                                       ),
                                       child: InkWell(
                                         onTap: () {
-                                          userNewsfeedProvider.id =
-                                              provider.userprofileData.id!;
+                                          userNewsfeedProvider.id = provider.userprofileData.id!;
                                           Get.to(() => const ProfileScreen());
                                         },
                                         child: Container(
                                             height: h * 0.037,
                                             width: w * 0.4,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
+                                              borderRadius: BorderRadius.circular(5),
                                               gradient: const LinearGradient(
                                                 begin: Alignment.topRight,
                                                 end: Alignment.bottomLeft,
@@ -145,26 +127,21 @@ class _MenuState extends State<Menu> {
                                               ),
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Palette.primary
-                                                      .withOpacity(0.4),
+                                                  color: Palette.primary.withOpacity(0.4),
                                                   spreadRadius: 2,
                                                   blurRadius: 3,
-                                                  offset: const Offset(0,
-                                                      2), // changes position of shadow
+                                                  offset: const Offset(0, 2), // changes position of shadow
                                                 ),
                                               ],
                                             ),
                                             child: Center(
                                                 child: Text("View profile",
-                                                    style: GoogleFonts.lato(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: Colors.white)))),
+                                                    style: GoogleFonts.lato(fontWeight: FontWeight.w400, color: Colors.white)))),
                                       ),
                                     ),
                                   );
                                 }),
-                               SizedBox(
+                                SizedBox(
                                   width: h * 0.02,
                                 ),
                                 Row(
@@ -173,28 +150,24 @@ class _MenuState extends State<Menu> {
                                       width: w * 0.01,
                                     ),
                                     CustomMenuCard(
-                                      h: h,
-                                      w: w,
-                                        svgName:"assets/menu/group.svg" ,
+                                        h: h,
+                                        svgName: "assets/menu/group.svg",
                                         iconColor: Palette.primary,
                                         iconName: "group",
                                         navigetion: () {
                                           Get.to(const CommingSoonScreen());
                                         }),
                                     CustomMenuCard(
-                                       h: h,
-                                        w: w,
-                                       svgName: "assets/menu/page.svg",
-                                          iconColor: Palette.primary,
+                                        h: h,
+                                        svgName: "assets/menu/page.svg",
+                                        iconColor: Palette.primary,
                                         iconName: "Page",
                                         navigetion: () {
                                           Get.to(const CommingSoonScreen());
                                         }),
                                     CustomMenuCard(
-                                       h: h,
-                                        w: w,
-                                       svgName:"assets/menu/friend.svg" ,
-                                  
+                                        h: h,
+                                        svgName: "assets/menu/friend.svg",
                                         iconColor: Palette.primary,
                                         iconName: "Friends",
                                         navigetion: () {
@@ -208,25 +181,21 @@ class _MenuState extends State<Menu> {
                                       width: w * 0.01,
                                     ),
                                     CustomMenuCard(
-                                       h: h,
-                                        w: w,
-                                         svgName:"assets/menu/animal.svg" ,
+                                        h: h,
+                                        svgName: "assets/menu/animal.svg",
                                         iconColor: Palette.primary,
                                         iconName: "Animal",
                                         navigetion: () {
                                           Get.to(const YourAnimalScreen());
                                         }),
                                     CustomMenuCard(
-                                       h: h,
-                                        w: w,
+                                        h: h,
                                         svgName: "assets/menu/settings.svg",
                                         iconColor: Palette.primary,
                                         iconName: "Settings",
                                         navigetion: () {
-                                           Get.to(() => const Settings());
+                                          Get.to(() => const Settings());
                                         }),
-                                 
-                                 
                                   ],
                                 ),
                                 Padding(
@@ -239,8 +208,7 @@ class _MenuState extends State<Menu> {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          Get.to(() =>
-                                              const TermsAndConditionsScreen());
+                                          Get.to(() => const TermsAndConditionsScreen());
                                         },
                                         child: Text("Terms & Conditions",
                                             style: GoogleFonts.lato(
@@ -259,8 +227,7 @@ class _MenuState extends State<Menu> {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          Get.to(
-                                              () => const PrivacyPolicyScreen());
+                                          Get.to(() => const PrivacyPolicyScreen());
                                         },
                                         child: Text("Privacy policy",
                                             style: GoogleFonts.lato(
@@ -281,14 +248,11 @@ class _MenuState extends State<Menu> {
                                   child: Padding(
                                     padding: EdgeInsets.only(top: h * 0.1),
                                     child: InkWell(
-                                      onTap: () =>
-                                          DatabaseProvider().logout(context),
+                                      onTap: () => DatabaseProvider().logout(context),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          const Icon(FontAwesomeIcons
-                                              .arrowRightFromBracket),
+                                          const Icon(FontAwesomeIcons.arrowRightFromBracket),
                                           Text("    logout",
                                               style: GoogleFonts.lato(
                                                 fontSize: h * 0.03,
@@ -313,8 +277,7 @@ class _MenuState extends State<Menu> {
                         child: CircleAvatar(
                             radius: h * 0.048,
                             backgroundColor: Palette.scaffold,
-                            backgroundImage: NetworkImage(
-                                "${provider.userprofileData.profileImage}")),
+                            backgroundImage: NetworkImage("${provider.userprofileData.profileImage}")),
                       ),
                     )
                   ],

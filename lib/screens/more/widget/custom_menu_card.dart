@@ -1,3 +1,4 @@
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -5,14 +6,12 @@ class CustomMenuCard extends StatelessWidget {
   const CustomMenuCard({
     Key? key,
     required this.h,
-    required this.w,
     required this.svgName,
     required this.iconColor,
     required this.iconName,
     required this.navigetion,
   }) : super(key: key);
   final double h;
-  final double w;
   final VoidCallback navigetion;
   final String svgName;
   final String iconName;
@@ -27,21 +26,10 @@ class CustomMenuCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                  width: w * 0.06,
-                  height: h * 0.03,
-                  child: SvgPicture.asset(
-                    svgName,
-                    fit: BoxFit.cover,
-                  )),
-              SizedBox(
-                width: w * 0.023,
-              ),
-              Text(iconName),
-              SizedBox(
-                width: w * 0.023,
-              )
+              SizedBox(height: 20, width: 20, child: SvgPicture.asset(svgName, fit: BoxFit.cover)),
+              Expanded(child: Center(child: Text(iconName,style: latoStyle500Medium))),
             ],
           ),
         ),

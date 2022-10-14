@@ -1,8 +1,10 @@
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
+import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
+import 'package:als_frontend/screens/more/more_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -116,7 +118,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   dashboardProvider.selectIndex == 0
                       ? AppBar(
-                          title: CustomText(title: 'Feedback', color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 27),
+                          title: CustomText(title: 'Feedback', color: Palette.primary, fontWeight: FontWeight.bold, fontSize: 27),
                           backgroundColor: Colors.white,
                           elevation: 0,
                           actions: [
@@ -169,7 +171,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Container(),
                         Container(),
                         ProfileScreen(),
-                        Container(),
+                        MoreScreen(),
                       ],
                     ),
                   )
