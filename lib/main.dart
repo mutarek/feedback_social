@@ -8,6 +8,7 @@ import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/language_provider.dart';
 import 'package:als_frontend/provider/localization_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
@@ -36,6 +37,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<DashboardProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<CommentProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<PostProvider>()),
       ChangeNotifierProvider(create: (_) => LoginProvider()),
       ChangeNotifierProvider(create: (_) => RegistrationProvider()),
       ChangeNotifierProvider(create: (_) => ShowPasswordProvider()),

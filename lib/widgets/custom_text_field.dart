@@ -39,6 +39,7 @@ class CustomTextField extends StatefulWidget {
   final double? borderRadius;
   final bool? autoFocus;
   final bool? isSaveAutoFillData;
+  final bool? isCancelShadow;
   final String autoFillHints;
   final String autoFillHints2;
 
@@ -60,6 +61,7 @@ class CustomTextField extends StatefulWidget {
       this.capitalization = TextCapitalization.none,
       this.isCountryPicker = false,
       this.isShowBorder = false,
+      this.isCancelShadow = false,
       this.isShowSuffixIcon = false,
       this.isShowPrefixIcon = false,
       this.onTap,
@@ -95,7 +97,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
       decoration: BoxDecoration(
         color: widget.fillColor ?? AppColors.primaryColorLight,
         boxShadow: [
-          BoxShadow(color: AppColors.primaryColorLight.withOpacity(.1), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)
+          BoxShadow(
+              color: !widget.isCancelShadow! ? AppColors.primaryColorLight.withOpacity(.1) : Colors.transparent,
+              offset: const Offset(0, 0),
+              blurRadius: 20,
+              spreadRadius: 3)
         ],
         borderRadius: BorderRadius.circular(widget.borderRadius!),
       ),

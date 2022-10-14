@@ -91,4 +91,25 @@ class NewsFeedProvider with ChangeNotifier {
     newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
     notifyListeners();
   }
+
+  int count = 0;
+  NewsFeedData newsFeedData = NewsFeedData();
+
+  initializeCount0() {
+    count = 0;
+    notifyListeners();
+  }
+
+  addPostOnTimeLine(NewsFeedData n) async {
+    newsFeedData = n;
+    count = 1;
+    notifyListeners();
+  }
+
+  addedDataOnLists() async {
+    likesStatusAllData.insert(0, 0);
+    newsFeedLists.add(newsFeedData);
+    count = 2;
+    notifyListeners();
+  }
 }

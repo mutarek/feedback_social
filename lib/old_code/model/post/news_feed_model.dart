@@ -67,7 +67,7 @@ class NewsFeedData {
   Group? group;
   bool? isApprove;
   int? totalImage;
-  List<Image>? images;
+  List<ImageData>? images;
   int? totalVideo;
   List<Video>? videos;
   int? totalComment;
@@ -89,7 +89,7 @@ class NewsFeedData {
         group: json["group"] == null ? null : Group.fromJson(json["group"]),
         isApprove: json["is_approve"] == null ? null : json["is_approve"],
         totalImage: json["total_image"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+        images: List<ImageData>.from(json["images"].map((x) => ImageData.fromJson(x))),
         totalVideo: json["total_video"],
         videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
         totalComment: json["total_comment"],
@@ -266,8 +266,8 @@ class Group {
       };
 }
 
-class Image {
-  Image({
+class ImageData {
+  ImageData({
     this.id,
     this.image,
   });
@@ -275,7 +275,7 @@ class Image {
   int? id;
   String? image;
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
+  factory ImageData.fromJson(Map<String, dynamic> json) => ImageData(
         id: json["id"],
         image: json["image"],
       );
@@ -329,7 +329,7 @@ class Post {
   String? description;
   Author? author;
   int? totalImage;
-  List<Image>? images;
+  List<ImageData>? images;
   int? totalVideo;
   List<dynamic>? videos;
 
@@ -338,7 +338,7 @@ class Post {
         description: json["description"],
         author: Author.fromJson(json["author"]),
         totalImage: json["total_image"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
+        images: List<ImageData>.from(json["images"].map((x) => ImageData.fromJson(x))),
         totalVideo: json["total_video"],
         videos: List<dynamic>.from(json["videos"].map((x) => x)),
       );

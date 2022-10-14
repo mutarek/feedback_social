@@ -17,7 +17,6 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
 
   @override
   void initState() {
-    final value = Provider.of<SingleVideoShowProvider>(context, listen: false);
 
     betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
@@ -27,20 +26,12 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
         preCacheSize: 2 * 1024 * 1024,
         maxCacheSize: 2 * 1024 * 1024,
         maxCacheFileSize: 2 * 1024 * 1024,
-
-        ///Android only option to use cached video between app sessions
         key: "testCacheKey",
       ),
     );
 
     super.initState();
   }
-
-  // @override
-  // void dispose() {
-
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {

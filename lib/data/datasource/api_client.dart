@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:als_frontend/data/model/response/base/error_response.dart';
 import 'package:als_frontend/util/app_constant.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as Http;
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiClient {
@@ -20,7 +18,6 @@ class ApiClient {
   Map<String, String>? _mainHeaders;
 
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
-
     if (sharedPreferences.containsKey(AppConstant.token)) {
       token = sharedPreferences.getString(AppConstant.token)!;
     } else {
@@ -63,24 +60,27 @@ class ApiClient {
     }
   }
 
-  Future<Response> postMultipartData(String uri, Map<String, String> body, List<MultipartBody> multipartBody,
+  Future<Response> postMultipartData(String uri, Map<String, String> body, List<Http.MultipartFile> multipartBody,
       {Map<String, String>? headers}) async {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
       debugPrint('====> API Body: $body with ${multipartBody.length} files');
       Http.MultipartRequest _request = Http.MultipartRequest('POST', Uri.parse(appBaseUrl + uri));
       _request.headers.addAll(headers ?? _mainHeaders!);
-      for (MultipartBody multipart in multipartBody) {
-        if (multipart.file != null) {
-          Uint8List _list = await multipart.file.readAsBytes();
-          _request.files.add(Http.MultipartFile(
-            multipart.key,
-            multipart.file.readAsBytes().asStream(),
-            _list.length,
-            filename: '${DateTime.now().toString()}.png',
-          ));
-        }
+      if(multipartBody.isNotEmpty){
+        _request.files.addAll(multipartBody);
       }
+      // for (MultipartBody multipart in multipartBody) {
+      //   if (multipart.file != null) {
+      //     Uint8List _list = await multipart.file.readAsBytes();
+      //     _request.files.add(Http.MultipartFile(
+      //       multipart.key,
+      //       multipart.file.readAsBytes().asStream(),
+      //       _list.length,
+      //       filename: '${DateTime.now().toString()}.png',
+      //     ));
+      //   }
+      // }
       _request.fields.addAll(body);
       Http.Response _response = await Http.Response.fromStream(await _request.send());
       return handleResponse(_response, uri);
@@ -149,11 +149,4 @@ class ApiClient {
     debugPrint('====> API Response: [${_response.statusCode}] $uri\n${_response.body}');
     return _response;
   }
-}
-
-class MultipartBody {
-  String key;
-  XFile file;
-
-  MultipartBody(this.key, this.file);
 }

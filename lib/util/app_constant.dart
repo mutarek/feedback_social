@@ -9,13 +9,12 @@ class AppConstant {
   static const String otpSendURI = '/accounts/otp/send/';
   static const String otpVerifyURI = '/accounts/otp/verify/';
   static const String newsFeedURI = '/posts/newsfeeds?page=';
-  static const String guestLoginURI = 'auth/login-guest';
+  static const String postsUri = '/posts/';
   static const String forgotPasswordURI = 'auth/forget-password';
   static const String homeActiveURI = 'home/active';
   static const String homeMenuOrdered = 'homeMenu/ordered';
   static const String recommendedOrdered = 'recommended/ordered';
   static const String wishlistURI = 'wishList/';
-  static const String photoUploadURI = 's3-storage/upload';
 
   // Shared Key
   static const String theme = 'theme';
@@ -29,7 +28,6 @@ class AppConstant {
   static const String userName = 'username';
   static const String usercode = 'usercode';
   static const String userEmail = 'useremail';
-
 
   static List<LanguageModel> languagesList = [
     LanguageModel(imageUrl: '', languageName: 'English', countryCode: 'US', languageCode: 'en'),
