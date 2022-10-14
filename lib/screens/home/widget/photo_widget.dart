@@ -1,4 +1,4 @@
-import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
 import 'package:als_frontend/screens/home/view/video_details_screen.dart';
 import 'package:als_frontend/widgets/custom_button.dart';

@@ -31,7 +31,7 @@ export 'Group/Tab items/group_images_tab.dart';
 export 'Group/Tab items/group_members_tab.dart';
 export 'news_feed_post/share_post_screen.dart';
 export 'profile/user/cover_photo.dart';
-export 'profile/user/profile_details_card.dart';
+export '../../screens/profile/widget/profile_details_card.dart';
 export 'profile/user/update_cover_photo.dart';
 export 'profile/user/update_profile_image.dart';
 export 'profile/user/profile_screen.dart';

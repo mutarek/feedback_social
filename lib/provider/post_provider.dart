@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:als_frontend/data/repository/post_repo.dart';
-import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';

@@ -31,7 +31,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => LanguageRepo());
   sl.registerLazySingleton(() => CommentRepo(apiClient: sl()));
   sl.registerLazySingleton(() => AuthRepo(sharedPreferences: sl(),apiClient: sl()));
-  sl.registerLazySingleton(() => ProfileRepo(authRepo: sl()));
+  sl.registerLazySingleton(() => ProfileRepo(apiClient: sl()));
   sl.registerLazySingleton(() => NewsfeedRepo(apiClient: sl()));
   sl.registerLazySingleton(() => PostRepo(apiClient: sl()));
   sl.registerLazySingleton(() => SplashRepo(sharedPreferences: sl()));
@@ -46,7 +46,7 @@ Future<void> init() async {
   sl.registerFactory(() => PostProvider(postRepo: sl()));
   sl.registerFactory(() => SplashProvider());
   sl.registerFactory(() => DashboardProvider());
-  sl.registerFactory(() => ProfileProvider());
+  sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

@@ -20,7 +20,7 @@ class ProfileCoverPhotoWidget extends StatelessWidget {
       child: Container(
         height: height * 0.23,
         width: width,
-        decoration: BoxDecoration(color: Colors.black, image: DecorationImage(image: NetworkImage(coverphoto), fit: BoxFit.cover)),
+        decoration: BoxDecoration(color: Colors.black, image: DecorationImage(image: NetworkImage(coverphoto))),
         child: Column(
           children: [
             Padding(
@@ -58,11 +58,7 @@ class ProfileCoverPhotoWidget extends StatelessWidget {
                       border: Border.all(color: Colors.white, width: 2)),
                   child: Padding(
                     padding: EdgeInsets.only(top: height * 0.001, left: width * 0.007),
-                    child: Icon(
-                      FontAwesomeIcons.camera,
-                      color: Colors.black,
-                      size: height * 0.024,
-                    ),
+                    child: Icon(FontAwesomeIcons.camera, color: Colors.black, size: height * 0.024),
                   ),
                 ),
               ),

@@ -1,5 +1,5 @@
-export 'post/news_feed_model.dart';
-export 'profile/user_profile_model.dart';
+export '../../data/model/response/news_feed_model.dart';
+export '../../data/model/response/user_profile_model.dart';
 export 'friends/friend_request_model.dart';
 export 'friends/friends_suggetions_model.dart';
 export 'group page/page/athour_pages_model.dart';

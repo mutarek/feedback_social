@@ -1,5 +1,5 @@
 import 'package:als_frontend/helper/number_helper.dart';
-import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';

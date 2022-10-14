@@ -2,9 +2,11 @@ import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/more/widget/custom_menu_card.dart';
+import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +25,7 @@ class MoreScreen extends StatelessWidget {
         elevation: 0,
         title: const Text(
           "FeedBack",
-          style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
+          style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2)
         ),
       ),
       body: Consumer<AuthProvider>(
@@ -38,7 +40,7 @@ class MoreScreen extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                     padding: const EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                      BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 20.0, spreadRadius: 3.0, offset: Offset(0.0, 0.0))
+                      BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 20.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                     ]),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -62,7 +64,7 @@ class MoreScreen extends StatelessWidget {
                               child: InkWell(
                                 onTap: () {
                                   // userNewsfeedProvider.id = provider.userprofileData.id!;
-                                  // Get.to(() => const ProfileScreen());
+                                  Get.to(() => const ProfileScreen());
                                 },
                                 child: Container(
                                     height: h * 0.037,

@@ -1,12 +1,10 @@
+import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../../const/palette.dart';
-import '../../../provider/provider.dart';
-import 'edit_profile.dart';
+import '../../../old_code/const/palette.dart';
 
 class ProfileDetailsCard extends StatelessWidget {
   const ProfileDetailsCard({Key? key}) : super(key: key);
@@ -15,53 +13,38 @@ class ProfileDetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    return Consumer<UserProfileProvider>(builder: (context, provider, child) {
+    return Consumer<ProfileProvider>(builder: (context, provider, child) {
       return Container(
         color: Colors.white,
         width: width * .92,
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: height * 0.01, horizontal: width * 0.02),
+          padding: EdgeInsets.symmetric(vertical: height * 0.01, horizontal: width * 0.02),
           child: Column(
             children: [
               Visibility(
-                visible: provider.userprofileData.presentCompany == ""
-                    ? false
-                    : true,
+                visible: provider.userprofileData.presentCompany == "" ? false : true,
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          FontAwesomeIcons.briefcase,
-                          size: height * 0.019,
-                        ),
-                        SizedBox(
-                          width: width * 0.03,
-                        ),
+                        Icon(FontAwesomeIcons.briefcase, size: height * 0.019),
+                        SizedBox(width: width * 0.03),
                         Text(
                           "Company Name: ",
-                          style: GoogleFonts.lato(
-                            fontSize: 12,
-                          ),
+                          style: GoogleFonts.lato(fontSize: 12),
                         ),
                         Text(
                           provider.userprofileData.presentCompany.toString(),
-                          style: GoogleFonts.lato(
-                              fontSize: 12, fontWeight: FontWeight.w700),
+                          style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700),
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: height * 0.009,
-                    ),
+                    SizedBox(height: height * 0.009),
                   ],
                 ),
               ),
               Visibility(
-                visible: provider.userprofileData.presentEducation == ""
-                    ? false
-                    : true,
+                visible: provider.userprofileData.presentEducation == "" ? false : true,
                 child: Column(
                   children: [
                     Row(
@@ -81,8 +64,7 @@ class ProfileDetailsCard extends StatelessWidget {
                         ),
                         Text(
                           provider.userprofileData.presentEducation.toString(),
-                          style: GoogleFonts.lato(
-                              fontSize: 12, fontWeight: FontWeight.w700),
+                          style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700),
                         )
                       ],
                     ),
@@ -113,8 +95,7 @@ class ProfileDetailsCard extends StatelessWidget {
                         ),
                         Text(
                           provider.userprofileData.gender.toString(),
-                          style: GoogleFonts.lato(
-                              fontSize: 12, fontWeight: FontWeight.w700),
+                          style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700),
                         )
                       ],
                     ),
@@ -145,8 +126,7 @@ class ProfileDetailsCard extends StatelessWidget {
                         ),
                         Text(
                           provider.userprofileData.religion.toString(),
-                          style: GoogleFonts.lato(
-                              fontSize: 12, fontWeight: FontWeight.w700),
+                          style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700),
                         )
                       ],
                     ),
@@ -157,9 +137,7 @@ class ProfileDetailsCard extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: provider.userprofileData.livesInAddress == ""
-                    ? false
-                    : true,
+                visible: provider.userprofileData.livesInAddress == "" ? false : true,
                 child: Column(
                   children: [
                     Row(
@@ -179,8 +157,7 @@ class ProfileDetailsCard extends StatelessWidget {
                         ),
                         Text(
                           provider.userprofileData.livesInAddress.toString(),
-                          style: GoogleFonts.lato(
-                              fontSize: 12, fontWeight: FontWeight.w700),
+                          style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700),
                         ),
                       ],
                     ),
@@ -191,8 +168,7 @@ class ProfileDetailsCard extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible:
-                    provider.userprofileData.fromAddress == "" ? false : true,
+                visible: provider.userprofileData.fromAddress == "" ? false : true,
                 child: Column(
                   children: [
                     Row(
@@ -212,8 +188,7 @@ class ProfileDetailsCard extends StatelessWidget {
                         ),
                         Text(
                           provider.userprofileData.fromAddress.toString(),
-                          style: GoogleFonts.lato(
-                              fontSize: 12, fontWeight: FontWeight.w700),
+                          style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700),
                         )
                       ],
                     ),
@@ -228,7 +203,7 @@ class ProfileDetailsCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Get.to(() => const EditProfile());
+                  // Get.to(() => const EditProfile());
                 },
                 child: Container(
                   height: height * 0.035,
@@ -240,10 +215,7 @@ class ProfileDetailsCard extends StatelessWidget {
                   child: Center(
                     child: Text(
                       "Edit Profile",
-                      style: GoogleFonts.lato(
-                          color: Colors.black,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500),
+                      style: GoogleFonts.lato(color: Colors.black, fontSize: 10, fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),

@@ -1,275 +1,122 @@
-import 'dart:io';
-
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/user_profile_model.dart';
+import 'package:als_frontend/data/repository/newsfeed_repo.dart';
+import 'package:als_frontend/data/repository/profile_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileProvider with ChangeNotifier {
-  // final ProfileRepo profileRepo;
-  // final AuthRepo authRepo;
-  //
-  // ProfileProvider({required this.profileRepo, required this.authRepo});
-  //
-  // bool _isLoading = false;
-  //
-  // bool get isLoading => _isLoading;
-  //
-  // // get All address
-  // List<Address> address = [];
-  // int selectAddressIndex = 0;
-  // Address selectDefaultAddress = Address(
-  //     id: -1,
-  //     address: '',
-  //     city: City(name: '', id: 0, image: '', version: 0),
-  //     country: Country(image: '', id: 0, name: '', version: 0),
-  //     state: '',
-  //     location: Location(),
-  //     isDefault: false);
-  //
-  // initializeAllAddress(BuildContext context) async {
-  //   _isLoading = true;
-  //   address.clear();
-  //   address = [];
-  //   selectAddressIndex = 0;
-  //   selectDefaultAddress = Address(
-  //       id: -1,
-  //       address: '',
-  //       city: City(name: '', id: 0, image: '', version: 0),
-  //       country: Country(image: '', id: 0, name: '', version: 0),
-  //       state: '',
-  //       location: Location(),
-  //       isDefault: false);
-  //   ApiResponse apiResponse = await profileRepo.getCustomerAddress();
-  //   _isLoading = false;
-  //   if (apiResponse.response.statusCode == 200) {
-  //     apiResponse.response.data['value'].forEach((element) {
-  //       if (Address.fromJson(element).isDefault!) {
-  //         selectDefaultAddress = Address.fromJson(element);
-  //       }
-  //       address.add(Address.fromJson(element));
-  //     });
-  //   } else {
-  //     //showScaffoldSnackBar(context: context, message: apiResponse.error.toString());
-  //     address = [];
-  //   }
-  //   notifyListeners();
-  // }
-  //
-  // changeAddressSelectIndex(int index) {
-  //   selectAddressIndex = index;
-  //   notifyListeners();
-  // }
-  //
-  // // get all countries
-  // List<Country> countries = [];
-  // Country? selectCountries;
-  // bool _isLoadingCountries = false;
-  //
-  // bool get isLoadingCountries => _isLoadingCountries;
-  //
-  // initializeAllCountry(BuildContext context) async {
-  //   _isLoadingCountries = true;
-  //   countries.clear();
-  //   countries = [];
-  //   ApiResponse apiResponse = await profileRepo.getCountries();
-  //   _isLoadingCountries = false;
-  //   if (apiResponse.response.statusCode == 200) {
-  //     apiResponse.response.data['value'].forEach((element) {
-  //       countries.add(Country.fromJson(element));
-  //     });
-  //     selectCountries = countries[0];
-  //     initializeAllCity(context, selectCountries!.id);
-  //     notifyListeners();
-  //   } else {
-  //     showScaffoldSnackBar(context: context, message: apiResponse.error.toString());
-  //   }
-  // }
-  //
-  // changeCountry(Country c, BuildContext context) {
-  //   selectCountries = c;
-  //   initializeAllCity(context, c.id);
-  //   notifyListeners();
-  // }
-  //
-  // // get all Cities
-  // List<City> cities = [];
-  // City? selectCity;
-  // bool _isLoadingCity = false;
-  //
-  // bool get isLoadingCity => _isLoadingCity;
-  //
-  // initializeAllCity(BuildContext context, int countryID) async {
-  //   _isLoadingCity = true;
-  //   cities.clear();
-  //   cities = [];
-  //   ApiResponse apiResponse = await profileRepo.getCitiesByCountryID(countryID);
-  //   _isLoadingCity = false;
-  //   if (apiResponse.response.statusCode == 200) {
-  //     apiResponse.response.data['value'].forEach((element) {
-  //       cities.add(City.fromJson(element));
-  //     });
-  //     if (countryID == 11) {
-  //       selectCity = cities[cities.length - 9];
-  //     } else {
-  //       selectCity = cities[0];
-  //     }
-  //
-  //     notifyListeners();
-  //   } else {
-  //     showScaffoldSnackBar(context: context, message: apiResponse.error.toString());
-  //   }
-  // }
-  //
-  // changeCities(City c, BuildContext context) {
-  //   selectCity = c;
-  //   notifyListeners();
-  // }
-  //
-  // //
-  // // for Remember Me Section
-  //
-  // bool _isActiveRememberMe = true;
-  //
-  // bool get isDefault => _isActiveRememberMe;
-  //
-  // toggleRememberMe() {
-  //   _isActiveRememberMe = !_isActiveRememberMe;
-  //   notifyListeners();
-  // }
-  //
-  // // add address
-  // bool _isLoadingAddAddress = false;
-  //
-  // bool get isLoadingAddAddress => _isLoadingAddAddress;
-  //
-  // addEditAddress(Map address, BuildContext context, Function callBack, {bool isEdit = false}) async {
-  //   _isLoadingAddAddress = true;
-  //   notifyListeners();
-  //   ApiResponse apiResponse;
-  //   if (isEdit) {
-  //     apiResponse = await profileRepo.editAddress(address);
-  //   } else {
-  //     apiResponse = await profileRepo.addAddress(address);
-  //   }
-  //   _isLoadingAddAddress = false;
-  //   if (apiResponse.response.statusCode == 201 || apiResponse.response.statusCode == 200) {
-  //     showScaffoldSnackBar(context: context, message: apiResponse.response.data['message'], isError: false);
-  //     initializeAllAddress(context);
-  //     callBack(true);
-  //   } else {
-  //     print(apiResponse.error.toString());
-  //     showScaffoldSnackBar(context: context, message: apiResponse.error.toString());
-  //     callBack(false);
-  //   }
-  //   notifyListeners();
-  // }
-  //
-  // deleteAddress(BuildContext context, String addressID) async {
-  //   _isLoading = true;
-  //   ApiResponse apiResponse = await profileRepo.deleteAddress(addressID);
-  //   _isLoading = false;
-  //   if (apiResponse.response.statusCode == 200) {
-  //     showScaffoldSnackBar(context: context, message: apiResponse.response.data['message'], isError: false);
-  //     initializeAllAddress(context);
-  //   } else {
-  //     showScaffoldSnackBar(context: context, message: apiResponse.error.toString());
-  //   }
-  //   notifyListeners();
-  // }
-  //
-  // // get User
-  // ProfileModel? user;
-  //
-  // getUserProfiles(BuildContext context) async {
-  //   _isLoading = true;
-  //   ApiResponse apiResponse = await profileRepo.getCustomerProfile();
-  //   _isLoading = false;
-  //   if (apiResponse.response.statusCode == 200) {
-  //     user = ProfileModel.fromJson(apiResponse.response.data['value']);
-  //     print(user!.toJson());
-  //   } else {
-  //     showScaffoldSnackBar(context: context, message: apiResponse.error.toString());
-  //   }
-  //   notifyListeners();
-  // }
-  //
-  // String _profileImage = '';
-  //
-  // String get profileImage => _profileImage;
-  // bool isLoadingUpload = false;
-  //
-  // updateProfileImage(BuildContext context, File file) async {
-  //   _profileImage = '';
-  //   isLoadingUpload = true;
-  //   notifyListeners();
-  //   ApiResponse apiResponse = await profileRepo.uploadPhoto(file);
-  //   isLoadingUpload = false;
-  //   if (apiResponse.response.statusCode == 200) {
-  //     _profileImage = apiResponse.response.data['uploadedFiles'][0]['filePath'];
-  //
-  //     Map map = {
-  //       "firstname": user!.firstname,
-  //       "lastname": user!.lastname,
-  //       "age": user!.age,
-  //       "email": 'test@gmail.com',
-  //       "mobile": user!.mobile,
-  //       "birthday": user!.birthday,
-  //       "darkMode": user!.darkMode,
-  //       "image": _profileImage
-  //     };
-  //
-  //     updateProfile(context, map);
-  //
-  //     showCustomSnackBar("Profile Picture Upload Successfully", context, isError: false);
-  //   } else {
-  //     showCustomSnackBar(apiResponse.error.toString(), context);
-  //   }
-  //   notifyListeners();
-  // }
-  //
-  // bool isUpdateProfilePassword = false;
-  //
-  // updateProfile(BuildContext context, Map map) async {
-  //   _isLoading = true;
-  //   notifyListeners();
-  //   ApiResponse apiResponse = await profileRepo.updateProfile(map);
-  //   _isLoading = false;
-  //   if (apiResponse.response.statusCode == 200) {
-  //     user = ProfileModel.fromJson(apiResponse.response.data['value']);
-  //     showCustomSnackBar(apiResponse.response.data['message'], context, isError: false);
-  //     authRepo.clearFirstName();
-  //     authRepo.saveFirstName(user!.firstname!);
-  //   } else {
-  //     showCustomSnackBar(apiResponse.error.toString(), context);
-  //   }
-  //   notifyListeners();
-  // }
-  //
-  // bool _isLoadingPassword = false;
-  //
-  // bool get isLoadingPassword => _isLoadingPassword;
-  //
-  // updatePassword(BuildContext context, Map<String, dynamic> map, Function callBack) async {
-  //   _isLoadingPassword = true;
-  //   notifyListeners();
-  //   ApiResponse apiResponse = await profileRepo.updatePassword(map);
-  //   _isLoadingPassword = false;
-  //   if (apiResponse.response.statusCode == 200) {
-  //     showCustomSnackBar(apiResponse.response.data['message'], context, isError: false);
-  //     callBack(true);
-  //   } else {
-  //     showCustomSnackBar(apiResponse.error.toString(), context);
-  //     callBack(false);
-  //   }
-  //   notifyListeners();
-  // }
-  //
-  // bool isMaximize = false;
-  //
-  // changeMaximize({bool isFirstTime = false}) {
-  //   if (isFirstTime) {
-  //     isMaximize = true;
-  //   } else {
-  //     isMaximize = true;
-  //     notifyListeners();
-  //   }
-  // }
+  final ProfileRepo profileRepo;
+  final NewsfeedRepo newsfeedRepo;
+
+  ProfileProvider({required this.profileRepo, required this.newsfeedRepo});
+
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  int position = 0;
+  List<NewsFeedData> newsFeedLists = [];
+  bool isBottomLoading = false;
+  int selectPage = 1;
+  List<int> likesStatusAllData = [];
+  bool hasNextData = false;
+
+  updatePageNo() {
+    selectPage++;
+    initializeAllUserPostData((bool status) {}, page: selectPage);
+    notifyListeners();
+  }
+
+  initializeAllUserPostData(Function callBackFunction, {int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      newsFeedLists.clear();
+      newsFeedLists = [];
+      _isLoading = true;
+      isBottomLoading = false;
+      hasNextData = false;
+      position = 0;
+      likesStatusAllData.clear();
+      likesStatusAllData = [];
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = (prefs.getString('userID') ?? '0');
+    Response response = await profileRepo.getUserNewsfeedDataByUsingID(id, page);
+    _isLoading = false;
+    isBottomLoading = false;
+    callBackFunction(true);
+    int status = 0;
+    if (response.statusCode == 200) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
+        NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
+
+        status = 0;
+        likesStatusAllData.add(0);
+        for (var e in newsFeedData.likedBy!) {
+          if (e.id.toString() == id) {
+            status = 1;
+            continue;
+          }
+        }
+        if (status == 0) {
+          likesStatusAllData[position] = 0;
+        } else {
+          likesStatusAllData[position] = 1;
+        }
+        position++;
+
+        newsFeedLists.add(newsFeedData);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  ///TODO: for user profile
+  UserProfileModel userprofileData = UserProfileModel();
+  bool isProfileLoading = false;
+
+  initializeUserData() async {
+    isProfileLoading = true;
+    userprofileData = UserProfileModel();
+    Response response = await profileRepo.getUserInfo();
+    isProfileLoading = false;
+    if (response.statusCode == 200) {
+      hasNextData = response.body['next'] != null ? true : false;
+      userprofileData = UserProfileModel.fromJson(response.body);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  // for LIKE comment
+
+  addLike(int postID, int index) async {
+    Response response = await newsfeedRepo.addLike(postID);
+    if (response.body['liked'] == true) {
+      likesStatusAllData[index] = 1;
+      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
+    } else {
+      likesStatusAllData[index] = 0;
+      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
+    }
+    notifyListeners();
+  }
+
+  void updateCommentDataCount(int index) {
+    newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
+    notifyListeners();
+  }
 }

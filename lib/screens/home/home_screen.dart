@@ -1,9 +1,7 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/shimmer_effect/timeline_post_shimmer_widget.dart';
-import 'package:als_frontend/screens/home/widget/photo_widget.dart';
-import 'package:als_frontend/screens/home/widget/post_header.dart';
-import 'package:als_frontend/screens/home/widget/post_stats.dart';
+import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/posts/add_post_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -169,37 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const CupertinoActivityIndicator();
                         }
 
-                        return Container(
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.3, offset: Offset(0.0, 0.0))
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    PostHeaderWidget(post: newsFeedProvider.newsFeedLists[index]),
-                                    const SizedBox(height: 8.0),
-                                    Text(newsFeedProvider.newsFeedLists[index].description!, style: latoStyle400Regular),
-                                    if (newsFeedProvider.newsFeedLists[index].totalImage != 0) const SizedBox(height: 10.0),
-                                  ],
-                                ),
-                              ),
-                              if ((newsFeedProvider.newsFeedLists[index].totalImage! + newsFeedProvider.newsFeedLists[index].totalVideo!) !=
-                                  0)
-                                PostPhotoContainer(index, postImageUrl: newsFeedProvider.newsFeedLists[index]),
-                              PostStats(post: newsFeedProvider.newsFeedLists[index], index: index, newsFeedProvider: newsFeedProvider),
-                            ],
-                          ),
-                        );
+                        return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,isHomeScreen: true);
                       }),
                 ],
               ),

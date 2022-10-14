@@ -35,7 +35,7 @@ class PhotoViewScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              PostStats(post: newsFeedData, index: index, newsFeedProvider: newsFeedProvider, paddingHorizontal: 0, paddingVertical: 3),
+              PostStats(post: newsFeedData, index: index, feedProvider: newsFeedProvider, paddingHorizontal: 0, paddingVertical: 3),
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),

@@ -14,7 +14,7 @@ class AppConstant {
   static const String homeActiveURI = 'home/active';
   static const String homeMenuOrdered = 'homeMenu/ordered';
   static const String recommendedOrdered = 'recommended/ordered';
-  static const String wishlistURI = 'wishList/';
+  static const String profileURI = '/accounts/profile/';
 
   // Shared Key
   static const String theme = 'theme';

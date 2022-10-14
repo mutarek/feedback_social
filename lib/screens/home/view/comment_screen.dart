@@ -5,6 +5,7 @@ import 'package:als_frontend/old_code/widgets/widgets.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,9 @@ class CommentsScreen extends StatefulWidget {
   final int index;
   final int postID;
   final bool isHomeScreen;
-  final bool isPublicScreen;
+  final bool isProfileScreen;
 
-  const CommentsScreen(this.index, this.postID, {this.isHomeScreen = false, this.isPublicScreen = false, Key? key}) : super(key: key);
+  const CommentsScreen(this.index, this.postID, {this.isHomeScreen = false, this.isProfileScreen = false, Key? key}) : super(key: key);
 
   @override
   State<CommentsScreen> createState() => _CommentsScreenState();
@@ -68,7 +69,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     FocusScope.of(context).requestFocus(FocusNode());
                   },
                   child: commentProvider.isLoading
-                      ? Center(child: CircularProgressIndicator())
+                      ? const Center(child: CircularProgressIndicator())
                       : Column(
                           children: [
                             Expanded(
@@ -107,12 +108,15 @@ class _CommentsScreenState extends State<CommentsScreen> {
                                         style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Palette.primary)),
                                         onPressed: () {
                                           commentProvider
-                                              .addComment(commentController.text, "${authProvider.name}", authProvider.profileImage,
+                                              .addComment(commentController.text, authProvider.name, authProvider.profileImage,
                                                   widget.postID, int.parse(authProvider.userID))
                                               .then((value) {
                                             if (value == true) {
                                               if (widget.isHomeScreen) {
                                                 Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                              }
+                                              if (widget.isProfileScreen) {
+                                                Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                               }
                                             }
                                           });

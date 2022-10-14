@@ -1,5 +1,5 @@
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
-import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

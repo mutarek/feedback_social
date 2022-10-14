@@ -1,5 +1,6 @@
-import 'package:als_frontend/old_code/model/post/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/view/comment_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -13,16 +14,20 @@ import 'package:provider/provider.dart';
 class PostStats extends StatelessWidget {
   final NewsFeedData post;
   final int index;
-  final NewsFeedProvider newsFeedProvider;
+  final feedProvider;
   final double paddingHorizontal;
   final double paddingVertical;
+  final bool isHomeNewsFeedProvider;
+  final bool isFromProfile;
 
   const PostStats(
       {Key? key,
       required this.post,
       required this.index,
-      required this.newsFeedProvider,
+      this.feedProvider,
       this.paddingHorizontal = 12,
+      this.isFromProfile = false,
+      this.isHomeNewsFeedProvider = false,
       this.paddingVertical = 0})
       : super(key: key);
 
@@ -48,7 +53,7 @@ class PostStats extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            newsFeedProvider.addLike(post.id!.toInt(), index);
+                            feedProvider.addLike(post.id!.toInt(), index);
                           },
                           child: SizedBox(
                             width: 40,
@@ -56,8 +61,8 @@ class PostStats extends StatelessWidget {
                             child: Stack(
                               clipBehavior: Clip.none,
                               children: [
-                                Icon((newsFeedProvider.likesStatusAllData[index] == 1) ? Icons.favorite : Icons.favorite_border,
-                                    size: 30, color: (newsFeedProvider.likesStatusAllData[index] == 1) ? Colors.red : Colors.black),
+                                Icon((feedProvider.likesStatusAllData[index] == 1) ? Icons.favorite : Icons.favorite_border,
+                                    size: 30, color: (feedProvider.likesStatusAllData[index] == 1) ? Colors.red : Colors.black),
                                 Positioned(
                                     top: -13,
                                     left: 20,
@@ -85,7 +90,8 @@ class PostStats extends StatelessWidget {
                         const SizedBox(width: 30.0),
                         InkWell(
                           onTap: () {
-                            Get.to(CommentsScreen(index, post.id as int, isHomeScreen: true));
+                            Get.to(CommentsScreen(index, post.id as int,
+                                isHomeScreen: isHomeNewsFeedProvider, isProfileScreen: isFromProfile));
                           },
                           child: SizedBox(
                             width: 40,
@@ -141,48 +147,6 @@ class PostStats extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _PostButton extends StatelessWidget {
-  final Icon icon;
-  final String label;
-  final Function onTap;
-  final Color lableColor;
-
-  const _PostButton({
-    Key? key,
-    required this.icon,
-    required this.label,
-    required this.onTap,
-    this.lableColor = Colors.black,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Material(
-        color: Colors.white,
-        child: InkWell(
-          onTap: onTap as void Function()?,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            height: 25.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                icon,
-                const SizedBox(width: 4.0),
-                Text(
-                  label,
-                  style: TextStyle(color: lableColor),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
