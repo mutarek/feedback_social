@@ -1,3 +1,4 @@
+import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
@@ -132,7 +133,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               icon: MdiIcons.facebookMessenger,
                               iconSize: 20.0,
                               onPressed: () {
-                                print('messenger');
+                                openFeedbackMessengerApp();
                               },
                             ),
                           ],
