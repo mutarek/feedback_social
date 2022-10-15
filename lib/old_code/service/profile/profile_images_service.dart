@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/profile-images_model.dart';
 import 'package:als_frontend/old_code/const/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

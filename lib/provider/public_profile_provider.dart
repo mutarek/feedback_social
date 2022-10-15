@@ -1,4 +1,6 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/profile-images_model.dart';
+import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/profile_repo.dart';
@@ -116,6 +118,46 @@ class PublicProfileProvider with ChangeNotifier {
 
   void updateCommentDataCount(int index) {
     publicNewsFeedLists[index].totalComment = publicNewsFeedLists[index].totalComment! + 1;
+    notifyListeners();
+  }
+
+  ///// for get Public profile all image:
+  List<ProfileImagesModel> publicAllImages = [];
+
+  initializeUserAllImages(String userID) async {
+    publicAllImages.clear();
+    publicAllImages = [];
+    _isLoading = true;
+
+    Response response = await profileRepo.getPublicProfileImageList(userID);
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        publicAllImages.add(ProfileImagesModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  ///// for get Public profile all Video:
+  List<ProfileVideoModel> publicAllVideo = [];
+
+  initializeUserAllVideo(String userID) async {
+    publicAllVideo.clear();
+    publicAllVideo = [];
+    _isLoading = true;
+
+    Response response = await profileRepo.getPublicProfileVideoList(userID);
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        publicAllVideo.add(ProfileVideoModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
     notifyListeners();
   }
 }

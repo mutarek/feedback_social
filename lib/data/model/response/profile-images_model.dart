@@ -5,11 +5,9 @@
 import 'dart:convert';
 
 List<ProfileImagesModel> profileImagesModelFromJson(String str) =>
-    List<ProfileImagesModel>.from(
-        json.decode(str).map((x) => ProfileImagesModel.fromJson(x)));
+    List<ProfileImagesModel>.from(json.decode(str).map((x) => ProfileImagesModel.fromJson(x)));
 
-String profileImagesModelToJson(List<ProfileImagesModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String profileImagesModelToJson(List<ProfileImagesModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ProfileImagesModel {
   ProfileImagesModel({
@@ -20,8 +18,7 @@ class ProfileImagesModel {
   int id;
   String image;
 
-  factory ProfileImagesModel.fromJson(Map<String, dynamic> json) =>
-      ProfileImagesModel(
+  factory ProfileImagesModel.fromJson(Map<String, dynamic> json) => ProfileImagesModel(
         id: json["id"],
         image: json["image"],
       );

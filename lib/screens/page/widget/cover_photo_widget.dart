@@ -26,7 +26,7 @@ class CoverPhotoWidget extends StatelessWidget {
       child: Container(
         height: height * 0.23,
         width: width,
-        decoration: BoxDecoration(color: Colors.black, image: DecorationImage(image: NetworkImage(coverphoto), fit: BoxFit.cover)),
+        decoration: BoxDecoration(color: Colors.white, image: DecorationImage(image: NetworkImage(coverphoto))),
         child: Column(
           children: [
             Padding(

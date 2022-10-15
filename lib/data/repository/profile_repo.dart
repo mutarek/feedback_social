@@ -24,23 +24,28 @@ class ProfileRepo {
   Future<Response> getPublicProfileInfo(String id) async {
     return await apiClient.getData('${AppConstant.profileURI}$id/');
   }
+  Future<Response> getPublicProfileImageList(String id) async {
+    return await apiClient.getData('${AppConstant.profileURI}$id/image/list/');
+  }
+  Future<Response> getPublicProfileVideoList(String id) async {
+    return await apiClient.getData('${AppConstant.profileURI}$id/video/list/');
+  }
 
   /*........................edit profile repo..............*/
 
-
-  Future<Response> updateProfileDetails(String firstName, lastName, company, education, gender,
-      religion, liveInAdress, fromAdress) async {
-    return await apiClient.putData(AppConstant.editProfile,
-        {
-          'first_name': firstName,
-          'last_name': lastName,
-          'gender': gender,
-          'lives_in_address': liveInAdress,
-          'from_address': fromAdress,
-          'religion': religion,
-          'company': company,
-          'education': education,},);
-
+  Future<Response> updateProfileDetails(String firstName, lastName, company, education, gender, religion, liveInAdress, fromAdress) async {
+    return await apiClient.putData(
+      AppConstant.editProfile,
+      {
+        'first_name': firstName,
+        'last_name': lastName,
+        'gender': gender,
+        'lives_in_address': liveInAdress,
+        'from_address': fromAdress,
+        'religion': religion,
+        'company': company,
+        'education': education,
+      },
+    );
   }
-
 }

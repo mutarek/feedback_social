@@ -1,9 +1,12 @@
-import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/helper/number_helper.dart';
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
+import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PostHeaderWidget extends StatelessWidget {
   final NewsFeedData post;
@@ -19,7 +22,11 @@ class PostHeaderWidget extends StatelessWidget {
         Expanded(
           child: InkWell(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(post.author!.id.toString())));
+              if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+              } else {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(post.author!.id.toString())));
+              }
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
