@@ -6,6 +6,8 @@ import 'package:als_frontend/screens/profile/widget/profile_cover_photo_widget.d
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
+import 'package:als_frontend/screens/profile/widget/update_cover_photo.dart';
+import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: Palette.scaffold,
       body: SafeArea(
         child: Consumer2<AuthProvider, ProfileProvider>(
-          builder: (context, authProvider, profileProvider, child) => profileProvider.isLoading
+          builder: (context, authProvider, profileProvider, child) => profileProvider.isLoading || profileProvider.isProfileLoading
               ? const Center(
                   child: CupertinoActivityIndicator(),
                 )
@@ -64,27 +66,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Navigator.of(context).pop();
                               },
                               viewCoverPhoto: (() {
-                                // profileImages.imageUrl = provider.userprofileData.coverImage!;
-                                // Get.to(() => const SingleImageView());
+                                Get.to(() => SingleImageView(imageURL: profileProvider.userprofileData.coverImage!));
                               }),
                               coverphoto: (profileProvider.isProfileLoading == false)
                                   ? profileProvider.userprofileData.coverImage!
                                   : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                               coverphotochange: (() {
-                                // coverPhotoProvider.imageUrl = provider.userprofileData.coverImage!;
-                                // Get.to(() => const UpdateCoverPhoto());
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) => const UpdateCoverPhoto(isCoverPhotoUpload: true)));
                               })),
                           ProfilePhotowidget(
                               profilePhotoChange: () {
-                                // profileImageProvider.imageUrl = provider.userprofileData.profileImage!;
-                                // Get.to(() => const UpdateProfileImage());
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) => const UpdateCoverPhoto(isCoverPhotoUpload: false)));
                               },
                               profileImage: (profileProvider.isProfileLoading == false)
                                   ? profileProvider.userprofileData.profileImage!
                                   : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                               viewProfilePhoto: () {
-                                // profileImages.imageUrl = provider.userprofileData.profileImage!;
-                                // Get.to(() => const SingleImageView());
+                                Get.to(() => SingleImageView(imageURL: profileProvider.userprofileData.profileImage!));
                               })
                         ],
                       ),

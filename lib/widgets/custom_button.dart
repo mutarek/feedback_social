@@ -64,7 +64,7 @@ class CustomButton extends StatelessWidget {
   const CustomButton(
       {this.onTap,
       @required this.btnTxt,
-      this.backgroundColor = AppColors.primaryColorDark,
+      this.backgroundColor = AppColors.unreadColorLight,
       this.height = 45.0,
       this.fontSize = 14.0,
       this.isStroked = false,

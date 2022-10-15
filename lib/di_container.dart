@@ -46,7 +46,7 @@ Future<void> init() async {
   sl.registerFactory(() => PostProvider(postRepo: sl()));
   sl.registerFactory(() => SplashProvider());
   sl.registerFactory(() => DashboardProvider());
-  sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl()));
+  sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

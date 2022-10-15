@@ -70,17 +70,23 @@ class ApiClient {
       if(multipartBody.isNotEmpty){
         _request.files.addAll(multipartBody);
       }
-      // for (MultipartBody multipart in multipartBody) {
-      //   if (multipart.file != null) {
-      //     Uint8List _list = await multipart.file.readAsBytes();
-      //     _request.files.add(Http.MultipartFile(
-      //       multipart.key,
-      //       multipart.file.readAsBytes().asStream(),
-      //       _list.length,
-      //       filename: '${DateTime.now().toString()}.png',
-      //     ));
-      //   }
-      // }
+      _request.fields.addAll(body);
+      Http.Response _response = await Http.Response.fromStream(await _request.send());
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return const Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+  Future<Response> putMultipartData(String uri, Map<String, String> body, List<Http.MultipartFile> multipartBody,
+      {Map<String, String>? headers}) async {
+    try {
+      debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+      debugPrint('====> API Body: $body with ${multipartBody.length} files');
+      Http.MultipartRequest _request = Http.MultipartRequest('PUT', Uri.parse(appBaseUrl + uri));
+      _request.headers.addAll(headers ?? _mainHeaders!);
+      if(multipartBody.isNotEmpty){
+        _request.files.addAll(multipartBody);
+      }
       _request.fields.addAll(body);
       Http.Response _response = await Http.Response.fromStream(await _request.send());
       return handleResponse(_response, uri);

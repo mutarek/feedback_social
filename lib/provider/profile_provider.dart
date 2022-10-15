@@ -1,17 +1,23 @@
+import 'dart:io';
+import 'package:als_frontend/data/repository/auth_repo.dart';
+import 'package:http/http.dart' as Http;
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/profile_repo.dart';
+import 'package:als_frontend/helper/image_compressure.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileProvider with ChangeNotifier {
   final ProfileRepo profileRepo;
   final NewsfeedRepo newsfeedRepo;
+  final AuthRepo authRepo;
 
-  ProfileProvider({required this.profileRepo, required this.newsfeedRepo});
+  ProfileProvider({required this.profileRepo, required this.newsfeedRepo, required this.authRepo});
 
   bool _isLoading = false;
 
@@ -117,6 +123,53 @@ class ProfileProvider with ChangeNotifier {
 
   void updateCommentDataCount(int index) {
     newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
+    notifyListeners();
+  }
+
+  //TODO: for upload user profile and cover
+  // for pic a image
+  File? image;
+  int? id;
+  final _picker = ImagePicker();
+
+  Future pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      image = await imageCompressed(imagePathToCompress: File(pickedFile.path), percentage: 50);
+      notifyListeners();
+    }
+  }
+
+  bool isLoadingForUploadPhoto = false;
+
+  uploadPhoto(Function callBackFunction, {bool isCover = false}) async {
+    isLoadingForUploadPhoto = true;
+    List<Http.MultipartFile> multipartFile = [];
+    if (isCover) {
+      multipartFile.add(
+          Http.MultipartFile('cover_image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
+    } else {
+      multipartFile.add(
+          Http.MultipartFile('profile_image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
+    }
+
+    notifyListeners();
+    Response response = await profileRepo.uploadPhoto(multipartFile, isCover: isCover);
+    isLoadingForUploadPhoto = false;
+    if (response.statusCode == 200) {
+      if (isCover) {
+        userprofileData.coverImage = response.body['cover_image'];
+      } else {
+        authRepo.changeUserImage(response.body['profile_image']);
+        userprofileData.profileImage = response.body['profile_image'];
+      }
+      callBackFunction(true);
+      Fluttertoast.showToast(msg: "Upload Successfully");
+    } else {
+      callBackFunction(false);
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    }
+    image = null;
     notifyListeners();
   }
 }

@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:als_frontend/data/repository/post_repo.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/data/repository/post_repo.dart';
+import 'package:als_frontend/helper/image_compressure.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:http/http.dart' as Http;
@@ -38,10 +38,10 @@ class PostProvider with ChangeNotifier {
     Response response = await postRepo.submitPost({"description": postText}, multipartFile);
     isLoading = false;
     if (response.statusCode == 201) {
-      callBackFunction(true, NewsFeedData.fromJson(response.body),1);
+      callBackFunction(true, NewsFeedData.fromJson(response.body), 1);
       Fluttertoast.showToast(msg: "Posted");
     } else {
-      callBackFunction(false, NewsFeedData(),0);
+      callBackFunction(false, NewsFeedData(), 0);
       Fluttertoast.showToast(msg: "Something went wrong!");
     }
     notifyListeners();
@@ -60,21 +60,16 @@ class PostProvider with ChangeNotifier {
       imageFile.addAll(pickedFile);
       imageFile.forEach((element) async {
         singleImage = File(element.path);
-        afterConvertImageLists.add(await customCompressed(imagePathToCompress: singleImage!));
+        afterConvertImageLists.add(await imageCompressed(imagePathToCompress: singleImage!));
 
         var sizeInBefore = singleImage!.lengthSync() / 1024;
         debugPrint("Size in Before Compress:" + sizeInBefore.toString() + "KB");
-        File compressImage = await customCompressed(imagePathToCompress: singleImage!);
+        File compressImage = await imageCompressed(imagePathToCompress: singleImage!);
         var sizeInAfter = compressImage.lengthSync() / 1024;
         debugPrint("Size in After:" + sizeInAfter.toString() + "KB");
         notifyListeners();
       });
     }
-  }
-
-  Future<File> customCompressed({required File imagePathToCompress, quality = 100, percentage = 30}) async {
-    var path = await FlutterNativeImage.compressImage(imagePathToCompress.absolute.path, quality: quality, percentage: percentage);
-    return path;
   }
 
   Future pickVideo() async {

@@ -53,6 +53,14 @@ class AuthRepo {
     }
   }
 
+  Future<void> changeUserImage(String image) async {
+    try {
+      await sharedPreferences.setString(AppConstant.userProfileImage, image);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   //TODO:: for get User Information
   String getUserID() {
     return sharedPreferences.getString(AppConstant.userID) ?? "";

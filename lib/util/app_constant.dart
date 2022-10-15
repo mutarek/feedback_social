@@ -15,6 +15,8 @@ class AppConstant {
   static const String homeMenuOrdered = 'homeMenu/ordered';
   static const String recommendedOrdered = 'recommended/ordered';
   static const String profileURI = '/accounts/profile/';
+  static const String uploadCoverImageURI = '/accounts/profile/update/cover-image/';
+  static const String uploadProfileImageURI = '/accounts/profile/update/profile-image/';
 
   // Shared Key
   static const String theme = 'theme';
