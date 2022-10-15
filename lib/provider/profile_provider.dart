@@ -30,6 +30,13 @@ class ProfileProvider with ChangeNotifier {
   List<int> likesStatusAllData = [];
   bool hasNextData = false;
 
+
+
+  String message = "";
+  bool success = false;
+  List<String> gender = ["Male", "Female"];
+  String drondownValue = "Male";
+
   updatePageNo() {
     selectPage++;
     initializeAllUserPostData((bool status) {}, page: selectPage);
@@ -139,6 +146,21 @@ class ProfileProvider with ChangeNotifier {
   void updateCommentDataCount(int index) {
     newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
     notifyListeners();
+
+
+
+  }
+
+  Future updateData (String firstName, lastName, company, education, gender,
+      religion, liveInAdress, fromAdress )async{
+    _isLoading = true;
+    notifyListeners();
+
+    Response response = await profileRepo.updateProfileDetails(firstName, lastName, company, education, gender,
+        religion, liveInAdress, fromAdress
+    );
+    _isLoading = false;
+
   }
 
   //TODO: for upload user profile and cover

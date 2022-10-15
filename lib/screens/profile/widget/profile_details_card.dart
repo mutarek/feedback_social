@@ -1,7 +1,9 @@
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/screens/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileDetailsCard extends StatelessWidget {
@@ -126,7 +128,7 @@ class ProfileDetailsCard extends StatelessWidget {
                 ? const SizedBox.shrink()
                 : InkWell(
                     onTap: () {
-                      // Get.to(() => const EditProfile());
+                      Get.to(() => const EditProfile());
                     },
                     child: Container(
                       height: height * 0.035,

@@ -11,11 +11,14 @@ class AppConstant {
   static const String newsFeedURI = '/posts/newsfeeds?page=';
   static const String postsUri = '/posts/';
   static const String forgotPasswordURI = 'auth/forget-password';
+  static const String homeActiveURI = 'home/active';
   static const String homeMenuOrdered = 'homeMenu/ordered';
   static const String recommendedOrdered = 'recommended/ordered';
   static const String profileURI = '/accounts/profile/';
   static const String uploadCoverImageURI = '/accounts/profile/update/cover-image/';
   static const String uploadProfileImageURI = '/accounts/profile/update/profile-image/';
+  static const String editProfile = '/accounts/profile/update/';
+
 
   // Shared Key
   static const String theme = 'theme';
