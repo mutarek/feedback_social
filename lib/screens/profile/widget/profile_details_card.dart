@@ -1,10 +1,14 @@
 import 'package:als_frontend/provider/profile_provider.dart';
+import 'package:als_frontend/screens/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../../old_code/const/palette.dart';
+
 
 class ProfileDetailsCard extends StatelessWidget {
   const ProfileDetailsCard({Key? key}) : super(key: key);
@@ -203,7 +207,7 @@ class ProfileDetailsCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  // Get.to(() => const EditProfile());
+                  Get.to(() => const EditProfile());
                 },
                 child: Container(
                   height: height * 0.035,
