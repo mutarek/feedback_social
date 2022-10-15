@@ -17,7 +17,7 @@ class UserNewsfeedPostProvider extends ChangeNotifier {
 
   Future<void> getData() async {
     authorPosts = (await AuthorNewsfeedPostService(id: id).getAuthorPost(page));
-    authorPostResults.addAll(authorPosts.newsFeedLists);
+    authorPostResults.addAll(authorPosts.publicNewsFeedLists);
     initializeLikedData();
     page = page + 1;
     notifyListeners();

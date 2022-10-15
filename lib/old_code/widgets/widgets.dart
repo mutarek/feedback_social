@@ -23,7 +23,7 @@ export '../../screens/more/widget/custom_menu_card.dart';
 export 'menu/custom_app_bar.dart';
 export 'profile/friend_list_card.dart';
 export 'button icon textfield/custom_group_page_button.dart.dart';
-export 'Page Group/cover_photo_widget.dart';
+export '../../screens/page/widget/cover_photo_widget.dart';
 export 'Page Group/page_photo_widgrt.dart';
 export 'Page Group/write_post_widget.dart';
 export 'Notification/post_card_header.dart';

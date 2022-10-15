@@ -14,6 +14,7 @@ import 'package:als_frontend/provider/localization_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
+import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
 import 'package:als_frontend/util/app_constant.dart';
@@ -47,6 +48,7 @@ Future<void> init() async {
   sl.registerFactory(() => SplashProvider());
   sl.registerFactory(() => DashboardProvider());
   sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
+  sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(),newsfeedRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

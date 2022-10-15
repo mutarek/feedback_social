@@ -13,7 +13,7 @@ class PublicNewsfeedPostProvider extends ChangeNotifier {
 
   Future<void> getData() async {
     authorPosts = (await AuthorNewsfeedPostService(id: id!).getAuthorPost(page));
-    authorPostResults.addAll(authorPosts.newsFeedLists);
+    authorPostResults.addAll(authorPosts.publicNewsFeedLists);
     if (authorPostResults.length < 5) {
       hasdata = false;
     }

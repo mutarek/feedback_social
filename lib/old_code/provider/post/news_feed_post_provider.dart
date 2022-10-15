@@ -39,7 +39,7 @@ class NewsFeedPostProvider extends ChangeNotifier {
       id = (prefs.getInt('id') ?? '') as int;
 
       posts = (await PostService().getPosts(page))!;
-      results.addAll(posts.newsFeedLists);
+      results.addAll(posts.publicNewsFeedLists);
       initializeLikedData();
       page = page + 1;
       notifyListeners();

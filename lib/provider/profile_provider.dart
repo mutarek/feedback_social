@@ -89,7 +89,7 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  ///TODO: for user profile
+  ///TODO: for Current user profile
   UserProfileModel userprofileData = UserProfileModel();
   bool isProfileLoading = false;
 
@@ -99,8 +99,23 @@ class ProfileProvider with ChangeNotifier {
     Response response = await profileRepo.getUserInfo();
     isProfileLoading = false;
     if (response.statusCode == 200) {
-      hasNextData = response.body['next'] != null ? true : false;
       userprofileData = UserProfileModel.fromJson(response.body);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  ///TODO: for Public user profile
+  UserProfileModel publicProfileData = UserProfileModel();
+
+  callForPublicProfileData(String userID) async {
+    isProfileLoading = true;
+    publicProfileData = UserProfileModel();
+    Response response = await profileRepo.getPublicProfileInfo(userID);
+    isProfileLoading = false;
+    if (response.statusCode == 200) {
+      publicProfileData = UserProfileModel.fromJson(response.body);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
@@ -170,6 +185,70 @@ class ProfileProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: "Something went wrong!");
     }
     image = null;
+    notifyListeners();
+  }
+
+  //TODO: for Public All NewsfeedData
+
+  List<NewsFeedData> publicNewsFeedLists = [];
+  List<int> publicLikesStatusAllData = [];
+
+  updatePublicPageNo() {
+    selectPage++;
+    initializeAllUserPostData((bool status) {}, page: selectPage);
+    notifyListeners();
+  }
+
+  initializePublicUserTimelineData(Function callBackFunction, {int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      publicNewsFeedLists.clear();
+      publicNewsFeedLists = [];
+      _isLoading = true;
+      isBottomLoading = false;
+      hasNextData = false;
+      position = 0;
+      publicLikesStatusAllData.clear();
+      publicLikesStatusAllData = [];
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = (prefs.getString('userID') ?? '0');
+    Response response = await profileRepo.getUserNewsfeedDataByUsingID(id, page);
+    _isLoading = false;
+    isBottomLoading = false;
+    callBackFunction(true);
+    int status = 0;
+    if (response.statusCode == 200) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
+        NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
+
+        status = 0;
+        publicLikesStatusAllData.add(0);
+        for (var e in newsFeedData.likedBy!) {
+          if (e.id.toString() == id) {
+            status = 1;
+            continue;
+          }
+        }
+        if (status == 0) {
+          publicLikesStatusAllData[position] = 0;
+        } else {
+          publicLikesStatusAllData[position] = 1;
+        }
+        position++;
+
+        publicNewsFeedLists.add(newsFeedData);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
     notifyListeners();
   }
 }

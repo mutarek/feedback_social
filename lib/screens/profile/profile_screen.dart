@@ -125,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: height * 0.01, left: width * 0.04, right: width * 0.04),
-                        child: const ProfileDetailsCard(),
+                        child: ProfileDetailsCard(userProfileModel: profileProvider.userprofileData),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.02),

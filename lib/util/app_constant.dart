@@ -11,7 +11,6 @@ class AppConstant {
   static const String newsFeedURI = '/posts/newsfeeds?page=';
   static const String postsUri = '/posts/';
   static const String forgotPasswordURI = 'auth/forget-password';
-  static const String homeActiveURI = 'home/active';
   static const String homeMenuOrdered = 'homeMenu/ordered';
   static const String recommendedOrdered = 'recommended/ordered';
   static const String profileURI = '/accounts/profile/';

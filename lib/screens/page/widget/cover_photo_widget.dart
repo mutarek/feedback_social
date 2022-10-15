@@ -16,6 +16,7 @@ class CoverPhotoWidget extends StatelessWidget {
   final VoidCallback coverphotochange;
   final String coverphoto;
   final bool isTrue;
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -25,10 +26,7 @@ class CoverPhotoWidget extends StatelessWidget {
       child: Container(
         height: height * 0.23,
         width: width,
-        decoration: BoxDecoration(
-            color: Colors.black,
-            image: DecorationImage(
-                image: NetworkImage(coverphoto), fit: BoxFit.cover)),
+        decoration: BoxDecoration(color: Colors.black, image: DecorationImage(image: NetworkImage(coverphoto), fit: BoxFit.cover)),
         child: Column(
           children: [
             Padding(
@@ -43,8 +41,7 @@ class CoverPhotoWidget extends StatelessWidget {
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                       border: Border.all(color: Colors.white, width: 2)),
                   child: Padding(
-                    padding: EdgeInsets.only(
-                        top: height * 0.001, left: width * 0.001),
+                    padding: EdgeInsets.only(top: height * 0.001, left: width * 0.001),
                     child: Icon(
                       FontAwesomeIcons.angleLeft,
                       color: Palette.scaffold,
@@ -65,12 +62,10 @@ class CoverPhotoWidget extends StatelessWidget {
                     width: width * 0.10,
                     decoration: BoxDecoration(
                         color: const Color(0xffC4C4C4),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
                         border: Border.all(color: Colors.white, width: 2)),
                     child: Padding(
-                      padding: EdgeInsets.only(
-                          top: height * 0.001, left: width * 0.007),
+                      padding: EdgeInsets.only(top: height * 0.001, left: width * 0.007),
                       child: Icon(
                         FontAwesomeIcons.camera,
                         color: Colors.black,
