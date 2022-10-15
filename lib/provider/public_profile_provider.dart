@@ -26,13 +26,13 @@ class PublicProfileProvider with ChangeNotifier {
   List<int> likesStatusAllData = [];
   bool hasNextData = false;
 
-  updatePageNo() {
+  updatePageNo(String userID) {
     selectPage++;
-    initializeAllUserPostData((bool status) {}, page: selectPage);
+    initializeAllUserPostData((bool status) {}, userID, page: selectPage);
     notifyListeners();
   }
 
-  initializeAllUserPostData(Function callBackFunction, {int page = 1, bool isFirstTime = true}) async {
+  initializeAllUserPostData(Function callBackFunction, String userID, {int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
       publicNewsFeedLists.clear();
@@ -52,7 +52,7 @@ class PublicProfileProvider with ChangeNotifier {
     }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = (prefs.getString('userID') ?? '0');
-    Response response = await profileRepo.getUserNewsfeedDataByUsingID(id, page);
+    Response response = await profileRepo.getUserNewsfeedDataByUsingID(userID, page);
     _isLoading = false;
     isBottomLoading = false;
     callBackFunction(true);

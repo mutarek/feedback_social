@@ -30,12 +30,12 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
     // TODO: implement initState
     super.initState();
     Provider.of<PublicProfileProvider>(context, listen: false).callForPublicProfileData(widget.userID);
-    Provider.of<PublicProfileProvider>(context, listen: false).initializeAllUserPostData((bool status) {}, isFirstTime: true);
+    Provider.of<PublicProfileProvider>(context, listen: false).initializeAllUserPostData((bool status) {},widget.userID, isFirstTime: true);
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
           Provider.of<PublicProfileProvider>(context, listen: false).hasNextData) {
-        Provider.of<PublicProfileProvider>(context, listen: false).updatePageNo();
+        Provider.of<PublicProfileProvider>(context, listen: false).updatePageNo(widget.userID);
       }
     });
   }
@@ -89,11 +89,17 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              "${provider.publicProfileData.firstName!} ${provider.publicProfileData.lastName!}",
-                              style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w700),
+                            Expanded(
+                              child: CustomText(
+                                title: "${provider.publicProfileData.firstName!} ${provider.publicProfileData.lastName!}",
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                            const Spacer(),
+
                             (provider.publicProfileData.isFriend == false)
                                 ? (provider.publicProfileData.friendRequestSent == true)
                                     ? ElevatedButton(
