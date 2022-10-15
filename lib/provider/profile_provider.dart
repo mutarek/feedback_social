@@ -30,12 +30,26 @@ class ProfileProvider with ChangeNotifier {
   List<int> likesStatusAllData = [];
   bool hasNextData = false;
 
-
-
   String message = "";
   bool success = false;
-  List<String> gender = ["Male", "Female"];
-  String drondownValue = "Male";
+  List<String> gender = ["Male", "Female", "Other", ""];
+  String selectDGenderValue = "";
+
+  changeGender(String value) {
+    selectDGenderValue = value;
+    notifyListeners();
+  }
+
+  initializeGender(String value) {
+    if (value.isEmpty) {
+      selectDGenderValue = '';
+    } else if (gender.contains(value)) {
+      selectDGenderValue = value;
+    } else {
+      selectDGenderValue = '';
+    }
+    notifyListeners();
+  }
 
   updatePageNo() {
     selectPage++;
@@ -113,22 +127,6 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  ///TODO: for Public user profile
-  UserProfileModel publicProfileData = UserProfileModel();
-
-  callForPublicProfileData(String userID) async {
-    isProfileLoading = true;
-    publicProfileData = UserProfileModel();
-    Response response = await profileRepo.getPublicProfileInfo(userID);
-    isProfileLoading = false;
-    if (response.statusCode == 200) {
-      publicProfileData = UserProfileModel.fromJson(response.body);
-    } else {
-      Fluttertoast.showToast(msg: response.statusText!);
-    }
-    notifyListeners();
-  }
-
   // for LIKE comment
 
   addLike(int postID, int index) async {
@@ -146,21 +144,32 @@ class ProfileProvider with ChangeNotifier {
   void updateCommentDataCount(int index) {
     newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
     notifyListeners();
-
-
-
   }
 
-  Future updateData (String firstName, lastName, company, education, gender,
-      religion, liveInAdress, fromAdress )async{
+  Future updateData(String firstName, lastName, company, education, religion, liveInAdress, fromAdress, Function callBack) async {
     _isLoading = true;
     notifyListeners();
-
-    Response response = await profileRepo.updateProfileDetails(firstName, lastName, company, education, gender,
-        religion, liveInAdress, fromAdress
-    );
+    Response response = await profileRepo.updateProfileDetails(
+        firstName, lastName, company, education, selectDGenderValue, religion, liveInAdress, fromAdress);
     _isLoading = false;
+    if (response.statusCode == 200) {
+      userprofileData.firstName = response.body['first_name'];
+      userprofileData.lastName = response.body['last_name'];
+      userprofileData.gender = response.body['gender'];
+      userprofileData.livesInAddress = response.body['lives_in_address'];
+      userprofileData.fromAddress = response.body['from_address'];
+      userprofileData.religion = response.body['religion'];
+      userprofileData.presentCompany = response.body['company'];
+      userprofileData.presentEducation = response.body['education'];
+      Fluttertoast.showToast(msg: "Profile Update successfully");
+      authRepo.changeUserName("${userprofileData.firstName} ${userprofileData.lastName}");
+      callBack(true);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+      callBack(true);
+    }
 
+    notifyListeners();
   }
 
   //TODO: for upload user profile and cover

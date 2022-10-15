@@ -28,7 +28,7 @@ class CustomTextField extends StatefulWidget {
   final VoidCallback? onTap;
   final VoidCallback? onSuffixTap;
   final String? suffixIconUrl;
-  final String? prefixIconUrl;
+  final IconData? prefixIconUrl;
   final bool? isSearch;
   final VoidCallback? onSubmit;
   final bool? isEnabled;
@@ -70,7 +70,7 @@ class CustomTextField extends StatefulWidget {
       this.suffixIconUrl,
       this.isShowSuffixWidget = false,
       this.suffixWidget,
-      this.prefixIconUrl = '',
+      this.prefixIconUrl,
       this.autoFillHints = '',
       this.autoFillHints2 = '',
       this.isSearch = false,
@@ -150,7 +150,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           prefixIcon: widget.isShowPrefixIcon!
               ? Padding(
                   padding: const EdgeInsets.only(left: 20, right: 10),
-                  child: Image.asset(widget.prefixIconUrl!),
+                  child: Icon(widget.prefixIconUrl!),
                 )
               : null,
           prefixIconConstraints: const BoxConstraints(minWidth: 23, maxHeight: 20),

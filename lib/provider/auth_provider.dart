@@ -178,10 +178,10 @@ class AuthProvider with ChangeNotifier {
   String profileImage = '';
   String userID = '';
 
-  void getUserInfo() {
+  void getUserInfo({bool isFirstTime = true}) {
     name = authRepo.getUserName();
     profileImage = authRepo.getUserProfile();
     userID = authRepo.getUserID();
-    //notifyListeners();
+    if (!isFirstTime) notifyListeners();
   }
 }

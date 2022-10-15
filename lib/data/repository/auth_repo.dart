@@ -60,6 +60,13 @@ class AuthRepo {
       rethrow;
     }
   }
+  Future<void> changeUserName(String value) async {
+    try {
+      await sharedPreferences.setString(AppConstant.userName, value);
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   //TODO:: for get User Information
   String getUserID() {
