@@ -1,4 +1,5 @@
 import 'package:als_frontend/widgets/custom_button.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,29 +24,29 @@ class SingleImageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: InkWell(
-          onLongPress: () {
-            showModalBottomSheet(
-                context: context,
-                builder: (context) => CustomButton(
-                    btnTxt: 'Download',
-                    textWhiteColor: true,
-                    fontSize: 16,
-                    radius: 2,
-                    onTap: () {
-                      saveImage(imageURL);
-                      Navigator.pop(context);
-                    }));
-          },
-          child: CachedNetworkImage(
-              imageUrl: imageURL,
-              height: MediaQuery.of(context).size.height,
-              imageBuilder: (context, imageProvider) =>
-                  Container(decoration: BoxDecoration(image: DecorationImage(image: imageProvider, fit: BoxFit.fitWidth))),
-              placeholder: ((context, url) => Container(
-                    alignment: Alignment.center,
-                    child: const CupertinoActivityIndicator(),
-                  ))),
+        child: Stack(
+          children: [
+            Center(child: zoomableCustomNetworkImage(context, imageURL, height: 0)),
+            Positioned(
+              right: 10,
+              top: 10,
+              child: InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) => CustomButton(
+                            btnTxt: 'Download',
+                            textWhiteColor: true,
+                            fontSize: 16,
+                            radius: 2,
+                            onTap: () {
+                              saveImage(imageURL);
+                              Navigator.pop(context);
+                            }));
+                  },
+                  child: CircleAvatar(backgroundColor: Colors.blue, child: Icon(Icons.save, color: Colors.white))),
+            )
+          ],
         ),
       ),
     );

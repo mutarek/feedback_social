@@ -5,8 +5,10 @@ import 'package:als_frontend/screens/home/view/video_details_screen.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class PhotoViewScreen extends StatelessWidget {
@@ -44,9 +46,10 @@ class PhotoViewScreen extends StatelessWidget {
                     return InkWell(
                       onTap: () {
                         if (!imageVideo[index].isImage) {
-                          print(imageVideo[index].url2);
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideo[index].url2)));
+                        } else {
+                          Get.to(() => SingleImageView(imageURL: imageVideo[index].url));
                         }
                       },
                       child: Column(

@@ -2,9 +2,12 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
 import 'package:als_frontend/screens/home/view/video_details_screen.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
+import 'package:als_frontend/widgets/network_image.dart';
+import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/route_manager.dart';
 
 import '../../../data/model/response/image_video_detect_model.dart';
 
@@ -59,14 +62,19 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
       return imageVideoLists[0].isImage
           ? Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ClipRRect(borderRadius: BorderRadius.circular(6), child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: InkWell(
+                      onTap: () {
+                        Get.to(() => SingleImageView(imageURL: imageVideoLists[0].url));
+                      },
+                      child: customNetworkImage(context, imageVideoLists[0].url))),
             )
           : Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: InkWell(
-                onTap: (){
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideoLists[0].url2)));
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideoLists[0].url2)));
                 },
                 child: Stack(
                   children: [
