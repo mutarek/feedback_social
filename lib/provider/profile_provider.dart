@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:http/http.dart' as Http;
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
@@ -283,5 +284,53 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO:   for send Friend Request Lists
+  List<SendFriendRequestModel> sendFriendRequestLists = [];
 
+  callForgetAllFriendRequest({int page = 1}) async {
+    sendFriendRequestLists.clear();
+    sendFriendRequestLists = [];
+    _isLoading = true;
+
+    Response response = await profileRepo.sendFriendRequestLists(page);
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        sendFriendRequestLists.add(SendFriendRequestModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  removeRequestAfterCancelRequest(int index) {
+    sendFriendRequestLists.removeAt(index);
+    notifyListeners();
+  }
+
+  //TODO: ************************* for Accept Friend Request or unfriend
+
+  Future acceptFriendRequest(String id, int index) async {
+    Response response = await profileRepo.acceptFriendRequest(id);
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(msg: response.body['message']);
+      removeRequestAfterCancelRequest(index);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
+
+  Future cancelFriendRequest(String id, int index) async {
+    Response response = await profileRepo.cancelFriendRequest(id);
+    if (response.statusCode == 204) {
+      Fluttertoast.showToast(msg: 'Friend Request is canceled successfully');
+      removeRequestAfterCancelRequest(index);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
@@ -15,8 +16,10 @@ import 'package:provider/provider.dart';
 
 class PublicProfileScreen extends StatefulWidget {
   final String userID;
+  final int index;
+  final bool isFromFriendRequestScreen;
 
-  const PublicProfileScreen(this.userID, {Key? key}) : super(key: key);
+  const PublicProfileScreen(this.userID, {this.index = -1, this.isFromFriendRequestScreen = false, Key? key}) : super(key: key);
 
   @override
   State<PublicProfileScreen> createState() => _PublicProfileScreenState();
@@ -105,7 +108,14 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                     ? ElevatedButton(
                                         child: const Text("Cancel Friend request"),
                                         onPressed: () {
-                                          publicProvider.cancelFriendRequest();
+                                          publicProvider.cancelFriendRequest((bool status) {
+                                            if (status) {
+                                              if (widget.isFromFriendRequestScreen) {
+                                                Provider.of<ProfileProvider>(context, listen: false)
+                                                    .removeRequestAfterCancelRequest(widget.index);
+                                              }
+                                            }
+                                          });
                                         },
                                       )
                                     : (publicProvider.publicProfileData.friendRequestAccept == true)
@@ -123,7 +133,11 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                         : ElevatedButton(
                                             child: const Text("Add friend"),
                                             onPressed: () {
-                                              publicProvider.sendFriendRequest();
+                                              publicProvider.sendFriendRequest((bool status) {
+                                                if (status && widget.isFromFriendRequestScreen) {
+                                                  Provider.of<ProfileProvider>(context, listen: false).callForgetAllFriendRequest();
+                                                }
+                                              });
                                             },
                                           )
                                 : ElevatedButton(

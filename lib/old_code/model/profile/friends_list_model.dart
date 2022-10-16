@@ -5,11 +5,9 @@
 import 'dart:convert';
 
 List<FriendListModel> friendListModelFromJson(String str) =>
-    List<FriendListModel>.from(
-        json.decode(str).map((x) => FriendListModel.fromJson(x)));
+    List<FriendListModel>.from(json.decode(str).map((x) => FriendListModel.fromJson(x)));
 
-String friendListModelToJson(List<FriendListModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String friendListModelToJson(List<FriendListModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class FriendListModel {
   FriendListModel({
@@ -22,8 +20,7 @@ class FriendListModel {
   String fullName;
   String profileImage;
 
-  factory FriendListModel.fromJson(Map<String, dynamic> json) =>
-      FriendListModel(
+  factory FriendListModel.fromJson(Map<String, dynamic> json) => FriendListModel(
         id: json["id"],
         fullName: json["full_name"],
         profileImage: json["profile_image"],

@@ -163,24 +163,29 @@ class PublicProfileProvider with ChangeNotifier {
 
   //TODO: ************************* for Send Friend Request cancel Friend Request or unfriend
 
-  Future sendFriendRequest() async {
+  Future sendFriendRequest(Function callback) async {
     Response response = await profileRepo.sendFriendRequest(publicProfileData.id.toString());
     if (response.statusCode == 201) {
+      callback(true);
       Fluttertoast.showToast(msg: response.body['message']);
       callForPublicProfileData(publicProfileData.id.toString(), isShowLoading: false);
     } else {
+      callback(false);
       Fluttertoast.showToast(msg: response.statusText!);
     }
 
     notifyListeners();
   }
 
-  Future cancelFriendRequest() async {
+  Future cancelFriendRequest(Function callback) async {
     Response response = await profileRepo.cancelFriendRequest(publicProfileData.friendRequestSentId.toString());
     if (response.statusCode == 204) {
+      callback(true);
       Fluttertoast.showToast(msg: 'Friend Request is canceled successfully');
       callForPublicProfileData(publicProfileData.id.toString(), isShowLoading: false);
+
     } else {
+      callback(false);
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();

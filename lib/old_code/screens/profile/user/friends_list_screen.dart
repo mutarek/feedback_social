@@ -43,15 +43,13 @@ class _FriendListScreenState extends State<FriendListScreen> {
               onPressed: () {
                 Get.back();
               }),
-          title: Consumer<FriendsListProvider>(
-              builder: (context, provider, child) {
+          title: Consumer<FriendsListProvider>(builder: (context, provider, child) {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Friends",
-                  style: GoogleFonts.lato(
-                      color: Colors.black, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.lato(color: Colors.black, fontWeight: FontWeight.bold),
                 ),
                 (provider.isLoaded == false)
                     ? Text(
@@ -68,10 +66,8 @@ class _FriendListScreenState extends State<FriendListScreen> {
           backgroundColor: Colors.white,
           elevation: 0,
         ),
-        body: Consumer4<FriendsListProvider, PublicProfileDetailsProvider,
-                UnFriendProvider, UserNewsfeedPostProvider>(
-            builder: (context, friendsListProvider, publicProvider,
-                unfriendProvider, newssFeedPostProvider, child) {
+        body: Consumer4<FriendsListProvider, PublicProfileDetailsProvider, UnFriendProvider, UserNewsfeedPostProvider>(
+            builder: (context, friendsListProvider, publicProvider, unfriendProvider, newssFeedPostProvider, child) {
           return (friendsListProvider.isLoaded == false)
               ? const Center(
                   child: CircularProgressIndicator(),
@@ -82,26 +78,22 @@ class _FriendListScreenState extends State<FriendListScreen> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        publicProvider.id =
-                            friendsListProvider.friendsList[index].id;
-                        newssFeedPostProvider.id =
-                            friendsListProvider.friendsList[index].id;
+                        publicProvider.id = friendsListProvider.friendsList[index].id;
+                        newssFeedPostProvider.id = friendsListProvider.friendsList[index].id;
                         Get.to(() => const PublicProfileDetailsScreen());
                       },
                       child: FriendListCard(
                           verb: "Unfriend",
                           onPressed: () {
-                            unfriendProvider.id =
-                                friendsListProvider.friendsList[index].id;
-                            
+                            unfriendProvider.id = friendsListProvider.friendsList[index].id;
+
                             unfriendProvider.unFriend();
                             refresh();
                           },
                           width: width,
                           height: height,
                           name: friendsListProvider.friendsList[index].fullName,
-                          image: friendsListProvider
-                              .friendsList[index].profileImage),
+                          image: friendsListProvider.friendsList[index].profileImage),
                     );
                   });
         }));

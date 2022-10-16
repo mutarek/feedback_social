@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/more/widget/custom_menu_card.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/screens/profile/send_friend_request_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -127,7 +128,7 @@ class MoreScreen extends StatelessWidget {
                                     iconColor: Palette.primary,
                                     iconName: "Friends",
                                     navigetion: () {
-                                      // Get.to(() => const FriendListScreen());
+                                      Get.to(() => const SendFriendRequestScreen());
                                     }),
                               )
                             ],

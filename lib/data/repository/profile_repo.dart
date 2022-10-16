@@ -65,6 +65,10 @@ class ProfileRepo {
   }
 
   Future<Response> unfriend(String id) async {
-    return await apiClient.postData('${AppConstant.unfriendURI}$id/',{});
+    return await apiClient.postData('${AppConstant.unfriendURI}$id/', {});
+  }
+
+  Future<Response> sendFriendRequestLists(int page) async {
+    return await apiClient.getData('${AppConstant.sendFriendRequestListURI}$page');
   }
 }
