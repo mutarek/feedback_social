@@ -17,7 +17,15 @@ class PostHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ProfileAvatar(profileImageUrl: post.author!.profileImage!),
+        InkWell(
+          onTap: (){
+            if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+            } else {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(post.author!.id.toString())));
+            }
+          },
+            child: ProfileAvatar(profileImageUrl: post.author!.profileImage!)),
         const SizedBox(width: 8.0),
         Expanded(
           child: InkWell(
