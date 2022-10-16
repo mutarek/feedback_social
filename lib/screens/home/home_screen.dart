@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/shimmer_effect/timeline_post_shimmer_widget.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/posts/add_post_screen.dart';
+import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,8 +83,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                CircleAvatar(
-                                    backgroundImage: NetworkImage(authProvider.profileImage), backgroundColor: Colors.grey.withOpacity(.4)),
+                                InkWell(
+                                  onTap: (){
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+
+                                  },
+                                  child: CircleAvatar(
+                                      backgroundImage: NetworkImage(authProvider.profileImage), backgroundColor: Colors.grey.withOpacity(.4)),
+                                ),
                                 SizedBox(width: 5),
                                 CustomText(
                                     title: 'Write Somethings',
