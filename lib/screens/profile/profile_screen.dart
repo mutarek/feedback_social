@@ -1,5 +1,6 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
+import 'package:als_frontend/screens/profile/friend_screen.dart';
 import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
 import 'package:als_frontend/screens/profile/widget/profile_cover_photo_widget.dart';
@@ -105,14 +106,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             padding: EdgeInsets.only(left: width * 0.1),
                             child: Row(
                               children: [
-                                Text(
-                                  "${profileProvider.userprofileData.friends!.length}",
-                                  style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                InkWell(
+                                  onTap: (){
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (_)=>FriendScreen()));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "${profileProvider.userprofileData.friends!.length}",
+                                        style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                      ),
+                                      Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
+                                    ],
+                                  ),
                                 ),
-                                Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
-                                SizedBox(
-                                  width: width * 0.2,
-                                ),
+                                SizedBox(width: width * 0.2),
                                 Text(
                                   "${profileProvider.userprofileData.followers!.length}",
                                   style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),

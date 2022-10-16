@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:als_frontend/data/model/response/friend_model.dart';
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:http/http.dart' as Http;
@@ -331,6 +332,32 @@ class ProfileProvider with ChangeNotifier {
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
+    notifyListeners();
+  }
+
+  //TODO:   for get All Friend
+  List<FriendModel> friendLists = [];
+
+  callForGetAllFriends({int page = 1}) async {
+    friendLists.clear();
+    friendLists = [];
+    _isLoading = true;
+
+    Response response = await profileRepo.getAllFriends(page);
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        friendLists.add(FriendModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  removeFriend(int index) {
+    friendLists.removeAt(index);
+    userprofileData.friends!.removeAt(index);
     notifyListeners();
   }
 }

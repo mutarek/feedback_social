@@ -16,8 +16,6 @@ class SendFriendRequestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     Provider.of<ProfileProvider>(context, listen: false).callForgetAllFriendRequest();
     return Scaffold(
       backgroundColor: Palette.scaffold,
@@ -59,7 +57,8 @@ class SendFriendRequestScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             margin: const EdgeInsets.only(bottom: 10),
                             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: [
-                              BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                             ]),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,18 +67,18 @@ class SendFriendRequestScreen extends StatelessWidget {
                                   child: InkWell(
                                     onTap: () {
                                       Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (_) => PublicProfileScreen(sendFriendRequestModel.toUser!.id.toString(),
+                                          builder: (_) => PublicProfileScreen(sendFriendRequestModel.fromUser!.id.toString(),
                                               index: index, isFromFriendRequestScreen: true)));
                                     },
                                     child: Row(
                                       children: [
-                                        ProfileAvatar(profileImageUrl: sendFriendRequestModel.toUser!.profileImage!),
+                                        ProfileAvatar(profileImageUrl: sendFriendRequestModel.fromUser!.profileImage!),
                                         const SizedBox(width: 8.0),
                                         Expanded(
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text('${sendFriendRequestModel.toUser!.firstName} ${sendFriendRequestModel.toUser!.lastName}',
+                                              Text('${sendFriendRequestModel.fromUser!.firstName} ${sendFriendRequestModel.fromUser!.lastName}',
                                                   style: latoStyle600SemiBold.copyWith(fontSize: 12)),
                                               Text(getDate(sendFriendRequestModel.timestamp!, context),
                                                   style: latoStyle400Regular.copyWith(fontSize: 12)),

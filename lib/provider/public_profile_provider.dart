@@ -191,12 +191,14 @@ class PublicProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future unFriend() async {
+  Future unFriend(Function callback) async {
     Response response = await profileRepo.unfriend(publicProfileData.id.toString());
     if (response.statusCode == 200) {
+      callback(true);
       Fluttertoast.showToast(msg: response.body['message']);
       callForPublicProfileData(publicProfileData.id.toString(), isShowLoading: false);
     } else {
+      callback(false);
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
