@@ -3,6 +3,8 @@ import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/animal/add_animal_screen.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -54,7 +56,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
         },
         child: Consumer2<AuthProvider, AnimalProvider>(
           builder: (context, authProvider, animalProvider, child) => authProvider.isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -113,41 +115,34 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                             ],
                           ),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
                             height: height * 0.77,
                             decoration: BoxDecoration(
-                                gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
-                                  const Color.fromARGB(255, 42, 26, 26).withOpacity(0.1),
-                                  const Color.fromARGB(255, 86, 154, 213).withOpacity(0.05),
-                                ], stops: const [
-                                  0.1,
-                                  1,
-                                ]),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+                                ],
                                 borderRadius: BorderRadius.circular(13)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  Center(
-                                      child: Text(
-                                        "Your added animal",
-                                        style:
-                                        GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 66, 40, 40)),
-                                      )),
+                                  CustomText(title: 'Your added animal', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "Total: ${animalProvider.animals.length}",
-                                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 66, 40, 40)),
+                                        style: const TextStyle(
+                                            fontSize: 18, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 66, 40, 40)),
                                       ),
                                       ElevatedButton(
                                           onPressed: () {
                                             animalProvider.clearImage();
-                                            Get.to(() =>  AddAnimalScreen());
+                                            Get.to(() => AddAnimalScreen());
                                           },
                                           child: const Text("Add"))
                                     ],
@@ -155,54 +150,49 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                   Expanded(
                                     child: (animalProvider.animals.isEmpty)
                                         ? const Center(
-                                      child: Text("You have not added any animal yet"),
-                                    )
+                                            child: Text("You have not added any animal yet"),
+                                          )
                                         : ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: animalProvider.animals.length,
-                                        itemBuilder: (context, index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              // addAnimal.animalID = provider.animals![index].id;
-                                              // provider.animalIndex = index;
-                                              // Get.to(() => const AnimalDetails());
-                                            },
-                                            child: Card(
-                                              child: ListTile(
-                                                leading: CircleAvatar(
-                                                  backgroundImage: NetworkImage(animalProvider.animals[index].image!),
-                                                ),
-                                                title: Column(
-                                                  children: [
-                                                    Text(
-                                                      animalProvider.animals[index].givenName!,
-                                                      style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w600, color: Colors.teal),
+                                            shrinkWrap: true,
+                                            itemCount: animalProvider.animals.length,
+                                            itemBuilder: (context, index) {
+                                              return InkWell(
+                                                onTap: () {
+                                                  // addAnimal.animalID = provider.animals![index].id;
+                                                  // provider.animalIndex = index;
+                                                  // Get.to(() => const AnimalDetails());
+                                                },
+                                                child: Card(
+                                                  child: ListTile(
+                                                    leading: CircleAvatar(
+                                                      backgroundImage: NetworkImage(animalProvider.animals[index].image!),
                                                     ),
-                                                    Text(
-                                                      animalProvider.animals[index].animalName!,
-                                                      style: const TextStyle(
-                                                          fontSize: 16,
-                                                          fontWeight: FontWeight.w600,
-                                                          color: Color.fromARGB(255, 77, 116, 112)),
+                                                    title: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        CustomText(
+                                                            title: animalProvider.animals[index].givenName!,
+                                                            textStyle: latoStyle600SemiBold.copyWith(color: Colors.teal, fontSize: 15)),
+                                                        CustomText(
+                                                            title: animalProvider.animals[index].animalName!,
+                                                            textStyle: latoStyle400Regular.copyWith(
+                                                                color: const Color.fromARGB(255, 77, 116, 112), fontSize: 15)),
+                                                      ],
                                                     ),
-                                                  ],
+                                                    trailing: CustomText(
+                                                        title: animalProvider.animals[index].gender!,
+                                                        textStyle: latoStyle400Regular.copyWith(
+                                                            color: const Color.fromARGB(255, 1, 78, 70), fontSize: 15)),
+                                                  ),
                                                 ),
-                                                trailing: Text(
-                                                  animalProvider.animals[index].gender!,
-                                                  style: const TextStyle(
-                                                      fontSize: 19, fontWeight: FontWeight.w600, color: Color.fromARGB(255, 1, 78, 70)),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }),
+                                              );
+                                            }),
                                   )
                                 ],
                               ),
                             ),
                           ),
                         )
-
                       ],
                     ),
                   ),
