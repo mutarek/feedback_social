@@ -4,10 +4,12 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/animal/add_animal_screen.dart';
 import 'package:als_frontend/screens/animal/animal_details_screen.dart';
+import 'package:als_frontend/screens/animal/search_animal_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -97,15 +99,12 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                             color: Colors.lightBlue,
                                             splashColor: Colors.green,
                                             onPressed: () {
-                                              // search.searchResult = [];
-                                              // search.code = searchController.text;
-                                              // if (searchController.text.isNotEmpty && searchController.text.length == 6) {
-                                              //   Get.to(() => const AnimalSearchResult());
-                                              // } else {
-                                              //   Fluttertoast.showToast(
-                                              //     msg: "Write 6 digits code to search",
-                                              //   );
-                                              // }
+                                              if (searchController.text.isNotEmpty && searchController.text.length == 6) {
+                                                Get.to(() => SearchAnimalScreen(searchController.text));
+                                                FocusScope.of(context).unfocus();
+                                              } else {
+                                                Fluttertoast.showToast(msg: "Write 6 digits code to search");
+                                              }
                                             },
                                             icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 20)),
                                       ),

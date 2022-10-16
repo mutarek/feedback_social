@@ -14,8 +14,9 @@ import 'package:provider/provider.dart';
 class AnimalDetailsScreen extends StatelessWidget {
   final OnwerAnimalModel animalModel;
   final int index;
+  final bool isEditDelete;
 
-  const AnimalDetailsScreen(this.animalModel, this.index, {Key? key}) : super(key: key);
+  const AnimalDetailsScreen(this.animalModel, this.index, {this.isEditDelete = false, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,28 +53,30 @@ class AnimalDetailsScreen extends StatelessWidget {
                         const Divider(),
                         detailsWidget('Age: ', animalModel.age!),
                         const Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
-                                onPressed: () {
-                                  animalProvider.changeGenderStatus(animalModel.gender!);
-                                  Get.to(() => AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
-                                },
-                                child: const Text("Edit")),
-                            ElevatedButton(
-                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
-                                onPressed: () {
-                                  animalProvider.deleteAnimal(animalModel.id as int, index, (bool status) {
-                                    if (status) {
-                                      Get.back();
-                                    }
-                                  });
-                                },
-                                child: const Text("Delete")),
-                          ],
-                        ),
+                        isEditDelete
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ElevatedButton(
+                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+                                      onPressed: () {
+                                        animalProvider.changeGenderStatus(animalModel.gender!);
+                                        Get.to(() => AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
+                                      },
+                                      child: const Text("Edit")),
+                                  ElevatedButton(
+                                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+                                      onPressed: () {
+                                        animalProvider.deleteAnimal(animalModel.id as int, index, (bool status) {
+                                          if (status) {
+                                            Get.back();
+                                          }
+                                        });
+                                      },
+                                      child: const Text("Delete")),
+                                ],
+                              )
+                            : SizedBox.shrink(),
                         Container(
                             margin: const EdgeInsets.only(top: 30),
                             height: 400,

@@ -23,6 +23,9 @@ class AnimalRepo {
   }
 
   Future<Response> deleteAnimal(int id) async {
-    return await apiClient.deleteData(AppConstant.animalUri + "${id}/");
+    return await apiClient.deleteData(AppConstant.animalUri + "$id/");
+  }
+  Future<Response> searchAnimal(String id) async {
+    return await apiClient.getData(AppConstant.animalUri + "search/$id/");
   }
 }

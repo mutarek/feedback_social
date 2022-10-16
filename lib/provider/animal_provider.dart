@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:als_frontend/data/model/response/Search_animal_model.dart';
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
 import 'package:als_frontend/data/repository/animal_repo.dart';
 import 'package:als_frontend/helper/image_compressure.dart';
@@ -160,6 +161,29 @@ class AnimalProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: "Updated Successfully");
     } else {
       callBackFunction(false);
+      Fluttertoast.showToast(msg: "Something went wrong!");
+    }
+    notifyListeners();
+  }
+
+  //TODO: for Update Animal
+  List<SearchAnimalModel> searchAnimalLists = [];
+  bool isLoadingSearch = false;
+
+  searchAnimal(String code, {bool isFirstTime=true}) async {
+    isLoadingSearch = true;
+    searchAnimalLists.clear();
+    searchAnimalLists = [];
+    if(!isFirstTime)notifyListeners();
+    Response response = await animalRepo.searchAnimal(code);
+    isLoadingSearch = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        SearchAnimalModel animal = SearchAnimalModel.fromJson(element);
+        searchAnimalLists.add(animal);
+      });
+
+    } else {
       Fluttertoast.showToast(msg: "Something went wrong!");
     }
     notifyListeners();
