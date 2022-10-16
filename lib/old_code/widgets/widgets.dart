@@ -14,7 +14,7 @@ export 'Post Container/like_comment_share.dart';
 export 'Post Container/like_comment_count.dart';
 export 'Post Container/post_image.dart';
 export 'Post Container/post_header.dart';
-export 'Add animal/owner_info_widget.dart';
+export '../../screens/animal/widget/owner_info_widget.dart';
 export '../../screens/profile/widget/profile_cover_photo_widget.dart';
 export '../../screens/profile/widget/profile_photo_widget.dart';
 export 'profile/profile_post_widget.dart';

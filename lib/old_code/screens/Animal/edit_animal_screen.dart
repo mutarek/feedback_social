@@ -28,12 +28,12 @@ class _EditAnimalScreenState extends State<EditAnimalScreen> {
     value.getData();
 
     setState(() {
-      animalNameController.text = value.animals![value.animalIndex!].animalName;
-      givenNameController.text = value.animals![value.animalIndex!].givenName;
-      genderController.text = value.animals![value.animalIndex!].gender;
-      genusController.text = value.animals![value.animalIndex!].genus;
-      speciesController.text = value.animals![value.animalIndex!].species;
-      ageController.text = value.animals![value.animalIndex!].age;
+      animalNameController.text = value.animals![value.animalIndex!].animalName!;
+      givenNameController.text = value.animals![value.animalIndex!].givenName!;
+      genderController.text = value.animals![value.animalIndex!].gender!;
+      genusController.text = value.animals![value.animalIndex!].genus!;
+      speciesController.text = value.animals![value.animalIndex!].species!;
+      ageController.text = value.animals![value.animalIndex!].age!;
     });
     super.initState();
   }
@@ -267,7 +267,7 @@ class _EditAnimalScreenState extends State<EditAnimalScreen> {
                           radius: h * 0.1,
                           backgroundColor: Palette.scaffold,
                           backgroundImage: NetworkImage(
-                              provider.animals![provider.animalIndex!].image),
+                              provider.animals![provider.animalIndex!].image!),
                         ),
                       ),
                     )

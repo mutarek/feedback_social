@@ -56,24 +56,18 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
               FocusScope.of(context).requestFocus(FocusNode());
             },
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: width * 0.05, vertical: height * 0.02),
+              padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: height * 0.02),
               child: Column(
                 children: [
                   Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(13)),
-                      child: Consumer<UserProfileProvider>(
-                          builder: (context, provider, child) {
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(13)),
+                      child: Consumer<UserProfileProvider>(builder: (context, provider, child) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            OnwerInfoWidget(
-                              name:
-                                  "${provider.userprofileData.firstName} ${provider.userprofileData.lastName}",
-                              image: (provider.userprofileData.profileImage !=
-                                      null)
+                            OwnerInfoWidget(
+                              name: "${provider.userprofileData.firstName} ${provider.userprofileData.lastName}",
+                              image: (provider.userprofileData.profileImage != null)
                                   ? provider.userprofileData.profileImage!
                                   : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                             ),
@@ -90,22 +84,16 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: width * 0.01, vertical: height * 0.02),
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.01, vertical: height * 0.02),
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(13)),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(13)),
                       width: double.maxFinite,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: width * 0.015, vertical: height * 0.01),
+                        padding: EdgeInsets.symmetric(horizontal: width * 0.015, vertical: height * 0.01),
                         child: Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.015,
-                                  vertical: height * 0.01),
+                              padding: EdgeInsets.symmetric(horizontal: width * 0.015, vertical: height * 0.01),
                               child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
@@ -116,9 +104,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.015,
-                                  vertical: height * 0.01),
+                              padding: EdgeInsets.symmetric(horizontal: width * 0.015, vertical: height * 0.01),
                               child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
@@ -129,9 +115,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.015,
-                                  vertical: height * 0.01),
+                              padding: EdgeInsets.symmetric(horizontal: width * 0.015, vertical: height * 0.01),
                               child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
@@ -142,9 +126,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.015,
-                                  vertical: height * 0.01),
+                              padding: EdgeInsets.symmetric(horizontal: width * 0.015, vertical: height * 0.01),
                               child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
@@ -161,11 +143,10 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                 children: [
                                   const Text(
                                     "Gender",
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 20),
+                                    style: TextStyle(color: Colors.black, fontSize: 20),
                                   ),
                                   SizedBox(
-                                    width: width*0.2,
+                                    width: width * 0.2,
                                   ),
                                   Container(
                                     height: height * 0.045,
@@ -179,15 +160,12 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                         dropdownColor: const Color(0xFF656B87),
                                         value: provider.drondownValue,
                                         items: provider.gender
-                                            .map((item) =>
-                                                DropdownMenuItem<String>(
-                                                    value: item,
-                                                    child: Text(
-                                                      item,
-                                                      style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 16),
-                                                    )))
+                                            .map((item) => DropdownMenuItem<String>(
+                                                value: item,
+                                                child: Text(
+                                                  item,
+                                                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                                                )))
                                             .toList(),
                                         onChanged: (item) {
                                           setState(() {
@@ -201,9 +179,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.015,
-                                  vertical: height * 0.01),
+                              padding: EdgeInsets.symmetric(horizontal: width * 0.015, vertical: height * 0.01),
                               child: CustomTextField1(
                                 fontColor: Colors.black,
                                 hintTextColor: Colors.black,
@@ -214,30 +190,22 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsets.symmetric(vertical: height * 0.01),
+                              padding: EdgeInsets.symmetric(vertical: height * 0.01),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   const Text(
                                     "Pick a photo",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400),
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                                   ),
                                   InkWell(
                                     onTap: () => provider.pickImage(),
                                     child: Container(
                                       height: 30,
                                       width: 90,
-                                      decoration: BoxDecoration(
-                                          color: Palette.primary,
-                                          borderRadius:
-                                              BorderRadius.circular(13)),
+                                      decoration: BoxDecoration(color: Palette.primary, borderRadius: BorderRadius.circular(13)),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: const [
                                           Icon(
                                             Icons.photo,
@@ -245,8 +213,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                           ),
                                           Text(
                                             "Photo",
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: TextStyle(color: Colors.white),
                                           ),
                                         ],
                                       ),
@@ -262,8 +229,7 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                 ],
                               ),
                             ),
-                            Consumer<AddAnimalProvider>(
-                                builder: (context, provider, child) {
+                            Consumer<AddAnimalProvider>(builder: (context, provider, child) {
                               return ElevatedButton(
                                 onPressed: () {
                                   provider.uploadImage(
@@ -283,11 +249,8 @@ class _AddAnimalScreenState extends State<AddAnimalScreen> {
                                   onPrimary: Colors.white,
                                   shadowColor: Colors.greenAccent,
                                   elevation: 3,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(32.0)),
-                                  minimumSize:
-                                      const Size(250, 50), //////// HERE
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+                                  minimumSize: const Size(250, 50), //////// HERE
                                 ),
                               );
                             })

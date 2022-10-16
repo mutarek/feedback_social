@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/repository/animal_repo.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/comment_repo.dart';
 import 'package:als_frontend/data/repository/language_repo.dart';
@@ -6,6 +7,7 @@ import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/post_repo.dart';
 import 'package:als_frontend/data/repository/profile_repo.dart';
 import 'package:als_frontend/data/repository/splash_repo.dart';
+import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
@@ -35,6 +37,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ProfileRepo(apiClient: sl()));
   sl.registerLazySingleton(() => NewsfeedRepo(apiClient: sl()));
   sl.registerLazySingleton(() => PostRepo(apiClient: sl()));
+  sl.registerLazySingleton(() => AnimalRepo(apiClient: sl(),authRepo: sl()));
   sl.registerLazySingleton(() => SplashRepo(sharedPreferences: sl()));
 
   // Provider
@@ -47,6 +50,7 @@ Future<void> init() async {
   sl.registerFactory(() => PostProvider(postRepo: sl()));
   sl.registerFactory(() => SplashProvider());
   sl.registerFactory(() => DashboardProvider());
+  sl.registerFactory(() => AnimalProvider(animalRepo: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(),newsfeedRepo: sl()));
 

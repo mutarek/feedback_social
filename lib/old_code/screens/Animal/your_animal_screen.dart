@@ -42,11 +42,7 @@ class _YourAnimalScreenState extends State<YourAnimalScreen> {
           },
           child: const Text(
             "FeedBack",
-            style: TextStyle(
-                color: Palette.primary,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                letterSpacing: -1.2),
+            style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
         ),
       ),
@@ -54,9 +50,8 @@ class _YourAnimalScreenState extends State<YourAnimalScreen> {
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
-        child: Consumer3<OwnerAnimalProvider, AnimalSearchProvider,
-                AddAnimalProvider>(
-            builder: (context, provider, search, addAnimal, child) {
+        child:
+            Consumer3<OwnerAnimalProvider, AnimalSearchProvider, AddAnimalProvider>(builder: (context, provider, search, addAnimal, child) {
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -68,23 +63,17 @@ class _YourAnimalScreenState extends State<YourAnimalScreen> {
                       children: [
                         Text(
                           "Your ID: ${provider.code}",
-                          style: GoogleFonts.lato(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                          style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                         Row(
                           children: [
                             Container(
                               width: width * 0.4,
                               height: height * 0.05,
-                              decoration: BoxDecoration(
-                                  border: Border.all(),
-                                  borderRadius: BorderRadius.circular(13),
-                                  color: Colors.white24),
+                              decoration:
+                                  BoxDecoration(border: Border.all(), borderRadius: BorderRadius.circular(13), color: Colors.white24),
                               child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: width * 0.01, right: width * 0.01),
+                                padding: EdgeInsets.only(left: width * 0.01, right: width * 0.01),
                                 child: TextField(
                                   textAlign: TextAlign.center,
                                   controller: searchController,
@@ -104,23 +93,18 @@ class _YourAnimalScreenState extends State<YourAnimalScreen> {
                             Container(
                               height: height * 0.05,
                               width: width * 0.1,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(),
-                                  color: Colors.white70),
+                              decoration:
+                                  BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(), color: Colors.white70),
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: height * 0.001),
+                                padding: EdgeInsets.symmetric(vertical: height * 0.001),
                                 child: IconButton(
                                     color: Colors.lightBlue,
                                     splashColor: Colors.green,
                                     onPressed: () {
                                       search.searchResult = [];
                                       search.code = searchController.text;
-                                      if (searchController.text.isNotEmpty &&
-                                          searchController.text.length == 6) {
-                                        Get.to(
-                                            () => const AnimalSearchResult());
+                                      if (searchController.text.isNotEmpty && searchController.text.length == 6) {
+                                        Get.to(() => const AnimalSearchResult());
                                       } else {
                                         Fluttertoast.showToast(
                                           msg: "Write 6 digits code to search",
@@ -143,19 +127,13 @@ class _YourAnimalScreenState extends State<YourAnimalScreen> {
                     child: Container(
                       height: height * 0.77,
                       decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                const Color.fromARGB(255, 42, 26, 26)
-                                    .withOpacity(0.1),
-                                const Color.fromARGB(255, 86, 154, 213)
-                                    .withOpacity(0.05),
-                              ],
-                              stops: const [
-                                0.1,
-                                1,
-                              ]),
+                          gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
+                            const Color.fromARGB(255, 42, 26, 26).withOpacity(0.1),
+                            const Color.fromARGB(255, 86, 154, 213).withOpacity(0.05),
+                          ], stops: const [
+                            0.1,
+                            1,
+                          ]),
                           borderRadius: BorderRadius.circular(13)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -164,20 +142,15 @@ class _YourAnimalScreenState extends State<YourAnimalScreen> {
                             Center(
                                 child: Text(
                               "Your added animal",
-                              style: GoogleFonts.lato(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color.fromARGB(255, 66, 40, 40)),
+                              style:
+                                  GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 66, 40, 40)),
                             )),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   "Total: ${provider.animals!.length}",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 66, 40, 40)),
+                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 66, 40, 40)),
                                 ),
                                 ElevatedButton(
                                     onPressed: () {
@@ -189,8 +162,7 @@ class _YourAnimalScreenState extends State<YourAnimalScreen> {
                             Expanded(
                               child: (provider.animals!.isEmpty)
                                   ? const Center(
-                                      child: Text(
-                                          "You have not added any animal yet"),
+                                      child: Text("You have not added any animal yet"),
                                     )
                                   : ListView.builder(
                                       shrinkWrap: true,
@@ -198,48 +170,34 @@ class _YourAnimalScreenState extends State<YourAnimalScreen> {
                                       itemBuilder: (context, index) {
                                         return InkWell(
                                           onTap: () {
-                                            addAnimal.animalID =
-                                                provider.animals![index].id;
+                                            addAnimal.animalID = provider.animals![index].id!as int;
                                             provider.animalIndex = index;
                                             Get.to(() => const AnimalDetails());
                                           },
                                           child: Card(
                                             child: ListTile(
                                               leading: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    provider
-                                                        .animals![index].image),
+                                                backgroundImage: NetworkImage(provider.animals![index].image!),
                                               ),
                                               title: Column(
                                                 children: [
                                                   Text(
-                                                    provider.animals![index]
-                                                        .givenName,
-                                                    style: const TextStyle(
-                                                        fontSize: 19,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Colors.teal),
+                                                    provider.animals![index].givenName!,
+                                                    style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w600, color: Colors.teal),
                                                   ),
                                                   Text(
-                                                    provider.animals![index]
-                                                        .animalName,
+                                                    provider.animals![index].animalName!,
                                                     style: const TextStyle(
                                                         fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: Color.fromARGB(
-                                                            255, 77, 116, 112)),
+                                                        fontWeight: FontWeight.w600,
+                                                        color: Color.fromARGB(255, 77, 116, 112)),
                                                   ),
                                                 ],
                                               ),
                                               trailing: Text(
-                                                provider.animals![index].gender,
+                                                provider.animals![index].gender!,
                                                 style: const TextStyle(
-                                                    fontSize: 19,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Color.fromARGB(
-                                                        255, 1, 78, 70)),
+                                                    fontSize: 19, fontWeight: FontWeight.w600, color: Color.fromARGB(255, 1, 78, 70)),
                                               ),
                                             ),
                                           ),

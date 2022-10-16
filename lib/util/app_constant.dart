@@ -10,6 +10,8 @@ class AppConstant {
   static const String otpVerifyURI = '/accounts/otp/verify/';
   static const String newsFeedURI = '/posts/newsfeeds?page=';
   static const String postsUri = '/posts/';
+  static const String animalUri = '/animal/';
+  static const String animalOwnerURI = '/animal/owner/';
   static const String forgotPasswordURI = 'auth/forget-password';
   static const String sendFriendRequestURI = '/accounts/friends/send-friend-request/';
   static const String cancelFriendRequestURI = '/accounts/friends/cancel-friend-request/';

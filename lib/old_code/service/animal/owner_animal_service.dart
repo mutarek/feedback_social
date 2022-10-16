@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:als_frontend/old_code/const/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +19,7 @@ class OwnerAnimalService {
 
     if (response.statusCode == 200) {
       var json = response.body;
-      return onwerAnimalModelFromJson(json);
+      // return OnwerAnimalModel.fromJson(jsonEncode(json));
     }
     return null;
   }

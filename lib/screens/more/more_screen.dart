@@ -1,5 +1,6 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/more/widget/custom_menu_card.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
@@ -142,7 +143,8 @@ class MoreScreen extends StatelessWidget {
                                     iconColor: Palette.primary,
                                     iconName: "Animal",
                                     navigetion: () {
-                                      // Get.to(const YourAnimalScreen());
+                                      Provider.of<AuthProvider>(context, listen: false).getUserInfo(isFirstTime: false);
+                                      Get.to(const MyAnimalScreen());
                                     }),
                               ),
                               Expanded(

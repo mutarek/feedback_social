@@ -2,6 +2,7 @@ import 'package:als_frontend/localization/app_localization.dart';
 import 'package:als_frontend/old_code/provider/Group%20Page/Group/group_images_provider.dart';
 import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
+import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
@@ -40,6 +41,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<CommentProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<PostProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<PublicProfileProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<AnimalProvider>()),
       ChangeNotifierProvider(create: (_) => LoginProvider()),
       ChangeNotifierProvider(create: (_) => RegistrationProvider()),
       ChangeNotifierProvider(create: (_) => ShowPasswordProvider()),
