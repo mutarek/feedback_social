@@ -41,25 +41,25 @@ class SendFriendRequestScreen extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 )
               : ListView(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   children: [
                     Center(
                         child: CustomText(
                       title: 'You Have (${profileProvider.sendFriendRequestLists.length}) Friend Request',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ListView.builder(
                         itemCount: profileProvider.sendFriendRequestLists.length,
                         shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           SendFriendRequestModel sendFriendRequestModel = profileProvider.sendFriendRequestLists[index];
                           return Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                            margin: EdgeInsets.only(bottom: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            margin: const EdgeInsets.only(bottom: 10),
                             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: [
-                              BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: Offset(0.0, 0.0))
+                              BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                             ]),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +92,7 @@ class SendFriendRequestScreen extends StatelessWidget {
                                 ),
                                 Column(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                         width: 95,
                                         height: 35,
                                         child: CustomButton(
@@ -104,8 +104,8 @@ class SendFriendRequestScreen extends StatelessWidget {
                                             profileProvider.acceptFriendRequest(sendFriendRequestModel.id.toString(), index);
                                           },
                                         )),
-                                    SizedBox(height: 5),
-                                    Container(
+                                    const SizedBox(height: 5),
+                                    SizedBox(
                                         width: 95,
                                         height: 35,
                                         child: CustomButton(
