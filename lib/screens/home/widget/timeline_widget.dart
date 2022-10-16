@@ -40,7 +40,8 @@ class TimeLineWidget extends StatelessWidget {
               ],
             ),
           ),
-          if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoContainer(index, postImageUrl: newsFeedData),
+          if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0)
+            PostPhotoContainer(index, postImageUrl: newsFeedData),
           PostStats(
               post: newsFeedData,
               index: index,
