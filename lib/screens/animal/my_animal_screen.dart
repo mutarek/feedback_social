@@ -146,7 +146,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                       ElevatedButton(
                                           onPressed: () {
                                             animalProvider.clearImage();
-                                            Get.to(() => AddAnimalScreen());
+                                            Get.to(() => AddEditAnimalScreen());
                                           },
                                           child: const Text("Add"))
                                     ],

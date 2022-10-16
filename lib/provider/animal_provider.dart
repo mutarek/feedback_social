@@ -119,7 +119,7 @@ class AnimalProvider with ChangeNotifier {
   }
 
   //TODO: delete animal
-  deleteAnimal(int animalID, int index,Function callback) async {
+  deleteAnimal(int animalID, int index, Function callback) async {
     isLoading = true;
     notifyListeners();
     Response response = await animalRepo.deleteAnimal(animalID);
@@ -131,6 +131,36 @@ class AnimalProvider with ChangeNotifier {
     } else {
       Fluttertoast.showToast(msg: "Animal Deleted Wrong!");
       callback(false);
+    }
+    notifyListeners();
+  }
+
+  //TODO: for Update Animal
+  updateAnimal(
+      String animalName, String givenName, String species, String age, String genus, Function callBackFunction, int id, int index) async {
+    isLoading = true;
+    List<Http.MultipartFile> multipartFile = [];
+
+    if (image != null) {
+      multipartFile
+          .add(Http.MultipartFile('image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
+    }
+
+    notifyListeners();
+    Response response = await animalRepo.updateAnimal(
+        {"animal_name": animalName, "given_name": givenName, "species": species, "gender": selectGender, "age": age, "genus": genus},
+        multipartFile,
+        id);
+    isLoading = false;
+    if (response.statusCode == 200) {
+      OnwerAnimalModel ownerAnimalModel = OnwerAnimalModel.fromJson(response.body);
+      animals.removeAt(index);
+      animals.add(ownerAnimalModel);
+      callBackFunction(true);
+      Fluttertoast.showToast(msg: "Updated Successfully");
+    } else {
+      callBackFunction(false);
+      Fluttertoast.showToast(msg: "Something went wrong!");
     }
     notifyListeners();
   }

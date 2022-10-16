@@ -1,6 +1,7 @@
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
+import 'package:als_frontend/screens/animal/add_animal_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/network_image.dart';
@@ -57,7 +58,8 @@ class AnimalDetailsScreen extends StatelessWidget {
                             ElevatedButton(
                                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
                                 onPressed: () {
-                                  //Get.to(() => const EditAnimalScreen());
+                                  animalProvider.changeGenderStatus(animalModel.gender!);
+                                  Get.to(() => AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
                                 },
                                 child: const Text("Edit")),
                             ElevatedButton(

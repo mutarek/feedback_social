@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/owner_animal_model.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
@@ -7,24 +8,56 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
-class AddAnimalScreen extends StatelessWidget {
-  AddAnimalScreen({Key? key}) : super(key: key);
+class AddEditAnimalScreen extends StatefulWidget {
+  final bool isEdit;
+  final OnwerAnimalModel? animalModel;
+  final int index;
+
+  const AddEditAnimalScreen({this.isEdit = false, this.animalModel, this.index = 0, Key? key}) : super(key: key);
+
+  @override
+  State<AddEditAnimalScreen> createState() => _AddEditAnimalScreenState();
+}
+
+class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
   final TextEditingController animalNameController = TextEditingController();
+
   final TextEditingController speciesController = TextEditingController();
+
   final TextEditingController genusController = TextEditingController();
+
   final TextEditingController givenNameController = TextEditingController();
+
   final TextEditingController ageController = TextEditingController();
 
   final FocusNode nameFocus = FocusNode();
+
   final FocusNode speciesFocus = FocusNode();
+
   final FocusNode genusFocus = FocusNode();
+
   final FocusNode givenNameFocus = FocusNode();
+
   final FocusNode ageFocus = FocusNode();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isEdit) {
+      animalNameController.text = widget.animalModel!.animalName!;
+      speciesController.text = widget.animalModel!.species!;
+      genusController.text = widget.animalModel!.genus!;
+      givenNameController.text = widget.animalModel!.givenName!;
+      ageController.text = widget.animalModel!.age!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +70,8 @@ class AddAnimalScreen extends StatelessWidget {
                 appBar: AppBar(
                   backgroundColor: Colors.white,
                   iconTheme: const IconThemeData(color: Palette.primary),
-                  title: CustomText(title: 'Add animal', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
+                  title:
+                      CustomText(title: '${widget.isEdit ? "Update" : "Add"} animal', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
                   elevation: 0,
                 ),
                 body: ListView(
@@ -71,7 +105,6 @@ class AddAnimalScreen extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 30),
-
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                             decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
@@ -195,26 +228,44 @@ class AddAnimalScreen extends StatelessWidget {
                                     ),
                                     (animalProvider.image != null)
                                         ? SizedBox(height: 40, width: 40, child: Image.file(animalProvider.image!))
-                                        : const Text("No image selected"),
+                                        : (widget.isEdit && widget.animalModel!.image != null)
+                                            ? SizedBox(
+                                                height: 40, width: 40, child: customNetworkImage(context, widget.animalModel!.image!))
+                                            : const Text("No image selected"),
                                   ],
                                 ),
                                 const SizedBox(height: 20),
                                 CustomButton(
-                                  btnTxt: 'Add',
+                                  btnTxt: '${widget.isEdit ? "Update" : "Add"}',
                                   textWhiteColor: true,
                                   height: 40,
                                   onTap: () {
-                                    animalProvider.addAnimal(animalNameController.text, givenNameController.text, speciesController.text,
-                                        ageController.text, genusController.text, (bool status) {
-                                      if (status) {
-                                        animalNameController.clear();
-                                        givenNameController.clear();
-                                        speciesController.clear();
-                                        ageController.clear();
-                                        genusController.clear();
-                                        Get.back();
-                                      }
-                                    });
+                                    if (widget.isEdit) {
+                                      animalProvider.updateAnimal(animalNameController.text, givenNameController.text,
+                                          speciesController.text, ageController.text, genusController.text, (bool status) {
+                                        if (status) {
+                                          animalNameController.clear();
+                                          givenNameController.clear();
+                                          speciesController.clear();
+                                          ageController.clear();
+                                          genusController.clear();
+                                          Get.back();
+                                          Get.back();
+                                        }
+                                      }, widget.animalModel!.id! as int, widget.index);
+                                    } else {
+                                      animalProvider.addAnimal(animalNameController.text, givenNameController.text, speciesController.text,
+                                          ageController.text, genusController.text, (bool status) {
+                                        if (status) {
+                                          animalNameController.clear();
+                                          givenNameController.clear();
+                                          speciesController.clear();
+                                          ageController.clear();
+                                          genusController.clear();
+                                          Get.back();
+                                        }
+                                      });
+                                    }
                                   },
                                 ),
                               ],
