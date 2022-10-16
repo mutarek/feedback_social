@@ -17,4 +17,8 @@ class AnimalRepo {
   Future<Response> addedAnimal(Map<String, String> body, List<Http.MultipartFile> multipartData) async {
     return await apiClient.postMultipartData(AppConstant.animalUri, body, multipartData);
   }
+
+  Future<Response> deleteAnimal(int id) async {
+    return await apiClient.deleteData(AppConstant.animalUri + "${id}/");
+  }
 }

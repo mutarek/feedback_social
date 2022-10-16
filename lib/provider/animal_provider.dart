@@ -117,4 +117,21 @@ class AnimalProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  //TODO: delete animal
+  deleteAnimal(int animalID, int index,Function callback) async {
+    isLoading = true;
+    notifyListeners();
+    Response response = await animalRepo.deleteAnimal(animalID);
+    isLoading = false;
+    if (response.statusCode == 204) {
+      animals.removeAt(index);
+      Fluttertoast.showToast(msg: "Animal Deleted Successfully");
+      callback(true);
+    } else {
+      Fluttertoast.showToast(msg: "Animal Deleted Wrong!");
+      callback(false);
+    }
+    notifyListeners();
+  }
 }

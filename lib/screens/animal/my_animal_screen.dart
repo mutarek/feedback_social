@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/animal/add_animal_screen.dart';
+import 'package:als_frontend/screens/animal/animal_details_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
@@ -123,7 +124,10 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                 color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+                                      color: Colors.grey.withOpacity(.1),
+                                      blurRadius: 10.0,
+                                      spreadRadius: 3.0,
+                                      offset: const Offset(0.0, 0.0))
                                 ],
                                 borderRadius: BorderRadius.circular(13)),
                             child: Padding(
@@ -158,9 +162,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                             itemBuilder: (context, index) {
                                               return InkWell(
                                                 onTap: () {
-                                                  // addAnimal.animalID = provider.animals![index].id;
-                                                  // provider.animalIndex = index;
-                                                  // Get.to(() => const AnimalDetails());
+                                                  Get.to(() => AnimalDetailsScreen(animalProvider.animals[index], index));
                                                 },
                                                 child: Card(
                                                   child: ListTile(
