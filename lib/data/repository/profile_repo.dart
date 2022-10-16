@@ -24,9 +24,11 @@ class ProfileRepo {
   Future<Response> getPublicProfileInfo(String id) async {
     return await apiClient.getData('${AppConstant.profileURI}$id/');
   }
+
   Future<Response> getPublicProfileImageList(String id) async {
     return await apiClient.getData('${AppConstant.profileURI}$id/image/list/');
   }
+
   Future<Response> getPublicProfileVideoList(String id) async {
     return await apiClient.getData('${AppConstant.profileURI}$id/video/list/');
   }
@@ -47,5 +49,22 @@ class ProfileRepo {
         'education': education,
       },
     );
+  }
+
+  /*                Friend Request    */
+  Future<Response> sendFriendRequest(String id) async {
+    return await apiClient.postData('${AppConstant.sendFriendRequestURI}$id/', {});
+  }
+
+  Future<Response> acceptFriendRequest(String id) async {
+    return await apiClient.postData('${AppConstant.acceptFriendRequestURI}$id/', {});
+  }
+
+  Future<Response> cancelFriendRequest(String id) async {
+    return await apiClient.deleteData('${AppConstant.cancelFriendRequestURI}$id/');
+  }
+
+  Future<Response> unfriend(String id) async {
+    return await apiClient.postData('${AppConstant.unfriendURI}$id/',{});
   }
 }

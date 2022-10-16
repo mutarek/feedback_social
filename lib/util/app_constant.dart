@@ -11,7 +11,10 @@ class AppConstant {
   static const String newsFeedURI = '/posts/newsfeeds?page=';
   static const String postsUri = '/posts/';
   static const String forgotPasswordURI = 'auth/forget-password';
-  static const String homeActiveURI = 'home/active';
+  static const String sendFriendRequestURI = '/accounts/friends/send-friend-request/';
+  static const String cancelFriendRequestURI = '/accounts/friends/cancel-friend-request/';
+  static const String acceptFriendRequestURI = '/accounts/friends/accept-friend-request/';
+  static const String unfriendURI = '/accounts/friends/unfriend/';
   static const String homeMenuOrdered = 'homeMenu/ordered';
   static const String recommendedOrdered = 'recommended/ordered';
   static const String profileURI = '/accounts/profile/';

@@ -148,6 +148,8 @@ class ApiClient {
             Response(statusCode: _response.statusCode, body: _response.body, statusText: 'OTP Verified Failed Please Insert correct OTP');
       } else if (_response.body.toString().startsWith('{message')) {
         _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _response.body['message']);
+      } else if (_response.body.toString().startsWith('{detail')) {
+        _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _response.body['detail']);
       }
     } else if (_response.statusCode != 200 && _response.body == null) {
       _response = const Response(statusCode: 0, statusText: noInternetMessage);

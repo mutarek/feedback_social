@@ -30,7 +30,8 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
     // TODO: implement initState
     super.initState();
     Provider.of<PublicProfileProvider>(context, listen: false).callForPublicProfileData(widget.userID);
-    Provider.of<PublicProfileProvider>(context, listen: false).initializeAllUserPostData((bool status) {},widget.userID, isFirstTime: true);
+    Provider.of<PublicProfileProvider>(context, listen: false)
+        .initializeAllUserPostData((bool status) {}, widget.userID, isFirstTime: true);
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
@@ -47,8 +48,8 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
     return Scaffold(
       backgroundColor: Palette.scaffold,
       body: Consumer<PublicProfileProvider>(
-        builder: (context, provider, child) => SafeArea(
-            child: (provider.isProfileLoading == true || provider.isLoading == true)
+        builder: (context, publicProvider, child) => SafeArea(
+            child: (publicProvider.isProfileLoading == true || publicProvider.isLoading == true)
                 ? const Center(child: CupertinoActivityIndicator())
                 : SingleChildScrollView(
                     controller: controller,
@@ -63,20 +64,20 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                   Get.back();
                                 },
                                 viewCoverPhoto: () {
-                                  Get.to(() => SingleImageView(imageURL: provider.publicProfileData.coverImage!));
+                                  Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.coverImage!));
                                 },
-                                coverphoto: (provider.publicProfileData.coverImage != null)
-                                    ? provider.publicProfileData.coverImage!
+                                coverphoto: (publicProvider.publicProfileData.coverImage != null)
+                                    ? publicProvider.publicProfileData.coverImage!
                                     : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                                 coverphotochange: () {}),
                             ProfilePhotowidget(
                               viewProfilePhoto: () {
-                                Get.to(() => SingleImageView(imageURL: provider.publicProfileData.profileImage!));
+                                Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.profileImage!));
                               },
                               isTrue: false,
                               profilePhotoChange: () {},
-                              profileImage: (provider.publicProfileData.profileImage != null)
-                                  ? provider.publicProfileData.profileImage!
+                              profileImage: (publicProvider.publicProfileData.profileImage != null)
+                                  ? publicProvider.publicProfileData.profileImage!
                                   : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                             ),
                           ],
@@ -91,7 +92,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           children: [
                             Expanded(
                               child: CustomText(
-                                title: "${provider.publicProfileData.firstName!} ${provider.publicProfileData.lastName!}",
+                                title: "${publicProvider.publicProfileData.firstName!} ${publicProvider.publicProfileData.lastName!}",
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black,
@@ -99,18 +100,15 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-
-                            (provider.publicProfileData.isFriend == false)
-                                ? (provider.publicProfileData.friendRequestSent == true)
+                            (publicProvider.publicProfileData.isFriend == false)
+                                ? (publicProvider.publicProfileData.friendRequestSent == true)
                                     ? ElevatedButton(
-                                        child: const Text("Friend request sent"),
+                                        child: const Text("Cancel Friend request"),
                                         onPressed: () {
-                                          // confirmFriendRequest.id = provider.publicProfileData.friendRequestSentId;
-                                          // confirmFriendRequest.unSendRequest();
-                                          // refresh();
+                                          publicProvider.cancelFriendRequest();
                                         },
                                       )
-                                    : (provider.publicProfileData.friendRequestAccept == true)
+                                    : (publicProvider.publicProfileData.friendRequestAccept == true)
                                         ? ElevatedButton(
                                             child: const Text("Accept friend request"),
                                             onPressed: () {
@@ -125,17 +123,13 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                         : ElevatedButton(
                                             child: const Text("Add friend"),
                                             onPressed: () {
-                                              // addProvider.id = provider.publicProfileData.id;
-                                              // addProvider.addSuggestedFriend();
-                                              // refresh();
+                                              publicProvider.sendFriendRequest();
                                             },
                                           )
                                 : ElevatedButton(
                                     child: const Text("Unfriend"),
                                     onPressed: () {
-                                      // unfriendProvider.id = provider.publicProfileData.id;
-                                      // unfriendProvider.unFriend();
-                                      // refresh();
+                                      publicProvider.unFriend();
                                     },
                                   )
                           ],
@@ -150,7 +144,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           child: Row(
                             children: [
                               Text(
-                                "${provider.publicProfileData.friends!.length}",
+                                "${publicProvider.publicProfileData.friends!.length}",
                                 style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                               ),
                               Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
@@ -158,7 +152,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 width: width * 0.2,
                               ),
                               Text(
-                                "${provider.publicProfileData.followers!.length}",
+                                "${publicProvider.publicProfileData.followers!.length}",
                                 style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                               ),
                               Text(
@@ -173,7 +167,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                         ),
                       ),
                       SizedBox(height: height * 0.01),
-                      ProfileDetailsCard(userProfileModel: provider.publicProfileData, isShowEditProfile: false),
+                      ProfileDetailsCard(userProfileModel: publicProvider.publicProfileData, isShowEditProfile: false),
                       SizedBox(height: height * 0.01),
                       Container(
                         height: 35,
@@ -225,9 +219,9 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                       ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: provider.publicNewsFeedLists.length,
+                          itemCount: publicProvider.publicNewsFeedLists.length,
                           itemBuilder: ((context, index) {
-                            return TimeLineWidget(provider.publicNewsFeedLists[index], index, provider, isProfileScreen: true);
+                            return TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider, isProfileScreen: true);
                           }))
                     ]))),
       ),

@@ -89,9 +89,9 @@ class PublicProfileProvider with ChangeNotifier {
   UserProfileModel publicProfileData = UserProfileModel();
   bool isProfileLoading = false;
 
-  callForPublicProfileData(String userID) async {
-    isProfileLoading = true;
-    publicProfileData = UserProfileModel();
+  callForPublicProfileData(String userID, {bool isShowLoading = true}) async {
+    if (isShowLoading) isProfileLoading = true;
+    if (isShowLoading) publicProfileData = UserProfileModel();
     Response response = await profileRepo.getPublicProfileInfo(userID);
     isProfileLoading = false;
     if (response.statusCode == 200) {
@@ -155,6 +155,42 @@ class PublicProfileProvider with ChangeNotifier {
       response.body.forEach((element) {
         publicAllVideo.add(ProfileVideoModel.fromJson(element));
       });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  //TODO: ************************* for Send Friend Request cancel Friend Request or unfriend
+
+  Future sendFriendRequest() async {
+    Response response = await profileRepo.sendFriendRequest(publicProfileData.id.toString());
+    if (response.statusCode == 201) {
+      Fluttertoast.showToast(msg: response.body['message']);
+      callForPublicProfileData(publicProfileData.id.toString(), isShowLoading: false);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
+
+  Future cancelFriendRequest() async {
+    Response response = await profileRepo.cancelFriendRequest(publicProfileData.friendRequestSentId.toString());
+    if (response.statusCode == 204) {
+      Fluttertoast.showToast(msg: 'Friend Request is canceled successfully');
+      callForPublicProfileData(publicProfileData.id.toString(), isShowLoading: false);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  Future unFriend() async {
+    Response response = await profileRepo.unfriend(publicProfileData.id.toString());
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(msg: response.body['message']);
+      callForPublicProfileData(publicProfileData.id.toString(), isShowLoading: false);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
