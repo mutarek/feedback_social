@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
 import 'package:als_frontend/screens/profile/view/public_photo_view_screen.dart';
 import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
@@ -53,7 +54,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
       body: Consumer<PublicProfileProvider>(
         builder: (context, publicProvider, child) => SafeArea(
             child: (publicProvider.isProfileLoading == true || publicProvider.isLoading == true)
-                ? const Center(child: CupertinoActivityIndicator())
+                ?const profilePostShimmerWidget()
                 : SingleChildScrollView(
                     controller: controller,
                     child: Column(children: [
