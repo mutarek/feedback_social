@@ -141,7 +141,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: profileProvider.newsFeedLists.length,
                             itemBuilder: ((context, index) {
-                              return TimeLineWidget(profileProvider.newsFeedLists[index], index, profileProvider, isProfileScreen: true);
+                              return Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  child: TimeLineWidget(profileProvider.newsFeedLists[index], index, profileProvider, isProfileScreen: true));
                             })),
                       )
                     ],

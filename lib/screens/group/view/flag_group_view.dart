@@ -1,9 +1,11 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +60,7 @@ class FlagGroupView extends StatelessWidget {
                                         // groupDetailsProvider.groupIndex = provider.groups![index2].id;
                                         // createGroupPost.groupId = provider.groups![index2].id;
                                         //
-                                        // Get.to(const UserGroupView());
+                                        Get.to(UserGroupScreen(provider.authorGroupList[index2].id.toString()));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(6.0),

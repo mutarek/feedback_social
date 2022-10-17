@@ -11,16 +11,16 @@ class TimeLineWidget extends StatelessWidget {
   final feedProvider;
   final bool isHomeScreen;
   final bool isProfileScreen;
+  final bool isFromGroup;
 
   const TimeLineWidget(this.newsFeedData, this.index, this.feedProvider,
-      {this.isHomeScreen = false, this.isProfileScreen = false, Key? key})
+      {this.isHomeScreen = false, this.isProfileScreen = false, this.isFromGroup = false, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -40,8 +40,7 @@ class TimeLineWidget extends StatelessWidget {
               ],
             ),
           ),
-          if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0)
-            PostPhotoContainer(index, postImageUrl: newsFeedData),
+          if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoContainer(index, postImageUrl: newsFeedData),
           PostStats(
               post: newsFeedData,
               index: index,

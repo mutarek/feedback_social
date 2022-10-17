@@ -11,4 +11,8 @@ class PostRepo {
   Future<Response> submitPost(Map<String, String> body, List<Http.MultipartFile> multipartData) async {
     return await apiClient.postMultipartData(AppConstant.postsUri, body, multipartData);
   }
+
+  Future<Response> submitPostTOGroupBYUSINGGroupID(Map<String, String> body, List<Http.MultipartFile> multipartData, int groupID) async {
+    return await apiClient.postMultipartData(AppConstant.postsGroupUri + "$groupID/", body, multipartData);
+  }
 }

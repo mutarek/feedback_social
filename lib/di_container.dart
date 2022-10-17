@@ -55,7 +55,7 @@ Future<void> init() async {
   sl.registerFactory(() => SplashProvider());
   sl.registerFactory(() => DashboardProvider());
   sl.registerFactory(() => OtherProvider());
-  sl.registerFactory(() => GroupProvider(groupRepo: sl()));
+  sl.registerFactory(() => GroupProvider(groupRepo: sl(),newsfeedRepo: sl()));
   sl.registerFactory(() => AnimalProvider(animalRepo: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(),newsfeedRepo: sl()));

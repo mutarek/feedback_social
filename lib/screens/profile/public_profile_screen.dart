@@ -242,7 +242,9 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: publicProvider.publicNewsFeedLists.length,
                           itemBuilder: ((context, index) {
-                            return TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider, isProfileScreen: true);
+                            return Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                child: TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider, isProfileScreen: true));
                           }))
                     ]))),
       ),

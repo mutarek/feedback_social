@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/posts/view/video_view.dart';
@@ -11,8 +12,10 @@ import 'package:provider/provider.dart';
 
 class AddPostScreen extends StatelessWidget {
   final String profileImage;
+  final int groupID;
+  final bool isFromGroupScreen;
 
-  AddPostScreen(this.profileImage, {Key? key}) : super(key: key);
+  AddPostScreen(this.profileImage, {this.groupID = 0, this.isFromGroupScreen = false, Key? key}) : super(key: key);
   final TextEditingController descriptionController = TextEditingController();
 
   @override
@@ -20,8 +23,8 @@ class AddPostScreen extends StatelessWidget {
     Provider.of<PostProvider>(context, listen: false).clearImageVideo(isFirstTime: true);
 
     return Scaffold(
-      bottomNavigationBar: Consumer2<PostProvider, NewsFeedProvider>(
-        builder: (context, postProvider, newsfeedProvider, child) => Container(
+      bottomNavigationBar: Consumer3<PostProvider, NewsFeedProvider, GroupProvider>(
+        builder: (context, postProvider, newsfeedProvider, groupProvider, child) => Container(
           height: 50,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
           width: MediaQuery.of(context).size.width,
@@ -76,15 +79,29 @@ class AddPostScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  newsfeedProvider.initializeCount0();
-                  postProvider.addPost(descriptionController.text, (bool status, NewsFeedData n,int value) {
-                    if (status) {
-                      descriptionController.clear();
-                      postProvider.clearImageVideo();
-                      newsfeedProvider.addPostOnTimeLine(n);
-                      newsfeedProvider.addedDataOnLists();
-                    }
-                  },);
+                  if (isFromGroupScreen) {
+                    postProvider.addPost(descriptionController.text, (bool status, NewsFeedData n, int value) {
+                      if (status) {
+                        descriptionController.clear();
+                        postProvider.clearImageVideo();
+                        groupProvider.addGroupPostTimeLine(n);
+                      }
+                    }, isFromGroup: true, groupID: groupID);
+                  } else {
+                    newsfeedProvider.initializeCount0();
+                    postProvider.addPost(
+                      descriptionController.text,
+                      (bool status, NewsFeedData n, int value) {
+                        if (status) {
+                          descriptionController.clear();
+                          postProvider.clearImageVideo();
+                          newsfeedProvider.addPostOnTimeLine(n);
+                          newsfeedProvider.addedDataOnLists();
+                        }
+                      },
+                    );
+                  }
+
                   Navigator.of(context).pop([true]);
                 },
                 child: Container(

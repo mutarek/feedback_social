@@ -17,7 +17,7 @@ export 'Post Container/post_header.dart';
 export '../../screens/animal/widget/owner_info_widget.dart';
 export '../../screens/profile/widget/profile_cover_photo_widget.dart';
 export '../../screens/profile/widget/profile_photo_widget.dart';
-export 'profile/profile_post_widget.dart';
+export '../../screens/group/widget/profile_post_widget.dart';
 export '../../screens/home/view/comment_widget.dart';
 export '../../screens/more/widget/custom_menu_card.dart';
 export 'menu/custom_app_bar.dart';

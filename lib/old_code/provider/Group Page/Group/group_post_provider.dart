@@ -1,4 +1,4 @@
-import 'package:als_frontend/old_code/model/post/group_post_model.dart';
+import 'package:als_frontend/data/model/response/group/group_post_model.dart';
 import 'package:als_frontend/old_code/service/post/group_post_provider_service.dart';
 
 import 'package:flutter/material.dart';

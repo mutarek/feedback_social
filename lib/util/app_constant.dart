@@ -21,6 +21,7 @@ class AppConstant {
   static const String editProfile = '/accounts/profile/update/';
   static const String newsFeedURI = '/posts/newsfeeds?page=';
   static const String postsUri = '/posts/';
+  static const String postsGroupUri = '/posts/group/';
   static const String animalUri = '/animal/';
   static const String animalOwnerURI = '/animal/owner/';
   static const String groupUri = '/group/';

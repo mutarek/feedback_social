@@ -1,4 +1,4 @@
-import 'package:als_frontend/old_code/model/group%20page/group/author_group_details_model.dart';
+import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/old_code/service/like/timeline_post_like_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

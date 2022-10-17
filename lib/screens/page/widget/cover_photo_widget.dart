@@ -24,7 +24,7 @@ class CoverPhotoWidget extends StatelessWidget {
     return InkWell(
       onTap: viewCoverPhoto,
       child: Container(
-        height: height * 0.23,
+        height: 200,
         width: width,
         decoration: BoxDecoration(color: Colors.white, image: DecorationImage(image: NetworkImage(coverphoto))),
         child: Column(

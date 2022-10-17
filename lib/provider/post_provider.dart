@@ -17,7 +17,7 @@ class PostProvider with ChangeNotifier {
 
   bool isLoading = false;
 
-  addPost(String postText, Function callBackFunction) async {
+  addPost(String postText, Function callBackFunction, {bool isFromGroup = false, int groupID = 0}) async {
     isLoading = true;
     List<Http.MultipartFile> multipartFile = [];
 
@@ -35,7 +35,12 @@ class PostProvider with ChangeNotifier {
       }
     }
     notifyListeners();
-    Response response = await postRepo.submitPost({"description": postText}, multipartFile);
+    Response response;
+    if (isFromGroup) {
+      response = await postRepo.submitPostTOGroupBYUSINGGroupID({"description": postText}, multipartFile, groupID);
+    } else {
+      response = await postRepo.submitPost({"description": postText}, multipartFile);
+    }
     isLoading = false;
     if (response.statusCode == 201) {
       callBackFunction(true, NewsFeedData.fromJson(response.body), 1);

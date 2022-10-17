@@ -5,11 +5,9 @@
 import 'dart:convert';
 
 List<GroupMembersModel> groupMembersModelFromJson(String str) =>
-    List<GroupMembersModel>.from(
-        json.decode(str).map((x) => GroupMembersModel.fromJson(x)));
+    List<GroupMembersModel>.from(json.decode(str).map((x) => GroupMembersModel.fromJson(x)));
 
-String groupMembersModelToJson(List<GroupMembersModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String groupMembersModelToJson(List<GroupMembersModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class GroupMembersModel {
   GroupMembersModel({
@@ -32,8 +30,7 @@ class GroupMembersModel {
   String createdAt;
   bool friend;
 
-  factory GroupMembersModel.fromJson(Map<String, dynamic> json) =>
-      GroupMembersModel(
+  factory GroupMembersModel.fromJson(Map<String, dynamic> json) => GroupMembersModel(
         id: json["id"],
         group: json["group"],
         member: Member.fromJson(json["member"]),
