@@ -1,16 +1,48 @@
 import 'package:als_frontend/old_code/const/palette.dart';
-import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/view/flag_group_view.dart';
+import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class PageOrGroupDecisionGroup extends StatelessWidget {
   const PageOrGroupDecisionGroup({Key? key}) : super(key: key);
 
+  void openBottomSheet(BuildContext context){
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.18,
+            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+            child: Column(
+              children: [
+                CustomButton(
+                  btnTxt: 'Create a Group',
+                  onTap: (){},
+                  textWhiteColor: true,
+                  radius: 5,
+                  backgroundColor: Palette.primary,
+                  isShowRightIcon: true,
+                ),
+                const SizedBox(height: 10),
+                CustomButton(
+                  btnTxt: 'Create a Page',
+                  onTap: (){},
+                  textWhiteColor: true,
+                  radius: 5,
+                  backgroundColor: Palette.notificationColor,
+                  isShowRightIcon: true,
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
+    // Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
@@ -67,7 +99,7 @@ class PageOrGroupDecisionGroup extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {openBottomSheet(context);},
             child: const Icon(Icons.add, color: Colors.white),
             backgroundColor: Palette.primary,
           ),

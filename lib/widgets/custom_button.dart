@@ -1,6 +1,7 @@
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/rounded_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 IconData? backIcon(BuildContext context) {
@@ -28,7 +29,7 @@ IconData? rightIcon(BuildContext context) {
   switch (Theme.of(context).platform) {
     case TargetPlatform.android:
     case TargetPlatform.fuchsia:
-      return Icons.arrow_forward;
+      return CupertinoIcons.arrowshape_turn_up_right;
     case TargetPlatform.iOS:
       return Icons.arrow_forward_ios;
     case TargetPlatform.linux:
