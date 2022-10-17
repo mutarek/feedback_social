@@ -3,6 +3,7 @@ import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/screens/dashboard/page_or_group_decesion_group.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/more/more_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
@@ -168,7 +169,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       },
                       children: [
                         HomeScreen(refreshController),
-                        Container(),
+                        PageOrGroupDecisionGroup(),
                         Container(),
                         ProfileScreen(),
                         MoreScreen(),

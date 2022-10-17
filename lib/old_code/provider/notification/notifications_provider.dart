@@ -24,13 +24,12 @@ class NotificationsProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = (prefs.getString('token') ?? '');
     userId = (prefs.getInt('id') ?? '') as int;
-    var uri = Uri.parse("$baseUrl/notification/list/"),
-        headers = {'Authorization': 'token $token'};
+    var uri = Uri.parse("$baseUrl/notification/list/"), headers = {'Authorization': 'token $token'};
     var response = await http.get(uri, headers: headers);
     notificationData = NotificationModel.fromJson(json.decode(response.body));
 
     data = notificationData.results as List<Result>;
-    
+
     loading = false;
     notifyListeners();
   }
@@ -72,8 +71,7 @@ class NotificationsProvider extends ChangeNotifier {
   }
 
   check() {
-    webSocketChannel = WebSocketChannel.connect(
-        Uri.parse("wss://als-social.com/ws/notifications/$token/"));
+    webSocketChannel = WebSocketChannel.connect(Uri.parse("wss://als-social.com/ws/notifications/$token/"));
     webSocketChannel.stream.listen((event) {
       print("Notification user token : $token");
       notificationUnread();

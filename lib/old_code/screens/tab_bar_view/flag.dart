@@ -27,8 +27,7 @@ class _FlagState extends State<Flag> {
     final value3 = Provider.of<AuthorGroupProvider>(context, listen: false);
     value3.getData();
 
-    final notification =
-        Provider.of<NotificationsProvider>(context, listen: false);
+    final notification = Provider.of<NotificationsProvider>(context, listen: false);
     notification.getData();
     notification.check();
 
@@ -49,7 +48,6 @@ class _FlagState extends State<Flag> {
 
         return value == true;
       },
-      
       child: DefaultTabController(
           length: 2,
           child: Scaffold(
@@ -60,13 +58,8 @@ class _FlagState extends State<Flag> {
                 elevation: 0,
                 title: const Text(
                   "FeedBack",
-                  style: TextStyle(
-                      color: Palette.primary,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: -1.2),
+                  style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
                 ),
-                
               ),
               body: NestedScrollView(
                 scrollDirection: Axis.vertical,
@@ -74,9 +67,8 @@ class _FlagState extends State<Flag> {
                 // Setting floatHeaderSlivers to true is required in order to float
                 // the outer slivers over the inner scrollable.
                 floatHeaderSlivers: true,
-    
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
+
+                headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return [
                     SliverList(
                         delegate: SliverChildListDelegate([
@@ -87,17 +79,11 @@ class _FlagState extends State<Flag> {
                               Container(
                                 height: height * 0.035,
                                 width: width * 0.7,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.white54),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white54),
                                 child: TabBar(
                                   tabs: [
-                                    Text("Your Pages",
-                                        style: GoogleFonts.lato(
-                                            color: Colors.black)),
-                                    Text("Your Groups",
-                                        style: GoogleFonts.lato(
-                                            color: Colors.black)),
+                                    Text("Your Pages", style: GoogleFonts.lato(color: Colors.black)),
+                                    Text("Your Groups", style: GoogleFonts.lato(color: Colors.black)),
                                   ],
                                 ),
                               ),
@@ -112,10 +98,8 @@ class _FlagState extends State<Flag> {
                   height: height,
                   width: width,
                   color: Colors.white,
-                  child: TabBarView(children: [
-                    FlagPageWidget(height: height, width: width),
-                    FlagGroupWidget(height: height, width: width)
-                  ]),
+                  child:
+                      TabBarView(children: [FlagPageWidget(height: height, width: width), FlagGroupWidget(height: height, width: width)]),
                 ),
               ))),
     );

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../model/group page/group/all_group_model.dart';
+import '../../../../data/model/response/group/all_group_model.dart';
 import '../../../service/services.dart';
 
 class AllGroupProvider extends ChangeNotifier {
