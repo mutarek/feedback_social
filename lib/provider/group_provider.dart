@@ -58,4 +58,16 @@ class GroupProvider with ChangeNotifier {
     categoryValue = value;
     notifyListeners();
   }
+
+  createGroup(String groupName) async {
+    isLoading = true;
+    Response response = await groupRepo.createGroup({"name": groupName, "category": categoryValue});
+    isLoading = false;
+    if (response.statusCode == 201) {
+      Fluttertoast.showToast(msg: "Created successfully");
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
 }

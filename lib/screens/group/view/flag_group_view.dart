@@ -16,7 +16,7 @@ class FlagGroupView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<GroupProvider>(
         builder: (context, provider, child) => SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Container(
                   color: Colors.white,
                   child: Padding(
@@ -43,42 +43,47 @@ class FlagGroupView extends StatelessWidget {
                         ),
                         (provider.authorGroupList.isEmpty)
                             ? CustomText(title: 'You Haven\'t any Personal Group', textStyle: latoStyle400Regular.copyWith(fontSize: 16))
-                            : ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: provider.authorGroupList.length,
-                                itemBuilder: (context, index2) {
-                                  return InkWell(
-                                    onTap: () {
-                                      // groupPostProvider.id = provider.groups![index2].id;
-                                      // groupDetailsProvider.groupIndex = provider.groups![index2].id;
-                                      // createGroupPost.groupId = provider.groups![index2].id;
-                                      //
-                                      // Get.to(const UserGroupView());
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(6.0),
-                                      child: Column(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: height * 0.04,
-                                            backgroundColor: Palette.notificationColor,
-                                            child: CircleAvatar(
-                                              radius: height * 0.0368,
-                                              backgroundColor: Palette.scaffold,
-                                              backgroundImage: NetworkImage(provider.authorGroupList[index2].coverPhoto),
+                            : Container(
+                                height: 90,
+                                alignment: Alignment.centerLeft,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  //physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: provider.authorGroupList.length,
+                                  itemBuilder: (context, index2) {
+                                    return InkWell(
+                                      onTap: () {
+                                        // groupPostProvider.id = provider.groups![index2].id;
+                                        // groupDetailsProvider.groupIndex = provider.groups![index2].id;
+                                        // createGroupPost.groupId = provider.groups![index2].id;
+                                        //
+                                        // Get.to(const UserGroupView());
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(6.0),
+                                        child: Column(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 25,
+                                              backgroundColor: Palette.notificationColor,
+                                              child: CircleAvatar(
+                                                radius: 22,
+                                                backgroundColor: Palette.primary,
+                                                backgroundImage: NetworkImage(provider.authorGroupList[index2].coverPhoto),
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            provider.authorGroupList[index2].name,
-                                            style: GoogleFonts.lato(fontSize: height * 0.02, fontWeight: FontWeight.w600),
-                                          )
-                                        ],
+                                            SizedBox(height: 3),
+                                            Text(
+                                              provider.authorGroupList[index2].name,
+                                              style: GoogleFonts.lato(fontSize: height * 0.02, fontWeight: FontWeight.w600),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
                         Container(height: 2, color: Colors.grey.withOpacity(.1), margin: const EdgeInsets.only(bottom: 10, top: 10)),
                         Column(

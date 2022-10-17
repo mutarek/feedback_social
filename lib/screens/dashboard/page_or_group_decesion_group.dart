@@ -1,8 +1,10 @@
 import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/view/flag_group_view.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class PageOrGroupDecisionGroup extends StatelessWidget {
   const PageOrGroupDecisionGroup({Key? key}) : super(key: key);
@@ -42,7 +44,7 @@ class PageOrGroupDecisionGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
+    Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
