@@ -11,6 +11,7 @@ class OtherProvider with ChangeNotifier {
 
   clearImage() {
     selectedFile = null;
+
     notifyListeners();
   }
 
