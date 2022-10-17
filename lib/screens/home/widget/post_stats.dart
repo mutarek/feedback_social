@@ -7,6 +7,7 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/route_manager.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -43,13 +44,13 @@ class PostStats extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
                           onTap: () {
@@ -133,14 +134,17 @@ class PostStats extends StatelessWidget {
                                 child: SizedBox(
                                   width: 35,
                                   height: 35,
-                                  child: Icon(CupertinoIcons.paperplane, size: 30, color: Colors.black),
+                                  child: SvgPicture.asset("assets/svg/share.svg",height: 30, color: Colors.black),
+                                  // child: Icon(CupertinoIcons.paperplane, size: 30, color: Colors.black),
                                 ),
                               )
-                            : SizedBox.shrink()
+                            :
+                        InkWell(onTap: () {}, child: Icon(CupertinoIcons.bookmark, size: 25, color: Colors.black)),
+
                       ],
                     ),
                   ),
-                  InkWell(onTap: () {}, child: Icon(CupertinoIcons.bookmark, size: 25, color: Colors.black)),
+
                 ],
               ),
             ],
