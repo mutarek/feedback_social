@@ -14,4 +14,7 @@ class NewsfeedRepo {
   Future<Response> addLike(int postID) async {
     return await apiClient.postData('/posts/$postID/like/', {});
   }
+  Future<Response> addLikeONGroup(int postID,int groupID) async {
+    return await apiClient.postData('/posts/group/$groupID/$postID/like/', {});
+  }
 }

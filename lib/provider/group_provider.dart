@@ -188,8 +188,8 @@ class GroupProvider with ChangeNotifier {
 
   // for LIKE comment
 
-  addLike(int postID, int index) async {
-    Response response = await newsfeedRepo.addLike(postID);
+  addLike(int groupID,int postID, int index) async {
+    Response response = await newsfeedRepo.addLikeONGroup(postID,groupID);
     if (response.body['liked'] == true) {
       likesStatusAllData[index] = 1;
       groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! + 1;

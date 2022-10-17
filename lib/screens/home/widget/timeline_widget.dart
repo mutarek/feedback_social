@@ -11,10 +11,11 @@ class TimeLineWidget extends StatelessWidget {
   final feedProvider;
   final bool isHomeScreen;
   final bool isProfileScreen;
-  final bool isFromGroup;
+  final int groupID;
+  final bool isGroup;
 
   const TimeLineWidget(this.newsFeedData, this.index, this.feedProvider,
-      {this.isHomeScreen = false, this.isProfileScreen = false, this.isFromGroup = false, Key? key})
+      {this.isHomeScreen = false, this.isProfileScreen = false, this.isGroup = false, this.groupID = 0,  Key? key})
       : super(key: key);
 
   @override
@@ -46,7 +47,9 @@ class TimeLineWidget extends StatelessWidget {
               index: index,
               feedProvider: feedProvider,
               isHomeNewsFeedProvider: isHomeScreen,
-              isFromProfile: isProfileScreen),
+              isFromProfile: isProfileScreen,
+              groupID: groupID,
+              isGroup: isGroup),
         ],
       ),
     );

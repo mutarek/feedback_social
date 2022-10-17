@@ -15,6 +15,8 @@ import 'package:provider/provider.dart';
 class PostStats extends StatelessWidget {
   final NewsFeedData post;
   final int index;
+  final int groupID;
+  final bool isGroup;
   final feedProvider;
   final double paddingHorizontal;
   final double paddingVertical;
@@ -26,6 +28,8 @@ class PostStats extends StatelessWidget {
       required this.post,
       required this.index,
       this.feedProvider,
+      this.groupID = 0,
+      this.isGroup = false,
       this.paddingHorizontal = 12,
       this.isFromProfile = false,
       this.isHomeNewsFeedProvider = false,
@@ -54,7 +58,11 @@ class PostStats extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            feedProvider.addLike(post.id!.toInt(), index);
+                            if (isGroup) {
+                              feedProvider.addLike(groupID, post.id!.toInt(), index);
+                            } else {
+                              feedProvider.addLike(post.id!.toInt(), index);
+                            }
                           },
                           child: SizedBox(
                             width: 40,
@@ -134,17 +142,14 @@ class PostStats extends StatelessWidget {
                                 child: SizedBox(
                                   width: 35,
                                   height: 35,
-                                  child: SvgPicture.asset("assets/svg/share.svg",height: 30, color: Colors.black),
+                                  child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
                                   // child: Icon(CupertinoIcons.paperplane, size: 30, color: Colors.black),
                                 ),
                               )
-                            :
-                        InkWell(onTap: () {}, child: Icon(CupertinoIcons.bookmark, size: 25, color: Colors.black)),
-
+                            : InkWell(onTap: () {}, child: Icon(CupertinoIcons.bookmark, size: 25, color: Colors.black)),
                       ],
                     ),
                   ),
-
                 ],
               ),
             ],
