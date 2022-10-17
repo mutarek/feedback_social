@@ -16,4 +16,7 @@ class GroupRepo {
   Future<Response> getOwnGroupList() async {
     return await apiClient.getData(AppConstant.groupCreatorAllURI + "${authRepo.getUserID()}/all");
   }
+  Future<Response> createGroup(Map map) async {
+    return await apiClient.postData(AppConstant.groupUri,map);
+  }
 }

@@ -49,4 +49,13 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  //TODO: for Group Category
+  List<String> items = ['Sports', 'Education', 'Animal', 'Pet', 'Music', 'Entertainment', 'Others'];
+  String categoryValue = "Sports";
+
+  changeGroupCategory(String value) {
+    categoryValue = value;
+    notifyListeners();
+  }
 }
