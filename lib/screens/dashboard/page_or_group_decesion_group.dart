@@ -1,5 +1,8 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/provider/other_provider.dart';
+import 'package:als_frontend/screens/group/create_group_screen.dart';
+import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
 import 'package:als_frontend/screens/group/view/flag_group_view.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -9,19 +12,23 @@ import 'package:provider/provider.dart';
 class PageOrGroupDecisionGroup extends StatelessWidget {
   const PageOrGroupDecisionGroup({Key? key}) : super(key: key);
 
-  void openBottomSheet(BuildContext context){
+  void openBottomSheet(BuildContext context) {
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (context) {
           return Container(
             height: MediaQuery.of(context).size.height * 0.18,
-            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Column(
               children: [
                 CustomButton(
                   btnTxt: 'Create a Group',
-                  onTap: (){},
+                  onTap: () {
+                    Provider.of<OtherProvider>(context, listen: false).clearImage();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => CreateGroupScreen()));
+                  },
                   textWhiteColor: true,
                   radius: 5,
                   backgroundColor: Palette.primary,
@@ -30,7 +37,7 @@ class PageOrGroupDecisionGroup extends StatelessWidget {
                 const SizedBox(height: 10),
                 CustomButton(
                   btnTxt: 'Create a Page',
-                  onTap: (){},
+                  onTap: () {},
                   textWhiteColor: true,
                   radius: 5,
                   backgroundColor: Palette.notificationColor,
@@ -101,7 +108,9 @@ class PageOrGroupDecisionGroup extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {openBottomSheet(context);},
+            onPressed: () {
+              openBottomSheet(context);
+            },
             child: const Icon(Icons.add, color: Colors.white),
             backgroundColor: Palette.primary,
           ),

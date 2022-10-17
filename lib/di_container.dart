@@ -16,6 +16,7 @@ import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/language_provider.dart';
 import 'package:als_frontend/provider/localization_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
@@ -53,6 +54,7 @@ Future<void> init() async {
   sl.registerFactory(() => PostProvider(postRepo: sl()));
   sl.registerFactory(() => SplashProvider());
   sl.registerFactory(() => DashboardProvider());
+  sl.registerFactory(() => OtherProvider());
   sl.registerFactory(() => GroupProvider(groupRepo: sl()));
   sl.registerFactory(() => AnimalProvider(animalRepo: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
