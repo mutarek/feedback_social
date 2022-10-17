@@ -1,5 +1,6 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
 import 'package:als_frontend/screens/profile/friend_screen.dart';
 import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
@@ -50,9 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SafeArea(
         child: Consumer2<AuthProvider, ProfileProvider>(
           builder: (context, authProvider, profileProvider, child) => profileProvider.isLoading || profileProvider.isProfileLoading
-              ? const Center(
-                  child: CupertinoActivityIndicator(),
-                )
+              ?const profilePostShimmerWidget()
               : SingleChildScrollView(
                   controller: controller,
                   physics: const ScrollPhysics(),

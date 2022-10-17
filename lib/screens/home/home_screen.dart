@@ -4,6 +4,7 @@ import 'package:als_frontend/screens/home/shimmer_effect/timeline_post_shimmer_w
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/posts/add_post_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -85,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 InkWell(
                                   onTap: (){
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProfileScreen()));
 
                                   },
                                   child: CircleAvatar(
