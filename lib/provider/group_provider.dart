@@ -111,12 +111,19 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
   }
-
+  loadingStart(){
+    isLoading = true;
+    notifyListeners();
+  }
   //TODO: for User Group
   AuthorGroupDetailsModel groupDetailsModel = AuthorGroupDetailsModel();
 
   callForGetAllGroupInformation(String id) async {
-    isLoading = true;
+    // isLoading = true;
+    groupMembersLists.clear();
+    groupMembersLists = [];
+    groupAllPosts.clear();
+    groupAllPosts = [];
     groupDetailsModel = AuthorGroupDetailsModel();
     // notifyListeners();
     Response response = await groupRepo.callForGetGroupDetails(id);
@@ -302,6 +309,36 @@ class GroupProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: response.body['message']);
       friendsList.removeAt(index);
       friendsListTemp.removeAt(index);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+// TODO: for member Join
+  memberJoin(int groupID) async {
+    Response response = await groupRepo.memberJoin(groupID.toString());
+
+    if (response.statusCode == 201) {
+      Fluttertoast.showToast(msg: response.body['message']);
+      groupDetailsModel.totalMember = groupDetailsModel.totalMember! + 1;
+      groupDetailsModel.isMember = true;
+      callForGetAllGroupMembers(groupID.toString());
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+// TODO: for member Join
+  leaveGroup(int groupID) async {
+    Response response = await groupRepo.leaveGroup(groupID.toString());
+
+    if (response.statusCode == 204) {
+      Fluttertoast.showToast(msg: 'Successfully leave this group');
+      groupDetailsModel.totalMember = groupDetailsModel.totalMember! - 1;
+      groupDetailsModel.isMember = false;
+      callForGetAllGroupMembers(groupID.toString());
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }

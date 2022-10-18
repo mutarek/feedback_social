@@ -50,7 +50,15 @@ class GroupRepo {
     return await apiClient.getData("/group/$groupID/friend/list/");
   }
 
+  Future<Response> memberJoin(String groupID) async {
+    return await apiClient.postData("/group/$groupID/member/join/", {});
+  }
+
+  Future<Response> leaveGroup(String groupID) async {
+    return await apiClient.deleteData("/group/$groupID/member/leave/");
+  }
+
   Future<Response> sendInvitation(String groupID, int userID) async {
-    return await apiClient.postData("/group/$groupID/$userID/invitation-send/",{});
+    return await apiClient.postData("/group/$groupID/$userID/invitation-send/", {});
   }
 }

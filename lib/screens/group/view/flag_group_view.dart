@@ -1,5 +1,6 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -56,10 +57,8 @@ class FlagGroupView extends StatelessWidget {
                                   itemBuilder: (context, index2) {
                                     return InkWell(
                                       onTap: () {
-                                        // groupPostProvider.id = provider.groups![index2].id;
-                                        // groupDetailsProvider.groupIndex = provider.groups![index2].id;
-                                        // createGroupPost.groupId = provider.groups![index2].id;
-                                        //
+
+                                        provider.loadingStart();
                                         Get.to(UserGroupScreen(provider.authorGroupList[index2].id.toString()));
                                       },
                                       child: Padding(
@@ -75,7 +74,7 @@ class FlagGroupView extends StatelessWidget {
                                                 backgroundImage: NetworkImage(provider.authorGroupList[index2].coverPhoto),
                                               ),
                                             ),
-                                            SizedBox(height: 3),
+                                            const SizedBox(height: 3),
                                             Text(
                                               provider.authorGroupList[index2].name,
                                               style: GoogleFonts.lato(fontSize: height * 0.02, fontWeight: FontWeight.w600),
@@ -110,14 +109,9 @@ class FlagGroupView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return CustomPageGroupButton(
                                   onTap: () {
-                                    // groupPostProvider.id =
-                                    //     provider.groups![index].id;
-                                    // groupDetailsProvider.groupIndex =
-                                    //     provider.groups![index].id;
-                                    // createGroupPost.groupId =
-                                    //     provider.groups![index].id;
-                                    //
-                                    // Get.to(const PublicGroupView());
+
+                                    provider.loadingStart();
+                                    Get.to(PublicGroupScreen(provider.allSuggestGroupList[index].id.toString()));
                                   },
                                   goToGroupOrPage: () {},
                                   groupOrPageImage: provider.allSuggestGroupList[index].coverPhoto,
