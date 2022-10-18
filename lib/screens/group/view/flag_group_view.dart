@@ -60,6 +60,7 @@ class FlagGroupView extends StatelessWidget {
                                         provider.loadingStart();
                                         Get.to(UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
                                       },
+
                                       child: Padding(
                                         padding: const EdgeInsets.all(6.0),
                                         child: Column(
