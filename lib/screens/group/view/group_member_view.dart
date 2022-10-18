@@ -30,6 +30,7 @@ class GroupMemberView extends StatelessWidget {
                           MaterialPageRoute(builder: (_) => PublicProfileScreen(provider.groupMembersLists[index].member.id.toString())));
                     }
                   },
+
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.03, vertical: height * 0.01),
                     child: Container(
