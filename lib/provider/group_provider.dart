@@ -113,11 +113,12 @@ class GroupProvider with ChangeNotifier {
 
   bool groupISPrivate = false;
 
-  changeGroupPrivateStatus(bool value) {
+  changeGroupPrivateStatus(bool value, {bool isFirstTime = false}) {
     groupISPrivate = value;
-    notifyListeners();
+    if (!isFirstTime) notifyListeners();
   }
 
+  // TODO: for create and update Group
   createGroup(String groupName, File? file, Function callback) async {
     isLoading = true;
     notifyListeners();
@@ -133,6 +134,41 @@ class GroupProvider with ChangeNotifier {
     } else {
       response =
           await groupRepo.createGroupWithoutImageUpload({"name": groupName, "category": categoryValue, "is_private": groupISPrivate});
+    }
+    isLoading = false;
+    if (response.statusCode == 201) {
+      authorGroupList.add(AllGroupModel(
+          id: response.body['id'],
+          name: response.body['name'],
+          category: response.body['category'],
+          coverPhoto: response.body['cover_photo'],
+          isPrivate: response.body['is_private'],
+          totalMember: response.body['total_member']));
+      Fluttertoast.showToast(msg: "Created successfully");
+      callback(true);
+    } else {
+      callback(false);
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  // TODO: for create and update Group
+  updateGroup(String groupName, File? file, Function callback,int groupID) async {
+    isLoading = true;
+    notifyListeners();
+    Response response;
+    if (file != null) {
+      List<Http.MultipartFile> multipartFile = [];
+
+      multipartFile
+          .add(Http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
+
+      response = await groupRepo.updateGroupWithImageUpload(
+          {"name": groupName, "category": categoryValue.id.toString(), "is_private": groupISPrivate.toString()}, multipartFile,groupID);
+    } else {
+      response =
+          await groupRepo.updateGroupWithoutImageUpload({"name": groupName, "category": categoryValue, "is_private": groupISPrivate},groupID);
     }
     isLoading = false;
     if (response.statusCode == 201) {
@@ -251,7 +287,7 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateCommentDataCount(int index, bool isMyGroup) {
+  void updateCommentDataCount(int index) {
     groupAllPosts[index].totalComment = groupAllPosts[index].totalComment! + 1;
     notifyListeners();
   }

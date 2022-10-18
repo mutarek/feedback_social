@@ -4,6 +4,7 @@ import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/old_code/widgets/widgets.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
+import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -34,12 +35,12 @@ class _CommentsScreenState extends State<CommentsScreen> {
   void initState() {
     if (widget.isGroupScreen) {
       Provider.of<CommentProvider>(context, listen: false).initializeGroupCommentData(widget.postID, widget.groupID);
-      Provider.of<CommentProvider>(context, listen: false).initializeSocketFroGroup(widget.postID, widget.groupID);
+
     } else {
       Provider.of<CommentProvider>(context, listen: false).initializeCommentData(widget.postID);
-      Provider.of<CommentProvider>(context, listen: false).initializeSocket(widget.postID);
-    }
 
+    }
+    Provider.of<CommentProvider>(context, listen: false).initializeSocket(widget.postID);
     Provider.of<AuthProvider>(context, listen: false).getUserInfo();
 
     super.initState();
@@ -125,8 +126,11 @@ class _CommentsScreenState extends State<CommentsScreen> {
                                               if (widget.isHomeScreen) {
                                                 Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                               }
-                                              if (widget.isProfileScreen) {
+                                              else if (widget.isProfileScreen) {
                                                 Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                              }
+                                              else if (widget.isGroupScreen) {
+                                                Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                               }
                                             }
                                           });

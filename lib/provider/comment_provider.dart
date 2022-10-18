@@ -95,9 +95,4 @@ class CommentProvider with ChangeNotifier {
     channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/comment/timeline_post/');
     userPostComments();
   }
-
-  initializeSocketFroGroup(int postID, int groupID) {
-    channel = IOWebSocketChannel.connect('wss://als-social.com/ws/group/$groupID/$postID/comment/timeline_post/');
-    userPostComments();
-  }
 }

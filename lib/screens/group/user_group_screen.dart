@@ -1,6 +1,7 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/create_group_screen.dart';
 import 'package:als_frontend/screens/group/invite_group_screen.dart';
 import 'package:als_frontend/screens/group/view/group_image_video_view.dart';
 import 'package:als_frontend/screens/group/view/group_member_view.dart';
@@ -13,6 +14,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import '../../provider/other_provider.dart';
 
 class UserGroupScreen extends StatefulWidget {
   final String groupID;
@@ -132,6 +135,12 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                       SizedBox(height: height * 0.014),
                                                       InkWell(
                                                         onTap: () {
+                                                          Provider.of<OtherProvider>(context, listen: false).clearImage();
+                                                          Navigator.of(context).pop();
+                                                          Navigator.of(context).push(MaterialPageRoute(
+                                                              builder: (_) => CreateGroupScreen(
+                                                                  authorGroup: groupProvider.groupDetailsModel, isUpdateGroup: true)));
+
                                                           // editGroupProvider.groupId = groupProvider.groupDetails!.id as int;
                                                           // Get.to(() => const EditGroup());
                                                         },

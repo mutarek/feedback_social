@@ -30,6 +30,14 @@ class GroupRepo {
     return await apiClient.postMultipartData(AppConstant.groupUri, body, multipartData);
   }
 
+  Future<Response> updateGroupWithoutImageUpload(Map map,int groupID) async {
+    return await apiClient.putData(AppConstant.groupUri+"$groupID/", map);
+  }
+
+  Future<Response> updateGroupWithImageUpload(Map<String, String> body, List<Http.MultipartFile> multipartData,int groupID) async {
+    return await apiClient.putMultipartData(AppConstant.groupUri+"$groupID/", body, multipartData);
+  }
+
   Future<Response> callForGetGroupDetails(String groupID) async {
     return await apiClient.getData(AppConstant.groupUri + "$groupID/");
   }

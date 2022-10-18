@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
+import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
@@ -15,24 +16,32 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
 class CreateGroupScreen extends StatefulWidget {
-  CreateGroupScreen({Key? key}) : super(key: key);
+  final bool isUpdateGroup;
+  final AuthorGroupDetailsModel? authorGroup;
+
+  const CreateGroupScreen({this.authorGroup, this.isUpdateGroup = false, Key? key}) : super(key: key);
 
   @override
   State<CreateGroupScreen> createState() => _CreateGroupScreenState();
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
-  final TextEditingController groupNameController = TextEditingController();
-@override
+  TextEditingController groupNameController = TextEditingController();
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    groupNameController = TextEditingController();
     Provider.of<GroupProvider>(context, listen: false).initializeCategory();
+    if (widget.isUpdateGroup) {
+      groupNameController.text = widget.authorGroup!.name!;
+      Provider.of<GroupProvider>(context, listen: false).changeGroupPrivateStatus(widget.authorGroup!.isPrivate!, isFirstTime: true);
+    }
   }
+
   @override
   Widget build(BuildContext context) {
-
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Consumer2<OtherProvider, GroupProvider>(
@@ -50,8 +59,11 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                           otherProvider.selectedFile != null
                               ? Image.file(otherProvider.selectedFile!,
                                   width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
-                              : Image.asset("assets/background/profile_placeholder.jpg",
-                                  width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.fitWidth),
+                              : widget.isUpdateGroup
+                                  ? Image.network(widget.authorGroup!.coverPhoto!,
+                                      width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
+                                  : Image.asset("assets/background/profile_placeholder.jpg",
+                                      width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.fitWidth),
                         ],
                       ),
                       Positioned(
@@ -120,15 +132,24 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         ),
                         const SizedBox(height: 20),
                         CustomButton(
-                          btnTxt: 'Add',
+                          btnTxt: widget.isUpdateGroup ? "Update" : "Add",
                           onTap: () {
                             if (groupNameController.text.isNotEmpty) {
-                              groupProvider.createGroup(groupNameController.text, otherProvider.selectedFile, (bool status) {
-                                if (status) {
-                                  groupNameController.clear();
-                                  Get.back();
-                                }
-                              });
+                              if (widget.isUpdateGroup) {
+                                groupProvider.updateGroup(groupNameController.text, otherProvider.selectedFile, (bool status) {
+                                  if (status) {
+                                    groupNameController.clear();
+                                    Get.back();
+                                  }
+                                }, widget.authorGroup!.id as int);
+                              } else {
+                                groupProvider.createGroup(groupNameController.text, otherProvider.selectedFile, (bool status) {
+                                  if (status) {
+                                    groupNameController.clear();
+                                    Get.back();
+                                  }
+                                });
+                              }
                             } else {
                               Fluttertoast.showToast(msg: "Please Write Group Name");
                             }
