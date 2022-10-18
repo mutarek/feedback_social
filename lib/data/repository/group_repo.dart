@@ -45,4 +45,12 @@ class GroupRepo {
   Future<Response> callForGetGroupAllVideo(String groupID) async {
     return await apiClient.getData("/group/$groupID/video/list/");
   }
+
+  Future<Response> callForGetAllGroupMemberWhoNotMember(String groupID) async {
+    return await apiClient.getData("/group/$groupID/friend/list/");
+  }
+
+  Future<Response> sendInvitation(String groupID, int userID) async {
+    return await apiClient.postData("/group/$groupID/$userID/invitation-send/",{});
+  }
 }

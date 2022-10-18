@@ -9,7 +9,7 @@ export 'animal/animal_search_result_model.dart';
 export 'animal/single_animal_details.dart';
 export 'group page/page/all_pages_model.dart';
 export '../../data/model/response/group/group_memebers_model.dart';
-export 'profile/friends_list_model.dart';
+export '../../data/model/response/group/friends_list_model.dart';
 export 'policy and conditions/privacy_policy_model.dart';
 export 'group page/page/page_images_model.dart';
 export '../../data/model/response/profile_video_model.dart';

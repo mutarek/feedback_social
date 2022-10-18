@@ -1,5 +1,5 @@
 import 'package:als_frontend/old_code/const/url.dart';
-import 'package:als_frontend/old_code/model/profile/friends_list_model.dart';
+import 'package:als_frontend/data/model/response/group/friends_list_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;

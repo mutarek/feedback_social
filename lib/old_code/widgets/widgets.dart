@@ -21,7 +21,7 @@ export '../../screens/group/widget/profile_post_widget.dart';
 export '../../screens/home/view/comment_widget.dart';
 export '../../screens/more/widget/custom_menu_card.dart';
 export 'menu/custom_app_bar.dart';
-export 'profile/friend_list_card.dart';
+export '../../screens/group/widget/friend_list_card.dart';
 export '../../screens/group/widget/custom_group_page_button.dart.dart';
 export '../../screens/page/widget/cover_photo_widget.dart';
 export 'Page Group/page_photo_widgrt.dart';

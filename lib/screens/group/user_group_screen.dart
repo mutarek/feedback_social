@@ -1,6 +1,7 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/invite_group_screen.dart';
 import 'package:als_frontend/screens/group/view/group_image_video_view.dart';
 import 'package:als_frontend/screens/group/view/group_member_view.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
@@ -16,7 +17,7 @@ import 'package:provider/provider.dart';
 class UserGroupScreen extends StatefulWidget {
   final String groupID;
 
-  UserGroupScreen(this.groupID, {Key? key}) : super(key: key);
+  const UserGroupScreen(this.groupID, {Key? key}) : super(key: key);
 
   @override
   State<UserGroupScreen> createState() => _UserGroupScreenState();
@@ -62,7 +63,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                     children: [
                                       Stack(
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             width: width,
                                             child: CoverPhotoWidget(
                                               isTrue: false,
@@ -104,7 +105,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                         // groupFriendListProvider.friendsList = [];
                                                         // groupInviteProvider.groupId = groupProvider.groupDetails!.id as int;
                                                         // groupFriendListProvider.groupId = groupProvider.groupDetails!.id as int;
-                                                        // Get.to(() => const InviteFriendScreen());
+                                                        Get.to(() => InviteGroupScreen(int.parse(widget.groupID)));
                                                       },
                                                       child: CircleAvatar(
                                                         backgroundColor: Palette.notificationColor,
@@ -185,7 +186,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                   createPostWidget(context, authProvider, isForGroup: true, groupID: int.parse(widget.groupID)),
 
                                   /*----------------------------------------Newsfeed---------------------------------*/
-                                  SizedBox(height: 15),
+                                  const SizedBox(height: 15),
                                   ListView.builder(
                                       physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
@@ -195,7 +196,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                       itemCount: groupProvider.groupAllPosts.length,
                                       itemBuilder: (context, index) {
                                         return Container(
-                                            margin: EdgeInsets.only(bottom: 10),
+                                            margin: const EdgeInsets.only(bottom: 10),
                                             child: TimeLineWidget(groupProvider.groupAllPosts[index], index, groupProvider,
                                                 isGroup: true, groupID: int.parse(widget.groupID)));
                                       }),
@@ -204,7 +205,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                             ),
                             GroupImageVideoView(int.parse(widget.groupID)),
                             GroupImageVideoView(int.parse(widget.groupID), isForImage: false),
-                            GroupMemberView(),
+                            const GroupMemberView(),
                           ],
                         ),
                       )),

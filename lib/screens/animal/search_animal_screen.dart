@@ -29,11 +29,12 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
     super.initState();
     searchController = TextEditingController();
     searchController.text = widget.code;
+    Provider.of<AnimalProvider>(context, listen: false).searchAnimal(widget.code);
   }
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<AnimalProvider>(context, listen: false).searchAnimal(widget.code);
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(

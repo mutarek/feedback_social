@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import '../../provider/provider.dart';
 import '../../widgets/widgets.dart';
 import '../screens.dart';
@@ -18,18 +17,17 @@ class InviteFriendScreen extends StatefulWidget {
 class _InviteFriendScreenState extends State<InviteFriendScreen> {
   TextEditingController searchController = TextEditingController();
   int value = 0;
+
   @override
   void initState() {
     value = 0;
-    final friendList =
-        Provider.of<GroupInviteFriendListProvider>(context, listen: false);
+    final friendList = Provider.of<GroupInviteFriendListProvider>(context, listen: false);
     friendList.getData();
     super.initState();
   }
 
   void refresh() {
-    final friendList =
-        Provider.of<GroupInviteFriendListProvider>(context, listen: false);
+    final friendList = Provider.of<GroupInviteFriendListProvider>(context, listen: false);
     friendList.getData();
     // final searchList =
     //     Provider.of<SearchGroupFriendListService>(context, listen: false);
@@ -51,10 +49,7 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                   child: Container(
                     height: height * 0.055,
                     decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5),
-                            bottomLeft: Radius.circular(5))),
+                        color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
                     child: TextFormField(
                         controller: searchController,
                         textAlign: TextAlign.center,
@@ -68,18 +63,15 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                         )),
                   ),
                 ),
-                Consumer2<GroupFriendSearchProvider,
-                        GroupInviteFriendListProvider>(
-                    builder: (context, searchProvider,
-                        groupInviteFriendListProvider, child) {
+                Consumer2<GroupFriendSearchProvider, GroupInviteFriendListProvider>(
+                    builder: (context, searchProvider, groupInviteFriendListProvider, child) {
                   return SizedBox(
                     height: height * 0.055,
                     width: width * 0.18,
                     child: ElevatedButton(
                         onPressed: () {
                           searchProvider.friendsList = [];
-                          searchProvider.groupId =
-                              groupInviteFriendListProvider.groupId;
+                          searchProvider.groupId = groupInviteFriendListProvider.groupId;
                           searchProvider.value = searchController.text;
                           searchProvider.getData();
                           if (searchController.text.isNotEmpty) {
@@ -87,8 +79,7 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                               value = 1;
                             });
                           } else {
-                            Fluttertoast.showToast(
-                                msg: "Insert a name to search");
+                            Fluttertoast.showToast(msg: "Insert a name to search");
                           }
                         },
                         child: const Icon(Icons.search)),
@@ -97,10 +88,8 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
               ],
             ),
             (value == 0)
-                ? Consumer3<GroupInviteFriendListProvider,
-                        PublicProfileDetailsProvider, GroupInviteProvider>(
-                    builder: (context, friendsListProvider, publicProvider,
-                        groupInviteProvider, child) {
+                ? Consumer3<GroupInviteFriendListProvider, PublicProfileDetailsProvider, GroupInviteProvider>(
+                    builder: (context, friendsListProvider, publicProvider, groupInviteProvider, child) {
                     return (friendsListProvider.isLoaded == false)
                         ? const Center(
                             child: CircularProgressIndicator(),
@@ -109,74 +98,53 @@ class _InviteFriendScreenState extends State<InviteFriendScreen> {
                             child: ListView.builder(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
-                                itemCount:
-                                    friendsListProvider.friendsList.length,
+                                itemCount: friendsListProvider.friendsList.length,
                                 itemBuilder: (context, index) {
                                   return InkWell(
                                     onTap: () {
-                                      publicProvider.id = friendsListProvider
-                                          .friendsList[index].id;
-                                      Get.to(() =>
-                                          const PublicProfileDetailsScreen());
+                                      publicProvider.id = friendsListProvider.friendsList[index].id;
+                                      Get.to(() => const PublicProfileDetailsScreen());
                                     },
                                     child: FriendListCard(
                                         verb: "Invite",
                                         onPressed: () {
-                                          groupInviteProvider.userId =
-                                              friendsListProvider
-                                                  .friendsList[index].id;
+                                          groupInviteProvider.userId = friendsListProvider.friendsList[index].id;
                                           groupInviteProvider.sendInvitation();
                                           refresh();
                                         },
                                         width: width,
                                         height: height,
-                                        name: friendsListProvider
-                                            .friendsList[index].fullName,
-                                        image: friendsListProvider
-                                            .friendsList[index].profileImage),
+                                        name: friendsListProvider.friendsList[index].fullName,
+                                        image: friendsListProvider.friendsList[index].profileImage),
                                   );
                                 }),
                           );
                   })
-                : Consumer4<
-                        GroupFriendSearchProvider,
-                        PublicProfileDetailsProvider,
-                        GroupInviteProvider,
-                        GroupFriendSearchProvider>(
-                    builder: (context, groupfriendsListProvider, publicProvider,
-                        groupInviteProvider, groupFriendSearchProvider, child) {
+                : Consumer4<GroupFriendSearchProvider, PublicProfileDetailsProvider, GroupInviteProvider, GroupFriendSearchProvider>(
+                    builder: (context, groupfriendsListProvider, publicProvider, groupInviteProvider, groupFriendSearchProvider, child) {
                     return SingleChildScrollView(
                       child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          itemCount:
-                              groupFriendSearchProvider.friendsList.length,
+                          itemCount: groupFriendSearchProvider.friendsList.length,
                           itemBuilder: (context, index) {
-                            return (groupFriendSearchProvider
-                                    .friendsList.isNotEmpty)
+                            return (groupFriendSearchProvider.friendsList.isNotEmpty)
                                 ? InkWell(
                                     onTap: () {
-                                      publicProvider.id =
-                                          groupfriendsListProvider
-                                              .friendsList[index].id;
-                                      Get.to(() =>
-                                          const PublicProfileDetailsScreen());
+                                      publicProvider.id = groupfriendsListProvider.friendsList[index].id;
+                                      Get.to(() => const PublicProfileDetailsScreen());
                                     },
                                     child: FriendListCard(
                                         verb: "Invite",
                                         onPressed: () {
-                                          groupInviteProvider.userId =
-                                              groupfriendsListProvider
-                                                  .friendsList[index].id;
+                                          groupInviteProvider.userId = groupfriendsListProvider.friendsList[index].id;
                                           groupInviteProvider.sendInvitation();
                                           refresh();
                                         },
                                         width: width,
                                         height: height,
-                                        name: groupFriendSearchProvider
-                                            .friendsList[index].fullName,
-                                        image: groupFriendSearchProvider
-                                            .friendsList[index].profileImage),
+                                        name: groupFriendSearchProvider.friendsList[index].fullName,
+                                        image: groupFriendSearchProvider.friendsList[index].profileImage),
                                   )
                                 : const Center(
                                     child: Text("No result found"),

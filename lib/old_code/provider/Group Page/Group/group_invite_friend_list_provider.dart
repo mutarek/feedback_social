@@ -13,11 +13,10 @@ class GroupInviteFriendListProvider extends ChangeNotifier {
   Future<void> getData() async {
     friendsList = [];
     isLoaded = false;
-    
+
     print(isLoaded);
     try {
-      friendsList = (await GroupInviteFriendListService(groupId: groupId)
-          .getFriendsList())!;
+      friendsList = (await GroupInviteFriendListService(groupId: groupId).getFriendsList())!;
       notifyListeners();
       if (friendsList.isNotEmpty) {
         isLoaded = true;

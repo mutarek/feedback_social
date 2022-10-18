@@ -1,4 +1,4 @@
-import 'package:als_frontend/old_code/model/profile/friends_list_model.dart';
+import 'package:als_frontend/data/model/response/group/friends_list_model.dart';
 import 'package:als_frontend/old_code/service/friends/search_group_friend_list._service.dart';
 import 'package:flutter/material.dart';
 

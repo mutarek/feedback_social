@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
+import 'package:als_frontend/data/model/response/group/friends_list_model.dart';
 import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
-import 'package:als_frontend/data/model/response/group/group_post_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/repository/group_repo.dart';
@@ -248,6 +248,60 @@ class GroupProvider with ChangeNotifier {
       response.body.forEach((element) {
         groupVideoLists.add(ProfileVideoModel.fromJson(element));
       });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  // TODO: for Group members lists who's not member in this group
+  List<FriendListModel> friendsList = [];
+  List<FriendListModel> friendsListTemp = [];
+
+  callForGetAllGroupMemberWhoNotMember(int groupID) async {
+    isLoading = true;
+    friendsList.clear();
+    friendsList = [];
+    friendsListTemp.clear();
+    friendsListTemp = [];
+    //notifyListeners();
+    Response response = await groupRepo.callForGetAllGroupMemberWhoNotMember(groupID.toString());
+    isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        friendsList.add(FriendListModel.fromJson(element));
+      });
+      friendsListTemp.addAll(friendsList);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  searchUser(String query) {
+    friendsList.clear();
+    friendsList = [];
+    if (query.isEmpty) {
+      friendsList.addAll(friendsListTemp);
+      notifyListeners();
+    } else {
+      for (var element in friendsListTemp) {
+        if (element.fullName.toLowerCase().toString().contains(query.toLowerCase().toString())) {
+          friendsList.add(element);
+        }
+      }
+      notifyListeners();
+    }
+  }
+
+// TODO: for send invitation
+  sendInvitation(int groupID, int userID, int index) async {
+    Response response = await groupRepo.sendInvitation(groupID.toString(), userID);
+
+    if (response.statusCode == 201) {
+      Fluttertoast.showToast(msg: response.body['message']);
+      friendsList.removeAt(index);
+      friendsListTemp.removeAt(index);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
