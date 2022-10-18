@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
+import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
 import 'package:als_frontend/data/model/response/group/group_post_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/repository/group_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:flutter/foundation.dart';
@@ -166,7 +168,7 @@ class GroupProvider with ChangeNotifier {
         status = 0;
         likesStatusAllData.add(0);
         for (var e in newsFeedData.likedBy!) {
-          if (e.id.toString() == id) {
+          if (e.id.toString() == userID) {
             status = 1;
             continue;
           }
@@ -188,8 +190,8 @@ class GroupProvider with ChangeNotifier {
 
   // for LIKE comment
 
-  addLike(int groupID,int postID, int index) async {
-    Response response = await newsfeedRepo.addLikeONGroup(postID,groupID);
+  addLike(int groupID, int postID, int index) async {
+    Response response = await newsfeedRepo.addLikeONGroup(postID, groupID);
     if (response.body['liked'] == true) {
       likesStatusAllData[index] = 1;
       groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! + 1;
@@ -208,6 +210,47 @@ class GroupProvider with ChangeNotifier {
   addGroupPostTimeLine(NewsFeedData n) async {
     groupAllPosts.add(n);
     likesStatusAllData.add(0);
+    notifyListeners();
+  }
+
+  // TODO: for Group Image
+  List<GroupImagesModel> groupImagesLists = [];
+  bool isLoadingForGroupImageVideo = false;
+
+  callForGetAllGroupImage(int groupID) async {
+    isLoadingForGroupImageVideo = true;
+    groupImagesLists.clear();
+    groupImagesLists = [];
+    //notifyListeners();
+    Response response = await groupRepo.callForGetGroupAllImages(groupID.toString());
+    isLoadingForGroupImageVideo = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        groupImagesLists.add(GroupImagesModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  // TODO: for Group Video
+  List<ProfileVideoModel> groupVideoLists = [];
+
+  callForGetAllGroupVideo(int groupID) async {
+    isLoadingForGroupImageVideo = true;
+    groupVideoLists.clear();
+    groupVideoLists = [];
+    //notifyListeners();
+    Response response = await groupRepo.callForGetGroupAllVideo(groupID.toString());
+    isLoadingForGroupImageVideo = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        groupVideoLists.add(ProfileVideoModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
     notifyListeners();
   }
 }

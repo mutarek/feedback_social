@@ -1,4 +1,4 @@
-import 'package:als_frontend/old_code/model/group%20page/group/group_images_model.dart';
+import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/old_code/service/group%20page/group_images_service.dart';
 import 'package:flutter/material.dart';
 

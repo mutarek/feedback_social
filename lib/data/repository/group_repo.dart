@@ -37,4 +37,12 @@ class GroupRepo {
   Future<Response> callForGetGroupAllPosts(String groupID) async {
     return await apiClient.getData("/posts/group/$groupID/");
   }
+
+  Future<Response> callForGetGroupAllImages(String groupID) async {
+    return await apiClient.getData("/group/$groupID/image/list/");
+  }
+
+  Future<Response> callForGetGroupAllVideo(String groupID) async {
+    return await apiClient.getData("/group/$groupID/video/list/");
+  }
 }
