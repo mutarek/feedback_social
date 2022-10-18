@@ -57,9 +57,8 @@ class FlagGroupView extends StatelessWidget {
                                   itemBuilder: (context, index2) {
                                     return InkWell(
                                       onTap: () {
-
                                         provider.loadingStart();
-                                        Get.to(UserGroupScreen(provider.authorGroupList[index2].id.toString()));
+                                        Get.to(UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(6.0),
@@ -109,7 +108,6 @@ class FlagGroupView extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return CustomPageGroupButton(
                                   onTap: () {
-
                                     provider.loadingStart();
                                     Get.to(PublicGroupScreen(provider.allSuggestGroupList[index].id.toString()));
                                   },

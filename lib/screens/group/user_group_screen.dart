@@ -19,8 +19,9 @@ import '../../provider/other_provider.dart';
 
 class UserGroupScreen extends StatefulWidget {
   final String groupID;
+  final int index;
 
-  const UserGroupScreen(this.groupID, {Key? key}) : super(key: key);
+  const UserGroupScreen(this.groupID, this.index, {Key? key}) : super(key: key);
 
   @override
   State<UserGroupScreen> createState() => _UserGroupScreenState();
@@ -139,7 +140,9 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                           Navigator.of(context).pop();
                                                           Navigator.of(context).push(MaterialPageRoute(
                                                               builder: (_) => CreateGroupScreen(
-                                                                  authorGroup: groupProvider.groupDetailsModel, isUpdateGroup: true)));
+                                                                  authorGroup: groupProvider.groupDetailsModel,
+                                                                  isUpdateGroup: true,
+                                                                  index: widget.index)));
 
                                                           // editGroupProvider.groupId = groupProvider.groupDetails!.id as int;
                                                           // Get.to(() => const EditGroup());

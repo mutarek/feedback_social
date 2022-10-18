@@ -18,8 +18,8 @@ import 'package:provider/provider.dart';
 class CreateGroupScreen extends StatefulWidget {
   final bool isUpdateGroup;
   final AuthorGroupDetailsModel? authorGroup;
-
-  const CreateGroupScreen({this.authorGroup, this.isUpdateGroup = false, Key? key}) : super(key: key);
+  final int index;
+  const CreateGroupScreen({this.authorGroup, this.isUpdateGroup = false,this.index=0, Key? key}) : super(key: key);
 
   @override
   State<CreateGroupScreen> createState() => _CreateGroupScreenState();
@@ -141,7 +141,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                     groupNameController.clear();
                                     Get.back();
                                   }
-                                }, widget.authorGroup!.id as int);
+                                }, widget.authorGroup!.id as int,widget.index);
                               } else {
                                 groupProvider.createGroup(groupNameController.text, otherProvider.selectedFile, (bool status) {
                                   if (status) {

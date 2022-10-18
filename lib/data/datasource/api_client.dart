@@ -59,6 +59,20 @@ class ApiClient {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
+  Future<Response> patchData(String uri, dynamic body, {Map<String, String>? headers}) async {
+    try {
+      debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
+      debugPrint('====> API Body: $body');
+      Http.Response _response = await Http.patch(
+        Uri.parse(appBaseUrl + uri),
+        body: jsonEncode(body),
+        headers: headers ?? _mainHeaders,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return const Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
 
   Future<Response> postMultipartData(String uri, Map<String, String> body, List<Http.MultipartFile> multipartBody,
       {Map<String, String>? headers}) async {
@@ -94,6 +108,7 @@ class ApiClient {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
+
   Future<Response> putMultipartData(String uri, Map<String, String> body, List<Http.MultipartFile> multipartBody,
       {Map<String, String>? headers}) async {
     try {

@@ -133,7 +133,7 @@ class GroupProvider with ChangeNotifier {
           {"name": groupName, "category": categoryValue.id.toString(), "is_private": groupISPrivate.toString()}, multipartFile);
     } else {
       response =
-          await groupRepo.createGroupWithoutImageUpload({"name": groupName, "category": categoryValue, "is_private": groupISPrivate});
+          await groupRepo.createGroupWithoutImageUpload({"name": groupName, "category": categoryValue.id, "is_private": groupISPrivate});
     }
     isLoading = false;
     if (response.statusCode == 201) {
@@ -154,7 +154,7 @@ class GroupProvider with ChangeNotifier {
   }
 
   // TODO: for create and update Group
-  updateGroup(String groupName, File? file, Function callback,int groupID) async {
+  updateGroup(String groupName, File? file, Function callback,int groupID,int index) async {
     isLoading = true;
     notifyListeners();
     Response response;
@@ -168,18 +168,17 @@ class GroupProvider with ChangeNotifier {
           {"name": groupName, "category": categoryValue.id.toString(), "is_private": groupISPrivate.toString()}, multipartFile,groupID);
     } else {
       response =
-          await groupRepo.updateGroupWithoutImageUpload({"name": groupName, "category": categoryValue, "is_private": groupISPrivate},groupID);
+          await groupRepo.updateGroupWithoutImageUpload({"name": groupName, "category": categoryValue.id, "is_private": groupISPrivate},groupID);
     }
     isLoading = false;
-    if (response.statusCode == 201) {
-      authorGroupList.add(AllGroupModel(
-          id: response.body['id'],
-          name: response.body['name'],
-          category: response.body['category'],
-          coverPhoto: response.body['cover_photo'],
-          isPrivate: response.body['is_private'],
-          totalMember: response.body['total_member']));
-      Fluttertoast.showToast(msg: "Created successfully");
+    if (response.statusCode == 200) {
+      authorGroupList[index].id=response.body['id'];
+      authorGroupList[index].name=response.body['name'];
+      authorGroupList[index].category=response.body['category'];
+      authorGroupList[index].coverPhoto=response.body['cover_photo'];
+      authorGroupList[index].totalMember=response.body['total_member'];
+
+      Fluttertoast.showToast(msg: "Update successfully");
       callback(true);
     } else {
       callback(false);
