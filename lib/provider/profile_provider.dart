@@ -190,15 +190,15 @@ class ProfileProvider with ChangeNotifier {
 
   bool isLoadingForUploadPhoto = false;
 
-  uploadPhoto(Function callBackFunction, {bool isCover = false}) async {
+  uploadPhoto(Function callBackFunction,File file, {bool isCover = false}) async {
     isLoadingForUploadPhoto = true;
     List<Http.MultipartFile> multipartFile = [];
     if (isCover) {
       multipartFile.add(
-          Http.MultipartFile('cover_image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
+          Http.MultipartFile('cover_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
     } else {
       multipartFile.add(
-          Http.MultipartFile('profile_image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
+          Http.MultipartFile('profile_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
     }
 
     notifyListeners();
