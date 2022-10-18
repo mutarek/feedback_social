@@ -4,12 +4,9 @@
 
 import 'dart:convert';
 
-List<AllGroupModel> allGroupModelFromJson(String str) =>
-    List<AllGroupModel>.from(
-        json.decode(str).map((x) => AllGroupModel.fromJson(x)));
+List<AllGroupModel> allGroupModelFromJson(String str) => List<AllGroupModel>.from(json.decode(str).map((x) => AllGroupModel.fromJson(x)));
 
-String allGroupModelToJson(List<AllGroupModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String allGroupModelToJson(List<AllGroupModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class AllGroupModel {
   AllGroupModel({
@@ -31,9 +28,9 @@ class AllGroupModel {
   factory AllGroupModel.fromJson(Map<String, dynamic> json) => AllGroupModel(
         id: json["id"],
         name: json["name"],
-        category: json["category"],
-        coverPhoto: json["cover_photo"],
-        isPrivate: json["is_private"],
+        category: json["category"]??"",
+        coverPhoto: json["cover_photo"] ?? json["avatar"],
+        isPrivate: json["is_private"]??false,
         totalMember: json["total_member"],
       );
 

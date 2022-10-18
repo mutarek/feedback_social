@@ -96,7 +96,6 @@ class AddPostScreen extends StatelessWidget {
                           descriptionController.clear();
                           postProvider.clearImageVideo();
                           newsfeedProvider.addPostOnTimeLine(n);
-                          newsfeedProvider.addedDataOnLists();
                         }
                       },
                     );

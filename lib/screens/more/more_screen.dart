@@ -2,6 +2,7 @@ import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
+import 'package:als_frontend/screens/group/my_group_screen.dart';
 import 'package:als_frontend/screens/more/widget/custom_menu_card.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/send_friend_request_screen.dart';
@@ -65,7 +66,6 @@ class MoreScreen extends StatelessWidget {
                               padding: EdgeInsets.only(top: h * 0.014),
                               child: InkWell(
                                 onTap: () {
-                                  // userNewsfeedProvider.id = provider.userprofileData.id!;
                                   Get.to(() => const ProfileScreen());
                                 },
                                 child: Container(
@@ -109,7 +109,7 @@ class MoreScreen extends StatelessWidget {
                                     iconColor: Palette.primary,
                                     iconName: "group",
                                     navigetion: () {
-                                      // Get.to(const CommingSoonScreen());
+                                      Get.to(const MyGroupScreen());
                                     }),
                               ),
                               Expanded(

@@ -107,7 +107,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 currentIndex: dashboardProvider.selectIndex,
                 bubbleFillStyle: BubbleFillStyle.fill,
                 onTap: (index) {
-                  controller.animateToPage(index!, duration: Duration(seconds: 1), curve: Curves.easeOut);
+                  controller.animateToPage(index!, duration: const Duration(seconds: 1), curve: Curves.easeOut);
                   dashboardProvider.changeSelectIndex(index);
                 },
               ),
@@ -163,16 +163,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Expanded(
                     child: PageView(
                       controller: controller,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       onPageChanged: (page) {
                         dashboardProvider.changeSelectIndex(page);
                       },
                       children: [
                         HomeScreen(refreshController),
-                        PageOrGroupDecisionGroup(),
+                        const PageOrGroupDecisionGroup(),
                         Container(),
-                        ProfileScreen(),
-                        MoreScreen(),
+                        const ProfileScreen(),
+                        const MoreScreen(),
                       ],
                     ),
                   )
@@ -188,7 +188,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: InkWell(
       onTap: () {
         dashboardProvider.changeSelectIndex(position);
-        controller.animateToPage(position, duration: Duration(seconds: 1), curve: Curves.easeOut);
+        controller.animateToPage(position, duration: const Duration(seconds: 1), curve: Curves.easeOut);
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

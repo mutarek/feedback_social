@@ -14,9 +14,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
       var result = await Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => AddPostScreen(authProvider.profileImage, isFromGroupScreen: isForGroup, groupID: groupID)));
 
-      if (result[0] == true && newsFeedProvider!.count == 1) {
-        newsFeedProvider.addedDataOnLists();
-      }
+
     },
     child: Container(
       decoration: BoxDecoration(

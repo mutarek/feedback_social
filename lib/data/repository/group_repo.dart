@@ -13,6 +13,9 @@ class GroupRepo {
   Future<Response> getAllSuggestGroup() async {
     return await apiClient.getData(AppConstant.groupSuggestAllURI);
   }
+  Future<Response> getAllJoinGroup() async {
+    return await apiClient.getData(AppConstant.groupJoinAllURI);
+  }
 
   Future<Response> getOwnGroupList() async {
     return await apiClient.getData(AppConstant.groupCreatorAllURI + "${authRepo.getUserID()}/all");

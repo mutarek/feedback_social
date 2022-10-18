@@ -16,8 +16,10 @@ import 'package:provider/provider.dart';
 
 class PublicGroupScreen extends StatefulWidget {
   final String groupID;
+  final int index;
+  final bool isFromMYGroup;
 
-  const PublicGroupScreen(this.groupID, {Key? key}) : super(key: key);
+  const PublicGroupScreen(this.groupID, {this.index = 0, this.isFromMYGroup = false, Key? key}) : super(key: key);
 
   @override
   State<PublicGroupScreen> createState() => _PublicGroupScreenState();
@@ -133,7 +135,8 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                           if (groupProvider.groupDetailsModel.isMember == false) {
                                                             groupProvider.memberJoin(int.parse(widget.groupID));
                                                           } else {
-                                                            groupProvider.leaveGroup(int.parse(widget.groupID));
+                                                            groupProvider.leaveGroup(int.parse(widget.groupID),
+                                                                index: widget.index, isFromMYGroup: widget.isFromMYGroup);
                                                           }
                                                         },
                                                         child: Container(

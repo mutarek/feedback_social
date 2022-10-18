@@ -45,6 +45,26 @@ class GroupProvider with ChangeNotifier {
   }
 
   //TODO: for get ALl Suggest Group
+  List<AllGroupModel> myGroupList = [];
+
+  initializeMyGroup() async {
+    isLoading = true;
+    myGroupList.clear();
+    myGroupList = [];
+    Response response = await groupRepo.getAllJoinGroup();
+
+    if (response.statusCode == 200) {
+      initializeAuthorGroup();
+      response.body.forEach((element) {
+        myGroupList.add(AllGroupModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  //TODO: for get ALl Suggest Group
   List<AllGroupModel> authorGroupList = [];
 
   initializeAuthorGroup() async {
@@ -111,10 +131,12 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
   }
-  loadingStart(){
+
+  loadingStart() {
     isLoading = true;
     notifyListeners();
   }
+
   //TODO: for User Group
   AuthorGroupDetailsModel groupDetailsModel = AuthorGroupDetailsModel();
 
@@ -331,7 +353,7 @@ class GroupProvider with ChangeNotifier {
   }
 
 // TODO: for member Join
-  leaveGroup(int groupID) async {
+  leaveGroup(int groupID, {int index = 0, bool isFromMYGroup = false}) async {
     Response response = await groupRepo.leaveGroup(groupID.toString());
 
     if (response.statusCode == 204) {
@@ -339,6 +361,9 @@ class GroupProvider with ChangeNotifier {
       groupDetailsModel.totalMember = groupDetailsModel.totalMember! - 1;
       groupDetailsModel.isMember = false;
       callForGetAllGroupMembers(groupID.toString());
+      if (isFromMYGroup) {
+        myGroupList.removeAt(index);
+      }
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }

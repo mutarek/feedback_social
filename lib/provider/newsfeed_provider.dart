@@ -101,15 +101,10 @@ class NewsFeedProvider with ChangeNotifier {
   }
 
   addPostOnTimeLine(NewsFeedData n) async {
-    newsFeedData = n;
-    count = 1;
+    likesStatusAllData.add(0);
+    newsFeedLists.add(newsFeedData);
     notifyListeners();
   }
 
-  addedDataOnLists() async {
-    likesStatusAllData.insert(0, 0);
-    newsFeedLists.add(newsFeedData);
-    count = 2;
-    notifyListeners();
-  }
+
 }
