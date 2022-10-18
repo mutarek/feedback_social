@@ -3,6 +3,7 @@ import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +31,7 @@ class FriendScreen extends StatelessWidget {
       body: Consumer<ProfileProvider>(
         builder: (context, profileProvider, child) {
           return profileProvider.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : ListView(
+              ?FriendReqShimmerWidget() : ListView(
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   children: [
