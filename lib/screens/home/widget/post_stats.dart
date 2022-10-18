@@ -76,9 +76,9 @@ class PostStats extends StatelessWidget {
                                     top: -13,
                                     left: 20,
                                     child: post.totalLike == 0
-                                        ? SizedBox.shrink()
+                                        ? const SizedBox.shrink()
                                         : Container(
-                                            padding: EdgeInsets.all(7),
+                                            padding: const EdgeInsets.all(7),
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: Colors.blue,
@@ -88,7 +88,7 @@ class PostStats extends StatelessWidget {
                                                       color: Colors.grey.withOpacity(.2),
                                                       blurRadius: 10.0,
                                                       spreadRadius: 3.0,
-                                                      offset: Offset(0.0, 0.0))
+                                                      offset: const Offset(0.0, 0.0))
                                                 ]),
                                             child: CustomText(title: post.totalLike.toString(), fontSize: 10),
                                           ))
@@ -100,7 +100,10 @@ class PostStats extends StatelessWidget {
                         InkWell(
                           onTap: () {
                             Get.to(CommentsScreen(index, post.id as int,
-                                isHomeScreen: isHomeNewsFeedProvider, isProfileScreen: isFromProfile));
+                                isHomeScreen: isHomeNewsFeedProvider,
+                                isProfileScreen: isFromProfile,
+                                groupID: groupID,
+                                isGroupScreen: isGroup));
                           },
                           child: SizedBox(
                             width: 40,
@@ -108,14 +111,14 @@ class PostStats extends StatelessWidget {
                             child: Stack(
                               clipBehavior: Clip.none,
                               children: [
-                                Icon(CupertinoIcons.chat_bubble, size: 30, color: Colors.black),
+                                const Icon(CupertinoIcons.chat_bubble, size: 30, color: Colors.black),
                                 Positioned(
                                     top: -13,
                                     left: 20,
                                     child: post.totalComment == 0
-                                        ? SizedBox.shrink()
+                                        ? const SizedBox.shrink()
                                         : Container(
-                                            padding: EdgeInsets.all(7),
+                                            padding: const EdgeInsets.all(7),
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: Colors.blue,
@@ -125,7 +128,7 @@ class PostStats extends StatelessWidget {
                                                       color: Colors.grey.withOpacity(.2),
                                                       blurRadius: 10.0,
                                                       spreadRadius: 3.0,
-                                                      offset: Offset(0.0, 0.0))
+                                                      offset: const Offset(0.0, 0.0))
                                                 ]),
                                             child: CustomText(title: post.totalComment.toString(), fontSize: 10),
                                           ))
@@ -143,10 +146,9 @@ class PostStats extends StatelessWidget {
                                   width: 35,
                                   height: 35,
                                   child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
-                                  // child: Icon(CupertinoIcons.paperplane, size: 30, color: Colors.black),
                                 ),
                               )
-                            : InkWell(onTap: () {}, child: Icon(CupertinoIcons.bookmark, size: 25, color: Colors.black)),
+                            : InkWell(onTap: () {}, child: const Icon(CupertinoIcons.bookmark, size: 25, color: Colors.black)),
                       ],
                     ),
                   ),

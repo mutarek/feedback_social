@@ -20,7 +20,7 @@ class AuthorGroupDetailsModel {
     id = json['id'];
     name = json['name'];
     category = json['category'];
-    coverPhoto = json['cover_photo'];
+    coverPhoto = json['cover_photo']??"";
     isPrivate = json['is_private'];
     avatar = json['avatar'];
     postApprovedByAdmin = json['post_approved_by_admin'];
@@ -363,9 +363,9 @@ class Group {
   Group.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    category = json['category'];
-    coverPhoto = json['cover_photo'];
-    isPrivate = json['is_private'];
+    category = json['category'].toString();
+    coverPhoto = json['cover_photo']??"";
+    isPrivate = json['is_private']??false;
   }
 
   num? id;

@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
@@ -13,10 +14,21 @@ import 'package:get/route_manager.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
-class CreateGroupScreen extends StatelessWidget {
+class CreateGroupScreen extends StatefulWidget {
   CreateGroupScreen({Key? key}) : super(key: key);
-  final TextEditingController groupNameController = TextEditingController();
 
+  @override
+  State<CreateGroupScreen> createState() => _CreateGroupScreenState();
+}
+
+class _CreateGroupScreenState extends State<CreateGroupScreen> {
+  final TextEditingController groupNameController = TextEditingController();
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<GroupProvider>(context, listen: false).initializeCategory();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -87,19 +99,19 @@ class CreateGroupScreen extends StatelessWidget {
                         Container(
                           width: width,
                           decoration: BoxDecoration(color: const Color(0xFF656B87), borderRadius: BorderRadius.circular(15.0)),
-                          child: DropdownButton<String>(
+                          child: DropdownButton<CategoryModel>(
                             dropdownColor: Palette.primary,
                             value: groupProvider.categoryValue,
                             isExpanded: true,
                             underline: const SizedBox.shrink(),
                             icon: const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white),
                             items: groupProvider.items
-                                .map((item) => DropdownMenuItem<String>(
+                                .map((item) => DropdownMenuItem<CategoryModel>(
                                     value: item,
                                     child: Container(
                                         padding: const EdgeInsets.only(left: 10),
                                         child: CustomText(
-                                            title: item, textStyle: latoStyle500Medium.copyWith(fontSize: 17, color: Colors.white)))))
+                                            title: item.name, textStyle: latoStyle500Medium.copyWith(fontSize: 17, color: Colors.white)))))
                                 .toList(),
                             onChanged: (item) {
                               groupProvider.changeGroupCategory(item!);

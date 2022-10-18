@@ -42,8 +42,13 @@ class PostProvider with ChangeNotifier {
       response = await postRepo.submitPost({"description": postText}, multipartFile);
     }
     isLoading = false;
-    if (response.statusCode == 201) {
-      callBackFunction(true, NewsFeedData.fromJson(response.body), 1);
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      if (isFromGroup) {
+        callBackFunction(true, NewsFeedData.fromJson(response.body), 1);
+      } else {
+        callBackFunction(true, NewsFeedData.fromJson(response.body), 1);
+      }
+
       Fluttertoast.showToast(msg: "Posted");
     } else {
       callBackFunction(false, NewsFeedData(), 0);

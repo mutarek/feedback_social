@@ -86,8 +86,8 @@ class NewsFeedData {
         id: json["id"],
         description: json["description"],
         author: Author.fromJson(json["author"]),
-        group: json["group"] == null ? null : Group.fromJson(json["group"]),
-        isApprove: json["is_approve"] == null ? null : json["is_approve"],
+        group: json["group"] == null ? Group() : Group.fromJson(json["group"]),
+        isApprove: json["is_approve"] ?? null,
         totalImage: json["total_image"],
         images: List<ImageData>.from(json["images"].map((x) => ImageData.fromJson(x))),
         totalVideo: json["total_video"],
@@ -110,7 +110,7 @@ class NewsFeedData {
         "description": description,
         "author": author!.toJson(),
         "group": group == null ? null : group!.toJson(),
-        "is_approve": isApprove == null ? null : isApprove,
+        "is_approve": isApprove ?? null,
         "total_image": totalImage,
         "images": List<dynamic>.from(images!.map((x) => x.toJson())),
         "total_video": totalVideo,
@@ -250,10 +250,10 @@ class Group {
   factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json["id"],
         name: json["name"],
-        category: json["category"],
+        category: json["category"].toString(),
         coverPhoto: json["cover_photo"],
-        isPrivate: json["is_private"] == null ? null : json["is_private"],
-        avatar: json["avatar"] == null ? null : json["avatar"],
+        isPrivate: json["is_private"] ?? false,
+        avatar: json["avatar"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -261,8 +261,8 @@ class Group {
         "name": name,
         "category": category,
         "cover_photo": coverPhoto,
-        "is_private": isPrivate == null ? null : isPrivate,
-        "avatar": avatar == null ? null : avatar,
+        "is_private": isPrivate ?? null,
+        "avatar": avatar ?? null,
       };
 }
 

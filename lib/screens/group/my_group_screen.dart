@@ -123,7 +123,8 @@ class MyGroupScreen extends StatelessWidget {
                                   return CustomPageGroupButton(
                                       onTap: () {
                                         provider.loadingStart();
-                                        Get.to(PublicGroupScreen(provider.myGroupList[index].id.toString()));
+                                        Get.to(PublicGroupScreen(provider.myGroupList[index].id.toString(),
+                                            index: index, isFromMYGroup: true));
                                       },
                                       goToGroupOrPage: () {},
                                       groupOrPageImage: provider.myGroupList[index].coverPhoto,

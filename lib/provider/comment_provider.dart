@@ -34,6 +34,24 @@ class CommentProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void initializeGroupCommentData(int postID, int groupID) async {
+    comments.clear();
+    comments = [];
+    isLoading = true;
+    Response response = await commentRepo.getAllGroupCommentData(postID, groupID);
+    isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        CommentModels comment = CommentModels.fromJson(element);
+
+        comments.add(comment);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
   Future<bool> addComment(String comment, String fullName, String profileImage, int postID, int userID) async {
     Response response = await commentRepo.addComment(postID, comment);
     if (response.statusCode == 201) {
@@ -75,6 +93,11 @@ class CommentProvider with ChangeNotifier {
 
   initializeSocket(int postID) {
     channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/comment/timeline_post/');
+    userPostComments();
+  }
+
+  initializeSocketFroGroup(int postID, int groupID) {
+    channel = IOWebSocketChannel.connect('wss://als-social.com/ws/group/$groupID/$postID/comment/timeline_post/');
     userPostComments();
   }
 }

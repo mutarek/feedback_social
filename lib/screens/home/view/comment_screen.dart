@@ -16,10 +16,14 @@ import 'package:provider/provider.dart';
 class CommentsScreen extends StatefulWidget {
   final int index;
   final int postID;
+  final int groupID;
   final bool isHomeScreen;
   final bool isProfileScreen;
+  final bool isGroupScreen;
 
-  const CommentsScreen(this.index, this.postID, {this.isHomeScreen = false, this.isProfileScreen = false, Key? key}) : super(key: key);
+  const CommentsScreen(this.index, this.postID,
+      {this.isHomeScreen = false, this.isProfileScreen = false, this.isGroupScreen = false, this.groupID = 0, Key? key})
+      : super(key: key);
 
   @override
   State<CommentsScreen> createState() => _CommentsScreenState();
@@ -28,8 +32,14 @@ class CommentsScreen extends StatefulWidget {
 class _CommentsScreenState extends State<CommentsScreen> {
   @override
   void initState() {
-    Provider.of<CommentProvider>(context, listen: false).initializeCommentData(widget.postID);
-    Provider.of<CommentProvider>(context, listen: false).initializeSocket(widget.postID);
+    if (widget.isGroupScreen) {
+      Provider.of<CommentProvider>(context, listen: false).initializeGroupCommentData(widget.postID, widget.groupID);
+      Provider.of<CommentProvider>(context, listen: false).initializeSocketFroGroup(widget.postID, widget.groupID);
+    } else {
+      Provider.of<CommentProvider>(context, listen: false).initializeCommentData(widget.postID);
+      Provider.of<CommentProvider>(context, listen: false).initializeSocket(widget.postID);
+    }
+
     Provider.of<AuthProvider>(context, listen: false).getUserInfo();
 
     super.initState();

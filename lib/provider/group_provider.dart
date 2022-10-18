@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/data/model/response/group/friends_list_model.dart';
@@ -82,11 +83,30 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO: for Group Category
-  List<String> items = ['Sports', 'Education', 'Animal', 'Pet', 'Music', 'Entertainment', 'Others'];
-  String categoryValue = "Sports";
+  //TODO: for get ALl category
+  List<CategoryModel> items = [];
 
-  changeGroupCategory(String value) {
+  initializeCategory() async {
+    isLoading = true;
+    items.clear();
+    items = [];
+    Response response = await groupRepo.getCategory();
+    isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        items.add(CategoryModel.fromJson(element));
+      });
+      categoryValue = items[0];
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  //TODO: for Group Category
+  CategoryModel categoryValue = CategoryModel();
+
+  changeGroupCategory(CategoryModel value) {
     categoryValue = value;
     notifyListeners();
   }
@@ -109,7 +129,7 @@ class GroupProvider with ChangeNotifier {
           .add(Http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
 
       response = await groupRepo.createGroupWithImageUpload(
-          {"name": groupName, "category": categoryValue, "is_private": groupISPrivate.toString()}, multipartFile);
+          {"name": groupName, "category": categoryValue.id.toString(), "is_private": groupISPrivate.toString()}, multipartFile);
     } else {
       response =
           await groupRepo.createGroupWithoutImageUpload({"name": groupName, "category": categoryValue, "is_private": groupISPrivate});
@@ -231,14 +251,14 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateCommentDataCount(int index) {
+  void updateCommentDataCount(int index, bool isMyGroup) {
     groupAllPosts[index].totalComment = groupAllPosts[index].totalComment! + 1;
     notifyListeners();
   }
 
   addGroupPostTimeLine(NewsFeedData n) async {
-    groupAllPosts.add(n);
-    likesStatusAllData.add(0);
+    groupAllPosts.insert(0, n);
+    likesStatusAllData.insert(0, 0);
     notifyListeners();
   }
 

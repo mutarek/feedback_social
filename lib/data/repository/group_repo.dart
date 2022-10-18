@@ -13,6 +13,7 @@ class GroupRepo {
   Future<Response> getAllSuggestGroup() async {
     return await apiClient.getData(AppConstant.groupSuggestAllURI);
   }
+
   Future<Response> getAllJoinGroup() async {
     return await apiClient.getData(AppConstant.groupJoinAllURI);
   }
@@ -61,8 +62,11 @@ class GroupRepo {
     return await apiClient.deleteData("/group/$groupID/member/leave/");
   }
 
-
   Future<Response> sendInvitation(String groupID, int userID) async {
     return await apiClient.postData("/group/$groupID/$userID/invitation-send/", {});
+  }
+
+  Future<Response> getCategory() async {
+    return await apiClient.getData(AppConstant.groupCategoryUri);
   }
 }

@@ -10,6 +10,10 @@ class CommentRepo {
     return await apiClient.getData('/posts/$postId/comment/');
   }
 
+  Future<Response> getAllGroupCommentData(int postId, int groupID) async {
+    return await apiClient.getData('/posts/group/$groupID/$postId/comment/');
+  }
+
   Future<Response> addComment(int postId, String comment) async {
     return await apiClient.postData('/posts/$postId/comment/create/', {"comment": comment});
   }
