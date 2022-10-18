@@ -1,5 +1,7 @@
 import 'package:als_frontend/old_code/provider/provider.dart';
+import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
+import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,7 +13,9 @@ import 'package:provider/provider.dart';
 class UpdateCoverPhoto extends StatelessWidget {
   final bool isCoverPhotoUpload;
 
-  const UpdateCoverPhoto({this.isCoverPhotoUpload = false, Key? key}) : super(key: key);
+  const UpdateCoverPhoto({
+    this.isCoverPhotoUpload = false,
+    Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class UpdateCoverPhoto extends StatelessWidget {
           },
         ),
       ),
-      body: Consumer<ProfileProvider>(builder: (context, profileProvider, child) {
+      body: Consumer2<ProfileProvider,OtherProvider>(builder: (context, profileProvider,otherProvider, child) {
         return ModalProgressHUD(
           inAsyncCall: profileProvider.isLoadingForUploadPhoto,
           child: Center(
@@ -36,20 +40,25 @@ class UpdateCoverPhoto extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                (profileProvider.image) == null
+                (otherProvider.selectedFile) == null
                     ? Expanded(
                         child: CachedNetworkImage(
                             imageUrl: isCoverPhotoUpload
                                 ? profileProvider.userprofileData.coverImage!
                                 : profileProvider.userprofileData.profileImage!))
-                    : Expanded(child: Image.file(profileProvider.image!)),
-                ElevatedButton(onPressed: () => profileProvider.pickImage(), child: const Text("Pick image")),
+                    : Expanded(child: Image.file(otherProvider.selectedFile!)),
+                ElevatedButton(onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) =>  isCoverPhotoUpload?ChooseImageAndCropImageView(16, 9, 640, 260):ChooseImageAndCropImageView(1, 1, 128, 128)));
+                }, child: const Text("Pick image")),
                 ElevatedButton(
                     onPressed: () => profileProvider.uploadPhoto((bool status) {
+
                           if (status) {
+                            Provider.of<OtherProvider>(context, listen: false).clearImage();
                             Navigator.of(context).pop();
                           }
-                        }, isCover: isCoverPhotoUpload),
+                        },otherProvider.selectedFile!, isCover: isCoverPhotoUpload,),
                     child: const Text("Update"))
               ],
             ),
