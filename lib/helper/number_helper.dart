@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 String getDate(String date, BuildContext context) {
   String createTime = '';
   DateTime time = DateTime.parse(date);
-  AgeDuration age = Age.dateDifference(fromDate: time, toDate: DateTime.now(), includeToDate: true);
 
+  AgeDuration age = Age.dateDifference(fromDate: time, toDate: DateTime.now(), includeToDate: false);
   int hourCompare = DateTime.now().hour - time.hour;
   int minuteCompare = DateTime.now().minute - time.minute;
   createTime = age.years > 0
