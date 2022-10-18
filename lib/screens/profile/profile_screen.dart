@@ -1,14 +1,12 @@
 import 'package:als_frontend/old_code/const/palette.dart';
-import 'package:als_frontend/provider/other_provider.dart';
-import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
-import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
-import 'package:als_frontend/screens/profile/friend_screen.dart';
-import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
-import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
-import 'package:als_frontend/screens/profile/widget/profile_cover_photo_widget.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
-import 'package:als_frontend/screens/auth/login_screen.dart';
+import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
+import 'package:als_frontend/screens/profile/friend_screen.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
+import 'package:als_frontend/screens/profile/widget/profile_cover_photo_widget.dart';
+import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
+import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
 import 'package:als_frontend/screens/profile/widget/update_cover_photo.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -50,8 +48,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Palette.scaffold,
       body: SafeArea(
-        child: Consumer3<AuthProvider, ProfileProvider,OtherProvider>(
-          builder: (context, authProvider, profileProvider,otherProvider, child) => profileProvider.isLoading || profileProvider.isProfileLoading
+        child: Consumer2<AuthProvider, ProfileProvider>(
+          builder: (context, authProvider, profileProvider, child) => profileProvider.isLoading || profileProvider.isProfileLoading
               ?const profilePostShimmerWidget()
               : SingleChildScrollView(
                   controller: controller,

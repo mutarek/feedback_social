@@ -16,7 +16,7 @@ class OtherProvider with ChangeNotifier {
   }
 
   getImage(ImageSource source, double ratioX, double ratioY, int widget, int height) async {
-    inProcess = true;
+    // inProcess = true;
 
     XFile? image = await ImagePicker().pickImage(source: source);
     if (image != null) {
@@ -24,8 +24,8 @@ class OtherProvider with ChangeNotifier {
         sourcePath: image.path,
         aspectRatio: CropAspectRatio(ratioX: ratioX, ratioY: ratioY),
         compressQuality: 100,
-        maxWidth: widget,
-        maxHeight: height,
+        maxWidth: widget+200,
+        maxHeight: height+200,
         compressFormat: ImageCompressFormat.jpg,
         uiSettings: [
           AndroidUiSettings(

@@ -70,15 +70,7 @@ class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageVie
                         )
                       ],
                     ),
-                    (otherProvider.inProcess)
-                        ? Container(
-                            color: Colors.white,
-                            height: MediaQuery.of(context).size.height * 0.95,
-                            child: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                        : const Center()
+
                   ],
                 )));
   }
