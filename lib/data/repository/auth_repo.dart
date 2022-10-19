@@ -27,6 +27,7 @@ class AuthRepo {
     } else {
       map = {"phone": emailOrPhone};
     }
+
     return await apiClient.postData(AppConstant.otpSendURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
