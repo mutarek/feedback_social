@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
 import 'package:als_frontend/screens/group/invite_group_screen.dart';
+import 'package:als_frontend/screens/group/shimmer_effect/my_group_shimmer_effect.dart';
 import 'package:als_frontend/screens/group/view/group_image_video_view.dart';
 import 'package:als_frontend/screens/group/view/group_member_view.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
@@ -47,8 +48,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
           body: SafeArea(
             child: Consumer2<GroupProvider, AuthProvider>(
                 builder: (context, groupProvider, authProvider, child) => (groupProvider.isLoading)
-                    ? const Center(child: CircularProgressIndicator())
-                    : NestedScrollView(
+                    ? MyGroupShimmerWidget(): NestedScrollView(
                         scrollDirection: Axis.vertical,
                         physics: const NeverScrollableScrollPhysics(),
                         // Setting floatHeaderSlivers to true is required in order to float
