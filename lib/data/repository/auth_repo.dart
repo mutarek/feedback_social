@@ -10,7 +10,8 @@ class AuthRepo {
   AuthRepo({required this.sharedPreferences, required this.apiClient});
 
   Future<Response> login(String email, String password) async {
-    return await apiClient.postData(AppConstant.loginURI, {'email': email, 'password': password});
+    return await apiClient.postData(AppConstant.loginURI, {'email': email, 'password': password},
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
   Future<Response> signup(String firstName, String lastName, String dob, String gender, String email, String password) async {
@@ -59,6 +60,7 @@ class AuthRepo {
       rethrow;
     }
   }
+
   Future<void> changeUserName(String value) async {
     try {
       await sharedPreferences.setString(AppConstant.userName, value);
