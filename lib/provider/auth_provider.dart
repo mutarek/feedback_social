@@ -89,7 +89,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future otpVerify(String code, Function callback) async {
+   otpVerify(String code, Function callback) async {
     _isLoading = true;
     notifyListeners();
     Response response = await authRepo.otpVerify(data, code, isEmail);

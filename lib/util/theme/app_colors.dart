@@ -37,35 +37,6 @@ class AppColors {
 
   static const Color bodyTextColorOverride = Color(0xFF020202);
 
-  //
-  // static Color barColor = HexColor('');
-  // static Color fastButtonColor = HexColor('');
-  // static Color bgndColor = HexColor('');
-  // static Color searchBgndColor = HexColor('');
-  // static Color searchButtonColor = HexColor('');
-  // static Color searchIconColor = HexColor('');
-  // static Color searchTextColor = HexColor('');
-  // static Color qrbgndColor = HexColor('');
-  // static Color qrIconColor = HexColor('');
-  // static Color menuBarBgndColor = HexColor('');
-  // static Color menuBarTextColor = HexColor('');
-  // static Color menuIconColor = HexColor('');
-  // static Color buttonColor = HexColor('');
-  // static Color priceColor = HexColor('');
-  // static Color iconColor = HexColor('');
-  // static Color textColor = HexColor('');
-  // static Color textLinkColor = HexColor('');
-  // static Color settHeaderColor = HexColor('');
-  // static Color settButtBgndColor = HexColor('');
-  // static Color settIconsColor = HexColor('');
-  // static Color settTextColor = HexColor('');
-  // static Color primaryColor = HexColor('');
-  // static Color primaryColor2 = HexColor('');
-  // static Color activeColor = HexColor('');
-  // static Color hintTextColor = HexColor('');
-  // static Color fastButTextColor = HexColor('');
-  // static Color menuIconActiveColor = HexColor('');
-  // static Color bodyTextColor = HexColor('');
 
   static Map<String, Color> lightThemeColors = {
     "backgroundColor": const Color(0xFFf5f5f5),

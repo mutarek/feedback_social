@@ -1,10 +1,9 @@
 class ErrorResponse {
-  ErrorResponse({
-    required this.error,
-  });
+  ErrorResponse({required this.error});
+
   late final String error;
 
-  ErrorResponse.fromJson(Map<String, dynamic> json){
+  ErrorResponse.fromJson(Map<String, dynamic> json) {
     error = json['error'];
   }
 

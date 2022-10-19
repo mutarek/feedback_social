@@ -10,8 +10,7 @@ class AuthRepo {
   AuthRepo({required this.sharedPreferences, required this.apiClient});
 
   Future<Response> login(String email, String password) async {
-    return await apiClient.postData(AppConstant.loginURI, {'email': email, 'password': password},
-        headers: {'Content-Type': 'application/json; charset=UTF-8'});
+    return await apiClient.postData(AppConstant.loginURI, {'email': email, 'password': password});
   }
 
   Future<Response> signup(String firstName, String lastName, String dob, String gender, String email, String password) async {

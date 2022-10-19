@@ -35,12 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Builder(builder: (context) {
       return Scaffold(
           backgroundColor: Palette.primary,
-          // backgroundColor: Palette.primary,
-          // appBar: AppBar(
-          //   backgroundColor: Colors.white,
-          //   title: const Text(" "),
-          //   elevation: 0,
-          // ),
           body: GestureDetector(
             onTap: () {
               FocusScope.of(context).requestFocus(FocusNode());
@@ -111,37 +105,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       inputAction: TextInputAction.done,
                                     ),
                                   ),
-
-                                  // Padding(
-                                  //   padding: EdgeInsets.fromLTRB(width * 0.07, 00, width * 0.07, height * 0.004),
-                                  //   child: LoginTextFiled(
-                                  //     h: height * 0.05,
-                                  //     w: width * 0.9,
-                                  //     child: CustomTextField(
-                                  //       hintText: getTranslated('E-mail', context),
-                                  //       controller: emailController,
-                                  //       height: height * 0.06,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  // Padding(
-                                  //   padding: EdgeInsets.fromLTRB(width * 0.07, height * 0.007, width * 0.07, height * 0.0),
-                                  //   child: Consumer<ShowPasswordProvider>(builder: (context, value, child) {
-                                  //     return LoginTextFiled(
-                                  //       h: height * 0.05,
-                                  //       w: width * 0.9,
-                                  //       child: CustomTextField(
-                                  //         hintText: getTranslated('Password', context),
-                                  //         controller: passwordController,
-                                  //         height: height * 0.06,
-                                  //         obsecureText: value.obsecureText,
-                                  //         suffixIconButton: IconButton(
-                                  //             icon: (value.obsecureText == true) ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
-                                  //             onPressed: () => value.showPassword()),
-                                  //       ),
-                                  //     );
-                                  //   }),
-                                  // ),
                                   Padding(
                                     padding: EdgeInsets.only(left: width * 0.5),
                                     child: TextButton(

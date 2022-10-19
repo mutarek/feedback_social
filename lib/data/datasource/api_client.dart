@@ -27,7 +27,6 @@ class ApiClient {
 
     updateHeader(token);
   }
-
   void updateHeader(String token) {
     _mainHeaders = {'Content-Type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer $token'};
   }
@@ -160,6 +159,7 @@ class ApiClient {
     try {
       _body = jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {}
+
     Response _response = Response(
       body: _body ?? response.body,
       bodyString: response.body.toString(),
@@ -170,9 +170,6 @@ class ApiClient {
     );
     if (_response.statusCode != 200 && _response.body != null && _response.body is! String) {
       if (_response.body.toString().startsWith('{errors')) {
-        ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
-        _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _errorResponse.error);
-      } else if (_response.body.toString().startsWith('{error')) {
         ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
         _response = Response(statusCode: _response.statusCode, body: _response.body, statusText: _errorResponse.error);
       } else if (_response.body.toString().startsWith('{otp_verified')) {
