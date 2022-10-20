@@ -13,6 +13,8 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../settings/view/Settings_screen.dart';
+
 class MoreScreen extends StatelessWidget {
   const MoreScreen({Key? key}) : super(key: key);
 
@@ -154,7 +156,7 @@ class MoreScreen extends StatelessWidget {
                                     iconColor: Palette.primary,
                                     iconName: "Settings",
                                     navigetion: () {
-                                      // Get.to(() => const Settings());
+                                      Get.to(() => const Settings());
                                     }),
                               ),
                               const Expanded(child: SizedBox.shrink()),
