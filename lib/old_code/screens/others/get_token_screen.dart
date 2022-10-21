@@ -23,7 +23,7 @@ class _GetTokenScreenState extends State<GetTokenScreen> {
         if (value == '') {
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
         } else {
-          final value = Provider.of<NotificationsProvider>(context, listen: false);
+          final value = Provider.of<OldNotificationsProvider>(context, listen: false);
           value.getData();
           // Get.to(() => const NavScreen());
           Get.off(const NavScreen());

@@ -10,6 +10,7 @@ import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/language_provider.dart';
 import 'package:als_frontend/provider/localization_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
@@ -46,11 +47,12 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<AnimalProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<GroupProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<OtherProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<NotificationProvider>()),
       ChangeNotifierProvider(create: (_) => LoginProvider()),
       ChangeNotifierProvider(create: (_) => RegistrationProvider()),
       ChangeNotifierProvider(create: (_) => ShowPasswordProvider()),
       ChangeNotifierProvider(create: (_) => DatabaseProvider()),
-      ChangeNotifierProvider(create: (_) => NotificationsProvider()),
+      ChangeNotifierProvider(create: (_) => OldNotificationsProvider()),
       ChangeNotifierProvider(create: (_) => NewsFeedPostProvider()),
       ChangeNotifierProvider(create: (_) => LikeCommentShareProvider()),
       ChangeNotifierProvider(create: (_) => GetInfoFromDb()),

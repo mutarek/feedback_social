@@ -27,7 +27,7 @@ class _FlagState extends State<Flag> {
     final value3 = Provider.of<AuthorGroupProvider>(context, listen: false);
     value3.getData();
 
-    final notification = Provider.of<NotificationsProvider>(context, listen: false);
+    final notification = Provider.of<OldNotificationsProvider>(context, listen: false);
     notification.getData();
     notification.check();
 

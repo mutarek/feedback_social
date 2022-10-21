@@ -2,6 +2,7 @@ import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/auth/signup_screen1.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -165,6 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (status) {
                                   Fluttertoast.showToast(msg: message);
                                   // Get.off(const NavScreen());
+                                  Provider.of<NotificationProvider>(context, listen: false).check();
                                   Get.off( DashboardScreen());
                                 } else {
                                   Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);

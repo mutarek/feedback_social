@@ -8,17 +8,17 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../const/url.dart';
 import '../../model/notification/notifications_model.dart';
 
-class NotificationsProvider extends ChangeNotifier {
+class OldNotificationsProvider extends ChangeNotifier {
   late WebSocketChannel webSocketChannel;
 
   bool loading = true;
-  List<Result> data = [];
+  List<OldResult> data = [];
   String token = "";
   int? id;
   int? userId;
   int? notificationId;
   int notificationCount = 0;
-  NotificationModel notificationData = NotificationModel();
+  OldNotificationModel notificationData = OldNotificationModel();
 
   void getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -26,9 +26,9 @@ class NotificationsProvider extends ChangeNotifier {
     userId = (prefs.getInt('id') ?? '') as int;
     var uri = Uri.parse("$baseUrl/notification/list/"), headers = {'Authorization': 'token $token'};
     var response = await http.get(uri, headers: headers);
-    notificationData = NotificationModel.fromJson(json.decode(response.body));
+    notificationData = OldNotificationModel.fromJson(json.decode(response.body));
 
-    data = notificationData.results as List<Result>;
+    data = notificationData.results as List<OldResult>;
 
     loading = false;
     notifyListeners();

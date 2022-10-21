@@ -17,7 +17,7 @@ class NotificationsScreen extends StatefulWidget {
 class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   void initState() {
-    final value = Provider.of<NotificationsProvider>(context, listen: false);
+    final value = Provider.of<OldNotificationsProvider>(context, listen: false);
     value.notificationCount = 0;
     value.getData();
     value.check();
@@ -26,7 +26,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Future<void> _refresh() async {
-    final data = Provider.of<NotificationsProvider>(context, listen: false);
+    final data = Provider.of<OldNotificationsProvider>(context, listen: false);
     data.getData();
   }
 
@@ -34,7 +34,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Consumer4<NotificationsProvider, PublicProfileDetailsProvider,
+    return Consumer4<OldNotificationsProvider, PublicProfileDetailsProvider,
             SinglePostProvider, TimelinePostCommentProvider>(
         builder: (context, provider, publicProfileProvider, singlePostProvider,
         timelinePostCommentProvider,

@@ -19,7 +19,7 @@ class _NavScreenState extends State<NavScreen> {
     final data = Provider.of<FriendRequestProvider>(context, listen: false);
     data.getData();
 
-    final data2 = Provider.of<NotificationsProvider>(context, listen: false);
+    final data2 = Provider.of<OldNotificationsProvider>(context, listen: false);
     data2.getData();
   }
 
@@ -40,7 +40,7 @@ class _NavScreenState extends State<NavScreen> {
     setState(() {
       _selectedIndex = index;
       if (_selectedIndex == 2) {
-        NotificationsProvider().notificationCount = 0;
+        OldNotificationsProvider().notificationCount = 0;
       }
     });
   }
@@ -49,13 +49,13 @@ class _NavScreenState extends State<NavScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body:
-          Consumer<NotificationsProvider>(builder: (context, provider, child) {
+          Consumer<OldNotificationsProvider>(builder: (context, provider, child) {
         return Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         );
       }),
       bottomNavigationBar:
-          Consumer<NotificationsProvider>(builder: (context, provider, child) {
+          Consumer<OldNotificationsProvider>(builder: (context, provider, child) {
         return BottomNavigationBar(
             items: <BottomNavigationBarItem>[
               const BottomNavigationBarItem(

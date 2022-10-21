@@ -4,14 +4,12 @@
 
 import 'dart:convert';
 
-NotificationModel notificationModelFromJson(String str) =>
-    NotificationModel.fromJson(json.decode(str));
+OldNotificationModel notificationModelFromJson(String str) => OldNotificationModel.fromJson(json.decode(str));
 
-String notificationModelToJson(NotificationModel data) =>
-    json.encode(data.toJson());
+String notificationModelToJson(OldNotificationModel data) => json.encode(data.toJson());
 
-class NotificationModel {
-  NotificationModel({
+class OldNotificationModel {
+  OldNotificationModel({
     this.count,
     this.next,
     this.previous,
@@ -21,15 +19,13 @@ class NotificationModel {
   int? count;
   String? next;
   dynamic previous;
-  List<Result>? results;
+  List<OldResult>? results;
 
-  factory NotificationModel.fromJson(Map<String, dynamic> json) =>
-      NotificationModel(
+  factory OldNotificationModel.fromJson(Map<String, dynamic> json) => OldNotificationModel(
         count: json["count"],
         next: json["next"],
         previous: json["previous"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+        results: List<OldResult>.from(json["results"].map((x) => OldResult.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -40,8 +36,8 @@ class NotificationModel {
       };
 }
 
-class Result {
-  Result({
+class OldResult {
+  OldResult({
     this.id,
     this.actor,
     this.noticeType,
@@ -55,7 +51,7 @@ class Result {
   });
 
   int? id;
-  Actor? actor;
+  OldActor? actor;
   String? noticeType;
   String? url;
   String? verb;
@@ -65,9 +61,9 @@ class Result {
   bool? isRead;
   String? timestamp;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory OldResult.fromJson(Map<String, dynamic> json) => OldResult(
         id: json["id"],
-        actor: Actor.fromJson(json["actor"]),
+        actor: OldActor.fromJson(json["actor"]),
         noticeType: json["notice_type"],
         url: json["url"],
         verb: json["verb"],
@@ -92,8 +88,8 @@ class Result {
       };
 }
 
-class Actor {
-  Actor({
+class OldActor {
+  OldActor({
     this.id,
     this.fullName,
     this.profileImage,
@@ -103,7 +99,7 @@ class Actor {
   String? fullName;
   String? profileImage;
 
-  factory Actor.fromJson(Map<String, dynamic> json) => Actor(
+  factory OldActor.fromJson(Map<String, dynamic> json) => OldActor(
         id: json["id"],
         fullName: json["full_name"],
         profileImage: json["profile_image"],

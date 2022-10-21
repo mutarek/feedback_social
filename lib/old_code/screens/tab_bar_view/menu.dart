@@ -24,7 +24,7 @@ class _MenuState extends State<Menu> {
   void initState() {
     final value = Provider.of<ProfileDetailsProvider>(context, listen: false);
     value.getUserData();
-    final notification = Provider.of<NotificationsProvider>(context, listen: false);
+    final notification = Provider.of<OldNotificationsProvider>(context, listen: false);
     notification.getData();
     notification.check();
     super.initState();

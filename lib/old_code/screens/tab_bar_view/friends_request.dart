@@ -21,7 +21,7 @@ class _FriendRequestState extends State<FriendRequest> {
     value.getData();
     value.getSuggetionsData();
     final notification =
-        Provider.of<NotificationsProvider>(context, listen: false);
+        Provider.of<OldNotificationsProvider>(context, listen: false);
     notification.getData();
     notification.check();
     super.initState();

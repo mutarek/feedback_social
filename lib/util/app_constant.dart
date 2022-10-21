@@ -29,6 +29,9 @@ class AppConstant {
   static const String groupJoinAllURI = '/group/group-join-list/';
   static const String groupSuggestAllURI = '/group/suggest/all/';
   static const String groupCreatorAllURI = '/group/creator/';
+  static const String notificationListURI = '/notification/list/';
+  static const String notificationUnreadCountURI = '/notification/count/unread/';
+  static const String notificationReadCountURI = '/notification/counter/read/';
 
   // Shared Key
   static const String theme = 'theme';

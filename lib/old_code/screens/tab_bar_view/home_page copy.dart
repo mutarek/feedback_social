@@ -44,7 +44,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
         Provider.of<UserProfileProvider>(context, listen: false);
     profieImage.getUserData();
     final notification =
-        Provider.of<NotificationsProvider>(context, listen: false);
+        Provider.of<OldNotificationsProvider>(context, listen: false);
     notification.getData();
     notification.check();
     super.initState();

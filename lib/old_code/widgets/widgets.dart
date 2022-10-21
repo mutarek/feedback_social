@@ -9,7 +9,7 @@ export 'Post Container/post_container.dart';
 export 'card container/custom_tab_bar.dart';
 export 'button icon textfield/custom_elevated_button.dart';
 export 'card container/friend_request_card.dart';
-export 'Notification/notifications_card.dart';
+export '../../screens/notification/widget/notifications_card.dart';
 export 'Post Container/like_comment_share.dart';
 export 'Post Container/like_comment_count.dart';
 export 'Post Container/post_image.dart';
