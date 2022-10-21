@@ -2,6 +2,7 @@ import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/view/comment_widget.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
@@ -17,8 +18,22 @@ import 'package:provider/provider.dart';
 
 class SinglePostScreen extends StatefulWidget {
   final String url;
+  final bool isFromHomeTimeline;
+  final bool isFromNotification;
+  final bool isProfileScreen;
+  final int timelineIndex;
+  final int postID;
+  final bool isFromGroup;
 
-  SinglePostScreen(this.url, {Key? key}) : super(key: key);
+  const SinglePostScreen(this.url,
+      {this.isFromHomeTimeline = false,
+      this.isFromNotification = false,
+      this.isFromGroup = false,
+      this.postID = 0,
+      this.isProfileScreen = false,
+      this.timelineIndex = 0,
+      Key? key})
+      : super(key: key);
 
   @override
   State<SinglePostScreen> createState() => _SinglePostScreenState();
@@ -29,8 +44,13 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Provider.of<NewsFeedProvider>(context, listen: false).callForSinglePosts(widget.url);
     Provider.of<CommentProvider>(context, listen: false).initializeCommentData(widget.url);
-    Provider.of<CommentProvider>(context, listen: false).initializeSinglePostSocket(widget.url);
+    if (widget.isFromGroup) {
+      Provider.of<CommentProvider>(context, listen: false).initializeSocket(widget.postID);
+    } else {
+      Provider.of<CommentProvider>(context, listen: false).initializeSinglePostSocket(widget.url);
+    }
     Provider.of<AuthProvider>(context, listen: false).getUserInfo();
   }
 
@@ -63,7 +83,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                     textAlign: TextAlign.start,
                     decoration: InputDecoration(
                         suffixIcon: commentProvider.isCommentLoading
-                            ? Container(height: 40, width: 40, child: Center(child: CircularProgressIndicator()))
+                            ? const SizedBox(height: 40, width: 40, child: Center(child: CircularProgressIndicator()))
                             : IconButton(
                                 onPressed: () {
                                   commentProvider
@@ -72,11 +92,12 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                       .then((value) {
                                     if (value == true) {
                                       newsFeedProvider.updateSingleCommentDataCount();
-                                      // if (widget.isHomeScreen) {
-                                      //   Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                      // } else if (widget.isProfileScreen) {
-                                      //   Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                      // } else if (widget.isGroupScreen) {
+                                      if (widget.isFromHomeTimeline) {
+                                        Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.timelineIndex);
+                                      } else if (widget.isProfileScreen) {
+                                        Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.timelineIndex);
+                                      }
+                                      // else if (widget.isGroupScreen) {
                                       //   Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                       // }
                                     }
@@ -116,8 +137,17 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 PostHeaderWidget(post: newsFeedProvider.singleNewsFeedModel),
-                                SizedBox(height: newsFeedProvider.singleNewsFeedModel.description!.isEmpty ? 0 : 8.0),
-                                Text(newsFeedProvider.singleNewsFeedModel.description!, style: latoStyle400Regular),
+                                SizedBox(
+                                    height: newsFeedProvider.singleNewsFeedModel.description == null ||
+                                            newsFeedProvider.singleNewsFeedModel.description!.isEmpty
+                                        ? 0
+                                        : 8.0),
+                                Text(
+                                    newsFeedProvider.singleNewsFeedModel.description == null ||
+                                            newsFeedProvider.singleNewsFeedModel.description!.isEmpty
+                                        ? ''
+                                        : newsFeedProvider.singleNewsFeedModel.description!,
+                                    style: latoStyle400Regular),
                                 if ((newsFeedProvider.singleNewsFeedModel.totalImage! + newsFeedProvider.singleNewsFeedModel.totalVideo!) !=
                                     0)
                                   PostPhotoContainer(0, postImageUrl: newsFeedProvider.singleNewsFeedModel),
@@ -129,7 +159,16 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        newsFeedProvider.singlePostLike(newsFeedProvider.singleNewsFeedModel.id!);
+                                        newsFeedProvider.singlePostLike(newsFeedProvider.singleNewsFeedModel.id!).then((value) {
+                                          if (value != -1) {
+                                            if (widget.isFromHomeTimeline) {
+                                              newsFeedProvider.changeLikeStatus(value, widget.timelineIndex);
+                                            } else if (widget.isProfileScreen) {
+                                              Provider.of<ProfileProvider>(context, listen: false)
+                                                  .changeLikeStatus(value, widget.timelineIndex);
+                                            }
+                                          }
+                                        });
                                       },
                                       child: SizedBox(
                                         width: 40,

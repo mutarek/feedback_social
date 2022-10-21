@@ -112,17 +112,17 @@ class CommentProvider with ChangeNotifier {
   }
 
   initializeSocket(int postID) {
-    channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/comment/timeline_post/');
+    channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/timeline_post/');
     userPostComments();
   }
 
   initializeSinglePostSocket(String url) {
-    channel = IOWebSocketChannel.connect('wss://als-social.com/ws${url.replaceAll('posts', 'post')}comment/timeline_post/');
+    channel = IOWebSocketChannel.connect('wss://als-social.com/ws${url.replaceAll('posts', 'post')}timeline_post/');
     userPostComments();
   }
 
   initializeReplySocket(int postID, int index) {
-    replyChannel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/comment/timeline_post/');
+    replyChannel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/timeline_post/');
     userReplyComments(index);
   }
 

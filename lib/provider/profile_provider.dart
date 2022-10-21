@@ -143,6 +143,17 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  changeLikeStatus(int value, int index) async {
+    if (value == 1) {
+      likesStatusAllData[index] = 1;
+      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
+    } else {
+      likesStatusAllData[index] = 0;
+      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
+    }
+    notifyListeners();
+  }
+
   void updateCommentDataCount(int index) {
     newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
     notifyListeners();

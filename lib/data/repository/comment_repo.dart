@@ -7,7 +7,7 @@ class CommentRepo {
   CommentRepo({required this.apiClient});
 
   Future<Response> getAllCommentData(String url) async {
-    return await apiClient.getData(url + "comment/?page=1");
+    return await apiClient.getData(url + "?page=1");
   }
 
   Future<Response> getAllGroupCommentData(int postId, int groupID) async {
@@ -15,10 +15,10 @@ class CommentRepo {
   }
 
   Future<Response> addComment(String url, String comment) async {
-    return await apiClient.postData('${url}comment/create/', {"comment": comment});
+    return await apiClient.postData('${url}create/', {"comment": comment});
   }
 
   Future<Response> addReply(String url, String commentID, String comment) async {
-    return await apiClient.postData('${url}comment/$commentID/reply/', {"comment": comment});
+    return await apiClient.postData('${url}$commentID/reply/', {"comment": comment});
   }
 }

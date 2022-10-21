@@ -1,21 +1,18 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
-import 'package:als_frontend/provider/profile_provider.dart';
-import 'package:als_frontend/screens/home/view/comment_screen.dart';
-import 'package:als_frontend/util/theme/app_colors.dart';
-import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/screens/notification/single_post_screen.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/route_manager.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 
 class PostStats extends StatelessWidget {
   final NewsFeedData post;
   final int index;
   final int groupID;
+  final int postID;
   final bool isGroup;
   final feedProvider;
   final double paddingHorizontal;
@@ -33,6 +30,7 @@ class PostStats extends StatelessWidget {
       this.paddingHorizontal = 12,
       this.isFromProfile = false,
       this.isHomeNewsFeedProvider = false,
+      this.postID = 0,
       this.paddingVertical = 0})
       : super(key: key);
 
@@ -99,13 +97,12 @@ class PostStats extends StatelessWidget {
                         const SizedBox(width: 30.0),
                         InkWell(
                           onTap: () {
-                            Get.to(CommentsScreen(
-                                index: index,
-                                postID: post.id as int,
-                                isHomeScreen: isHomeNewsFeedProvider,
+                            Get.to(SinglePostScreen(post.commentUrl!,
+                                isFromHomeTimeline: isHomeNewsFeedProvider,
                                 isProfileScreen: isFromProfile,
-                                groupID: groupID,
-                                isGroupScreen: isGroup));
+                                timelineIndex: index,
+                                postID: postID,
+                                isFromGroup: isGroup));
                           },
                           child: SizedBox(
                             width: 40,

@@ -88,6 +88,17 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  changeLikeStatus(int value, int index) async {
+    if (value == 1) {
+      likesStatusAllData[index] = 1;
+      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
+    } else {
+      likesStatusAllData[index] = 0;
+      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
+    }
+    notifyListeners();
+  }
+
   void updateCommentDataCount(int index) {
     newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
     notifyListeners();
@@ -115,8 +126,8 @@ class NewsFeedProvider with ChangeNotifier {
   callForSinglePosts(String url) async {
     isLoading = true;
     singleNewsFeedModel = NewsFeedData();
-    notifyListeners();
-    Response response = await newsFeedRepo.callForSinglePostFromNotification(url);
+    //notifyListeners();
+    Response response = await newsFeedRepo.callForSinglePostFromNotification(url.replaceAll('comment/', ''));
     isLoading = false;
     isLikeMe = false;
     if (response.statusCode == 200) {
@@ -134,28 +145,30 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  singlePostLike(int postID, {bool isGroup = false, bool isFromLike = false}) async {
+  Future<int> singlePostLike(int postID, {bool isGroup = false, bool isFromLike = false}) async {
     Response response = await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike);
     if (response.statusCode == 200) {
       if (response.body['liked'] == true) {
         isLikeMe = true;
         singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! + 1;
+        notifyListeners();
+        return 1;
       } else {
         isLikeMe = false;
         singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! - 1;
+        notifyListeners();
+        return 0;
       }
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
 
     notifyListeners();
+    return -1;
   }
 
   void updateSingleCommentDataCount() {
     singleNewsFeedModel.totalComment = singleNewsFeedModel.totalComment! + 1;
     notifyListeners();
   }
-
-
-
 }

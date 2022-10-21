@@ -67,9 +67,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           List<String> noticeType = ['timeline', 'page', 'group'];
 
                           if (noticeType.contains(notificationProvider.notificationLists[index].noticeType)) {
-                            Provider.of<NewsFeedProvider>(context, listen: false)
-                                .callForSinglePosts(notificationProvider.notificationLists[index].url!);
-                            Get.to(() =>  SinglePostScreen(notificationProvider.notificationLists[index].url!));
+
+                            Get.to(() => SinglePostScreen(notificationProvider.notificationLists[index].url!+"comment/"));
                           } else {}
 
                           // provider.notificationId = provider.data[index].id;
