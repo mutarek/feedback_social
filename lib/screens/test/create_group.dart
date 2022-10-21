@@ -1,3 +1,6 @@
+
+import 'dart:async';
+
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
@@ -11,62 +14,46 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
-class CreateGroupScreen extends StatefulWidget {
+class CreateGroup extends StatefulWidget {
   final bool isUpdateGroup;
   final AuthorGroupDetailsModel? authorGroup;
   final int index;
-  const CreateGroupScreen({
+  const CreateGroup({
+    this.isUpdateGroup= false,
+    this.index=0,
     this.authorGroup,
-    this.isUpdateGroup = false,
-    this.index=0, Key? key}) : super(key: key);
+    Key? key}) : super(key: key);
 
   @override
-  State<CreateGroupScreen> createState() => _CreateGroupScreenState();
+  State<CreateGroup> createState() => _CreateGroupState();
 }
 
-class _CreateGroupScreenState extends State<CreateGroupScreen> {
+class _CreateGroupState extends State<CreateGroup> {
   TextEditingController groupNameController = TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    groupNameController = TextEditingController();
-    Provider.of<GroupProvider>(context, listen: false).initializeCategory();
-    if (widget.isUpdateGroup) {
-      groupNameController.text = widget.authorGroup!.name!;
-      Provider.of<GroupProvider>(context, listen: false).changeGroupPrivateStatus(widget.authorGroup!.isPrivate!, isFirstTime: true);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Consumer2<OtherProvider, GroupProvider>(
-        builder: (context, otherProvider, groupProvider, child) => SafeArea(
-          child: ModalProgressHUD(
+
+        builder: (context, otherProvider,groupProvider,child) {
+          return ModalProgressHUD(
+
             inAsyncCall: groupProvider.isLoading,
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Stack(
-                    children: <Widget>[
+                    children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          otherProvider.selectedFile != null
-                              ? Image.file(otherProvider.selectedFile!,
-                                  width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
-                              : widget.isUpdateGroup
-                                  ? Image.network(widget.authorGroup!.coverPhoto!,
-                                      width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
-                                  : Image.asset("assets/background/profile_placeholder.jpg",
-                                      width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.fitWidth),
+                        children: [
+
                         ],
                       ),
                       Positioned(
@@ -122,11 +109,11 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                             icon: const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white),
                             items: groupProvider.items
                                 .map((item) => DropdownMenuItem<CategoryModel>(
-                                    value: item,
-                                    child: Container(
-                                        padding: const EdgeInsets.only(left: 10),
-                                        child: CustomText(
-                                            title: item.name, textStyle: latoStyle500Medium.copyWith(fontSize: 17, color: Colors.white)))))
+                                value: item,
+                                child: Container(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: CustomText(
+                                        title: item.name, textStyle: latoStyle500Medium.copyWith(fontSize: 17, color: Colors.white)))))
                                 .toList(),
                             onChanged: (item) {
                               groupProvider.changeGroupCategory(item!);
@@ -167,8 +154,8 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 ],
               ),
             ),
-          ),
-        ),
+          );
+        }
       ),
     );
   }
