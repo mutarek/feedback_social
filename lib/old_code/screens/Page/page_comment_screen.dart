@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:als_frontend/data/model/response/CommentModels.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:als_frontend/old_code/widgets/widgets.dart';
@@ -19,7 +20,7 @@ class PageCommentsScreen extends StatefulWidget {
 class _PageCommentsScreenState extends State<PageCommentsScreen> {
   TextEditingController commentController = TextEditingController();
 
-  Future<void> _refresh() async{
+  Future<void> _refresh() async {
     final data = Provider.of<PagePostProvider>(context, listen: false);
     data.getData();
   }
@@ -63,16 +64,11 @@ class _PageCommentsScreenState extends State<PageCommentsScreen> {
                 children: [
                   Align(
                     alignment: Alignment.topCenter,
-                    child:
-                        Consumer2<PagePostProvider, ProfileDetailsProvider>(
-                            builder: (context, provider, provider2, child) {
+                    child: Consumer2<PagePostProvider, ProfileDetailsProvider>(builder: (context, provider, provider2, child) {
                       return ListView.builder(
-                          itemCount:
-                              provider.pagePosts![provider.index].comments.length,
+                          itemCount: provider.pagePosts![provider.index].comments.length,
                           itemBuilder: (context, index) {
-                            return (provider.pagePosts![provider.index]
-                                        .comments[index] ==
-                                    null)
+                            return (provider.pagePosts![provider.index].comments[index] == null)
                                 ? Container()
                                 : SingleChildScrollView(
                                     physics: const ScrollPhysics(),
@@ -80,28 +76,12 @@ class _PageCommentsScreenState extends State<PageCommentsScreen> {
                                         width: width,
                                         height: height,
                                         onTap: () {
-                                          provider2.id = provider
-                                              .pagePosts![provider.index]
-                                              .comments[index].author.id;
-                                          (provider
-                                                      .pagePosts![provider.index]
-                                                      .comments[index]
-                                                      .author
-                                                      .id ==
-                                                  provider2.userId)
-                                              ? Get.to(() =>
-                                                  const PublicProfileDetailsScreen())
-                                              : Get.to(() =>
-                                                  const PublicProfileDetailsScreen());
+                                          provider2.id = provider.pagePosts![provider.index].comments[index].author.id;
+                                          (provider.pagePosts![provider.index].comments[index].author.id == provider2.userId)
+                                              ? Get.to(() => const PublicProfileDetailsScreen())
+                                              : Get.to(() => const PublicProfileDetailsScreen());
                                         },
-                                        image:
-                                            provider.pagePosts![provider.index].comments[index].author.profileImage,
-                                        name: "${provider.pagePosts![provider.index].comments[index].author.firstName} ${provider.pagePosts![provider.index].comments[index].author.lastName}"
-                                            .toString(),
-                                        comment: provider
-                                            .pagePosts![provider.index]
-                                            .comments[index]
-                                            .comment),
+                                        commentModels: CommentModels(),index: index,url: '',postID: 1,),
                                   );
                           });
                     }),
@@ -110,8 +90,7 @@ class _PageCommentsScreenState extends State<PageCommentsScreen> {
                       child: Align(
                     alignment: Alignment.bottomLeft,
                     child: Padding(
-                      padding: EdgeInsets.only(
-                          left: width * 0.03, bottom: height * 0.02),
+                      padding: EdgeInsets.only(left: width * 0.03, bottom: height * 0.02),
                       child: Container(
                         height: height * 0.08,
                         width: width * 0.795,
@@ -120,8 +99,7 @@ class _PageCommentsScreenState extends State<PageCommentsScreen> {
                           color: Colors.white,
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              top: height * 0.01, left: width * 0.02),
+                          padding: EdgeInsets.only(top: height * 0.01, left: width * 0.02),
                           child: TextField(
                             textAlign: TextAlign.start,
                             controller: commentController,
@@ -136,16 +114,13 @@ class _PageCommentsScreenState extends State<PageCommentsScreen> {
                   Positioned.fill(
                       child: Align(
                     alignment: Alignment.bottomRight,
-                    child: Consumer<PageLikePostShareProvider>(
-                        builder: (context, provider, child) {
+                    child: Consumer<PageLikePostShareProvider>(builder: (context, provider, child) {
                       return Padding(
                         padding: EdgeInsets.only(bottom: height * 0.02),
                         child: SizedBox(
                           height: height * 0.079,
                           child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Palette.primary)),
+                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Palette.primary)),
                               onPressed: () {
                                 provider.comment(commentController.text);
                                 _refresh();

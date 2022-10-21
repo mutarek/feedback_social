@@ -99,7 +99,9 @@ class PostStats extends StatelessWidget {
                         const SizedBox(width: 30.0),
                         InkWell(
                           onTap: () {
-                            Get.to(CommentsScreen(index, post.id as int,
+                            Get.to(CommentsScreen(
+                                index: index,
+                                postID: post.id as int,
                                 isHomeScreen: isHomeNewsFeedProvider,
                                 isProfileScreen: isFromProfile,
                                 groupID: groupID,

@@ -16,14 +16,22 @@ import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {
   final int index;
+  final String url;
   final int postID;
   final int groupID;
   final bool isHomeScreen;
   final bool isProfileScreen;
   final bool isGroupScreen;
 
-  const CommentsScreen(this.index, this.postID,
-      {this.isHomeScreen = false, this.isProfileScreen = false, this.isGroupScreen = false, this.groupID = 0, Key? key})
+  const CommentsScreen(
+      {this.index = 0,
+      this.url = '',
+      this.isHomeScreen = false,
+      this.postID = 0,
+      this.isProfileScreen = false,
+      this.isGroupScreen = false,
+      this.groupID = 0,
+      Key? key})
       : super(key: key);
 
   @override
@@ -34,13 +42,12 @@ class _CommentsScreenState extends State<CommentsScreen> {
   @override
   void initState() {
     if (widget.isGroupScreen) {
-      Provider.of<CommentProvider>(context, listen: false).initializeGroupCommentData(widget.postID, widget.groupID);
+      // Provider.of<CommentProvider>(context, listen: false).initializeGroupCommentData(widget.postID, widget.groupID);
 
     } else {
-      Provider.of<CommentProvider>(context, listen: false).initializeCommentData(widget.postID);
-
+      Provider.of<CommentProvider>(context, listen: false).initializeCommentData(widget.url);
     }
-    Provider.of<CommentProvider>(context, listen: false).initializeSocket(widget.postID);
+    Provider.of<CommentProvider>(context, listen: false).initializeSinglePostSocket(widget.url);
     Provider.of<AuthProvider>(context, listen: false).getUserInfo();
 
     super.initState();
@@ -92,13 +99,13 @@ class _CommentsScreenState extends State<CommentsScreen> {
                                         itemCount: commentProvider.comments.length,
                                         itemBuilder: (context, index) {
                                           return CommentWidget(
-                                            width: width,
-                                            height: height,
-                                            onTap: () {},
-                                            image: commentProvider.comments[index].author!.profileImage!,
-                                            name: commentProvider.comments[index].author!.fullName!,
-                                            comment: commentProvider.comments[index].comment!,
-                                          );
+                                              width: width,
+                                              height: height,
+                                              onTap: () {},
+                                              commentModels: commentProvider.comments[index],
+                                              index: index,
+                                              url: widget.url,
+                                              postID: 171);
                                         }),
                               ),
                             ),
@@ -120,16 +127,14 @@ class _CommentsScreenState extends State<CommentsScreen> {
                                         onPressed: () {
                                           commentProvider
                                               .addComment(commentController.text, authProvider.name, authProvider.profileImage,
-                                                  widget.postID, int.parse(authProvider.userID))
+                                                  widget.postID, int.parse(authProvider.userID), widget.url)
                                               .then((value) {
                                             if (value == true) {
                                               if (widget.isHomeScreen) {
                                                 Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                              }
-                                              else if (widget.isProfileScreen) {
+                                              } else if (widget.isProfileScreen) {
                                                 Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                              }
-                                              else if (widget.isGroupScreen) {
+                                              } else if (widget.isGroupScreen) {
                                                 Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                               }
                                             }

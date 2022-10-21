@@ -49,7 +49,7 @@ class NewsFeedData {
     this.totalVideo,
     this.videos,
     this.totalComment,
-    this.comments,
+    this.commentUrl,
     this.totalLike,
     this.likedBy,
     this.timestamp,
@@ -71,7 +71,7 @@ class NewsFeedData {
   int? totalVideo;
   List<Video>? videos;
   int? totalComment;
-  List<Comment>? comments;
+  String? commentUrl;
   int? totalLike;
   List<LikedBy>? likedBy;
   String? timestamp;
@@ -93,7 +93,7 @@ class NewsFeedData {
         totalVideo: json["total_video"],
         videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
         totalComment: json["total_comment"],
-        comments: List<Comment>.from(json["comments"].map((x) => Comment.fromJson(x))),
+        commentUrl: json["comment_url"],
         totalLike: json["total_like"],
         likedBy: List<LikedBy>.from(json["liked_by"].map((x) => LikedBy.fromJson(x))),
         timestamp: json["timestamp"],
@@ -116,7 +116,7 @@ class NewsFeedData {
         "total_video": totalVideo,
         "videos": List<dynamic>.from(videos!.map((x) => x.toJson())),
         "total_comment": totalComment,
-        "comments": List<dynamic>.from(comments!.map((x) => x.toJson())),
+        "comment_url": commentUrl,
         "total_like": totalLike,
         "liked_by": List<dynamic>.from(likedBy!.map((x) => x.toJson())),
         "timestamp": timestamp,
@@ -149,38 +149,6 @@ class Author {
         "id": id,
         "full_name": fullName,
         "profile_image": profileImage,
-      };
-}
-
-class Comment {
-  Comment({
-    this.id,
-    this.comment,
-    this.post,
-    this.author,
-    this.replies,
-  });
-
-  int? id;
-  String? comment;
-  int? post;
-  LikedBy? author;
-  List<dynamic>? replies;
-
-  factory Comment.fromJson(Map<String, dynamic> json) => Comment(
-        id: json["id"],
-        comment: json["comment"],
-        post: json["post"],
-        author: LikedBy.fromJson(json["author"]),
-        replies: List<dynamic>.from(json["replies"].map((x) => x)),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "comment": comment,
-        "post": post,
-        "author": author!.toJson(),
-        "replies": List<dynamic>.from(replies!.map((x) => x)),
       };
 }
 

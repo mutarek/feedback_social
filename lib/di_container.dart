@@ -52,7 +52,7 @@ Future<void> init() async {
   sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl()));
   sl.registerFactory(() => LanguageProvider(languageRepo: sl()));
   sl.registerFactory(() => AuthProvider(authRepo: sl(),sharedPreferences: sl()));
-  sl.registerFactory(() => NewsFeedProvider(newsFeedRepo: sl()));
+  sl.registerFactory(() => NewsFeedProvider(newsFeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => CommentProvider(commentRepo: sl()));
   sl.registerFactory(() => PostProvider(postRepo: sl()));
   sl.registerFactory(() => NotificationProvider(authRepo: sl(),notificationRepo: sl()));

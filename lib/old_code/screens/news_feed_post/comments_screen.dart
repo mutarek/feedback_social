@@ -54,53 +54,38 @@ class _CommentsScreenState extends State<CommentsScreen> {
               },
               child: Stack(
                 children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child:
-                        Consumer2<NewsFeedPostProvider, ProfileDetailsProvider>(
-                            builder: (context, provider, provider2, child) {
-                      return ListView.builder(
-                          itemCount:
-                              provider.results[provider.index].comments!.length,
-                          itemBuilder: (context, index) {
-                            return (provider.results[provider.index]
-                                        .comments![index] == null)
-                                ? Container()
-                                : SingleChildScrollView(
-                                    physics: const ScrollPhysics(),
-                                    child: CommentWidget(
-                                        width: width,
-                                        height: height,
-                                        onTap: () {
-                                          provider2.id = provider
-                                              .posts![provider.index]
-                                              .comments[index]["user"];
-                                          (provider.results[provider.index]
-                                                          .comments![index].author!.id ==
-                                                  provider2.userId)
-                                              ? Get.to(
-                                                  () =>const PublicProfileDetailsScreen())
-                                              : Get.to(() =>
-                                                  const PublicProfileDetailsScreen());
-                                        },
-                                        image:
-                                            "${provider.results[provider.index]
-                                                          .comments![index].author!.profileImage}",
-                                        name: "${provider.results[provider.index]
-                                            .comments![index].author!.firstName!} ${provider.results[provider.index].comments![index].author!.lastName!}",
-                                        comment: provider
-                                            .results[provider.index]
-                                            .comments![index].comment!),
-                                  );
-                          });
-                    }),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topCenter,
+                  //   child: Consumer2<NewsFeedPostProvider, ProfileDetailsProvider>(builder: (context, provider, provider2, child) {
+                  //     return ListView.builder(
+                  //         itemCount: provider.results[provider.index].comments!.length,
+                  //         itemBuilder: (context, index) {
+                  //           return (provider.results[provider.index].comments![index] == null)
+                  //               ? Container()
+                  //               : SingleChildScrollView(
+                  //                   physics: const ScrollPhysics(),
+                  //                   child: CommentWidget(
+                  //                       width: width,
+                  //                       height: height,
+                  //                       onTap: () {
+                  //                         provider2.id = provider.posts![provider.index].comments[index]["user"];
+                  //                         (provider.results[provider.index].comments![index].author!.id == provider2.userId)
+                  //                             ? Get.to(() => const PublicProfileDetailsScreen())
+                  //                             : Get.to(() => const PublicProfileDetailsScreen());
+                  //                       },
+                  //                       image: "${provider.results[provider.index].comments![index].author!.profileImage}",
+                  //                       name:
+                  //                           "${provider.results[provider.index].comments![index].author!.firstName!} ${provider.results[provider.index].comments![index].author!.lastName!}",
+                  //                       comment: provider.results[provider.index].comments![index].comment!),
+                  //                 );
+                  //         });
+                  //   }),
+                  // ),
                   Positioned.fill(
                       child: Align(
                     alignment: Alignment.bottomLeft,
                     child: Padding(
-                      padding: EdgeInsets.only(
-                          left: width * 0.03, bottom: height * 0.02),
+                      padding: EdgeInsets.only(left: width * 0.03, bottom: height * 0.02),
                       child: Container(
                         height: height * 0.08,
                         width: width * 0.795,
@@ -109,8 +94,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                           color: Colors.white,
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              top: height * 0.01, left: width * 0.02),
+                          padding: EdgeInsets.only(top: height * 0.01, left: width * 0.02),
                           child: TextField(
                             textAlign: TextAlign.start,
                             controller: commentController,
@@ -125,16 +109,13 @@ class _CommentsScreenState extends State<CommentsScreen> {
                   Positioned.fill(
                       child: Align(
                     alignment: Alignment.bottomRight,
-                    child: Consumer<LikeCommentShareProvider>(
-                        builder: (context, provider, child) {
+                    child: Consumer<LikeCommentShareProvider>(builder: (context, provider, child) {
                       return Padding(
                         padding: EdgeInsets.only(bottom: height * 0.02),
                         child: SizedBox(
                           height: height * 0.079,
                           child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Palette.primary)),
+                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Palette.primary)),
                               onPressed: () {
                                 provider.comment(commentController.text);
                                 _refresh();

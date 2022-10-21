@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:flutter/foundation.dart';
@@ -8,8 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NewsFeedProvider with ChangeNotifier {
   final NewsfeedRepo newsFeedRepo;
+  final AuthRepo authRepo;
 
-  NewsFeedProvider({required this.newsFeedRepo});
+  NewsFeedProvider({required this.newsFeedRepo, required this.authRepo});
 
   int position = 0;
   List<NewsFeedData> newsFeedLists = [];
@@ -41,7 +43,7 @@ class NewsFeedProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     Response response = await newsFeedRepo.getNewsFeedData(page);
     isLoading = false;
     isBottomLoading = false;
@@ -50,12 +52,11 @@ class NewsFeedProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       response.body['results'].forEach((element) {
         NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
-        String id = (prefs.getString('userID') ?? '0');
 
         status = 0;
         likesStatusAllData.add(0);
         for (var e in newsFeedData.likedBy!) {
-          if (e.id.toString() == id) {
+          if (e.id.toString() == authRepo.getUserID()) {
             status = 1;
             continue;
           }
@@ -105,6 +106,56 @@ class NewsFeedProvider with ChangeNotifier {
     newsFeedLists.add(newsFeedData);
     notifyListeners();
   }
+
+  /////// TODO: for single post
+
+  NewsFeedData singleNewsFeedModel = NewsFeedData();
+  bool isLikeMe = false;
+
+  callForSinglePosts(String url) async {
+    isLoading = true;
+    singleNewsFeedModel = NewsFeedData();
+    notifyListeners();
+    Response response = await newsFeedRepo.callForSinglePostFromNotification(url);
+    isLoading = false;
+    isLikeMe = false;
+    if (response.statusCode == 200) {
+      singleNewsFeedModel = NewsFeedData.fromJson(response.body);
+
+      for (var e in singleNewsFeedModel.likedBy!) {
+        if (e.id.toString() == authRepo.getUserID()) {
+          isLikeMe = true;
+          break;
+        }
+      }
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  singlePostLike(int postID, {bool isGroup = false, bool isFromLike = false}) async {
+    Response response = await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike);
+    if (response.statusCode == 200) {
+      if (response.body['liked'] == true) {
+        isLikeMe = true;
+        singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! + 1;
+      } else {
+        isLikeMe = false;
+        singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! - 1;
+      }
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
+
+  void updateSingleCommentDataCount() {
+    singleNewsFeedModel.totalComment = singleNewsFeedModel.totalComment! + 1;
+    notifyListeners();
+  }
+
 
 
 }

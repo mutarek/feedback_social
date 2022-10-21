@@ -1,8 +1,11 @@
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
+import 'package:als_frontend/screens/notification/single_post_screen.dart';
 import 'package:als_frontend/screens/notification/widget/notifications_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -61,6 +64,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       return NotificationCard(
                         image: "${notificationProvider.notificationLists[index].actor!.profileImage}",
                         ontap: () {
+                          List<String> noticeType = ['timeline', 'page', 'group'];
+
+                          if (noticeType.contains(notificationProvider.notificationLists[index].noticeType)) {
+                            Provider.of<NewsFeedProvider>(context, listen: false)
+                                .callForSinglePosts(notificationProvider.notificationLists[index].url!);
+                            Get.to(() =>  SinglePostScreen(notificationProvider.notificationLists[index].url!));
+                          } else {}
+
                           // provider.notificationId = provider.data[index].id;
                           // provider.tappedOnNotification();
                           //

@@ -34,11 +34,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Consumer4<OldNotificationsProvider, PublicProfileDetailsProvider,
-            SinglePostProvider, TimelinePostCommentProvider>(
-        builder: (context, provider, publicProfileProvider, singlePostProvider,
-        timelinePostCommentProvider,
-            child) {
+    return Consumer4<OldNotificationsProvider, PublicProfileDetailsProvider, SinglePostProvider, TimelinePostCommentProvider>(
+        builder: (context, provider, publicProfileProvider, singlePostProvider, timelinePostCommentProvider, child) {
       return RefreshIndicator(
         onRefresh: _refresh,
         child: SafeArea(
@@ -59,11 +56,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 elevation: 0,
                 title: const Text(
                   "FeedBack",
-                  style: TextStyle(
-                      color: Palette.primary,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: -1.2),
+                  style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
                 ),
               ),
               body: SingleChildScrollView(
@@ -79,43 +72,32 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         itemCount: provider.data.length,
                         itemBuilder: ((context, index) {
                           return Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.02,
-                                  vertical: height * 0.001),
+                              padding: EdgeInsets.symmetric(horizontal: width * 0.02, vertical: height * 0.001),
                               child: NotificationCard(
-                                image:
-                                    "${provider.data[index].actor!.profileImage}",
+                                image: "${provider.data[index].actor!.profileImage}",
                                 ontap: () {
-                                  provider.notificationId =
-                                      provider.data[index].id;
+                                  provider.notificationId = provider.data[index].id;
                                   provider.tappedOnNotification();
-          
-                                  if (provider.data[index].verb ==
-                                      "friend_request") {
-                                    publicProfileProvider.id =
-                                        provider.data[index].actor!.id!;
-                                    publicProfileProvider.id =
-                                        provider.data[index].actor!.id!;
-                                    Get.to(
-                                        () => const PublicProfileDetailsScreen());
+
+                                  if (provider.data[index].verb == "friend_request") {
+                                    publicProfileProvider.id = provider.data[index].actor!.id!;
+                                    publicProfileProvider.id = provider.data[index].actor!.id!;
+                                    Get.to(() => const PublicProfileDetailsScreen());
                                   }
-          
+
                                   if (provider.data[index].noticeType == "timeline") {
-                                    singlePostProvider.url =
-                                        provider.data[index].url!;
+                                    singlePostProvider.url = provider.data[index].url!;
                                     singlePostProvider.getUserData();
-                                    // timelinePostCommentProvider.postId = 
+                                    // timelinePostCommentProvider.postId =
                                     Get.to(() => const SinglePostScreen());
                                   }
-          
+
                                   _refresh();
                                 },
                                 textColor: Colors.black,
                                 likecmnt: "${provider.data[index].description}",
                                 containerColor:
-                                    (provider.data[index].isRead == false)
-                                        ? const Color.fromARGB(255, 175, 216, 243)
-                                        : Colors.white,
+                                    (provider.data[index].isRead == false) ? const Color.fromARGB(255, 175, 216, 243) : Colors.white,
                                 time: "${provider.data[index].timestamp} ago",
                               ));
                         })),

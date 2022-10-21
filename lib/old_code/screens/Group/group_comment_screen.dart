@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:als_frontend/data/model/response/CommentModels.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:als_frontend/old_code/widgets/widgets.dart';
@@ -66,12 +67,9 @@ class _GroupCommentsScreenState extends State<GroupCommentsScreen> {
                     child: Consumer3<GroupPostProvider, ProfileDetailsProvider, UserNewsfeedPostProvider>(
                         builder: (context, provider, provider2, userNewsfeedPostProvider, child) {
                       return ListView.builder(
-                          itemCount: provider
-                              .groupPosts![provider.index].comments.length,
+                          itemCount: provider.groupPosts![provider.index].comments.length,
                           itemBuilder: (context, index) {
-                            return (provider.groupPosts![provider.index]
-                                        .comments[index] ==
-                                    null)
+                            return (provider.groupPosts![provider.index].comments[index] == null)
                                 ? Container()
                                 : SingleChildScrollView(
                                     physics: const ScrollPhysics(),
@@ -79,42 +77,14 @@ class _GroupCommentsScreenState extends State<GroupCommentsScreen> {
                                         width: width,
                                         height: height,
                                         onTap: () {
-                                          provider2.id = provider
-                                              .groupPosts![provider.index]
-                                              .comments[index]
-                                              .author
-                                              .id;
-                                          userNewsfeedPostProvider.id = provider
-                                              .groupPosts![provider.index]
-                                              .comments[index]
-                                              .author
-                                              .id;
-                                          (provider
-                                                      .groupPosts![
-                                                          provider.index]
-                                                      .comments[index]
-                                                      .author
-                                                      .id ==
-                                                  provider2.userId)
-                                              ? Get.to(() =>
-                                                  const ProfileScreen())
-                                              : Get.to(() =>
-                                                  const PublicProfileDetailsScreen());
+                                          provider2.id = provider.groupPosts![provider.index].comments[index].author.id;
+                                          userNewsfeedPostProvider.id = provider.groupPosts![provider.index].comments[index].author.id;
+                                          (provider.groupPosts![provider.index].comments[index].author.id == provider2.userId)
+                                              ? Get.to(() => const ProfileScreen())
+                                              : Get.to(() => const PublicProfileDetailsScreen());
                                         },
-                                        image: provider
-                                            .groupPosts![provider.index]
-                                            .comments[index]
-                                            .author
-                                            .profileImage,
-                                        name: "${provider
-                                            .groupPosts![provider.index]
-                                            .comments[index]
-                                            .author
-                                            .firstName} ${provider.groupPosts![provider.index].comments[index].author.lastName}",
-                                        comment: provider
-                                            .groupPosts![provider.index]
-                                            .comments[index]
-                                            .comment),
+                                        commentModels:  CommentModels(),index: index,url: '',postID: 1,
+                                        ),
                                   );
                           });
                     }),
@@ -123,8 +93,7 @@ class _GroupCommentsScreenState extends State<GroupCommentsScreen> {
                       child: Align(
                     alignment: Alignment.bottomLeft,
                     child: Padding(
-                      padding: EdgeInsets.only(
-                          left: width * 0.03, bottom: height * 0.02),
+                      padding: EdgeInsets.only(left: width * 0.03, bottom: height * 0.02),
                       child: Container(
                         height: height * 0.08,
                         width: width * 0.795,
@@ -133,8 +102,7 @@ class _GroupCommentsScreenState extends State<GroupCommentsScreen> {
                           color: Colors.white,
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              top: height * 0.01, left: width * 0.02),
+                          padding: EdgeInsets.only(top: height * 0.01, left: width * 0.02),
                           child: TextField(
                             textAlign: TextAlign.start,
                             controller: commentController,
@@ -149,16 +117,13 @@ class _GroupCommentsScreenState extends State<GroupCommentsScreen> {
                   Positioned.fill(
                       child: Align(
                     alignment: Alignment.bottomRight,
-                    child: Consumer<GroupPostLikeCommentProvider>(
-                        builder: (context, provider, child) {
+                    child: Consumer<GroupPostLikeCommentProvider>(builder: (context, provider, child) {
                       return Padding(
                         padding: EdgeInsets.only(bottom: height * 0.02),
                         child: SizedBox(
                           height: height * 0.079,
                           child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                      Palette.primary)),
+                              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Palette.primary)),
                               onPressed: () {
                                 provider.comment(commentController.text);
                                 _refresh();

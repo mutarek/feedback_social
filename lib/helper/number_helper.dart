@@ -10,14 +10,14 @@ String getDate(String date, BuildContext context) {
   int hourCompare = DateTime.now().hour - time.hour;
   int minuteCompare = DateTime.now().minute - time.minute;
   createTime = age.years > 0
-      ? "${age.years}${getTranslated('ye ago', context)}"
+      ? "${age.years} ${getTranslated('ye ago', context)}"
       : age.months > 0
-          ? "${age.months}${getTranslated('mo ago', context)}"
+          ? "${age.months} ${getTranslated('mo ago', context)}"
           : age.days > 0
-              ? "${age.days}${getTranslated('da ago', context)}"
+              ? "${age.days} ${getTranslated('da ago', context)}"
               : hourCompare > 0
-                  ? "$hourCompare${getTranslated('ho ago', context)}"
-                  : "$minuteCompare${getTranslated('mi ago', context)}";
+                  ? "$hourCompare ${getTranslated('ho ago', context)}"
+                  : "$minuteCompare ${getTranslated('mi ago', context)}";
 
   return createTime;
 }
