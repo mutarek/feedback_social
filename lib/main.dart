@@ -14,6 +14,7 @@ import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
+import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
 import 'package:als_frontend/util/app_constant.dart';
@@ -46,6 +47,8 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<AnimalProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<GroupProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<OtherProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<SettingsProvider>()),
+
       ChangeNotifierProvider(create: (_) => LoginProvider()),
       ChangeNotifierProvider(create: (_) => RegistrationProvider()),
       ChangeNotifierProvider(create: (_) => ShowPasswordProvider()),
@@ -142,6 +145,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => PublicNewsfeedPostProvider()),
       ChangeNotifierProvider(create: (_) => TimelinePostCommentProvider()),
       ChangeNotifierProvider(create: (_) => ShareGroupPagePostProvider()),
+
     ],
     child: const MyApp(),
   ));

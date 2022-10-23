@@ -7,6 +7,7 @@ import 'package:als_frontend/data/repository/language_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/post_repo.dart';
 import 'package:als_frontend/data/repository/profile_repo.dart';
+import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:als_frontend/data/repository/splash_repo.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
@@ -20,6 +21,7 @@ import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
+import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
 import 'package:als_frontend/util/app_constant.dart';
@@ -43,6 +45,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GroupRepo(apiClient: sl(),authRepo: sl()));
   sl.registerLazySingleton(() => AnimalRepo(apiClient: sl(),authRepo: sl()));
   sl.registerLazySingleton(() => SplashRepo(sharedPreferences: sl()));
+  sl.registerLazySingleton(() => SettingsRepo( apiClient:sl()));
+
 
   // Provider
   sl.registerFactory(() => ThemeProvider(sharedPreferences: sl(),splashRepo: sl()));
@@ -59,6 +63,7 @@ Future<void> init() async {
   sl.registerFactory(() => AnimalProvider(animalRepo: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(),newsfeedRepo: sl()));
+  sl.registerFactory(() => SettingsProvider(settingsRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

@@ -29,6 +29,7 @@ class AppConstant {
   static const String groupJoinAllURI = '/group/group-join-list/';
   static const String groupSuggestAllURI = '/group/suggest/all/';
   static const String groupCreatorAllURI = '/group/creator/';
+  static const String passwordUpdate = '/accounts/password/change/';
 
   // Shared Key
   static const String theme = 'theme';
