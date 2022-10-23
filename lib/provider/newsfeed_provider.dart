@@ -141,8 +141,8 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> singlePostLike(int postID, {bool isGroup = false, bool isFromLike = false}) async {
-    Response response = await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike);
+  Future<int> singlePostLike(int postID, {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
+    Response response = await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupID: groupID);
     if (response.statusCode == 200) {
       if (response.body['liked'] == true) {
         isLikeMe = true;

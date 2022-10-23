@@ -31,7 +31,8 @@ class PostStats extends StatelessWidget {
       this.isFromProfile = false,
       this.isHomeNewsFeedProvider = false,
       this.postID = 0,
-      this.paddingVertical = 0}) : super(key: key) {
+      this.paddingVertical = 0})
+      : super(key: key) {
     isGroup = post.postType == AppConstant.postTypeGroup ? true : false;
   }
 
@@ -103,6 +104,7 @@ class PostStats extends StatelessWidget {
                                 isProfileScreen: isFromProfile,
                                 timelineIndex: index,
                                 postID: postID,
+                                groupID: groupID,
                                 isFromGroup: isGroup));
                           },
                           child: SizedBox(

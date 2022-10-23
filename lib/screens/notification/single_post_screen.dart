@@ -1,6 +1,7 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
+import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/view/comment_widget.dart';
@@ -23,6 +24,7 @@ class SinglePostScreen extends StatefulWidget {
   final bool isProfileScreen;
   final int timelineIndex;
   final int postID;
+  final int groupID;
   final bool isFromGroup;
 
   const SinglePostScreen(this.url,
@@ -30,6 +32,7 @@ class SinglePostScreen extends StatefulWidget {
       this.isFromNotification = false,
       this.isFromGroup = false,
       this.postID = 0,
+      this.groupID = 0,
       this.isProfileScreen = false,
       this.timelineIndex = 0,
       Key? key})
@@ -96,10 +99,9 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                         Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.timelineIndex);
                                       } else if (widget.isProfileScreen) {
                                         Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.timelineIndex);
+                                      } else if (widget.isFromGroup) {
+                                        Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.timelineIndex);
                                       }
-                                      // else if (widget.isGroupScreen) {
-                                      //   Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                      // }
                                     }
                                   });
 
@@ -159,12 +161,18 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        newsFeedProvider.singlePostLike(newsFeedProvider.singleNewsFeedModel.id!).then((value) {
+                                        newsFeedProvider
+                                            .singlePostLike(newsFeedProvider.singleNewsFeedModel.id!,
+                                                isGroup: widget.isFromGroup, groupID: widget.groupID)
+                                            .then((value) {
                                           if (value != -1) {
                                             if (widget.isFromHomeTimeline) {
                                               newsFeedProvider.changeLikeStatus(value, widget.timelineIndex);
                                             } else if (widget.isProfileScreen) {
                                               Provider.of<ProfileProvider>(context, listen: false)
+                                                  .changeLikeStatus(value, widget.timelineIndex);
+                                            } else if (widget.isFromGroup) {
+                                              Provider.of<GroupProvider>(context, listen: false)
                                                   .changeLikeStatus(value, widget.timelineIndex);
                                             }
                                           }

@@ -11,9 +11,9 @@ class NewsfeedRepo {
     return await apiClient.getData(AppConstant.newsFeedURI + page.toString());
   }
 
-  Future<Response> addLike(int postID, {int id = 0, bool isGroup = false, bool isFromLike = false}) async {
+  Future<Response> addLike(int postID, {int id = 0, bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
     if (isGroup) {
-      return await apiClient.postData('/posts/$postID/like/', {});
+      return await apiClient.postData('/posts/group/$groupID/$postID/like/', {});
     } else if (isFromLike) {
       return await apiClient.postData('/posts/$postID/like/', {});
     } else {

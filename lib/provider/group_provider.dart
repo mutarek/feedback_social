@@ -285,6 +285,16 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+  changeLikeStatus(int value, int index) async {
+    if (value == 1) {
+      likesStatusAllData[index] = 1;
+      groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! + 1;
+    } else {
+      likesStatusAllData[index] = 0;
+      groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! - 1;
+    }
+    notifyListeners();
+  }
 
   void updateCommentDataCount(int index) {
     groupAllPosts[index].totalComment = groupAllPosts[index].totalComment! + 1;

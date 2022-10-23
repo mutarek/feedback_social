@@ -202,9 +202,6 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                   ListView.builder(
                                       physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
-                                      // separatorBuilder: (context, index) {
-                                      //   return const SizedBox(height: 10.0);
-                                      // },
                                       itemCount: groupProvider.groupAllPosts.length,
                                       itemBuilder: (context, index) {
                                         return Container(
