@@ -4,11 +4,9 @@
 
 import 'dart:convert';
 
-AuthorPageDetailsModel authorPageDetailsModelFromJson(String str) =>
-    AuthorPageDetailsModel.fromJson(json.decode(str));
+AuthorPageDetailsModel authorPageDetailsModelFromJson(String str) => AuthorPageDetailsModel.fromJson(json.decode(str));
 
-String authorPageDetailsModelToJson(AuthorPageDetailsModel data) =>
-    json.encode(data.toJson());
+String authorPageDetailsModelToJson(AuthorPageDetailsModel data) => json.encode(data.toJson());
 
 class AuthorPageDetailsModel {
   AuthorPageDetailsModel({
@@ -34,15 +32,14 @@ class AuthorPageDetailsModel {
   String avatar;
   String createdAt;
   Author author;
-  List<Photo> photos;
+  List<PagePhotoWidget> photos;
   List<Video> videos;
   List<Post> posts;
   bool like;
   int totalLike;
   List<LikedBy> likedBy;
 
-  factory AuthorPageDetailsModel.fromJson(Map<String, dynamic> json) =>
-      AuthorPageDetailsModel(
+  factory AuthorPageDetailsModel.fromJson(Map<String, dynamic> json) => AuthorPageDetailsModel(
         id: json["id"],
         name: json["name"],
         category: json["category"],
@@ -50,13 +47,12 @@ class AuthorPageDetailsModel {
         avatar: json["avatar"],
         createdAt: json["created_at"],
         author: Author.fromJson(json["author"]),
-        photos: List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x))),
+        photos: List<PagePhotoWidget>.from(json["photos"].map((x) => PagePhotoWidget.fromJson(x))),
         videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
         posts: List<Post>.from(json["posts"].map((x) => Post.fromJson(x))),
         like: json["like"],
         totalLike: json["total_like"],
-        likedBy: List<LikedBy>.from(
-            json["liked_by"].map((x) => LikedBy.fromJson(x))),
+        likedBy: List<LikedBy>.from(json["liked_by"].map((x) => LikedBy.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -100,9 +96,6 @@ class Author {
       };
 }
 
-
-
-
 class LikedBy {
   LikedBy({
     required this.id,
@@ -135,20 +128,13 @@ class LikedBy {
       };
 }
 
-
-
-
-
-class Photo {
-  Photo({
-    required this.id,
-    required this.image,
-  });
+class PagePhotoWidget {
+  PagePhotoWidget({required this.id, required this.image});
 
   int id;
   String image;
 
-  factory Photo.fromJson(Map<String, dynamic> json) => Photo(
+  factory PagePhotoWidget.fromJson(Map<String, dynamic> json) => PagePhotoWidget(
         id: json["id"],
         image: json["image"],
       );
@@ -170,7 +156,6 @@ class Post {
     required this.totalVideo,
     required this.videos,
     required this.totalComment,
-    required this.comments,
     required this.totalLike,
     required this.likedBy,
     required this.timestamp,
@@ -183,11 +168,10 @@ class Post {
   Author author;
   Page page;
   int totalImage;
-  List<Photo> images;
+  List<PagePhotoWidget> images;
   int totalVideo;
   List<Video> videos;
   int totalComment;
-  List<Comment> comments;
   int totalLike;
   List<LikedBy> likedBy;
   String timestamp;
@@ -200,15 +184,12 @@ class Post {
         author: Author.fromJson(json["author"]),
         page: Page.fromJson(json["page"]),
         totalImage: json["total_image"],
-        images: List<Photo>.from(json["images"].map((x) => Photo.fromJson(x))),
+        images: List<PagePhotoWidget>.from(json["images"].map((x) => PagePhotoWidget.fromJson(x))),
         totalVideo: json["total_video"],
         videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
         totalComment: json["total_comment"],
-        comments: List<Comment>.from(
-            json["comments"].map((x) => Comment.fromJson(x))),
         totalLike: json["total_like"],
-        likedBy: List<LikedBy>.from(
-            json["liked_by"].map((x) => LikedBy.fromJson(x))),
+        likedBy: List<LikedBy>.from(json["liked_by"].map((x) => LikedBy.fromJson(x))),
         timestamp: json["timestamp"],
         isShare: json["is_share"],
         postType: json["post_type"],
@@ -224,7 +205,6 @@ class Post {
         "total_video": totalVideo,
         "videos": List<dynamic>.from(videos.map((x) => x.toJson())),
         "total_comment": totalComment,
-        "comments": List<dynamic>.from(comments.map((x) => x.toJson())),
         "total_like": totalLike,
         "liked_by": List<dynamic>.from(likedBy.map((x) => x.toJson())),
         "timestamp": timestamp,
@@ -297,7 +277,6 @@ class Page {
       };
 }
 
-
 class Video {
   Video({
     required this.id,
@@ -322,7 +301,7 @@ class EnumValues<T> {
   Map<String, T>? map;
   Map<T, String>? reverseMap;
 
-  EnumValues( this.map);
+  EnumValues(this.map);
 
   Map<T, String> get reverse {
     reverseMap ??= map!.map((k, v) => MapEntry(v, k));

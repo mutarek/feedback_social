@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
+import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class FlagPageView extends StatelessWidget {
                                     return InkWell(
                                       onTap: () {
                                         provider.loadingStart();
-                                        Get.to(UserGroupScreen(provider.authorPageLists[index2].id.toString(), index2));
+                                        Get.to(UserPageScreen(provider.authorPageLists[index2].id.toString(), index2));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(6.0),

@@ -184,14 +184,14 @@ class Page {
   Page.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    category = json['category'];
+    category = json['category'].toString();
     coverPhoto = json['cover_photo'];
     avatar = json['avatar'];
   }
 
   num? id;
   String? name;
-  num? category;
+  String? category;
   String? coverPhoto;
   String? avatar;
 

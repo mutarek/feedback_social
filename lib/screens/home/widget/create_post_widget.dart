@@ -10,12 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Widget createPostWidget(BuildContext context, AuthProvider authProvider,
-    {NewsFeedProvider? newsFeedProvider, bool isForGroup = false, int groupID = 0}) {
+    {NewsFeedProvider? newsFeedProvider, bool isForGroup = false, bool isForPage = false, int groupPageID = 0}) {
   return InkWell(
     onTap: () async {
       Provider.of<PostProvider>(context, listen: false).clearImageVideo();
-       Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => AddPostScreen(authProvider.profileImage, isFromGroupScreen: isForGroup, groupID: groupID)));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) =>
+              AddPostScreen(authProvider.profileImage, isFromGroupScreen: isForGroup, groupPageID: groupPageID, isForPage: isForPage)));
     },
     child: Container(
       decoration: BoxDecoration(

@@ -1,7 +1,7 @@
 import 'package:als_frontend/old_code/const/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../model/group page/page/author_page_details_model.dart';
+import '../../../data/model/response/page/author_page_details_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthorPageDetailsService {

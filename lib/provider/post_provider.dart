@@ -24,7 +24,7 @@ class PostProvider with ChangeNotifier {
 
   bool isLoading = false;
 
-  Future<PostResponse> addPost(String postText, {bool isFromGroup = false, int groupID = 0}) async {
+  Future<PostResponse> addPost(String postText, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
     isLoading = true;
     List<Http.MultipartFile> multipartFile = [];
 
@@ -44,7 +44,9 @@ class PostProvider with ChangeNotifier {
     notifyListeners();
     Response response;
     if (isFromGroup) {
-      response = await postRepo.submitPostTOGroupBYUSINGGroupID({"description": postText}, multipartFile, groupID);
+      response = await postRepo.submitPostTOGroupBYUSINGGroupID({"description": postText}, multipartFile, groupPageID);
+    }else if (isFromPage) {
+      response = await postRepo.submitPostTOPageBYUSINGPageID({"description": postText}, multipartFile, groupPageID);
     } else {
       response = await postRepo.submitPost({"description": postText}, multipartFile);
     }

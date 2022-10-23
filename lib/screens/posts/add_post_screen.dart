@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/posts/view/video_view.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -11,17 +12,19 @@ import 'package:provider/provider.dart';
 
 class AddPostScreen extends StatelessWidget {
   final String profileImage;
-  final int groupID;
+  final int groupPageID;
   final bool isFromGroupScreen;
+  final bool isForPage;
 
-  AddPostScreen(this.profileImage, {this.groupID = 0, this.isFromGroupScreen = false, Key? key}) : super(key: key);
+  AddPostScreen(this.profileImage, {this.groupPageID = 0, this.isFromGroupScreen = false, this.isForPage = false, Key? key})
+      : super(key: key);
   final TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Consumer3<PostProvider, NewsFeedProvider, GroupProvider>(
-        builder: (context, postProvider, newsfeedProvider, groupProvider, child) => Container(
+      bottomNavigationBar: Consumer4<PostProvider, NewsFeedProvider, GroupProvider,PageProvider>(
+        builder: (context, postProvider, newsfeedProvider, groupProvider,pageProvider, child) => Container(
           height: 50,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
           width: MediaQuery.of(context).size.width,
@@ -76,12 +79,16 @@ class AddPostScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  postProvider.addPost(descriptionController.text, isFromGroup: isFromGroupScreen, groupID: groupID).then((value) {
+                  postProvider
+                      .addPost(descriptionController.text, isFromGroup: isFromGroupScreen, groupPageID: groupPageID, isFromPage: isForPage)
+                      .then((value) {
                     descriptionController.clear();
                     postProvider.clearImageVideo();
                     if (value.status!) {
                       if (isFromGroupScreen) {
                         groupProvider.addGroupPostTimeLine(value.newsFeedData!);
+                      } else if (isForPage) {
+                        pageProvider.addPagePostToTimeLine(value.newsFeedData!);
                       } else {
                         newsfeedProvider.addPostOnTimeLine(value.newsFeedData!);
                       }

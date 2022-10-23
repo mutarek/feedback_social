@@ -30,6 +30,22 @@ class PageRepo {
     return await apiClient.postMultipartData(AppConstant.pageURI, body, multipartData);
   }
 
+  Future<Response> callForGetPageAllPosts(String pageID) async {
+    return await apiClient.getData("/posts/page/$pageID/");
+  }
+
+  Future<Response> callForGetPageAllImages(String pageId) async {
+    return await apiClient.getData("/page/$pageId/image/list/");
+  }
+
+  Future<Response> callForGetPageAllVideo(String pageID) async {
+    return await apiClient.getData("/page/$pageID/video/list/");
+  }
+
+  Future<Response> callForGetPageDetails(String pageID) async {
+    return await apiClient.getData(AppConstant.pageURI + "$pageID/");
+  }
+
   //////**************************************
 
   Future<Response> getOwnGroupList() async {
@@ -44,24 +60,8 @@ class PageRepo {
     return await apiClient.patchMultipartData(AppConstant.groupUri + "$groupID/", body, multipartData);
   }
 
-  Future<Response> callForGetGroupDetails(String groupID) async {
-    return await apiClient.getData(AppConstant.groupUri + "$groupID/");
-  }
-
   Future<Response> callForGetGroupMembers(String groupID) async {
     return await apiClient.getData(AppConstant.groupUri + "$groupID/member/all/");
-  }
-
-  Future<Response> callForGetGroupAllPosts(String groupID) async {
-    return await apiClient.getData("/posts/group/$groupID/");
-  }
-
-  Future<Response> callForGetGroupAllImages(String groupID) async {
-    return await apiClient.getData("/group/$groupID/image/list/");
-  }
-
-  Future<Response> callForGetGroupAllVideo(String groupID) async {
-    return await apiClient.getData("/group/$groupID/video/list/");
   }
 
   Future<Response> callForGetAllGroupMemberWhoNotMember(String groupID) async {

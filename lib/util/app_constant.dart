@@ -37,6 +37,7 @@ class AppConstant {
   static const String pageSuggestedURI = '/page/suggested-page/';
   static const String pageCategoryURI = '/page/category/';
   static const String pageURI = '/page/';
+  static const String postPageURI = '/posts/page/';
 
   // Shared Key
   static const String theme = 'theme';

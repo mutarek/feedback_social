@@ -1,13 +1,11 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
-import 'package:als_frontend/provider/group_provider.dart';
-import 'package:als_frontend/screens/group/create_group_screen.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/invite_group_screen.dart';
 import 'package:als_frontend/screens/group/shimmer_effect/my_group_shimmer_effect.dart';
-import 'package:als_frontend/screens/group/view/group_image_video_view.dart';
-import 'package:als_frontend/screens/group/view/group_member_view.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
+import 'package:als_frontend/screens/page/page_image_video_view.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/material.dart';
@@ -16,26 +14,24 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/other_provider.dart';
-
-class UserGroupScreen extends StatefulWidget {
-  final String groupID;
+class UserPageScreen extends StatefulWidget {
+  final String pageID;
   final int index;
 
-  const UserGroupScreen(this.groupID, this.index, {Key? key}) : super(key: key);
+  const UserPageScreen(this.pageID, this.index, {Key? key}) : super(key: key);
 
   @override
-  State<UserGroupScreen> createState() => _UserGroupScreenState();
+  State<UserPageScreen> createState() => _UserPageScreenState();
 }
 
-class _UserGroupScreenState extends State<UserGroupScreen> {
+class _UserPageScreenState extends State<UserPageScreen> {
   final TextEditingController writePostController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupInformation(widget.groupID);
+    Provider.of<PageProvider>(context, listen: false).callForGetPageInformation(widget.pageID);
   }
 
   @override
@@ -43,12 +39,13 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
-        length: 4,
+        length: 3,
         child: Scaffold(
           body: SafeArea(
-            child: Consumer2<GroupProvider, AuthProvider>(
-                builder: (context, groupProvider, authProvider, child) => (groupProvider.isLoading)
-                    ? const MyGroupShimmerWidget(): NestedScrollView(
+            child: Consumer2<PageProvider, AuthProvider>(
+                builder: (context, pageProvider, authProvider, child) => (pageProvider.isLoading)
+                    ? const MyGroupShimmerWidget()
+                    : NestedScrollView(
                         scrollDirection: Axis.vertical,
                         physics: const NeverScrollableScrollPhysics(),
                         // Setting floatHeaderSlivers to true is required in order to float
@@ -75,9 +72,9 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                               back: () {
                                                 Get.back();
                                               },
-                                              coverPhoto: groupProvider.groupDetailsModel.coverPhoto!,
+                                              coverPhoto: pageProvider.pageDetailsModel!.coverPhoto,
                                               viewCoverPhoto: () {
-                                                Get.to(() => SingleImageView(imageURL: groupProvider.groupDetailsModel.coverPhoto!));
+                                                Get.to(() => SingleImageView(imageURL: pageProvider.pageDetailsModel!.coverPhoto));
                                               },
                                             ),
                                           ),
@@ -98,29 +95,28 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                 Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(groupProvider.groupDetailsModel.name!,
+                                                    Text(pageProvider.pageDetailsModel!.name,
                                                         style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
                                                     Padding(
                                                         padding: EdgeInsets.only(right: width * 0.227),
-                                                        child: Text(groupProvider.groupDetailsModel.category!)),
+                                                        child: Text(pageProvider.pageDetailsModel!.category)),
                                                     SizedBox(height: height * 0.01),
                                                     InkWell(
                                                       onTap: () {
                                                         // groupFriendListProvider.friendsList = [];
                                                         // groupInviteProvider.groupId = groupProvider.groupDetails!.id as int;
                                                         // groupFriendListProvider.groupId = groupProvider.groupDetails!.id as int;
-                                                        Get.to(() => InviteGroupScreen(int.parse(widget.groupID)));
+                                                        Get.to(() => InviteGroupScreen(int.parse(widget.pageID)));
                                                       },
-                                                      child: CircleAvatar(
-                                                        backgroundColor: Palette.notificationColor,
-                                                        radius: 20,
-                                                        child: Column(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          children: [
-                                                            const Icon(FontAwesomeIcons.plus, size: 8, color: Colors.white),
-                                                            Text("Invite", style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
-                                                          ],
-                                                        ),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            "${pageProvider.pageDetailsModel!.totalLike}",
+                                                            style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold),
+                                                          ),
+                                                          Text(" Followers", style: GoogleFonts.lato(fontSize: 10, color: Colors.black))
+                                                        ],
                                                       ),
                                                     )
                                                   ],
@@ -130,22 +126,38 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: Column(
                                                     children: [
-                                                      Text(groupProvider.groupDetailsModel.totalMember.toString(),
-                                                          style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
-                                                      const Text("Members"),
+                                                      Container(
+                                                        height: height * 0.036,
+                                                        width: width * 0.2,
+                                                        decoration: BoxDecoration(
+                                                            color: (pageProvider.pageDetailsModel!.like == false)
+                                                                ? Palette.primary
+                                                                : Colors.green,
+                                                            borderRadius: BorderRadius.circular(10)),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                          children: [
+                                                            const Icon(Icons.thumb_up_sharp, size: 16, color: Colors.white),
+                                                            Text(
+                                                              (pageProvider.pageDetailsModel!.like == false) ? "Like" : "Liked",
+                                                              style: TextStyle(fontSize: height * 0.015, color: Colors.white),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
                                                       SizedBox(height: height * 0.014),
                                                       InkWell(
                                                         onTap: () {
-                                                          Provider.of<OtherProvider>(context, listen: false).clearImage();
-                                                          Navigator.of(context).pop();
-                                                          Navigator.of(context).push(MaterialPageRoute(
-                                                              builder: (_) => CreateGroupScreen(
-                                                                  authorGroup: groupProvider.groupDetailsModel,
-                                                                  isUpdateGroup: true,
-                                                                  index: widget.index)));
-
-                                                          // editGroupProvider.groupId = groupProvider.groupDetails!.id as int;
-                                                          // Get.to(() => const EditGroup());
+                                                          // Provider.of<OtherProvider>(context, listen: false).clearImage();
+                                                          // Navigator.of(context).pop();
+                                                          // Navigator.of(context).push(MaterialPageRoute(
+                                                          //     builder: (_) => CreateGroupScreen(
+                                                          //         authorGroup: pageProvider.groupDetailsModel,
+                                                          //         isUpdateGroup: true,
+                                                          //         index: widget.index)));
+                                                          //
+                                                          // // editGroupProvider.groupId = groupProvider.groupDetails!.id as int;
+                                                          // // Get.to(() => const EditGroup());
                                                         },
                                                         child: Container(
                                                           height: height * 0.036,
@@ -157,7 +169,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                             children: [
                                                               const Icon(FontAwesomeIcons.penToSquare, size: 14, color: Colors.white),
                                                               SizedBox(width: width * 0.007),
-                                                              Text("Edit Group",
+                                                              Text("Edit Page",
                                                                   style: TextStyle(fontSize: height * 0.012, color: Colors.white))
                                                             ],
                                                           ),
@@ -169,17 +181,16 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                               ],
                                             ),
                                           ),
-                                          SizedBox(height: height * 0.02),
                                         ],
                                       ),
                                       Container(
                                         height: height * 0.03,
                                         color: Colors.white,
+                                        margin: const EdgeInsets.only(top: 2),
                                         child: TabBar(tabs: [
-                                          Text("Discussion", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                          Text("Post", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                           Text("Photos", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                           Text("Videos", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                          Text("Members", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                         ]),
                                       ),
                                     ],
@@ -195,26 +206,25 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                               physics: const ScrollPhysics(),
                               child: Column(
                                 children: [
-                                  createPostWidget(context, authProvider, isForGroup: true, groupPageID: int.parse(widget.groupID)),
+                                  createPostWidget(context, authProvider, isForPage: true, groupPageID: int.parse(widget.pageID)),
 
                                   /*----------------------------------------Newsfeed---------------------------------*/
                                   const SizedBox(height: 15),
                                   ListView.builder(
                                       physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
-                                      itemCount: groupProvider.groupAllPosts.length,
+                                      itemCount: pageProvider.pageAllPosts.length,
                                       itemBuilder: (context, index) {
                                         return Container(
                                             margin: const EdgeInsets.only(bottom: 10),
-                                            child: TimeLineWidget(groupProvider.groupAllPosts[index], index, groupProvider,
-                                                isGroup: true, groupID: int.parse(widget.groupID)));
+                                            child: TimeLineWidget(pageProvider.pageAllPosts[index], index, pageProvider,
+                                                isGroup: true, groupID: int.parse(widget.pageID)));
                                       }),
                                 ],
                               ),
                             ),
-                            GroupImageVideoView(int.parse(widget.groupID)),
-                            GroupImageVideoView(int.parse(widget.groupID), isForImage: false),
-                            const GroupMemberView(),
+                            const PageImageVideoView(),
+                            const PageImageVideoView(isForImage: false),
                           ],
                         ),
                       )),

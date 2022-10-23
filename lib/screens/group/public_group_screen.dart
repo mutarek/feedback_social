@@ -46,7 +46,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
           body: SafeArea(
             child: Consumer2<GroupProvider, AuthProvider>(
                 builder: (context, groupProvider, authProvider, child) => (groupProvider.isLoading)
-                    ?  MyGroupShimmerWidget()
+                    ?  const MyGroupShimmerWidget()
 
                     : NestedScrollView(
                         scrollDirection: Axis.vertical,
@@ -206,7 +206,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                 children: [
                                   groupProvider.groupDetailsModel.isMember == false
                                       ? const SizedBox.shrink()
-                                      : createPostWidget(context, authProvider, isForGroup: true, groupID: int.parse(widget.groupID)),
+                                      : createPostWidget(context, authProvider, isForGroup: true, groupPageID: int.parse(widget.groupID)),
 
                                   /*----------------------------------------Newsfeed---------------------------------*/
                                   const SizedBox(height: 15),
