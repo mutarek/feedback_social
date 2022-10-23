@@ -7,14 +7,14 @@ class CoverPhotoWidget extends StatelessWidget {
       {Key? key,
       required this.back,
       required this.viewCoverPhoto,
-      required this.coverphoto,
+      required this.coverPhoto,
       this.isTrue = true,
-      required this.coverphotochange})
+      required this.coverPhotoChange})
       : super(key: key);
   final VoidCallback back;
   final VoidCallback viewCoverPhoto;
-  final VoidCallback coverphotochange;
-  final String coverphoto;
+  final VoidCallback coverPhotoChange;
+  final String coverPhoto;
   final bool isTrue;
 
   @override
@@ -26,7 +26,7 @@ class CoverPhotoWidget extends StatelessWidget {
       child: Container(
         height: 200,
         width: width,
-        decoration: BoxDecoration(color: Colors.white, image: DecorationImage(image: NetworkImage(coverphoto))),
+        decoration: BoxDecoration(color: Colors.white, image: DecorationImage(image: NetworkImage(coverPhoto))),
         child: Column(
           children: [
             Padding(
@@ -56,7 +56,7 @@ class CoverPhotoWidget extends StatelessWidget {
               child: Visibility(
                 visible: isTrue,
                 child: InkWell(
-                  onTap: coverphotochange,
+                  onTap: coverPhotoChange,
                   child: Container(
                     height: height * 0.041,
                     width: width * 0.10,

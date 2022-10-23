@@ -75,8 +75,8 @@ class _SuggestedPageViewState extends State<SuggestedPageView> {
                             back: () {
                               Get.back();
                             },
-                            coverphoto: "${suggestedPageDetailsProvider.pageDetails.coverPhoto}",
-                            coverphotochange: () {},
+                            coverPhoto: "${suggestedPageDetailsProvider.pageDetails.coverPhoto}",
+                            coverPhotoChange: () {},
                             viewCoverPhoto: () {
                               profileImageProvider.imageUrl = suggestedPageDetailsProvider.pageDetails.coverPhoto;
                               Get.to(() => const SingleImageView());

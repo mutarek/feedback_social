@@ -97,9 +97,9 @@ class _AdminPageState extends State<AdminPage> {
                                             back: () {
                                               Get.back();
                                             },
-                                            coverphoto:
+                                            coverPhoto:
                                                 "${authorPageDetailsProvider.pageDetails.coverPhoto}",
-                                            coverphotochange: () {},
+                                            coverPhotoChange: () {},
                                             viewCoverPhoto: () {
                                               profileImageProvider.imageUrl =
                                                   authorPageDetailsProvider

@@ -5,11 +5,9 @@
 import 'dart:convert';
 
 List<AuthorPageModel> authorPageModelFromJson(String str) =>
-    List<AuthorPageModel>.from(
-        json.decode(str).map((x) => AuthorPageModel.fromJson(x)));
+    List<AuthorPageModel>.from(json.decode(str).map((x) => AuthorPageModel.fromJson(x)));
 
-String authorPageModelToJson(List<AuthorPageModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String authorPageModelToJson(List<AuthorPageModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class AuthorPageModel {
   AuthorPageModel({
@@ -28,11 +26,10 @@ class AuthorPageModel {
   String avatar;
   int followers;
 
-  factory AuthorPageModel.fromJson(Map<String, dynamic> json) =>
-      AuthorPageModel(
+  factory AuthorPageModel.fromJson(Map<String, dynamic> json) => AuthorPageModel(
         id: json["id"],
         name: json["name"],
-        category: json["category"],
+        category: json["category"].toString(),
         coverPhoto: json["cover_photo"],
         avatar: json["avatar"],
         followers: json["followers"],

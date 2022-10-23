@@ -2,7 +2,7 @@ export '../../data/model/response/news_feed_model.dart';
 export '../../data/model/response/user_profile_model.dart';
 export 'friends/friend_request_model.dart';
 export 'friends/friends_suggetions_model.dart';
-export 'group page/page/athour_pages_model.dart';
+export '../../data/model/response/page/athour_pages_model.dart';
 export 'group page/group/author_group_model.dart';
 export '../../data/model/response/owner_animal_model.dart';
 export 'animal/animal_search_result_model.dart';

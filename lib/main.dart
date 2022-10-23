@@ -12,6 +12,7 @@ import 'package:als_frontend/provider/localization_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
@@ -50,7 +51,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<OtherProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<NotificationProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<SettingsProvider>()),
-
+      ChangeNotifierProvider(create: (context) => di.sl<PageProvider>()),
       ChangeNotifierProvider(create: (_) => LoginProvider()),
       ChangeNotifierProvider(create: (_) => RegistrationProvider()),
       ChangeNotifierProvider(create: (_) => ShowPasswordProvider()),
@@ -147,7 +148,6 @@ void main() async {
       ChangeNotifierProvider(create: (_) => PublicNewsfeedPostProvider()),
       ChangeNotifierProvider(create: (_) => TimelinePostCommentProvider()),
       ChangeNotifierProvider(create: (_) => ShareGroupPagePostProvider()),
-
     ],
     child: const MyApp(),
   ));

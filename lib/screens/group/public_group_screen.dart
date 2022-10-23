@@ -69,11 +69,11 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                             width: width,
                                             child: CoverPhotoWidget(
                                               isTrue: false,
-                                              coverphotochange: () {},
+                                              coverPhotoChange: () {},
                                               back: () {
                                                 Get.back();
                                               },
-                                              coverphoto: groupProvider.groupDetailsModel.coverPhoto!,
+                                              coverPhoto: groupProvider.groupDetailsModel.coverPhoto!,
                                               viewCoverPhoto: () {
                                                 Get.to(() => SingleImageView(imageURL: groupProvider.groupDetailsModel.coverPhoto!));
                                               },

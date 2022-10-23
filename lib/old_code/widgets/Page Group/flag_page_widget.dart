@@ -36,11 +36,8 @@ class _FlagPageWidgetState extends State<FlagPageWidget> {
             SizedBox(
               height: widget.height * 0.15,
               width: widget.width,
-              child: Consumer5<AuthorPagesProvider, WritePagePostProvider,
-                      AuthorPageDetailsProvider, PagePostProvider, CreatePagePost>(
-                  builder: (context, provider, pagePostProvider, 
-                      authorPageDetailsProvider,pagePostsProvider,
-                      createPagePost, child) {
+              child: Consumer5<AuthorPagesProvider, WritePagePostProvider, AuthorPageDetailsProvider, PagePostProvider, CreatePagePost>(
+                  builder: (context, provider, pagePostProvider, authorPageDetailsProvider, pagePostsProvider, createPagePost, child) {
                 return (provider.pages!.isEmpty)
                     ? const Center(
                         child: Text(
@@ -55,10 +52,8 @@ class _FlagPageWidgetState extends State<FlagPageWidget> {
                           return InkWell(
                             onTap: () {
                               createPagePost.pageId = provider.pages![index2].id;
-                              authorPageDetailsProvider.pageIndex =
-                                  provider.pages![index2].id;
+                              authorPageDetailsProvider.pageIndex = provider.pages![index2].id;
                               pagePostsProvider.id = provider.pages![index2].id;
-                              
 
                               Get.to(() => const AdminPage());
                             },
@@ -72,15 +67,12 @@ class _FlagPageWidgetState extends State<FlagPageWidget> {
                                     child: CircleAvatar(
                                       radius: widget.height * 0.0368,
                                       backgroundColor: Palette.scaffold,
-                                      backgroundImage: NetworkImage(
-                                          provider.pages![index2].avatar),
+                                      backgroundImage: NetworkImage(provider.pages![index2].avatar),
                                     ),
                                   ),
                                   Text(
                                     provider.pages![index2].name,
-                                    style: GoogleFonts.lato(
-                                        fontSize: widget.height * 0.02,
-                                        fontWeight: FontWeight.w600),
+                                    style: GoogleFonts.lato(fontSize: widget.height * 0.02, fontWeight: FontWeight.w600),
                                   )
                                 ],
                               ),
@@ -94,9 +86,7 @@ class _FlagPageWidgetState extends State<FlagPageWidget> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 "Pages",
-                style: GoogleFonts.lato(
-                    fontSize: widget.height * 0.03,
-                    fontWeight: FontWeight.w700),
+                style: GoogleFonts.lato(fontSize: widget.height * 0.03, fontWeight: FontWeight.w700),
               ),
             ),
             InkWell(
@@ -127,24 +117,19 @@ class _FlagPageWidgetState extends State<FlagPageWidget> {
                           color: Palette.primary.withOpacity(0.4),
                           spreadRadius: 2,
                           blurRadius: 3,
-                          offset:
-                              const Offset(0, 2), // changes position of shadow
+                          offset: const Offset(0, 2), // changes position of shadow
                         ),
                       ],
                     ),
-                    child: Center(
-                        child: Text("Create ",
-                            style: GoogleFonts.lato(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white)))),
+                    child: Center(child: Text("Create ", style: GoogleFonts.lato(fontWeight: FontWeight.w400, color: Colors.white)))),
               ),
             ),
             const Text(
               "Suggested Pages",
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
-            Consumer4<AllPageProvider, SuggestedPageDetailsProvider, PagePostProvider, PageLikeProvider>(builder:
-                (context, provider, suggestedPageDetailsProvider, pagePostsProvider, pageLikeProvider, child) {
+            Consumer4<AllPageProvider, SuggestedPageDetailsProvider, PagePostProvider, PageLikeProvider>(
+                builder: (context, provider, suggestedPageDetailsProvider, pagePostsProvider, pageLikeProvider, child) {
               return Visibility(
                 child: Expanded(
                   child: ListView.builder(
@@ -154,18 +139,15 @@ class _FlagPageWidgetState extends State<FlagPageWidget> {
                       itemBuilder: (context, index2) {
                         return CustomPageGroupButton(
                             onTap: () {
-                              pageLikeProvider.pageId =
-                                  provider.pages![index2].id;
-                              suggestedPageDetailsProvider.pageIndex =
-                                  provider.pages![index2].id;
+                              pageLikeProvider.pageId = provider.pages![index2].id;
+                              suggestedPageDetailsProvider.pageIndex = provider.pages![index2].id;
                               pagePostsProvider.id = provider.pages![index2].id;
                               Get.to(() => const SuggestedPageView());
                             },
                             goToGroupOrPage: () {},
                             groupOrPageImage: provider.pages![index2].avatar,
                             groupOrPageName: provider.pages![index2].name,
-                            groupOrPageLikes:
-                                "${provider.pages![index2].followers} Likes");
+                            groupOrPageLikes: "${provider.pages![index2].followers} Likes");
                       }),
                 ),
                 replacement: const CircularProgressIndicator(),

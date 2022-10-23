@@ -48,7 +48,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
           body: SafeArea(
             child: Consumer2<GroupProvider, AuthProvider>(
                 builder: (context, groupProvider, authProvider, child) => (groupProvider.isLoading)
-                    ? MyGroupShimmerWidget(): NestedScrollView(
+                    ? const MyGroupShimmerWidget(): NestedScrollView(
                         scrollDirection: Axis.vertical,
                         physics: const NeverScrollableScrollPhysics(),
                         // Setting floatHeaderSlivers to true is required in order to float
@@ -71,11 +71,11 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                             width: width,
                                             child: CoverPhotoWidget(
                                               isTrue: false,
-                                              coverphotochange: () {},
+                                              coverPhotoChange: () {},
                                               back: () {
                                                 Get.back();
                                               },
-                                              coverphoto: groupProvider.groupDetailsModel.coverPhoto!,
+                                              coverPhoto: groupProvider.groupDetailsModel.coverPhoto!,
                                               viewCoverPhoto: () {
                                                 Get.to(() => SingleImageView(imageURL: groupProvider.groupDetailsModel.coverPhoto!));
                                               },

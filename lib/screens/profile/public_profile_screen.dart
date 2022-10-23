@@ -71,10 +71,10 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 viewCoverPhoto: () {
                                   Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.coverImage!));
                                 },
-                                coverphoto: (publicProvider.publicProfileData.coverImage != null)
+                                coverPhoto: (publicProvider.publicProfileData.coverImage != null)
                                     ? publicProvider.publicProfileData.coverImage!
                                     : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
-                                coverphotochange: () {}),
+                                coverPhotoChange: () {}),
                             ProfilePhotowidget(
                               viewProfilePhoto: () {
                                 Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.profileImage!));

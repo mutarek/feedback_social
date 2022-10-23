@@ -90,10 +90,10 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                                         profileImageProvider.imageUrl = provider.userprofileData!.coverImage!;
                                         Get.to(() => const SingleImageView());
                                       },
-                                      coverphoto: (provider.userprofileData! != null)
+                                      coverPhoto: (provider.userprofileData! != null)
                                           ? provider.userprofileData!.coverImage!
                                           : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
-                                      coverphotochange: () {}),
+                                      coverPhotoChange: () {}),
                                   Positioned(
                                     top: height * 0.23,
                                     child: Container(

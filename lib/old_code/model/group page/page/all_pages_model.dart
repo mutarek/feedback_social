@@ -4,12 +4,9 @@
 
 import 'dart:convert';
 
-List<AllPagesModel> allPagesModelFromJson(String str) =>
-    List<AllPagesModel>.from(
-        json.decode(str).map((x) => AllPagesModel.fromJson(x)));
+List<AllPagesModel> allPagesModelFromJson(String str) => List<AllPagesModel>.from(json.decode(str).map((x) => AllPagesModel.fromJson(x)));
 
-String allPagesModelToJson(List<AllPagesModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String allPagesModelToJson(List<AllPagesModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class AllPagesModel {
   AllPagesModel({

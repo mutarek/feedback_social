@@ -1,17 +1,25 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
 import 'package:als_frontend/screens/group/view/flag_group_view.dart';
+import 'package:als_frontend/screens/page/create_page_screen.dart';
+import 'package:als_frontend/screens/page/view/flag_page_view.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class PageOrGroupDecisionGroup extends StatelessWidget {
+class PageOrGroupDecisionGroup extends StatefulWidget {
   const PageOrGroupDecisionGroup({Key? key}) : super(key: key);
 
+  @override
+  State<PageOrGroupDecisionGroup> createState() => _PageOrGroupDecisionGroupState();
+}
+
+class _PageOrGroupDecisionGroupState extends State<PageOrGroupDecisionGroup> {
   void openBottomSheet(BuildContext context) {
     showModalBottomSheet(
         isScrollControlled: true,
@@ -27,7 +35,7 @@ class PageOrGroupDecisionGroup extends StatelessWidget {
                   onTap: () {
                     Provider.of<OtherProvider>(context, listen: false).clearImage();
                     Navigator.of(context).pop();
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => CreateGroupScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreateGroupScreen()));
                   },
                   textWhiteColor: true,
                   radius: 5,
@@ -37,7 +45,11 @@ class PageOrGroupDecisionGroup extends StatelessWidget {
                 const SizedBox(height: 10),
                 CustomButton(
                   btnTxt: 'Create a Page',
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<OtherProvider>(context, listen: false).clearImage();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreatePageScreen()));
+                  },
                   textWhiteColor: true,
                   radius: 5,
                   backgroundColor: Palette.notificationColor,
@@ -51,6 +63,7 @@ class PageOrGroupDecisionGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<PageProvider>(context, listen: false).initializeAuthorPageLists();
     Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -102,7 +115,7 @@ class PageOrGroupDecisionGroup extends StatelessWidget {
               width: width,
               color: Colors.white,
               child: TabBarView(children: [
-                Container(),
+                FlagPageView(height: height, width: width),
                 FlagGroupView(height: height, width: width),
               ]),
             ),

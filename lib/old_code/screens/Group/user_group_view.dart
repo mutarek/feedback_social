@@ -92,11 +92,11 @@ class _UserGroupViewState extends State<UserGroupView> {
                                           children: [
                                             CoverPhotoWidget(
                                               isTrue: false,
-                                              coverphotochange: () {},
+                                              coverPhotoChange: () {},
                                               back: () {
                                                 Get.back();
                                               },
-                                              coverphoto: groupDetailsProvider.groupDetails!.coverPhoto!,
+                                              coverPhoto: groupDetailsProvider.groupDetails!.coverPhoto!,
                                               viewCoverPhoto: () {
                                                 profileImageProvider.imageUrl = groupDetailsProvider.groupDetails!.coverPhoto!;
                                                 Get.to(() => const SingleImageView());

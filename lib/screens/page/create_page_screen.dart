@@ -3,6 +3,7 @@ import 'package:als_frontend/data/model/response/group/author_group_details_mode
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
@@ -15,18 +16,18 @@ import 'package:get/route_manager.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
-class CreateGroupScreen extends StatefulWidget {
-  final bool isUpdateGroup;
+class CreatePageScreen extends StatefulWidget {
+  final bool isUpdatePage;
   final AuthorGroupDetailsModel? authorGroup;
   final int index;
 
-  const CreateGroupScreen({this.authorGroup, this.isUpdateGroup = false, this.index = 0, Key? key}) : super(key: key);
+  const CreatePageScreen({this.authorGroup, this.isUpdatePage = false, this.index = 0, Key? key}) : super(key: key);
 
   @override
-  State<CreateGroupScreen> createState() => _CreateGroupScreenState();
+  State<CreatePageScreen> createState() => _CreatePageScreenState();
 }
 
-class _CreateGroupScreenState extends State<CreateGroupScreen> {
+class _CreatePageScreenState extends State<CreatePageScreen> {
   TextEditingController groupNameController = TextEditingController();
 
   @override
@@ -34,8 +35,8 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
     // TODO: implement initState
     super.initState();
     groupNameController = TextEditingController();
-    Provider.of<GroupProvider>(context, listen: false).initializeCategory();
-    if (widget.isUpdateGroup) {
+    Provider.of<PageProvider>(context, listen: false).initializeCategory();
+    if (widget.isUpdatePage) {
       groupNameController.text = widget.authorGroup!.name!;
       Provider.of<GroupProvider>(context, listen: false).changeGroupPrivateStatus(widget.authorGroup!.isPrivate!, isFirstTime: true);
     }
@@ -45,10 +46,10 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Consumer2<OtherProvider, GroupProvider>(
-        builder: (context, otherProvider, groupProvider, child) => SafeArea(
+      body: Consumer2<OtherProvider, PageProvider>(
+        builder: (context, otherProvider, pageProvider, child) => SafeArea(
           child: ModalProgressHUD(
-            inAsyncCall: groupProvider.isLoading,
+            inAsyncCall: pageProvider.isLoading,
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -60,7 +61,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                           otherProvider.selectedFile != null
                               ? Image.file(otherProvider.selectedFile!,
                                   width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
-                              : widget.isUpdateGroup
+                              : widget.isUpdatePage
                                   ? Image.network(widget.authorGroup!.coverPhoto!,
                                       width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
                                   : Image.asset("assets/background/profile_placeholder.jpg",
@@ -84,7 +85,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(title: 'Enter Group name ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText(title: 'Enter Page name ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         CustomTextField(
                           hintText: 'Write here....',
@@ -95,30 +96,18 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                           inputAction: TextInputAction.done,
                         ),
                         const SizedBox(height: 13),
-                        Row(
-                          children: [
-                            CustomText(title: 'Group Is Private? ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
-                            CupertinoSwitch(
-                              value: groupProvider.groupISPrivate,
-                              onChanged: (value) {
-                                groupProvider.changeGroupPrivateStatus(value);
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 13),
-                        CustomText(title: 'Select Group Category ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText(title: 'Select Page Category Type: ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         Container(
                           width: width,
                           decoration: BoxDecoration(color: const Color(0xFF656B87), borderRadius: BorderRadius.circular(15.0)),
                           child: DropdownButton<CategoryModel>(
                             dropdownColor: Palette.primary,
-                            value: groupProvider.categoryValue,
+                            value: pageProvider.categoryValue,
                             isExpanded: true,
                             underline: const SizedBox.shrink(),
                             icon: const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white),
-                            items: groupProvider.items
+                            items: pageProvider.items
                                 .map((item) => DropdownMenuItem<CategoryModel>(
                                     value: item,
                                     child: Container(
@@ -127,24 +116,24 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                             title: item.name, textStyle: latoStyle500Medium.copyWith(fontSize: 17, color: Colors.white)))))
                                 .toList(),
                             onChanged: (item) {
-                              groupProvider.changeGroupCategory(item!);
+                              pageProvider.changeGroupCategory(item!);
                             },
                           ),
                         ),
                         const SizedBox(height: 20),
                         CustomButton(
-                          btnTxt: widget.isUpdateGroup ? "Update" : "Add",
+                          btnTxt: widget.isUpdatePage ? "Update" : "Add",
                           onTap: () {
                             if (groupNameController.text.isNotEmpty) {
-                              if (widget.isUpdateGroup) {
-                                groupProvider.updateGroup(groupNameController.text, otherProvider.selectedFile, (bool status) {
+                              if (widget.isUpdatePage) {
+                                pageProvider.updateGroup(groupNameController.text, otherProvider.selectedFile, (bool status) {
                                   if (status) {
                                     groupNameController.clear();
                                     Get.back();
                                   }
                                 }, widget.authorGroup!.id as int, widget.index);
                               } else {
-                                groupProvider.createGroup(groupNameController.text, otherProvider.selectedFile, (bool status) {
+                                pageProvider.createPage(groupNameController.text, otherProvider.selectedFile, (bool status) {
                                   if (status) {
                                     groupNameController.clear();
                                     Get.back();
@@ -152,7 +141,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                 });
                               }
                             } else {
-                              Fluttertoast.showToast(msg: "Please Write Group Name");
+                              Fluttertoast.showToast(msg: "Please Write Page Name");
                             }
                           },
                           fontSize: 18,
