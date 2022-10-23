@@ -46,6 +46,9 @@ class AppConstant {
   static const String userName = 'username';
   static const String usercode = 'usercode';
   static const String userEmail = 'useremail';
+  static const String postTypePage = 'page';
+  static const String postTypeGroup = 'group';
+  static const String postTypeTimeline = 'timeline';
 
   static List<LanguageModel> languagesList = [
     LanguageModel(imageUrl: '', languageName: 'English', countryCode: 'US', languageCode: 'en'),

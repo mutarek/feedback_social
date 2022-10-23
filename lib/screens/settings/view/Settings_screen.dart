@@ -15,22 +15,29 @@ import 'package:provider/provider.dart';
 import '../../../widgets/snackbar_message.dart';
 import '../widget/passowrd_update_widget.dart';
 
-
-
-class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsScreenState extends State<SettingsScreen> {
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController repeatPasswordController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    newPasswordController = TextEditingController();
+    currentPasswordController = TextEditingController();
+    repeatPasswordController = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController newPasswordContorller = TextEditingController();
-    TextEditingController currentPasswordContorller = TextEditingController();
-    TextEditingController repeatPasswordContorller = TextEditingController();
-
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -54,8 +61,7 @@ class _SettingsState extends State<Settings> {
                   ),
                   Text(
                     "Settings",
-                    style: GoogleFonts.lato(
-                        fontSize: 22, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.lato(fontSize: 22, fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -72,36 +78,25 @@ class _SettingsState extends State<Settings> {
               SizedBox(
                 height: height * 0.02,
               ),
-              Consumer<SettingsProvider>(
-
-                  builder: (context, provider,child) {
-                    return PasswordSettings(
-                      width: width,
-                      height: height,
-                      newPasswordContorller: newPasswordContorller,
-                      currentPasswordContorller: currentPasswordContorller,
-                      repeatPasswordContorller: repeatPasswordContorller,
-                      passwordSaveUpdate: () {
-                        if (newPasswordContorller.text ==
-                            repeatPasswordContorller.text) {
-                          provider.passwordUpdate(
-                              currentPasswordContorller.text,
-                              newPasswordContorller.text ,
-                              repeatPasswordContorller.text);
-                        } else {
-                          showMessage(
-                            message: "New password & repeat Password don't match",
-                            context: context,
-                          );
-                        }
-
-
-
-                       },
-                    );
-                  }
-              ),
-
+              Consumer<SettingsProvider>(builder: (context, provider, child) {
+                return PasswordSettings(
+                  width: width,
+                  height: height,
+                  newPasswordContorller: newPasswordController,
+                  currentPasswordContorller: currentPasswordController,
+                  repeatPasswordContorller: repeatPasswordController,
+                  passwordSaveUpdate: () {
+                    if (newPasswordController.text == repeatPasswordController.text) {
+                      provider.passwordUpdate(currentPasswordController.text, newPasswordController.text, repeatPasswordController.text);
+                    } else {
+                      showMessage(
+                        message: "New password & repeat Password don't match",
+                        context: context,
+                      );
+                    }
+                  },
+                );
+              }),
 
               /*..................Notifications ............*/
 

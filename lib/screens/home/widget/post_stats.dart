@@ -1,6 +1,7 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/notification/single_post_screen.dart';
+import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,26 +14,26 @@ class PostStats extends StatelessWidget {
   final int index;
   final int groupID;
   final int postID;
-  final bool isGroup;
+  bool isGroup = false;
   final feedProvider;
   final double paddingHorizontal;
   final double paddingVertical;
   final bool isHomeNewsFeedProvider;
   final bool isFromProfile;
 
-  const PostStats(
+  PostStats(
       {Key? key,
       required this.post,
       required this.index,
       this.feedProvider,
       this.groupID = 0,
-      this.isGroup = false,
       this.paddingHorizontal = 12,
       this.isFromProfile = false,
       this.isHomeNewsFeedProvider = false,
       this.postID = 0,
-      this.paddingVertical = 0})
-      : super(key: key);
+      this.paddingVertical = 0}) : super(key: key) {
+    isGroup = post.postType == AppConstant.postTypeGroup ? true : false;
+  }
 
   @override
   Widget build(BuildContext context) {

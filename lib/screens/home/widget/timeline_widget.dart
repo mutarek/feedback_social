@@ -50,7 +50,7 @@ class TimeLineWidget extends StatelessWidget {
               isFromProfile: isProfileScreen,
               groupID: groupID,
               postID: newsFeedData.id as int,
-              isGroup: isGroup),
+              ),
         ],
       ),
     );
