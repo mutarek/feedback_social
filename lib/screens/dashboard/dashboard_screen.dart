@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -31,23 +30,16 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final PageController controller = PageController();
-  RefreshController refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initState() {
     super.initState();
-    refreshController = RefreshController(initialRefresh: false);
     Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData((bool status) {}, page: 1);
+    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData( page: 1);
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
     // Provider.of<NotificationProvider>(context, listen: false).check();
   }
 
-  @override
-  void dispose() {
-    refreshController.dispose();
-    super.dispose();
-  }
 
   int selected = 0;
 
@@ -193,7 +185,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         dashboardProvider.changeSelectIndex(page);
                       },
                       children: [
-                        HomeScreen(refreshController),
+                        HomeScreen(),
                         const PageOrGroupDecisionGroup(),
                         NotificationScreen(),
                         const ProfileScreen(),

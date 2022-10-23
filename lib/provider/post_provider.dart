@@ -10,6 +10,13 @@ import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:http/http.dart' as Http;
 import 'package:image_picker/image_picker.dart';
 
+class PostResponse {
+  NewsFeedData? newsFeedData;
+  bool? status;
+
+  PostResponse({this.newsFeedData, this.status});
+}
+
 class PostProvider with ChangeNotifier {
   final PostRepo postRepo;
 
@@ -17,7 +24,7 @@ class PostProvider with ChangeNotifier {
 
   bool isLoading = false;
 
-  addPost(String postText, Function callBackFunction, {bool isFromGroup = false, int groupID = 0}) async {
+  Future<PostResponse> addPost(String postText, {bool isFromGroup = false, int groupID = 0}) async {
     isLoading = true;
     List<Http.MultipartFile> multipartFile = [];
 
@@ -43,18 +50,15 @@ class PostProvider with ChangeNotifier {
     }
     isLoading = false;
     if (response.statusCode == 201 || response.statusCode == 200) {
-      if (isFromGroup) {
-        callBackFunction(true, NewsFeedData.fromJson(response.body), 1);
-      } else {
-        callBackFunction(true, NewsFeedData.fromJson(response.body), 1);
-      }
-
       Fluttertoast.showToast(msg: "Posted");
+      NewsFeedData n = NewsFeedData.fromJson(response.body);
+      print('tonni ${n.toJson()}');
+      notifyListeners();
+      return PostResponse(newsFeedData: n, status: true);
     } else {
-      callBackFunction(false, NewsFeedData(), 0);
       Fluttertoast.showToast(msg: "Something went wrong!");
+      return PostResponse(newsFeedData: NewsFeedData(), status: false);
     }
-    notifyListeners();
   }
 
   List<XFile> imageFile = [];

@@ -6,56 +6,49 @@ import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
-  final RefreshController refreshController;
-
-  const HomeScreen(this.refreshController, {Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late ScrollController _controller;
+  ScrollController controller = ScrollController();
+
+  Future<void> _refresh(BuildContext context) async {
+    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(isFirstTime: false);
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    _controller = ScrollController()
-      ..addListener(() {
-        if (_controller.position.maxScrollExtent == _controller.position.pixels) {
-          Provider.of<NewsFeedProvider>(context, listen: false).updatePageNo();
-        }
-      });
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange &&
+          Provider.of<NewsFeedProvider>(context, listen: false).hasNextData) {
+        Provider.of<NewsFeedProvider>(context, listen: false).updatePageNo();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer2<NewsFeedProvider, AuthProvider>(builder: (context, newsFeedProvider, authProvider, child) {
-      return SmartRefresher(
-        controller: widget.refreshController,
-        enablePullDown: true,
-        enablePullUp: false,
+      return RefreshIndicator(
         onRefresh: () {
-          newsFeedProvider.initializeAllFeedData((bool status) {
-            if (status == true) {
-              widget.refreshController.loadComplete();
-              widget.refreshController.refreshCompleted();
-            }
-          }, isFirstTime: false);
+          return _refresh(context);
         },
         child: newsFeedProvider.isLoading
             ? const TimeLinePostShimmerWidget(20)
             : ListView(
-                controller: _controller,
+                controller: controller,
                 children: [
                   Container(
                       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: createPostWidget(context, authProvider, newsFeedProvider: newsFeedProvider, isForGroup: true)),
+                      child: createPostWidget(context, authProvider, newsFeedProvider: newsFeedProvider, isForGroup: false)),
                   ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -68,8 +61,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const CupertinoActivityIndicator();
                         }
 
-                        return Container(margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),child: TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider, isHomeScreen: true));
+                        return Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            child: TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider, isHomeScreen: true));
                       }),
+                  newsFeedProvider.isBottomLoading
+                      ? Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
+                          alignment: Alignment.center,
+                          child: const CupertinoActivityIndicator())
+                      : const SizedBox.shrink()
                 ],
               ),
       );

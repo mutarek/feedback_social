@@ -19,19 +19,21 @@ class NewsFeedProvider with ChangeNotifier {
   bool isBottomLoading = false;
   int selectPage = 1;
   List<int> likesStatusAllData = [];
+  bool hasNextData = false;
 
   updatePageNo() {
     selectPage++;
-    initializeAllFeedData((bool status) {}, page: selectPage);
+    initializeAllFeedData(page: selectPage);
     notifyListeners();
   }
 
-  initializeAllFeedData(Function callBackFunction, {int page = 1, bool isFirstTime = true}) async {
+  initializeAllFeedData({int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
       newsFeedLists.clear();
       newsFeedLists = [];
       isLoading = true;
+      hasNextData = false;
       isBottomLoading = false;
       position = 0;
       likesStatusAllData.clear();
@@ -47,9 +49,9 @@ class NewsFeedProvider with ChangeNotifier {
     Response response = await newsFeedRepo.getNewsFeedData(page);
     isLoading = false;
     isBottomLoading = false;
-    callBackFunction(true);
     int status = 0;
     if (response.statusCode == 200) {
+      hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
         NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
 
@@ -104,18 +106,15 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  int count = 0;
   NewsFeedData newsFeedData = NewsFeedData();
 
-  initializeCount0() {
-    count = 0;
-    notifyListeners();
-  }
-
   addPostOnTimeLine(NewsFeedData n) async {
-    likesStatusAllData.add(0);
-    newsFeedLists.add(newsFeedData);
+    likesStatusAllData.insert(0, 0);
+    newsFeedLists.insert(0, newsFeedData);
+    print('shuvoooo ${n.toJson()}');
+
     notifyListeners();
+    print('mehehhe ${newsFeedLists[0].toJson()}');
   }
 
   /////// TODO: for single post

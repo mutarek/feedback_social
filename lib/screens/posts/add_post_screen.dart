@@ -1,4 +1,3 @@
-import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
@@ -20,8 +19,6 @@ class AddPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<PostProvider>(context, listen: false).clearImageVideo(isFirstTime: true);
-
     return Scaffold(
       bottomNavigationBar: Consumer3<PostProvider, NewsFeedProvider, GroupProvider>(
         builder: (context, postProvider, newsfeedProvider, groupProvider, child) => Container(
@@ -80,28 +77,24 @@ class AddPostScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   if (isFromGroupScreen) {
-                    postProvider.addPost(descriptionController.text, (bool status, NewsFeedData n, int value) {
-                      if (status) {
-                        descriptionController.clear();
-                        postProvider.clearImageVideo();
-                        groupProvider.addGroupPostTimeLine(n);
+                    postProvider.addPost(descriptionController.text, isFromGroup: isFromGroupScreen, groupID: groupID).then((value) {
+                      descriptionController.clear();
+                      postProvider.clearImageVideo();
+                      if (value.status!) {
+                        groupProvider.addGroupPostTimeLine(value.newsFeedData!);
                       }
-                    }, isFromGroup: true, groupID: groupID);
+                    });
                   } else {
-                    newsfeedProvider.initializeCount0();
-                    postProvider.addPost(
-                      descriptionController.text,
-                      (bool status, NewsFeedData n, int value) {
-                        if (status) {
-                          descriptionController.clear();
-                          postProvider.clearImageVideo();
-                          newsfeedProvider.addPostOnTimeLine(n);
-                        }
-                      },
-                    );
+                    postProvider.addPost(descriptionController.text).then((value) {
+                      descriptionController.clear();
+                      postProvider.clearImageVideo();
+                      if (value.status!) {
+                        newsfeedProvider.addPostOnTimeLine(value.newsFeedData!);
+                      }
+                    });
                   }
 
-                  Navigator.of(context).pop([true]);
+                  Navigator.of(context).pop();
                 },
                 child: Container(
                   width: 50,

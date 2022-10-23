@@ -1,20 +1,21 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/posts/add_post_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Widget createPostWidget(BuildContext context, AuthProvider authProvider,
     {NewsFeedProvider? newsFeedProvider, bool isForGroup = false, int groupID = 0}) {
   return InkWell(
     onTap: () async {
-      var result = await Navigator.of(context).push(
+      Provider.of<PostProvider>(context, listen: false).clearImageVideo();
+       Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => AddPostScreen(authProvider.profileImage, isFromGroupScreen: isForGroup, groupID: groupID)));
-
-
     },
     child: Container(
       decoration: BoxDecoration(
