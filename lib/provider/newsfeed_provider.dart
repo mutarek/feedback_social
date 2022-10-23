@@ -110,11 +110,8 @@ class NewsFeedProvider with ChangeNotifier {
 
   addPostOnTimeLine(NewsFeedData n) async {
     likesStatusAllData.insert(0, 0);
-    newsFeedLists.insert(0, newsFeedData);
-    print('shuvoooo ${n.toJson()}');
-
+    newsFeedLists.insert(0, n);
     notifyListeners();
-    print('mehehhe ${newsFeedLists[0].toJson()}');
   }
 
   /////// TODO: for single post

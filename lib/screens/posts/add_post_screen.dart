@@ -76,23 +76,17 @@ class AddPostScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  if (isFromGroupScreen) {
-                    postProvider.addPost(descriptionController.text, isFromGroup: isFromGroupScreen, groupID: groupID).then((value) {
-                      descriptionController.clear();
-                      postProvider.clearImageVideo();
-                      if (value.status!) {
+                  postProvider.addPost(descriptionController.text, isFromGroup: isFromGroupScreen, groupID: groupID).then((value) {
+                    descriptionController.clear();
+                    postProvider.clearImageVideo();
+                    if (value.status!) {
+                      if (isFromGroupScreen) {
                         groupProvider.addGroupPostTimeLine(value.newsFeedData!);
-                      }
-                    });
-                  } else {
-                    postProvider.addPost(descriptionController.text).then((value) {
-                      descriptionController.clear();
-                      postProvider.clearImageVideo();
-                      if (value.status!) {
+                      } else {
                         newsfeedProvider.addPostOnTimeLine(value.newsFeedData!);
                       }
-                    });
-                  }
+                    }
+                  });
 
                   Navigator.of(context).pop();
                 },

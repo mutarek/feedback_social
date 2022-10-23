@@ -52,7 +52,6 @@ class PostProvider with ChangeNotifier {
     if (response.statusCode == 201 || response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Posted");
       NewsFeedData n = NewsFeedData.fromJson(response.body);
-      print('tonni ${n.toJson()}');
       notifyListeners();
       return PostResponse(newsFeedData: n, status: true);
     } else {
