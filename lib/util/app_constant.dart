@@ -32,6 +32,7 @@ class AppConstant {
   static const String notificationListURI = '/notification/list/';
   static const String notificationUnreadCountURI = '/notification/count/unread/';
   static const String notificationReadCountURI = '/notification/counter/read/';
+  static const String passwordUpdate = '/accounts/password/change/';
 
   // Shared Key
   static const String theme = 'theme';
