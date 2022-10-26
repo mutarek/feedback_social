@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/view/comment_widget.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
@@ -26,6 +27,7 @@ class SinglePostScreen extends StatefulWidget {
   final int postID;
   final int groupID;
   final bool isFromGroup;
+  final bool isFromPage;
 
   const SinglePostScreen(this.url,
       {this.isFromHomeTimeline = false,
@@ -34,6 +36,7 @@ class SinglePostScreen extends StatefulWidget {
       this.postID = 0,
       this.groupID = 0,
       this.isProfileScreen = false,
+      this.isFromPage = false,
       this.timelineIndex = 0,
       Key? key})
       : super(key: key);
@@ -49,7 +52,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
     super.initState();
     Provider.of<NewsFeedProvider>(context, listen: false).callForSinglePosts(widget.url);
     Provider.of<CommentProvider>(context, listen: false).initializeCommentData(widget.url);
-    if (widget.isFromGroup) {
+    if (widget.isFromGroup || widget.isFromPage) {
       Provider.of<CommentProvider>(context, listen: false).initializeSocket(widget.postID);
     } else {
       Provider.of<CommentProvider>(context, listen: false).initializeSinglePostSocket(widget.url);
@@ -101,6 +104,8 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                         Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.timelineIndex);
                                       } else if (widget.isFromGroup) {
                                         Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.timelineIndex);
+                                      } else if (widget.isFromPage) {
+                                        Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(widget.timelineIndex);
                                       }
                                     }
                                   });

@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class PostStats extends StatelessWidget {
   final NewsFeedData post;
   final int index;
-  final int groupID;
+  final int groupPageID;
   final int postID;
   bool isGroup = false;
   final feedProvider;
@@ -20,16 +20,18 @@ class PostStats extends StatelessWidget {
   final double paddingVertical;
   final bool isHomeNewsFeedProvider;
   final bool isFromProfile;
+  final bool isPage;
 
   PostStats(
       {Key? key,
       required this.post,
       required this.index,
       this.feedProvider,
-      this.groupID = 0,
+      this.groupPageID = 0,
       this.paddingHorizontal = 12,
       this.isFromProfile = false,
       this.isHomeNewsFeedProvider = false,
+      this.isPage = false,
       this.postID = 0,
       this.paddingVertical = 0})
       : super(key: key) {
@@ -58,8 +60,8 @@ class PostStats extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            if (isGroup) {
-                              feedProvider.addLike(groupID, post.id!.toInt(), index);
+                            if (isGroup || isPage) {
+                              feedProvider.addLike(groupPageID, post.id!.toInt(), index);
                             } else {
                               feedProvider.addLike(post.id!.toInt(), index);
                             }
@@ -104,7 +106,8 @@ class PostStats extends StatelessWidget {
                                 isProfileScreen: isFromProfile,
                                 timelineIndex: index,
                                 postID: postID,
-                                groupID: groupID,
+                                groupID: groupPageID,
+                                isFromPage: isPage,
                                 isFromGroup: isGroup));
                           },
                           child: SizedBox(

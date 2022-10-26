@@ -37,15 +37,15 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
             shrinkWrap: true,
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 5.0, mainAxisSpacing: 5.0),
-            itemCount: widget.isForImage ? pageProvider.pageDetailsModel!.photos.length : pageProvider.pageDetailsModel!.videos.length,
+            itemCount: widget.isForImage ? pageProvider.pageDetailsModel!.photos!.length : pageProvider.pageDetailsModel!.videos!.length,
             itemBuilder: (context, index) {
               return InkWell(
                   onTap: () {
                     if (widget.isForImage) {
-                      Get.to(() => SingleImageView(imageURL: pageProvider.pageDetailsModel!.photos[index].image));
+                      Get.to(() => SingleImageView(imageURL: pageProvider.pageDetailsModel!.photos![index].image!));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => VideoDetailsScreen(videoURL: pageProvider.pageDetailsModel!.videos[index].video)));
+                          builder: (_) => VideoDetailsScreen(videoURL: pageProvider.pageDetailsModel!.videos![index].video)));
                     }
                   },
                   child: Stack(
@@ -63,8 +63,8 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
                           borderRadius: BorderRadius.circular(5),
                           child: CachedNetworkImage(
                               imageUrl: widget.isForImage
-                                  ? pageProvider.pageDetailsModel!.photos[index].image
-                                  : pageProvider.pageDetailsModel!.videos[index].video,
+                                  ? pageProvider.pageDetailsModel!.photos![index].image!
+                                  : pageProvider.pageDetailsModel!.videos![index].video,
                               fit: BoxFit.cover,
                               height: 200,
                               width: MediaQuery.of(context).size.width,

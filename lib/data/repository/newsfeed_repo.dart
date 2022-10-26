@@ -24,6 +24,9 @@ class NewsfeedRepo {
   Future<Response> addLikeONGroup(int postID, int groupID) async {
     return await apiClient.postData('/posts/group/$groupID/$postID/like/', {});
   }
+  Future<Response> addLikeONPage(int postID, int groupID) async {
+    return await apiClient.postData('/posts/page/$groupID/$postID/like/', {});
+  }
 
   Future<Response> callForSinglePostFromNotification(String url) async {
     return await apiClient.getData(url);

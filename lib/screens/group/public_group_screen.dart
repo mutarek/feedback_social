@@ -218,7 +218,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                         return Container(
                                             margin: const EdgeInsets.only(bottom: 10),
                                             child: TimeLineWidget(groupProvider.groupAllPosts[index], index, groupProvider,
-                                                isGroup: true, groupID: int.parse(widget.groupID)));
+                                                isGroup: true, groupPageID: int.parse(widget.groupID)));
                                       }),
                                 ],
                               ),

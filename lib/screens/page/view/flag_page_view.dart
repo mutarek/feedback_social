@@ -1,8 +1,7 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/group/public_group_screen.dart';
-import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
+import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -110,7 +109,7 @@ class FlagPageView extends StatelessWidget {
                               return CustomPageGroupButton(
                                   onTap: () {
                                     provider.loadingStart();
-                                    Get.to(PublicGroupScreen(provider.allSuggestPageList[index].id.toString()));
+                                    Get.to(PublicPageScreen(provider.authorPageLists[index].id.toString(), index));
                                   },
                                   goToGroupOrPage: () {},
                                   groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,

@@ -46,37 +46,15 @@ class PageRepo {
     return await apiClient.getData(AppConstant.pageURI + "$pageID/");
   }
 
-  //////**************************************
-
-  Future<Response> getOwnGroupList() async {
-    return await apiClient.getData(AppConstant.groupCreatorAllURI + "${authRepo.getUserID()}/all");
+  Future<Response> updatePageWithoutImageUpload(Map map, int pageID) async {
+    return await apiClient.patchData(AppConstant.pageURI + "$pageID/", map);
   }
 
-  Future<Response> updateGroupWithoutImageUpload(Map map, int groupID) async {
-    return await apiClient.patchData(AppConstant.groupUri + "$groupID/", map);
+  Future<Response> updatePageWithImageUpload(Map<String, String> body, List<Http.MultipartFile> multipartData, int pageID) async {
+    return await apiClient.patchMultipartData(AppConstant.pageURI + "$pageID/", body, multipartData);
   }
 
-  Future<Response> updateGroupWithImageUpload(Map<String, String> body, List<Http.MultipartFile> multipartData, int groupID) async {
-    return await apiClient.patchMultipartData(AppConstant.groupUri + "$groupID/", body, multipartData);
-  }
-
-  Future<Response> callForGetGroupMembers(String groupID) async {
-    return await apiClient.getData(AppConstant.groupUri + "$groupID/member/all/");
-  }
-
-  Future<Response> callForGetAllGroupMemberWhoNotMember(String groupID) async {
-    return await apiClient.getData("/group/$groupID/friend/list/");
-  }
-
-  Future<Response> memberJoin(String groupID) async {
-    return await apiClient.postData("/group/$groupID/member/join/", {});
-  }
-
-  Future<Response> leaveGroup(String groupID) async {
-    return await apiClient.deleteData("/group/$groupID/member/leave/");
-  }
-
-  Future<Response> sendInvitation(String groupID, int userID) async {
-    return await apiClient.postData("/group/$groupID/$userID/invitation-send/", {});
+  Future<Response> pageLikeUnlike(String pageId) async {
+    return await apiClient.postData("/page/$pageId/like/", {});
   }
 }

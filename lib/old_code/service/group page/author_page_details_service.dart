@@ -20,12 +20,14 @@ class AuthorPageDetailsService {
         headers = {'Authorization': 'token $token'};
     var response = await http.get(uri, headers: headers);
     print("page details: ${response.statusCode}");
+    //
+    // if (response.statusCode == 200) {
+    //   var json = response.body;
+    //   return authorPageDetailsModelFromJson(json);
+    // } else {
+    //
+    // }
 
-    if (response.statusCode == 200) {
-      var json = response.body;
-      return authorPageDetailsModelFromJson(json);
-    } else {
-      return null;
-    }
+    return null;
   }
 }

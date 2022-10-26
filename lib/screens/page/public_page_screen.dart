@@ -1,34 +1,28 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
-import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/invite_group_screen.dart';
 import 'package:als_frontend/screens/group/shimmer_effect/my_group_shimmer_effect.dart';
-import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
-import 'package:als_frontend/screens/page/create_page_screen.dart';
 import 'package:als_frontend/screens/page/page_image_video_view.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class UserPageScreen extends StatefulWidget {
+class PublicPageScreen extends StatefulWidget {
   final String pageID;
   final int index;
 
-  const UserPageScreen(this.pageID, this.index, {Key? key}) : super(key: key);
+  const PublicPageScreen(this.pageID, this.index, {Key? key}) : super(key: key);
 
   @override
-  State<UserPageScreen> createState() => _UserPageScreenState();
+  State<PublicPageScreen> createState() => _PublicPageScreenState();
 }
 
-class _UserPageScreenState extends State<UserPageScreen> {
-  final TextEditingController writePostController = TextEditingController();
-
+class _PublicPageScreenState extends State<PublicPageScreen> {
   @override
   void initState() {
     // TODO: implement initState
@@ -58,7 +52,7 @@ class _UserPageScreenState extends State<UserPageScreen> {
                             SliverList(
                                 delegate: SliverChildListDelegate([
                               Container(
-                                height: 270,
+                                height: 260,
                                 width: width,
                                 color: Palette.scaffold,
                                 child: SingleChildScrollView(
@@ -74,7 +68,8 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                               back: () {
                                                 Get.back();
                                               },
-                                              coverPhoto: pageProvider.pageDetailsModel!.coverPhoto!,
+                                              coverPhoto:
+                                                  pageProvider.pageDetailsModel != null ? pageProvider.pageDetailsModel!.coverPhoto! : "",
                                               viewCoverPhoto: () {
                                                 Get.to(() => SingleImageView(imageURL: pageProvider.pageDetailsModel!.coverPhoto!));
                                               },
@@ -97,11 +92,13 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                 Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(pageProvider.pageDetailsModel!.name!,
+                                                    Text(pageProvider.pageDetailsModel != null ? pageProvider.pageDetailsModel!.name! : "",
                                                         style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
                                                     Padding(
                                                         padding: EdgeInsets.only(right: width * 0.227),
-                                                        child: Text(pageProvider.pageDetailsModel!.category!)),
+                                                        child: Text(pageProvider.pageDetailsModel != null
+                                                            ? pageProvider.pageDetailsModel!.category!
+                                                            : "")),
                                                     SizedBox(height: height * 0.01),
                                                     InkWell(
                                                       onTap: () {
@@ -131,52 +128,31 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                     crossAxisAlignment: CrossAxisAlignment.end,
                                                     mainAxisSize: MainAxisSize.max,
                                                     children: [
-                                                      // Container(
-                                                      //   height: height * 0.036,
-                                                      //   width: width * 0.2,
-                                                      //   decoration: BoxDecoration(
-                                                      //       color: (pageProvider.pageDetailsModel!.like == false)
-                                                      //           ? Palette.primary
-                                                      //           : Colors.green,
-                                                      //       borderRadius: BorderRadius.circular(10)),
-                                                      //   child: Row(
-                                                      //     mainAxisAlignment: MainAxisAlignment.center,
-                                                      //     children: [
-                                                      //       const Icon(Icons.thumb_up_sharp, size: 16, color: Colors.white),
-                                                      //       Text(
-                                                      //         (pageProvider.pageDetailsModel!.like == false) ? "Like" : "Liked",
-                                                      //         style: TextStyle(fontSize: height * 0.015, color: Colors.white),
-                                                      //       )
-                                                      //     ],
-                                                      //   ),
-                                                      // ),
-                                                      SizedBox(height: height * 0.014),
                                                       InkWell(
                                                         onTap: () {
-                                                          Provider.of<OtherProvider>(context, listen: false).clearImage();
-                                                          Navigator.of(context).pop();
-                                                          Navigator.of(context).push(MaterialPageRoute(
-                                                              builder: (_) => CreatePageScreen(
-                                                                  authorPage: pageProvider.pageDetailsModel,
-                                                                  isUpdatePage: true,
-                                                                  index: widget.index)));
+                                                          pageProvider.pageLikeUnlike(int.parse(widget.pageID), widget.index);
                                                         },
                                                         child: Container(
                                                           height: height * 0.036,
                                                           width: width * 0.2,
                                                           decoration: BoxDecoration(
-                                                              color: Palette.primary, borderRadius: BorderRadius.circular(10)),
+                                                              color: (pageProvider.pageDetailsModel!.like == false)
+                                                                  ? Palette.primary
+                                                                  : Colors.green,
+                                                              borderRadius: BorderRadius.circular(10)),
                                                           child: Row(
                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                             children: [
-                                                              const Icon(FontAwesomeIcons.penToSquare, size: 14, color: Colors.white),
-                                                              SizedBox(width: width * 0.007),
-                                                              Text("Edit Page",
-                                                                  style: TextStyle(fontSize: height * 0.012, color: Colors.white))
+                                                              const Icon(Icons.thumb_up_sharp, size: 16, color: Colors.white),
+                                                              Text(
+                                                                (pageProvider.pageDetailsModel!.like == false) ? "Like" : "Liked",
+                                                                style: TextStyle(fontSize: height * 0.015, color: Colors.white),
+                                                              )
                                                             ],
                                                           ),
                                                         ),
-                                                      )
+                                                      ),
+
                                                     ],
                                                   ),
                                                 ),
@@ -208,8 +184,6 @@ class _UserPageScreenState extends State<UserPageScreen> {
                               physics: const ScrollPhysics(),
                               child: Column(
                                 children: [
-                                  createPostWidget(context, authProvider, isForPage: true, groupPageID: int.parse(widget.pageID)),
-
                                   /*----------------------------------------Newsfeed---------------------------------*/
                                   const SizedBox(height: 15),
                                   ListView.builder(

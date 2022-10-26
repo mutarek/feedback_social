@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:als_frontend/data/model/response/category_model.dart';
-import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/data/model/response/group/friends_list_model.dart';
 import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
@@ -134,7 +133,7 @@ class PageProvider with ChangeNotifier {
   callForGetPageInformation(String id) async {
     isLoading = true;
 
-    pageDetailsModel = null;
+    pageDetailsModel = AuthorPageDetailsModel();
     // notifyListeners();
     Response response = await pageRepo.callForGetPageDetails(id);
     callForGetAllPagePosts(id);
@@ -193,13 +192,12 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //// ****************************************************
-
-  // TODO: for create and update Group
-  updateGroup(String groupName, File? file, Function callback, int groupID, int index) async {
+// TODO: for update Page
+  Future<bool> updatePage(String groupName, File? file, int pageID, int index) async {
     isLoading = true;
     notifyListeners();
     Response response;
+
     if (file != null) {
       List<Http.MultipartFile> multipartFile = [];
 
@@ -207,54 +205,36 @@ class PageProvider with ChangeNotifier {
           .add(Http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
 
       response =
-          await pageRepo.updateGroupWithImageUpload({"name": groupName, "category": categoryValue.id.toString()}, multipartFile, groupID);
+          await pageRepo.updatePageWithImageUpload({"name": groupName, "category": categoryValue.id.toString()}, multipartFile, pageID);
     } else {
-      response = await pageRepo.updateGroupWithoutImageUpload({"name": groupName, "category": categoryValue.id}, groupID);
+      response = await pageRepo.updatePageWithoutImageUpload({"name": groupName, "category": categoryValue.id}, pageID);
     }
     isLoading = false;
     if (response.statusCode == 200) {
-      // authorGroupList[index].id = response.body['id'];
-      // authorGroupList[index].name = response.body['name'];
-      // authorGroupList[index].category = response.body['category'];
-      // authorGroupList[index].coverPhoto = response.body['cover_photo'];
-      // authorGroupList[index].totalMember = response.body['total_member'];
-
+      authorPageLists.removeAt(index);
+      authorPageLists.insert(
+          0,
+          AuthorPageModel(
+              id: response.body['id'],
+              coverPhoto: response.body['cover_photo'],
+              category: response.body['category'],
+              avatar: response.body['avatar'],
+              name: response.body['name'],
+              followers: response.body['total_like']));
       Fluttertoast.showToast(msg: "Update successfully");
-      callback(true);
-    } else {
-      callback(false);
-      Fluttertoast.showToast(msg: response.statusText!);
-    }
-    notifyListeners();
-  }
-
-  loadingStart() {
-    isLoading = true;
-    notifyListeners();
-  }
-
-  // TODO:: for group Members
-  List<GroupMembersModel> groupMembersLists = [];
-
-  callForGetAllGroupMembers(String id) async {
-    groupMembersLists.clear();
-    groupMembersLists = [];
-    Response response = await pageRepo.callForGetGroupMembers(id);
-
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
-        groupMembersLists.add(GroupMembersModel.fromJson(element));
-      });
+      notifyListeners();
+      return true;
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
+    return false;
   }
 
   // for LIKE comment
 
-  addLike(int groupID, int postID, int index) async {
-    Response response = await newsfeedRepo.addLikeONGroup(postID, groupID);
+  addLike(int pageID, int postID, int index) async {
+    Response response = await newsfeedRepo.addLikeONPage(postID, pageID);
     if (response.body['liked'] == true) {
       likesStatusAllData[index] = 1;
       pageAllPosts[index].totalLike = pageAllPosts[index].totalLike! + 1;
@@ -281,131 +261,26 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: for Group Image
-  List<GroupImagesModel> groupImagesLists = [];
-  bool isLoadingForGroupImageVideo = false;
-
-  callForGetAllGroupImage(int groupID) async {
-    isLoadingForGroupImageVideo = true;
-    groupImagesLists.clear();
-    groupImagesLists = [];
-    //notifyListeners();
-    Response response = await pageRepo.callForGetPageAllImages(groupID.toString());
-    isLoadingForGroupImageVideo = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
-        groupImagesLists.add(GroupImagesModel.fromJson(element));
-      });
-    } else {
-      Fluttertoast.showToast(msg: response.statusText!);
-    }
-    notifyListeners();
-  }
-
-  // TODO: for Group Video
-  List<ProfileVideoModel> groupVideoLists = [];
-
-  callForGetAllGroupVideo(int groupID) async {
-    isLoadingForGroupImageVideo = true;
-    groupVideoLists.clear();
-    groupVideoLists = [];
-    //notifyListeners();
-    Response response = await pageRepo.callForGetPageAllVideo(groupID.toString());
-    isLoadingForGroupImageVideo = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
-        groupVideoLists.add(ProfileVideoModel.fromJson(element));
-      });
-    } else {
-      Fluttertoast.showToast(msg: response.statusText!);
-    }
-    notifyListeners();
-  }
-
-  // TODO: for Group members lists who's not member in this group
-  List<FriendListModel> friendsList = [];
-  List<FriendListModel> friendsListTemp = [];
-
-  callForGetAllGroupMemberWhoNotMember(int groupID) async {
+  loadingStart() {
     isLoading = true;
-    friendsList.clear();
-    friendsList = [];
-    friendsListTemp.clear();
-    friendsListTemp = [];
-    //notifyListeners();
-    Response response = await pageRepo.callForGetAllGroupMemberWhoNotMember(groupID.toString());
-    isLoading = false;
+    notifyListeners();
+  }
+
+//// ****************************************************
+
+  pageLikeUnlike(int pageID, int index) async {
+    Response response = await pageRepo.pageLikeUnlike(pageID.toString());
     if (response.statusCode == 200) {
-      response.body.forEach((element) {
-        friendsList.add(FriendListModel.fromJson(element));
-      });
-      friendsListTemp.addAll(friendsList);
-    } else {
-      Fluttertoast.showToast(msg: response.statusText!);
-    }
-    notifyListeners();
-  }
-
-  searchUser(String query) {
-    friendsList.clear();
-    friendsList = [];
-    if (query.isEmpty) {
-      friendsList.addAll(friendsListTemp);
-      notifyListeners();
-    } else {
-      for (var element in friendsListTemp) {
-        if (element.fullName.toLowerCase().toString().contains(query.toLowerCase().toString())) {
-          friendsList.add(element);
-        }
+      if (response.body['liked'] == true) {
+        pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
+        pageDetailsModel!.like = true;
+        authorPageLists[index].followers = authorPageLists[index].followers + 1;
+      } else {
+        pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! - 1;
+        pageDetailsModel!.like = false;
+        authorPageLists[index].followers = authorPageLists[index].followers - 1;
       }
       notifyListeners();
     }
-  }
-
-// TODO: for send invitation
-  sendInvitation(int groupID, int userID, int index) async {
-    Response response = await pageRepo.sendInvitation(groupID.toString(), userID);
-
-    if (response.statusCode == 201) {
-      Fluttertoast.showToast(msg: response.body['message']);
-      friendsList.removeAt(index);
-      friendsListTemp.removeAt(index);
-    } else {
-      Fluttertoast.showToast(msg: response.statusText!);
-    }
-    notifyListeners();
-  }
-
-// TODO: for member Join
-  memberJoin(int groupID) async {
-    Response response = await pageRepo.memberJoin(groupID.toString());
-
-    if (response.statusCode == 201) {
-      Fluttertoast.showToast(msg: response.body['message']);
-      // groupDetailsModel.totalMember = groupDetailsModel.totalMember! + 1;
-      // groupDetailsModel.isMember = true;
-      callForGetAllGroupMembers(groupID.toString());
-    } else {
-      Fluttertoast.showToast(msg: response.statusText!);
-    }
-    notifyListeners();
-  }
-
-// TODO: for member Join
-  leaveGroup(int groupID, {int index = 0, bool isFromMYGroup = false}) async {
-    Response response = await pageRepo.leaveGroup(groupID.toString());
-
-    if (response.statusCode == 204) {
-      Fluttertoast.showToast(msg: 'Successfully leave this group');
-      // groupDetailsModel.totalMember = groupDetailsModel.totalMember! - 1;
-      // groupDetailsModel.isMember = false;
-      callForGetAllGroupMembers(groupID.toString());
-      if (isFromMYGroup) {
-        authorPageLists.removeAt(index);
-      }
-    } else {
-      Fluttertoast.showToast(msg: response.statusText!);
-    }
-    notifyListeners();
   }
 }

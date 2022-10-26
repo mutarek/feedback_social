@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
+import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
@@ -18,27 +19,26 @@ import 'package:provider/provider.dart';
 
 class CreatePageScreen extends StatefulWidget {
   final bool isUpdatePage;
-  final AuthorGroupDetailsModel? authorGroup;
+  final AuthorPageDetailsModel? authorPage;
   final int index;
 
-  const CreatePageScreen({this.authorGroup, this.isUpdatePage = false, this.index = 0, Key? key}) : super(key: key);
+  const CreatePageScreen({this.authorPage, this.isUpdatePage = false, this.index = 0, Key? key}) : super(key: key);
 
   @override
   State<CreatePageScreen> createState() => _CreatePageScreenState();
 }
 
 class _CreatePageScreenState extends State<CreatePageScreen> {
-  TextEditingController groupNameController = TextEditingController();
+  TextEditingController pageNameController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    groupNameController = TextEditingController();
+    pageNameController = TextEditingController();
     Provider.of<PageProvider>(context, listen: false).initializeCategory();
     if (widget.isUpdatePage) {
-      groupNameController.text = widget.authorGroup!.name!;
-      Provider.of<GroupProvider>(context, listen: false).changeGroupPrivateStatus(widget.authorGroup!.isPrivate!, isFirstTime: true);
+      pageNameController.text = widget.authorPage!.name!;
     }
   }
 
@@ -62,7 +62,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                               ? Image.file(otherProvider.selectedFile!,
                                   width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
                               : widget.isUpdatePage
-                                  ? Image.network(widget.authorGroup!.coverPhoto!,
+                                  ? Image.network(widget.authorPage!.coverPhoto!,
                                       width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
                                   : Image.asset("assets/background/profile_placeholder.jpg",
                                       width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.fitWidth),
@@ -91,7 +91,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                           hintText: 'Write here....',
                           fillColor: Colors.white,
                           borderRadius: 10,
-                          controller: groupNameController,
+                          controller: pageNameController,
                           verticalSize: 13,
                           inputAction: TextInputAction.done,
                         ),
@@ -124,18 +124,20 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                         CustomButton(
                           btnTxt: widget.isUpdatePage ? "Update" : "Add",
                           onTap: () {
-                            if (groupNameController.text.isNotEmpty) {
+                            if (pageNameController.text.isNotEmpty) {
                               if (widget.isUpdatePage) {
-                                pageProvider.updateGroup(groupNameController.text, otherProvider.selectedFile, (bool status) {
-                                  if (status) {
-                                    groupNameController.clear();
+                                pageProvider
+                                    .updatePage(pageNameController.text, otherProvider.selectedFile, widget.authorPage!.id as int, widget.index)
+                                    .then((value) {
+                                  if (value) {
+                                    pageNameController.clear();
                                     Get.back();
                                   }
-                                }, widget.authorGroup!.id as int, widget.index);
+                                });
                               } else {
-                                pageProvider.createPage(groupNameController.text, otherProvider.selectedFile, (bool status) {
+                                pageProvider.createPage(pageNameController.text, otherProvider.selectedFile, (bool status) {
                                   if (status) {
-                                    groupNameController.clear();
+                                    pageNameController.clear();
                                     Get.back();
                                   }
                                 });
