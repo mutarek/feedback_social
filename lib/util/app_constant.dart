@@ -38,6 +38,8 @@ class AppConstant {
   static const String pageCategoryURI = '/page/category/';
   static const String pageURI = '/page/';
   static const String postPageURI = '/posts/page/';
+  static const String emailUpdate = '/settings/change-email/';
+  static const String blocklist = '/settings/block/';
 
   // Shared Key
   static const String theme = 'theme';

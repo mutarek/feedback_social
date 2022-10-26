@@ -1,5 +1,4 @@
 import 'package:als_frontend/old_code/const/palette.dart';
-import 'package:als_frontend/old_code/screens/settings/settings_screen.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
@@ -13,6 +12,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import '../settings/view/Settings_screen.dart';
 
 
 class MoreScreen extends StatelessWidget {
