@@ -33,6 +33,8 @@ class AppConstant {
   static const String notificationUnreadCountURI = '/notification/count/unread/';
   static const String notificationReadCountURI = '/notification/counter/read/';
   static const String passwordUpdate = '/accounts/password/change/';
+  static const String emailUpdate = '/settings/change-email/';
+  static const String blocklist = '/settings/block/';
 
   // Shared Key
   static const String theme = 'theme';

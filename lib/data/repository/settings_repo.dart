@@ -8,6 +8,7 @@ class SettingsRepo{
   final ApiClient apiClient;
   SettingsRepo({required this.apiClient});
 
+
   Future<Response> passwordUpdate(String oldPassword,String newPassword,String confirmPassword) async {
     return await apiClient.putData(AppConstant.passwordUpdate,{
       "old_password": oldPassword,
@@ -15,6 +16,17 @@ class SettingsRepo{
       "confirm_password": confirmPassword
     });
   }
+  Future<Response> emailUpdate(String oldmail,String newmail,String confirmPassword) async {
+    return await apiClient.putData(AppConstant.emailUpdate, {
+      "old_email": oldmail,
+      "new_email": newmail,
+      "password": confirmPassword
+    });
+  }
+  Future<Response> blockList(int page) async {
+    return await apiClient.getData(AppConstant.blocklist+"?page=$page");
+  }
+
 
 
 }
