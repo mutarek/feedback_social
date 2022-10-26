@@ -31,13 +31,16 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   void initState() {
-    firstNameController.text = widget.userprofileData!.firstName!;
-    lastNameController.text = widget.userprofileData!.lastName!;
-    presentCompanyController.text = widget.userprofileData!.presentCompany!;
-    presentEducationController.text = widget.userprofileData!.presentEducation!;
-    religionController.text = widget.userprofileData!.religion!;
-    liveInAddressController.text = widget.userprofileData!.livesInAddress!;
-    fromAddressController.text = widget.userprofileData!.fromAddress!;
+   if(widget.userprofileData != null){
+     firstNameController.text = widget.userprofileData!.firstName!;
+     lastNameController.text = widget.userprofileData!.lastName!;
+     presentCompanyController.text = widget.userprofileData!.presentCompany!;
+     presentEducationController.text = widget.userprofileData!.presentEducation!;
+     religionController.text = widget.userprofileData!.religion!;
+     liveInAddressController.text = widget.userprofileData!.livesInAddress!;
+     fromAddressController.text = widget.userprofileData!.fromAddress!;
+   }
+
 
     super.initState();
   }

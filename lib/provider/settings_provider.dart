@@ -21,4 +21,10 @@ class SettingsProvider extends ChangeNotifier{
     }
   }
 
+   bool darkModeOff = false;
+
+   changeDarkModestatus(bool value, {bool isFirstTime = false}) {
+     darkModeOff = value;
+     if (!isFirstTime) notifyListeners();}
+
 }
