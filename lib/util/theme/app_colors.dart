@@ -64,7 +64,7 @@ class AppColors {
     "qrColor": const Color(0xFFe82326),
   };
 
-  static const LinearGradient defaultGradient = LinearGradient(colors: [primaryColorDark, const Color(0xFFfe9585)]);
+  static const LinearGradient defaultGradient = LinearGradient(colors: [primaryColorDark, Color(0xFFfe9585)]);
 
   static const Color facebookColor = Color(0xFF1976D2);
 

@@ -26,49 +26,49 @@ class EmailUpdateSettings extends StatelessWidget {
 
         SingleChildScrollView(
           child: Padding(
-            padding:  EdgeInsets.only(left: 30,right: 30),
+            padding:  const EdgeInsets.only(left: 30,right: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
 
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 InkWell(
                     onTap: (){
                       Get.back();
                     },
-                    child: Icon(FontAwesomeIcons.angleLeft,size: 20,)),
-                SizedBox(height: 40,),
+                    child: const Icon(FontAwesomeIcons.angleLeft,size: 20,)),
+                const SizedBox(height: 40,),
                 Text("Email update",style:GoogleFonts.lato(fontSize: 40,fontWeight: FontWeight.w800),),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Text("Enter your current Email",style: latoStyle500Medium,),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 CustomTextField(
                   controller: currentMailContorller,
-                  fillColor: Color(0xfff1d3f2),
+                  fillColor: const Color(0xfff1d3f2),
                   //Color(0xffd7f2d3),
                   hintText: "input your old Email",
 
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Text("Enter new Email",style: latoStyle500Medium,),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 CustomTextField(
                   controller: newMailContorller,
-                  fillColor: Color(0xffd7f2d3),
+                  fillColor: const Color(0xffd7f2d3),
                   hintText: "input your new Email",
 
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Text("Enter current password",style: latoStyle500Medium,),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 CustomTextField(
                   controller: currentPasswordContorller,
-                  fillColor: Color(0xffd7f2d3),
+                  fillColor: const Color(0xffd7f2d3),
                   hintText: "input your password",
 
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Center(
                   child: SizedBox(
                     height: 38,
@@ -91,7 +91,7 @@ class EmailUpdateSettings extends StatelessWidget {
                                    currentPasswordContorller.text);}else{
                                print("error");
                              }
-                            }, child: Text("Update"));
+                            }, child: const Text("Update"));
                       }
                     ),
                   ),

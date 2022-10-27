@@ -29,11 +29,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Color(0xffFFFFFF),
-        body: Padding(
-          padding: EdgeInsets.only(left: 30, right: 30),
+    return Scaffold(
+      backgroundColor: Color(0xffFFFFFF),
+      body: Padding(
+        padding: EdgeInsets.only(left: 30, right: 30),
+        child: SafeArea(
           child: SingleChildScrollView(
             child: Consumer<ProfileProvider>(builder: (context, provider, child) {
               return provider.isLoading
@@ -74,10 +74,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CircleAvatar(
-                                radius: 35,
-                                backgroundImage: NetworkImage(
-                                  provider.userprofileData.profileImage!,
-                                )),
+                              radius: 38,
+                              backgroundColor: Colors.blue,
+                              child: CircleAvatar(
+                                  radius: 35,
+                                  backgroundImage: NetworkImage(
+                                    provider.userprofileData.profileImage!,
+                                  ),),
+                            ),
                             SizedBox(
                               width: 10,
                             ),

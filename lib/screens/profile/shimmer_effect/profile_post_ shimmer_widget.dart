@@ -16,7 +16,7 @@ class profilePostShimmerWidget extends StatelessWidget {
       child: Scaffold(
         body: ListView.builder(
             itemCount: 1,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               return Column(
 
@@ -38,7 +38,7 @@ class profilePostShimmerWidget extends StatelessWidget {
                           child: Shimmer.fromColors(
                               baseColor: Colors.black.withOpacity(.1),
                               highlightColor: Colors.grey.withOpacity(.1),
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 radius: 40,
                                   backgroundColor: Colors.white)),
                         ),
@@ -46,9 +46,9 @@ class profilePostShimmerWidget extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     child: Column(
                       children: [
                         Shimmer.fromColors(
@@ -60,7 +60,7 @@ class profilePostShimmerWidget extends StatelessWidget {
                             width: 320,
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         Shimmer.fromColors(
                           baseColor: Colors.black.withOpacity(.1),
                           highlightColor: Colors.grey.withOpacity(.1),
@@ -73,13 +73,13 @@ class profilePostShimmerWidget extends StatelessWidget {
                             width: 320,
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         Row(
                           children: [
                             Shimmer.fromColors(
                                 baseColor: Colors.black.withOpacity(.1),
                                 highlightColor: Colors.grey.withOpacity(.1),
-                                child: CircleAvatar(backgroundColor: Colors.white)),
+                                child: const CircleAvatar(backgroundColor: Colors.white)),
                             const SizedBox(width: 8.0),
                             Expanded(
                               child: Column(
@@ -92,7 +92,7 @@ class profilePostShimmerWidget extends StatelessWidget {
                                         height: 15,
                                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
                                       )),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Row(
                                     children: [
                                       Shimmer.fromColors(
@@ -103,17 +103,17 @@ class profilePostShimmerWidget extends StatelessWidget {
                                             width: 100,
                                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
                                           )),
-                                      SizedBox(width: 5),
+                                      const SizedBox(width: 5),
                                       Shimmer.fromColors(
                                           baseColor: Colors.black.withOpacity(.1),
                                           highlightColor: Colors.grey.withOpacity(.1),
-                                          child: CircleAvatar(backgroundColor: Colors.white, radius: 5)),
+                                          child: const CircleAvatar(backgroundColor: Colors.white, radius: 5)),
                                     ],
                                   )
                                 ],
                               ),
                             ),
-                            SizedBox(width: 10)
+                            const SizedBox(width: 10)
                           ],
                         ),
 
@@ -122,16 +122,16 @@ class profilePostShimmerWidget extends StatelessWidget {
                             highlightColor: Colors.grey.withOpacity(.1),
                             child: Container(
                               height: 80,
-                              margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                              margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
                             )),
-                        SizedBox(height: 10,),
+                        const SizedBox(height: 10,),
                         Row(
                           children: [
                             Shimmer.fromColors(
                                 baseColor: Colors.black.withOpacity(.1),
                                 highlightColor: Colors.grey.withOpacity(.1),
-                                child: CircleAvatar(backgroundColor: Colors.white)),
+                                child: const CircleAvatar(backgroundColor: Colors.white)),
                             const SizedBox(width: 8.0),
                             Expanded(
                               child: Column(
@@ -144,7 +144,7 @@ class profilePostShimmerWidget extends StatelessWidget {
                                         height: 15,
                                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
                                       )),
-                                  SizedBox(height: 5),
+                                  const SizedBox(height: 5),
                                   Row(
                                     children: [
                                       Shimmer.fromColors(
@@ -155,17 +155,17 @@ class profilePostShimmerWidget extends StatelessWidget {
                                             width: 100,
                                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
                                           )),
-                                      SizedBox(width: 5),
+                                      const SizedBox(width: 5),
                                       Shimmer.fromColors(
                                           baseColor: Colors.black.withOpacity(.1),
                                           highlightColor: Colors.grey.withOpacity(.1),
-                                          child: CircleAvatar(backgroundColor: Colors.white, radius: 5)),
+                                          child: const CircleAvatar(backgroundColor: Colors.white, radius: 5)),
                                     ],
                                   )
                                 ],
                               ),
                             ),
-                            SizedBox(width: 10)
+                            const SizedBox(width: 10)
                           ],
                         ),
 
@@ -174,7 +174,7 @@ class profilePostShimmerWidget extends StatelessWidget {
                             highlightColor: Colors.grey.withOpacity(.1),
                             child: Container(
                               height: 80,
-                              margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                              margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                               decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white),
                             )),
 

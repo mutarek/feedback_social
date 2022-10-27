@@ -29,24 +29,24 @@ final String name;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFFFFFF),
+      backgroundColor: const Color(0xffFFFFFF),
       body: SafeArea(
         child: Padding(
-          padding:  EdgeInsets.only(left: 30,right: 30),
+          padding:  const EdgeInsets.only(left: 30,right: 30),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
               InkWell(
                 onTap: (){
                   Get.back();
                 },
-                  child: Icon(FontAwesomeIcons.angleLeft,size: 20,)),
-                SizedBox(height: 40,),
+                  child: const Icon(FontAwesomeIcons.angleLeft,size: 20,)),
+                const SizedBox(height: 40,),
                 Text("About",style:GoogleFonts.lato(fontSize: 40,fontWeight: FontWeight.w800),),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Center(
                   child: CircleAvatar(
                     radius: 62,
@@ -57,26 +57,26 @@ final String name;
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Center(child: Text(name,style:GoogleFonts.lato(fontSize: 20,fontWeight: FontWeight.w800),)),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Row(
 
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 25,
                       backgroundColor: Color(0xffd7f2d3),
                       child: Center(child: Icon(FontAwesomeIcons.person,color: Colors.green,)),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                    Column(crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        Text("Personal Information",style: GoogleFonts.lato(fontSize: 16)),
-                       SizedBox(height: 3,),
-                       Text("Name,gender,profile details",style: GoogleFonts.lato(color: Color(0xff9C9EA2)),),
+                       const SizedBox(height: 3,),
+                       Text("Name,gender,profile details",style: GoogleFonts.lato(color: const Color(0xff9C9EA2)),),
                      ],
                    ),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: InkWell(
@@ -88,10 +88,10 @@ final String name;
                           height: 35,
                           width: 35,
                           decoration: BoxDecoration(
-                              color: Color(0xffF3F3F6),
+                              color: const Color(0xffF3F3F6),
                               borderRadius: BorderRadius.circular(8)
                           ),
-                          child: Icon(FontAwesomeIcons.angleRight,size: 15,),
+                          child: const Icon(FontAwesomeIcons.angleRight,size: 15,),
                         ),
                       ),
                     )
@@ -99,76 +99,76 @@ final String name;
                 ),
 
 
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Row(
 
                   children: [
                     CircleAvatar(
                       radius: 25,
-                      backgroundColor: Color(0xffd7f2d3),
+                      backgroundColor: const Color(0xffd7f2d3),
                       child: Center(child: SvgPicture.asset('assets/svg/password.svg',height: 25,)),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                    Column(crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        Text("Password security",style: GoogleFonts.lato(fontSize: 16)),
-                       SizedBox(height: 3,),
-                       Text("change password",style: GoogleFonts.lato(color: Color(0xff9C9EA2)),),
+                       const SizedBox(height: 3,),
+                       Text("change password",style: GoogleFonts.lato(color: const Color(0xff9C9EA2)),),
                      ],
                    ),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: InkWell(
                         onTap: (){
-                      Get.to(PasswordUpdateSettings());
+                      Get.to(const PasswordUpdateSettings());
                         },
                         child: Container(
                           height: 35,
                           width: 35,
                           decoration: BoxDecoration(
-                              color: Color(0xffF3F3F6),
+                              color: const Color(0xffF3F3F6),
                               borderRadius: BorderRadius.circular(8)
                           ),
-                          child: Icon(FontAwesomeIcons.angleRight,size: 15,),
+                          child: const Icon(FontAwesomeIcons.angleRight,size: 15,),
                         ),
                       ),
                     )
                   ],
                 ),
 
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Row(
 
                   children: [
                     CircleAvatar(
                       radius: 25,
-                      backgroundColor: Color(0xfff1d3f2),
+                      backgroundColor: const Color(0xfff1d3f2),
                       child: Center(child: SvgPicture.asset('assets/svg/mail.svg',height: 25,color: Colors.pink,)),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                    Column(crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        Text("Email Security",style: GoogleFonts.lato(fontSize: 16)),
-                       SizedBox(height: 3,),
-                       Text("Change Email",style: GoogleFonts.lato(color: Color(0xff9C9EA2)),),
+                       const SizedBox(height: 3,),
+                       Text("Change Email",style: GoogleFonts.lato(color: const Color(0xff9C9EA2)),),
                      ],
                    ),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: InkWell(
                         onTap: (){
-                          Get.to(EmailUpdateSettings());
+                          Get.to(const EmailUpdateSettings());
                         },
                         child: Container(
                           height: 35,
                           width: 35,
                           decoration: BoxDecoration(
-                              color: Color(0xffF3F3F6),
+                              color: const Color(0xffF3F3F6),
                               borderRadius: BorderRadius.circular(8)
                           ),
-                          child: Icon(FontAwesomeIcons.angleRight,size: 15,),
+                          child: const Icon(FontAwesomeIcons.angleRight,size: 15,),
                         ),
                       ),
                     )
@@ -177,38 +177,38 @@ final String name;
 
 
 
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Row(
 
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 25,
                       backgroundColor: Color(0xfff1d3f2),
                       child: Center(child: Icon(FontAwesomeIcons.ban,color: Colors.pinkAccent,)),
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                    Column(crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        Text("Block list",style: GoogleFonts.lato(fontSize: 16)),
-                       SizedBox(height: 3,),
-                       Text("See your block list",style: GoogleFonts.lato(color: Color(0xff9C9EA2)),),
+                       const SizedBox(height: 3,),
+                       Text("See your block list",style: GoogleFonts.lato(color: const Color(0xff9C9EA2)),),
                      ],
                    ),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: InkWell(
                         onTap: (){
-                          Get.to(BlockListUpdateSettings());
+                          Get.to(const BlockListUpdateSettings());
                         },
                         child: Container(
                           height: 35,
                           width: 35,
                           decoration: BoxDecoration(
-                              color: Color(0xffF3F3F6),
+                              color: const Color(0xffF3F3F6),
                               borderRadius: BorderRadius.circular(8)
                           ),
-                          child: Icon(FontAwesomeIcons.angleRight,size: 15,),
+                          child: const Icon(FontAwesomeIcons.angleRight,size: 15,),
                         ),
                       ),
                     )
