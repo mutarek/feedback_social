@@ -65,11 +65,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         image: "${notificationProvider.notificationLists[index].actor!.profileImage}",
                         ontap: () {
                           List<String> noticeType = ['timeline', 'page', 'group'];
+                          List<String> noticeType2 = ['friend'];
 
-                          if (noticeType.contains(notificationProvider.notificationLists[index].noticeType)) {
-
-                            Get.to(() => SinglePostScreen(notificationProvider.notificationLists[index].url!+"comment/"));
-                          } else {}
+                          if (noticeType.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
+                            Get.to(() => SinglePostScreen(notificationProvider.notificationLists[index].url! + "comment/"));
+                          }else if (noticeType2.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
+                            Get.to(() => SinglePostScreen(notificationProvider.notificationLists[index].url! + "comment/"));
+                          }  else {}
 
                           // provider.notificationId = provider.data[index].id;
                           // provider.tappedOnNotification();

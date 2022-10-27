@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
-
 class SearchProvider extends ChangeNotifier {
   bool loading = true;
   String token = "";
@@ -20,8 +19,7 @@ class SearchProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = (prefs.getString('token') ?? '');
     userId = (prefs.getInt('id') ?? '') as int;
-    var uri = Uri.parse("$baseUrl/search/?q=$searchKey"),
-        headers = {'Authorization': 'token $token'};
+    var uri = Uri.parse("$baseUrl/search/?q=$searchKey"), headers = {'Authorization': 'token $token'};
     var response = await http.get(uri, headers: headers);
     searchData = json.decode(response.body);
     if (response.statusCode == 200) {

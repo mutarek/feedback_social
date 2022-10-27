@@ -26,10 +26,10 @@ class _SearchScreenState extends State<SearchScreen> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Palette.scaffold,
-      body: Consumer5<SearchProvider, PublicProfileDetailsProvider,
-              GroupDetailsProvider, AuthorPageDetailsProvider, UserNewsfeedPostProvider>(
-          builder: (context, provider, publicDetailsProvider,
-              groupDetailsProvider, authorPageDetailsProvider,userNewsfeedPostProvider, child) {
+      body: Consumer5<SearchProvider, PublicProfileDetailsProvider, GroupDetailsProvider, AuthorPageDetailsProvider,
+              UserNewsfeedPostProvider>(
+          builder:
+              (context, provider, publicDetailsProvider, groupDetailsProvider, authorPageDetailsProvider, userNewsfeedPostProvider, child) {
         return SafeArea(
           child: GestureDetector(
             onTap: () {
@@ -48,9 +48,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             height: height * 0.055,
                             decoration: const BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5))),
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
                             child: TextFormField(
                                 controller: searchController,
                                 textAlign: TextAlign.center,
@@ -59,8 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   hintStyle: GoogleFonts.lato(),
                                   border: InputBorder.none,
                                   fillColor: Colors.white24,
-                                  labelStyle:
-                                      const TextStyle(color: Colors.black),
+                                  labelStyle: const TextStyle(color: Colors.black),
                                   filled: true,
                                 )),
                           ),
@@ -87,8 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           : Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     ElevatedButton(
                                       onPressed: () {
@@ -98,17 +94,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                       },
                                       child: Text(
                                         "People",
-                                        style: TextStyle(
-                                            color: (value == 1)
-                                                ? Colors.white
-                                                : Colors.black),
+                                        style: TextStyle(color: (value == 1) ? Colors.white : Colors.black),
                                       ),
                                       style: ButtonStyle(
                                         backgroundColor: (value == 1)
-                                            ? MaterialStateProperty.all<Color>(
-                                                Palette.primary)
-                                            : MaterialStateProperty.all<Color>(
-                                                Colors.white),
+                                            ? MaterialStateProperty.all<Color>(Palette.primary)
+                                            : MaterialStateProperty.all<Color>(Colors.white),
                                       ),
                                     ),
                                     ElevatedButton(
@@ -119,17 +110,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                       },
                                       child: Text(
                                         "Groups",
-                                        style: TextStyle(
-                                            color: (value == 2)
-                                                ? Colors.white
-                                                : Colors.black),
+                                        style: TextStyle(color: (value == 2) ? Colors.white : Colors.black),
                                       ),
                                       style: ButtonStyle(
                                         backgroundColor: (value == 2)
-                                            ? MaterialStateProperty.all<Color>(
-                                                Palette.primary)
-                                            : MaterialStateProperty.all<Color>(
-                                                Colors.white),
+                                            ? MaterialStateProperty.all<Color>(Palette.primary)
+                                            : MaterialStateProperty.all<Color>(Colors.white),
                                       ),
                                     ),
                                     ElevatedButton(
@@ -140,17 +126,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                       },
                                       child: Text(
                                         "Pages",
-                                        style: TextStyle(
-                                            color: (value == 3)
-                                                ? Colors.white
-                                                : Colors.black),
+                                        style: TextStyle(color: (value == 3) ? Colors.white : Colors.black),
                                       ),
                                       style: ButtonStyle(
                                         backgroundColor: (value == 3)
-                                            ? MaterialStateProperty.all<Color>(
-                                                Palette.primary)
-                                            : MaterialStateProperty.all<Color>(
-                                                Colors.white),
+                                            ? MaterialStateProperty.all<Color>(Palette.primary)
+                                            : MaterialStateProperty.all<Color>(Colors.white),
                                       ),
                                     ),
                                   ],
@@ -158,52 +139,31 @@ class _SearchScreenState extends State<SearchScreen> {
                                 (value == 1)
                                     ? ListView.builder(
                                         shrinkWrap: true,
-                                        itemCount: provider
-                                            .searchData['people'].length,
+                                        itemCount: provider.searchData['people'].length,
                                         itemBuilder: (context, index) {
                                           return Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Container(
                                               height: height * 0.06,
                                               width: width * 0.5,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
+                                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
                                               child: InkWell(
                                                 onTap: () {
-                                                  if (provider.userId ==
-                                                      provider.searchData[
-                                                              'people'][index]
-                                                          ["id"]) {
-                                                    Get.to(() =>
-                                                        const ProfileScreen());
+                                                  if (provider.userId == provider.searchData['people'][index]["id"]) {
+                                                    Get.to(() => const ProfileScreen());
                                                   } else {
-                                                    publicDetailsProvider.id =
-                                                        provider.searchData[
-                                                                'people'][index]
-                                                            ["id"];
-                                                    userNewsfeedPostProvider
-                                                        .id =
-                                                        provider.searchData[
-                                                                'people'][index]
-                                                            ["id"];
-                                                    Get.to(() =>
-                                                        const PublicProfileDetailsScreen());
+                                                    publicDetailsProvider.id = provider.searchData['people'][index]["id"];
+                                                    userNewsfeedPostProvider.id = provider.searchData['people'][index]["id"];
+                                                    Get.to(() => const PublicProfileDetailsScreen());
                                                   }
                                                 },
                                                 child: Row(
                                                   children: [
                                                     Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              5.0),
+                                                      padding: const EdgeInsets.all(5.0),
                                                       child: CircleAvatar(
-                                                        backgroundImage: NetworkImage(
-                                                            provider.searchData[
-                                                                        'people']
-                                                                    [index][
-                                                                "profile_image"]),
+                                                        backgroundImage:
+                                                            NetworkImage(provider.searchData['people'][index]["profile_image"]),
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -211,10 +171,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     ),
                                                     Text(
                                                         "${provider.searchData['people'][index]["first_name"]} ${provider.searchData['people'][index]["last_name"]}",
-                                                        style: GoogleFonts.lato(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold))
+                                                        style: GoogleFonts.lato(fontWeight: FontWeight.bold))
                                                   ],
                                                 ),
                                               ),
@@ -223,83 +180,45 @@ class _SearchScreenState extends State<SearchScreen> {
                                         },
                                       )
                                     : (value == 2)
-                                        ? (provider.searchData['groups'] ==
-                                                null)
+                                        ? (provider.searchData['groups'] == null)
                                             ? const Center(
-                                                child: Text(
-                                                    "No search result found"),
+                                                child: Text("No search result found"),
                                               )
                                             : ListView.builder(
                                                 shrinkWrap: true,
-                                                itemCount: provider
-                                                    .searchData['groups']
-                                                    .length,
+                                                itemCount: provider.searchData['groups'].length,
                                                 itemBuilder: (context, index) {
                                                   return Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
+                                                    padding: const EdgeInsets.all(8.0),
                                                     child: Container(
                                                       height: height * 0.06,
                                                       width: width * 0.5,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
+                                                      decoration:
+                                                          BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
                                                       child: InkWell(
                                                         onTap: () {
-                                                          if (provider.searchData[
-                                                                          'groups']
-                                                                      [index][
-                                                                  "is_author"] ==
-                                                              false) {
-                                                            groupDetailsProvider
-                                                                    .groupIndex =
-                                                                provider.searchData[
-                                                                        'groups']
-                                                                    [
-                                                                    index]["id"];
-                                                            Get.to(
-                                                                const PublicGroupView());
+                                                          if (provider.searchData['groups'][index]["is_author"] == false) {
+                                                            groupDetailsProvider.groupIndex = provider.searchData['groups'][index]["id"];
+                                                            Get.to(const PublicGroupView());
                                                           } else {
-                                                            groupDetailsProvider
-                                                                    .groupIndex =
-                                                                provider.searchData[
-                                                                        'groups']
-                                                                    [
-                                                                    index]["id"];
-                                                            Get.to(
-                                                                const UserGroupView());
+                                                            groupDetailsProvider.groupIndex = provider.searchData['groups'][index]["id"];
+                                                            Get.to(const UserGroupView());
                                                           }
                                                         },
                                                         child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(5.0),
+                                                          padding: const EdgeInsets.all(5.0),
                                                           child: Row(
                                                             children: [
                                                               CircleAvatar(
                                                                 backgroundImage:
-                                                                    NetworkImage(provider.searchData['groups']
-                                                                            [
-                                                                            index]
-                                                                        [
-                                                                        "cover_photo"]),
+                                                                    NetworkImage(provider.searchData['groups'][index]["cover_photo"]),
                                                               ),
-                                                              SizedBox(
-                                                                width: width *
-                                                                    0.006,
-                                                              ),
+                                                              SizedBox(width: width * 0.006),
                                                               Column(
                                                                 children: [
-                                                                  Text(
-                                                                      "${provider.searchData['groups'][index]["name"]}",
-                                                                      style: GoogleFonts.lato(
-                                                                          fontWeight:
-                                                                              FontWeight.bold)),
-                                                                  Text(
-                                                                      "${provider.searchData['groups'][index]["category"]}"),
+                                                                  Text("${provider.searchData['groups'][index]["name"]}",
+                                                                      style: GoogleFonts.lato(fontWeight: FontWeight.bold)),
+                                                                  Text("${provider.searchData['groups'][index]["category"]}"),
                                                                 ],
                                                               )
                                                             ],
@@ -312,88 +231,53 @@ class _SearchScreenState extends State<SearchScreen> {
                                               )
                                         : (provider.searchData['pages'] == null)
                                             ? const Center(
-                                                child: Text(
-                                                    "No search result found"),
+                                                child: Text("No search result found"),
                                               )
                                             : ListView.builder(
                                                 shrinkWrap: true,
-                                                itemCount: provider
-                                                    .searchData['pages'].length,
+                                                itemCount: provider.searchData['pages'].length,
                                                 itemBuilder: (context, index) {
                                                   return Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
+                                                    padding: const EdgeInsets.all(8.0),
                                                     child: Container(
                                                       height: height * 0.06,
                                                       width: width * 0.5,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5)),
+                                                      decoration:
+                                                          BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
                                                       child: InkWell(
                                                         onTap: () {
-                                                          if (provider.searchData[
-                                                                          'pages']
-                                                                      [index][
-                                                                  "is_author"] ==
-                                                              false) {
-                                                            authorPageDetailsProvider
-                                                                    .pageIndex =
-                                                                provider.searchData[
-                                                                        'pages']
-                                                                    [
-                                                                    index]["id"];
-                                                           
-                                                            Get.to(
-                                                                const AdminPage());
+                                                          if (provider.searchData['pages'][index]["is_author"] == false) {
+                                                            authorPageDetailsProvider.pageIndex = provider.searchData['pages'][index]["id"];
+
+                                                            Get.to(const AdminPage());
                                                           } else {
-                                                            authorPageDetailsProvider
-                                                                    .pageIndex =
-                                                                provider.searchData[
-                                                                        'pages']
-                                                                    [
-                                                                    index]["id"];
-                                                              
-                                                            Get.to(
-                                                                const UserGroupView());
+                                                            authorPageDetailsProvider.pageIndex = provider.searchData['pages'][index]["id"];
+
+                                                            Get.to(const UserGroupView());
                                                           }
                                                         },
                                                         child: Row(
                                                           children: [
                                                             Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(5.0),
-                                                              child:
-                                                                  CircleAvatar(
+                                                              padding: const EdgeInsets.all(5.0),
+                                                              child: CircleAvatar(
                                                                 backgroundImage:
-                                                                    NetworkImage(
-                                                                        "${provider.searchData['pages'][index]["avatar"]}"),
+                                                                    NetworkImage("${provider.searchData['pages'][index]["avatar"]}"),
                                                               ),
                                                             ),
                                                             SizedBox(
-                                                              width:
-                                                                  width * 0.006,
+                                                              width: width * 0.006,
                                                             ),
                                                             Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(5.0),
+                                                              padding: const EdgeInsets.all(5.0),
                                                               child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
                                                                     "${provider.searchData['pages'][index]["name"]}",
-                                                                    style: GoogleFonts.lato(
-                                                                        fontWeight:
-                                                                            FontWeight.bold),
+                                                                    style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                                                                   ),
-                                                                  Text(
-                                                                      "${provider.searchData['pages'][index]["category"]}"),
+                                                                  Text("${provider.searchData['pages'][index]["category"]}"),
                                                                 ],
                                                               ),
                                                             )

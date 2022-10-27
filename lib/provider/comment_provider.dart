@@ -117,6 +117,7 @@ class CommentProvider with ChangeNotifier {
   }
 
   initializeSinglePostSocket(String url) {
+    print('sss');
     channel = IOWebSocketChannel.connect('wss://als-social.com/ws${url.replaceAll('posts', 'post')}timeline_post/');
     userPostComments();
   }
