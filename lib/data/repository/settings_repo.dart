@@ -16,10 +16,10 @@ class SettingsRepo{
       "confirm_password": confirmPassword
     });
   }
-  Future<Response> emailUpdate(String oldmail,String newmail,String confirmPassword) async {
+  Future<Response> emailUpdate(String oldMail,String newMail,String confirmPassword) async {
     return await apiClient.putData(AppConstant.emailUpdate, {
-      "old_email": oldmail,
-      "new_email": newmail,
+      "old_email": oldMail,
+      "new_email": newMail,
       "password": confirmPassword
     });
   }

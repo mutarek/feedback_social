@@ -48,19 +48,19 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
             return SingleChildScrollView(
               controller: controller,
               child: Padding(
-                padding:  EdgeInsets.only(left: 30,right: 30),
+                padding:  const EdgeInsets.only(left: 30,right: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
 
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     InkWell(
                         onTap: (){
                           Get.back();
                         },
-                        child: Icon(FontAwesomeIcons.angleLeft,size: 20,)),
-                    SizedBox(height: 40,),
+                        child: const Icon(FontAwesomeIcons.angleLeft,size: 20,)),
+                    const SizedBox(height: 40,),
                     Text("Block List",style:GoogleFonts.lato(fontSize: 40,fontWeight: FontWeight.w800),),
                     ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
@@ -79,7 +79,7 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
                                 width: width,
                                child: Row(
                                  children: [
-                                   SizedBox(width: 10,),
+                                   const SizedBox(width: 10,),
                                    CircleAvatar(
                                      backgroundColor: Colors.red,
                                      radius: 25,
@@ -90,15 +90,15 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
                                        backgroundImage: NetworkImage("${settingsProvider.blocklist[index].profileImage}"),
                                      ),
                                    ),
-                                   SizedBox(width: 10,),
+                                   const SizedBox(width: 10,),
                                    Text("${settingsProvider.blocklist[index].fullName}",style: latoStyle500Medium,),
-                                   SizedBox(width: 10,),
+                                   const SizedBox(width: 10,),
                                    ElevatedButton(
                                      style: ElevatedButton.styleFrom(
                                        backgroundColor: Colors.red,
                                        elevation: 7
                                      ),
-                                       onPressed: (){}, child: Text("Unblock",style: button,))
+                                       onPressed: (){}, child: const Text("Unblock",style: button,))
                                  ],
                                ),
                               ),
