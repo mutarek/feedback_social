@@ -4,11 +4,13 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
+import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/dashboard/page_or_group_decesion_group.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/more/more_screen.dart';
 import 'package:als_frontend/screens/notification/notification_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/screens/search/search_screen.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -17,6 +19,7 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/route_manager.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -35,11 +38,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData( page: 1);
+    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1);
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
     // Provider.of<NotificationProvider>(context, listen: false).check();
   }
-
 
   int selected = 0;
 
@@ -145,7 +147,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               icon: Icons.search,
                               iconSize: 20.0,
                               onPressed: () {
-                                print('Search');
+                                Provider.of<SearchProvider>(context,listen: false).resetFirstTime();
+                                Get.to(SearchScreen());
                               },
                             ),
                             CircleButton(

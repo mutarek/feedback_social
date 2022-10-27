@@ -58,3 +58,38 @@ Widget zoomableCustomNetworkImage(BuildContext context, String imageUrl, {double
     },
   );
 }
+
+Widget customNetworkImage2(BuildContext context, String imageUrl, {double? height, BoxFit boxFit = BoxFit.fill}) {
+  return ExtendedImage.network(
+    imageUrl,
+    cache: true,
+    height: height == 0 ? MediaQuery.of(context).size.height : height,
+    mode: ExtendedImageMode.none,
+    fit: boxFit,
+    loadStateChanged: (ExtendedImageState state) {
+      switch (state.extendedImageLoadState) {
+        case LoadState.loading:
+          CupertinoActivityIndicator();
+          break;
+        case LoadState.completed:
+          ExtendedRawImage(image: state.extendedImageInfo?.image);
+          break;
+        case LoadState.failed:
+          GestureDetector(
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                Image.asset("assets/failed.jpg", fit: BoxFit.fill),
+                const Positioned(
+                    bottom: 0.0, left: 0.0, right: 0.0, child: Text("load image failed, click to reload", textAlign: TextAlign.center))
+              ],
+            ),
+            onTap: () {
+              state.reLoadImage();
+            },
+          );
+          break;
+      }
+    },
+  );
+}

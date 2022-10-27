@@ -21,8 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    final version = Provider.of<LatestVersionProvider>(context, listen: false);
-    version.getData();
+    // final version = Provider.of<LatestVersionProvider>(context, listen: false);
+    // version.getData();
     navigate();
     super.initState();
   }
