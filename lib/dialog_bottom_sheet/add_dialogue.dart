@@ -8,6 +8,7 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 class AddDialogue extends StatelessWidget {
   final NewsFeedData newsFeedData;
 
