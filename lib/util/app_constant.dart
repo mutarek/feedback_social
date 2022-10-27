@@ -40,7 +40,8 @@ class AppConstant {
   static const String postPageURI = '/posts/page/';
   static const String emailUpdate = '/settings/change-email/';
   static const String blocklist = '/settings/block/';
-
+  static const String messageRoomList = '/message-room-list/';
+  static const String chatRoomList = '/chat-message-list/';
   // Shared Key
   static const String theme = 'theme';
   static const String light = 'light';

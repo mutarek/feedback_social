@@ -1,6 +1,7 @@
 import 'package:als_frontend/data/datasource/api_client.dart';
 import 'package:als_frontend/data/repository/animal_repo.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
+import 'package:als_frontend/data/repository/chat_repo.dart';
 import 'package:als_frontend/data/repository/comment_repo.dart';
 import 'package:als_frontend/data/repository/group_repo.dart';
 import 'package:als_frontend/data/repository/language_repo.dart';
@@ -14,6 +15,7 @@ import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:als_frontend/data/repository/splash_repo.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
@@ -55,6 +57,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SplashRepo(sharedPreferences: sl()));
   sl.registerLazySingleton(() => SettingsRepo( apiClient:sl()));
   sl.registerLazySingleton(() => SearchRepo( apiClient:sl()));
+  sl.registerLazySingleton(() => ChatRepo( apiClient:sl()));
 
 
   // Provider
@@ -63,6 +66,7 @@ Future<void> init() async {
   sl.registerFactory(() => LanguageProvider(languageRepo: sl()));
   sl.registerFactory(() => AuthProvider(authRepo: sl(),sharedPreferences: sl()));
   sl.registerFactory(() => NewsFeedProvider(newsFeedRepo: sl(),authRepo: sl()));
+  sl.registerFactory(() => ChatProvider(chatRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => CommentProvider(commentRepo: sl()));
   sl.registerFactory(() => PostProvider(postRepo: sl()));
   sl.registerFactory(() => NotificationProvider(authRepo: sl(),notificationRepo: sl()));

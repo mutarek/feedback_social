@@ -2,6 +2,7 @@ import 'package:als_frontend/localization/app_localization.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
@@ -51,6 +52,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<SettingsProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<PageProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>()),
 
       //
       // ChangeNotifierProvider(create: (_) => LoginProvider()),

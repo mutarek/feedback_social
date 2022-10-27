@@ -6,8 +6,8 @@ import 'package:als_frontend/widgets/custom_inkwell_btn.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-
 
 class AddDialogue extends StatelessWidget {
   final NewsFeedData newsFeedData;
@@ -95,19 +95,23 @@ class AddDialogue extends StatelessWidget {
                             child: CustomButton(
                               onTap: () {
                                 FocusScope.of(context).unfocus();
-                                bool isFromGroup = newsFeedData.postType == 'group';
-                                bool isFromPage = newsFeedData.postType == 'page';
-                                postProvider
-                                    .reportPost(reportController.text.isEmpty ? "report post" : reportController.text, newsFeedData.id!,
-                                        isFromGroup: isFromGroup, isFromPage: isFromPage)
-                                    .then((value) {
-                                  if (value) {
-                                    reportController.clear();
-                                    Navigator.pop(context);
-                                  } else {
-                                    Navigator.pop(context);
-                                  }
-                                });
+                                if (reportController.text.isEmpty) {
+                                  Fluttertoast.showToast(msg: "Please Write Somethings", backgroundColor: Colors.red);
+                                } else {
+                                  bool isFromGroup = newsFeedData.postType == 'group';
+                                  bool isFromPage = newsFeedData.postType == 'page';
+                                  postProvider
+                                      .reportPost(reportController.text.isEmpty ? "report post" : reportController.text, newsFeedData.id!,
+                                          isFromGroup: isFromGroup, isFromPage: isFromPage)
+                                      .then((value) {
+                                    if (value) {
+                                      reportController.clear();
+                                      Navigator.pop(context);
+                                    } else {
+                                      Navigator.pop(context);
+                                    }
+                                  });
+                                }
                               },
                               btnTxt: 'Yes',
                               fontSize: 17,

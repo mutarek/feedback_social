@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 
-class ThemeUtility{
-
+class ThemeUtility {
   static const double baseHeight = 812.0;
   static const double baseWidth = 375.0;
 
@@ -15,5 +13,5 @@ class ThemeUtility{
     final double drawingWidth = MediaQuery.of(context).size.width;
     return size * drawingWidth / baseWidth;
   }
-
 }
+const kDefaultPadding = 20.0;

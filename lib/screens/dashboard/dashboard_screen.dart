@@ -5,11 +5,11 @@ import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
+import 'package:als_frontend/screens/chat/chats_screen.dart';
 import 'package:als_frontend/screens/dashboard/page_or_group_decesion_group.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/more/more_screen.dart';
 import 'package:als_frontend/screens/notification/notification_screen.dart';
-import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/search/search_screen.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -187,12 +187,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       onPageChanged: (page) {
                         dashboardProvider.changeSelectIndex(page);
                       },
-                      children: [
+                      children: const [
                         HomeScreen(),
-                        const PageOrGroupDecisionGroup(),
+                        PageOrGroupDecisionGroup(),
                         NotificationScreen(),
-                        const ProfileScreen(),
-                        const MoreScreen(),
+                        ChatsScreen(),
+                        MoreScreen(),
                       ],
                     ),
                   )

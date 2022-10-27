@@ -1,0 +1,53 @@
+import 'dart:async';
+
+import 'package:als_frontend/data/model/response/chat/AllMessageChatListModel.dart';
+import 'package:als_frontend/provider/chat_provider.dart';
+import 'package:als_frontend/util/size.util.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
+
+import 'chat_input_field.dart';
+import 'message.dart';
+
+class Body extends StatelessWidget {
+  Body(this.roomID, this.controller, this.model, this.index, {Key? key}) : super(key: key);
+  final String roomID;
+  final AutoScrollController controller;
+  int status = 0;
+  final AllMessageChatListModel model;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ChatProvider>(builder: (context, chatProvider, child) {
+      if (status == 0 && !chatProvider.isLoading) {
+        Timer(const Duration(seconds: 1), () {
+          controller.animateTo(controller.position.maxScrollExtent, duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
+          status = 1;
+        });
+      }
+      return Column(
+        children: [
+          Expanded(
+            child: chatProvider.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    child: ListView.builder(
+                      controller: controller,
+                      itemCount: chatProvider.p2pChatLists.length,
+                      itemBuilder: (context, index) {
+                        bool isSender =
+                            chatProvider.userID().toLowerCase() == chatProvider.p2pChatLists[index].user!.toString() ? true : false;
+                        return Message(message: chatProvider.p2pChatLists[index], isSender: isSender);
+                      },
+                    ),
+                  ),
+          ),
+          ChatInputField(roomID, controller, model, index),
+        ],
+      );
+    });
+  }
+}
