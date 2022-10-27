@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:als_frontend/data/model/response/image_video_detect_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/repository/post_repo.dart';
 import 'package:als_frontend/helper/image_compressure.dart';
@@ -23,11 +24,11 @@ class PostProvider with ChangeNotifier {
   PostProvider({required this.postRepo});
 
   bool isLoading = false;
+  List<Http.MultipartFile> multipartFile = [];
 
-  Future<PostResponse> addPost(String postText, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
-    isLoading = true;
-    List<Http.MultipartFile> multipartFile = [];
-
+  calculateMultipartFile() {
+    multipartFile.clear();
+    multipartFile = [];
     if (afterConvertImageLists.isNotEmpty) {
       for (int i = 0; i < afterConvertImageLists.length; i++) {
         multipartFile.add(Http.MultipartFile(
@@ -42,10 +43,15 @@ class PostProvider with ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  Future<PostResponse> addPost(String postText, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
+    isLoading = true;
+    calculateMultipartFile();
     Response response;
     if (isFromGroup) {
       response = await postRepo.submitPostTOGroupBYUSINGGroupID({"description": postText}, multipartFile, groupPageID);
-    }else if (isFromPage) {
+    } else if (isFromPage) {
       response = await postRepo.submitPostTOPageBYUSINGPageID({"description": postText}, multipartFile, groupPageID);
     } else {
       response = await postRepo.submitPost({"description": postText}, multipartFile);
@@ -53,6 +59,29 @@ class PostProvider with ChangeNotifier {
     isLoading = false;
     if (response.statusCode == 201 || response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Posted");
+      NewsFeedData n = NewsFeedData.fromJson(response.body);
+      notifyListeners();
+      return PostResponse(newsFeedData: n, status: true);
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+      return PostResponse(newsFeedData: NewsFeedData(), status: false);
+    }
+  }
+
+  Future<PostResponse> updatePost(String postText, int id, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
+    isLoading = true;
+    calculateMultipartFile();
+    Response response;
+    if (isFromGroup) {
+      response = await postRepo.updatePostTOGroupBYUSINGGroupID({"description": postText}, multipartFile, groupPageID, id);
+    } else if (isFromPage) {
+      response = await postRepo.updatePostTOPageBYUSINGPageID({"description": postText}, multipartFile, groupPageID, id);
+    } else {
+      response = await postRepo.updatePost({"description": postText}, multipartFile, id);
+    }
+    isLoading = false;
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      Fluttertoast.showToast(msg: "Updated Successfully");
       NewsFeedData n = NewsFeedData.fromJson(response.body);
       notifyListeners();
       return PostResponse(newsFeedData: n, status: true);
@@ -100,6 +129,8 @@ class PostProvider with ChangeNotifier {
     video = [];
     afterConvertImageLists.clear();
     afterConvertImageLists = [];
+    imageVideoLists.clear();
+    imageVideoLists = [];
     if (!isFirstTime) notifyListeners();
   }
 
@@ -110,6 +141,24 @@ class PostProvider with ChangeNotifier {
 
   cancelVideoFromList(int index) {
     video.removeAt(index);
+    notifyListeners();
+  }
+
+  List<ImageVideoDetectModel> imageVideoLists = [];
+
+  initializeImageVideo(NewsFeedData newsFeedData) {
+    for (var element in newsFeedData.images!) {
+      imageVideoLists.add(ImageVideoDetectModel(true, element.image!, '', element.id!.toString()));
+    }
+
+    for (var element in newsFeedData.videos!) {
+      imageVideoLists.add(ImageVideoDetectModel(false, element.thumbnail!, element.video!, element.id!.toString()));
+    }
+    notifyListeners();
+  }
+
+  clearUserImage(int index) {
+    imageVideoLists.removeAt(index);
     notifyListeners();
   }
 }

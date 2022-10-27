@@ -1,30 +1,60 @@
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
+import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/posts/view/video_view.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddPostScreen extends StatelessWidget {
+class AddPostScreen extends StatefulWidget {
   final String profileImage;
   final int groupPageID;
   final bool isFromGroupScreen;
+  final bool isFromProfileScreen;
   final bool isForPage;
+  final bool isEditPost;
+  final NewsFeedData? post;
+  final int index;
 
-  AddPostScreen(this.profileImage, {this.groupPageID = 0, this.isFromGroupScreen = false, this.isForPage = false, Key? key})
+  const AddPostScreen(this.profileImage,
+      {this.groupPageID = 0,
+      this.index = 0,
+      this.isFromGroupScreen = false,
+      this.isEditPost = false,
+      this.isForPage = false,
+      this.isFromProfileScreen = false,
+      this.post,
+      Key? key})
       : super(key: key);
-  final TextEditingController descriptionController = TextEditingController();
+
+  @override
+  State<AddPostScreen> createState() => _AddPostScreenState();
+}
+
+class _AddPostScreenState extends State<AddPostScreen> {
+  TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isEditPost) {
+      descriptionController.text = widget.post!.description!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Consumer4<PostProvider, NewsFeedProvider, GroupProvider,PageProvider>(
-        builder: (context, postProvider, newsfeedProvider, groupProvider,pageProvider, child) => Container(
+      bottomNavigationBar: Consumer5<PostProvider, NewsFeedProvider, GroupProvider, PageProvider, ProfileProvider>(
+        builder: (context, postProvider, newsfeedProvider, groupProvider, pageProvider, profileProvider, child) => Container(
           height: 50,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
           width: MediaQuery.of(context).size.width,
@@ -79,21 +109,43 @@ class AddPostScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  postProvider
-                      .addPost(descriptionController.text, isFromGroup: isFromGroupScreen, groupPageID: groupPageID, isFromPage: isForPage)
-                      .then((value) {
-                    descriptionController.clear();
-                    postProvider.clearImageVideo();
-                    if (value.status!) {
-                      if (isFromGroupScreen) {
-                        groupProvider.addGroupPostTimeLine(value.newsFeedData!);
-                      } else if (isForPage) {
-                        pageProvider.addPagePostToTimeLine(value.newsFeedData!);
-                      } else {
-                        newsfeedProvider.addPostOnTimeLine(value.newsFeedData!);
+                  if (widget.isEditPost) {
+                    postProvider
+                        .updatePost(descriptionController.text, widget.post!.id!,
+                            isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isForPage)
+                        .then((value) {
+                      descriptionController.clear();
+                      postProvider.clearImageVideo();
+                      if (value.status!) {
+                        if (widget.isFromGroupScreen) {
+                          groupProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
+                        } else if (widget.isForPage) {
+                          pageProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
+                        } else if (widget.isFromProfileScreen) {
+                          profileProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
+                        } else {
+                          newsfeedProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
+                        }
                       }
-                    }
-                  });
+                    });
+                  } else {
+                    postProvider
+                        .addPost(descriptionController.text,
+                            isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isForPage)
+                        .then((value) {
+                      descriptionController.clear();
+                      postProvider.clearImageVideo();
+                      if (value.status!) {
+                        if (widget.isFromGroupScreen) {
+                          groupProvider.addGroupPostTimeLine(value.newsFeedData!);
+                        } else if (widget.isForPage) {
+                          pageProvider.addPagePostToTimeLine(value.newsFeedData!);
+                        } else {
+                          newsfeedProvider.addPostOnTimeLine(value.newsFeedData!);
+                        }
+                      }
+                    });
+                  }
 
                   Navigator.of(context).pop();
                 },
@@ -132,11 +184,10 @@ class AddPostScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CircleAvatar(backgroundImage: NetworkImage(profileImage), backgroundColor: Colors.grey.withOpacity(.4)),
+                      CircleAvatar(backgroundImage: NetworkImage(widget.profileImage), backgroundColor: Colors.grey.withOpacity(.4)),
                       Expanded(
                           child: CustomTextField(
                         hintText: 'Write Somethings',
-                        //autoFocus: true,
                         fillColor: Colors.transparent,
                         isCancelShadow: true,
                         borderRadius: 0,
@@ -207,6 +258,31 @@ class AddPostScreen extends StatelessWidget {
                                       child: IconButton(
                                           onPressed: () {
                                             postProvider.cancelVideoFromList(index);
+                                          },
+                                          icon: const Icon(Icons.clear, color: Colors.white)))
+                                ],
+                              )));
+                    }),
+                ListView.builder(
+                    itemCount: postProvider.imageVideoLists.length,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Container(
+                          margin: const EdgeInsets.only(bottom: 15),
+                          alignment: Alignment.center,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Stack(
+                                children: [
+                                  customNetworkImage(context, postProvider.imageVideoLists[index].url),
+                                  Positioned(
+                                      right: 5,
+                                      top: 5,
+                                      child: IconButton(
+                                          onPressed: () {
+                                            postProvider.clearUserImage(index);
                                           },
                                           icon: const Icon(Icons.clear, color: Colors.white)))
                                 ],

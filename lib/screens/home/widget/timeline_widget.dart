@@ -35,9 +35,16 @@ class TimeLineWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PostHeaderWidget(post: newsFeedData),
+                PostHeaderWidget(
+                    post: newsFeedData,
+                    index: index,
+                    isGroup: isGroup,
+                    isHomeScreen: isHomeScreen,
+                    isPage: isPage,
+                    groupPageID: groupPageID,
+                    isProfileScreen: isProfileScreen),
                 const SizedBox(height: 8.0),
-                newsFeedData.description != null ? Text(newsFeedData.description!, style: latoStyle400Regular) : SizedBox(),
+                newsFeedData.description != null ? Text(newsFeedData.description!, style: latoStyle400Regular) : const SizedBox(),
                 if (newsFeedData.totalImage != 0) const SizedBox(height: 10.0),
               ],
             ),

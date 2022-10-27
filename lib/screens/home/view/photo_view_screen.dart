@@ -31,7 +31,7 @@ class PhotoViewScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PostHeaderWidget(post: newsFeedData),
+                    PostHeaderWidget(post: newsFeedData, index: index),
                     const SizedBox(height: 8.0),
                     Text(newsFeedData.description!, style: latoStyle400Regular)
                   ],

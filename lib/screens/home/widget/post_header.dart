@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/dialog_bottom_sheet/more_menu_bottom_sheet.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
@@ -10,21 +11,36 @@ import 'package:provider/provider.dart';
 
 class PostHeaderWidget extends StatelessWidget {
   final NewsFeedData post;
+  final int index;
+  final bool isHomeScreen;
+  final bool isProfileScreen;
+  final int groupPageID;
+  final bool isGroup;
+  final bool isPage;
 
-  const PostHeaderWidget({Key? key, required this.post}) : super(key: key);
+  const PostHeaderWidget(
+      {Key? key,
+      required this.post,
+      required this.index,
+      this.isHomeScreen = false,
+      this.isProfileScreen = false,
+      this.isGroup = false,
+      this.isPage = false,
+      this.groupPageID = 0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         InkWell(
-          onTap: (){
-            if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
-            } else {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(post.author!.id.toString())));
-            }
-          },
+            onTap: () {
+              if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+              } else {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(post.author!.id.toString())));
+              }
+            },
             child: ProfileAvatar(profileImageUrl: post.author!.profileImage!)),
         const SizedBox(width: 8.0),
         Expanded(
@@ -50,7 +66,15 @@ class PostHeaderWidget extends StatelessWidget {
             ),
           ),
         ),
-        IconButton(icon: const Icon(Icons.more_horiz), onPressed: () => print('More')),
+        Visibility(
+          visible: post.author!.id.toString() != Provider.of<AuthProvider>(context, listen: false).userID,
+          child: IconButton(
+              icon: const Icon(Icons.more_horiz),
+              onPressed: () => {
+                    moreMenuBottomSheet(context, post, index,
+                        isFromProfile: isProfileScreen, isForPage: isPage, isFromGroupScreen: isGroup, groupPageID: groupPageID)
+                  }),
+        ),
       ],
     );
   }

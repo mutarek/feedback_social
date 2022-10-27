@@ -114,6 +114,14 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  updatePostOnTimeLine(int index, NewsFeedData n) async {
+    likesStatusAllData.removeAt(index);
+    newsFeedLists.removeAt(index);
+    likesStatusAllData.insert(0, 0);
+    newsFeedLists.insert(0, n);
+    notifyListeners();
+  }
+
   /////// TODO: for single post
 
   NewsFeedData singleNewsFeedModel = NewsFeedData();

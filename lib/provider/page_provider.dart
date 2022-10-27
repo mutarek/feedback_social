@@ -191,7 +191,13 @@ class PageProvider with ChangeNotifier {
     likesStatusAllData.insert(0, 0);
     notifyListeners();
   }
-
+  updatePostOnTimeLine(int index, NewsFeedData n) async {
+    likesStatusAllData.removeAt(index);
+    pageAllPosts.removeAt(index);
+    likesStatusAllData.insert(0, 0);
+    pageAllPosts.insert(0, n);
+    notifyListeners();
+  }
 // TODO: for update Page
   Future<bool> updatePage(String groupName, File? file, int pageID, int index) async {
     isLoading = true;

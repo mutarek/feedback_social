@@ -12,11 +12,25 @@ class PostRepo {
     return await apiClient.postMultipartData(AppConstant.postsUri, body, multipartData);
   }
 
+  Future<Response> updatePost(Map<String, String> body, List<Http.MultipartFile> multipartData, int id) async {
+    return await apiClient.patchMultipartData(AppConstant.postsUri + "$id/", body, multipartData);
+  }
+
   Future<Response> submitPostTOGroupBYUSINGGroupID(Map<String, String> body, List<Http.MultipartFile> multipartData, int groupID) async {
     return await apiClient.postMultipartData(AppConstant.postsGroupUri + "$groupID/", body, multipartData);
   }
 
+  Future<Response> updatePostTOGroupBYUSINGGroupID(
+      Map<String, String> body, List<Http.MultipartFile> multipartData, int groupID, int id) async {
+    return await apiClient.patchMultipartData(AppConstant.postsGroupUri + "$groupID/$id/", body, multipartData);
+  }
+
   Future<Response> submitPostTOPageBYUSINGPageID(Map<String, String> body, List<Http.MultipartFile> multipartData, int pageID) async {
     return await apiClient.postMultipartData(AppConstant.postPageURI + "$pageID/", body, multipartData);
+  }
+
+  Future<Response> updatePostTOPageBYUSINGPageID(
+      Map<String, String> body, List<Http.MultipartFile> multipartData, int pageID, int id) async {
+    return await apiClient.patchMultipartData(AppConstant.postPageURI + "$pageID/$id/", body, multipartData);
   }
 }

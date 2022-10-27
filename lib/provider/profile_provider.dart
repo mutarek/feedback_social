@@ -112,6 +112,14 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  updatePostOnTimeLine(int index, NewsFeedData n) async {
+    likesStatusAllData.removeAt(index);
+    newsFeedLists.removeAt(index);
+    likesStatusAllData.insert(0, 0);
+    newsFeedLists.insert(0, n);
+    notifyListeners();
+  }
+
   ///TODO: for Current user profile
   UserProfileModel userprofileData = UserProfileModel();
   bool isProfileLoading = false;
@@ -201,15 +209,15 @@ class ProfileProvider with ChangeNotifier {
 
   bool isLoadingForUploadPhoto = false;
 
-  uploadPhoto(Function callBackFunction,File file, {bool isCover = false}) async {
+  uploadPhoto(Function callBackFunction, File file, {bool isCover = false}) async {
     isLoadingForUploadPhoto = true;
     List<Http.MultipartFile> multipartFile = [];
     if (isCover) {
-      multipartFile.add(
-          Http.MultipartFile('cover_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
+      multipartFile
+          .add(Http.MultipartFile('cover_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
     } else {
-      multipartFile.add(
-          Http.MultipartFile('profile_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
+      multipartFile
+          .add(Http.MultipartFile('profile_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
     }
 
     notifyListeners();

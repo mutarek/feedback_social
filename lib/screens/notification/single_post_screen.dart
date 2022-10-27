@@ -143,7 +143,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                PostHeaderWidget(post: newsFeedProvider.singleNewsFeedModel),
+                                PostHeaderWidget(post: newsFeedProvider.singleNewsFeedModel,index: 0,),
                                 SizedBox(
                                     height: newsFeedProvider.singleNewsFeedModel.description == null ||
                                             newsFeedProvider.singleNewsFeedModel.description!.isEmpty
