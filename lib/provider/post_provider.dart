@@ -161,4 +161,26 @@ class PostProvider with ChangeNotifier {
     imageVideoLists.removeAt(index);
     notifyListeners();
   }
+
+  //// for report post
+  Future<bool> reportPost(String report, int id, {bool isFromGroup = false, bool isFromPage = false}) async {
+    isLoading = true;
+    Response response;
+    if (isFromGroup) {
+      response = await postRepo.reportGroupPost({"report_note": report, "report_type": "1"}, id);
+    } else if (isFromPage) {
+      response = await postRepo.reportPagePost({"report_note": report, "report_type": "1"}, id);
+    } else {
+      response = await postRepo.reportPost({"report_note": report}, id);
+    }
+    isLoading = false;
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      Fluttertoast.showToast(msg: "Report Added Successfully On this post");
+      notifyListeners();
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong!");
+      return false;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/dialog_bottom_sheet/add_dialogue.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/posts/add_post_screen.dart';
@@ -84,6 +85,14 @@ void moreMenuBottomSheet(BuildContext context, NewsFeedData newsFeedData, int in
                     Visibility(
                       visible: height != 120,
                       child: InkWell(
+                        onTap: (){
+                          Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AddDialogue(newsFeedData);
+                              });
+                        },
                         borderRadius: BorderRadius.circular(15),
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),

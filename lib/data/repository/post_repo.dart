@@ -33,4 +33,16 @@ class PostRepo {
       Map<String, String> body, List<Http.MultipartFile> multipartData, int pageID, int id) async {
     return await apiClient.patchMultipartData(AppConstant.postPageURI + "$pageID/$id/", body, multipartData);
   }
+
+  Future<Response> reportPost(Map<String, String> body, int id) async {
+    return await apiClient.postData(AppConstant.postsUri + "post-report/$id/", body);
+  }
+
+  Future<Response> reportPagePost(Map<String, String> body, int id) async {
+    return await apiClient.postData(AppConstant.postsUri + "page-post-report/$id/", body);
+  }
+
+  Future<Response> reportGroupPost(Map<String, String> body, int id) async {
+    return await apiClient.postData(AppConstant.postsUri + "group-post-report/$id/", body);
+  }
 }

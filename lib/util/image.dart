@@ -12,5 +12,6 @@ class ImagesModel {
 
   //Image
   static const String placeholderImageOne = 'assets/image/placeholder_image_one.png';
+  static const String logo = 'assets/logo/logo.jpeg';
 
 }
