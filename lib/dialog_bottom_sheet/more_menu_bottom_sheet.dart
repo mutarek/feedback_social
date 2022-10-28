@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/dialog_bottom_sheet/add_dialogue.dart';
+import 'package:als_frontend/dialog_bottom_sheet/delete_dialogue.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/posts/add_post_screen.dart';
@@ -70,6 +71,14 @@ void moreMenuBottomSheet(BuildContext context, NewsFeedData newsFeedData, int in
                     Visibility(
                       visible: height == 120,
                       child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return DeleteDialogue(newsFeedData, index);
+                              });
+                        },
                         borderRadius: BorderRadius.circular(15),
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
@@ -85,7 +94,7 @@ void moreMenuBottomSheet(BuildContext context, NewsFeedData newsFeedData, int in
                     Visibility(
                       visible: height != 120,
                       child: InkWell(
-                        onTap: (){
+                        onTap: () {
                           Navigator.of(context).pop();
                           showDialog(
                               context: context,
@@ -105,87 +114,7 @@ void moreMenuBottomSheet(BuildContext context, NewsFeedData newsFeedData, int in
                         ),
                       ),
                     ),
-                    //
-                    // Visibility(
-                    //   visible: _note.noteArchived == 0,
-                    //   child: InkWell(
-                    //     borderRadius: BorderRadius.circular(15),
-                    //     onTap: () async {
-                    //       // Navigator.of(context).pop();
-                    //       // setState(() {
-                    //       //   currentEditingNoteId = _note.noteId;
-                    //       // });
-                    //       // _archiveNote(1);
-                    //
-                    //       bool status = await FirestoreDatabaseHelper.checkIfWishlistExists(_note.noteId);
-                    //       if (!status) {
-                    //         FirestoreDatabaseHelper.addWishlist(_note);
-                    //         ScaffoldMessenger.of(context).showSnackBar(
-                    //           const SnackBar(
-                    //             backgroundColor: Colors.transparent,
-                    //             elevation: 0,
-                    //             content: SuccessToast(
-                    //                 body: "Favourite Added Successfully",
-                    //                 title: "Message",
-                    //                 widget: Icon(Iconsax.tag, size: 16, color: Colors.white)),
-                    //           ),
-                    //         );
-                    //       } else {
-                    //         ScaffoldMessenger.of(context).showSnackBar(
-                    //           const SnackBar(
-                    //             backgroundColor: Colors.transparent,
-                    //             elevation: 0,
-                    //             content: FancySnackBar(
-                    //                 body: "Already Added in Wishlist",
-                    //                 title: "Warning",
-                    //                 widget: Icon(Iconsax.warning_2, size: 16, color: Colors.white)),
-                    //           ),
-                    //         );
-                    //       }
-                    //       Navigator.of(context).pop();
-                    //     },
-                    //     child: Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: Row(
-                    //         children: const <Widget>[
-                    //           Padding(
-                    //             padding: EdgeInsets.all(8.0),
-                    //             child: Icon(Iconsax.heart),
-                    //           ),
-                    //           Padding(
-                    //             padding: EdgeInsets.all(8.0),
-                    //             child: Text('Favourite'),
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // InkWell(
-                    //   borderRadius: BorderRadius.circular(15),
-                    //   onTap: () {
-                    //     Navigator.of(context).pop();
-                    //     setState(() {
-                    //       currentEditingNoteId = _note.noteId;
-                    //     });
-                    //     confirmDeleteDialog(isDesktop, context, _note);
-                    //   },
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Row(
-                    //       children: const <Widget>[
-                    //         Padding(
-                    //           padding: EdgeInsets.all(8.0),
-                    //           child: Icon(Iconsax.trash),
-                    //         ),
-                    //         Padding(
-                    //           padding: EdgeInsets.all(8.0),
-                    //           child: Text('Delete'),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+
                     //
                   ],
                 ),

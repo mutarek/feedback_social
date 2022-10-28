@@ -119,7 +119,10 @@ class ProfileProvider with ChangeNotifier {
     newsFeedLists.insert(0, n);
     notifyListeners();
   }
-
+  void deleteNewsfeedData(int index) {
+    newsFeedLists.removeAt(index);
+    notifyListeners();
+  }
   ///TODO: for Current user profile
   UserProfileModel userprofileData = UserProfileModel();
   bool isProfileLoading = false;

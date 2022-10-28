@@ -1,13 +1,9 @@
 import 'dart:io';
 
 import 'package:als_frontend/data/model/response/category_model.dart';
-import 'package:als_frontend/data/model/response/group/friends_list_model.dart';
-import 'package:als_frontend/data/model/response/group/group_images_model.dart';
-import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
-import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/page_repo.dart';
 import 'package:flutter/foundation.dart';
@@ -146,10 +142,15 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO:: for group All Posts
+  // TODO:: for Page All Posts
   List<NewsFeedData> pageAllPosts = [];
   List<int> likesStatusAllData = [];
   int position = 0;
+
+  void deleteNewsfeedData(int index) {
+    pageAllPosts.removeAt(index);
+    notifyListeners();
+  }
 
   callForGetAllPagePosts(String id) async {
     pageAllPosts.clear();
@@ -191,6 +192,7 @@ class PageProvider with ChangeNotifier {
     likesStatusAllData.insert(0, 0);
     notifyListeners();
   }
+
   updatePostOnTimeLine(int index, NewsFeedData n) async {
     likesStatusAllData.removeAt(index);
     pageAllPosts.removeAt(index);
@@ -198,6 +200,7 @@ class PageProvider with ChangeNotifier {
     pageAllPosts.insert(0, n);
     notifyListeners();
   }
+
 // TODO: for update Page
   Future<bool> updatePage(String groupName, File? file, int pageID, int index) async {
     isLoading = true;

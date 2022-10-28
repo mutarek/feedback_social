@@ -183,4 +183,21 @@ class PostProvider with ChangeNotifier {
       return false;
     }
   }
+
+  //// for delete post
+  Future<bool> deletePost(String url) async {
+    isLoading = true;
+    notifyListeners();
+    Response response = await postRepo.deletePost(url);
+
+    isLoading = false;
+    if (response.statusCode == 204 || response.statusCode == 301) {
+      Fluttertoast.showToast(msg: 'Post Deleted Successfully');
+      notifyListeners();
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+      return false;
+    }
+  }
 }

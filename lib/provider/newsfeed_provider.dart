@@ -105,6 +105,11 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteNewsfeedData(int index) {
+    newsFeedLists.removeAt(index);
+    notifyListeners();
+  }
+
   NewsFeedData newsFeedData = NewsFeedData();
 
   addPostOnTimeLine(NewsFeedData n) async {

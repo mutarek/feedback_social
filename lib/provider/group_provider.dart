@@ -237,6 +237,11 @@ class GroupProvider with ChangeNotifier {
   List<int> likesStatusAllData = [];
   int position = 0;
 
+  void deleteNewsfeedData(int index) {
+    groupAllPosts.removeAt(index);
+    notifyListeners();
+  }
+
   callForGetAllGroupPosts(String id) async {
     groupAllPosts.clear();
     groupAllPosts = [];

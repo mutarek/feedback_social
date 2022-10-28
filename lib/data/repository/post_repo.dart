@@ -45,4 +45,8 @@ class PostRepo {
   Future<Response> reportGroupPost(Map<String, String> body, int id) async {
     return await apiClient.postData(AppConstant.postsUri + "group-post-report/$id/", body);
   }
+
+  Future<Response> deletePost(String url) async {
+    return await apiClient.deleteData(url.replaceAll("comment/", ""));
+  }
 }
