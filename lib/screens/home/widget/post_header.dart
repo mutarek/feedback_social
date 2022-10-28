@@ -67,7 +67,7 @@ class PostHeaderWidget extends StatelessWidget {
           ),
         ),
         Visibility(
-          visible: post.author!.id.toString() != Provider.of<AuthProvider>(context, listen: false).userID,
+          visible: post.author!.id.toString() != Provider.of<AuthProvider>(context, listen: false).userID || !isHomeScreen,
           child: IconButton(
               icon: const Icon(Icons.more_horiz),
               onPressed: () => {
