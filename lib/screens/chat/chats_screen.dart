@@ -4,7 +4,6 @@ import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/chat/components/chat_card.dart';
 import 'package:als_frontend/screens/chat/message_screen.dart';
 import 'package:als_frontend/screens/search/search_screen.dart';
-import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/circle_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';

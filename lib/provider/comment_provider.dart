@@ -117,7 +117,6 @@ class CommentProvider with ChangeNotifier {
   }
 
   initializeSinglePostSocket(String url) {
-    print('sss');
     channel = IOWebSocketChannel.connect('wss://als-social.com/ws${url.replaceAll('posts', 'post')}timeline_post/');
     userPostComments();
   }
@@ -129,6 +128,7 @@ class CommentProvider with ChangeNotifier {
 
   changeExpandedForOpen(int index, int postID, int commentID) {
     isOpenComment[index] = !isOpenComment[index];
+    replyChannelDismiss();
     if (isOpenComment[index]) {
       initializeReplySocket(postID + commentID, index);
     } else {

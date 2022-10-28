@@ -143,7 +143,10 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                PostHeaderWidget(post: newsFeedProvider.singleNewsFeedModel,index: 0,),
+                                PostHeaderWidget(
+                                  post: newsFeedProvider.singleNewsFeedModel,
+                                  index: 0,
+                                ),
                                 SizedBox(
                                     height: newsFeedProvider.singleNewsFeedModel.description == null ||
                                             newsFeedProvider.singleNewsFeedModel.description!.isEmpty
@@ -292,6 +295,10 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                               url: widget.url,
                                               replyController: replyController,
                                               postID: newsFeedProvider.singleNewsFeedModel.id!,
+                                              isFromGroup: widget.isFromGroup,
+                                              isFromPage: widget.isFromPage,
+                                              isProfileScreen: widget.isProfileScreen,
+                                              isFromHomeTimeline: widget.isFromHomeTimeline,
                                             );
                                           }),
                                 )
