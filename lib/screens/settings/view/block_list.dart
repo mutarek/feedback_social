@@ -17,6 +17,7 @@ class BlockListUpdateSettings extends StatefulWidget {
 
 class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
   ScrollController controller = ScrollController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -31,87 +32,88 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
       }
     });
   }
+
+  @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: const Color(0xffFFFFFF),
+        leading: InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
+        title: Text("Block List", style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+      ),
       body: SafeArea(
-        child:
-
-
-
-        Consumer<SettingsProvider>(
-
-          builder: (context, settingsProvider,child) {
-            print("redy to put on}");
-            return SingleChildScrollView(
-              controller: controller,
-              child: Padding(
-                padding:  const EdgeInsets.only(left: 30,right: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-
-                    const SizedBox(height: 20,),
-                    InkWell(
-                        onTap: (){
-                          Get.back();
-                        },
-                        child: const Icon(FontAwesomeIcons.angleLeft,size: 20,)),
-                    const SizedBox(height: 40,),
-                    Text("Block List",style:GoogleFonts.lato(fontSize: 40,fontWeight: FontWeight.w800),),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: settingsProvider.blocklist.length,
-
-                        itemBuilder: (context, index){
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Material(
-                              borderRadius: BorderRadius.circular(8),
-
-                              elevation: 7,
-                              child: Container(
-                                height: height*0.07,
-                                width: width,
-                               child: Row(
-                                 children: [
-                                   const SizedBox(width: 10,),
-                                   CircleAvatar(
-                                     backgroundColor: Colors.red,
-                                     radius: 25,
-
-                                     child: CircleAvatar(
-                                       radius: 23,
-                                       backgroundColor: Colors.grey,
-                                       backgroundImage: NetworkImage("${settingsProvider.blocklist[index].profileImage}"),
-                                     ),
-                                   ),
-                                   const SizedBox(width: 10,),
-                                   Text("${settingsProvider.blocklist[index].fullName}",style: latoStyle500Medium,),
-                                   const SizedBox(width: 10,),
-                                   ElevatedButton(
-                                     style: ElevatedButton.styleFrom(
-                                       backgroundColor: Colors.red,
-                                       elevation: 7
-                                     ),
-                                       onPressed: (){}, child: const Text("Unblock",style: button,))
-                                 ],
-                               ),
+        child: Consumer<SettingsProvider>(builder: (context, settingsProvider, child) {
+          return SingleChildScrollView(
+            controller: controller,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: settingsProvider.blocklist.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(8),
+                            elevation: 7,
+                            child: Container(
+                              height: height * 0.07,
+                              width: width,
+                              child: Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    radius: 25,
+                                    child: CircleAvatar(
+                                      radius: 23,
+                                      backgroundColor: Colors.grey,
+                                      backgroundImage: NetworkImage("${settingsProvider.blocklist[index].profileImage}"),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "${settingsProvider.blocklist[index].fullName}",
+                                    style: latoStyle500Medium,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red, elevation: 7),
+                                      onPressed: () {},
+                                      child: const Text(
+                                        "Unblock",
+                                        style: button,
+                                      ))
+                                ],
                               ),
                             ),
-                          );
-                        }
-                    )
-                  ],
-                ),
+                          ),
+                        );
+                      })
+                ],
               ),
-            );
-          }
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

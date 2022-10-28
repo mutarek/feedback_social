@@ -1,4 +1,4 @@
-import 'package:als_frontend/provider/profile_provider.dart';
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/screens/settings/view/about_settings.dart';
 import 'package:als_frontend/screens/settings/view/help_desk.dart';
@@ -14,61 +14,41 @@ import 'package:provider/provider.dart';
 
 import 'widget/Settings_widget.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  @override
-  void initState() {
-    Provider.of<ProfileProvider>(context, listen: false).initializeUserData();
-    super.initState();
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFFFFFF),
+      backgroundColor: const Color(0xffFFFFFF),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: const Color(0xffFFFFFF),
+        leading: InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
+        title: Text(
+          "Settings",
+          style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black),
+        ),
+      ),
       body: Padding(
-        padding: EdgeInsets.only(left: 30, right: 30),
+        padding: const EdgeInsets.only(left: 30, right: 30),
         child: SafeArea(
           child: SingleChildScrollView(
-            child: Consumer<ProfileProvider>(builder: (context, provider, child) {
+            child: Consumer<AuthProvider>(builder: (context, provider, child) {
               return provider.isLoading
-                  ? Center(child: CupertinoActivityIndicator())
+                  ? const Center(child: CupertinoActivityIndicator())
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Icon(
-                              FontAwesomeIcons.angleLeft,
-                              size: 20,
-                            )),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Text(
-                          "Settings",
-                          style: GoogleFonts.lato(fontSize: 40, fontWeight: FontWeight.w800),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
                         Text(
                           "Accounts",
                           style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w400),
                         ),
-                        SizedBox(
-                          height: 40,
-                        ),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,93 +57,63 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               radius: 38,
                               backgroundColor: Colors.blue,
                               child: CircleAvatar(
-                                  radius: 35,
-                                  backgroundImage: NetworkImage(
-                                    provider.userprofileData.profileImage!,
-                                  ),),
+                                radius: 35,
+                                backgroundImage: NetworkImage(
+                                  provider.profileImage,
+                                ),
+                              ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             Padding(
                               padding: const EdgeInsets.only(top: 9),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(provider.userprofileData.firstName! + provider.userprofileData.lastName!,
-                                      style: GoogleFonts.lato(fontSize: 16)),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(
-                                    "personal info",
-                                    style: GoogleFonts.lato(color: Color(0xff9C9EA2)),
-                                  )
+                                  Text(provider.name, style: GoogleFonts.lato(fontSize: 16)),
+                                  const SizedBox(height: 2),
+                                  Text("personal info", style: GoogleFonts.lato(color: const Color(0xff9C9EA2)))
                                 ],
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: InkWell(
                                 onTap: () {
-                                  Get.to(AboutSettings(
-                                    image: provider.userprofileData.profileImage!,
-                                    name: provider.userprofileData.firstName! + provider.userprofileData.lastName!,
-                                    userprofileData: provider.userprofileData,
-                                  ));
+                                  Get.to(const AboutSettings());
                                 },
                                 child: Container(
                                   height: 35,
                                   width: 35,
-                                  decoration: BoxDecoration(color: Color(0xffF3F3F6), borderRadius: BorderRadius.circular(8)),
-                                  child: Icon(
-                                    FontAwesomeIcons.angleRight,
-                                    size: 15,
-                                  ),
+                                  decoration: BoxDecoration(color: const Color(0xffF3F3F6), borderRadius: BorderRadius.circular(8)),
+                                  child: const Icon(FontAwesomeIcons.angleRight, size: 15),
                                 ),
                               ),
                             )
                           ],
                         ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Text(
-                          "Settings",
-                          style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w400),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
+                        Text("Others", style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w400)),
+                        const SizedBox(height: 20),
 
                         /*...................language............*/
-                        SettingsWidget(
-                          image: 'assets/svg/lang.svg',
-                          name: "Language",
-                          subname: "English",
-                          goingScreen: () {},
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        SettingsWidget(image: 'assets/svg/lang.svg', name: "Language", subname: "English", goingScreen: () {}),
+                        const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/notifications.svg',
                           name: "notifications",
                           subname: "",
                           goingScreen: () {
-                            Get.to(NotificationSettings());
+                            Get.to(const NotificationSettings());
                           },
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
                         Row(
                           children: [
                             CircleAvatar(
                               radius: 19,
-                              backgroundColor: Color(0xffE1F6FE),
+                              backgroundColor: const Color(0xffE1F6FE),
                               child: Center(
                                   child: SvgPicture.asset(
                                 "assets/svg/darkmode.svg",
@@ -171,11 +121,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 color: Colors.blue,
                               )),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
+                            const SizedBox(width: 10),
                             Text("Dark Mode", style: GoogleFonts.lato(fontSize: 16)),
-                            Spacer(),
+                            const Spacer(),
                             Consumer<SettingsProvider>(builder: (context, settingsProvider, child) {
                               return CupertinoSwitch(
                                 value: settingsProvider.darkModeOff,
@@ -186,26 +134,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             }),
                           ],
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/help.svg',
                           name: "Help",
                           subname: "",
                           goingScreen: () {
-                            Get.to(HelpDesk());
+                            Get.to(const HelpDesk());
                           },
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/other.svg',
                           name: "Other",
                           subname: "",
                           goingScreen: () {
-                            Get.to(OtherSettings());
+                            Get.to(const OtherSettings());
                           },
                         ),
                       ],

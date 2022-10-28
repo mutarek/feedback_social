@@ -13,94 +13,76 @@ class PasswordUpdateSettings extends StatelessWidget {
   const PasswordUpdateSettings({Key? key}) : super(key: key);
 
   @override
-
   Widget build(BuildContext context) {
     TextEditingController newPasswordContorller = TextEditingController();
     TextEditingController currentPasswordContorller = TextEditingController();
     TextEditingController repeatPasswordContorller = TextEditingController();
     return Scaffold(
- backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: const Color(0xffFFFFFF),
+        leading: InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
+        title: Text("Password Update", style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+      ),
       body: SafeArea(
-        child:
-
-
-
-        SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Padding(
-            padding:  const EdgeInsets.only(left: 30,right: 30),
+            padding: const EdgeInsets.only(left: 30, right: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-
-                const SizedBox(height: 20,),
-                InkWell(
-                    onTap: (){
-                      Get.back();
-                    },
-                    child: const Icon(FontAwesomeIcons.angleLeft,size: 20,)),
-                const SizedBox(height: 40,),
-                Text("Password update",style:GoogleFonts.lato(fontSize: 40,fontWeight: FontWeight.w800),),
-                const SizedBox(height: 30,),
-             Text("Enter your current password",style: latoStyle500Medium,),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 10),
+                Text("Enter your current password", style: latoStyle500Medium),
+                const SizedBox(height: 10),
                 CustomTextField(
                   controller: currentPasswordContorller,
                   fillColor: const Color(0xfff1d3f2),
-                  //Color(0xffd7f2d3),
-                 hintText: "input your old password",
-
+                  hintText: "input your old password",
                 ),
-                const SizedBox(height: 20,),
-                Text("Enter new password",style: latoStyle500Medium,),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 20),
+                Text("Enter new password", style: latoStyle500Medium),
+                const SizedBox(height: 10),
+                CustomTextField(controller: newPasswordContorller, fillColor: const Color(0xffd7f2d3), hintText: "input your new password"),
+                const SizedBox(height: 20),
+                Text("Repeat new password", style: latoStyle500Medium),
+                const SizedBox(height: 10),
                 CustomTextField(
-                  controller: newPasswordContorller,
-                  fillColor: const Color(0xffd7f2d3),
-                  hintText: "input your new password",
-
-                ),
-                const SizedBox(height: 20,),
-                Text("Repeat new password",style: latoStyle500Medium,),
-                const SizedBox(height: 20,),
-                CustomTextField(
-        validation: (value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter some text';
-      }},
+                  validation: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
                   controller: repeatPasswordContorller,
                   fillColor: const Color(0xffd7f2d3),
                   hintText: "input your new password again",
-
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 20),
                 Center(
                   child: SizedBox(
                     height: 38,
                     width: 200,
-                    child: Consumer<SettingsProvider>(
-
-                      builder: (context, provider,child) {
-                        return ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 7,
-                            backgroundColor: Colors.green
-                          ),
-                            onPressed: (){
-                            if(newPasswordContorller.text==repeatPasswordContorller.text){
-                            provider.passwordUpdate(
-                                currentPasswordContorller.text,
-                                newPasswordContorller.text,
-                                repeatPasswordContorller.text);
-                            if(provider.success==true){
-                              Get.back();
+                    child: Consumer<SettingsProvider>(builder: (context, provider, child) {
+                      return ElevatedButton(
+                          style: ElevatedButton.styleFrom(elevation: 7, backgroundColor: Colors.green),
+                          onPressed: () {
+                            if (newPasswordContorller.text == repeatPasswordContorller.text) {
+                              provider.passwordUpdate(
+                                  currentPasswordContorller.text, newPasswordContorller.text, repeatPasswordContorller.text);
+                              if (provider.success == true) {
+                                Get.back();
+                              }
+                            } else {
+                              print("error");
                             }
-                            }else{
-                         print("error");
-                            }
-                            }, child: const Text("Update"));
-                      }
-                    ),
+                          },
+                          child: const Text("Update"));
+                    }),
                   ),
                 )
               ],
