@@ -154,7 +154,7 @@ class _MenuState extends State<Menu> {
                                         svgName: "assets/menu/group.svg",
                                         iconColor: Palette.primary,
                                         iconName: "group",
-                                        navigetion: () {
+                                        navigation: () {
                                           Get.to(const CommingSoonScreen());
                                         }),
                                     CustomMenuCard(
@@ -162,7 +162,7 @@ class _MenuState extends State<Menu> {
                                         svgName: "assets/menu/page.svg",
                                         iconColor: Palette.primary,
                                         iconName: "Page",
-                                        navigetion: () {
+                                        navigation: () {
                                           Get.to(const CommingSoonScreen());
                                         }),
                                     CustomMenuCard(
@@ -170,7 +170,7 @@ class _MenuState extends State<Menu> {
                                         svgName: "assets/menu/friend.svg",
                                         iconColor: Palette.primary,
                                         iconName: "Friends",
-                                        navigetion: () {
+                                        navigation: () {
                                           Get.to(() => const FriendListScreen());
                                         })
                                   ],
@@ -185,7 +185,7 @@ class _MenuState extends State<Menu> {
                                         svgName: "assets/menu/animal.svg",
                                         iconColor: Palette.primary,
                                         iconName: "Animal",
-                                        navigetion: () {
+                                        navigation: () {
                                           Get.to(const YourAnimalScreen());
                                         }),
                                     CustomMenuCard(
@@ -193,7 +193,7 @@ class _MenuState extends State<Menu> {
                                         svgName: "assets/menu/settings.svg",
                                         iconColor: Palette.primary,
                                         iconName: "Settings",
-                                        navigetion: () {
+                                        navigation: () {
                                           Get.to(() => const Settings());
                                         }),
                                   ],

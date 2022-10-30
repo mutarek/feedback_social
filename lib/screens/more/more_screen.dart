@@ -3,7 +3,6 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/group/my_group_screen.dart';
-import 'package:als_frontend/screens/more/view/terms_and_condition.dart';
 import 'package:als_frontend/screens/more/widget/custom_menu_card.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/send_friend_request_screen.dart';
@@ -16,7 +15,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../settings/settings_screen.dart';
-
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({Key? key}) : super(key: key);
@@ -31,20 +29,20 @@ class MoreScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 1,
-        title: const Text(
-          "FeedBack",
-          style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2)
-        ),
+        title: const Text("FeedBack",
+            style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2)),
       ),
       body: Consumer<AuthProvider>(
         builder: (context, authProvider, child) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 15,right: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: h*0.01,),
+                  SizedBox(
+                    height: h * 0.01,
+                  ),
                   Center(
                     child: Material(
                       color: Colors.white,
@@ -52,9 +50,7 @@ class MoreScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(65),
                       elevation: 6,
                       child: CircleAvatar(
-                          radius: h * 0.086,
-                          backgroundColor: Palette.scaffold,
-                          backgroundImage: NetworkImage(authProvider.profileImage)),
+                          radius: h * 0.086, backgroundColor: Palette.scaffold, backgroundImage: NetworkImage(authProvider.profileImage)),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -62,17 +58,19 @@ class MoreScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   Center(
                     child: SizedBox(
-                      height: h*0.04,
-                      width: w*0.4,
+                      height: h * 0.04,
+                      width: w * 0.4,
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
-                            ),),
-                          onPressed: (){
-                        Get.to(() => const ProfileScreen());},
-                          child: Text("View profile",style: button)),
+                            ),
+                          ),
+                          onPressed: () {
+                            Get.to(() => const ProfileScreen());
+                          },
+                          child: const Text("View profile", style: button)),
                     ),
                   ),
                   //
@@ -85,7 +83,7 @@ class MoreScreen extends StatelessWidget {
                             svgName: "assets/menu/group.svg",
                             iconColor: Palette.primary,
                             iconName: "group",
-                            navigetion: () {
+                            navigation: () {
                               Get.to(const MyGroupScreen());
                             }),
                       ),
@@ -95,42 +93,48 @@ class MoreScreen extends StatelessWidget {
                             svgName: "assets/menu/page.svg",
                             iconColor: Palette.primary,
                             iconName: "Page",
-                            navigetion: () {
+                            navigation: () {
                               // Get.to(const CommingSoonScreen());
                             }),
                       ),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
                       Expanded(
                         child: CustomMenuCard(
                             h: h,
                             svgName: "assets/menu/friend.svg",
                             iconColor: Palette.primary,
                             iconName: "Friends",
-                            navigetion: () {
+                            navigation: () {
                               Get.to(() => const SendFriendRequestScreen());
                             }),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
+                      ),
                       Expanded(
                         child: CustomMenuCard(
                             h: h,
                             svgName: "assets/menu/animal.svg",
                             iconColor: Palette.primary,
                             iconName: "Animal",
-                            navigetion: () {
+                            navigation: () {
                               Provider.of<AuthProvider>(context, listen: false).getUserInfo(isFirstTime: false);
                               Get.to(const MyAnimalScreen());
                             }),
                       ),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
                       Expanded(
                         child: CustomMenuCard(
                             h: h,
                             svgName: "assets/menu/settings.svg",
                             iconColor: Palette.primary,
                             iconName: "Settings",
-                            navigetion: () {
+                            navigation: () {
                               Get.to(() => const SettingsScreen());
                             }),
                       ),
@@ -140,12 +144,10 @@ class MoreScreen extends StatelessWidget {
                             svgName: "assets/svg/tarmscondition.svg",
                             iconColor: Palette.primary,
                             iconName: "Terms & Conditions",
-                            navigetion: () {
+                            navigation: () {
                               Get.to(() => const SettingsScreen());
                             }),
                       ),
-
-                      const Expanded(child: SizedBox.shrink()),
                     ],
                   ),
 
@@ -170,7 +172,6 @@ class MoreScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-
                   )
                 ],
               ),
