@@ -20,6 +20,10 @@ class SettingsRepo {
     return await apiClient.getData(AppConstant.blocklist + "?page=$page");
   }
 
+  Future<Response> unBlockUser(int userID) async {
+    return await apiClient.deleteData("/settings/block/$userID/delete/");
+  }
+
   Future<Response> otherSettingsValue() async {
     return await apiClient.getData(AppConstant.getOthersettingsValue);
   }

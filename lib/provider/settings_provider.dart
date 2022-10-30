@@ -10,13 +10,8 @@ class SettingsProvider extends ChangeNotifier {
 
   SettingsProvider({required this.settingsRepo});
 
-  bool darkModeOff = false;
-  List<Result> blocklist = [];
-  int position = 0;
-  bool isBottomLoading = false;
-  bool hasNextData = false;
+
   int selectPage = 1;
-  String message = "";
   bool success = false;
   bool _isLoading = false;
 
@@ -48,11 +43,16 @@ class SettingsProvider extends ChangeNotifier {
 
   updatePageNo() {
     selectPage++;
-    initializeAllUserBlockData((bool status) {}, page: selectPage);
+    initializeAllUserBlockData(page: selectPage);
     notifyListeners();
   }
 
-  initializeAllUserBlockData(Function callBackFunction, {int page = 1, bool isFirstTime = true}) async {
+/////TODO: for block list
+  List<Result> blocklist = [];
+  bool isBottomLoading = false;
+  bool hasNextData = false;
+
+  initializeAllUserBlockData({int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
       blocklist.clear();
@@ -60,8 +60,6 @@ class SettingsProvider extends ChangeNotifier {
       _isLoading = true;
       isBottomLoading = false;
       hasNextData = false;
-      position = 0;
-
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -73,13 +71,27 @@ class SettingsProvider extends ChangeNotifier {
     Response response = await settingsRepo.blockList(page);
     _isLoading = false;
     isBottomLoading = false;
-    callBackFunction(true);
-
     if (response.statusCode == 200) {
       hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
-        Result blocklist = Result.fromJson(element);
+        blocklist.add(Result.fromJson(element));
       });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  // TODO: for Unblock section
+  bool isUnblockLoading = false;
+
+  unblockUser(int userID, int index) async {
+    isUnblockLoading = true;
+    notifyListeners();
+    Response response = await settingsRepo.unBlockUser(userID);
+    isUnblockLoading = false;
+    if (response.statusCode == 200) {
+      blocklist.removeAt(index);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
@@ -101,6 +113,7 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool darkModeOff = false;
   changeDarkModeStatus(bool value) {
     darkModeOff = value;
     notifyListeners();
