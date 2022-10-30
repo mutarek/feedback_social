@@ -130,6 +130,18 @@ class SettingsProvider extends ChangeNotifier {
       case 2:
         otherSettingsValue!.isFollowingTag = value;
         break;
+      case 3:otherSettingsValue!.isAnyoneShare = value;
+        break;
+      case 4:otherSettingsValue!.isFollowerShare = value;
+        break;
+      case 5:otherSettingsValue!.isFollowingShare = value;
+        break;
+      case 6:otherSettingsValue!.isAnyoneMessage = value;
+        break;
+      case 7:otherSettingsValue!.isFollowerMessage = value;
+        break;
+      case 8:otherSettingsValue!.isFollowingMessage = value;
+        break;
     }
     notifyListeners();
     Response response = await settingsRepo.updateOtherSettings(value, slNo);

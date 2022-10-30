@@ -40,6 +40,25 @@ class SettingsRepo {
       case 2:
         map['is_following_tag'] = status;
         break;
+      case 3:
+        map['is_anyone_share'] = status;
+        break;
+      case 4:
+        map['is_follower_share'] = status;
+        break;
+      case 5:
+        map['is_following_share'] = status;
+        break;
+      case 6:
+        map['is_anyone_message'] = status;
+        break;
+      case 7:
+        map['is_follower_message'] = status;
+        break;
+      case 8:
+        map['is_following_message'] = status;
+        break;
+
     }
     return await apiClient.patchData(AppConstant.getOthersettingsValue, map);
   }

@@ -86,7 +86,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "*  anyone",
+                                        "*  Anyone",
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),
@@ -198,7 +198,9 @@ class _OtherSettingsState extends State<OtherSettings> {
                                         trackColor: const Color(0xffC5E8B7), // **INACTIVE STATE COLOR**
                                         activeColor: const Color(0xff57C84D),
                                         value: settingsProvider.otherSettingsValue!.isAnyoneShare!,
-                                        onChanged: (value) {},
+                                        onChanged: (value) {
+                                          settingsProvider.changeOtherSettingsStatus(value, 3);
+                                        },
                                       ),
                                     ],
                                   ),
@@ -215,7 +217,9 @@ class _OtherSettingsState extends State<OtherSettings> {
                                         trackColor: const Color(0xffC5E8B7), // **INACTIVE STATE COLOR**
                                         activeColor: const Color(0xff57C84D),
                                         value: settingsProvider.otherSettingsValue!.isFollowerShare!,
-                                        onChanged: (value) {},
+                                        onChanged: (value) {
+                                          settingsProvider.changeOtherSettingsStatus(value, 4);
+                                        },
                                       ),
                                     ],
                                   ),
@@ -232,7 +236,9 @@ class _OtherSettingsState extends State<OtherSettings> {
                                         trackColor: const Color(0xffC5E8B7), // **INACTIVE STATE COLOR**
                                         activeColor: const Color(0xff57C84D),
                                         value: settingsProvider.otherSettingsValue!.isFollowingShare!,
-                                        onChanged: (value) {},
+                                        onChanged: (value) {
+                                          settingsProvider.changeOtherSettingsStatus(value, 5);
+                                        },
                                       ),
                                     ],
                                   ),
@@ -292,7 +298,9 @@ class _OtherSettingsState extends State<OtherSettings> {
                                         trackColor: const Color(0xffFA86F2), // **INACTIVE STATE COLOR**
                                         activeColor: const Color(0xffED30CD),
                                         value: settingsProvider.otherSettingsValue!.isAnyoneMessage!,
-                                        onChanged: (value) {},
+                                        onChanged: (value) {
+                                          settingsProvider.changeOtherSettingsStatus(value, 6);
+                                        },
                                       ),
                                     ],
                                   ),
@@ -309,7 +317,9 @@ class _OtherSettingsState extends State<OtherSettings> {
                                         trackColor: const Color(0xffFA86F2), // **INACTIVE STATE COLOR**
                                         activeColor: const Color(0xffED30CD),
                                         value: settingsProvider.otherSettingsValue!.isFollowerMessage!,
-                                        onChanged: (value) {},
+                                        onChanged: (value) {
+                                          settingsProvider.changeOtherSettingsStatus(value, 7);
+                                        },
                                       ),
                                     ],
                                   ),
@@ -326,7 +336,9 @@ class _OtherSettingsState extends State<OtherSettings> {
                                         trackColor: const Color(0xffFA86F2), // **INACTIVE STATE COLOR**
                                         activeColor: const Color(0xffED30CD),
                                         value: settingsProvider.otherSettingsValue!.isFollowingMessage!,
-                                        onChanged: (value) {},
+                                        onChanged: (value) {
+                                          settingsProvider.changeOtherSettingsStatus(value, 8);
+                                        },
                                       ),
                                     ],
                                   ),
