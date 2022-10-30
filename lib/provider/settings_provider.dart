@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
 import 'package:als_frontend/data/model/response/settings/other_settings_model.dart';
+import 'package:als_frontend/data/model/response/settings/privcay_model.dart';
 import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -130,6 +131,18 @@ class SettingsProvider extends ChangeNotifier {
       case 2:
         otherSettingsValue!.isFollowingTag = value;
         break;
+      case 3:otherSettingsValue!.isAnyoneShare = value;
+        break;
+      case 4:otherSettingsValue!.isFollowerShare = value;
+        break;
+      case 5:otherSettingsValue!.isFollowingShare = value;
+        break;
+      case 6:otherSettingsValue!.isAnyoneMessage = value;
+        break;
+      case 7:otherSettingsValue!.isFollowerMessage = value;
+        break;
+      case 8:otherSettingsValue!.isFollowingMessage = value;
+        break;
     }
     notifyListeners();
     Response response = await settingsRepo.updateOtherSettings(value, slNo);
@@ -139,4 +152,21 @@ class SettingsProvider extends ChangeNotifier {
       Fluttertoast.showToast(msg: response.statusText!);
     }
   }
+// TODO: for terms & section
+  List<PrivacyPolicyModel> privacyPolicyModel = [];
+ initializeTermsAndCondition()async{
+   _isLoading = true;
+   privacyPolicyModel.clear();
+   privacyPolicyModel = [];
+   Response response = await settingsRepo.termsAndCondition();
+   _isLoading = false;
+   if (response.statusCode == 200) {
+     response.body.forEach((element) {
+       privacyPolicyModel.add(PrivacyPolicyModel.fromJson(element));
+     });
+   } else {
+     Fluttertoast.showToast(msg: response.statusText!);
+   }
+   notifyListeners();
+ }
 }
