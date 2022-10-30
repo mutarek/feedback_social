@@ -139,6 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                         ),
+                        SizedBox(height: height*0.01,),
                         ProfileDetailsCard(userProfileModel: profileProvider.userprofileData),
                         const SizedBox(height: 10),
                         Padding(
