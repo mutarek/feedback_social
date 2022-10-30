@@ -54,60 +54,65 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
         child: Consumer<SettingsProvider>(builder: (context, settingsProvider, child) {
           return ModalProgressHUD(
             inAsyncCall: settingsProvider.isUnblockLoading,
-            child: SingleChildScrollView(
-              controller: controller,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: settingsProvider.blocklist.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-                              ],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                const SizedBox(width: 10),
-                                CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  radius: 25,
-                                  child: CircleAvatar(
-                                    radius: 23,
-                                    backgroundColor: Colors.grey,
-                                    backgroundImage: NetworkImage("${settingsProvider.blocklist[index].profileImage}"),
+            child: settingsProvider.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : SingleChildScrollView(
+                    controller: controller,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: settingsProvider.blocklist.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: const EdgeInsets.only(top: 10),
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(.2),
+                                          blurRadius: 10.0,
+                                          spreadRadius: 3.0,
+                                          offset: const Offset(0.0, 0.0))
+                                    ],
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(child: Text("${settingsProvider.blocklist[index].fullName}", style: latoStyle500Medium)),
-                                const SizedBox(width: 10),
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red, elevation: 7),
-                                    onPressed: () {
-                                      settingsProvider.unblockUser(settingsProvider.blocklist[index].id, index);
-                                    },
-                                    child: const Text("Unblock", style: button)),
-                                const SizedBox(width: 10),
-                              ],
-                            ),
-                          );
-                        })
-                  ],
-                ),
-              ),
-            ),
+                                  child: Row(
+                                    children: [
+                                      const SizedBox(width: 10),
+                                      CircleAvatar(
+                                        backgroundColor: Colors.red,
+                                        radius: 25,
+                                        child: CircleAvatar(
+                                          radius: 23,
+                                          backgroundColor: Colors.grey,
+                                          backgroundImage: NetworkImage("${settingsProvider.blocklist[index].profileImage}"),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Expanded(child: Text("${settingsProvider.blocklist[index].fullName}", style: latoStyle500Medium)),
+                                      const SizedBox(width: 10),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.red, elevation: 7),
+                                          onPressed: () {
+                                            settingsProvider.unblockUser(settingsProvider.blocklist[index].id, index);
+                                          },
+                                          child: const Text("Unblock", style: button)),
+                                      const SizedBox(width: 10),
+                                    ],
+                                  ),
+                                );
+                              })
+                        ],
+                      ),
+                    ),
+                  ),
           );
         }),
       ),
