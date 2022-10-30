@@ -115,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => FriendScreen()));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FriendScreen()));
                                     },
                                     child: Row(
                                       children: [
@@ -139,10 +139,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: height * 0.01, left: width * 0.04, right: width * 0.04),
-                          child: ProfileDetailsCard(userProfileModel: profileProvider.userprofileData),
-                        ),
+                        ProfileDetailsCard(userProfileModel: profileProvider.userprofileData),
+                        const SizedBox(height: 10),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                           child: ListView.builder(

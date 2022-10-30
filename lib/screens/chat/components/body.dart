@@ -10,20 +10,22 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'chat_input_field.dart';
 import 'message.dart';
 
-class Body extends StatelessWidget {
-  Body(this.roomID, this.controller, this.model, this.index, {Key? key}) : super(key: key);
-  final String roomID;
+class BodyWidget extends StatelessWidget {
+  BodyWidget(this.controller, this.index, {this.customerID = 0, this.isFromProfile = false, Key? key}) : super(key: key);
+
   final AutoScrollController controller;
   int status = 0;
-  final AllMessageChatListModel model;
   final int index;
+  final bool isFromProfile;
+  final int customerID;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ChatProvider>(builder: (context, chatProvider, child) {
       if (status == 0 && !chatProvider.isLoading) {
         Timer(const Duration(seconds: 1), () {
-          controller.animateTo(controller.position.maxScrollExtent, duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
+          controller.animateTo(controller.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
           status = 1;
         });
       }
@@ -45,7 +47,7 @@ class Body extends StatelessWidget {
                     ),
                   ),
           ),
-          ChatInputField(roomID, controller, model, index),
+          ChatInputField( controller, index, customerID: customerID, isFromProfile: isFromProfile),
         ],
       );
     });

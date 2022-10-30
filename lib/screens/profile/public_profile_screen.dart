@@ -1,6 +1,8 @@
 import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
+import 'package:als_frontend/screens/chat/message_screen.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
@@ -21,7 +23,9 @@ class PublicProfileScreen extends StatefulWidget {
   final bool isFromFriendRequestScreen;
   final bool isFromFriendScreen;
 
-  const PublicProfileScreen(this.userID, {this.index = -1, this.isFromFriendRequestScreen = false, this.isFromFriendScreen = false, Key? key}) : super(key: key);
+  const PublicProfileScreen(this.userID,
+      {this.index = -1, this.isFromFriendRequestScreen = false, this.isFromFriendScreen = false, Key? key})
+      : super(key: key);
 
   @override
   State<PublicProfileScreen> createState() => _PublicProfileScreenState();
@@ -55,10 +59,10 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
       body: Consumer<PublicProfileProvider>(
         builder: (context, publicProvider, child) => SafeArea(
             child: (publicProvider.isProfileLoading == true || publicProvider.isLoading == true)
-                ?const profilePostShimmerWidget()
+                ? const profilePostShimmerWidget()
                 : SingleChildScrollView(
                     controller: controller,
-                    child: Column(children: [
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       SizedBox(
                         height: height * 0.27,
                         child: Stack(
@@ -88,77 +92,106 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           ],
                         ),
                       ),
-                      Container(
-                        width: width,
-                        decoration: const BoxDecoration(color: Palette.scaffold, borderRadius: BorderRadius.all(Radius.circular(15))),
-                        padding: EdgeInsets.only(left: width * 0.05, right: width * 0.05, bottom: height * 0.01),
+                      const SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: CustomText(
+                          title: "${publicProvider.publicProfileData.firstName!} ${publicProvider.publicProfileData.lastName!}",
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      //TODO: for message Button section
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: CustomText(
-                                title: "${publicProvider.publicProfileData.firstName!} ${publicProvider.publicProfileData.lastName!}",
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                            Container(
+                              width: 100,
+                              margin: const EdgeInsets.only(right: 15),
+                              child: ElevatedButton(
+                                child: const Text("Message"),
+                                onPressed: () {
+                                  Provider.of<ChatProvider>(context, listen: false).resetOneTime();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MessagesScreen(
+                                                isFromProfile: true,
+                                                customerID: int.parse(widget.userID),
+                                                name:
+                                                    '${publicProvider.publicProfileData.firstName!} ${publicProvider.publicProfileData.lastName!}',
+                                                imageURL: (publicProvider.publicProfileData.profileImage != null)
+                                                    ? publicProvider.publicProfileData.profileImage!
+                                                    : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
+                                              )));
+                                },
                               ),
                             ),
                             (publicProvider.publicProfileData.isFriend == false)
                                 ? (publicProvider.publicProfileData.friendRequestSent == true)
-                                    ? ElevatedButton(
-                                        child: const Text("Cancel Friend request"),
-                                        onPressed: () {
-                                          publicProvider.cancelFriendRequest((bool status) {
-                                            if (status) {
-                                              if (widget.isFromFriendRequestScreen) {
-                                                Provider.of<ProfileProvider>(context, listen: false)
-                                                    .removeRequestAfterCancelRequest(widget.index);
+                                    ? Expanded(
+                                        child: ElevatedButton(
+                                          child: const Text("Cancel Friend request"),
+                                          onPressed: () {
+                                            publicProvider.cancelFriendRequest((bool status) {
+                                              if (status) {
+                                                if (widget.isFromFriendRequestScreen) {
+                                                  Provider.of<ProfileProvider>(context, listen: false)
+                                                      .removeRequestAfterCancelRequest(widget.index);
+                                                }
                                               }
-                                            }
-                                          });
-                                        },
+                                            });
+                                          },
+                                        ),
                                       )
                                     : (publicProvider.publicProfileData.friendRequestAccept == true)
-                                        ? ElevatedButton(
-                                            child: const Text("Accept friend request"),
-                                            onPressed: () {
-                                              // confirmFriendRequest.id =
-                                              //     provider.publicProfileData.friendRquestAcceptId;
-                                              //
-                                              // confirmFriendRequest.confirmRequest();
-                                              //
-                                              // refresh();
-                                            },
+                                        ? Expanded(
+                                            child: ElevatedButton(
+                                              child: const Text("Accept friend request"),
+                                              onPressed: () {
+                                                // confirmFriendRequest.id =
+                                                //     provider.publicProfileData.friendRquestAcceptId;
+                                                //
+                                                // confirmFriendRequest.confirmRequest();
+                                                //
+                                                // refresh();
+                                              },
+                                            ),
                                           )
-                                        : ElevatedButton(
-                                            child: const Text("Add friend"),
-                                            onPressed: () {
-                                              publicProvider.sendFriendRequest((bool status) {
-                                                if (status && widget.isFromFriendRequestScreen) {
-                                                  Provider.of<ProfileProvider>(context, listen: false).callForgetAllFriendRequest();
-                                                }
-                                              });
-                                            },
+                                        : Expanded(
+                                            child: ElevatedButton(
+                                              child: const Text("Add friend"),
+                                              onPressed: () {
+                                                publicProvider.sendFriendRequest((bool status) {
+                                                  if (status && widget.isFromFriendRequestScreen) {
+                                                    Provider.of<ProfileProvider>(context, listen: false).callForgetAllFriendRequest();
+                                                  }
+                                                });
+                                              },
+                                            ),
                                           )
-                                : ElevatedButton(
-                                    child: const Text("Unfriend"),
-                                    onPressed: () {
-                                      publicProvider.unFriend((bool status){
-                                        if(widget.isFromFriendScreen){
-                                          Provider.of<ProfileProvider>(context, listen: false)
-                                              .removeFriend(widget.index);
-                                        }
-                                      });
-                                    },
-                                  )
+                                : Expanded(
+                                    child: ElevatedButton(
+                                      child: const Text("Unfriend"),
+                                      onPressed: () {
+                                        publicProvider.unFriend((bool status) {
+                                          if (widget.isFromFriendScreen) {
+                                            Provider.of<ProfileProvider>(context, listen: false).removeFriend(widget.index);
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ),
                           ],
                         ),
                       ),
                       Container(
                         height: height * 0.043,
-                        width: width * 0.92,
+                        margin: const EdgeInsets.symmetric(horizontal: 15),
                         decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(4))),
                         child: Padding(
                           padding: EdgeInsets.only(left: width * 0.1),
@@ -236,7 +269,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -244,7 +277,8 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           itemBuilder: ((context, index) {
                             return Container(
                                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                child: TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider, isProfileScreen: true));
+                                child: TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider,
+                                    isProfileScreen: true));
                           }))
                     ]))),
       ),

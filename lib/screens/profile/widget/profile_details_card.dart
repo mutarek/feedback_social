@@ -20,7 +20,7 @@ class ProfileDetailsCard extends StatelessWidget {
     final double width = MediaQuery.of(context).size.width;
     return Container(
       color: Colors.white,
-      width: width * .92,
+      margin: const EdgeInsets.symmetric(horizontal: 15),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: height * 0.01, horizontal: width * 0.02),
         child: Column(

@@ -25,7 +25,7 @@ class SettingsRepo {
   }
 
   Future<Response> otherSettingsValue() async {
-    return await apiClient.getData(AppConstant.getOthersettingsValue);
+    return await apiClient.getData(AppConstant.getOtherSettingsValue);
   }
 
   Future<Response> updateOtherSettings(bool status, int slNo) async {
@@ -41,6 +41,6 @@ class SettingsRepo {
         map['is_following_tag'] = status;
         break;
     }
-    return await apiClient.patchData(AppConstant.getOthersettingsValue, map);
+    return await apiClient.patchData(AppConstant.getOtherSettingsValue, map);
   }
 }
