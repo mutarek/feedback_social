@@ -62,4 +62,8 @@ class SettingsRepo {
     }
     return await apiClient.patchData(AppConstant.getOthersettingsValue, map);
   }
+
+  Future<Response> termsAndCondition() async {
+    return await apiClient.getData(AppConstant.termsAndCondition);
+  }
 }

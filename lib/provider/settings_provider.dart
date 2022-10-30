@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
 import 'package:als_frontend/data/model/response/settings/other_settings_model.dart';
+import 'package:als_frontend/data/model/response/settings/privcay_model.dart';
 import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -151,4 +152,21 @@ class SettingsProvider extends ChangeNotifier {
       Fluttertoast.showToast(msg: response.statusText!);
     }
   }
+// TODO: for terms & section
+  List<PrivacyPolicyModel> privacyPolicyModel = [];
+ initializeTermsAndCondition()async{
+   _isLoading = true;
+   privacyPolicyModel.clear();
+   privacyPolicyModel = [];
+   Response response = await settingsRepo.termsAndCondition();
+   _isLoading = false;
+   if (response.statusCode == 200) {
+     response.body.forEach((element) {
+       privacyPolicyModel.add(PrivacyPolicyModel.fromJson(element));
+     });
+   } else {
+     Fluttertoast.showToast(msg: response.statusText!);
+   }
+   notifyListeners();
+ }
 }

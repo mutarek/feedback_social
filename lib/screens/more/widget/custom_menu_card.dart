@@ -22,7 +22,8 @@ class CustomMenuCard extends StatelessWidget {
     return InkWell(
       onTap: navigetion,
       child: Card(
-        elevation: 2,
+
+     elevation: 2,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Row(

@@ -43,6 +43,7 @@ class AppConstant {
   static const String messageRoomList = '/message-room-list/';
   static const String chatRoomList = '/chat-message-list/';
   static const String getOthersettingsValue = '/settings/other-settings/';
+  static const String termsAndCondition = '/terms-condition/list/"';
   // Shared Key
   static const String theme = 'theme';
   static const String light = 'light';
