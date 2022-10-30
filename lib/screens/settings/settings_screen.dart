@@ -128,7 +128,7 @@ class SettingsScreen extends StatelessWidget {
                               return CupertinoSwitch(
                                 value: settingsProvider.darkModeOff,
                                 onChanged: (value) {
-                                  settingsProvider.changeDarkModestatus(value);
+                                  settingsProvider.changeDarkModeStatus(value);
                                 },
                               );
                             }),

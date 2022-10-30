@@ -1,17 +1,14 @@
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
-import 'package:als_frontend/data/model/response/settings/get_other_settigs_vlaue.dart';
+import 'package:als_frontend/data/model/response/settings/other_settings_model.dart';
 import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsProvider extends ChangeNotifier {
   final SettingsRepo settingsRepo;
 
-  SettingsProvider({
-    required this.settingsRepo,
-  });
+  SettingsProvider({required this.settingsRepo});
 
   bool darkModeOff = false;
   List<Result> blocklist = [];
@@ -23,6 +20,8 @@ class SettingsProvider extends ChangeNotifier {
   bool success = false;
   bool _isLoading = false;
 
+  bool get isLoading => _isLoading;
+
   Future passwordUpdate(String oldPassword, String newPassword, String confirmPassword) async {
     _isLoading = true;
     notifyListeners();
@@ -31,19 +30,19 @@ class SettingsProvider extends ChangeNotifier {
       success = true;
       notifyListeners();
     } else {
-      print("false");
+      Fluttertoast.showToast(msg: response.statusText!);
     }
   }
 
-  Future emailUpdate(String oldMail, String newmail, String confirmPassword) async {
+  Future emailUpdate(String oldMail, String newMail, String confirmPassword) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await settingsRepo.emailUpdate(oldMail, newmail, confirmPassword);
+    Response response = await settingsRepo.emailUpdate(oldMail, newMail, confirmPassword);
     if (response.statusCode == 200) {
       success = true;
       notifyListeners();
     } else {
-      print("false");
+      Fluttertoast.showToast(msg: response.statusText!);
     }
   }
 
@@ -75,12 +74,11 @@ class SettingsProvider extends ChangeNotifier {
     _isLoading = false;
     isBottomLoading = false;
     callBackFunction(true);
-    int status = 0;
+
     if (response.statusCode == 200) {
       hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
         Result blocklist = Result.fromJson(element);
-        print(blocklist.toJson());
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
@@ -88,22 +86,44 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  GetOtherSettingsValueModel? otherSettingsvalue ;
+  OtherSettingsModel? otherSettingsValue = OtherSettingsModel();
+
   initializeOtherSettingsValue() async {
-    otherSettingsvalue=null;
-    Response response = await settingsRepo.otherSettingsvalue();
+    _isLoading = true;
+    otherSettingsValue = OtherSettingsModel();
+    Response response = await settingsRepo.otherSettingsValue();
     _isLoading = false;
     if (response.statusCode == 200) {
-      otherSettingsvalue= GetOtherSettingsValueModel.fromJson(response.body);
-
+      otherSettingsValue = OtherSettingsModel.fromJson(response.body);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
   }
 
-  changeDarkModestatus(bool value, {bool isFirstTime = false}) {
+  changeDarkModeStatus(bool value) {
     darkModeOff = value;
-    if (!isFirstTime) notifyListeners();
+    notifyListeners();
+  }
+
+  changeOtherSettingsStatus(bool value, int slNo) async {
+    switch (slNo) {
+      case 0:
+        otherSettingsValue!.isAnyoneTag = value;
+        break;
+      case 1:
+        otherSettingsValue!.isFollowerTag = value;
+        break;
+      case 2:
+        otherSettingsValue!.isFollowingTag = value;
+        break;
+    }
+    notifyListeners();
+    Response response = await settingsRepo.updateOtherSettings(value, slNo);
+
+    if (response.statusCode == 200) {
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
   }
 }
