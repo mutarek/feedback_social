@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
+import 'package:als_frontend/data/model/response/settings/get_other_settigs_vlaue.dart';
 import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -81,6 +82,20 @@ class SettingsProvider extends ChangeNotifier {
         Result blocklist = Result.fromJson(element);
         print(blocklist.toJson());
       });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  GetOtherSettingsValueModel? otherSettingsvalue ;
+  initializeOtherSettingsValue() async {
+    otherSettingsvalue=null;
+    Response response = await settingsRepo.otherSettingsvalue();
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      otherSettingsvalue= GetOtherSettingsValueModel.fromJson(response.body);
+
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }

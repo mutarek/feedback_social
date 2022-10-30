@@ -26,7 +26,9 @@ class SettingsRepo{
   Future<Response> blockList(int page) async {
     return await apiClient.getData(AppConstant.blocklist+"?page=$page");
   }
-
+  Future<Response> otherSettingsvalue() async {
+    return await apiClient.getData(AppConstant.getOthersettingsValue);
+  }
 
 
 }
