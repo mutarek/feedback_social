@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:als_frontend/data/model/response/image_video_detect_model.dart';
@@ -73,11 +74,22 @@ class PostProvider with ChangeNotifier {
     calculateMultipartFile();
     Response response;
     if (isFromGroup) {
-      response = await postRepo.updatePostTOGroupBYUSINGGroupID({"description": postText}, multipartFile, groupPageID, id);
+      response = await postRepo.updatePostTOGroupBYUSINGGroupID(
+          {"description": postText, "deleted_image": jsonEncode(deletedImagesIDS), "deleted_video": jsonEncode(deletedVideoIDS)},
+          multipartFile,
+          groupPageID,
+          id);
     } else if (isFromPage) {
-      response = await postRepo.updatePostTOPageBYUSINGPageID({"description": postText}, multipartFile, groupPageID, id);
+      response = await postRepo.updatePostTOPageBYUSINGPageID(
+          {"description": postText, "deleted_image": jsonEncode(deletedImagesIDS), "deleted_video": jsonEncode(deletedVideoIDS)},
+          multipartFile,
+          groupPageID,
+          id);
     } else {
-      response = await postRepo.updatePost({"description": postText}, multipartFile, id);
+      response = await postRepo.updatePost(
+          {"description": postText, "deleted_image": jsonEncode(deletedImagesIDS), "deleted_video": jsonEncode(deletedVideoIDS)},
+          multipartFile,
+          id);
     }
     isLoading = false;
     if (response.statusCode == 201 || response.statusCode == 200) {
@@ -147,6 +159,11 @@ class PostProvider with ChangeNotifier {
   List<ImageVideoDetectModel> imageVideoLists = [];
 
   initializeImageVideo(NewsFeedData newsFeedData) {
+    deletedImagesIDS.clear();
+    deletedVideoIDS.clear();
+    deletedImagesIDS = [];
+    deletedVideoIDS = [];
+
     for (var element in newsFeedData.images!) {
       imageVideoLists.add(ImageVideoDetectModel(true, element.image!, '', element.id!.toString()));
     }
@@ -157,7 +174,15 @@ class PostProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  List<int> deletedImagesIDS = [];
+  List<int> deletedVideoIDS = [];
+
   clearUserImage(int index) {
+    if (imageVideoLists[index].isImage) {
+      deletedImagesIDS.add(int.parse(imageVideoLists[index].id));
+    } else {
+      deletedVideoIDS.add(int.parse(imageVideoLists[index].id));
+    }
     imageVideoLists.removeAt(index);
     notifyListeners();
   }

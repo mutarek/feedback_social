@@ -153,7 +153,7 @@ class PostStats extends StatelessWidget {
                                   child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
                                 ),
                               )
-                            : InkWell(onTap: () {}, child: const Icon(CupertinoIcons.bookmark, size: 25, color: Colors.black)),
+                            : InkWell(onTap: () {}, child: const Icon(CupertinoIcons.share, size: 25, color: Colors.black)),
                       ],
                     ),
                   ),
