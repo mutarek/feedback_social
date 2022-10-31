@@ -3,6 +3,7 @@ import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -74,11 +75,28 @@ class PasswordUpdateSettings extends StatelessWidget {
                             if (newPasswordContorller.text == repeatPasswordContorller.text) {
                               provider.passwordUpdate(
                                   currentPasswordContorller.text, newPasswordContorller.text, repeatPasswordContorller.text);
-                              if (provider.success == true) {
+                              if (provider.success) {
+                                Fluttertoast.showToast(
+                                    msg: "Successfully update",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
                                 Get.back();
                               }
                             } else {
-                              print("error");
+                              Fluttertoast.showToast(
+                                  msg: "Please enter correct old password",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0
+                              );
                             }
                           },
                           child: const Text("Update"));

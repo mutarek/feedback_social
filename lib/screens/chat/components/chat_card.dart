@@ -1,6 +1,7 @@
 import 'package:als_frontend/data/model/response/chat/AllMessageChatListModel.dart';
 import 'package:als_frontend/helper/date_converter.dart';
 import 'package:als_frontend/util/size.util.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ChatCard extends StatelessWidget {
@@ -24,8 +25,12 @@ class ChatCard extends StatelessWidget {
             Stack(
               children: [
                 CircleAvatar(
-                    radius: 24,
-                    backgroundImage: NetworkImage(chat.roomType == "G" ? chat.chatGroup!.avatar! : chat.users![0].profileImage!)),
+                  radius: 26,
+                  backgroundColor: AppColors.facebookColor,
+                  child: CircleAvatar(
+                      radius: 24,
+                      backgroundImage: NetworkImage(chat.roomType == "G" ? chat.chatGroup!.avatar! : chat.users![0].profileImage!)),
+                ),
               ],
             ),
             Expanded(

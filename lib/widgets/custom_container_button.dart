@@ -18,12 +18,12 @@ class CustomConatinerButton extends StatelessWidget {
     return InkWell(
       onTap: ontap,
       child: Container(
-        height: 60,
-        width: 60,
+        height: 40,
+        width: 100,
         child: child,
         decoration: BoxDecoration(
             color: Palette.primary,
-            borderRadius: const BorderRadius.all(Radius.circular(30)),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
             border: Border.all(color: Colors.white, width: 2.5)),
       ),
     );

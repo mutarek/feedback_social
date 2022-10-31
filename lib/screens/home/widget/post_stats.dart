@@ -7,6 +7,7 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -162,7 +163,12 @@ class PostStats extends StatelessWidget {
                                       child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
                                     ),
                                   )
-                                : InkWell(onTap: () {}, child: const Icon(CupertinoIcons.share, size: 25, color: Colors.black)),
+                                : InkWell(onTap: () {}, child: SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
+                            ),
+                            ),
                           ],
                         ),
                       ),

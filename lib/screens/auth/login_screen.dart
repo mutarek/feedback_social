@@ -9,6 +9,7 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -46,8 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   top: height * 0.75,
                   left: width * 0.6,
                   child: Container(
-                    height: height * 0.4,
-                    width: width * 0.4,
+                    height: height * 0.3,
+                    width: width * 0.9,
                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
                   ),
                 ),
@@ -117,6 +118,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                           style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
                                         )),
                                   ),
+                             SizedBox(height: height*0.06,),
+                                  ElevatedButton(
+                                      style:ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20),)
+                                      ),
+                                      onPressed:(){ Get.to(SignUpScreen1());} , child: Text(  getTranslated('Create account', context)!,
+                                    style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.black),)),
+
                                   SizedBox(height: 20),
 
                                   SizedBox(height: height * 0.02),
@@ -124,31 +135,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Text(
-                              getTranslated('Don\'t have an account?', context)!,
-                              style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 15),
-                            ),
-                            SizedBox(width: width * 0.01),
-                            TextButton(
-                              onPressed: () {
-                                Get.to(SignUpScreen1());
-                                // Get.to(const EnterEmailOrPhone());
-                              },
-                              child: Text(
-                                getTranslated('Create account', context)!,
-                                style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.blue),
-                              ),
-                            )
-                          ]),
+
                         ],
                       ),
                     ),
                   ],
                 ),
                 Positioned(
-                  top: height * 0.65,
-                  left: width * 0.47,
+                  top: height * 0.315,
+                  left: width * 0.3,
                   child: Container(
                     alignment: Alignment.center,
                     height: height * 0.4,
@@ -156,8 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Consumer<AuthProvider>(builder: (context, auth, child) {
                       return CustomConatinerButton(
                           child: (auth.isLoading == false)
-                              ? const Icon(Icons.arrow_forward, color: Colors.white)
-                              : const CircularProgressIndicator(),
+                              ? Center(child: Text("Login",style: latoStyle800ExtraBold.copyWith(color: Colors.white),))
+                              : const CupertinoActivityIndicator(),
                           ontap: () {
                             if (emailController.text.isEmpty || passwordController.text.isEmpty) {
                               showMessage(message: getTranslated('Please fill all the form', context), context: context);

@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/util/size.util.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -67,7 +69,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
         return Future.value(true);
       },
       child:
-          Scaffold(appBar: buildAppBar(), body: BodyWidget(controller, widget.index, customerID: widget.customerID, isFromProfile: widget.isFromProfile)),
+          Scaffold(
+            backgroundColor: Color(0xffFBFAFF),
+              appBar: buildAppBar(), 
+              body: BodyWidget(
+                controller, widget.index, customerID: widget.customerID, isFromProfile: widget.isFromProfile,imageURL:widget.imageURL,)),
     );
   }
 
@@ -76,6 +82,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 0,
+
       title: Row(
         children: [
           BackButton(
@@ -85,7 +92,12 @@ class _MessagesScreenState extends State<MessagesScreen> {
             },
             color: Colors.black,
           ),
-          CircleAvatar(backgroundImage: NetworkImage(widget.imageURL)),
+          CircleAvatar(
+              radius: 20,
+              backgroundColor: AppColors.scaffold,
+              child: CircleAvatar(
+                radius: 17,
+                  backgroundImage: NetworkImage(widget.imageURL))),
           const SizedBox(width: kDefaultPadding * 0.75),
           Expanded(
             child: Column(
@@ -99,7 +111,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
         ],
       ),
       actions: [
-        IconButton(icon: const Icon(Icons.local_phone, color: Colors.black), onPressed: () {}),
+        IconButton(icon: const Icon(FontAwesomeIcons.phone, color: Colors.black), onPressed: () {}),
         IconButton(icon: const Icon(Icons.videocam, color: Colors.black), onPressed: () {}),
         const SizedBox(width: kDefaultPadding / 2),
       ],
