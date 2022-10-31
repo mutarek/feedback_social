@@ -119,14 +119,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                         )),
                                   ),
                              SizedBox(height: height*0.06,),
-                                  ElevatedButton(
-                                      style:ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(20),)
-                                      ),
-                                      onPressed:(){ Get.to(SignUpScreen1());} , child: Text(  getTranslated('Create account', context)!,
-                                    style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.black),)),
+                                  SizedBox(
+                                    width: width*0.6,
+                                    child: ElevatedButton(
+                                        style:ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20),)
+                                        ),
+                                        onPressed:(){ Get.to(SignUpScreen1());} , child: Text(  getTranslated('Create account', context)!,
+                                      style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.black),)),
+                                  ),
 
                                   SizedBox(height: 20),
 

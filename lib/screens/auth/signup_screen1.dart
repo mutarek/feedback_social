@@ -10,6 +10,7 @@ import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
@@ -121,7 +122,7 @@ class SignUpScreen1 extends StatelessWidget {
                     return CustomConatinerButton(
                         child: (auth.isLoading == false)
                             ? const Icon(Icons.arrow_forward, color: Colors.white)
-                            : const CircularProgressIndicator(),
+                            : const CupertinoActivityIndicator(),
                         ontap: () {
                           if (emailPhoneController.text.isEmpty) {
                             showMessage(
