@@ -51,7 +51,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
           ),
           const SizedBox(height: 30),
           Container(
-            height: 50,
+            height: 35,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 color: Colors.blue.withOpacity(.1),

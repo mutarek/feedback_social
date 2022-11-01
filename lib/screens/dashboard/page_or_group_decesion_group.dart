@@ -77,7 +77,7 @@ class _PageOrGroupDecisionGroupState extends State<PageOrGroupDecisionGroup> {
             elevation: 0,
             title: const Text(
               "FeedBack",
-              style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
+              style: TextStyle(color: Palette.feedback, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
             ),
           ),
           body: NestedScrollView(

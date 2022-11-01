@@ -4,6 +4,7 @@ class ImagesModel {
   static String get backIcon => 'assets/icons/ic_back.png';
   static const String homeURI = 'assets/svg/home.svg';
   static const String messageURI = 'assets/svg/messege.svg';
+  static const String chatingURI = 'assets/svg/chating.svg';
   static const String flagURI = 'assets/svg/flag.svg';
   static const String friendRequestURI = 'assets/svg/friend_req.svg';
   static const String menuURI = 'assets/svg/menu.svg';

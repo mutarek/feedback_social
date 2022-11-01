@@ -30,7 +30,7 @@ class MoreScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 1,
         title: const Text("FeedBack",
-            style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2)),
+            style: TextStyle(color: Palette.feedback, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2)),
       ),
       body: Consumer<AuthProvider>(
         builder: (context, authProvider, child) {

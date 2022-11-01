@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/screens/settings/widget/notification_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -20,8 +21,6 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     super.initState();
     Provider.of<SettingsProvider>(context, listen: false).initializeNotificationSettingsValue();
   }
-
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +42,15 @@ class _NotificationSettingsState extends State<NotificationSettings> {
             child: Consumer<SettingsProvider>(
 
               builder: (context,settingsProvider,child) {
-                return Column(
+                return settingsProvider.isLoading?const Center(child: CupertinoActivityIndicator()):Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(height: 10),
                     NotificationWidget(buttunName: "Push notification", buttunValue: settingsProvider.notificationModel!.isPush!,
                         onChanged: (value) {
-                      settingsProvider.changeNotificationSettingsStatus(value!, 0);
-                    }),
+                          settingsProvider.changeNotificationSettingsStatus(value!, 0);
+                        }),
                     const SizedBox(height: 30),
                     NotificationWidget(buttunName: "Friend notification", buttunValue: settingsProvider.notificationModel!.isFriend!, onChanged: (value) {
                       settingsProvider.changeNotificationSettingsStatus(value!, 1);
