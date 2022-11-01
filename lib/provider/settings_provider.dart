@@ -1,10 +1,13 @@
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
+import 'package:als_frontend/data/model/response/settings/notification_model.dart';
 import 'package:als_frontend/data/model/response/settings/other_settings_model.dart';
 import 'package:als_frontend/data/model/response/settings/privcay_model.dart';
 import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
+
+import '../data/model/response/notification_model.dart';
 
 class SettingsProvider extends ChangeNotifier {
   final SettingsRepo settingsRepo;
@@ -97,6 +100,48 @@ class SettingsProvider extends ChangeNotifier {
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
+  }
+  NotificationSettingsModel? notificationModel =NotificationSettingsModel();
+  initializeNotificationSettingsValue()async{
+    _isLoading = true;
+    notificationModel = NotificationSettingsModel();
+    Response response = await settingsRepo.notificationValue();
+    _isLoading = false;
+    if (response.statusCode == 200) {
+    notificationModel = NotificationSettingsModel.fromJson(response.body);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+  changeNotificationSettingsStatus(bool value, int slNo) async {
+    switch (slNo) {
+      case 0:
+        notificationModel!.isPush = value;
+        break;
+      case 1:
+        notificationModel!.isFriend = value;
+        break;
+      case 2:
+        notificationModel!.isFollower = value;
+        break;
+      case 3:notificationModel!.isFollowing = value;
+      break;
+      case 4:notificationModel!.isLike = value;
+      break;
+      case 5:notificationModel!.isComment = value;
+      break;
+      case 6:notificationModel!.isShare = value;
+      break;
+
+    }
+    notifyListeners();
+    Response response = await settingsRepo.updateOtherSettings(value, slNo);
+
+    if (response.statusCode == 200) {
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
   }
 
   OtherSettingsModel? otherSettingsValue = OtherSettingsModel();

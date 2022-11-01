@@ -23,11 +23,9 @@ class SettingsRepo {
   Future<Response> unBlockUser(int userID) async {
     return await apiClient.deleteData("/settings/block/$userID/delete/");
   }
-
-  Future<Response> otherSettingsValue() async {
-    return await apiClient.getData(AppConstant.getOtherSettingsValue);
+  Future<Response> notificationValue() async {
+    return await apiClient.getData(AppConstant.getNotificationsettingsValue);
   }
-
   Future<Response> updateOtherSettings(bool status, int slNo) async {
     Map map = {};
     switch (slNo) {
@@ -61,6 +59,39 @@ class SettingsRepo {
 
     }
     return await apiClient.patchData(AppConstant.getOtherSettingsValue, map);
+  }
+
+  Future<Response> otherSettingsValue() async {
+    return await apiClient.getData(AppConstant.getOtherSettingsValue);
+  }
+
+  Future<Response> updateNotificationSettings(bool status, int slNo) async {
+    Map map = {};
+    switch (slNo) {
+      case 0:
+        map['is_push'] = status;
+        break;
+      case 1:
+        map['is_friend'] = status;
+        break;
+      case 2:
+        map['is_follower'] = status;
+        break;
+      case 3:
+        map['is_following'] = status;
+        break;
+      case 4:
+        map['is_like'] = status;
+        break;
+      case 5:
+        map['is_comment'] = status;
+        break;
+      case 6:
+        map['is_share'] = status;
+        break;
+
+    }
+    return await apiClient.patchData(AppConstant.getNotificationsettingsValue, map);
   }
 
   Future<Response> termsAndCondition() async {
