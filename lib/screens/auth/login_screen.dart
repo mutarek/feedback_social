@@ -118,34 +118,38 @@ class _LoginScreenState extends State<LoginScreen> {
                                           style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
                                         )),
                                   ),
-                             SizedBox(height: height*0.06,),
                                   SizedBox(
-                                    width: width*0.6,
-                                    child: ElevatedButton(
-                                        style:ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(20),)
-                                        ),
-                                        onPressed:(){ Get.to(SignUpScreen1());} , child: Text(  getTranslated('Create account', context)!,
-                                      style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.black),)),
+                                    height: height * 0.06,
                                   ),
-
+                                  SizedBox(
+                                    width: width * 0.6,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20),
+                                            )),
+                                        onPressed: () {
+                                          Get.to(SignUpScreen1());
+                                        },
+                                        child: Text(
+                                          getTranslated('Create account', context)!,
+                                          style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.black),
+                                        )),
+                                  ),
                                   SizedBox(height: 20),
-
                                   SizedBox(height: height * 0.02),
                                 ],
                               ),
                             ),
                           ),
-
                         ],
                       ),
                     ),
                   ],
                 ),
                 Positioned(
-                  top: height * 0.315,
+                  top: height * 0.330,
                   left: width * 0.3,
                   child: Container(
                     alignment: Alignment.center,
@@ -154,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Consumer<AuthProvider>(builder: (context, auth, child) {
                       return CustomConatinerButton(
                           child: (auth.isLoading == false)
-                              ? Center(child: Text("Login",style: latoStyle800ExtraBold.copyWith(color: Colors.white),))
+                              ? Center(child: Text("Login", style: latoStyle800ExtraBold.copyWith(color: Colors.white)))
                               : const CupertinoActivityIndicator(),
                           ontap: () {
                             if (emailController.text.isEmpty || passwordController.text.isEmpty) {
@@ -165,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Fluttertoast.showToast(msg: message);
                                   // Get.off(const NavScreen());
                                   Provider.of<NotificationProvider>(context, listen: false).check();
-                                  Get.off( DashboardScreen());
+                                  Get.off(DashboardScreen());
                                 } else {
                                   Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                 }

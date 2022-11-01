@@ -1,11 +1,8 @@
-import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
-import 'package:als_frontend/provider/profile_provider.dart';
-import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/chat/chats_screen.dart';
 import 'package:als_frontend/screens/dashboard/page_or_group_decesion_group.dart';
@@ -19,11 +16,11 @@ import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/circle_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/route_manager.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -43,7 +40,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Provider.of<AuthProvider>(context, listen: false).getUserInfo();
     Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1);
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
-    Provider.of<ProfileProvider>(context, listen: false).initializeUserData();
+
     // Provider.of<NotificationProvider>(context, listen: false).check();
   }
 
@@ -137,8 +134,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           body: SafeArea(
-            child: Consumer2<ProfileProvider,DashboardProvider>(
-              builder: (context,publicProvider, dashboardProvider, child) => Column(
+            child: Consumer2<AuthProvider, DashboardProvider>(
+              builder: (context, authProvider, dashboardProvider, child) => Column(
                 children: [
                   dashboardProvider.selectIndex == 0
                       ? AppBar(
@@ -151,24 +148,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               icon: Icons.search,
                               iconSize: 20.0,
                               onPressed: () {
-                                Provider.of<SearchProvider>(context,listen: false).resetFirstTime();
+                                Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
                                 Get.to(SearchScreen());
                               },
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: InkWell(
-                                onTap: (){
+                                onTap: () {
                                   Get.to(const ProfileScreen());
                                 },
-                                child: CircleAvatar(
-                                  radius: 19,
-                                  backgroundColor: AppColors.scaffold,
-                                  child: publicProvider.userprofileData.profileImage ==null?CupertinoActivityIndicator():CircleAvatar(
-                                    radius: 16,
-                                    backgroundColor: AppColors.scaffold,
-                                    backgroundImage: NetworkImage(publicProvider.userprofileData.profileImage!,),
-                                  ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(2),
+                                  width: 40,
+                                  height: 30,
+                                  decoration: const BoxDecoration(color: AppColors.scaffold, shape: BoxShape.circle),
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: customNetworkImage2(context, authProvider.profileImage, height: 30)),
                                 ),
                               ),
                             )

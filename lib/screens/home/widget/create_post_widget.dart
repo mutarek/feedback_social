@@ -3,10 +3,13 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/posts/add_post_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 Widget createPostWidget(BuildContext context, AuthProvider authProvider,
@@ -35,10 +38,17 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                    Get.to(const ProfileScreen());
                   },
-                  child:
-                      CircleAvatar(backgroundImage: NetworkImage(authProvider.profileImage), backgroundColor: Colors.grey.withOpacity(.4)),
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(color: AppColors.scaffold, shape: BoxShape.circle),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: customNetworkImage2(context, authProvider.profileImage, height: 40)),
+                  ),
                 ),
                 const SizedBox(width: 5),
                 CustomText(
