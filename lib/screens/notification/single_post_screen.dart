@@ -160,7 +160,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                     style: latoStyle400Regular),
                                 if ((newsFeedProvider.singleNewsFeedModel.totalImage! + newsFeedProvider.singleNewsFeedModel.totalVideo!) !=
                                     0)
-                                  PostPhotoContainer(0, postImageUrl: newsFeedProvider.singleNewsFeedModel),
+                                  PostPhotoContainer(0, newsfeedModel: newsFeedProvider.singleNewsFeedModel),
                                 const SizedBox(height: 10.0),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,

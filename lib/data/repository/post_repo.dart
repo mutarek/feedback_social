@@ -49,4 +49,8 @@ class PostRepo {
   Future<Response> deletePost(String url) async {
     return await apiClient.deleteData(url.replaceAll("comment/", ""));
   }
+
+  Future<Response> sharePost(String url, String description) async {
+    return await apiClient.postData("${url.replaceAll("comment/", "")}share/", {"description": description});
+  }
 }

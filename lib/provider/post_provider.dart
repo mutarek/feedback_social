@@ -225,4 +225,27 @@ class PostProvider with ChangeNotifier {
       return false;
     }
   }
+
+  //// for Share post
+  Future<PostResponse> sharePost(String url, String description, NewsFeedData newsfeedData) async {
+    isLoading = true;
+    notifyListeners();
+    Response response = await postRepo.sharePost(url, description);
+
+    isLoading = false;
+    if (response.statusCode == 201) {
+      Fluttertoast.showToast(msg: 'Post Share Successfully');
+      SharePostModel n = SharePostModel.fromJson(response.body);
+      NewsFeedData newsFeedData = newsfeedData;
+      newsFeedData.isShare = true;
+      newsFeedData.sharePost = n;
+      newsFeedData.description = description;
+      newsFeedData.timestamp=DateTime.now().toString();
+      notifyListeners();
+      return PostResponse(newsFeedData: newsFeedData, status: true);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+      return PostResponse(newsFeedData: NewsFeedData(), status: false);
+    }
+  }
 }

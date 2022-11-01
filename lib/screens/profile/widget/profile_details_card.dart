@@ -131,7 +131,7 @@ class ProfileDetailsCard extends StatelessWidget {
                 : InkWell(
                     onTap: () {
                       Provider.of<ProfileProvider>(context, listen: false).initializeGender(userProfileModel!.gender!);
-                      Get.to(() =>  EditProfile(userprofileData: userProfileModel));
+                      Get.to(() => EditProfile(userprofileData: userProfileModel));
                     },
                     child: Container(
                       height: height * 0.035,

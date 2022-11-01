@@ -35,6 +35,7 @@ class NewsfeedModel {
         "results": List<dynamic>.from(results!.map((x) => x.toJson())),
       };
 }
+
 class NewsFeedData {
   NewsFeedData({
     this.newsfeedId,
@@ -53,22 +54,28 @@ class NewsFeedData {
     this.likedBy,
     this.timestamp,
     this.isShare,
+    this.sharePost,
     this.postType,
     this.like,
   });
 
   NewsFeedData.fromJson(dynamic json) {
-    newsfeedId = json['newsfeed_id']??0;
-    isDelete = json['is_delete']??false;
+    newsfeedId = json['newsfeed_id'] ?? 0;
+    isDelete = json['is_delete'] ?? false;
     id = json['id'];
     description = json['description'];
     author = json['author'] != null ? Author.fromJson(json['author']) : null;
     page = json['page'] != null ? Page.fromJson(json['page']) : null;
+    if (json.containsKey('share_post')) {
+      sharePost = json['share_post'] != null ? SharePostModel.fromJson(json['share_post']) : null;
+    } else {
+      sharePost = SharePostModel();
+    }
     totalImage = json['total_image'];
     if (json['images'] != null) {
       images = [];
       json['images'].forEach((v) {
-        images?.add(Images.fromJson(v));
+        images?.add(ImagesData.fromJson(v));
       });
     }
     totalVideo = json['total_video'];
@@ -103,8 +110,9 @@ class NewsFeedData {
   String? description;
   Author? author;
   Page? page;
+  SharePostModel? sharePost;
   int? totalImage;
-  List<Images>? images;
+  List<ImagesData>? images;
   int? totalVideo;
   List<Video>? videos;
   int? totalComment;
@@ -150,13 +158,13 @@ class NewsFeedData {
   }
 }
 
-class Images {
-  Images({
+class ImagesData {
+  ImagesData({
     this.id,
     this.image,
   });
 
-  Images.fromJson(dynamic json) {
+  ImagesData.fromJson(dynamic json) {
     id = json['id'];
     image = json['image'];
   }
@@ -270,28 +278,28 @@ class LikedBy {
   String? profileImage;
 
   factory LikedBy.fromJson(Map<String, dynamic> json) => LikedBy(
-    id: json["id"],
-    firstName: json["first_name"],
-    lastName: json["last_name"],
-    email: json["email"],
-    dateOfBirth: json["date_of_birth"] == null ? null : DateTime.parse(json["date_of_birth"]),
-    gender: json["gender"],
-    isActive: json["is_active"],
-    profileImage: json["profile_image"],
-  );
+        id: json["id"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        email: json["email"],
+        dateOfBirth: json["date_of_birth"] == null ? null : DateTime.parse(json["date_of_birth"]),
+        gender: json["gender"],
+        isActive: json["is_active"],
+        profileImage: json["profile_image"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "first_name": firstName,
-    "last_name": lastName,
-    "email": email,
-    "date_of_birth": dateOfBirth == null
-        ? null
-        : "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
-    "gender": gender,
-    "is_active": isActive,
-    "profile_image": profileImage,
-  };
+        "id": id,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "date_of_birth": dateOfBirth == null
+            ? null
+            : "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
+        "gender": gender,
+        "is_active": isActive,
+        "profile_image": profileImage,
+      };
 }
 
 class Group {
@@ -393,18 +401,18 @@ class Post {
   String? description;
   Author? author;
   int? totalImage;
-  List<ImageData>? images;
+  List<ImagesData>? images;
   int? totalVideo;
-  List<dynamic>? videos;
+  List<Video>? videos;
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
         id: json["id"],
-        description: json["description"],
+        description: json["description"] ?? "",
         author: Author.fromJson(json["author"]),
         totalImage: json["total_image"],
-        images: List<ImageData>.from(json["images"].map((x) => ImageData.fromJson(x))),
+        images: List<ImagesData>.from(json["images"].map((x) => ImagesData.fromJson(x))),
         totalVideo: json["total_video"],
-        videos: List<dynamic>.from(json["videos"].map((x) => x)),
+        videos: List<Video>.from(json["videos"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -429,5 +437,37 @@ class EnumValues<T> {
       reverseMap = map!.map((k, v) => new MapEntry(v, k));
     }
     return reverseMap!;
+  }
+}
+
+class SharePostModel {
+  SharePostModel({
+    this.post,
+    this.postUrl,
+    this.shareFrom,
+    this.timestamp,
+  });
+
+  SharePostModel.fromJson(dynamic json) {
+    post = json['post'] != null ? Post.fromJson(json['post']) : null;
+    postUrl = json['post_url'];
+    shareFrom = json['share_from'];
+    timestamp = json['timestamp'];
+  }
+
+  Post? post;
+  String? postUrl;
+  String? shareFrom;
+  String? timestamp;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (post != null) {
+      map['post'] = post?.toJson();
+    }
+    map['post_url'] = postUrl;
+    map['share_from'] = shareFrom;
+    map['timestamp'] = timestamp;
+    return map;
   }
 }
