@@ -47,7 +47,7 @@ class PostStats extends StatelessWidget {
         return Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-              color: AppColors.scaffold,
+              color: AppColors.postLikeCommentContainer,
               borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
               boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))]),
           child: Padding(
@@ -82,7 +82,7 @@ class PostStats extends StatelessWidget {
                                     padding: const EdgeInsets.all(7),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.blue,
+                                        color: AppColors.postLikeCountContainer,
                                         border: Border.all(color: Colors.white),
                                         boxShadow: [
                                           BoxShadow(
@@ -125,7 +125,7 @@ class PostStats extends StatelessWidget {
                                     padding: const EdgeInsets.all(7),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.blue,
+                                        color: AppColors.postLikeCountContainer,
                                         border: Border.all(color: Colors.white),
                                         boxShadow: [
                                           BoxShadow(

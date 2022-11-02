@@ -34,6 +34,8 @@ class AppColors {
   static const Color COLUMBIA_BLUE = Color(0xff92C6FF);
   static const Color accentColor = Color(0xFFE6A537);
   static const Color SELLER_TXT = Color(0xff92C6FF);
+  static const Color postLikeCommentContainer = Color(0xffDDEFFD);
+  static const Color postLikeCountContainer = Color(0xff195FC7);
   static const Color black = Color(0xFF252525);
   static const Color ICON_BG = Color(0xffF9F9F9);
   static const Color grey = Color(0xFF909090);
