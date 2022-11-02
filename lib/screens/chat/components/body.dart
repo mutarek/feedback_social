@@ -11,7 +11,8 @@ import 'chat_input_field.dart';
 import 'message.dart';
 
 class BodyWidget extends StatelessWidget {
-  BodyWidget(this.controller, this.index, {this.customerID = 0, this.isFromProfile = false,required this.imageURL, Key? key}) : super(key: key);
+  BodyWidget(this.controller, this.index, {this.customerID = 0, this.isFromProfile = false, required this.imageURL, Key? key})
+      : super(key: key);
 
   final AutoScrollController controller;
   int status = 0;
@@ -30,6 +31,11 @@ class BodyWidget extends StatelessWidget {
           status = 1;
         });
       }
+      if (chatProvider.isChangeValue) {
+        Timer(const Duration(milliseconds: 250), () {
+          controller.scrollToIndex(0, preferPosition: AutoScrollPosition.begin);
+        });
+      }
       return Column(
         children: [
           Expanded(
@@ -43,12 +49,16 @@ class BodyWidget extends StatelessWidget {
                       itemBuilder: (context, index) {
                         bool isSender =
                             chatProvider.userID().toLowerCase() == chatProvider.p2pChatLists[index].user!.toString() ? true : false;
-                        return Message(message: chatProvider.p2pChatLists[index], isSender: isSender,imageURL:imageURL,);
+                        return Message(
+                          message: chatProvider.p2pChatLists[index],
+                          isSender: isSender,
+                          imageURL: imageURL,
+                        );
                       },
                     ),
                   ),
           ),
-          ChatInputField( controller, index, customerID: customerID, isFromProfile: isFromProfile),
+          ChatInputField(controller, index, customerID: customerID, isFromProfile: isFromProfile),
         ],
       );
     });

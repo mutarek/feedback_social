@@ -75,6 +75,7 @@ class _PageCommentsScreenState extends State<PageCommentsScreen> {
                                     child: CommentWidget(
                                         width: width,
                                         height: height,
+                                      postIndex: provider.index,
                                         onTap: () {
                                           provider2.id = provider.pagePosts![provider.index].comments[index].author.id;
                                           (provider.pagePosts![provider.index].comments[index].author.id == provider2.userId)

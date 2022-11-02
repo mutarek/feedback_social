@@ -21,6 +21,24 @@ class PageProvider with ChangeNotifier {
 
   bool isLoading = false;
 
+  //TODO: for get ALl Liked Page
+  List<AuthorPageModel> likedPageLists = [];
+
+  initializeLikedPageLists() async {
+    likedPageLists.clear();
+    likedPageLists = [];
+    Response response = await pageRepo.getAllLikedPageLists();
+    isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        likedPageLists.add(AuthorPageModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
   //TODO: for get ALl Suggest Page
   List<AuthorPageModel> allSuggestPageList = [];
 
@@ -42,13 +60,18 @@ class PageProvider with ChangeNotifier {
   //TODO: for get ALl Author Page
   List<AuthorPageModel> authorPageLists = [];
 
-  initializeAuthorPageLists() async {
+  initializeAuthorPageLists({bool isFromMyPage = false}) async {
     isLoading = true;
     authorPageLists.clear();
     authorPageLists = [];
     Response response = await pageRepo.getAuthorPage();
     if (response.statusCode == 200) {
-      initializeSuggestPage();
+      if (isFromMyPage) {
+        initializeLikedPageLists();
+      } else {
+        initializeSuggestPage();
+      }
+
       isLoading = false;
       response.body.forEach((element) {
         authorPageLists.add(AuthorPageModel.fromJson(element));
@@ -133,12 +156,13 @@ class PageProvider with ChangeNotifier {
     // notifyListeners();
     Response response = await pageRepo.callForGetPageDetails(id);
     callForGetAllPagePosts(id);
-    isLoading = false;
+
     if (response.statusCode == 200) {
       pageDetailsModel = AuthorPageDetailsModel.fromJson(response.body);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
+    isLoading = false;
     notifyListeners();
   }
 

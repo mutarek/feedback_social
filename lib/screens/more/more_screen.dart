@@ -1,9 +1,13 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/dashboard_provider.dart';
+import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/group/my_group_screen.dart';
+import 'package:als_frontend/screens/more/view/terms_and_condition.dart';
 import 'package:als_frontend/screens/more/widget/custom_menu_card.dart';
+import 'package:als_frontend/screens/page/my_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/send_friend_request_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -85,6 +89,7 @@ class MoreScreen extends StatelessWidget {
                             iconName: "group",
                             navigation: () {
                               Get.to(const MyGroupScreen());
+
                             }),
                       ),
                       Expanded(
@@ -94,7 +99,7 @@ class MoreScreen extends StatelessWidget {
                             iconColor: Palette.primary,
                             iconName: "Page",
                             navigation: () {
-                              // Get.to(const CommingSoonScreen());
+                              Get.to(const MyPageScreen());
                             }),
                       ),
                     ],
@@ -119,7 +124,7 @@ class MoreScreen extends StatelessWidget {
                             iconColor: Palette.primary,
                             iconName: "Animal",
                             navigation: () {
-                              Provider.of<AuthProvider>(context, listen: false).getUserInfo(isFirstTime: false);
+                              Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                               Get.to(const MyAnimalScreen());
                             }),
                       ),
@@ -145,7 +150,7 @@ class MoreScreen extends StatelessWidget {
                             iconColor: Palette.primary,
                             iconName: "Terms & Conditions",
                             navigation: () {
-                              Get.to(() => const SettingsScreen());
+                              Get.to(() => const TermsAndConditionsScreen());
                             }),
                       ),
                     ],
@@ -158,6 +163,8 @@ class MoreScreen extends StatelessWidget {
                         onTap: () {
                           Provider.of<AuthProvider>(context, listen: false).logout().then((value) {
                             if (value) {
+                              Provider.of<DashboardProvider>(context, listen: false).changeSelectIndex(0);
+                              Provider.of<NotificationProvider>(context, listen: false).channelDismiss();
                               Navigator.of(context)
                                   .pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
                             }

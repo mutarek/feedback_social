@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/dialog_bottom_sheet/share_modal_bottom_sheet.dart';
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/notification/single_post_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
@@ -20,7 +21,7 @@ class PostStats extends StatelessWidget {
   final feedProvider;
   final double paddingHorizontal;
   final double paddingVertical;
-  final bool isHomeNewsFeedProvider;
+  final bool isHomeScreen;
   final bool isFromProfile;
   final bool isPage;
 
@@ -32,7 +33,7 @@ class PostStats extends StatelessWidget {
       this.groupPageID = 0,
       this.paddingHorizontal = 12,
       this.isFromProfile = false,
-      this.isHomeNewsFeedProvider = false,
+      this.isHomeScreen = false,
       this.isPage = false,
       this.postID = 0,
       this.paddingVertical = 0})
@@ -49,7 +50,9 @@ class PostStats extends StatelessWidget {
           decoration: BoxDecoration(
               color: AppColors.scaffold,
               borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-              boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))]),
+              boxShadow: [
+                BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+              ]),
           child: Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),
             child: Row(
@@ -100,10 +103,11 @@ class PostStats extends StatelessWidget {
                 const SizedBox(width: 30.0),
                 InkWell(
                   onTap: () {
+                    Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                     Get.to(SinglePostScreen(post.commentUrl!,
-                        isFromHomeTimeline: isHomeNewsFeedProvider,
+                        isHomeScreen: isHomeScreen,
                         isProfileScreen: isFromProfile,
-                        timelineIndex: index,
+                        index: index,
                         postID: postID,
                         groupID: groupPageID,
                         isFromPage: isPage,
@@ -141,19 +145,16 @@ class PostStats extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 1.0),
-                post.isShare!
-                    ? InkWell(
-                        onTap: () {
-                          shareBottomSheet(context,post.commentUrl!,post);
-                          //Get.to(CommentsScreen(index, post.id as int, isHomeScreen: true));
-                        },
-                        child: SizedBox(
-                          width: 35,
-                          height: 35,
-                          child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
-                        ),
-                      )
-                    : SizedBox(),
+                InkWell(
+                  onTap: () {
+                    shareBottomSheet(context, post.isShare! ? post.sharePost!.postUrl! : post.commentUrl!, post);
+                  },
+                  child: SizedBox(
+                    width: 35,
+                    height: 35,
+                    child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
+                  ),
+                )
               ],
             ),
           ),

@@ -71,7 +71,12 @@ class ProfileRepo {
   Future<Response> sendFriendRequestLists(int page) async {
     return await apiClient.getData('${AppConstant.sendFriendRequestListURI}$page');
   }
+
   Future<Response> getAllFriends(int page) async {
     return await apiClient.getData('${AppConstant.friendListsURI}$page');
+  }
+
+  Future<Response> blockUser(int id) async {
+    return await apiClient.postData('/settings/block/$id/create/', {});
   }
 }

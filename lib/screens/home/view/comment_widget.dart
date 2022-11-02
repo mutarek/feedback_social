@@ -24,9 +24,10 @@ class CommentWidget extends StatelessWidget {
       required this.commentModels,
       required this.onTap,
       required this.index,
+      required this.postIndex,
       required this.url,
       required this.postID,
-      this.isFromHomeTimeline = false,
+      this.isHomeScreen = false,
       this.isProfileScreen = false,
       this.isFromGroup = false,
       this.isFromPage = false,
@@ -37,11 +38,12 @@ class CommentWidget extends StatelessWidget {
   final double height;
   final CommentModels commentModels;
   final int index;
+  final int postIndex;
   final int postID;
   final String url;
   final VoidCallback onTap;
   final TextEditingController? replyController;
-  final bool isFromHomeTimeline;
+  final bool isHomeScreen;
   final bool isProfileScreen;
   final bool isFromGroup;
   final bool isFromPage;
@@ -122,14 +124,14 @@ class CommentWidget extends StatelessWidget {
                                       if (value) {
                                         replyController!.clear();
                                         Provider.of<NewsFeedProvider>(context, listen: false).updateSingleCommentDataCount();
-                                        if (isFromHomeTimeline) {
-                                          Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(index);
+                                        if (isHomeScreen) {
+                                          Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(postIndex);
                                         } else if (isProfileScreen) {
-                                          Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(index);
+                                          Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(postIndex);
                                         } else if (isFromGroup) {
-                                          Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(index);
+                                          Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(postIndex);
                                         } else if (isFromPage) {
-                                          Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(index);
+                                          Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(postIndex);
                                         }
                                       }
                                     });

@@ -30,9 +30,9 @@ class AuthorPageModel {
         id: json["id"],
         name: json["name"],
         category: json["category"].toString(),
-        coverPhoto: json["cover_photo"],
+        coverPhoto: json["cover_photo"] ?? "",
         avatar: json["avatar"],
-        followers: json["followers"],
+        followers: json["followers"] ?? json["total_like"],
       );
 
   Map<String, dynamic> toJson() => {

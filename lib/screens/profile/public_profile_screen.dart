@@ -1,14 +1,20 @@
+import 'package:als_frontend/dialog_bottom_sheet/more_menu_bottom_sheet.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
+import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/chat/message_screen.dart';
+import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
+import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
 import 'package:als_frontend/screens/profile/view/public_photo_video_screen.dart';
 import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,6 +45,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
     // TODO: implement initState
     super.initState();
     Provider.of<PublicProfileProvider>(context, listen: false).callForPublicProfileData(widget.userID);
+
     Provider.of<PublicProfileProvider>(context, listen: false)
         .initializeAllUserPostData((bool status) {}, widget.userID, isFirstTime: true);
     controller.addListener(() {
@@ -186,6 +193,55 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                       },
                                     ),
                                   ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              height: height * 0.047,
+                              width: width * 0.1,
+                              decoration: BoxDecoration(color: Colors.white60, borderRadius: BorderRadius.circular(7)),
+                              child: Center(
+                                child: IconButton(
+                                    icon: const Icon(Icons.more_horiz),
+                                    onPressed: () => showDialog(
+                                          context: context,
+                                          builder: (ctx) => publicProvider.isBlockLoading
+                                              ? const Center(child: CircularProgressIndicator())
+                                              : AlertDialog(
+                                                  title: Text(
+                                                    "Do you want to block this User ?",
+                                                    style: latoStyle800ExtraBold,
+                                                  ),
+                                                  actions: [
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      children: [
+                                                        ElevatedButton(
+                                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                                                            onPressed: () {
+                                                              Navigator.of(ctx).pop();
+                                                            },
+                                                            child: const Text("Cancel", style: button)),
+                                                        const SizedBox(width: 15),
+                                                        ElevatedButton(
+                                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                                                            onPressed: () {
+                                                              publicProvider.blockUser(publicProvider.publicProfileData.id!).then((value) {
+                                                                if (value) {
+                                                                  Provider.of<NewsFeedProvider>(context, listen: false)
+                                                                      .afterBlockRemoveUserPosts(publicProvider.publicProfileData.id!);
+
+                                                                  Navigator.of(context).pop();
+                                                                  Navigator.of(context).pop();
+                                                                }
+                                                              });
+                                                            },
+                                                            child: const Text("Block", style: button)),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                        )),
+                              ),
+                            )
                           ],
                         ),
                       ),

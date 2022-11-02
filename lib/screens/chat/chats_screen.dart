@@ -82,11 +82,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             press: () {
                               AllMessageChatListModel allMessageChatListModel = chatProvider.allChatsLists[index];
                               chatProvider.changeChantModel(allMessageChatListModel);
+                              chatProvider.initializeSocket(index);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => MessagesScreen(
                                             index: index,
+                                            isForGroup: allMessageChatListModel.roomType == "G" ? true : false,
+                                            customerID: allMessageChatListModel.users![0].id as int,
                                             imageURL: allMessageChatListModel.roomType == "G"
                                                 ? allMessageChatListModel.chatGroup!.avatar!
                                                 : allMessageChatListModel.users![0].profileImage!,

@@ -196,7 +196,7 @@ class GroupProvider with ChangeNotifier {
   AuthorGroupDetailsModel groupDetailsModel = AuthorGroupDetailsModel();
 
   callForGetAllGroupInformation(String id) async {
-    // isLoading = true;
+    isLoading = true;
     groupMembersLists.clear();
     groupMembersLists = [];
     groupAllPosts.clear();

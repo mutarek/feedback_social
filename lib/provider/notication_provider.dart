@@ -99,4 +99,11 @@ class NotificationProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  channelDismiss() {
+    // if (webSocketChannel.sink.isBlank!) {
+    //   webSocketChannel.sink.close();
+    //   notifyListeners();
+    // }
+  }
 }

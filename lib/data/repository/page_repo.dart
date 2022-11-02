@@ -17,6 +17,9 @@ class PageRepo {
   Future<Response> getAllSuggestedPage() async {
     return await apiClient.getData(AppConstant.pageSuggestedURI);
   }
+  Future<Response> getAllLikedPageLists() async {
+    return await apiClient.getData(AppConstant.pageLikeAllURI);
+  }
 
   Future<Response> getCategory() async {
     return await apiClient.getData(AppConstant.pageCategoryURI);

@@ -54,7 +54,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GroupRepo(apiClient: sl(),authRepo: sl()));
   sl.registerLazySingleton(() => PageRepo(apiClient: sl(),authRepo: sl()));
   sl.registerLazySingleton(() => AnimalRepo(apiClient: sl(),authRepo: sl()));
-  sl.registerLazySingleton(() => SplashRepo(sharedPreferences: sl()));
+  sl.registerLazySingleton(() => SplashRepo(apiClient: sl()));
   sl.registerLazySingleton(() => SettingsRepo( apiClient:sl()));
   sl.registerLazySingleton(() => SearchRepo( apiClient:sl()));
   sl.registerLazySingleton(() => ChatRepo( apiClient:sl()));
@@ -64,13 +64,13 @@ Future<void> init() async {
   sl.registerFactory(() => ThemeProvider(sharedPreferences: sl(),splashRepo: sl()));
   sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl()));
   sl.registerFactory(() => LanguageProvider(languageRepo: sl()));
-  sl.registerFactory(() => AuthProvider(authRepo: sl(),sharedPreferences: sl()));
+  sl.registerFactory(() => AuthProvider(authRepo: sl()));
   sl.registerFactory(() => NewsFeedProvider(newsFeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => ChatProvider(chatRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => CommentProvider(commentRepo: sl()));
-  sl.registerFactory(() => PostProvider(postRepo: sl()));
+  sl.registerFactory(() => PostProvider(postRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => NotificationProvider(authRepo: sl(),notificationRepo: sl()));
-  sl.registerFactory(() => SplashProvider());
+  sl.registerFactory(() => SplashProvider(splashRepo: sl()));
   sl.registerFactory(() => DashboardProvider());
   sl.registerFactory(() => OtherProvider());
   sl.registerFactory(() => SearchProvider(searchRepo: sl()));

@@ -15,6 +15,7 @@ class AppConstant {
   static const String unfriendURI = '/accounts/friends/unfriend/';
   static const String sendFriendRequestListURI = '/accounts/friends/friend-request/list/?size=10&page=';
   static const String friendListsURI = '/accounts/friends/list/?size=10&page=';
+
   static const String profileURI = '/accounts/profile/';
   static const String uploadCoverImageURI = '/accounts/profile/update/cover-image/';
   static const String uploadProfileImageURI = '/accounts/profile/update/profile-image/';
@@ -35,17 +36,19 @@ class AppConstant {
   static const String passwordUpdate = '/accounts/password/change/';
   static const String pageAuthorURI = '/page/author-page/';
   static const String pageSuggestedURI = '/page/suggested-page/';
+  static const String pageLikeAllURI = '/page/like-page-list/';
   static const String pageCategoryURI = '/page/category/';
   static const String pageURI = '/page/';
   static const String postPageURI = '/posts/page/';
   static const String emailUpdate = '/settings/change-email/';
   static const String blocklist = '/settings/block/';
   static const String messageRoomList = '/message-room-list/';
-  static const String chatRoomList = '/chat-message-list/';
+  static const String chatRoomListUri = '/chat-message-list/';
   static const String messageRoomCreateList = '/message-room-create/';
   static const String getOtherSettingsValue = '/settings/other-settings/';
-  static const String getNotificationsettingsValue = '/settings/notification/';
-  static const String termsAndCondition = '/terms-condition/list/"';
+  static const String getNotificationSettingsValueUri = '/settings/notification/';
+  static const String termsAndConditionUri = '/terms-condition/list/';
+  static const String latestVersionUri = '/latest-version/';
   // Shared Key
   static const String theme = 'theme';
   static const String light = 'light';

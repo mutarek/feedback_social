@@ -7,11 +7,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+class CallBackResponse {
+  bool status;
+  String message;
+
+  CallBackResponse({this.status = false, this.message = ''});
+}
+
 class AuthProvider with ChangeNotifier {
   final AuthRepo authRepo;
-  final SharedPreferences sharedPreferences;
 
-  AuthProvider({required this.authRepo, required this.sharedPreferences});
+  AuthProvider({required this.authRepo});
 
   bool _isLoading = false;
 
@@ -41,17 +47,11 @@ class AuthProvider with ChangeNotifier {
 
   //TODO:: for Sign in Section
 
-  Future signIn(String email, String password, bool isRemember, Function callback) async {
+  Future<CallBackResponse> signIn(String email, String password) async {
     _isLoading = true;
     notifyListeners();
     Response response = await authRepo.login(email, password);
     _isLoading = false;
-
-    // if (isRemember==true) {
-    //   authRepo.saveUserEmailAndPassword(email, password);
-    // } else {
-    //   authRepo.clearUserEmailAndPassword();
-    // }
 
     if (response.statusCode == 200) {
       if (authRepo.checkTokenExist()) {
@@ -61,12 +61,16 @@ class AuthProvider with ChangeNotifier {
       authRepo.saveUserToken(response.body['token'].toString());
       authRepo.saveUserInformation(response.body['id'].toString(), '${response.body['first_name']} ${response.body['last_name']}',
           '${response.body['profile_image']}', '${response.body['code']}', '${response.body['email']}');
-      callback(true, 'Login Successfully');
+      name = '${response.body['first_name']} ${response.body['last_name']}';
+      userID = '${response.body['id']}';
+      userCode = '${response.body['code']}';
+      profileImage = '${response.body['profile_image']}';
+      notifyListeners();
+      return CallBackResponse(status: true, message: 'Login Successfully');
     } else {
-      print('khan ${response.statusText}');
-      callback(false, response.statusText);
+      notifyListeners();
+      return CallBackResponse(status: false, message: response.statusText!);
     }
-    notifyListeners();
   }
 
   String data = '';
@@ -89,7 +93,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-   otpVerify(String code, Function callback) async {
+  otpVerify(String code, Function callback) async {
     _isLoading = true;
     notifyListeners();
     Response response = await authRepo.otpVerify(data, code, isEmail);
@@ -173,17 +177,25 @@ class AuthProvider with ChangeNotifier {
     return true;
   }
 
+  //TODO: for Logout
+  bool checkTokenExist() {
+    return authRepo.checkTokenExist();
+  }
+  String getUserToken() {
+    return authRepo.getUserToken();
+  }
+
   // get User INFO:
   String name = '';
   String profileImage = '';
   String userID = '';
   String userCode = '';
 
-  void getUserInfo({bool isFirstTime = true}) {
+  void getUserInfo() {
     name = authRepo.getUserName();
     profileImage = authRepo.getUserProfile();
     userID = authRepo.getUserID();
     userCode = authRepo.getUserCode();
-    if (!isFirstTime) notifyListeners();
+    notifyListeners();
   }
 }

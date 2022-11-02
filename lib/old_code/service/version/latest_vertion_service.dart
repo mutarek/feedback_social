@@ -10,8 +10,7 @@ class LatestVersionService {
   Future<LatestVersionModel?> getVersion() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = (prefs.getString('token') ?? '');
-    var uri = Uri.parse("$baseUrl/latest-version/"),
-        headers = {'Authorization': 'token $token'};
+    var uri = Uri.parse("$baseUrl/latest-version/"), headers = {'Authorization': 'token $token'};
     var response = await http.get(uri, headers: headers);
     print(response.statusCode);
     if (response.statusCode == 200) {
