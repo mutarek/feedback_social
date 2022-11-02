@@ -126,6 +126,14 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO remove post when successfully done block a user
+  void afterBlockRemoveUserPosts(int id) {
+    newsFeedLists.removeWhere((element) {
+      return element.author!.id.toString() == id.toString();
+    });
+    notifyListeners();
+  }
+
   /////// TODO: for single post
 
   NewsFeedData singleNewsFeedModel = NewsFeedData();

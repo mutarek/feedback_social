@@ -1,5 +1,4 @@
 import 'package:als_frontend/localization/app_localization.dart';
-import 'package:als_frontend/old_code/provider/latest_version/latest_version_provider.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';

@@ -15,6 +15,7 @@ class AppConstant {
   static const String unfriendURI = '/accounts/friends/unfriend/';
   static const String sendFriendRequestListURI = '/accounts/friends/friend-request/list/?size=10&page=';
   static const String friendListsURI = '/accounts/friends/list/?size=10&page=';
+
   static const String profileURI = '/accounts/profile/';
   static const String uploadCoverImageURI = '/accounts/profile/update/cover-image/';
   static const String uploadProfileImageURI = '/accounts/profile/update/profile-image/';

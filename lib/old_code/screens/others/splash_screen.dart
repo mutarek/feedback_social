@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Provider.of<SplashProvider>(context, listen: false).initializeVersion().then((value) {
       if (value) {
         navigate();
-      } else {}
+      }
     });
 
     super.initState();

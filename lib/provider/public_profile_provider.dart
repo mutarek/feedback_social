@@ -183,7 +183,6 @@ class PublicProfileProvider with ChangeNotifier {
       callback(true);
       Fluttertoast.showToast(msg: 'Friend Request is canceled successfully');
       callForPublicProfileData(publicProfileData.id.toString(), isShowLoading: false);
-
     } else {
       callback(false);
       Fluttertoast.showToast(msg: response.statusText!);
@@ -202,5 +201,25 @@ class PublicProfileProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
+  }
+
+  //TODO: ************************* for Block
+  bool block = false;
+  bool isBlockLoading = false;
+
+  Future<bool> blockUser(int userid) async {
+    isBlockLoading = true;
+    notifyListeners();
+    Response response = await profileRepo.blockUser(userid);
+    isBlockLoading = false;
+    notifyListeners();
+    if (response.statusCode == 201) {
+      block = true;
+      Fluttertoast.showToast(msg: response.body['message']);
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+      return false;
+    }
   }
 }
