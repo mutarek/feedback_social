@@ -34,23 +34,47 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
   List<ImageVideoDetectModel> imageVideoLists = [];
 
   void initializeAllImageVideo() {
-    if (widget.newsfeedModel.totalImage! >= 4) {
-      for (int i = 0; i <= 3; i++) {
-        imageVideoLists
-            .add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '', widget.newsfeedModel.images![i].id!.toString()));
+    if (widget.newsfeedModel.isShare != null && widget.newsfeedModel.isShare!) {
+      if (widget.newsfeedModel.sharePost!.post!.totalImage! >= 4) {
+        for (int i = 0; i <= 3; i++) {
+          imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
+              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString()));
+        }
+      } else {
+        for (int i = 0; i < widget.newsfeedModel.sharePost!.post!.totalImage!; i++) {
+          imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
+              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString()));
+        }
+
+        int j = 0;
+
+        for (int i = widget.newsfeedModel.sharePost!.post!.totalImage!;
+            i < widget.newsfeedModel.sharePost!.post!.totalImage! + widget.newsfeedModel.sharePost!.post!.totalVideo!;
+            i++) {
+          imageVideoLists.add(ImageVideoDetectModel(false, widget.newsfeedModel.sharePost!.post!.videos![j].thumbnail!,
+              widget.newsfeedModel.sharePost!.post!.videos![j].video!, widget.newsfeedModel.sharePost!.post!.videos![j].id!.toString()));
+          j++;
+        }
       }
     } else {
-      for (int i = 0; i < widget.newsfeedModel.totalImage!; i++) {
-        imageVideoLists
-            .add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '', widget.newsfeedModel.images![i].id!.toString()));
-      }
+      if (widget.newsfeedModel.totalImage! >= 4) {
+        for (int i = 0; i <= 3; i++) {
+          imageVideoLists
+              .add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '', widget.newsfeedModel.images![i].id!.toString()));
+        }
+      } else {
+        for (int i = 0; i < widget.newsfeedModel.totalImage!; i++) {
+          imageVideoLists
+              .add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '', widget.newsfeedModel.images![i].id!.toString()));
+        }
 
-      int j = 0;
+        int j = 0;
 
-      for (int i = widget.newsfeedModel.totalImage!; i < widget.newsfeedModel.totalImage! + widget.newsfeedModel.totalVideo!; i++) {
-        imageVideoLists.add(ImageVideoDetectModel(false, widget.newsfeedModel.videos![j].thumbnail!, widget.newsfeedModel.videos![j].video!,
-            widget.newsfeedModel.videos![j].id!.toString()));
-        j++;
+        for (int i = widget.newsfeedModel.totalImage!; i < widget.newsfeedModel.totalImage! + widget.newsfeedModel.totalVideo!; i++) {
+          imageVideoLists.add(ImageVideoDetectModel(false, widget.newsfeedModel.videos![j].thumbnail!,
+              widget.newsfeedModel.videos![j].video!, widget.newsfeedModel.videos![j].id!.toString()));
+          j++;
+        }
       }
     }
   }
@@ -65,28 +89,28 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
               },
               child: customNetworkImage(context, imageVideoLists[0].url))
           : InkWell(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideoLists[0].url2)));
-            },
-            child: Stack(
-              children: [
-                ClipRRect(borderRadius: BorderRadius.circular(6), child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  child: Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
-                    child: IconButton(
-                        onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
-                  ),
-                )
-              ],
-            ),
-          );
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideoLists[0].url2)));
+              },
+              child: Stack(
+                children: [
+                  ClipRRect(borderRadius: BorderRadius.circular(6), child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                      child: IconButton(
+                          onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                    ),
+                  )
+                ],
+              ),
+            );
     }
 
     return MasonryGridView.count(

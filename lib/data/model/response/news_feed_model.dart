@@ -99,7 +99,7 @@ class NewsFeedData {
       likedBy = [];
     }
     timestamp = json['timestamp'];
-    isShare = json['is_share'];
+    isShare = json['is_share']??false;
     postType = json['post_type'];
     like = json['like'];
   }
