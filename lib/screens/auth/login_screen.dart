@@ -167,11 +167,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               auth.signIn(emailController.text, passwordController.text).then((value) {
                                 if (value.status) {
                                   Fluttertoast.showToast(msg: value.message);
-                                  // auth.getUserInfo();
                                   Provider.of<NotificationProvider>(context, listen: false).check();
                                   Navigator.of(context)
                                       .pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
-                                  // Get.off(DashboardScreen());
                                 } else {
                                   Fluttertoast.showToast(msg: value.message, backgroundColor: Colors.red);
                                 }
