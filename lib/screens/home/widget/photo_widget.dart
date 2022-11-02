@@ -40,6 +40,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
           imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
               widget.newsfeedModel.sharePost!.post!.images![i].id!.toString()));
         }
+
       } else {
         for (int i = 0; i < widget.newsfeedModel.sharePost!.post!.totalImage!; i++) {
           imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
