@@ -82,6 +82,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             press: () {
                               AllMessageChatListModel allMessageChatListModel = chatProvider.allChatsLists[index];
                               chatProvider.changeChantModel(allMessageChatListModel);
+                              chatProvider.initializeSocket(index);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

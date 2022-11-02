@@ -121,11 +121,15 @@ class ChatProvider with ChangeNotifier {
     return authRepo.getUserID();
   }
 
+  bool isChangeValue = false;
+
   //TODO:  ********    for Web Socket
   WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/191/comment/timeline_post/');
 
   userPostComments(AllMessageChatListModel model, int index, {bool isFromProfile = false}) {
     channel.stream.listen((data) {
+      isChangeValue = true;
+      notifyListeners();
       ChatMessageModel commentData = ChatMessageModel.fromJson(jsonDecode(data)['chat_data']);
       p2pChatLists.add(commentData);
       if (!isFromProfile) {
@@ -135,7 +139,7 @@ class ChatProvider with ChangeNotifier {
         allChatsLists.removeAt(index);
         allChatsLists.insert(0, updateChatUser);
       }
-
+      isChangeValue = false;
       notifyListeners();
     }, onDone: () {
       print("disconected");

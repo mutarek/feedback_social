@@ -5,11 +5,12 @@ import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class ChatInputField extends StatelessWidget {
   ChatInputField(this.controller, this.index, {this.customerID = 0, this.isFromProfile = false, Key? key}) : super(key: key);
 
-  final ScrollController controller;
+  final AutoScrollController controller;
   final TextEditingController textEditingController = TextEditingController();
 
   final int index;
@@ -50,8 +51,11 @@ class ChatInputField extends StatelessWidget {
                     const SizedBox(width: kDefaultPadding / 4),
                     Expanded(
                       child: TextField(
+                        onTap: () {
+                          controller.scrollToIndex(0, preferPosition: AutoScrollPosition.end);
+                        },
                         controller: textEditingController,
-                        decoration: const InputDecoration(hintText: "Type message", border: InputBorder.none),
+                        decoration: const InputDecoration(hintText: "Type message", border: InputBorder.none,enabledBorder: InputBorder.none),
                       ),
                     ),
                     Icon(
@@ -94,4 +98,3 @@ class ChatInputField extends StatelessWidget {
     );
   }
 }
-

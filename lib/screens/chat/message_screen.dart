@@ -48,17 +48,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
         viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom), axis: scrollDirection);
     if (widget.isFromProfile) {
     } else {
-      Provider.of<ChatProvider>(context, listen: false).initializeSocket(widget.index);
+
       Provider.of<ChatProvider>(context, listen: false).initializeP2PChats((bool status) {});
     }
-  }
 
-  Future _scrollToIndex(int index) async {
-    controller.scrollToIndex(index, preferPosition: AutoScrollPosition.begin);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     controller = AutoScrollController()
       ..addListener(() {
         if (controller.position.minScrollExtent == controller.position.pixels &&
@@ -72,7 +65,14 @@ class _MessagesScreenState extends State<MessagesScreen> {
           });
         }
       });
+  }
 
+  Future _scrollToIndex(int index) async {
+    controller.scrollToIndex(index, preferPosition: AutoScrollPosition.begin);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
         Provider.of<ChatProvider>(context, listen: false).channelDismiss();
@@ -114,7 +114,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
           Expanded(
             child: InkWell(
               onTap: () {
-                if(!widget.isForGroup){
+                if (!widget.isForGroup) {
                   if (Provider.of<AuthProvider>(context, listen: false).userID == widget.customerID.toString()) {
                     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
                   } else {
