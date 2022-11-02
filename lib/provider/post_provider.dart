@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:als_frontend/data/model/response/image_video_detect_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/post_repo.dart';
 import 'package:als_frontend/helper/image_compressure.dart';
 import 'package:flutter/foundation.dart';
@@ -21,8 +22,9 @@ class PostResponse {
 
 class PostProvider with ChangeNotifier {
   final PostRepo postRepo;
+  final AuthRepo authRepo;
 
-  PostProvider({required this.postRepo});
+  PostProvider({required this.postRepo, required this.authRepo});
 
   bool isLoading = false;
   List<Http.MultipartFile> multipartFile = [];
@@ -240,7 +242,9 @@ class PostProvider with ChangeNotifier {
       newsFeedData.isShare = true;
       newsFeedData.sharePost = n;
       newsFeedData.description = description;
-      newsFeedData.timestamp=DateTime.now().toString();
+      newsFeedData.timestamp = DateTime.now().toString();
+      newsFeedData.author =
+          Author(id: int.parse(authRepo.getUserID()), fullName: authRepo.getUserName(), profileImage: authRepo.getUserProfile());
       notifyListeners();
       return PostResponse(newsFeedData: newsFeedData, status: true);
     } else {

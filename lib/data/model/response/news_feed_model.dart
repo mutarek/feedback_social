@@ -412,10 +412,10 @@ class Post {
         id: json["id"],
         description: json["description"] ?? "",
         author: Author.fromJson(json["author"]),
-        totalImage: json["total_image"],
-        images: List<ImagesData>.from(json["images"].map((x) => ImagesData.fromJson(x))),
-        totalVideo: json["total_video"],
-        videos: List<Video>.from(json["videos"].map((x) => x)),
+        totalImage: json["total_image"] ?? 0,
+        images: (json['images'] != null) ? List<ImagesData>.from(json["images"].map((x) => ImagesData.fromJson(x))) : [],
+        totalVideo: json["total_video"] ?? 0,
+        videos: (json['videos'] != null) ? List<Video>.from(json["videos"].map((x) => x)) : [],
       );
 
   Map<String, dynamic> toJson() => {
