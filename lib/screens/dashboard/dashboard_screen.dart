@@ -53,7 +53,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   controller.jumpToPage(0);
                   return false;
                 } else {
-                  return true;
+                  if (dashboardProvider.backButtonPressCount >= 2) {
+                    return true;
+                  } else {
+                    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1, isFirstTime: false);
+                    dashboardProvider.incrementBackButtonPressCount();
+                    return false;
+                  }
                 }
               },
               child: Scaffold(
@@ -174,6 +180,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             controller: controller,
                             physics: const NeverScrollableScrollPhysics(),
                             onPageChanged: (page) {
+                              if (page != 0) {
+                                dashboardProvider.resetBackButtonPress();
+                              }
                               dashboardProvider.changeSelectIndex(page);
                             },
                             children: const [
