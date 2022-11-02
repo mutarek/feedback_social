@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
 
                         return Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            // margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             child: TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
                                 isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id!));
                       }),
