@@ -1,146 +1,160 @@
-import 'package:als_frontend/provider/settings/password_update_provider.dart';
-import 'package:als_frontend/screens/settings/details/acces_display_language_settings.dart';
-import 'package:als_frontend/screens/settings/details/data_uses_settings.dart';
-import 'package:als_frontend/screens/settings/details/notification_settings.dart';
-import 'package:als_frontend/screens/settings/details/privacy_settings.dart';
-import 'package:als_frontend/screens/settings/details/security_settings.dart';
+import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/settings_provider.dart';
+import 'package:als_frontend/screens/settings/view/about_settings.dart';
+import 'package:als_frontend/screens/settings/view/help_desk.dart';
+import 'package:als_frontend/screens/settings/view/notifications_settings.dart';
+import 'package:als_frontend/screens/settings/view/other_settings.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/card container/snackbar_message.dart';
+import 'widget/Settings_widget.dart';
 
-import '../../widgets/settings widgets/password_update_settings.dart';
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
-import '../../widgets/settings widgets/user_account_update_settings.dart';
-
-
-class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
-
-  @override
-  State<Settings> createState() => _SettingsState();
-}
-
-class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController newPasswordContorller = TextEditingController();
-    TextEditingController currentPasswordContorller = TextEditingController();
-    TextEditingController repeatPasswordContorller = TextEditingController();
-
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xffFFFFFF),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: const Color(0xffFFFFFF),
+        leading: InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
+        title: Text(
+          "Settings",
+          style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black),
+        ),
+      ),
       body: Padding(
-        padding: EdgeInsets.only(top: height * 0.08, left: width * 0.03),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    FontAwesomeIcons.gear,
-                    size: height * 0.04,
-                    color: Colors.black,
-                  ),
-                  SizedBox(
-                    width: width * 0.06,
-                  ),
-                  Text(
-                    "Settings",
-                    style: GoogleFonts.lato(
-                        fontSize: 22, fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: height * 0.05,
-              ),
-              UserAccountSettings(
-                width: width,
-                height: height,
-              ),
+        padding: const EdgeInsets.only(left: 30, right: 30),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Consumer<AuthProvider>(builder: (context, provider, child) {
+              return provider.isLoading
+                  ? const Center(child: CupertinoActivityIndicator())
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Accounts",
+                          style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              radius: 38,
+                              backgroundColor: Colors.blue,
+                              child: CircleAvatar(
+                                radius: 35,
+                                backgroundImage: NetworkImage(
+                                  provider.profileImage,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 9),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(provider.name, style: GoogleFonts.lato(fontSize: 16)),
+                                  const SizedBox(height: 2),
+                                  Text("personal info", style: GoogleFonts.lato(color: const Color(0xff9C9EA2)))
+                                ],
+                              ),
+                            ),
+                            const Spacer(),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.to(const AboutSettings());
+                                },
+                                child: Container(
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(color: const Color(0xffF3F3F6), borderRadius: BorderRadius.circular(8)),
+                                  child: const Icon(FontAwesomeIcons.angleRight, size: 15),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Text("Others", style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w400)),
+                        const SizedBox(height: 20),
 
-              /*.............pasword..................*/
-
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Consumer<PasswordUpdateProviders>(
-                
-                builder: (context, provider,child) {
-                  return PasswordSettings(
-                      width: width,
-                      height: height,
-                      newPasswordContorller: newPasswordContorller,
-                      currentPasswordContorller: currentPasswordContorller,
-                      repeatPasswordContorller: repeatPasswordContorller,
-                      passwordSaveUpdate: () {
-                        if (newPasswordContorller.text ==
-                            repeatPasswordContorller.text) {
-                          print("password match");
-                        } else {
-                          showMessage(
-                            message: "New password & repeat Password don't match",
-                            context: context,
-                          );
-                        }
-                        if (provider.success = false) {
-                          showMessage(
-                            message: "Something went wrong",
-                            context: context,
-                          );
-                        } else {
-                          provider.loading = true;
-                          provider.updatepassword(
-                              currentPasswordContorller.text,
-                              newPasswordContorller.text,
-                              repeatPasswordContorller.text);
-                        }
-                        if (provider.success == true) {
-                          provider.loading = false;
-                        }
-                      },
+                        /*...................language............*/
+                        SettingsWidget(image: 'assets/svg/lang.svg', name: "Language", subname: "English", goingScreen: () {}),
+                        const SizedBox(height: 20),
+                        SettingsWidget(
+                          image: 'assets/svg/notifications.svg',
+                          name: "notifications",
+                          subname: "",
+                          goingScreen: () {
+                            Get.to(const NotificationSettings());
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 19,
+                              backgroundColor: const Color(0xffE1F6FE),
+                              child: Center(
+                                  child: SvgPicture.asset(
+                                "assets/svg/darkmode.svg",
+                                height: 15,
+                                color: Colors.blue,
+                              )),
+                            ),
+                            const SizedBox(width: 10),
+                            Text("Dark Mode", style: GoogleFonts.lato(fontSize: 16)),
+                            const Spacer(),
+                            Consumer<SettingsProvider>(builder: (context, settingsProvider, child) {
+                              return CupertinoSwitch(
+                                value: settingsProvider.darkModeOff,
+                                onChanged: (value) {
+                                  settingsProvider.changeDarkModeStatus(value);
+                                },
+                              );
+                            }),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        SettingsWidget(
+                          image: 'assets/svg/help.svg',
+                          name: "Help",
+                          subname: "",
+                          goingScreen: () {
+                            Get.to(const HelpDesk());
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        SettingsWidget(
+                          image: 'assets/svg/other.svg',
+                          name: "Other",
+                          subname: "",
+                          goingScreen: () {
+                            Get.to(const OtherSettings());
+                          },
+                        ),
+                      ],
                     );
-                }
-              ),
-              
-
-              /*..................Notifications ............*/
-
-              SizedBox(
-                height: height * 0.05,
-              ),
-              const NotificationSettins(),
-              /*..................Security and account access ............*/
-              SizedBox(
-                height: height * 0.05,
-              ),
-              const SecuritySettings(),
-              /*..................Privacy and safety  ............*/
-
-              SizedBox(
-                height: height * 0.05,
-              ),
-              const PrivacySettings(),
-              /*..................Accessibility, display, and languages  ............*/
-              SizedBox(
-                height: height * 0.05,
-              ),
-              const AccesDisplayLanguageSettings(),
-              /*.................. Data Uses   ............*/
-
-              SizedBox(
-                height: height * 0.05,
-              ),
-              const DataUses(),
-            ],
+            }),
           ),
         ),
       ),
