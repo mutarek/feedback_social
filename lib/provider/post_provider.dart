@@ -245,6 +245,8 @@ class PostProvider with ChangeNotifier {
       newsFeedData.timestamp = DateTime.now().toString();
       newsFeedData.author =
           Author(id: int.parse(authRepo.getUserID()), fullName: authRepo.getUserName(), profileImage: authRepo.getUserProfile());
+      newsFeedData.images = [];
+      newsFeedData.videos = [];
       notifyListeners();
       return PostResponse(newsFeedData: newsFeedData, status: true);
     } else {
