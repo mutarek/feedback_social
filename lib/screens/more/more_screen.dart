@@ -6,6 +6,7 @@ import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/group/my_group_screen.dart';
 import 'package:als_frontend/screens/more/widget/custom_menu_card.dart';
+import 'package:als_frontend/screens/page/my_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/send_friend_request_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -87,6 +88,7 @@ class MoreScreen extends StatelessWidget {
                             iconName: "group",
                             navigation: () {
                               Get.to(const MyGroupScreen());
+
                             }),
                       ),
                       Expanded(
@@ -96,7 +98,7 @@ class MoreScreen extends StatelessWidget {
                             iconColor: Palette.primary,
                             iconName: "Page",
                             navigation: () {
-                              // Get.to(const CommingSoonScreen());
+                              Get.to(const MyPageScreen());
                             }),
                       ),
                     ],

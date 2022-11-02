@@ -35,6 +35,7 @@ class AppConstant {
   static const String passwordUpdate = '/accounts/password/change/';
   static const String pageAuthorURI = '/page/author-page/';
   static const String pageSuggestedURI = '/page/suggested-page/';
+  static const String pageLikeAllURI = '/page/like-page-list/';
   static const String pageCategoryURI = '/page/category/';
   static const String pageURI = '/page/';
   static const String postPageURI = '/posts/page/';
