@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
+import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +19,16 @@ class MessagesScreen extends StatefulWidget {
   final int customerID;
   final String name;
   final String imageURL;
+  final bool isForGroup;
 
-  const MessagesScreen({required this.name, required this.imageURL, this.index = 0, this.customerID = 0, this.isFromProfile = false, Key? key})
+  const MessagesScreen(
+      {required this.name,
+      required this.imageURL,
+      this.index = 0,
+      this.customerID = 0,
+      this.isFromProfile = false,
+      this.isForGroup = false,
+      Key? key})
       : super(key: key);
 
   @override
@@ -68,12 +79,16 @@ class _MessagesScreenState extends State<MessagesScreen> {
         Navigator.of(context).pop();
         return Future.value(true);
       },
-      child:
-          Scaffold(
-            backgroundColor: Color(0xffFBFAFF),
-              appBar: buildAppBar(), 
-              body: BodyWidget(
-                controller, widget.index, customerID: widget.customerID, isFromProfile: widget.isFromProfile,imageURL:widget.imageURL,)),
+      child: Scaffold(
+          backgroundColor: Color(0xffFBFAFF),
+          appBar: buildAppBar(),
+          body: BodyWidget(
+            controller,
+            widget.index,
+            customerID: widget.customerID,
+            isFromProfile: widget.isFromProfile,
+            imageURL: widget.imageURL,
+          )),
     );
   }
 
@@ -82,7 +97,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 0,
-
       title: Row(
         children: [
           BackButton(
@@ -95,17 +109,26 @@ class _MessagesScreenState extends State<MessagesScreen> {
           CircleAvatar(
               radius: 20,
               backgroundColor: AppColors.scaffold,
-              child: CircleAvatar(
-                radius: 17,
-                  backgroundImage: NetworkImage(widget.imageURL))),
+              child: CircleAvatar(radius: 17, backgroundImage: NetworkImage(widget.imageURL))),
           const SizedBox(width: kDefaultPadding * 0.75),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.name, style: const TextStyle(fontSize: 16, color: Colors.black)),
-                const Text("Active 3m ago", style: TextStyle(fontSize: 12, color: Colors.black))
-              ],
+            child: InkWell(
+              onTap: () {
+                if(!widget.isForGroup){
+                  if (Provider.of<AuthProvider>(context, listen: false).userID == widget.customerID.toString()) {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                  } else {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(widget.customerID.toString())));
+                  }
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.name, style: const TextStyle(fontSize: 16, color: Colors.black)),
+                  const Text("Active 3m ago", style: TextStyle(fontSize: 12, color: Colors.black))
+                ],
+              ),
             ),
           )
         ],

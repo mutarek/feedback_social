@@ -46,8 +46,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
           body: SafeArea(
             child: Consumer2<GroupProvider, AuthProvider>(
                 builder: (context, groupProvider, authProvider, child) => (groupProvider.isLoading)
-                    ?  const MyGroupShimmerWidget()
-
+                    ? const MyGroupShimmerWidget()
                     : NestedScrollView(
                         scrollDirection: Axis.vertical,
                         physics: const NeverScrollableScrollPhysics(),

@@ -99,7 +99,7 @@ class NewsFeedData {
       likedBy = [];
     }
     timestamp = json['timestamp'];
-    isShare = json['is_share']??false;
+    isShare = json['is_share'] ?? false;
     postType = json['post_type'];
     like = json['like'];
   }
@@ -395,6 +395,7 @@ class Post {
     this.description,
     this.author,
     this.totalImage,
+    this.groupData,
     this.images,
     this.totalVideo,
     this.videos,
@@ -403,6 +404,7 @@ class Post {
   int? id;
   String? description;
   Author? author;
+  GroupData? groupData;
   int? totalImage;
   List<ImagesData>? images;
   int? totalVideo;
@@ -412,6 +414,7 @@ class Post {
         id: json["id"],
         description: json["description"] ?? "",
         author: Author.fromJson(json["author"]),
+        groupData: json["group"] != null ? GroupData.fromJson(json["group"]) : GroupData(),
         totalImage: json["total_image"] ?? 0,
         images: (json['images'] != null) ? List<ImagesData>.from(json["images"].map((x) => ImagesData.fromJson(x))) : [],
         totalVideo: json["total_video"] ?? 0,
@@ -427,6 +430,40 @@ class Post {
         "total_video": totalVideo,
         "videos": List<dynamic>.from(videos!.map((x) => x)),
       };
+}
+
+class GroupData {
+  GroupData({
+    this.id,
+    this.name,
+    this.category,
+    this.coverPhoto,
+    this.isPrivate,
+  });
+
+  GroupData.fromJson(dynamic json) {
+    id = json['id'];
+    name = json['name'];
+    category = json['category'];
+    coverPhoto = json['cover_photo'];
+    isPrivate = json['is_private'];
+  }
+
+  num? id;
+  String? name;
+  String? category;
+  String? coverPhoto;
+  bool? isPrivate;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['name'] = name;
+    map['category'] = category;
+    map['cover_photo'] = coverPhoto;
+    map['is_private'] = isPrivate;
+    return map;
+  }
 }
 
 class EnumValues<T> {
