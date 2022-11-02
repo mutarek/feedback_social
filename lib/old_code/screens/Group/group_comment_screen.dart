@@ -76,6 +76,7 @@ class _GroupCommentsScreenState extends State<GroupCommentsScreen> {
                                     child: CommentWidget(
                                         width: width,
                                         height: height,
+                                        postIndex: provider.index,
                                         onTap: () {
                                           provider2.id = provider.groupPosts![provider.index].comments[index].author.id;
                                           userNewsfeedPostProvider.id = provider.groupPosts![provider.index].comments[index].author.id;

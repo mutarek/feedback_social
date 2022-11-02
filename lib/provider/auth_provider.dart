@@ -189,7 +189,5 @@ class AuthProvider with ChangeNotifier {
     userID = authRepo.getUserID();
     userCode = authRepo.getUserCode();
     notifyListeners();
-    print('sjsjsjs ${authRepo.getUserProfile()}');
-    print('sjsjsjs ${profileImage}');
   }
 }

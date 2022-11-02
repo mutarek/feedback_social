@@ -1,5 +1,6 @@
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/notification/single_post_screen.dart';
@@ -66,30 +67,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ontap: () {
                           List<String> noticeType = ['timeline', 'page', 'group'];
                           List<String> noticeType2 = ['friend'];
-
+                          Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                           if (noticeType.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
                             Get.to(() => SinglePostScreen(notificationProvider.notificationLists[index].url! + "comment/"));
                           }else if (noticeType2.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
                             Get.to(() => SinglePostScreen(notificationProvider.notificationLists[index].url! + "comment/"));
                           }  else {}
 
-                          // provider.notificationId = provider.data[index].id;
-                          // provider.tappedOnNotification();
-                          //
-                          // if (provider.data[index].verb == "friend_request") {
-                          //   publicProfileProvider.id = provider.data[index].actor!.id!;
-                          //   publicProfileProvider.id = provider.data[index].actor!.id!;
-                          //   Get.to(() => const PublicProfileDetailsScreen());
-                          // }
-                          //
-                          // if (provider.data[index].noticeType == "timeline") {
-                          //   singlePostProvider.url = provider.data[index].url!;
-                          //   singlePostProvider.getUserData();
-                          //   // timelinePostCommentProvider.postId =
-                          //   Get.to(() => const SinglePostScreen());
-                          // }
-                          //
-                          // _refresh();
                         },
                         textColor: Colors.black,
                         likecmnt: "${notificationProvider.notificationLists[index].description}",

@@ -154,7 +154,7 @@ class TimeLineWidget extends StatelessWidget {
             post: newsFeedData,
             index: index,
             feedProvider: feedProvider,
-            isHomeNewsFeedProvider: isHomeScreen,
+            isHomeScreen: isHomeScreen,
             isFromProfile: isProfileScreen,
             groupPageID: groupPageID,
             postID: newsFeedData.id as int,

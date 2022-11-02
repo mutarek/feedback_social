@@ -101,6 +101,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                                           return CommentWidget(
                                               width: width,
                                               height: height,
+                                              postIndex: widget.index,
                                               onTap: () {},
                                               commentModels: commentProvider.comments[index],
                                               index: index,

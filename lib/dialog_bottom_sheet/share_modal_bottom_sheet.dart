@@ -31,6 +31,7 @@ void shareBottomSheet(BuildContext context, String url, NewsFeedData newsfeedDat
                     verticalSize: 30,
                     isCancelShadow: true,
                     controller: shareController,
+                    inputAction: TextInputAction.done,
                   ),
                 ),
                 postProvider.isLoading
@@ -46,7 +47,7 @@ void shareBottomSheet(BuildContext context, String url, NewsFeedData newsfeedDat
                             shareController.text = '';
                           });
                         },
-                        backgroundColor:Palette.feedback,
+                        backgroundColor: Palette.feedback,
                         textWhiteColor: true,
                       ),
               ],
