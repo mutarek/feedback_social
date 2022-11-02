@@ -1,13 +1,8 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
-import 'package:als_frontend/dialog_bottom_sheet/add_dialogue.dart';
-import 'package:als_frontend/dialog_bottom_sheet/delete_dialogue.dart';
-import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
-import 'package:als_frontend/screens/posts/add_post_screen.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +17,7 @@ void shareBottomSheet(BuildContext context, String url, NewsFeedData newsfeedDat
       return Card(
         color: Colors.white,
         child: Consumer2<PostProvider, NewsFeedProvider>(
-          builder: (context, postProvider, newsfeedProvider, child) => Container(
+          builder: (context, postProvider, newsfeedProvider, child) => SizedBox(
             height: MediaQuery.of(context).size.height / 2 + MediaQuery.of(context).viewInsets.bottom,
             child: Column(
               children: <Widget>[
@@ -38,7 +33,7 @@ void shareBottomSheet(BuildContext context, String url, NewsFeedData newsfeedDat
                   ),
                 ),
                 postProvider.isLoading
-                    ? Center(child: CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : CustomButton(
                         btnTxt: 'share now',
                         onTap: () {
