@@ -25,7 +25,7 @@ import 'package:provider/provider.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
-  DashboardScreen({Key? key}) : super(key: key);
+  const DashboardScreen({Key? key}) : super(key: key);
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -37,180 +37,158 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+
     Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1);
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
-
-    // Provider.of<NotificationProvider>(context, listen: false).check();
   }
 
   int selected = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return Scaffold(
-          backgroundColor: Colors.white,
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {},
-          //   backgroundColor: Colors.white,
-          //   child: Icon(CupertinoIcons.add_circled, color: Colors.blue),
-          // ),
-          // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: Consumer2<DashboardProvider, NotificationProvider>(
-            builder: (context, dashboardProvider, notificationProvider, child) => Container(
-              height: 48,
-              child: StylishBottomBar(
-                items: [
-                  AnimatedBarItems(
-                      // icon: Icon(CupertinoIcons.home, color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey),
-                      icon: SvgPicture.asset(ImagesModel.homeURI,
-                          color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                      selectedColor: Colors.blue,
-                      title: Text('Home',
-                          style: latoStyle600SemiBold.copyWith(
-                              color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, fontSize: 12))),
-                  AnimatedBarItems(
-                      icon: SvgPicture.asset(ImagesModel.friendRequestURI,
-                          color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                      selectedColor: Colors.blue,
-                      title: Text('Group',
-                          style: latoStyle600SemiBold.copyWith(
-                              color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, fontSize: 12))),
-                  AnimatedBarItems(
-                      icon: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          SvgPicture.asset(ImagesModel.notificationURI,
-                              color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                          Positioned(
-                              right: -15,
-                              top: -3,
-                              child: notificationProvider.notificationCount == 0
-                                  ? const SizedBox.shrink()
-                                  : CircleAvatar(
-                                      radius: 10,
-                                      backgroundColor: AppColors.redColor,
-                                      child: CustomText(
-                                        title:
-                                            '${notificationProvider.notificationCount > 9 ? "9+" : notificationProvider.notificationCount}',
-                                        color: Colors.white,
-                                        fontSize: 9,
-                                      ),
-                                    ))
-                        ],
-                      ),
-                      selectedColor: Colors.blue,
-                      title: Text('Notifications',
-                          style: latoStyle600SemiBold.copyWith(
-                              color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, fontSize: 12))),
-                  AnimatedBarItems(
-                      icon: SvgPicture.asset(ImagesModel.chatingURI,
-                          color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                      selectedColor: Colors.blue,
-                      title: Text('Message',
-                          style: latoStyle600SemiBold.copyWith(
-                              color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, fontSize: 12))),
-                  AnimatedBarItems(
-                      icon: SvgPicture.asset(ImagesModel.menuURI,
-                          color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                      backgroundColor: Colors.blue,
-                      title: Text('More',
-                          style: latoStyle600SemiBold.copyWith(
-                              color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, fontSize: 12))),
-                ],
-                iconSize: 25,
-                barAnimation: BarAnimation.fade,
-                iconStyle: IconStyle.animated,
-                hasNotch: true,
-                opacity: 0.3,
-                currentIndex: dashboardProvider.selectIndex,
-                bubbleFillStyle: BubbleFillStyle.fill,
-                onTap: (index) {
-                  controller.animateToPage(index!, duration: const Duration(seconds: 1), curve: Curves.easeOut);
-                  dashboardProvider.changeSelectIndex(index);
-                },
-              ),
-            ),
-          ),
-          body: SafeArea(
-            child: Consumer2<AuthProvider, DashboardProvider>(
-              builder: (context, authProvider, dashboardProvider, child) => Column(
-                children: [
-                  dashboardProvider.selectIndex == 0
-                      ? AppBar(
-                          title: CustomText(title: 'Feedback', color: Palette.feedback, fontWeight: FontWeight.bold, fontSize: 27),
-                          backgroundColor: Colors.white,
-                          elevation: 0,
-                          actions: [
-                            CircleButton(
-                              radius: 35.0,
-                              icon: Icons.search,
-                              iconSize: 20.0,
-                              onPressed: () {
-                                Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
-                                Get.to(SearchScreen());
-                              },
+    return Consumer3<DashboardProvider, NotificationProvider, AuthProvider>(
+        builder: (context, dashboardProvider, notificationProvider, authProvider, child) => WillPopScope(
+              onWillPop: () async {
+                if (dashboardProvider.selectIndex != 0) {
+                  controller.jumpToPage(0);
+                  return false;
+                } else {
+                  return true;
+                }
+              },
+              child: Scaffold(
+                  backgroundColor: Colors.white,
+                  bottomNavigationBar: SizedBox(
+                    height: 48,
+                    child: StylishBottomBar(
+                      items: [
+                        AnimatedBarItems(
+                            icon: SvgPicture.asset(ImagesModel.homeURI,
+                                color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                            selectedColor: Colors.blue,
+                            title: Text('Home',
+                                style: latoStyle600SemiBold.copyWith(
+                                    color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, fontSize: 12))),
+                        AnimatedBarItems(
+                            icon: SvgPicture.asset(ImagesModel.friendRequestURI,
+                                color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                            selectedColor: Colors.blue,
+                            title: Text('Group',
+                                style: latoStyle600SemiBold.copyWith(
+                                    color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, fontSize: 12))),
+                        AnimatedBarItems(
+                            icon: Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                SvgPicture.asset(ImagesModel.notificationURI,
+                                    color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                                Positioned(
+                                    right: -15,
+                                    top: -3,
+                                    child: notificationProvider.notificationCount == 0
+                                        ? const SizedBox.shrink()
+                                        : CircleAvatar(
+                                            radius: 10,
+                                            backgroundColor: AppColors.redColor,
+                                            child: CustomText(
+                                              title:
+                                                  '${notificationProvider.notificationCount > 9 ? "9+" : notificationProvider.notificationCount}',
+                                              color: Colors.white,
+                                              fontSize: 9,
+                                            ),
+                                          ))
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                onTap: () {
-                                  Get.to(const ProfileScreen());
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(2),
-                                  width: 40,
-                                  height: 30,
-                                  decoration: const BoxDecoration(color: AppColors.scaffold, shape: BoxShape.circle),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(30),
-                                      child: customNetworkImage2(context, authProvider.profileImage, height: 30)),
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      : const SizedBox(),
-                  // SizedBox(
-                  //   height: 55,
-                  //   child: Stack(
-                  //     children: [
-                  //       Positioned(bottom: 2, left: 0, right: 0, child: Container(height: 3, color: Colors.grey.withOpacity(.3))),
-                  //       Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //         children: [
-                  //           tabItem(MdiIcons.home, 0, dashboardProvider),
-                  //           tabItem(Icons.groups, 1, dashboardProvider),
-                  //           tabItem(Icons.account_circle_outlined, 2, dashboardProvider, isCircle: true),
-                  //           tabItem(Icons.notifications, 3, dashboardProvider),
-                  //           tabItem(Icons.menu, 4, dashboardProvider),
-                  //         ],
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  Expanded(
-                    child: PageView(
-                      controller: controller,
-                      physics: const NeverScrollableScrollPhysics(),
-                      onPageChanged: (page) {
-                        dashboardProvider.changeSelectIndex(page);
+                            selectedColor: Colors.blue,
+                            title: Text('Notifications',
+                                style: latoStyle600SemiBold.copyWith(
+                                    color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, fontSize: 12))),
+                        AnimatedBarItems(
+                            icon: SvgPicture.asset(ImagesModel.chatingURI,
+                                color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                            selectedColor: Colors.blue,
+                            title: Text('Message',
+                                style: latoStyle600SemiBold.copyWith(
+                                    color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, fontSize: 12))),
+                        AnimatedBarItems(
+                            icon: SvgPicture.asset(ImagesModel.menuURI,
+                                color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                            backgroundColor: Colors.blue,
+                            title: Text('More',
+                                style: latoStyle600SemiBold.copyWith(
+                                    color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, fontSize: 12))),
+                      ],
+                      iconSize: 25,
+                      barAnimation: BarAnimation.fade,
+                      iconStyle: IconStyle.animated,
+                      hasNotch: true,
+                      opacity: 0.3,
+                      currentIndex: dashboardProvider.selectIndex,
+                      bubbleFillStyle: BubbleFillStyle.fill,
+                      onTap: (index) {
+                        controller.animateToPage(index!, duration: const Duration(seconds: 1), curve: Curves.easeOut);
+                        dashboardProvider.changeSelectIndex(index);
                       },
-                      children: const [
-                        HomeScreen(),
-                        PageOrGroupDecisionGroup(),
-                        NotificationScreen(),
-                        ChatsScreen(),
-                        MoreScreen(),
+                    ),
+                  ),
+                  body: SafeArea(
+                    child: Column(
+                      children: [
+                        dashboardProvider.selectIndex == 0
+                            ? AppBar(
+                                title: CustomText(title: 'Feedback', color: Palette.feedback, fontWeight: FontWeight.bold, fontSize: 27),
+                                backgroundColor: Colors.white,
+                                elevation: 0,
+                                actions: [
+                                  CircleButton(
+                                    radius: 35.0,
+                                    icon: Icons.search,
+                                    iconSize: 20.0,
+                                    onPressed: () {
+                                      Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
+                                      Get.to(SearchScreen());
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Get.to(const ProfileScreen());
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(2),
+                                        width: 40,
+                                        height: 30,
+                                        decoration: const BoxDecoration(color: AppColors.scaffold, shape: BoxShape.circle),
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(30),
+                                            child: customNetworkImage2(context, authProvider.profileImage, height: 30)),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            : const SizedBox(),
+                        Expanded(
+                          child: PageView(
+                            controller: controller,
+                            physics: const NeverScrollableScrollPhysics(),
+                            onPageChanged: (page) {
+                              dashboardProvider.changeSelectIndex(page);
+                            },
+                            children: const [
+                              HomeScreen(),
+                              PageOrGroupDecisionGroup(),
+                              NotificationScreen(),
+                              ChatsScreen(),
+                              MoreScreen(),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
-            ),
-          ));
-    });
+                  )),
+            ));
   }
 
   Widget tabItem(IconData iconData, int position, DashboardProvider dashboardProvider, {bool isCircle = false}) {

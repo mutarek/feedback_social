@@ -64,7 +64,7 @@ Future<void> init() async {
   sl.registerFactory(() => ThemeProvider(sharedPreferences: sl(),splashRepo: sl()));
   sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl()));
   sl.registerFactory(() => LanguageProvider(languageRepo: sl()));
-  sl.registerFactory(() => AuthProvider(authRepo: sl(),sharedPreferences: sl()));
+  sl.registerFactory(() => AuthProvider(authRepo: sl()));
   sl.registerFactory(() => NewsFeedProvider(newsFeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => ChatProvider(chatRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => CommentProvider(commentRepo: sl()));

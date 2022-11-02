@@ -1,5 +1,7 @@
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/dashboard_provider.dart';
+import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/group/my_group_screen.dart';
@@ -119,7 +121,7 @@ class MoreScreen extends StatelessWidget {
                             iconColor: Palette.primary,
                             iconName: "Animal",
                             navigation: () {
-                              Provider.of<AuthProvider>(context, listen: false).getUserInfo(isFirstTime: false);
+                              Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                               Get.to(const MyAnimalScreen());
                             }),
                       ),
@@ -158,6 +160,8 @@ class MoreScreen extends StatelessWidget {
                         onTap: () {
                           Provider.of<AuthProvider>(context, listen: false).logout().then((value) {
                             if (value) {
+                              Provider.of<DashboardProvider>(context, listen: false).changeSelectIndex(0);
+                              Provider.of<NotificationProvider>(context, listen: false).channelDismiss();
                               Navigator.of(context)
                                   .pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
                             }

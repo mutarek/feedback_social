@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:als_frontend/old_code/screens/screens.dart';
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
           } else {
             Provider.of<NotificationProvider>(context, listen: false).check();
+            Provider.of<AuthProvider>(context, listen: false).getUserInfo();
             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>  DashboardScreen()), (route) => false);
             // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const GetTokenScreen()), (route) => false);
           }

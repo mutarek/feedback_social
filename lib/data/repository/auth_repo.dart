@@ -44,11 +44,17 @@ class AuthRepo {
   //TODO: for save User Information
   Future<void> saveUserInformation(String userID, String name, String image, String code, String email) async {
     try {
+      print("SSSS " + userID + " " + name + " " + image + " ");
       await sharedPreferences.setString(AppConstant.userID, userID);
       await sharedPreferences.setString(AppConstant.userEmail, email);
       await sharedPreferences.setString(AppConstant.usercode, code);
       await sharedPreferences.setString(AppConstant.userName, name);
       await sharedPreferences.setString(AppConstant.userProfileImage, image);
+      getUserProfile();
+      getUserName();
+      getUserID();
+      getUserCode();
+      getUserEmail();
     } catch (e) {
       rethrow;
     }

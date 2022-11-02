@@ -251,7 +251,10 @@ class Video {
   String? video;
   String? thumbnail;
 
-  factory Video.fromJson(Map<String, dynamic> json) => Video(id: json["id"], video: json["video"], thumbnail: json["thumbnail"]);
+  factory Video.fromJson(Map<String, dynamic> json) => Video(
+      id: json["id"],
+      video: json["video"],
+      thumbnail: json["thumbnail"] ?? "https://www.thejungleadventure.com/assets/images/logo/novideo.png");
 
   Map<String, dynamic> toJson() => {"id": id, "video": video, "thumbnail": thumbnail};
 }

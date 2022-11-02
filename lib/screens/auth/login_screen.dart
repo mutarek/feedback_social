@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Expanded(
                             child: SingleChildScrollView(
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               child: Column(
                                 children: [
                                   SizedBox(height: height * 0.02),
@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.black),
                                         )),
                                   ),
-                                  SizedBox(height: 20),
+                                  const SizedBox(height: 20),
                                   SizedBox(height: height * 0.02),
                                 ],
                               ),
@@ -164,14 +164,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (emailController.text.isEmpty || passwordController.text.isEmpty) {
                               showMessage(message: getTranslated('Please fill all the form', context), context: context);
                             } else {
-                              auth.signIn(emailController.text, passwordController.text, false, (bool status, String message) {
-                                if (status) {
-                                  Fluttertoast.showToast(msg: message);
-                                  // Get.off(const NavScreen());
+                              auth.signIn(emailController.text, passwordController.text).then((value) {
+                                if (value.status) {
+                                  Fluttertoast.showToast(msg: value.message);
+                                  // auth.getUserInfo();
                                   Provider.of<NotificationProvider>(context, listen: false).check();
-                                  Get.off(DashboardScreen());
+                                  Navigator.of(context)
+                                      .pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
+                                  // Get.off(DashboardScreen());
                                 } else {
-                                  Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                                  Fluttertoast.showToast(msg: value.message, backgroundColor: Colors.red);
                                 }
                               });
                             }

@@ -177,7 +177,7 @@ class _EditProfileState extends State<EditProfile> {
                               liveInAddressController.text,
                               fromAddressController.text, (bool status) {
                             if (status) {
-                              Provider.of<AuthProvider>(context, listen: false).getUserInfo(isFirstTime: false);
+                              Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                               Get.back();
                             }
                           });
