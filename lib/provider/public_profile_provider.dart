@@ -203,4 +203,18 @@ class PublicProfileProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+  //TODO: ************************* for Block
+  bool block = false;
+  Future Blockuser(int userid) async {
+    Response response = await profileRepo.blockUser(userid);
+    if (response.statusCode == 201) {
+      block = true;
+      Fluttertoast.showToast(msg: response.body['message']);
+
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
 }

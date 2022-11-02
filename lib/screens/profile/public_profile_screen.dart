@@ -1,14 +1,19 @@
+import 'package:als_frontend/dialog_bottom_sheet/more_menu_bottom_sheet.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/chat/message_screen.dart';
+import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
+import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
 import 'package:als_frontend/screens/profile/view/public_photo_video_screen.dart';
 import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +29,10 @@ class PublicProfileScreen extends StatefulWidget {
   final bool isFromFriendScreen;
 
   const PublicProfileScreen(this.userID,
-      {this.index = -1, this.isFromFriendRequestScreen = false, this.isFromFriendScreen = false, Key? key})
+      {this.index = -1,
+      this.isFromFriendRequestScreen = false,
+      this.isFromFriendScreen = false,
+      Key? key})
       : super(key: key);
 
   @override
@@ -38,7 +46,9 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<PublicProfileProvider>(context, listen: false).callForPublicProfileData(widget.userID);
+    Provider.of<PublicProfileProvider>(context, listen: false)
+        .callForPublicProfileData(widget.userID);
+
     Provider.of<PublicProfileProvider>(context, listen: false)
         .initializeAllUserPostData((bool status) {}, widget.userID, isFirstTime: true);
     controller.addListener(() {
@@ -73,7 +83,8 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                   Get.back();
                                 },
                                 viewCoverPhoto: () {
-                                  Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.coverImage!));
+                                  Get.to(() => SingleImageView(
+                                      imageURL: publicProvider.publicProfileData.coverImage!));
                                 },
                                 coverPhoto: (publicProvider.publicProfileData.coverImage != null)
                                     ? publicProvider.publicProfileData.coverImage!
@@ -81,7 +92,8 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 coverPhotoChange: () {}),
                             ProfilePhotowidget(
                               viewProfilePhoto: () {
-                                Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.profileImage!));
+                                Get.to(() => SingleImageView(
+                                    imageURL: publicProvider.publicProfileData.profileImage!));
                               },
                               isTrue: false,
                               profilePhotoChange: () {},
@@ -96,7 +108,8 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: CustomText(
-                          title: "${publicProvider.publicProfileData.firstName!} ${publicProvider.publicProfileData.lastName!}",
+                          title:
+                              "${publicProvider.publicProfileData.firstName!} ${publicProvider.publicProfileData.lastName!}",
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
@@ -124,7 +137,9 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                                 customerID: int.parse(widget.userID),
                                                 name:
                                                     '${publicProvider.publicProfileData.firstName!} ${publicProvider.publicProfileData.lastName!}',
-                                                imageURL: (publicProvider.publicProfileData.profileImage != null)
+                                                imageURL: (publicProvider
+                                                            .publicProfileData.profileImage !=
+                                                        null)
                                                     ? publicProvider.publicProfileData.profileImage!
                                                     : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                                               )));
@@ -140,8 +155,10 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                             publicProvider.cancelFriendRequest((bool status) {
                                               if (status) {
                                                 if (widget.isFromFriendRequestScreen) {
-                                                  Provider.of<ProfileProvider>(context, listen: false)
-                                                      .removeRequestAfterCancelRequest(widget.index);
+                                                  Provider.of<ProfileProvider>(context,
+                                                          listen: false)
+                                                      .removeRequestAfterCancelRequest(
+                                                          widget.index);
                                                 }
                                               }
                                             });
@@ -168,7 +185,9 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                               onPressed: () {
                                                 publicProvider.sendFriendRequest((bool status) {
                                                   if (status && widget.isFromFriendRequestScreen) {
-                                                    Provider.of<ProfileProvider>(context, listen: false).callForgetAllFriendRequest();
+                                                    Provider.of<ProfileProvider>(context,
+                                                            listen: false)
+                                                        .callForgetAllFriendRequest();
                                                   }
                                                 });
                                               },
@@ -180,34 +199,82 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                       onPressed: () {
                                         publicProvider.unFriend((bool status) {
                                           if (widget.isFromFriendScreen) {
-                                            Provider.of<ProfileProvider>(context, listen: false).removeFriend(widget.index);
+                                            Provider.of<ProfileProvider>(context, listen: false)
+                                                .removeFriend(widget.index);
                                           }
                                         });
                                       },
                                     ),
                                   ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              height: height * 0.047,
+                              width: width * 0.1,
+                              decoration: BoxDecoration(
+                                  color: Colors.white60, borderRadius: BorderRadius.circular(7)),
+                              child: Center(
+                                child: IconButton(
+                                    icon: const Icon(Icons.more_horiz),
+                                    onPressed: () => showDialog(
+                                          context: context,
+                                          builder: (ctx) => AlertDialog(
+                                            title: Text("Do you want to block this User ?",style: latoStyle800ExtraBold,),
+
+                                            actions: [
+                                             ElevatedButton(
+                                               style: ElevatedButton.styleFrom(
+                                                 backgroundColor: Colors.green
+                                               ),
+                                                 onPressed: (){
+                                               Navigator.of(ctx).pop();
+                                             }, child: const Text("Cancel",style: button,)),
+                                             ElevatedButton(
+                                                 style: ElevatedButton.styleFrom(
+                                                     backgroundColor: Colors.red
+                                                 ),
+                                                 onPressed: (){
+
+                                                   publicProvider.Blockuser(publicProvider.publicProfileData.id!);
+                                                   Get.to(const DashboardScreen());
+
+                                                 }, child: const Text("Block",style: button,)),
+                                            ],
+                                          ),
+                                        )),
+                              ),
+                            )
                           ],
                         ),
                       ),
                       Container(
                         height: height * 0.043,
                         margin: const EdgeInsets.symmetric(horizontal: 15),
-                        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(4))),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(4))),
                         child: Padding(
                           padding: EdgeInsets.only(left: width * 0.1),
                           child: Row(
                             children: [
                               Text(
                                 "${publicProvider.publicProfileData.friends!.length}",
-                                style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                style: GoogleFonts.lato(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Palette.notificationColor),
                               ),
-                              Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
+                              Text(" Friends",
+                                  style:
+                                      GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
                               SizedBox(
                                 width: width * 0.2,
                               ),
                               Text(
                                 "${publicProvider.publicProfileData.followers!.length}",
-                                style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                style: GoogleFonts.lato(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: Palette.notificationColor),
                               ),
                               Text(
                                 " Followers",
@@ -221,27 +288,39 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                         ),
                       ),
                       SizedBox(height: height * 0.01),
-                      ProfileDetailsCard(userProfileModel: publicProvider.publicProfileData, isShowEditProfile: false),
+                      ProfileDetailsCard(
+                          userProfileModel: publicProvider.publicProfileData,
+                          isShowEditProfile: false),
                       SizedBox(height: height * 0.01),
                       Container(
                         height: 35,
                         margin: const EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                          BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-                        ]),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.withOpacity(.2),
+                                  blurRadius: 10.0,
+                                  spreadRadius: 3.0,
+                                  offset: const Offset(0.0, 0.0))
+                            ]),
                         child: Row(
                           children: [
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicPhotoViewScreen(widget.userID)));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (_) => PublicPhotoViewScreen(widget.userID)));
                                 },
                                 child: Container(
                                   height: 35,
                                   alignment: Alignment.center,
                                   decoration: const BoxDecoration(
                                       color: Colors.grey,
-                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(5),
+                                          bottomLeft: Radius.circular(5))),
                                   child: CustomText(title: 'PHOTOS'),
                                 ),
                               ),
@@ -249,19 +328,23 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                             Container(
                                 height: 35,
                                 width: 2,
-                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10))),
+                                decoration: BoxDecoration(
+                                    color: Colors.white, borderRadius: BorderRadius.circular(10))),
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  Navigator.of(context)
-                                      .push(MaterialPageRoute(builder: (_) => PublicPhotoViewScreen(widget.userID, isForImage: false)));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (_) =>
+                                          PublicPhotoViewScreen(widget.userID, isForImage: false)));
                                 },
                                 child: Container(
                                   height: 35,
                                   alignment: Alignment.center,
                                   decoration: const BoxDecoration(
                                       color: Colors.grey,
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5))),
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(5),
+                                          bottomRight: Radius.circular(5))),
                                   child: CustomText(title: 'VIDEOS'),
                                 ),
                               ),
@@ -277,7 +360,8 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           itemBuilder: ((context, index) {
                             return Container(
                                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                child: TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider,
+                                child: TimeLineWidget(publicProvider.publicNewsFeedLists[index],
+                                    index, publicProvider,
                                     isProfileScreen: true));
                           }))
                     ]))),
