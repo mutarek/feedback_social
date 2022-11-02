@@ -5,6 +5,7 @@ import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/group/my_group_screen.dart';
+import 'package:als_frontend/screens/more/view/terms_and_condition.dart';
 import 'package:als_frontend/screens/more/widget/custom_menu_card.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/send_friend_request_screen.dart';
@@ -147,7 +148,7 @@ class MoreScreen extends StatelessWidget {
                             iconColor: Palette.primary,
                             iconName: "Terms & Conditions",
                             navigation: () {
-                              Get.to(() => const SettingsScreen());
+                              Get.to(() => const TermsAndConditionsScreen());
                             }),
                       ),
                     ],
