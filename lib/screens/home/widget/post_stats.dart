@@ -49,7 +49,9 @@ class PostStats extends StatelessWidget {
           decoration: BoxDecoration(
               color: AppColors.scaffold,
               borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-              boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))]),
+              boxShadow: [
+                BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+              ]),
           child: Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),
             child: Row(
@@ -141,19 +143,16 @@ class PostStats extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 1.0),
-                post.isShare!
-                    ? InkWell(
-                        onTap: () {
-                          shareBottomSheet(context,post.commentUrl!,post);
-                          //Get.to(CommentsScreen(index, post.id as int, isHomeScreen: true));
-                        },
-                        child: SizedBox(
-                          width: 35,
-                          height: 35,
-                          child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
-                        ),
-                      )
-                    : const SizedBox(),
+                InkWell(
+                  onTap: () {
+                    shareBottomSheet(context, post.isShare! ? post.sharePost!.postUrl! : post.commentUrl!, post);
+                  },
+                  child: SizedBox(
+                    width: 35,
+                    height: 35,
+                    child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
+                  ),
+                )
               ],
             ),
           ),

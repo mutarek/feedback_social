@@ -3,9 +3,11 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget customNetworkImage(BuildContext context, String imageUrl, {double? height}) {
+Widget customNetworkImage(BuildContext context, String imageUrl, {double? height, BoxFit boxFit = BoxFit.fill}) {
   return CachedNetworkImage(
     imageUrl: imageUrl,
+    fit: boxFit,
+    width: MediaQuery.of(context).size.width,
     height: height == 0 ? MediaQuery.of(context).size.height : height,
     errorWidget: (context, url, error) => const Icon(Icons.error),
     placeholder: ((context, url) => Container(alignment: Alignment.center, child: const CupertinoActivityIndicator())),
@@ -63,13 +65,14 @@ Widget customNetworkImage2(BuildContext context, String imageUrl, {double? heigh
   return ExtendedImage.network(
     imageUrl,
     cache: true,
+    width: MediaQuery.of(context).size.width,
     height: height == 0 ? MediaQuery.of(context).size.height : height,
     mode: ExtendedImageMode.none,
     fit: boxFit,
     loadStateChanged: (ExtendedImageState state) {
       switch (state.extendedImageLoadState) {
         case LoadState.loading:
-          CupertinoActivityIndicator();
+          const CupertinoActivityIndicator();
           break;
         case LoadState.completed:
           ExtendedRawImage(image: state.extendedImageInfo?.image);

@@ -59,26 +59,56 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
   Widget build(BuildContext context) {
     if (imageVideoLists.length == 1) {
       return imageVideoLists[0].isImage
-          ? Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: InkWell(
-                      onTap: () {
-                        Get.to(() => SingleImageView(imageURL: imageVideoLists[0].url));
-                      },
-                      child: customNetworkImage(context, imageVideoLists[0].url))),
-            )
-          : Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideoLists[0].url2)));
-                },
-                child: Stack(
-                  children: [
-                    ClipRRect(borderRadius: BorderRadius.circular(6), child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
-                    Positioned(
+          ? InkWell(
+              onTap: () {
+                Get.to(() => SingleImageView(imageURL: imageVideoLists[0].url));
+              },
+              child: customNetworkImage(context, imageVideoLists[0].url))
+          : InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideoLists[0].url2)));
+            },
+            child: Stack(
+              children: [
+                ClipRRect(borderRadius: BorderRadius.circular(6), child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                    child: IconButton(
+                        onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                  ),
+                )
+              ],
+            ),
+          );
+    }
+
+    return MasonryGridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 10,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: imageVideoLists.length > 4 ? 4 : imageVideoLists.length,
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => PhotoViewScreen(widget.newsfeedModel, imageVideoLists, widget.index)));
+          },
+          child: Stack(
+            children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity)),
+              imageVideoLists[index].isImage == false
+                  ? Positioned(
                       left: 0,
                       right: 0,
                       top: 0,
@@ -91,69 +121,28 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                             onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                       ),
                     )
-                  ],
-                ),
-              ),
-            );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: MasonryGridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 10,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: imageVideoLists.length > 4 ? 4 : imageVideoLists.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => PhotoViewScreen(widget.newsfeedModel, imageVideoLists, widget.index)));
-            },
-            child: Stack(
-              children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity)),
-                imageVideoLists[index].isImage == false
-                    ? Positioned(
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        bottom: 0,
-                        child: Container(
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
-                          child: IconButton(
-                              onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                  : SizedBox.shrink(),
+              index == 3
+                  ? Container(
+                      width: double.infinity,
+                      height: 100,
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: 100,
+                        child: CustomButton(
+                          onTap: () {},
+                          btnTxt: 'View More+',
+                          fontSize: 12,
+                          backgroundColor: Colors.green.withOpacity(.7),
+                          textWhiteColor: true,
                         ),
-                      )
-                    : SizedBox.shrink(),
-                index == 3
-                    ? Container(
-                        width: double.infinity,
-                        height: 100,
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          width: 100,
-                          child: CustomButton(
-                            onTap: () {},
-                            btnTxt: 'View More+',
-                            fontSize: 12,
-                            backgroundColor: Colors.green.withOpacity(.7),
-                            textWhiteColor: true,
-                          ),
-                        ),
-                      )
-                    : SizedBox.shrink()
-              ],
-            ),
-          );
-        },
-      ),
+                      ),
+                    )
+                  : SizedBox.shrink()
+            ],
+          ),
+        );
+      },
     );
   }
 }
