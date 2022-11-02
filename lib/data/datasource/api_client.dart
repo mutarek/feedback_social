@@ -158,7 +158,9 @@ class ApiClient {
     dynamic _body;
     try {
       _body = jsonDecode(utf8.decode(response.bodyBytes));
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
 
     Response _response = Response(
       body: _body ?? response.body,

@@ -12,3 +12,13 @@ openFeedbackMessengerApp() async {
     throw 'Could not launch $url';
   }
 }
+
+openFeedbackAppOnPlayStore() async {
+  String url = 'https://play.google.com/store/apps/details?id=com.als.feedback';
+
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}

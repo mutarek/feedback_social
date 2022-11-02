@@ -42,11 +42,12 @@ class AppConstant {
   static const String emailUpdate = '/settings/change-email/';
   static const String blocklist = '/settings/block/';
   static const String messageRoomList = '/message-room-list/';
-  static const String chatRoomList = '/chat-message-list/';
+  static const String chatRoomListUri = '/chat-message-list/';
   static const String messageRoomCreateList = '/message-room-create/';
   static const String getOtherSettingsValue = '/settings/other-settings/';
-  static const String getNotificationsettingsValue = '/settings/notification/';
-  static const String termsAndCondition = '/terms-condition/list/"';
+  static const String getNotificationSettingsValueUri = '/settings/notification/';
+  static const String termsAndConditionUri = '/terms-condition/list/';
+  static const String latestVersionUri = '/latest-version/';
   // Shared Key
   static const String theme = 'theme';
   static const String light = 'light';

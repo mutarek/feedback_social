@@ -24,7 +24,7 @@ class SettingsRepo {
     return await apiClient.deleteData("/settings/block/$userID/delete/");
   }
   Future<Response> notificationValue() async {
-    return await apiClient.getData(AppConstant.getNotificationsettingsValue);
+    return await apiClient.getData(AppConstant.getNotificationSettingsValueUri);
   }
   Future<Response> updateOtherSettings(bool status, int slNo) async {
     Map map = {};
@@ -91,10 +91,10 @@ class SettingsRepo {
         break;
 
     }
-    return await apiClient.patchData(AppConstant.getNotificationsettingsValue, map);
+    return await apiClient.patchData(AppConstant.getNotificationSettingsValueUri, map);
   }
 
   Future<Response> termsAndCondition() async {
-    return await apiClient.getData(AppConstant.termsAndCondition);
+    return await apiClient.getData(AppConstant.termsAndConditionUri);
   }
 }

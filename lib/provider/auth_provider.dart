@@ -177,6 +177,14 @@ class AuthProvider with ChangeNotifier {
     return true;
   }
 
+  //TODO: for Logout
+  bool checkTokenExist() {
+    return authRepo.checkTokenExist();
+  }
+  String getUserToken() {
+    return authRepo.getUserToken();
+  }
+
   // get User INFO:
   String name = '';
   String profileImage = '';

@@ -54,7 +54,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GroupRepo(apiClient: sl(),authRepo: sl()));
   sl.registerLazySingleton(() => PageRepo(apiClient: sl(),authRepo: sl()));
   sl.registerLazySingleton(() => AnimalRepo(apiClient: sl(),authRepo: sl()));
-  sl.registerLazySingleton(() => SplashRepo(sharedPreferences: sl()));
+  sl.registerLazySingleton(() => SplashRepo(apiClient: sl()));
   sl.registerLazySingleton(() => SettingsRepo( apiClient:sl()));
   sl.registerLazySingleton(() => SearchRepo( apiClient:sl()));
   sl.registerLazySingleton(() => ChatRepo( apiClient:sl()));
@@ -70,7 +70,7 @@ Future<void> init() async {
   sl.registerFactory(() => CommentProvider(commentRepo: sl()));
   sl.registerFactory(() => PostProvider(postRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => NotificationProvider(authRepo: sl(),notificationRepo: sl()));
-  sl.registerFactory(() => SplashProvider());
+  sl.registerFactory(() => SplashProvider(splashRepo: sl()));
   sl.registerFactory(() => DashboardProvider());
   sl.registerFactory(() => OtherProvider());
   sl.registerFactory(() => SearchProvider(searchRepo: sl()));

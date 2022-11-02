@@ -21,7 +21,8 @@ class LatestVersionProvider extends ChangeNotifier {
   }
 
   void chekVersion() {
-    print("new version = ${latestVer}");;
+    print("new version = ${latestVer}");
+
     if (latestVer == null || latestVer == oldVersion) {
       Get.off(const NavScreen());
     } else {
