@@ -235,6 +235,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                                  onPressed: (){
 
                                                    publicProvider.Blockuser(publicProvider.publicProfileData.id!);
+
                                                    Get.to(const DashboardScreen());
 
                                                  }, child: const Text("Block",style: button,)),
