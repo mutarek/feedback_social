@@ -8,7 +8,7 @@ class SplashProvider with ChangeNotifier {
   SplashProvider({required this.splashRepo});
 
   String? serverVersion;
-  String currentVersion = "1.0.13";
+  String currentVersion = "1.0.14";
   bool isLoading = false;
   bool isExistsVersion = false;
 
