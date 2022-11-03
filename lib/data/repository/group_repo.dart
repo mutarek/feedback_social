@@ -46,8 +46,8 @@ class GroupRepo {
     return await apiClient.getData(AppConstant.groupUri + "$groupID/member/all/");
   }
 
-  Future<Response> callForGetGroupAllPosts(String groupID) async {
-    return await apiClient.getData("/posts/group/$groupID/");
+  Future<Response> callForGetGroupAllPosts(String groupID,int page) async {
+    return await apiClient.getData("/posts/group/$groupID/?page=$page");
   }
 
   Future<Response> callForGetGroupAllImages(String groupID) async {

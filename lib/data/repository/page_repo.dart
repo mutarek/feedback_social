@@ -33,8 +33,8 @@ class PageRepo {
     return await apiClient.postMultipartData(AppConstant.pageURI, body, multipartData);
   }
 
-  Future<Response> callForGetPageAllPosts(String pageID) async {
-    return await apiClient.getData("/posts/page/$pageID/");
+  Future<Response> callForGetPageAllPosts(String pageID,int page) async {
+    return await apiClient.getData("/posts/page/$pageID/?page=$page");
   }
 
   Future<Response> callForGetPageAllImages(String pageId) async {

@@ -20,7 +20,7 @@ class ProfilePhotowidget extends StatelessWidget {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Positioned(
-        top: height * 0.14,
+        top: height * 0.15,
         left: width * 0.08,
         child: CircleAvatar(
           radius: height * 0.06,

@@ -19,6 +19,7 @@ class GroupMemberView extends StatelessWidget {
         builder: (context, provider, child) => ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: provider.groupMembersLists.length,
+              shrinkWrap: true,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {

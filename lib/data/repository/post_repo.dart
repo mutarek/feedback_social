@@ -9,7 +9,7 @@ class PostRepo {
   PostRepo({required this.apiClient});
 
   Future<Response> submitPost(Map<String, String> body, List<Http.MultipartFile> multipartData) async {
-    return await apiClient.postMultipartData(AppConstant.postsUri, body, multipartData);
+    return await apiClient.postMultipartData(AppConstant.postsUri+"user/create/", body, multipartData);
   }
 
   Future<Response> updatePost(Map<String, String> body, List<Http.MultipartFile> multipartData, int id) async {
