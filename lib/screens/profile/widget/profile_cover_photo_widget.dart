@@ -1,4 +1,5 @@
 import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,12 +19,14 @@ class ProfileCoverPhotoWidget extends StatelessWidget {
     return InkWell(
       onTap: viewCoverPhoto,
       child: Container(
-        height: height * 0.23,
+        height: 200,
         width: width,
         decoration: BoxDecoration(color: Colors.white, image: DecorationImage(image: NetworkImage(coverphoto))),
-        child: Column(
+        child: Stack(
           children: [
-            Padding(
+            customNetworkImage2(context,coverphoto,boxFit: BoxFit.fill),
+            Container(
+              margin: const EdgeInsets.only(left: 15),
               padding: EdgeInsets.only(top: height * 0.03, right: width * 0.8),
               child: InkWell(
                 onTap: back,
@@ -49,7 +52,7 @@ class ProfileCoverPhotoWidget extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: height * 0.08, left: width * 0.8),
+              padding: EdgeInsets.only(top: 150, left: width * 0.8),
               child: InkWell(
                 onTap: coverphotochange,
                 child: Container(

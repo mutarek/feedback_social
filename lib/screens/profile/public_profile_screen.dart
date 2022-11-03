@@ -62,7 +62,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Palette.scaffold,
+      backgroundColor: Colors.white,
       body: Consumer<PublicProfileProvider>(
         builder: (context, publicProvider, child) => SafeArea(
             child: (publicProvider.isProfileLoading == true || publicProvider.isLoading == true)
@@ -331,10 +331,8 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: publicProvider.publicNewsFeedLists.length,
                           itemBuilder: ((context, index) {
-                            return Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                child: TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider,
-                                    isProfileScreen: true));
+                            return TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider,
+                                isProfileScreen: true);
                           }))
                     ]))),
       ),

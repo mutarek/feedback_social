@@ -9,7 +9,7 @@ class ProfileRepo {
   ProfileRepo({required this.apiClient});
 
   Future<Response> getUserNewsfeedDataByUsingID(String userID, int page) async {
-    return await apiClient.getData('/posts/$userID/list?page=$page');
+    return await apiClient.getData('/posts/user/$userID/?page=$page');
   }
 
   Future<Response> getUserInfo() async {

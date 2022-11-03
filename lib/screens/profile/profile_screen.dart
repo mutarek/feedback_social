@@ -51,7 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Palette.scaffold,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Consumer2<AuthProvider, ProfileProvider>(
           builder: (context, authProvider, profileProvider, child) => profileProvider.isLoading || profileProvider.isProfileLoading
@@ -139,22 +139,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: height*0.01,),
+                        SizedBox(
+                          height: height * 0.01,
+                        ),
                         ProfileDetailsCard(userProfileModel: profileProvider.userprofileData),
                         const SizedBox(height: 10),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width * 0.02),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: profileProvider.newsFeedLists.length,
-                              itemBuilder: ((context, index) {
-                                return Container(
-                                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                    child: TimeLineWidget(profileProvider.newsFeedLists[index], index, profileProvider,
-                                        isProfileScreen: true));
-                              })),
-                        ),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: profileProvider.newsFeedLists.length,
+                            itemBuilder: ((context, index) {
+                              return TimeLineWidget(profileProvider.newsFeedLists[index], index, profileProvider, isProfileScreen: true);
+                            })),
                         profileProvider.isBottomLoading
                             ? Container(
                                 width: MediaQuery.of(context).size.width,

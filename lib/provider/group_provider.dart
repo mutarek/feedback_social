@@ -205,6 +205,7 @@ class GroupProvider with ChangeNotifier {
     // notifyListeners();
     Response response = await groupRepo.callForGetGroupDetails(id);
     callForGetAllGroupMembers(id);
+    isLoading = false;
     if (response.statusCode == 200) {
       groupDetailsModel = AuthorGroupDetailsModel.fromJson(response.body);
     } else {
@@ -220,7 +221,6 @@ class GroupProvider with ChangeNotifier {
     groupMembersLists.clear();
     groupMembersLists = [];
     Response response = await groupRepo.callForGetGroupMembers(id);
-    callForGetAllGroupPosts(id);
 
     if (response.statusCode == 200) {
       response.body.forEach((element) {
@@ -236,22 +236,51 @@ class GroupProvider with ChangeNotifier {
   List<NewsFeedData> groupAllPosts = [];
   List<int> likesStatusAllData = [];
   int position = 0;
+  bool isBottomLoading = false;
+  int selectPage = 1;
+  bool hasNextData = false;
 
   void deleteNewsfeedData(int index) {
     groupAllPosts.removeAt(index);
     notifyListeners();
   }
 
-  callForGetAllGroupPosts(String id) async {
-    groupAllPosts.clear();
-    groupAllPosts = [];
-    Response response = await groupRepo.callForGetGroupAllPosts(id);
+  updatePageNo(String id) {
+    selectPage++;
+    callForGetAllGroupPosts(id, page: selectPage);
+    notifyListeners();
+  }
+
+  callForGetAllGroupPosts(String id, {int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      groupAllPosts.clear();
+      groupAllPosts = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      menuValue = 0;
+      likesStatusAllData.clear();
+      likesStatusAllData = [];
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+
+    Response response = await groupRepo.callForGetGroupAllPosts(id, selectPage);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userID = (prefs.getString('userID') ?? '0');
     int status = 0;
     isLoading = false;
+    isBottomLoading = false;
+
     if (response.statusCode == 200) {
-      response.body.forEach((element) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
         NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
 
         status = 0;
@@ -446,6 +475,14 @@ class GroupProvider with ChangeNotifier {
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
+    notifyListeners();
+  }
+
+  //TODO for menu value
+  int menuValue = 0;
+
+  changeMenuValue(int value) {
+    menuValue = value;
     notifyListeners();
   }
 }

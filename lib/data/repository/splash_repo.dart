@@ -8,6 +8,6 @@ class SplashRepo {
   SplashRepo({required this.apiClient});
 
   Future<Response> getCurrentAppVersion() async {
-    return await apiClient.getData(AppConstant.latestVersionUri);
+    return await apiClient.getData(AppConstant.latestVersionUri, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 }

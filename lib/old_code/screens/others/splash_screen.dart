@@ -25,12 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    Provider.of<SplashProvider>(context, listen: false).initializeVersion().then((value) {
-      if (value) {
-        navigate();
-      }
-    });
-
+    navigate();
     super.initState();
   }
 
@@ -74,13 +69,17 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }
     if (connection == true) {
-      Future.delayed(const Duration(seconds: 1), () {
-        if (Provider.of<AuthProvider>(context, listen: false).getUserToken().isEmpty) {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
-        } else {
-          Provider.of<NotificationProvider>(context, listen: false).check();
-          Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
+      Provider.of<SplashProvider>(context, listen: false).initializeVersion().then((value) {
+        if (value) {
+          Future.delayed(const Duration(seconds: 1), () {
+            if (Provider.of<AuthProvider>(context, listen: false).getUserToken().isEmpty) {
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
+            } else {
+              Provider.of<NotificationProvider>(context, listen: false).check();
+              Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
+            }
+          });
         }
       });
     } else {

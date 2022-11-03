@@ -1,4 +1,5 @@
 import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -23,13 +24,14 @@ class CoverPhotoWidget extends StatelessWidget {
     final double width = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: viewCoverPhoto,
-      child: Container(
+      child: SizedBox(
         height: 200,
         width: width,
-        decoration: BoxDecoration(color: Colors.white, image: DecorationImage(image: NetworkImage(coverPhoto))),
-        child: Column(
+        child: Stack(
           children: [
-            Padding(
+            customNetworkImage2(context,coverPhoto,boxFit: BoxFit.fill),
+            Container(
+              margin: const EdgeInsets.only(left: 15),
               padding: EdgeInsets.only(top: height * 0.03, right: width * 0.8),
               child: InkWell(
                 onTap: back,

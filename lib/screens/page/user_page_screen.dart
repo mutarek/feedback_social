@@ -28,12 +28,21 @@ class UserPageScreen extends StatefulWidget {
 
 class _UserPageScreenState extends State<UserPageScreen> {
   final TextEditingController writePostController = TextEditingController();
+  ScrollController controller = ScrollController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Provider.of<PageProvider>(context, listen: false).callForGetPageInformation(widget.pageID);
+    Provider.of<PageProvider>(context, listen: false).callForGetAllPagePosts(widget.pageID);
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange &&
+          Provider.of<PageProvider>(context, listen: false).hasNextData) {
+        Provider.of<PageProvider>(context, listen: false).updatePageNo(widget.pageID);
+      }
+    });
   }
 
   @override
@@ -49,7 +58,8 @@ class _UserPageScreenState extends State<UserPageScreen> {
                     ? const MyGroupShimmerWidget()
                     : NestedScrollView(
                         scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
+                        controller: controller,
+                        // physics: const NeverScrollableScrollPhysics(),
                         // Setting floatHeaderSlivers to true is required in order to float
                         // the outer slivers over the inner scrollable.
                         floatHeaderSlivers: true,

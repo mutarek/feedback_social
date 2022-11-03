@@ -29,7 +29,7 @@ class MyGroupScreen extends StatelessWidget {
       ),
       body: Consumer<GroupProvider>(
           builder: (context, provider, child) => provider.isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Container(

@@ -23,13 +23,23 @@ class PublicPageScreen extends StatefulWidget {
 }
 
 class _PublicPageScreenState extends State<PublicPageScreen> {
+
+  ScrollController controller = ScrollController();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Provider.of<PageProvider>(context, listen: false).callForGetPageInformation(widget.pageID);
+    Provider.of<PageProvider>(context, listen: false).callForGetAllPagePosts(widget.pageID);
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange &&
+          Provider.of<PageProvider>(context, listen: false).hasNextData) {
+        Provider.of<PageProvider>(context, listen: false).updatePageNo(widget.pageID);
+      }
+    });
   }
-
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -43,9 +53,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                     ? const MyGroupShimmerWidget()
                     : NestedScrollView(
                         scrollDirection: Axis.vertical,
-                        physics: const NeverScrollableScrollPhysics(),
-                        // Setting floatHeaderSlivers to true is required in order to float
-                        // the outer slivers over the inner scrollable.
+                        controller: controller,
                         floatHeaderSlivers: true,
                         headerSliverBuilder: (context, innerBoxIsScrolled) {
                           return [

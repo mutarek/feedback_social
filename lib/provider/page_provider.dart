@@ -155,7 +155,6 @@ class PageProvider with ChangeNotifier {
     pageDetailsModel = AuthorPageDetailsModel();
     // notifyListeners();
     Response response = await pageRepo.callForGetPageDetails(id);
-    callForGetAllPagePosts(id);
 
     if (response.statusCode == 200) {
       pageDetailsModel = AuthorPageDetailsModel.fromJson(response.body);
@@ -170,22 +169,48 @@ class PageProvider with ChangeNotifier {
   List<NewsFeedData> pageAllPosts = [];
   List<int> likesStatusAllData = [];
   int position = 0;
+  bool isBottomLoading = false;
+  int selectPage = 1;
+  bool hasNextData = false;
 
   void deleteNewsfeedData(int index) {
     pageAllPosts.removeAt(index);
     notifyListeners();
   }
 
-  callForGetAllPagePosts(String id) async {
-    pageAllPosts.clear();
-    pageAllPosts = [];
-    Response response = await pageRepo.callForGetPageAllPosts(id);
+  updatePageNo(String id) {
+    selectPage++;
+    callForGetAllPagePosts(id, page: selectPage);
+    notifyListeners();
+  }
+
+  callForGetAllPagePosts(String id, {int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      pageAllPosts.clear();
+      pageAllPosts = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      likesStatusAllData.clear();
+      likesStatusAllData = [];
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+
+    Response response = await pageRepo.callForGetPageAllPosts(id, selectPage);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userID = (prefs.getString('userID') ?? '0');
     int status = 0;
     isLoading = false;
     if (response.statusCode == 200) {
-      response.body.forEach((element) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
         NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
 
         status = 0;
