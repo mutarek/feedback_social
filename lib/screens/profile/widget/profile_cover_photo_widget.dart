@@ -52,11 +52,11 @@ class ProfileCoverPhotoWidget extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 150, left: width * 0.8),
+              padding: EdgeInsets.only(top: 165, left: width * 0.88),
               child: InkWell(
                 onTap: coverphotochange,
                 child: Container(
-                  height: height * 0.041,
+                  height: 30,
                   width: width * 0.10,
                   decoration: BoxDecoration(
                       color: const Color(0xffC4C4C4),

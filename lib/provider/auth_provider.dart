@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CallBackResponse {
   bool status;

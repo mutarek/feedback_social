@@ -7,9 +7,7 @@ import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_inkwell_btn.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
-import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class DeleteDialogue extends StatelessWidget {
