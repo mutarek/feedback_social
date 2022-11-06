@@ -7,8 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 
-import '../data/model/response/notification_model.dart';
-
 class SettingsProvider extends ChangeNotifier {
   final SettingsRepo settingsRepo;
 

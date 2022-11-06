@@ -76,7 +76,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                       child: const Text("Delete")),
                                 ],
                               )
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                         Container(
                             margin: const EdgeInsets.only(top: 30),
                             height: 400,

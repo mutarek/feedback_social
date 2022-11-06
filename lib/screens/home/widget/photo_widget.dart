@@ -40,7 +40,6 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
           imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
               widget.newsfeedModel.sharePost!.post!.images![i].id!.toString()));
         }
-
       } else {
         for (int i = 0; i < widget.newsfeedModel.sharePost!.post!.totalImage!; i++) {
           imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
@@ -146,24 +145,21 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                             onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                       ),
                     )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
               index == 3
-                  ? Container(
-                      width: double.infinity,
-                      height: 100,
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: 100,
-                        child: CustomButton(
-                          onTap: () {},
-                          btnTxt: 'View More+',
-                          fontSize: 12,
-                          backgroundColor: Colors.green.withOpacity(.7),
-                          textWhiteColor: true,
-                        ),
+                  ? Positioned(
+                      bottom: 20,
+                      right: 10,
+                      left: 50,
+                      child: CustomButton(
+                        onTap: () {},
+                        btnTxt: 'View More+',
+                        fontSize: 12,
+                        backgroundColor: Colors.green.withOpacity(.8),
+                        textWhiteColor: true,
                       ),
                     )
-                  : SizedBox.shrink()
+                  : const SizedBox.shrink()
             ],
           ),
         );

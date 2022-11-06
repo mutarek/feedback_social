@@ -28,10 +28,10 @@ class CustomPageGroupButton extends StatelessWidget {
       onTap: goToGroupOrPage,
       child: Container(
         width: width,
-        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         margin: const EdgeInsets.only(bottom: 10),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white, boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), color: Colors.white, boxShadow: [
+          BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 15.0, spreadRadius: 3.0)
         ]),
         child: InkWell(
           onTap: onTap,

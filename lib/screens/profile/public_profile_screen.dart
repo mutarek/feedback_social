@@ -1,19 +1,15 @@
-import 'package:als_frontend/dialog_bottom_sheet/more_menu_bottom_sheet.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/chat/message_screen.dart';
-import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
-import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
 import 'package:als_frontend/screens/profile/view/public_photo_video_screen.dart';
 import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
-import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
@@ -71,8 +67,9 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                     controller: controller,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       SizedBox(
-                        height: height * 0.27,
+                        height: 200,
                         child: Stack(
+                          clipBehavior: Clip.none,
                           children: [
                             CoverPhotoWidget(
                                 isTrue: false,
@@ -99,7 +96,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 30),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: CustomText(
@@ -331,8 +328,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: publicProvider.publicNewsFeedLists.length,
                           itemBuilder: ((context, index) {
-                            return TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider,
-                                isProfileScreen: true);
+                            return TimeLineWidget(publicProvider.publicNewsFeedLists[index], index, publicProvider, isProfileScreen: true);
                           }))
                     ]))),
       ),

@@ -20,16 +20,16 @@ class ProfilePhotowidget extends StatelessWidget {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Positioned(
-        top: height * 0.15,
-        left: width * 0.08,
+        top: 140,
+        left: 30,
         child: CircleAvatar(
-          radius: height * 0.06,
+          radius: 43,
           backgroundColor: Colors.brown,
           child: InkWell(
             onTap: viewProfilePhoto,
             child: CircleAvatar(
               backgroundColor: Palette.scaffold,
-              radius: height * 0.057,
+              radius: 41,
               backgroundImage: NetworkImage(profileImage),
               child: Padding(
                 padding: EdgeInsets.only(top: height * 0.06, left: width * 0.2),
@@ -38,8 +38,8 @@ class ProfilePhotowidget extends StatelessWidget {
                   child: InkWell(
                     onTap: profilePhotoChange,
                     child: Container(
-                        height: height * 0.032,
-                        width: width,
+                        height: 20,
+                        width: 150,
                         decoration: BoxDecoration(
                             color: Palette.scaffold,
                             border: Border.all(width: 2, color: Colors.white),
