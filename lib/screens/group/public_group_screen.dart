@@ -156,7 +156,8 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                         InkWell(
                                                           onTap: () {
                                                             if (groupProvider.groupDetailsModel.isMember == false) {
-                                                              groupProvider.memberJoin(int.parse(widget.groupID));
+                                                              groupProvider.memberJoin(int.parse(widget.groupID),
+                                                                  index: widget.index, isFromMyGroup: widget.isFromMYGroup);
                                                             } else {
                                                               groupProvider.leaveGroup(int.parse(widget.groupID),
                                                                   index: widget.index, isFromMYGroup: widget.isFromMYGroup);
