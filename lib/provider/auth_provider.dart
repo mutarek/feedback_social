@@ -27,7 +27,15 @@ class AuthProvider with ChangeNotifier {
   Future signup(String firstName, String lastName, String password, Function callback) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await authRepo.signup(firstName, lastName, buttonText, selectGender, data, password);
+    String gender = '';
+    if (genderLists[0] == selectGender) {
+      gender = 'M';
+    } else if (genderLists[1] == selectGender) {
+      gender = 'F';
+    } else {
+      gender = '0';
+    }
+    Response response = await authRepo.signup(firstName, lastName, buttonText, gender, data, password);
     _isLoading = false;
     if (response.statusCode == 201) {
       if (authRepo.checkTokenExist()) {
@@ -180,6 +188,7 @@ class AuthProvider with ChangeNotifier {
   bool checkTokenExist() {
     return authRepo.checkTokenExist();
   }
+
   String getUserToken() {
     return authRepo.getUserToken();
   }
