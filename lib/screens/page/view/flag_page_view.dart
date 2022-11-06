@@ -109,7 +109,7 @@ class FlagPageView extends StatelessWidget {
                               return CustomPageGroupButton(
                                   onTap: () {
                                     provider.loadingStart();
-                                    Get.to(PublicPageScreen(provider.authorPageLists[index].id.toString(), index));
+                                    Get.to(PublicPageScreen(provider.authorPageLists[index].id.toString()));
                                   },
                                   goToGroupOrPage: () {},
                                   groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,

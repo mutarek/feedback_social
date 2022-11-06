@@ -24,18 +24,16 @@ class GroupProvider with ChangeNotifier {
   GroupProvider({required this.groupRepo, required this.newsfeedRepo});
 
   bool isLoading = false;
+  bool isLoadingSuggestedGroup = false;
 
   //TODO: for get ALl Suggest Group
   List<AllGroupModel> allSuggestGroupList = [];
 
   initializeSuggestGroup() async {
-    isLoading = true;
-    allSuggestGroupList.clear();
-    allSuggestGroupList = [];
+    isLoadingSuggestedGroup = true;
     Response response = await groupRepo.getAllSuggestGroup();
-
+    isLoadingSuggestedGroup = false;
     if (response.statusCode == 200) {
-      initializeAuthorGroup();
       response.body.forEach((element) {
         allSuggestGroupList.add(AllGroupModel.fromJson(element));
       });
@@ -52,6 +50,9 @@ class GroupProvider with ChangeNotifier {
     isLoading = true;
     myGroupList.clear();
     myGroupList = [];
+    allSuggestGroupList.clear();
+    allSuggestGroupList = [];
+    menuValue = 0;
     Response response = await groupRepo.getAllJoinGroup();
 
     if (response.statusCode == 200) {
@@ -73,6 +74,7 @@ class GroupProvider with ChangeNotifier {
     authorGroupList = [];
     Response response = await groupRepo.getOwnGroupList();
     isLoading = false;
+    notifyListeners();
     if (response.statusCode == 200) {
       response.body.forEach((element) {
         authorGroupList.add(AllGroupModel.fromJson(element));
@@ -446,7 +448,7 @@ class GroupProvider with ChangeNotifier {
   }
 
 // TODO: for member Join
-  memberJoin(int groupID) async {
+  memberJoin(int groupID, {bool isFromMyGroup = false, int index = 0}) async {
     Response response = await groupRepo.memberJoin(groupID.toString());
 
     if (response.statusCode == 201) {
@@ -454,6 +456,18 @@ class GroupProvider with ChangeNotifier {
       groupDetailsModel.totalMember = groupDetailsModel.totalMember! + 1;
       groupDetailsModel.isMember = true;
       callForGetAllGroupMembers(groupID.toString());
+      if (isFromMyGroup) {
+        allSuggestGroupList.removeAt(index);
+        myGroupList.insert(
+            0,
+            AllGroupModel(
+                id: groupDetailsModel.id as int,
+                name: groupDetailsModel.name!,
+                category: groupDetailsModel.category!,
+                coverPhoto: groupDetailsModel.coverPhoto!,
+                isPrivate: groupDetailsModel.isPrivate!,
+                totalMember: groupDetailsModel.totalMember! as int));
+      }
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
@@ -470,6 +484,7 @@ class GroupProvider with ChangeNotifier {
       groupDetailsModel.isMember = false;
       callForGetAllGroupMembers(groupID.toString());
       if (isFromMYGroup) {
+        allSuggestGroupList.insert(0, myGroupList[index]);
         myGroupList.removeAt(index);
       }
     } else {
@@ -485,6 +500,4 @@ class GroupProvider with ChangeNotifier {
     menuValue = value;
     notifyListeners();
   }
-
-
 }
