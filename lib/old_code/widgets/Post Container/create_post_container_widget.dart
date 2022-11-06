@@ -141,14 +141,12 @@ class _CreatePostContainerWidgetState extends State<CreatePostContainerWidget> {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              child: Image.file(
-                                File(postProvider.image[index2].path),
-                                height: (postProvider.image.length == 1)
-                                    ? height * 0.3
-                                    : height * 0.2,
-                                fit: BoxFit.fill,
-                              ),
+                            Image.file(
+                              File(postProvider.image[index2].path),
+                              height: (postProvider.image.length == 1)
+                                  ? height * 0.3
+                                  : height * 0.2,
+                              fit: BoxFit.fill,
                             )
                           ],
                         );

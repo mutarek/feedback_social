@@ -67,8 +67,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Stack(
+                          clipBehavior: Clip.none,
                           children: [
-                            Container(height: height * 0.26, width: width, color: Palette.scaffold),
+                            Container(height: 200, width: width, color: Palette.scaffold),
                             ProfileCoverPhotoWidget(
                                 back: () {
                                   Navigator.of(context).pop();
@@ -97,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: height * 0.01, left: width * 0.05),
+                          padding: EdgeInsets.only(top: 25, left: width * 0.05),
                           child: Text(
                             "${profileProvider.userprofileData.firstName!} ${profileProvider.userprofileData.lastName!}",
                             style: GoogleFonts.lato(fontSize: width * 0.05, fontWeight: FontWeight.w700),

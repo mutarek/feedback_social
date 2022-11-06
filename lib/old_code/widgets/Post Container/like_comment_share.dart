@@ -1,7 +1,5 @@
-import 'package:als_frontend/old_code/provider/profile/user%20profile/user_newsfeed_post_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 
 class LikeCommentShare extends StatelessWidget {
   final VoidCallback? like;

@@ -329,7 +329,7 @@ class _SecuritySettingsState extends State<SecuritySettings> {
                     Row(
                       children: [
                         const Icon(
-                          FontAwesomeIcons.googlePlusSquare,
+                          FontAwesomeIcons.squareGooglePlus,
                           color: Colors.redAccent,
                         ),
                         SizedBox(
