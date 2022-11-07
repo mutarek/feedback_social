@@ -6,10 +6,11 @@ import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/app_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MyGroupScreen extends StatefulWidget {
@@ -26,10 +27,10 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
     super.initState();
     _pageController = PageController();
     Provider.of<GroupProvider>(context, listen: false).initializeMyGroup();
+    Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
   }
 
   PageController _pageController = PageController();
-  int activePageIndex = 0;
 
   @override
   void dispose() {
@@ -41,6 +42,17 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Consumer<GroupProvider>(
+          builder: (context, groupProvider, child) => CustomText(
+            title: groupProvider.menuValue == 0 ? "Group" : "Suggested Groups",
+            textStyle: latoStyle700Bold.copyWith(color: Palette.primary, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: -1.2),
+          ),
+        ),
+      ),
       floatingActionButton: Consumer<GroupProvider>(
         builder: (context, groupProvider, child) => groupProvider.menuValue == 0
             ? FloatingActionButton(
@@ -58,7 +70,6 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
               ? const Center(child: CircularProgressIndicator())
               : Column(
                   children: [
-                    const SizedBox(height: 45),
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.9,
@@ -87,15 +98,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
 
                           provider.changeMenuValue(i);
                         },
-                        children: <Widget>[
-                          myGroupView(provider),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                            child: const Center(
-                              child: Text("Other Group"),
-                            ),
-                          ),
-                        ],
+                        children: <Widget>[myGroupView(provider), mySuggestedView(provider)],
                       ),
                     ),
                   ],
@@ -142,13 +145,14 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                                   padding: const EdgeInsets.all(6.0),
                                   child: Column(
                                     children: [
+
                                       CircleAvatar(
                                         radius: 25,
                                         backgroundColor: Palette.notificationColor,
                                         child: CircleAvatar(
-                                          radius: 22,
+                                          radius: 24,
                                           backgroundColor: Palette.primary,
-                                          backgroundImage: NetworkImage(provider.authorGroupList[index2].coverPhoto),
+                                          child: getCircularImage(50,provider.authorGroupList[index2].coverPhoto),
                                         ),
                                       ),
                                       const SizedBox(height: 3),
@@ -173,26 +177,52 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                       const SizedBox(height: 15),
                     ],
                   ),
-                  ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      itemCount: provider.myGroupList.length,
-                      itemBuilder: (context, index) {
-                        return CustomPageGroupButton(
-                            onTap: () {
-                              provider.loadingStart();
-                              Get.to(PublicGroupScreen(provider.myGroupList[index].id.toString(), index: index, isFromMYGroup: true));
-                            },
-                            goToGroupOrPage: () {},
-                            groupOrPageImage: provider.myGroupList[index].coverPhoto,
-                            groupOrPageName: provider.myGroupList[index].name,
-                            groupOrPageLikes: "${provider.myGroupList[index].totalMember} Members");
-                      }),
+                  provider.myGroupList.isNotEmpty
+                      ? ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          itemCount: provider.myGroupList.length,
+                          itemBuilder: (context, index) {
+                            return CustomPageGroupButton(
+                                onTap: () {
+                                  provider.loadingStart();
+                                  Get.to(PublicGroupScreen(provider.myGroupList[index].id.toString(), index: index, isFromMYGroup: true));
+                                },
+                                goToGroupOrPage: () {},
+                                groupOrPageImage: provider.myGroupList[index].coverPhoto,
+                                groupOrPageName: provider.myGroupList[index].name,
+                                groupOrPageLikes: "${provider.myGroupList[index].totalMember} Members");
+                          })
+                      : CustomText(title: 'No History found', textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
                 ],
               ),
             )),
       ),
+    );
+  }
+
+  Widget mySuggestedView(GroupProvider provider) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints.expand(),
+      child: provider.isLoadingSuggestedGroup
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              padding: const EdgeInsets.only(top: 15),
+              itemCount: provider.allSuggestGroupList.length,
+              itemBuilder: (context, index) {
+                return CustomPageGroupButton(
+                    onTap: () {
+                      provider.loadingStart();
+                      Get.to(PublicGroupScreen(provider.allSuggestGroupList[index].id.toString(), index: index, isFromMYGroup: true));
+                    },
+                    goToGroupOrPage: () {},
+                    groupOrPageImage: provider.allSuggestGroupList[index].coverPhoto,
+                    groupOrPageName: provider.allSuggestGroupList[index].name,
+                    groupOrPageLikes: "${provider.allSuggestGroupList[index].totalMember} Members");
+              }),
     );
   }
 

@@ -25,8 +25,6 @@ class PageProvider with ChangeNotifier {
   List<AuthorPageModel> likedPageLists = [];
 
   initializeLikedPageLists() async {
-    likedPageLists.clear();
-    likedPageLists = [];
     Response response = await pageRepo.getAllLikedPageLists();
     isLoading = false;
     if (response.statusCode == 200) {
@@ -43,8 +41,6 @@ class PageProvider with ChangeNotifier {
   List<AuthorPageModel> allSuggestPageList = [];
 
   initializeSuggestPage() async {
-    allSuggestPageList.clear();
-    allSuggestPageList = [];
     Response response = await pageRepo.getAllSuggestedPage();
     isLoading = false;
     if (response.statusCode == 200) {
@@ -60,19 +56,20 @@ class PageProvider with ChangeNotifier {
   //TODO: for get ALl Author Page
   List<AuthorPageModel> authorPageLists = [];
 
-  initializeAuthorPageLists({bool isFromMyPage = false}) async {
+  initializeAuthorPageLists() async {
     isLoading = true;
     authorPageLists.clear();
     authorPageLists = [];
+    likedPageLists.clear();
+    likedPageLists = [];
+    allSuggestPageList.clear();
+    allSuggestPageList = [];
     Response response = await pageRepo.getAuthorPage();
+    initializeLikedPageLists();
+    initializeSuggestPage();
+    isLoading = false;
+    notifyListeners();
     if (response.statusCode == 200) {
-      if (isFromMyPage) {
-        initializeLikedPageLists();
-      } else {
-        initializeSuggestPage();
-      }
-
-      isLoading = false;
       response.body.forEach((element) {
         authorPageLists.add(AuthorPageModel.fromJson(element));
       });
@@ -326,19 +323,37 @@ class PageProvider with ChangeNotifier {
 
 //// ****************************************************
 
-  pageLikeUnlike(int pageID, int index) async {
+  pageLikeUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
     Response response = await pageRepo.pageLikeUnlike(pageID.toString());
     if (response.statusCode == 200) {
       if (response.body['liked'] == true) {
         pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
         pageDetailsModel!.like = true;
-        authorPageLists[index].followers = authorPageLists[index].followers + 1;
+        if (isFromMyPageScreen) {
+          authorPageLists[index].followers = authorPageLists[index].followers + 1;
+          likedPageLists.insert(0, authorPageLists[index]);
+          if (isFromSuggestedPage) {
+            allSuggestPageList.removeAt(index);
+          }
+        }
       } else {
         pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! - 1;
         pageDetailsModel!.like = false;
-        authorPageLists[index].followers = authorPageLists[index].followers - 1;
+        if (isFromMyPageScreen) {
+          authorPageLists[index].followers = authorPageLists[index].followers - 1;
+          allSuggestPageList.insert(index, authorPageLists[index]);
+          likedPageLists.removeAt(index);
+        }
       }
       notifyListeners();
     }
+  }
+
+  //TODO for menu value
+  int menuValue = 0;
+
+  changeMenuValue(int value) {
+    menuValue = value;
+    notifyListeners();
   }
 }

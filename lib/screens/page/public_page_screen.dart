@@ -15,15 +15,17 @@ import 'package:provider/provider.dart';
 class PublicPageScreen extends StatefulWidget {
   final String pageID;
   final int index;
+  final bool isFromMyPageScreen;
+  final bool isFromSuggestedPage;
 
-  const PublicPageScreen(this.pageID, this.index, {Key? key}) : super(key: key);
+  const PublicPageScreen(this.pageID, {this.isFromMyPageScreen = false, this.isFromSuggestedPage = false, this.index = 0, Key? key})
+      : super(key: key);
 
   @override
   State<PublicPageScreen> createState() => _PublicPageScreenState();
 }
 
 class _PublicPageScreenState extends State<PublicPageScreen> {
-
   ScrollController controller = ScrollController();
 
   @override
@@ -40,6 +42,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -138,7 +141,10 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                     children: [
                                                       InkWell(
                                                         onTap: () {
-                                                          pageProvider.pageLikeUnlike(int.parse(widget.pageID), widget.index);
+                                                          pageProvider.pageLikeUnlike(int.parse(widget.pageID),
+                                                              isFromMyPageScreen: widget.isFromMyPageScreen,
+                                                              index: widget.index,
+                                                              isFromSuggestedPage: widget.isFromSuggestedPage);
                                                         },
                                                         child: Container(
                                                           height: height * 0.036,
@@ -160,7 +166,6 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                           ),
                                                         ),
                                                       ),
-
                                                     ],
                                                   ),
                                                 ),

@@ -39,15 +39,18 @@ class CustomPageGroupButton extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 25,
-                backgroundColor: Palette.scaffold,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(25),
-                  child: CachedNetworkImage(
-                    imageUrl: groupOrPageImage,
-                    fit: BoxFit.fill,
-                    height: height == 0 ? MediaQuery.of(context).size.height : height,
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                    placeholder: ((context, url) => Container(alignment: Alignment.center, child: const CupertinoActivityIndicator())),
+                backgroundColor: Palette.notificationColor,
+                child: CircleAvatar(
+                  radius: 24,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: CachedNetworkImage(
+                      imageUrl: groupOrPageImage,
+                      fit: BoxFit.fill,
+                      height: height == 0 ? MediaQuery.of(context).size.height : height,
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
+                      placeholder: ((context, url) => Container(alignment: Alignment.center, child: const CupertinoActivityIndicator())),
+                    ),
                   ),
                 ),
               ),

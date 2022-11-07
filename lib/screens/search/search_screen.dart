@@ -248,7 +248,7 @@ class SearchScreen extends StatelessWidget {
                                                           onTap: () {
                                                             if (searchProvider.searchModel.pages![index].isAuthor == false) {
                                                               Get.to(PublicPageScreen(
-                                                                  searchProvider.searchModel.pages![index].id.toString(), index));
+                                                                  searchProvider.searchModel.pages![index].id.toString()));
                                                             } else {
                                                               Get.to(UserPageScreen(
                                                                   searchProvider.searchModel.pages![index].id.toString(), index));
