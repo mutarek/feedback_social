@@ -132,10 +132,12 @@
 // }
 
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/data/model/response/suggested_friend_model.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
+import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 
 import 'package:flutter/material.dart';
@@ -147,6 +149,7 @@ class FriendReqSuggestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<ProfileProvider>(context, listen: false).callForgetAllFriendRequest();
+    Provider.of<ProfileProvider>(context, listen: false).callFor_getAllSuggestFriendRequest();
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
@@ -185,60 +188,75 @@ class FriendReqSuggestion extends StatelessWidget {
                 ),
                 Expanded(
                   child: TabBarView(children: [
-                    Consumer<ProfileProvider>(
-
-                      builder: (context, profileProvider, child) {
-                        return Container(
-                            child: profileProvider.sendFriendRequestLists.isEmpty?Center(child: Text("you have no friend request")):
-                            ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                itemCount: profileProvider.sendFriendRequestLists.length,
-                                itemBuilder: (context, index) {
-                                  SendFriendRequestModel sendFriendRequestModel = profileProvider.sendFriendRequestLists[index];
-                                  return FriendReqWidget(
-                                    height: height,
-                                    width: width,
-                                    imgUrl: sendFriendRequestModel.fromUser!.profileImage!,
-                                    gotoProfileScreen: (){ Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (_) => PublicProfileScreen(sendFriendRequestModel.fromUser!.id.toString(),
-                                            index: index, isFromFriendRequestScreen: true)));},
-                                    userName: "${sendFriendRequestModel.fromUser!.firstName}${sendFriendRequestModel.fromUser!.lastName}",
-                                    fastButtunName: "Confirm",
-                                    fastbuttunColor: Colors.green,
-                                    fastButton: (){
-                                      profileProvider.acceptFriendRequest(sendFriendRequestModel.id.toString(), index);
-                                    },
-                                    seconButunName: "cancel",
-                                    secondButton: (){
-                                      profileProvider.cancelFriendRequest(sendFriendRequestModel.id.toString(), index);
-                                    },
-
-                                  );
-                                }));
-                      }
-                    ),
+                    Consumer<ProfileProvider>(builder: (context, profileProvider, child) {
+                      return profileProvider.isLoading
+                          ? FriendReqShimmerWidget()
+                          : Container(
+                              child: profileProvider.sendFriendRequestLists.isEmpty
+                                  ? Center(child: Text("you have no friend request"))
+                                  : ListView.builder(
+                                      physics: BouncingScrollPhysics(),
+                                      itemCount: profileProvider.sendFriendRequestLists.length,
+                                      itemBuilder: (context, index) {
+                                        SendFriendRequestModel sendFriendRequestModel =
+                                            profileProvider.sendFriendRequestLists[index];
+                                        return FriendReqWidget(
+                                          height: height,
+                                          width: width,
+                                          imgUrl: sendFriendRequestModel.fromUser!.profileImage!,
+                                          gotoProfileScreen: () {
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (_) => PublicProfileScreen(
+                                                    sendFriendRequestModel.fromUser!.id.toString(),
+                                                    index: index,
+                                                    isFromFriendRequestScreen: true)));
+                                          },
+                                          userName:
+                                              "${sendFriendRequestModel.fromUser!.firstName}${sendFriendRequestModel.fromUser!.lastName}",
+                                          fastButtunName: "Confirm",
+                                          fastbuttunColor: Colors.green,
+                                          fastButton: () {
+                                            profileProvider.acceptFriendRequest(
+                                                sendFriendRequestModel.id.toString(), index);
+                                          },
+                                          seconButunName: "cancel",
+                                          secondButton: () {
+                                            profileProvider.cancelFriendRequest(
+                                                sendFriendRequestModel.id.toString(), index);
+                                          },
+                                        );
+                                      }));
+                    }),
 
                     //Todo: Suggestted friend
 
-                    Container(
-                        child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            itemCount: 20,
-                            itemBuilder: (context, index) {
-                              return FriendReqWidget(
-                                height: height,
-                                width: width,
-                                imgUrl: "",
-                                gotoProfileScreen: (){},
-                                fastbuttunColor: AppColors.postLikeCountContainer,
-                                userName: "Faysal",
-                                fastButtunName: "Add friend",
-                                fastButton: (){},
-                                seconButunName: "cancel",
-                                secondButton: (){},
-
-                              );
-                            })),
+                    Consumer2<ProfileProvider, PublicProfileProvider>(
+                        builder: (context, profileProvider, publicProfileProvider, child) {
+                      return Container(
+                          child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              itemCount: profileProvider.suggestFriendRequestlist.length,
+                              itemBuilder: (context, index) {
+                                SuggestFriendModel suggestFriendRequestModel =
+                                    profileProvider.suggestFriendRequestlist[index];
+                                return FriendReqWidget(
+                                  height: height,
+                                  width: width,
+                                  imgUrl: suggestFriendRequestModel.results![index].profileImage!,
+                                  gotoProfileScreen: () {},
+                                  fastbuttunColor: AppColors.postLikeCountContainer,
+                                  userName:
+                                      "${suggestFriendRequestModel.results![index].firstName}${suggestFriendRequestModel.results![index].lastName}",
+                                  fastButtunName: "Add friend",
+                                  fastButton: () {},
+                                  seconButunName: "cancel",
+                                  secondButton: () {
+                                    profileProvider.cancelFriendRequest(
+                                        suggestFriendRequestModel.results![index].id.toString(), index);
+                                  },
+                                );
+                              }));
+                    }),
                   ]),
                 )
               ],

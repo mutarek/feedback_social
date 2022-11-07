@@ -8,6 +8,7 @@ import 'package:als_frontend/screens/profile/widget/profile_cover_photo_widget.d
 import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
 import 'package:als_frontend/screens/profile/widget/update_cover_photo.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -108,35 +109,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: EdgeInsets.only(top: height * 0.01, left: width * 0.04, right: width * 0.04),
                           child: Container(
                             height: height * 0.043,
-                            width: width * 0.92,
-                            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(4))),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: width * 0.1),
+
+                            decoration: const BoxDecoration(color: AppColors.scaffold, borderRadius: BorderRadius.all(Radius.circular(4))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+
+
+                               Expanded(
+                                 flex: 1,
+                                 child: Container(
+                                   child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.center,
+                                     children: [
+                                       InkWell(
+                                         onTap: () {
+                                           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FriendScreen()));
+                                         },
+                                         child: Text(
+                                           "${profileProvider.userprofileData.friends!.length}",
+                                           style:
+                                           GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                         ),
+                                       ),
+                                       Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
+
+                                     ],
+                                   ),
+                                 ),
+                               ),
+
+                          Expanded(
+                            flex: 1,
+                            child: Container(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FriendScreen()));
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "${profileProvider.userprofileData.friends!.length}",
-                                          style:
-                                              GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
-                                        ),
-                                        Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: width * 0.2),
                                   Text(
                                     "${profileProvider.userprofileData.followers!.length}",
                                     style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                                   ),
                                   Text(" Followers", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
+
                                 ],
                               ),
+                            ),
+                          ),
+
+                              ],
                             ),
                           ),
                         ),
