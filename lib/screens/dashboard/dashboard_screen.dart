@@ -142,7 +142,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       children: [
                         dashboardProvider.selectIndex == 0
                             ? AppBar(
-                                title: CustomText(title: 'Feedback', color: Palette.feedback, fontWeight: FontWeight.bold, fontSize: 27),
+                                title: CustomText(title: 'Feedback', color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 27),
                                 backgroundColor: Colors.white,
                                 elevation: 0,
                                 actions: [
@@ -187,7 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             },
                             children: const [
                               HomeScreen(),
-                              PageOrGroupDecisionGroup(),
+                              FriendReqSuggestion(),
                               NotificationScreen(),
                               ChatsScreen(),
                               MoreScreen(),

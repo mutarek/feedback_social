@@ -23,6 +23,7 @@ class AppColors {
   static const Color imageBGColorDark = Color(0xffE2F0FF);
   static const Color whiteColorDark = Color(0xFFFFFFFF);
   static const Color unreadColorDark = Color(0xFF00ACFF);
+  static const Color feedback = Color(0xFF2365A8);
 
   static const Color scaffold = Color(0xFFF0F2F5);
   static const LinearGradient createRoomGradient = LinearGradient(colors: [Color(0xFF496AE1), Color(0xFFCE48B1)]);
