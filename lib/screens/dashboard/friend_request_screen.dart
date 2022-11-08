@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 class FriendRequestSuggestionScreen extends StatefulWidget {
   const FriendRequestSuggestionScreen({Key? key}) : super(key: key);
 
+
   @override
   State<FriendRequestSuggestionScreen> createState() => _FriendRequestSuggestionScreenState();
 }
