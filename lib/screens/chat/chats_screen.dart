@@ -4,6 +4,7 @@ import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/chat/components/chat_card.dart';
 import 'package:als_frontend/screens/chat/message_screen.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/screens/search/search_screen.dart';
 import 'package:als_frontend/widgets/circle_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -67,7 +68,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         },
         child: Consumer<ChatProvider>(
           builder: (context, chatProvider, child) => chatProvider.isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(child: FriendReqShimmerWidget())
               : SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   controller: controller,

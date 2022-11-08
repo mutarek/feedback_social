@@ -28,7 +28,7 @@ Widget getCircularImage(double size, String imageURL) {
     child: ClipOval(
         child: FadeInImage.assetNetwork(
             fit: BoxFit.cover,
-            placeholder: 'assets/images/logo.png',
+            placeholder: 'assets/logo/logo.jpeg',
             image: imageURL,
             imageErrorBuilder: (context, url, error) => ClipRRect(
                 borderRadius: BorderRadius.circular(size),

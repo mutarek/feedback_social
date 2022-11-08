@@ -418,7 +418,8 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                               isHomeScreen: widget.isHomeScreen,
                                             );
                                           }),
-                                )
+                                ),
+                                const SizedBox(height: 100)
                               ],
                             ),
                           ),

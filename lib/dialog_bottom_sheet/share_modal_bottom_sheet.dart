@@ -2,6 +2,7 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ void shareBottomSheet(BuildContext context, String url, NewsFeedData newsfeedDat
                             shareController.text = '';
                           });
                         },
-                        backgroundColor: Palette.feedback,
+                        backgroundColor: AppColors.feedback,
                         textWhiteColor: true,
                       ),
               ],

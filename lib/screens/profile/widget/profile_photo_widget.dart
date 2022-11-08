@@ -32,14 +32,13 @@ class ProfilePhotowidget extends StatelessWidget {
               radius: 41,
               backgroundImage: NetworkImage(profileImage),
               child: Padding(
-                padding: EdgeInsets.only(top: height * 0.06, left: width * 0.2),
+                padding: EdgeInsets.only(top: height * 0.06, left: width * 0.15),
                 child: Visibility(
                   visible: isTrue,
                   child: InkWell(
                     onTap: profilePhotoChange,
                     child: Container(
-                        height: 20,
-                        width: 150,
+
                         decoration: BoxDecoration(
                             color: Palette.scaffold,
                             border: Border.all(width: 2, color: Colors.white),

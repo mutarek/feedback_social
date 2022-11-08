@@ -5,6 +5,7 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/notification/single_post_screen.dart';
 import 'package:als_frontend/screens/notification/widget/notifications_card.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: Consumer<NotificationProvider>(
         builder: (context, notificationProvider, child) => RefreshIndicator(
             child: notificationProvider.isLoading
-                ? const Center(child: CircularProgressIndicator())
+                ? const Center(child: FriendReqShimmerWidget())
                 : ListView.builder(
                     shrinkWrap: true,
                     controller: controller,

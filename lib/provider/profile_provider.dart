@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:als_frontend/data/model/response/friend_model.dart';
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
+import 'package:als_frontend/data/model/response/suggested_friend_model.dart';
+
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:http/http.dart' as Http;
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
@@ -300,6 +302,28 @@ class ProfileProvider with ChangeNotifier {
         position++;
 
         publicNewsFeedLists.add(newsFeedData);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+  //TODO:   for Suggestion Friend Request Lists
+  List<SuggestFriendModel> suggestFriendRequestlist = [];
+  callFor_getAllSuggestFriendRequest({int page = 1}) async {
+    suggestFriendRequestlist.clear();
+    suggestFriendRequestlist = [];
+    _isLoading = true;
+
+    Response response = await profileRepo.sendFriendRequestLists(page);
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        hasNextData = response.body['next'] != null ? true : false;
+        response.body['results'].forEach((element) {
+          SuggestFriendModel newsFeedData = SuggestFriendModel.fromJson(element);
+          print(newsFeedData);
+        });
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
