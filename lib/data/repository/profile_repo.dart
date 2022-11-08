@@ -35,18 +35,19 @@ class ProfileRepo {
 
   /*........................edit profile repo..............*/
 
-  Future<Response> updateProfileDetails(String firstName, lastName, company, education, gender, religion, liveInAdress, fromAdress) async {
+  Future<Response> updateProfileDetails(
+      String firstName, lastName, company, education, gender, religion, liveInAddress, fromAddress) async {
     return await apiClient.putData(
       AppConstant.editProfile,
       {
         'first_name': firstName,
         'last_name': lastName,
         'gender': gender,
-        'lives_in_address': liveInAdress,
-        'from_address': fromAdress,
+        'lives_in_address': liveInAddress,
+        'from_address': fromAddress,
         'religion': religion,
         'company': company,
-        'education': education,
+        'education': education
       },
     );
   }
@@ -71,6 +72,7 @@ class ProfileRepo {
   Future<Response> sendFriendRequestLists(int page) async {
     return await apiClient.getData('${AppConstant.sendFriendRequestListURI}$page');
   }
+
   Future<Response> sendSuggestFriendRequestLists(int page) async {
     return await apiClient.getData('${AppConstant.sendSuggestFriendListURI}$page');
   }

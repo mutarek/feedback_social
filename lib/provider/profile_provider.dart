@@ -121,10 +121,12 @@ class ProfileProvider with ChangeNotifier {
     newsFeedLists.insert(0, n);
     notifyListeners();
   }
+
   void deleteNewsfeedData(int index) {
     newsFeedLists.removeAt(index);
     notifyListeners();
   }
+
   ///TODO: for Current user profile
   UserProfileModel userprofileData = UserProfileModel();
   bool isProfileLoading = false;
@@ -308,22 +310,37 @@ class ProfileProvider with ChangeNotifier {
     }
     notifyListeners();
   }
-  //TODO:   for Suggestion Friend Request Lists
-  List<SuggestFriendModel> suggestFriendRequestlist = [];
-  callFor_getAllSuggestFriendRequest({int page = 1}) async {
-    suggestFriendRequestlist.clear();
-    suggestFriendRequestlist = [];
-    _isLoading = true;
 
-    Response response = await profileRepo.sendFriendRequestLists(page);
-    _isLoading = false;
+  //TODO:   for Suggestion Friend Request Lists
+  List<SuggestFriendModel> suggestFriendRequestList = [];
+  bool isLoadingSuggestedFriend = false;
+
+  updateSuggestedPageNo() {
+    selectPage++;
+    callForGetAllSuggestFriendRequest(page: selectPage);
+    notifyListeners();
+  }
+
+  callForGetAllSuggestFriendRequest({int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      suggestFriendRequestList.clear();
+      suggestFriendRequestList = [];
+      isLoadingSuggestedFriend = true;
+      isBottomLoading = false;
+      hasNextData = false;
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    Response response = await profileRepo.sendSuggestFriendRequestLists(page);
+    isLoadingSuggestedFriend = false;
+    isBottomLoading = false;
     if (response.statusCode == 200) {
-      response.body.forEach((element) {
-        hasNextData = response.body['next'] != null ? true : false;
-        response.body['results'].forEach((element) {
-          SuggestFriendModel newsFeedData = SuggestFriendModel.fromJson(element);
-          print(newsFeedData);
-        });
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
+        SuggestFriendModel newsFeedData = SuggestFriendModel.fromJson(element);
+        suggestFriendRequestList.add(newsFeedData);
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
@@ -338,9 +355,10 @@ class ProfileProvider with ChangeNotifier {
     sendFriendRequestLists.clear();
     sendFriendRequestLists = [];
     _isLoading = true;
-
+    isLoadingSuggestedFriend = true;
     Response response = await profileRepo.sendFriendRequestLists(page);
     _isLoading = false;
+    callForGetAllSuggestFriendRequest();
     if (response.statusCode == 200) {
       response.body.forEach((element) {
         sendFriendRequestLists.add(SendFriendRequestModel.fromJson(element));
@@ -353,6 +371,25 @@ class ProfileProvider with ChangeNotifier {
 
   removeRequestAfterCancelRequest(int index) {
     sendFriendRequestLists.removeAt(index);
+    notifyListeners();
+  }
+
+//TODO: ************************* for Send Friend Request cancel Friend Request or unfriend
+
+   sendFriendRequest(int userID, int index) async {
+    Response response = await profileRepo.sendFriendRequest(userID.toString());
+    if (response.statusCode == 201) {
+      suggestFriendRequestList.removeAt(index);
+      Fluttertoast.showToast(msg: response.body['message']);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
+
+  Future cancelSuggestedFriend(int index) async {
+    suggestFriendRequestList.removeAt(index);
     notifyListeners();
   }
 

@@ -5,7 +5,7 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/chat/chats_screen.dart';
-import 'package:als_frontend/screens/dashboard/page_or_group_decesion_group.dart';
+import 'package:als_frontend/screens/dashboard/friend_request_screen.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/more/more_screen.dart';
 import 'package:als_frontend/screens/notification/notification_screen.dart';
@@ -79,7 +79,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             icon: SvgPicture.asset(ImagesModel.friendRequestURI,
                                 color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, width: 22, height: 22),
                             selectedColor: Colors.blue,
-                            title: Text('Group',
+                            title: Text('Friend',
                                 style: latoStyle600SemiBold.copyWith(
                                     color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, fontSize: 12))),
                         AnimatedBarItems(
@@ -187,7 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             },
                             children: const [
                               HomeScreen(),
-                              FriendReqSuggestion(),
+                              FriendRequestSuggestionScreen(),
                               NotificationScreen(),
                               ChatsScreen(),
                               MoreScreen(),
