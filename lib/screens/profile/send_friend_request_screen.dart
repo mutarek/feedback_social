@@ -16,7 +16,8 @@ class SendFriendRequestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProfileProvider>(context, listen: false).callForgetAllFriendRequest();
+    Provider.of<ProfileProvider>(context, listen: false)
+        .callForgetAllFriendRequest();
     return Scaffold(
       backgroundColor: Palette.scaffold,
       appBar: AppBar(
@@ -28,7 +29,11 @@ class SendFriendRequestScreen extends StatelessWidget {
             onPressed: () {
               Get.back();
             }),
-        title: CustomText(title: 'All Friends Request', color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+        title: CustomText(
+            title: 'All Friends Request',
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+            fontSize: 16),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -43,45 +48,73 @@ class SendFriendRequestScreen extends StatelessWidget {
                   children: [
                     Center(
                         child: CustomText(
-                      title: 'You Have (${profileProvider.sendFriendRequestLists.length}) Friend Request',
+                      title:
+                          'You Have (${profileProvider.sendFriendRequestLists.length}) Friend Request',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
-                    )),//this text is added for test commit
+                    )), //this text is added for test commit
                     const SizedBox(height: 10),
                     ListView.builder(
-                        itemCount: profileProvider.sendFriendRequestLists.length,
+                        itemCount:
+                            profileProvider.sendFriendRequestLists.length,
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          SendFriendRequestModel sendFriendRequestModel = profileProvider.sendFriendRequestLists[index];
+                          SendFriendRequestModel sendFriendRequestModel =
+                              profileProvider.sendFriendRequestLists[index];
                           return Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
                             margin: const EdgeInsets.only(bottom: 10),
-                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5), boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-                            ]),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.withOpacity(.1),
+                                      blurRadius: 10.0,
+                                      spreadRadius: 3.0,
+                                      offset: const Offset(0.0, 0.0))
+                                ]),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (_) => PublicProfileScreen(sendFriendRequestModel.fromUser!.id.toString(),
-                                              index: index, isFromFriendRequestScreen: true)));
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  PublicProfileScreen(
+                                                      sendFriendRequestModel
+                                                          .fromUser!.id
+                                                          .toString(),
+                                                      index: index,
+                                                      isFromFriendRequestScreen:
+                                                          true)));
                                     },
                                     child: Row(
                                       children: [
-                                        ProfileAvatar(profileImageUrl: sendFriendRequestModel.fromUser!.profileImage!),
+                                        ProfileAvatar(
+                                            profileImageUrl:
+                                                sendFriendRequestModel
+                                                    .fromUser!.profileImage!),
                                         const SizedBox(width: 8.0),
                                         Expanded(
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text('${sendFriendRequestModel.fromUser!.firstName} ${sendFriendRequestModel.fromUser!.lastName}',
-                                                  style: latoStyle600SemiBold.copyWith(fontSize: 12)),
-                                              Text(getDate(sendFriendRequestModel.timestamp!, context),
-                                                  style: latoStyle400Regular.copyWith(fontSize: 12)),
+                                              Text(
+                                                  '${sendFriendRequestModel.fromUser!.firstName} ${sendFriendRequestModel.fromUser!.lastName}',
+                                                  style: latoStyle600SemiBold
+                                                      .copyWith(fontSize: 12)),
+                                              Text(
+                                                  getDate(
+                                                      sendFriendRequestModel
+                                                          .timestamp!,
+                                                      context),
+                                                  style: latoStyle400Regular
+                                                      .copyWith(fontSize: 12)),
                                             ],
                                           ),
                                         ),
@@ -100,7 +133,10 @@ class SendFriendRequestScreen extends StatelessWidget {
                                           backgroundColor: Colors.green,
                                           height: 30,
                                           onTap: () {
-                                            profileProvider.acceptFriendRequest(sendFriendRequestModel.id.toString(), index);
+                                            profileProvider.acceptFriendRequest(
+                                                sendFriendRequestModel.id
+                                                    .toString(),
+                                                index);
                                           },
                                         )),
                                     const SizedBox(height: 5),
@@ -113,7 +149,10 @@ class SendFriendRequestScreen extends StatelessWidget {
                                           backgroundColor: Colors.red,
                                           height: 30,
                                           onTap: () {
-                                            profileProvider.cancelFriendRequest(sendFriendRequestModel.id.toString(), index);
+                                            profileProvider.cancelFriendRequest(
+                                                sendFriendRequestModel.id
+                                                    .toString(),
+                                                index);
                                           },
                                         )),
                                   ],
