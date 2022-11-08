@@ -45,7 +45,7 @@ class SendFriendRequestScreen extends StatelessWidget {
                         child: CustomText(
                       title: 'You Have (${profileProvider.sendFriendRequestLists.length}) Friend Request',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
-                    )),
+                    )),//this text is added for test commit
                     const SizedBox(height: 10),
                     ListView.builder(
                         itemCount: profileProvider.sendFriendRequestLists.length,
