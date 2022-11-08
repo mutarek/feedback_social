@@ -125,7 +125,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
 
   Widget menuRow(double width, GroupProvider groupProvider, double height, BuildContext context) {
     return Container(
-      height: 270,
+      height: height*0.37,
       width: width,
       color: Palette.scaffold,
       child: Column(
