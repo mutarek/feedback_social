@@ -44,13 +44,7 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
       length: 2,
       child: Scaffold(
           backgroundColor: AppColors.scaffold,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
-            elevation: 1,
-            title: const Text("FeedBack",
-                style: TextStyle(color: AppColors.feedback, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2)),
-          ),
+
           body: Consumer<ProfileProvider>(
             builder: (context, profileProvider, child) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

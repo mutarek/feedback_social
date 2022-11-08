@@ -40,18 +40,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     Provider.of<NotificationProvider>(context, listen: false).notificationRead();
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          "Notifications",
-          style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
-        ),
-      ),
+
       body: Consumer<NotificationProvider>(
         builder: (context, notificationProvider, child) => RefreshIndicator(
             child: notificationProvider.isLoading

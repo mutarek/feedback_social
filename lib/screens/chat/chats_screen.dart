@@ -46,22 +46,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: CustomText(title: 'Chat ', color: Palette.primary, fontWeight: FontWeight.bold, fontSize: 27),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: [
-          CircleButton(
-            radius: 35.0,
-            icon: Icons.search,
-            iconSize: 20.0,
-            onPressed: () {
-              Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
-              Get.to(SearchScreen());
-            },
-          ),
-        ],
-      ),
       body: RefreshIndicator(
         onRefresh: () {
           return _refresh(context);

@@ -10,6 +10,7 @@ import 'package:als_frontend/screens/more/widget/custom_menu_card.dart';
 import 'package:als_frontend/screens/page/my_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/send_friend_request_screen.dart';
+import 'package:als_frontend/screens/settings/widget/Settings_widget.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
@@ -28,14 +29,7 @@ class MoreScreen extends StatelessWidget {
     final double h = MediaQuery.of(context).size.height;
     final double w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: AppColors.scaffold,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 1,
-        title: const Text("FeedBack",
-            style: TextStyle(color: AppColors.feedback, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2)),
-      ),
+      backgroundColor: Colors.white,
       body: Consumer<AuthProvider>(
         builder: (context, authProvider, child) {
           return SingleChildScrollView(
@@ -44,9 +38,7 @@ class MoreScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: h * 0.01,
-                  ),
+                  SizedBox(height: h * 0.01),
                   Center(
                     child: Material(
                       color: Colors.white,
@@ -79,81 +71,46 @@ class MoreScreen extends StatelessWidget {
                   ),
                   //
                   const SizedBox(height: 15),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomMenuCard(
-                            h: h,
-                            svgName: "assets/menu/group.svg",
-                            iconColor: Palette.primary,
-                            iconName: "group",
-                            navigation: () {
-                              Get.to(const MyGroupScreen());
 
-                            }),
-                      ),
-                      Expanded(
-                        child: CustomMenuCard(
-                            h: h,
-                            svgName: "assets/menu/page.svg",
-                            iconColor: Palette.primary,
-                            iconName: "Page",
-                            navigation: () {
-                              Get.to(const MyPageScreen());
-                            }),
-                      ),
-                    ],
+                  SettingsWidget(
+                    image: 'assets/menu/group.svg',
+                    name: "Groups",
+                    subName: "",
+                    isShowIconsColor: false,
+                    goingScreen: () {
+                      Get.to(const MyGroupScreen());
+                    },
                   ),
 
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomMenuCard(
-                            h: h,
-                            svgName: "assets/menu/friend.svg",
-                            iconColor: Palette.primary,
-                            iconName: "Friends",
-                            navigation: () {
-                              Get.to(() => const SendFriendRequestScreen());
-                            }),
-                      ),
-                      Expanded(
-                        child: CustomMenuCard(
-                            h: h,
-                            svgName: "assets/menu/animal.svg",
-                            iconColor: Palette.primary,
-                            iconName: "Animal",
-                            navigation: () {
-                              Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                              Get.to(const MyAnimalScreen());
-                            }),
-                      ),
-                    ],
+                  SettingsWidget(
+                    image: 'assets/menu/page.svg',
+                    name: "Page",
+                    subName: "",
+                    isShowIconsColor: false,
+                    goingScreen: () {
+                      Get.to(const MyPageScreen());
+                    },
                   ),
 
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CustomMenuCard(
-                            h: h,
-                            svgName: "assets/menu/settings.svg",
-                            iconColor: Palette.primary,
-                            iconName: "Settings",
-                            navigation: () {
-                              Get.to(() => const SettingsScreen());
-                            }),
-                      ),
-                      Expanded(
-                        child: CustomMenuCard(
-                            h: h,
-                            svgName: "assets/svg/tarmscondition.svg",
-                            iconColor: Palette.primary,
-                            iconName: "Terms & Conditions",
-                            navigation: () {
-                              Get.to(() => const TermsAndConditionsScreen());
-                            }),
-                      ),
-                    ],
+                  SettingsWidget(
+                    image: 'assets/menu/animal.svg',
+                    name: "Animal",
+                    subName: "",
+                    isShowIconsColor: false,
+                    goingScreen: () {
+                      Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+                      Get.to(const MyAnimalScreen());
+                    },
+                  ),
+
+                  SettingsWidget(
+                    image: 'assets/menu/settings.svg',
+                    name: "Settings",
+                    subName: "",
+                    isShowIconsColor: false,
+                    goingScreen: () {
+                      Get.to(const SettingsScreen());
+                    },
                   ),
 
                   Center(

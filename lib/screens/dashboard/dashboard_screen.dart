@@ -174,7 +174,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   )
                                 ],
                               )
-                            : const SizedBox(),
+                            : AppBar(
+                                title: CustomText(
+                                    title: dashboardProvider.selectIndex == 1
+                                        ? 'Friend'
+                                        : dashboardProvider.selectIndex == 2
+                                            ? 'Notifications'
+                                            : dashboardProvider.selectIndex == 3
+                                                ? 'Chats'
+                                                : 'Feedback',
+                                    color: AppColors.feedback,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 27),
+                                backgroundColor: Colors.white,
+                                elevation: 0,
+                                actions: [
+                                  dashboardProvider.selectIndex == 3
+                                      ? CircleButton(
+                                          radius: 35.0,
+                                          icon: Icons.search,
+                                          iconSize: 20.0,
+                                          onPressed: () {
+                                            Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
+                                            Get.to(SearchScreen());
+                                          },
+                                        )
+                                      : SizedBox.shrink(),
+                                ],
+                              ),
                         Expanded(
                           child: PageView(
                             controller: controller,
