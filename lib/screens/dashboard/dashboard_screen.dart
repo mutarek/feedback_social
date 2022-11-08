@@ -42,7 +42,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
   }
 
-  int selected = 0;
 
   @override
   Widget build(BuildContext context) {

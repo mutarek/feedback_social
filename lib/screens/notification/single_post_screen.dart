@@ -97,49 +97,88 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
           builder: (context, newsFeedProvider, commentProvider, authProvider, child) => Scaffold(
                 backgroundColor: Colors.white,
                 bottomSheet: Container(
+                  height: 70,
+                  padding: const EdgeInsets.only(top: 5),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                       ],
                       borderRadius: BorderRadius.circular(0)),
-                  child: TextField(
-                    maxLines: null,
-                    textAlign: TextAlign.start,
-                    decoration: InputDecoration(
-                        suffixIcon: commentProvider.isCommentLoading
-                            ? const SizedBox(height: 40, width: 40, child: Center(child: CircularProgressIndicator()))
-                            : IconButton(
-                                onPressed: () {
-                                  commentProvider
-                                      .addComment(commentController.text, authProvider.name, authProvider.profileImage,
-                                          newsFeedProvider.singleNewsFeedModel.id!, int.parse(authProvider.userID), widget.url)
-                                      .then((value) {
-                                    if (value == true) {
-                                      newsFeedProvider.updateSingleCommentDataCount();
-                                      if (widget.isHomeScreen) {
-                                        Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                      } else if (widget.isProfileScreen) {
-                                        Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                      } else if (widget.isFromGroup) {
-                                        Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                      } else if (widget.isFromPage) {
-                                        Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                  child: Column(
+                    children: [
+                      commentProvider.isShowCancelButton
+                          ? Row(
+                              children: [
+                                const SizedBox(width: 15),
+                                CustomText(title: 'Replying to ', color: Colors.black),
+                                CustomText(title: '${commentProvider.replyUserName} .', color: Colors.black, fontWeight: FontWeight.w700),
+                                InkWell(
+                                    onTap: () {
+                                      commentProvider.resetReply();
+                                    },
+                                    child: CustomText(title: 'Cancel', color: Colors.grey, fontWeight: FontWeight.w700)),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                      TextField(
+                        maxLines: 1,
+                        textAlign: TextAlign.start,
+                        decoration: InputDecoration(
+                            suffixIcon: commentProvider.isCommentLoading
+                                ? const SizedBox(height: 40, width: 40, child: Center(child: CircularProgressIndicator()))
+                                : IconButton(
+                                    onPressed: () {
+                                      if (commentProvider.isShowCancelButton) {
+                                        FocusScope.of(context).unfocus();
+                                        commentProvider.addReply(commentController.text, widget.url).then((value) {
+                                          if (value) {
+                                            commentController.clear();
+                                            Provider.of<NewsFeedProvider>(context, listen: false).updateSingleCommentDataCount();
+                                            if (widget.isHomeScreen) {
+                                              Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isProfileScreen) {
+                                              Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isFromGroup) {
+                                              Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isFromPage) {
+                                              Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            }
+                                          }
+                                        });
+                                      } else {
+                                        commentProvider
+                                            .addComment(commentController.text, authProvider.name, authProvider.profileImage,
+                                                newsFeedProvider.singleNewsFeedModel.id!, int.parse(authProvider.userID), widget.url)
+                                            .then((value) {
+                                          if (value == true) {
+                                            newsFeedProvider.updateSingleCommentDataCount();
+                                            if (widget.isHomeScreen) {
+                                              Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isProfileScreen) {
+                                              Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isFromGroup) {
+                                              Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isFromPage) {
+                                              Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            }
+                                          }
+                                        });
                                       }
-                                    }
-                                  });
 
-                                  commentController.text = "";
-                                  // timelineProvider.channelDismiss();
-                                  FocusScope.of(context).unfocus();
-                                },
-                                icon: Icon(FontAwesomeIcons.paperPlane, color: Palette.primary, size: height * 0.05 * .5),
-                              ),
-                        contentPadding: EdgeInsets.fromLTRB(width * 0.04, height * 0.017, width * 0.02, 00),
-                        hintText: "Write Comment Here...",
-                        hintStyle: GoogleFonts.lato(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black.withOpacity(.6)),
-                        border: InputBorder.none),
-                    controller: commentController,
+                                      commentController.text = "";
+                                      // timelineProvider.channelDismiss();
+                                      FocusScope.of(context).unfocus();
+                                    },
+                                    icon: Icon(FontAwesomeIcons.paperPlane, color: Palette.primary, size: height * 0.05 * .5),
+                                  ),
+                            contentPadding: EdgeInsets.fromLTRB(width * 0.04, height * 0.017, width * 0.02, 00),
+                            hintText: "Write ${commentProvider.isShowCancelButton ? 'Reply' : 'Comment'} Here...",
+                            hintStyle: GoogleFonts.lato(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black.withOpacity(.6)),
+                            border: InputBorder.none),
+                        controller: commentController,
+                      ),
+                    ],
                   ),
                 ),
                 body: newsFeedProvider.isLoading
@@ -393,9 +432,9 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                   alignment: Alignment.topCenter,
                                   child: commentProvider.comments.isEmpty
                                       ? Container(
-                                      height: 40,
-                                      alignment: Alignment.center,
-                                      child: Text('No Comment Found', style: latoStyle800ExtraBold.copyWith()))
+                                          height: 40,
+                                          alignment: Alignment.center,
+                                          child: Text('No Comment Found', style: latoStyle800ExtraBold.copyWith()))
                                       : ListView.builder(
                                           itemCount: commentProvider.comments.length,
                                           shrinkWrap: true,

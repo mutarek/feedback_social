@@ -21,8 +21,10 @@ class CommentProvider with ChangeNotifier {
     comments.clear();
     comments = [];
     isLoading = true;
+    resetReply(isFirstTime: true);
     Response response = await commentRepo.getAllCommentData(url);
     isLoading = false;
+
     if (response.statusCode == 200) {
       response.body.forEach((element) {
         CommentModels comment = CommentModels.fromJson(element);
@@ -143,10 +145,11 @@ class CommentProvider with ChangeNotifier {
 
   bool isReplyButtonLoading = false;
 
-  Future<bool> addReply(String comment, String url, int index) async {
-    isReplyButtonLoading = true;
-    Response response = await commentRepo.addReply(url, comments[index].id.toString(), comment);
-    isReplyButtonLoading = false;
+  Future<bool> addReply(String comment, String url) async {
+    isCommentLoading = true;
+    notifyListeners();
+    Response response = await commentRepo.addReply(url, comments[replyIndex].id.toString(), comment);
+    isCommentLoading = false;
     if (response.statusCode == 201) {
       Replies c = Replies(
         id: response.body['id'],
@@ -166,5 +169,33 @@ class CommentProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: "Something went wrong");
       return false;
     }
+  }
+
+  //// for reply button
+  String replyUserName = '';
+  String replyURL = '';
+
+  int replyIndex = -1;
+  bool isShowCancelButton = false;
+
+  addReplyUserNameAndIndex(String value, String url, int index) {
+    replyUserName = value;
+    replyIndex = index;
+    replyURL = url;
+    isShowCancelButton = true;
+    notifyListeners();
+  }
+
+  resetReply({bool isFirstTime = false}) {
+    replyUserName = '';
+    replyURL = '';
+    replyIndex = -1;
+    isShowCancelButton = false;
+    if (!isFirstTime) notifyListeners();
+  }
+
+  changeCancelButtonStatus(bool status) {
+    isShowCancelButton = status;
+    notifyListeners();
   }
 }
