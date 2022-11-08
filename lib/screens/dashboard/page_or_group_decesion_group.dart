@@ -161,11 +161,7 @@ class FriendReqSuggestion extends StatelessWidget {
             backgroundColor: Colors.white,
             elevation: 1,
             title: const Text("FeedBack",
-                style: TextStyle(
-                    color: AppColors.feedback,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -1.2)),
+                style: TextStyle(color: AppColors.feedback, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2)),
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -175,54 +171,45 @@ class FriendReqSuggestion extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Container(
                     height: height * 0.055,
-                    decoration: BoxDecoration(
-                        color: Colors.black26, borderRadius: BorderRadius.circular(25)),
-                    child: TabBar(
-                        indicator: BoxDecoration(
-                            color: AppColors.feedback, borderRadius: BorderRadius.circular(25)),
-                        tabs: [
-                          Text("Friend request"),
-                          Text("Suggested friend"),
-                        ]),
+                    decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(25)),
+                    child: TabBar(indicator: BoxDecoration(color: AppColors.feedback, borderRadius: BorderRadius.circular(25)), tabs: const [
+                      Text("Friend request"),
+                      Text("Suggested friend"),
+                    ]),
                   ),
                 ),
                 Expanded(
                   child: TabBarView(children: [
                     Consumer<ProfileProvider>(builder: (context, profileProvider, child) {
                       return profileProvider.isLoading
-                          ? FriendReqShimmerWidget()
+                          ? const FriendReqShimmerWidget()
                           : Container(
                               child: profileProvider.sendFriendRequestLists.isEmpty
-                                  ? Center(child: Text("you have no friend request"))
+                                  ? const Center(child: Text("you have no friend request"))
                                   : ListView.builder(
-                                      physics: BouncingScrollPhysics(),
+                                      physics: const BouncingScrollPhysics(),
                                       itemCount: profileProvider.sendFriendRequestLists.length,
                                       itemBuilder: (context, index) {
-                                        SendFriendRequestModel sendFriendRequestModel =
-                                            profileProvider.sendFriendRequestLists[index];
+                                        SendFriendRequestModel sendFriendRequestModel = profileProvider.sendFriendRequestLists[index];
                                         return FriendReqWidget(
                                           height: height,
                                           width: width,
                                           imgUrl: sendFriendRequestModel.fromUser!.profileImage!,
                                           gotoProfileScreen: () {
                                             Navigator.of(context).push(MaterialPageRoute(
-                                                builder: (_) => PublicProfileScreen(
-                                                    sendFriendRequestModel.fromUser!.id.toString(),
-                                                    index: index,
-                                                    isFromFriendRequestScreen: true)));
+                                                builder: (_) => PublicProfileScreen(sendFriendRequestModel.fromUser!.id.toString(),
+                                                    index: index, isFromFriendRequestScreen: true)));
                                           },
                                           userName:
                                               "${sendFriendRequestModel.fromUser!.firstName}${sendFriendRequestModel.fromUser!.lastName}",
                                           fastButtunName: "Confirm",
                                           fastbuttunColor: Colors.green,
                                           fastButton: () {
-                                            profileProvider.acceptFriendRequest(
-                                                sendFriendRequestModel.id.toString(), index);
+                                            profileProvider.acceptFriendRequest(sendFriendRequestModel.id.toString(), index);
                                           },
                                           seconButunName: "cancel",
                                           secondButton: () {
-                                            profileProvider.cancelFriendRequest(
-                                                sendFriendRequestModel.id.toString(), index);
+                                            profileProvider.cancelFriendRequest(sendFriendRequestModel.id.toString(), index);
                                           },
                                         );
                                       }));
@@ -230,29 +217,25 @@ class FriendReqSuggestion extends StatelessWidget {
 
                     //Todo: Suggestted friend
 
-                    Consumer2<ProfileProvider, PublicProfileProvider>(
-                        builder: (context, profileProvider, publicProfileProvider, child) {
+                    Consumer2<ProfileProvider, PublicProfileProvider>(builder: (context, profileProvider, publicProfileProvider, child) {
                       return Container(
                           child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               itemCount: profileProvider.suggestFriendRequestlist.length,
                               itemBuilder: (context, index) {
-                                SuggestFriendModel suggestFriendRequestModel =
-                                    profileProvider.suggestFriendRequestlist[index];
+                                SuggestFriendModel suggestFriendRequestModel = profileProvider.suggestFriendRequestlist[index];
                                 return FriendReqWidget(
                                   height: height,
                                   width: width,
-                                  imgUrl: suggestFriendRequestModel.results![index].profileImage!,
+                                  imgUrl: suggestFriendRequestModel.profileImage!,
                                   gotoProfileScreen: () {},
                                   fastbuttunColor: AppColors.postLikeCountContainer,
-                                  userName:
-                                      "${suggestFriendRequestModel.results![index].firstName}${suggestFriendRequestModel.results![index].lastName}",
+                                  userName: "${suggestFriendRequestModel.firstName}${suggestFriendRequestModel.lastName}",
                                   fastButtunName: "Add friend",
                                   fastButton: () {},
                                   seconButunName: "cancel",
                                   secondButton: () {
-                                    profileProvider.cancelFriendRequest(
-                                        suggestFriendRequestModel.results![index].id.toString(), index);
+                                    profileProvider.cancelFriendRequest(suggestFriendRequestModel.id.toString(), index);
                                   },
                                 );
                               }));
