@@ -8,7 +8,6 @@ import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/app_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
-import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';

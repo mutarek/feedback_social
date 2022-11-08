@@ -83,12 +83,11 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                     ? publicProvider.publicProfileData.coverImage!
                                     : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                                 coverPhotoChange: () {}),
-                            ProfilePhotowidget(
+                            ProfilePhotoWidget(
                               viewProfilePhoto: () {
                                 Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.profileImage!));
                               },
                               isTrue: false,
-                              profilePhotoChange: () {},
                               profileImage: (publicProvider.publicProfileData.profileImage != null)
                                   ? publicProvider.publicProfileData.profileImage!
                                   : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",

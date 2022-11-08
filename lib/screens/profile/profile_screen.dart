@@ -70,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Stack(
                           clipBehavior: Clip.none,
                           children: [
-                            Container(height: 200, width: width, color: Palette.scaffold),
+                            Container(height: 230, width: width, color: Colors.white),
                             ProfileCoverPhotoWidget(
                                 back: () {
                                   Navigator.of(context).pop();
@@ -85,21 +85,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Navigator.of(context)
                                       .push(MaterialPageRoute(builder: (_) => const UpdateCoverPhoto(isCoverPhotoUpload: true)));
                                 })),
-                            ProfilePhotowidget(
-                                profilePhotoChange: () {
-                                  Navigator.of(context)
-                                      .push(MaterialPageRoute(builder: (_) => const UpdateCoverPhoto(isCoverPhotoUpload: false)));
-                                },
-                                profileImage: (profileProvider.isProfileLoading == false)
-                                    ? profileProvider.userprofileData.profileImage!
-                                    : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
-                                viewProfilePhoto: () {
-                                  Get.to(() => SingleImageView(imageURL: profileProvider.userprofileData.profileImage!));
-                                })
+                            Positioned(
+                              bottom: 0,
+                              left: 30,
+                              child: ProfilePhotoWidget(
+                                  profileImage: (profileProvider.isProfileLoading == false)
+                                      ? profileProvider.userprofileData.profileImage!
+                                      : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
+                                  viewProfilePhoto: () {
+                                    Get.to(() => SingleImageView(imageURL: profileProvider.userprofileData.profileImage!));
+                                  }),
+                            )
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 25, left: width * 0.05),
+                          padding: EdgeInsets.only(top: 2, left: width * 0.05),
                           child: Text(
                             "${profileProvider.userprofileData.firstName!} ${profileProvider.userprofileData.lastName!}",
                             style: GoogleFonts.lato(fontSize: width * 0.05, fontWeight: FontWeight.w700),
@@ -109,53 +109,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           padding: EdgeInsets.only(top: height * 0.01, left: width * 0.04, right: width * 0.04),
                           child: Container(
                             height: height * 0.043,
-
                             decoration: const BoxDecoration(color: AppColors.scaffold, borderRadius: BorderRadius.all(Radius.circular(4))),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-
-
-                               Expanded(
-                                 flex: 1,
-                                 child: Container(
-                                   child: Row(
-                                     mainAxisAlignment: MainAxisAlignment.center,
-                                     children: [
-                                       InkWell(
-                                         onTap: () {
-                                           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FriendScreen()));
-                                         },
-                                         child: Text(
-                                           "${profileProvider.userprofileData.friends!.length}",
-                                           style:
-                                           GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
-                                         ),
-                                       ),
-                                       Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
-
-                                     ],
-                                   ),
-                                 ),
-                               ),
-
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "${profileProvider.userprofileData.followers!.length}",
-                                    style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FriendScreen()));
+                                          },
+                                          child: Text(
+                                            "${profileProvider.userprofileData.friends!.length}",
+                                            style: GoogleFonts.lato(
+                                                fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                          ),
+                                        ),
+                                        Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
+                                      ],
+                                    ),
                                   ),
-                                  Text(" Followers", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
-
-                                ],
-                              ),
-                            ),
-                          ),
-
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${profileProvider.userprofileData.followers!.length}",
+                                          style:
+                                              GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                        ),
+                                        Text(" Followers", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),

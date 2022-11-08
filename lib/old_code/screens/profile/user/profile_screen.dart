@@ -85,11 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   coverPhotoProvider.imageUrl = provider.userprofileData.coverImage!;
                                   Get.to(() => const UpdateCoverPhoto());
                                 })),
-                            ProfilePhotowidget(
-                                profilePhotoChange: () {
-                                  profileImageProvider.imageUrl = provider.userprofileData.profileImage!;
-                                  Get.to(() => const UpdateProfileImage());
-                                },
+                            ProfilePhotoWidget(
                                 profileImage: (provider.loading == false)
                                     ? provider.userprofileData.profileImage!
                                     : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
@@ -101,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
 
                         Padding(
-                          padding: EdgeInsets.only(top: height * 0.01, left: width * 0.05),
+                          padding: EdgeInsets.only(top: 0, left: width * 0.05),
                           child: Text(
                             "${provider.userprofileData.firstName!} ${provider.userprofileData.lastName!}",
                             style: GoogleFonts.lato(fontSize: width * 0.05, fontWeight: FontWeight.w700),

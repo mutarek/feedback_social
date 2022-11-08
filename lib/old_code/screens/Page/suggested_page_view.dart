@@ -414,16 +414,12 @@ class _SuggestedPageViewState extends State<SuggestedPageView> {
                             ),
                           ),
                         ), //name
-                        ProfilePhotowidget(
+                        ProfilePhotoWidget(
                             viewProfilePhoto: () {
                               profileImageProvider.imageUrl = suggestedPageDetailsProvider.pageDetails.avatar;
                               Get.to(() => const SingleImageView());
                             },
-                            profilePhotoChange: () {
-                              imageProvider.imageUrl = suggestedPageDetailsProvider.pageDetails.avatar;
-                              imageProvider.id = suggestedPageDetailsProvider.pageDetails.id;
-                              Get.to(() => const UpdatePageProfilePic());
-                            },
+
                             profileImage: suggestedPageDetailsProvider.pageDetails.avatar)
                       ],
                     ),

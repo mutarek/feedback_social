@@ -231,7 +231,7 @@ class _AdminPageState extends State<AdminPage> {
                                             ),
                                           ),
                                         ), //name
-                                        ProfilePhotowidget(
+                                        ProfilePhotoWidget(
                                             viewProfilePhoto: () {
                                               profileImageProvider.imageUrl =
                                                   authorPageDetailsProvider
@@ -239,16 +239,7 @@ class _AdminPageState extends State<AdminPage> {
                                               Get.to(() =>
                                                   const SingleImageView());
                                             },
-                                            profilePhotoChange: () {
-                                              imageProvider.imageUrl =
-                                                  authorPageDetailsProvider
-                                                      .pageDetails.avatar;
-                                              imageProvider.id =
-                                                  authorPageDetailsProvider
-                                                      .pageDetails.id;
-                                              Get.to(() =>
-                                                  const UpdatePageProfilePic());
-                                            },
+
                                             profileImage:
                                                 authorPageDetailsProvider
                                                     .pageDetails.avatar)
