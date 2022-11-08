@@ -105,8 +105,7 @@ class PublicProfileProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int postID, int index) async {
-    Response response = await newsfeedRepo.addLike(postID);
-    if (response.body['liked'] == true) {
+    if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       publicNewsFeedLists[index].totalLike = publicNewsFeedLists[index].totalLike! + 1;
     } else {
@@ -114,6 +113,7 @@ class PublicProfileProvider with ChangeNotifier {
       publicNewsFeedLists[index].totalLike = publicNewsFeedLists[index].totalLike! - 1;
     }
     notifyListeners();
+    await newsfeedRepo.addLike(postID);
   }
 
   void updateCommentDataCount(int index) {

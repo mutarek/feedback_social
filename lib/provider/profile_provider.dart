@@ -147,8 +147,7 @@ class ProfileProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int postID, int index) async {
-    Response response = await newsfeedRepo.addLike(postID);
-    if (response.body['liked'] == true) {
+    if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
     } else {
@@ -156,6 +155,8 @@ class ProfileProvider with ChangeNotifier {
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
     }
     notifyListeners();
+
+    await newsfeedRepo.addLike(postID);
   }
 
   changeLikeStatus(int value, int index) async {
@@ -376,7 +377,7 @@ class ProfileProvider with ChangeNotifier {
 
 //TODO: ************************* for Send Friend Request cancel Friend Request or unfriend
 
-   sendFriendRequest(int userID, int index) async {
+  sendFriendRequest(int userID, int index) async {
     Response response = await profileRepo.sendFriendRequest(userID.toString());
     if (response.statusCode == 201) {
       suggestFriendRequestList.removeAt(index);

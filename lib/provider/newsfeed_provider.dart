@@ -77,9 +77,8 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  addLike(int postID, int index) async {
-    Response response = await newsFeedRepo.addLike(postID);
-    if (response.body['liked'] == true) {
+  addLike(int postID, int index, {bool isGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
+    if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
     } else {
@@ -87,6 +86,7 @@ class NewsFeedProvider with ChangeNotifier {
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
     }
     notifyListeners();
+    await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
   }
 
   changeLikeStatus(int value, int index) async {
@@ -162,7 +162,7 @@ class NewsFeedProvider with ChangeNotifier {
   }
 
   Future<int> singlePostLike(int postID, {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
-    Response response = await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupID: groupID);
+    Response response = await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
     if (response.statusCode == 200) {
       if (response.body['liked'] == true) {
         isLikeMe = true;

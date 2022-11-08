@@ -311,8 +311,7 @@ class GroupProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int groupID, int postID, int index) async {
-    Response response = await newsfeedRepo.addLikeONGroup(postID, groupID);
-    if (response.body['liked'] == true) {
+    if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! + 1;
     } else {
@@ -320,6 +319,7 @@ class GroupProvider with ChangeNotifier {
       groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! - 1;
     }
     notifyListeners();
+    await newsfeedRepo.addLikeONGroup(postID, groupID);
   }
 
   changeLikeStatus(int value, int index) async {

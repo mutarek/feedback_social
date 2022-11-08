@@ -1,18 +1,11 @@
 import 'package:als_frontend/data/model/response/CommentModels.dart';
 import 'package:als_frontend/helper/number_helper.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
-import 'package:als_frontend/provider/group_provider.dart';
-import 'package:als_frontend/provider/newsfeed_provider.dart';
-import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
-import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -50,8 +43,7 @@ class CommentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
+
     return Consumer<CommentProvider>(
         builder: (context, commentProvider, child) => Column(
           mainAxisAlignment: MainAxisAlignment.start,

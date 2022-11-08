@@ -65,67 +65,67 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                 child: (groupProvider.isLoading)
                     ? const MyGroupShimmerWidget()
                     : RefreshIndicator(
-                  onRefresh: () {
-                    return _refresh(context);
-                  },
-                  child: PageView(
-                    controller: pageController,
-                    onPageChanged: (value) {
-                      groupProvider.changeMenuValue(value);
-                    },
-                    children: [
-                      ListView(
-                        controller: controller,
-                        children: [
-                          menuRow(width, groupProvider, height, context),
-                          Column(
-                            children: [
-                              createPostWidget(context, authProvider, isForGroup: true, groupPageID: int.parse(widget.groupID)),
+                        onRefresh: () {
+                          return _refresh(context);
+                        },
+                        child: PageView(
+                          controller: pageController,
+                          onPageChanged: (value) {
+                            groupProvider.changeMenuValue(value);
+                          },
+                          children: [
+                            ListView(
+                              controller: controller,
+                              children: [
+                                menuRow(width, groupProvider, height, context),
+                                Column(
+                                  children: [
+                                    createPostWidget(context, authProvider, isForGroup: true, groupPageID: int.parse(widget.groupID)),
 
-                              /*----------------------------------------Newsfeed---------------------------------*/
-                              const SizedBox(height: 15),
-                              ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: groupProvider.groupAllPosts.length,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                        margin: const EdgeInsets.only(bottom: 10),
-                                        child: TimeLineWidget(groupProvider.groupAllPosts[index], index, groupProvider,
-                                            isGroup: true, groupPageID: int.parse(widget.groupID)));
-                                  }),
-                            ],
-                          )
-                        ],
+                                    /*----------------------------------------Newsfeed---------------------------------*/
+                                    const SizedBox(height: 15),
+                                    ListView.builder(
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: groupProvider.groupAllPosts.length,
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                              margin: const EdgeInsets.only(bottom: 10),
+                                              child: TimeLineWidget(groupProvider.groupAllPosts[index], index, groupProvider,
+                                                  isGroup: true, groupPageID: int.parse(widget.groupID)));
+                                        }),
+                                  ],
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                menuRow(width, groupProvider, height, context),
+                                GroupImageVideoView(int.parse(widget.groupID)),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                menuRow(width, groupProvider, height, context),
+                                GroupImageVideoView(int.parse(widget.groupID), isForImage: false),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                menuRow(width, groupProvider, height, context),
+                                const GroupMemberView(),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                      Column(
-                        children: [
-                          menuRow(width, groupProvider, height, context),
-                          GroupImageVideoView(int.parse(widget.groupID)),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          menuRow(width, groupProvider, height, context),
-                          GroupImageVideoView(int.parse(widget.groupID), isForImage: false),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          menuRow(width, groupProvider, height, context),
-                          const GroupMemberView(),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ));
   }
 
   Widget menuRow(double width, GroupProvider groupProvider, double height, BuildContext context) {
     return Container(
-      height: height*0.37,
+      height: 270,
       width: width,
       color: Palette.scaffold,
       child: Column(

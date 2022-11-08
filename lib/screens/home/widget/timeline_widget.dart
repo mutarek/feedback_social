@@ -157,8 +157,7 @@ class TimeLineWidget extends StatelessWidget {
             isHomeScreen: isHomeScreen,
             isFromProfile: isProfileScreen,
             groupPageID: groupPageID,
-            postID: newsFeedData.id as int,
-            isPage: isPage,
+            postID: newsFeedData.id as int
           ),
         ],
       ),
