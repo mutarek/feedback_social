@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 class FriendRequestSuggestionScreen extends StatefulWidget {
   const FriendRequestSuggestionScreen({Key? key}) : super(key: key);
 
-
   @override
   State<FriendRequestSuggestionScreen> createState() => _FriendRequestSuggestionScreenState();
 }
@@ -25,7 +24,6 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     Provider.of<ProfileProvider>(context, listen: false).callForgetAllFriendRequest();
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
@@ -34,6 +32,8 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
         Provider.of<ProfileProvider>(context, listen: false).updateSuggestedPageNo();
       }
     });
+
+    super.initState();
   }
 
   @override
@@ -44,7 +44,6 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
       length: 2,
       child: Scaffold(
           backgroundColor: AppColors.scaffold,
-
           body: Consumer<ProfileProvider>(
             builder: (context, profileProvider, child) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

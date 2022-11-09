@@ -346,6 +346,7 @@ class ProfileProvider with ChangeNotifier {
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
+
     notifyListeners();
   }
 
