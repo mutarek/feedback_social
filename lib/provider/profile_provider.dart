@@ -458,26 +458,28 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<FriendModel> friendLists = [];
+  // todo old code
 
-  callForGetAllFriends({int page = 1}) async {
-    friendLists.clear();
-    friendLists = [];
-    _isLoading = true;
-    Response response = await profileRepo.getAllFriends(page);
-    _isLoading = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
-        friendLists.add(FriendModel.fromJson(element));
-      });
-    } else {
-      Fluttertoast.showToast(msg: response.statusText!);
-    }
-    notifyListeners();
-  }
+  // List<FriendModel> friendLists = [];
+  //
+  // callForGetAllFriends({int page = 1}) async {
+  //   friendLists.clear();
+  //   friendLists = [];
+  //   _isLoading = true;
+  //   Response response = await profileRepo.getAllFriends(page);
+  //   _isLoading = false;
+  //   if (response.statusCode == 200) {
+  //     response.body.forEach((element) {
+  //       friendLists.add(FriendModel.fromJson(element));
+  //     });
+  //   } else {
+  //     Fluttertoast.showToast(msg: response.statusText!);
+  //   }
+  //   notifyListeners();
+  // }
 
   removeFriend(int index) {
-    friendLists.removeAt(index);
+    paginationFriendLists.removeAt(index);
     userprofileData.friends!.removeAt(index);
     notifyListeners();
   }
