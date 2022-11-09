@@ -5,6 +5,7 @@ import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.
 import 'package:als_frontend/screens/page/create_page_screen.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
       ),
       body: Consumer<PageProvider>(
           builder: (context, provider, child) => provider.isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(child: FriendReqShimmerWidget())
               : Column(
                   children: [
                     Center(
