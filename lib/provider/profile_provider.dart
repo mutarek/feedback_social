@@ -351,24 +351,37 @@ class ProfileProvider with ChangeNotifier {
   }
 
   //TODO:   for send Friend Request Lists
+  int friendRequestSelectPage = 1;
+  bool isBottomLoadingFriendRequest = false;
+  bool hasNextDataFriendRequest = false;
 
-  updateUpcomingFriendsRequest(){
-    selectPage++;
-    callForgetAllFriendRequest(page: selectPage);
+  updateUpcomingFriendsRequest() {
+    friendRequestSelectPage++;
+    callForgetAllFriendRequest(page: friendRequestSelectPage);
     notifyListeners();
   }
 
   List<SendFriendRequestModel> sendFriendRequestLists = [];
 
   callForgetAllFriendRequest({int page = 1}) async {
-    sendFriendRequestLists.clear();
-    sendFriendRequestLists = [];
-    _isLoading = true;
-    isLoadingSuggestedFriend = true;
+    if (page == 1) {
+      friendRequestSelectPage = 1;
+      sendFriendRequestLists.clear();
+      sendFriendRequestLists = [];
+      _isLoading = true;
+      isBottomLoadingFriendRequest = false;
+      hasNextDataFriendRequest = false;
+    } else {
+      isBottomLoadingFriendRequest = true;
+      notifyListeners();
+    }
+
     Response response = await profileRepo.sendFriendRequestLists(page);
     _isLoading = false;
-    callForGetAllSuggestFriendRequest();
+    isBottomLoadingFriendRequest = false;
+    if (page == 1) callForGetAllSuggestFriendRequest();
     if (response.statusCode == 200) {
+      hasNextDataFriendRequest = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
         sendFriendRequestLists.add(SendFriendRequestModel.fromJson(element));
       });
@@ -431,13 +444,13 @@ class ProfileProvider with ChangeNotifier {
 
   List<FriendModel> paginationFriendLists = [];
 
-  updateAllFriendsPage(){
+  updateAllFriendsPage() {
     selectPage++;
     callForGetAllFriendsPagination(page: selectPage);
     notifyListeners();
   }
 
-  callForGetAllFriendsPagination({int page =1}) async {
+  callForGetAllFriendsPagination({int page = 1}) async {
     if (page == 1) {
       selectPage = 1;
       paginationFriendLists.clear();

@@ -19,7 +19,7 @@ class FriendRequestSuggestionScreen extends StatefulWidget {
 
 class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionScreen> {
   ScrollController controller = ScrollController();
-  ScrollController confirmFriendRedController = ScrollController();
+  ScrollController confirmFriendRequestController = ScrollController();
 
   @override
   void initState() {
@@ -34,10 +34,10 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
     });
 
     // TODO: implement confirm friend req
-    confirmFriendRedController.addListener(() {
-      if (confirmFriendRedController.offset >= confirmFriendRedController.position.maxScrollExtent &&
-          !confirmFriendRedController.position.outOfRange &&
-          Provider.of<ProfileProvider>(context, listen: false).hasNextData) {
+    confirmFriendRequestController.addListener(() {
+      if (confirmFriendRequestController.offset >= confirmFriendRequestController.position.maxScrollExtent &&
+          !confirmFriendRequestController.position.outOfRange &&
+          Provider.of<ProfileProvider>(context, listen: false).hasNextDataFriendRequest) {
         Provider.of<ProfileProvider>(context, listen: false).updateUpcomingFriendsRequest();
       }
     });
@@ -76,32 +76,46 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                           ? const FriendReqShimmerWidget()
                           : profileProvider.sendFriendRequestLists.isEmpty
                               ? const Center(child: Text("you have no friend request"))
-                              : ListView.builder(
-                        controller: confirmFriendRedController,
+                              : ListView(
                                   physics: const BouncingScrollPhysics(),
-                                  itemCount: profileProvider.sendFriendRequestLists.length,
-                                  itemBuilder: (context, index) {
-                                    SendFriendRequestModel sendFriendRequestModel = profileProvider.sendFriendRequestLists[index];
-                                    return FriendRequestWidget(
-                                      width: width,
-                                      imgUrl: sendFriendRequestModel.fromUser!.profileImage!,
-                                      gotoProfileScreen: () {
-                                        Navigator.of(context).push(MaterialPageRoute(
-                                            builder: (_) => PublicProfileScreen(sendFriendRequestModel.fromUser!.id.toString(),
-                                                index: index, isFromFriendRequestScreen: true)));
-                                      },
-                                      userName: "${sendFriendRequestModel.fromUser!.firstName}${sendFriendRequestModel.fromUser!.lastName}",
-                                      firstButtonName: "Confirm",
-                                      firstButtonColor: Colors.green,
-                                      firstButtonOnTab: () {
-                                        profileProvider.acceptFriendRequest(sendFriendRequestModel.id.toString(), index);
-                                      },
-                                      secondButtonName: "cancel",
-                                      secondButtonOnTab: () {
-                                        profileProvider.cancelFriendRequest(sendFriendRequestModel.id.toString(), index);
-                                      },
-                                    );
-                                  }),
+                                  controller: confirmFriendRequestController,
+                                  children: [
+                                    ListView.builder(
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: profileProvider.sendFriendRequestLists.length,
+                                        itemBuilder: (context, index) {
+                                          SendFriendRequestModel sendFriendRequestModel = profileProvider.sendFriendRequestLists[index];
+                                          return FriendRequestWidget(
+                                            width: width,
+                                            imgUrl: sendFriendRequestModel.fromUser!.profileImage!,
+                                            gotoProfileScreen: () {
+                                              Navigator.of(context).push(MaterialPageRoute(
+                                                  builder: (_) => PublicProfileScreen(sendFriendRequestModel.fromUser!.id.toString(),
+                                                      index: index, isFromFriendRequestScreen: true)));
+                                            },
+                                            userName:
+                                                "${sendFriendRequestModel.fromUser!.firstName}${sendFriendRequestModel.fromUser!.lastName}",
+                                            firstButtonName: "Confirm",
+                                            firstButtonColor: Colors.green,
+                                            firstButtonOnTab: () {
+                                              profileProvider.acceptFriendRequest(sendFriendRequestModel.id.toString(), index);
+                                            },
+                                            secondButtonName: "cancel",
+                                            secondButtonOnTab: () {
+                                              profileProvider.cancelFriendRequest(sendFriendRequestModel.id.toString(), index);
+                                            },
+                                          );
+                                        }),
+                                    profileProvider.isBottomLoadingFriendRequest
+                                        ? Container(
+                                            width: MediaQuery.of(context).size.width,
+                                            height: 100,
+                                            alignment: Alignment.center,
+                                            child: const CupertinoActivityIndicator())
+                                        : const SizedBox.shrink(),
+                                  ],
+                                ),
 
                       //Todo: Suggested friend
 

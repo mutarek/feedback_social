@@ -42,7 +42,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Consumer3<DashboardProvider, NotificationProvider, AuthProvider>(
