@@ -1,7 +1,6 @@
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/data/model/response/suggested_friend_model.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
-import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
@@ -20,6 +19,7 @@ class FriendRequestSuggestionScreen extends StatefulWidget {
 
 class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionScreen> {
   ScrollController controller = ScrollController();
+  ScrollController confirmFriendRedController = ScrollController();
 
   @override
   void initState() {
@@ -30,6 +30,15 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
           !controller.position.outOfRange &&
           Provider.of<ProfileProvider>(context, listen: false).hasNextData) {
         Provider.of<ProfileProvider>(context, listen: false).updateSuggestedPageNo();
+      }
+    });
+
+    // TODO: implement confirm friend req
+    confirmFriendRedController.addListener(() {
+      if (confirmFriendRedController.offset >= confirmFriendRedController.position.maxScrollExtent &&
+          !confirmFriendRedController.position.outOfRange &&
+          Provider.of<ProfileProvider>(context, listen: false).hasNextData) {
+        Provider.of<ProfileProvider>(context, listen: false).updateUpcomingFriendsRequest();
       }
     });
 
@@ -68,6 +77,7 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                           : profileProvider.sendFriendRequestLists.isEmpty
                               ? const Center(child: Text("you have no friend request"))
                               : ListView.builder(
+                        controller: confirmFriendRedController,
                                   physics: const BouncingScrollPhysics(),
                                   itemCount: profileProvider.sendFriendRequestLists.length,
                                   itemBuilder: (context, index) {
