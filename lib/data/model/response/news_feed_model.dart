@@ -424,6 +424,7 @@ class Post {
         "description": description,
         "author": author!.toJson(),
         "total_image": totalImage,
+
         "images": List<dynamic>.from(images!.map((x) => x.toJson())),
         "total_video": totalVideo,
         "videos": List<dynamic>.from(videos!.map((x) => x)),
