@@ -362,7 +362,7 @@ class ProfileProvider with ChangeNotifier {
     _isLoading = false;
     callForGetAllSuggestFriendRequest();
     if (response.statusCode == 200) {
-      response.body.forEach((element) {
+      response.body['results'].forEach((element) {
         sendFriendRequestLists.add(SendFriendRequestModel.fromJson(element));
       });
     } else {

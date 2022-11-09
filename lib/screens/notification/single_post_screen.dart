@@ -219,6 +219,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                         ? ''
                                         : newsFeedProvider.singleNewsFeedModel.description!,
                                     style: latoStyle400Regular),
+                                SizedBox(height: 5),
                                 if ((newsFeedProvider.singleNewsFeedModel.totalImage! + newsFeedProvider.singleNewsFeedModel.totalVideo!) !=
                                     0)
                                   PostPhotoContainer(0, newsfeedModel: newsFeedProvider.singleNewsFeedModel),

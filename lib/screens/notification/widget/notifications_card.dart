@@ -26,7 +26,7 @@ class NotificationCard extends StatelessWidget {
     return InkWell(
       onTap: ontap,
       child: Container(
-          margin: EdgeInsets.only(bottom: 8),
+          margin: const EdgeInsets.only(bottom: 8),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: containerColor),
           child: Row(
             children: [
@@ -38,7 +38,7 @@ class NotificationCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(likecmnt, style: TextStyle(color: textColor)),
                     Padding(padding: EdgeInsets.only(top: height * 0.01), child: Text(time, style: TextStyle(color: textColor, fontSize: 10)))
                   ],

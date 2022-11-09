@@ -5,6 +5,7 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/notification/single_post_screen.dart';
 import 'package:als_frontend/screens/notification/widget/notifications_card.dart';
+import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -41,7 +42,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     Provider.of<NotificationProvider>(context, listen: false).notificationRead();
     return Scaffold(
-
       body: Consumer<NotificationProvider>(
         builder: (context, notificationProvider, child) => RefreshIndicator(
             child: notificationProvider.isLoading
@@ -61,10 +61,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                           if (noticeType.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
                             Get.to(() => SinglePostScreen(notificationProvider.notificationLists[index].url! + "comment/"));
-                          }else if (noticeType2.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
-                            Get.to(() => SinglePostScreen(notificationProvider.notificationLists[index].url! + "comment/"));
-                          }  else {}
-
+                          } else if (noticeType2.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => PublicProfileScreen(notificationProvider.notificationLists[index].actor!.id.toString())));
+                          } else {}
                         },
                         textColor: Colors.black,
                         likecmnt: "${notificationProvider.notificationLists[index].description}",
