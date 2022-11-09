@@ -1,5 +1,4 @@
 import 'package:als_frontend/data/model/response/friend_model.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
@@ -10,12 +9,33 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
-class FriendScreen extends StatelessWidget {
+class FriendScreen extends StatefulWidget {
   const FriendScreen({Key? key}) : super(key: key);
 
   @override
+  State<FriendScreen> createState() => _FriendScreenState();
+}
+
+class _FriendScreenState extends State<FriendScreen> {
+  ScrollController controller = ScrollController();
+
+  @override
+  void initState() {
+    Provider.of<ProfileProvider>(context, listen: false).callForGetAllFriendsPagination();
+
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange &&
+          Provider.of<ProfileProvider>(context, listen: false).hasNextData) {
+        Provider.of<ProfileProvider>(context, listen: false).updateAllFriendsPage();
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Provider.of<ProfileProvider>(context, listen: false).callForGetAllFriends();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -32,21 +52,23 @@ class FriendScreen extends StatelessWidget {
         builder: (context, profileProvider, child) {
           return profileProvider.isLoading
               ?FriendReqShimmerWidget() : ListView(
+            controller: controller,
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   children: [
                     Center(
                         child: CustomText(
-                      title: 'You Have (${profileProvider.friendLists.length}) Friend ',
+                      title: 'You Have (${profileProvider.paginationFriendLists.length}) Friend ',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
                     const SizedBox(height: 10),
                     ListView.builder(
-                        itemCount: profileProvider.friendLists.length,
+
+                        itemCount: profileProvider.paginationFriendLists.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          FriendModel friendModel = profileProvider.friendLists[index];
+                          FriendModel friendModel = profileProvider.paginationFriendLists[index];
                           return Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             margin: const EdgeInsets.only(bottom: 10),
@@ -72,7 +94,7 @@ class FriendScreen extends StatelessWidget {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text('${friendModel.fullName}', style: latoStyle600SemiBold.copyWith(fontSize: 12)),
+                                              Text('${friendModel.full_name}', style: latoStyle600SemiBold.copyWith(fontSize: 12)),
                                             ],
                                           ),
                                         ),

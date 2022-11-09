@@ -421,13 +421,49 @@ class ProfileProvider with ChangeNotifier {
   }
 
   //TODO:   for get All Friend
+
+  List<FriendModel> paginationFriendLists = [];
+
+  updateAllFriendsPage(){
+    selectPage++;
+    callForGetAllFriendsPagination(page: selectPage);
+    notifyListeners();
+  }
+
+  callForGetAllFriendsPagination({int page =1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      paginationFriendLists.clear();
+      paginationFriendLists = [];
+      isLoadingSuggestedFriend = true;
+      isBottomLoading = false;
+      hasNextData = false;
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    Response response = await profileRepo.getAllFriends(page);
+    isLoadingSuggestedFriend = false;
+    isBottomLoading = false;
+    if (response.statusCode == 200) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
+        FriendModel friendModel = FriendModel.fromJson(element);
+        paginationFriendLists.add(friendModel);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
+
   List<FriendModel> friendLists = [];
 
   callForGetAllFriends({int page = 1}) async {
     friendLists.clear();
     friendLists = [];
     _isLoading = true;
-
     Response response = await profileRepo.getAllFriends(page);
     _isLoading = false;
     if (response.statusCode == 200) {
