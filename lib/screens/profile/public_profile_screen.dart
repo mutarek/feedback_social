@@ -66,24 +66,26 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                 : SingleChildScrollView(
                     controller: controller,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      SizedBox(
-                        height: 200,
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            CoverPhotoWidget(
-                                isTrue: false,
-                                back: () {
-                                  Get.back();
-                                },
-                                viewCoverPhoto: () {
-                                  Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.coverImage!));
-                                },
-                                coverPhoto: (publicProvider.publicProfileData.coverImage != null)
-                                    ? publicProvider.publicProfileData.coverImage!
-                                    : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
-                                coverPhotoChange: () {}),
-                            ProfilePhotoWidget(
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(height: 230, width: width, color: Colors.white),
+                          CoverPhotoWidget(
+                              isTrue: false,
+                              back: () {
+                                Get.back();
+                              },
+                              viewCoverPhoto: () {
+                                Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.coverImage!));
+                              },
+                              coverPhoto: (publicProvider.publicProfileData.coverImage != null)
+                                  ? publicProvider.publicProfileData.coverImage!
+                                  : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
+                              coverPhotoChange: () {}),
+                          Positioned(
+                            bottom: 0,
+                            left: 30,
+                            child: ProfilePhotoWidget(
                               viewProfilePhoto: () {
                                 Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.profileImage!));
                               },
@@ -92,10 +94,10 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                   ? publicProvider.publicProfileData.profileImage!
                                   : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 9),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: CustomText(

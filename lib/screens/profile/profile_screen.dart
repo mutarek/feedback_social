@@ -115,19 +115,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: Container(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FriendScreen()));
+                                    },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FriendScreen()));
-                                          },
-                                          child: Text(
-                                            "${profileProvider.userprofileData.friends!.length}",
-                                            style: GoogleFonts.lato(
-                                                fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
-                                          ),
+                                        Text(
+                                          "${profileProvider.userprofileData.friends!.length}",
+                                          style: GoogleFonts.lato(
+                                              fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                                         ),
                                         Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
                                       ],
@@ -136,18 +134,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Expanded(
                                   flex: 1,
-                                  child: Container(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "${profileProvider.userprofileData.followers!.length}",
-                                          style:
-                                              GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
-                                        ),
-                                        Text(" Followers", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
-                                      ],
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${profileProvider.userprofileData.followers!.length}",
+                                        style:
+                                            GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                      ),
+                                      Text(" Followers", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
+                                    ],
                                   ),
                                 ),
                               ],

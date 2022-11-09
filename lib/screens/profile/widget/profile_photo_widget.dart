@@ -31,7 +31,7 @@ class ProfilePhotoWidget extends StatelessWidget {
                       },
                       child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.red, border: Border.all(width: 2, color: Colors.white), borderRadius: BorderRadius.circular(5)),
+                              color: Colors.white, border: Border.all(width: 2, color: Colors.white), borderRadius: BorderRadius.circular(5)),
                           child: const Icon(FontAwesomeIcons.camera, color: Colors.black, size: 17)),
                     ),
                   )
