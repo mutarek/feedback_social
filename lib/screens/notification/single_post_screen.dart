@@ -53,6 +53,8 @@ class SinglePostScreen extends StatefulWidget {
 }
 
 class _SinglePostScreenState extends State<SinglePostScreen> {
+  ScrollController controller = ScrollController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -64,6 +66,14 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
     } else {
       Provider.of<CommentProvider>(context, listen: false).initializeSinglePostSocket(widget.url);
     }
+
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange &&
+          Provider.of<CommentProvider>(context, listen: false).hasNextData) {
+        Provider.of<CommentProvider>(context, listen: false).updatePageNo(widget.url);
+      }
+    });
   }
 
   final TextEditingController commentController = TextEditingController();
@@ -186,15 +196,9 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                     : SafeArea(
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.3, offset: const Offset(0.0, 0.0))
-                            ],
-                          ),
+                          decoration: BoxDecoration(color: Colors.white),
                           child: SingleChildScrollView(
+                            controller: controller,
                             physics: const BouncingScrollPhysics(),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

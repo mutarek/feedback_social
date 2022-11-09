@@ -16,17 +16,36 @@ class CommentProvider with ChangeNotifier {
   List<CommentModels> comments = [];
   bool isLoading = false;
   List<bool> isOpenComment = [];
+  int selectPage = 1;
+  bool isBottomLoading = false;
+  bool hasNextData = false;
 
-  void initializeCommentData(String url) async {
-    comments.clear();
-    comments = [];
-    isLoading = true;
-    resetReply(isFirstTime: true);
+  updatePageNo(String url) {
+    selectPage++;
+    initializeCommentData(url, page: selectPage);
+    notifyListeners();
+  }
+
+  void initializeCommentData(String url, {int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      comments.clear();
+      comments = [];
+      resetReply(isFirstTime: true);
+      isLoading = true;
+      isBottomLoading = false;
+      hasNextData = false;
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+
     Response response = await commentRepo.getAllCommentData(url);
     isLoading = false;
-
+    isBottomLoading = false;
     if (response.statusCode == 200) {
-      response.body.forEach((element) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
         CommentModels comment = CommentModels.fromJson(element);
 
         comments.insert(0, comment);

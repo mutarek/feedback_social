@@ -65,8 +65,10 @@ class TimeLineWidget extends StatelessWidget {
                     isPage: isPage,
                     groupPageID: groupPageID,
                     isProfileScreen: isProfileScreen),
-                SizedBox(height: newsFeedData.description != null ? 8.0 : 0),
-                Visibility(visible: newsFeedData.description != null, child: Text(newsFeedData.description!, style: latoStyle400Regular)),
+                SizedBox(height: newsFeedData.description != null &&  newsFeedData.description!.isNotEmpty? 8.0 : 0),
+                newsFeedData.description != null &&  newsFeedData.description!.isNotEmpty?
+                Text(newsFeedData.description!, style: latoStyle400Regular):const SizedBox.shrink(),
+
                 SizedBox(height: newsFeedData.totalImage != 0 && newsFeedData.description != null ? 10.0 : 0),
                 !newsFeedData.isShare!
                     ? const SizedBox()
