@@ -351,6 +351,13 @@ class ProfileProvider with ChangeNotifier {
   }
 
   //TODO:   for send Friend Request Lists
+
+  updateUpcomingFriendsRequest(){
+    selectPage++;
+    callForgetAllFriendRequest(page: selectPage);
+    notifyListeners();
+  }
+
   List<SendFriendRequestModel> sendFriendRequestLists = [];
 
   callForgetAllFriendRequest({int page = 1}) async {
@@ -457,26 +464,6 @@ class ProfileProvider with ChangeNotifier {
 
     notifyListeners();
   }
-
-  // todo old code
-
-  // List<FriendModel> friendLists = [];
-  //
-  // callForGetAllFriends({int page = 1}) async {
-  //   friendLists.clear();
-  //   friendLists = [];
-  //   _isLoading = true;
-  //   Response response = await profileRepo.getAllFriends(page);
-  //   _isLoading = false;
-  //   if (response.statusCode == 200) {
-  //     response.body.forEach((element) {
-  //       friendLists.add(FriendModel.fromJson(element));
-  //     });
-  //   } else {
-  //     Fluttertoast.showToast(msg: response.statusText!);
-  //   }
-  //   notifyListeners();
-  // }
 
   removeFriend(int index) {
     paginationFriendLists.removeAt(index);
