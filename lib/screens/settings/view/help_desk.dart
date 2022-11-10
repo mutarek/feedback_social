@@ -116,7 +116,9 @@ class HelpDesk extends StatelessWidget {
                     textname: 'FAQs',
                     discription: "Find intelligent answer instantly",
                     color: const Color(0xffF1B8BC),
-                    goingScreen: () {},
+                    goingScreen: () {
+                      Get.snackbar("Info", "This Feature is coming soon");
+                    },
                   ),
                   SizedBox(height: height * 0.01),
                   HelpDeskWidget(
@@ -124,7 +126,9 @@ class HelpDesk extends StatelessWidget {
                     textname: 'Email',
                     discription: 'Get solution beamed to your inbox',
                     color: const Color(0xffF1B8BC),
-                    goingScreen: () {},
+                    goingScreen: () {
+                      Get.snackbar("Info", "This Feature is coming soon");
+                    },
                   ),
                 ],
               );
