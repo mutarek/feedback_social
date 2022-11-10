@@ -418,16 +418,21 @@ class ProfileProvider with ChangeNotifier {
 
   //TODO: ************************* for Accept Friend Request or unfriend
 
-  Future acceptFriendRequest(String id, int index) async {
+  Future<bool> acceptFriendRequest(String id, int index, {bool isFromFollowers = false, bool isFromFriendRequest = false}) async {
     Response response = await profileRepo.acceptFriendRequest(id);
     if (response.statusCode == 200) {
       Fluttertoast.showToast(msg: response.body['message']);
-      removeRequestAfterCancelRequest(index);
+      if (isFromFollowers) {
+        followersModelList[index].is_friend = true;
+      } else if (isFromFriendRequest) {
+        removeRequestAfterCancelRequest(index);
+      } else {}
+      notifyListeners();
+      return true;
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
+      return false;
     }
-
-    notifyListeners();
   }
 
   Future cancelFriendRequest(String id, int index) async {
@@ -479,12 +484,11 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   //TODO:   for get All Followers
 
   List<FollowersModel> followersModelList = [];
 
-  updateAllFllowersPage() {
+  updateAllFollowersPage() {
     selectPage++;
     callForGetAllFollowersPagination(page: selectPage);
     notifyListeners();
@@ -518,9 +522,15 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  removeFollowers(int index) {
+    followersModelList.removeAt(index);
+    userprofileData.followers!.removeAt(index);
+    userprofileData.friends!.removeAt(index);
+    notifyListeners();
+  }
 
   removeFriend(int index) {
-    followersModelList.removeAt(index);
+    paginationFriendLists.removeAt(index);
     userprofileData.friends!.removeAt(index);
     notifyListeners();
   }

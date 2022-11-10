@@ -13,7 +13,6 @@ import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -158,12 +157,16 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                             child: ElevatedButton(
                                               child: const Text("Accept friend request"),
                                               onPressed: () {
-                                                // confirmFriendRequest.id =
-                                                //     provider.publicProfileData.friendRquestAcceptId;
-                                                //
-                                                // confirmFriendRequest.confirmRequest();
-                                                //
-                                                // refresh();
+                                                Provider.of<ProfileProvider>(context, listen: false)
+                                                    .acceptFriendRequest(
+                                                        publicProvider.publicProfileData.friendRquestAcceptId.toString(), widget.index,
+                                                        isFromFriendRequest: widget.isFromFriendRequestScreen)
+                                                    .then((value) {
+                                                  if (value) {
+                                                    publicProvider.acceptFriendRequest();
+                                                  }
+                                                });
+
                                               },
                                             ),
                                           )

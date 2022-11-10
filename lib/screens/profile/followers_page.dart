@@ -2,7 +2,6 @@ import 'package:als_frontend/data/model/response/followers_model.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
-import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -12,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class FollowersPage extends StatefulWidget {
+  const FollowersPage({Key? key}) : super(key: key);
+
   @override
   State<FollowersPage> createState() => _FollowersPageState();
 }
@@ -27,7 +28,7 @@ class _FollowersPageState extends State<FollowersPage> {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
           Provider.of<ProfileProvider>(context, listen: false).hasNextData) {
-        Provider.of<ProfileProvider>(context, listen: false).updateAllFllowersPage();
+        Provider.of<ProfileProvider>(context, listen: false).updateAllFollowersPage();
       }
     });
     super.initState();
@@ -35,25 +36,22 @@ class _FollowersPageState extends State<FollowersPage> {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              Get.back();
-            }),
-        title: CustomText(
-            title: 'All Followers', color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Get.back();
+              }),
+          title: CustomText(title: 'All Followers', color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          backgroundColor: Colors.white,
+          elevation: 0),
       body: Consumer2<ProfileProvider, PublicProfileProvider>(
         builder: (context, profileProvider, publicProfileProvider, child) {
-          return profileProvider.isLoading
-              ? FriendReqShimmerWidget()
+          return profileProvider.isLoadingSuggestedFriend
+              ? const FriendReqShimmerWidget()
               : ListView(
                   controller: controller,
                   physics: const BouncingScrollPhysics(),
@@ -74,29 +72,30 @@ class _FollowersPageState extends State<FollowersPage> {
                           return FriendRequestWidget(
                             width: width,
                             userName: followersModel.full_name.toString(),
-                            firstButtonName: followersModel.is_friend! ? "Friend" : "Confrim",
+                            firstButtonName: followersModel.is_friend! ? "Friend" : "Confirm",
                             secondButtonName: followersModel.is_friend! ? "Unfriend" : "Remove",
                             firstButtonOnTab: () {
                               // called for accept friend request
                               if (!followersModel.is_friend!) {
-                                profileProvider.acceptFriendRequest(
-                                    followersModel.id.toString(), index);
+                                profileProvider.acceptFriendRequest(followersModel.id.toString(), index, isFromFollowers: true);
                               } else {
                                 //Called for public profile view
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) => PublicProfileScreen(
-                                        followersModel.id.toString(),
-                                        index: index,
-                                        isFromFriendRequestScreen: true)));
+                                    builder: (_) =>
+                                        PublicProfileScreen(followersModel.id.toString(), index: index, isFromFriendRequestScreen: true)));
                               }
                             },
                             secondButtonOnTab: () {
-                              if (followersModel.is_friend!) {
+                              if (!followersModel.is_friend!) {
                                 //Call when your clicked on Unfriend Button
 
                               } else {
                                 //call when you clicked on remove button
-
+                                Provider.of<PublicProfileProvider>(context, listen: false).unFriend((bool status) {
+                                  if (status) {
+                                    profileProvider.removeFollowers(index);
+                                  }
+                                });
                               }
                             },
                             gotoProfileScreen: () {},

@@ -35,7 +35,6 @@ class _FriendScreenState extends State<FriendScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -50,9 +49,10 @@ class _FriendScreenState extends State<FriendScreen> {
       ),
       body: Consumer<ProfileProvider>(
         builder: (context, profileProvider, child) {
-          return profileProvider.isLoading
-              ?FriendReqShimmerWidget() : ListView(
-            controller: controller,
+          return profileProvider.isLoadingSuggestedFriend
+              ? const FriendReqShimmerWidget()
+              : ListView(
+                  controller: controller,
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   children: [
@@ -63,7 +63,6 @@ class _FriendScreenState extends State<FriendScreen> {
                     )),
                     const SizedBox(height: 10),
                     ListView.builder(
-
                         itemCount: profileProvider.paginationFriendLists.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),

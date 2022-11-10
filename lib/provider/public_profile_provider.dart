@@ -163,6 +163,13 @@ class PublicProfileProvider with ChangeNotifier {
 
   //TODO: ************************* for Send Friend Request cancel Friend Request or unfriend
 
+  acceptFriendRequest() {
+    publicProfileData.isFriend = true;
+    publicProfileData.friendRequestAccept = false;
+    publicProfileData.friendRequestSent = false;
+    notifyListeners();
+  }
+
   Future sendFriendRequest(Function callback) async {
     Response response = await profileRepo.sendFriendRequest(publicProfileData.id.toString());
     if (response.statusCode == 201) {
