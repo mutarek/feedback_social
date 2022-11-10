@@ -134,16 +134,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Expanded(
                                   flex: 1,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "${profileProvider.userprofileData.followers!.length}",
-                                        style:
-                                            GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
-                                      ),
-                                      Text(" Followers", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
-                                    ],
+                                  child: GestureDetector(
+                                    onTap: (){
+                                      Get.to(()=> FriendScreen());
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${profileProvider.userprofileData.followers!.length}",
+                                          style:
+                                              GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                        ),
+                                        Text(" Followers", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:als_frontend/data/model/response/followers_model.dart';
 import 'package:als_frontend/data/model/response/friend_model.dart';
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/data/model/response/suggested_friend_model.dart';
@@ -478,8 +479,48 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+  //TODO:   for get All Followers
+
+  List<FollowersModel> followersModelList = [];
+
+  updateAllFllowersPage() {
+    selectPage++;
+    callForGetAllFollowersPagination(page: selectPage);
+    notifyListeners();
+  }
+
+  callForGetAllFollowersPagination({int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      followersModelList.clear();
+      followersModelList = [];
+      isLoadingSuggestedFriend = true;
+      isBottomLoading = false;
+      hasNextData = false;
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    Response response = await profileRepo.getAllFollowers(page);
+    isLoadingSuggestedFriend = false;
+    isBottomLoading = false;
+    if (response.statusCode == 200) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
+        FollowersModel followersModel = FollowersModel.fromJson(element);
+        followersModelList.add(followersModel);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
+
+
   removeFriend(int index) {
-    paginationFriendLists.removeAt(index);
+    followersModelList.removeAt(index);
     userprofileData.friends!.removeAt(index);
     notifyListeners();
   }

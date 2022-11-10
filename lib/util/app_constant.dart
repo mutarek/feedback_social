@@ -16,6 +16,7 @@ class AppConstant {
   static const String sendFriendRequestListURI = '/accounts/friends/friend-request/list/?size=10&page=';
   static const String sendSuggestFriendListURI = '/accounts/friends/suggestions/?size=10&page=';
   static const String  friendListsURI = '/accounts/friends/list/?size=10&page=';
+  static const String  follwersListsURI = '/accounts/followers/list/?size=10&page=';
 
   static const String profileURI = '/accounts/profile/';
   static const String uploadCoverImageURI = '/accounts/profile/update/cover-image/';

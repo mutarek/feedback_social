@@ -9,6 +9,7 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
+import 'package:als_frontend/screens/home/shimmer_effect/cmnt_screen_shimmmer_widget.dart';
 import 'package:als_frontend/screens/home/view/comment_widget.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
@@ -136,7 +137,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
                             suffixIcon: commentProvider.isCommentLoading
-                                ? const SizedBox(height: 40, width: 40, child: Center(child: CircularProgressIndicator()))
+                                ? const SizedBox(height: 40, width: 40, child: Center(child: CommentShimmerWidget()))
                                 : IconButton(
                                     onPressed: () {
                                       if (commentProvider.isShowCancelButton) {
