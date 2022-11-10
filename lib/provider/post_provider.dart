@@ -133,6 +133,7 @@ class PostProvider with ChangeNotifier {
     }
   }
 
+
   clearImageVideo({bool isFirstTime = false}) {
     video.clear();
     video = [];
