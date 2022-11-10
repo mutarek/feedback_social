@@ -77,7 +77,7 @@ class HelpDesk extends StatelessWidget {
                           "Help Centre",
                           style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266), fontSize: 40),
                         )),
-                        Container(height: height * 0.26, child: Image.asset("assets/background/help.png", fit: BoxFit.cover))
+                        SizedBox(height: height * 0.26, child: Image.asset("assets/background/help.png", fit: BoxFit.cover))
                       ],
                     ),
                   ),
@@ -86,9 +86,7 @@ class HelpDesk extends StatelessWidget {
                     color: Colors.white,
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
+                        SizedBox(height: height * 0.02),
                         Text(
                           "Tell us how we can help 👋",
                           style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266), fontSize: 16),
@@ -96,13 +94,9 @@ class HelpDesk extends StatelessWidget {
                         Text(
                           "our crew of superheroes are standing by\n for service & support",
                           textAlign: TextAlign.center,
-                          style: latoStyle500Medium.copyWith(
-                            color: const Color(0xffA4AEC0),
-                          ),
+                          style: latoStyle500Medium.copyWith(color: const Color(0xffA4AEC0)),
                         ),
-                        SizedBox(
-                          height: height * 0.05,
-                        ),
+                        SizedBox(height: height * 0.05),
                       ],
                     ),
                   ),
@@ -116,9 +110,7 @@ class HelpDesk extends StatelessWidget {
                       Navigator.of(context).push(MaterialPageRoute(builder: (_) => const HelpChatScreen()));
                     },
                   ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
+                  SizedBox(height: height * 0.01),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.question,
                     textname: 'FAQs',
@@ -126,9 +118,7 @@ class HelpDesk extends StatelessWidget {
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {},
                   ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
+                  SizedBox(height: height * 0.01),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.solidPaperPlane,
                     textname: 'Email',
