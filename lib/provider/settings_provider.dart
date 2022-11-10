@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
 import 'package:als_frontend/data/model/response/settings/notification_model.dart';
 import 'package:als_frontend/data/model/response/settings/other_settings_model.dart';
@@ -11,7 +13,6 @@ class SettingsProvider extends ChangeNotifier {
   final SettingsRepo settingsRepo;
 
   SettingsProvider({required this.settingsRepo});
-
 
   int selectPage = 1;
   bool success = false;
@@ -99,19 +100,22 @@ class SettingsProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
-  NotificationSettingsModel? notificationModel =NotificationSettingsModel();
-  initializeNotificationSettingsValue()async{
+
+  NotificationSettingsModel? notificationModel = NotificationSettingsModel();
+
+  initializeNotificationSettingsValue() async {
     _isLoading = true;
     notificationModel = NotificationSettingsModel();
     Response response = await settingsRepo.notificationValue();
     _isLoading = false;
     if (response.statusCode == 200) {
-    notificationModel = NotificationSettingsModel.fromJson(response.body);
+      notificationModel = NotificationSettingsModel.fromJson(response.body);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
   }
+
   changeNotificationSettingsStatus(bool value, int slNo) async {
     switch (slNo) {
       case 0:
@@ -123,15 +127,18 @@ class SettingsProvider extends ChangeNotifier {
       case 2:
         notificationModel!.isFollower = value;
         break;
-      case 3:notificationModel!.isFollowing = value;
-      break;
-      case 4:notificationModel!.isLike = value;
-      break;
-      case 5:notificationModel!.isComment = value;
-      break;
-      case 6:notificationModel!.isShare = value;
-      break;
-
+      case 3:
+        notificationModel!.isFollowing = value;
+        break;
+      case 4:
+        notificationModel!.isLike = value;
+        break;
+      case 5:
+        notificationModel!.isComment = value;
+        break;
+      case 6:
+        notificationModel!.isShare = value;
+        break;
     }
     notifyListeners();
     Response response = await settingsRepo.updateOtherSettings(value, slNo);
@@ -158,6 +165,7 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   bool darkModeOff = false;
+
   changeDarkModeStatus(bool value) {
     darkModeOff = value;
     notifyListeners();
@@ -174,17 +182,23 @@ class SettingsProvider extends ChangeNotifier {
       case 2:
         otherSettingsValue!.isFollowingTag = value;
         break;
-      case 3:otherSettingsValue!.isAnyoneShare = value;
+      case 3:
+        otherSettingsValue!.isAnyoneShare = value;
         break;
-      case 4:otherSettingsValue!.isFollowerShare = value;
+      case 4:
+        otherSettingsValue!.isFollowerShare = value;
         break;
-      case 5:otherSettingsValue!.isFollowingShare = value;
+      case 5:
+        otherSettingsValue!.isFollowingShare = value;
         break;
-      case 6:otherSettingsValue!.isAnyoneMessage = value;
+      case 6:
+        otherSettingsValue!.isAnyoneMessage = value;
         break;
-      case 7:otherSettingsValue!.isFollowerMessage = value;
+      case 7:
+        otherSettingsValue!.isFollowerMessage = value;
         break;
-      case 8:otherSettingsValue!.isFollowingMessage = value;
+      case 8:
+        otherSettingsValue!.isFollowingMessage = value;
         break;
     }
     notifyListeners();
@@ -195,21 +209,38 @@ class SettingsProvider extends ChangeNotifier {
       Fluttertoast.showToast(msg: response.statusText!);
     }
   }
+
 // TODO: for terms & section
   List<PrivacyPolicyModel> privacyPolicyModel = [];
- initializeTermsAndCondition()async{
-   _isLoading = true;
-   privacyPolicyModel.clear();
-   privacyPolicyModel = [];
-   Response response = await settingsRepo.termsAndCondition();
-   _isLoading = false;
-   if (response.statusCode == 200) {
-     response.body.forEach((element) {
-       privacyPolicyModel.add(PrivacyPolicyModel.fromJson(element));
-     });
-   } else {
-     Fluttertoast.showToast(msg: response.statusText!);
-   }
-   notifyListeners();
- }
+
+  initializeTermsAndCondition() async {
+    _isLoading = true;
+    privacyPolicyModel.clear();
+    privacyPolicyModel = [];
+    Response response = await settingsRepo.termsAndCondition();
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        privacyPolicyModel.add(PrivacyPolicyModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+  //TODO: for add problems
+  Future<bool> addMessageOnHelpDesk(String message, File problemsScreenshots) async {
+    _isLoading = true;
+    notifyListeners();
+    Response response = await settingsRepo.addHelpDisk(message, problemsScreenshots);
+    _isLoading = false;
+    notifyListeners();
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+      return false;
+    }
+  }
 }

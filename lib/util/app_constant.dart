@@ -51,6 +51,7 @@ class AppConstant {
   static const String getNotificationSettingsValueUri = '/settings/notification/';
   static const String termsAndConditionUri = '/terms-condition/list/';
   static const String latestVersionUri = '/latest-version/';
+  static const String helpDiskURI = '/settings/help-desk/';
   // Shared Key
   static const String theme = 'theme';
   static const String light = 'light';
