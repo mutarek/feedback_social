@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/followers_model.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
+import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
@@ -17,11 +18,11 @@ class FollowersPage extends StatefulWidget {
 
 class _FollowersPageState extends State<FollowersPage> {
   ScrollController controller = ScrollController();
+  final bool isFromFriendScreen = false;
 
   @override
   void initState() {
     Provider.of<ProfileProvider>(context, listen: false).callForGetAllFollowersPagination();
-
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
@@ -49,8 +50,8 @@ class _FollowersPageState extends State<FollowersPage> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Consumer<ProfileProvider>(
-        builder: (context, profileProvider, child) {
+      body: Consumer2<ProfileProvider, PublicProfileProvider>(
+        builder: (context, profileProvider, publicProfileProvider, child) {
           return profileProvider.isLoading
               ? FriendReqShimmerWidget()
               : ListView(
@@ -91,14 +92,16 @@ class _FollowersPageState extends State<FollowersPage> {
                             },
                             secondButtonOnTab: () {
                               if (followersModel.is_friend!) {
-                                // call when you clicked on unfriend button
+                                //Call when your clicked on Unfriend Button
+
                               } else {
                                 //call when you clicked on remove button
+
                               }
                             },
                             gotoProfileScreen: () {},
                             firstButtonColor: Colors.blue,
-                            imgUrl: '',
+                            imgUrl: followersModel.profileImage!,
                           );
 
                           //   Container(
