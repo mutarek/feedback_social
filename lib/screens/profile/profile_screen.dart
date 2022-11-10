@@ -2,6 +2,7 @@ import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
+import 'package:als_frontend/screens/profile/followers_page.dart';
 import 'package:als_frontend/screens/profile/friend_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
 import 'package:als_frontend/screens/profile/widget/profile_cover_photo_widget.dart';
@@ -136,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   flex: 1,
                                   child: GestureDetector(
                                     onTap: (){
-                                      Get.to(()=> FriendScreen());
+                                      Get.to(()=> FollowersPage());
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
