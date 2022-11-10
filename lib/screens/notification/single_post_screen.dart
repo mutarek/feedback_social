@@ -137,7 +137,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
                             suffixIcon: commentProvider.isCommentLoading
-                                ? const SizedBox(height: 40, width: 40, child: Center(child: CommentShimmerWidget()))
+                                ? const SizedBox(height: 40, width: 40, child: Center(child: CupertinoActivityIndicator()))
                                 : IconButton(
                                     onPressed: () {
                                       if (commentProvider.isShowCancelButton) {
