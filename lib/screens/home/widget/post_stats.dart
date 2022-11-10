@@ -23,7 +23,7 @@ class PostStats extends StatelessWidget {
   final double paddingVertical;
   final bool isHomeScreen;
   final bool isFromProfile;
-  final bool isPage;
+  bool isPage = false;
 
   PostStats(
       {Key? key,
@@ -34,11 +34,11 @@ class PostStats extends StatelessWidget {
       this.paddingHorizontal = 12,
       this.isFromProfile = false,
       this.isHomeScreen = false,
-      this.isPage = false,
       this.postID = 0,
       this.paddingVertical = 0})
       : super(key: key) {
     isGroup = post.postType == AppConstant.postTypeGroup ? true : false;
+    isPage = post.postType == AppConstant.postTypePage ? true : false;
   }
 
   @override
@@ -62,10 +62,18 @@ class PostStats extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    if (isGroup || isPage) {
-                      feedProvider.addLike(groupPageID, post.id!.toInt(), index);
+                    if (isHomeScreen) {
+                      if (isGroup || isPage) {
+                        feedProvider.addLike(post.id!.toInt(), index, isGroup: isGroup, isFromPage: isPage, groupPageID: groupPageID);
+                      } else {
+                        feedProvider.addLike(post.id!.toInt(), index);
+                      }
                     } else {
-                      feedProvider.addLike(post.id!.toInt(), index);
+                      if (isGroup || isPage) {
+                        feedProvider.addLike(groupPageID, post.id!.toInt(), index);
+                      } else {
+                        feedProvider.addLike(post.id!.toInt(), index);
+                      }
                     }
                   },
                   child: SizedBox(

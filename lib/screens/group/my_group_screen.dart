@@ -5,7 +5,9 @@ import 'package:als_frontend/screens/group/create_group_screen.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/app_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -65,7 +67,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
       ),
       body: Consumer<GroupProvider>(
           builder: (context, provider, child) => provider.isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(child: FriendReqShimmerWidget())
               : Column(
                   children: [
                     Center(
@@ -143,13 +145,14 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                                   padding: const EdgeInsets.all(6.0),
                                   child: Column(
                                     children: [
+
                                       CircleAvatar(
                                         radius: 25,
                                         backgroundColor: Palette.notificationColor,
                                         child: CircleAvatar(
-                                          radius: 22,
+                                          radius: 24,
                                           backgroundColor: Palette.primary,
-                                          backgroundImage: NetworkImage(provider.authorGroupList[index2].coverPhoto),
+                                          child: getCircularImage(50,provider.authorGroupList[index2].coverPhoto),
                                         ),
                                       ),
                                       const SizedBox(height: 3),

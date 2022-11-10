@@ -92,23 +92,26 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideoLists[0].url2)));
               },
-              child: Stack(
-                children: [
-                  ClipRRect(borderRadius: BorderRadius.circular(6), child: CachedNetworkImage(imageUrl: imageVideoLists[0].url)),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    child: Container(
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
-                      child: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
-                    ),
-                  )
-                ],
+              child: Container(
+                margin: const EdgeInsets.only(top: 8),
+                child: Stack(
+                  children: [
+                    CachedNetworkImage(imageUrl: imageVideoLists[0].url),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                        child: IconButton(
+                            onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
     }

@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'package:http/http.dart' as Http;
+
 import 'package:als_frontend/data/datasource/api_client.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
@@ -23,9 +26,11 @@ class SettingsRepo {
   Future<Response> unBlockUser(int userID) async {
     return await apiClient.deleteData("/settings/block/$userID/delete/");
   }
+
   Future<Response> notificationValue() async {
     return await apiClient.getData(AppConstant.getNotificationSettingsValueUri);
   }
+
   Future<Response> updateOtherSettings(bool status, int slNo) async {
     Map map = {};
     switch (slNo) {
@@ -56,7 +61,6 @@ class SettingsRepo {
       case 8:
         map['is_following_message'] = status;
         break;
-
     }
     return await apiClient.patchData(AppConstant.getOtherSettingsValue, map);
   }
@@ -89,12 +93,18 @@ class SettingsRepo {
       case 6:
         map['is_share'] = status;
         break;
-
     }
     return await apiClient.patchData(AppConstant.getNotificationSettingsValueUri, map);
   }
 
   Future<Response> termsAndCondition() async {
     return await apiClient.getData(AppConstant.termsAndConditionUri);
+  }
+
+  Future<Response> addHelpDisk(String message, File problemsScreenshots) async {
+    Http.MultipartFile multipartFile = Http.MultipartFile(
+        'image', problemsScreenshots.readAsBytes().asStream(), problemsScreenshots.lengthSync(),
+        filename: problemsScreenshots.path.split("/").last);
+    return await apiClient.putMultipartData(AppConstant.helpDiskURI, {"text": message}, [multipartFile]);
   }
 }

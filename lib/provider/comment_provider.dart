@@ -16,15 +16,36 @@ class CommentProvider with ChangeNotifier {
   List<CommentModels> comments = [];
   bool isLoading = false;
   List<bool> isOpenComment = [];
+  int selectPage = 1;
+  bool isBottomLoading = false;
+  bool hasNextData = false;
 
-  void initializeCommentData(String url) async {
-    comments.clear();
-    comments = [];
-    isLoading = true;
+  updatePageNo(String url) {
+    selectPage++;
+    initializeCommentData(url, page: selectPage);
+    notifyListeners();
+  }
+
+  void initializeCommentData(String url, {int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      comments.clear();
+      comments = [];
+      resetReply(isFirstTime: true);
+      isLoading = true;
+      isBottomLoading = false;
+      hasNextData = false;
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+
     Response response = await commentRepo.getAllCommentData(url);
     isLoading = false;
+    isBottomLoading = false;
     if (response.statusCode == 200) {
-      response.body.forEach((element) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
         CommentModels comment = CommentModels.fromJson(element);
 
         comments.insert(0, comment);
@@ -143,10 +164,11 @@ class CommentProvider with ChangeNotifier {
 
   bool isReplyButtonLoading = false;
 
-  Future<bool> addReply(String comment, String url, int index) async {
-    isReplyButtonLoading = true;
-    Response response = await commentRepo.addReply(url, comments[index].id.toString(), comment);
-    isReplyButtonLoading = false;
+  Future<bool> addReply(String comment, String url) async {
+    isCommentLoading = true;
+    notifyListeners();
+    Response response = await commentRepo.addReply(url, comments[replyIndex].id.toString(), comment);
+    isCommentLoading = false;
     if (response.statusCode == 201) {
       Replies c = Replies(
         id: response.body['id'],
@@ -166,5 +188,33 @@ class CommentProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: "Something went wrong");
       return false;
     }
+  }
+
+  //// for reply button
+  String replyUserName = '';
+  String replyURL = '';
+
+  int replyIndex = -1;
+  bool isShowCancelButton = false;
+
+  addReplyUserNameAndIndex(String value, String url, int index) {
+    replyUserName = value;
+    replyIndex = index;
+    replyURL = url;
+    isShowCancelButton = true;
+    notifyListeners();
+  }
+
+  resetReply({bool isFirstTime = false}) {
+    replyUserName = '';
+    replyURL = '';
+    replyIndex = -1;
+    isShowCancelButton = false;
+    if (!isFirstTime) notifyListeners();
+  }
+
+  changeCancelButtonStatus(bool status) {
+    isShowCancelButton = status;
+    notifyListeners();
   }
 }

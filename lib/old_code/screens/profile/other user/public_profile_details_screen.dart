@@ -161,13 +161,13 @@ class _PublicProfileDetailsScreenState extends State<PublicProfileDetailsScreen>
                                       ),
                                     ),
                                   ),
-                                  ProfilePhotowidget(
+                                  ProfilePhotoWidget(
                                     viewProfilePhoto: () {
                                       profileImageProvider.imageUrl = provider.userprofileData!.profileImage!;
                                       Get.to(() => const SingleImageView());
                                     },
                                     isTrue: false,
-                                    profilePhotoChange: () {},
+
                                     profileImage: (provider.userprofileData != null)
                                         ? provider.userprofileData!.profileImage!
                                         : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",

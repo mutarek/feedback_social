@@ -119,12 +119,7 @@ class PostProvider with ChangeNotifier {
       imageFile.forEach((element) async {
         singleImage = File(element.path);
         afterConvertImageLists.add(await imageCompressed(imagePathToCompress: singleImage!));
-
-        var sizeInBefore = singleImage!.lengthSync() / 1024;
-        debugPrint("Size in Before Compress:" + sizeInBefore.toString() + "KB");
-        File compressImage = await imageCompressed(imagePathToCompress: singleImage!);
-        var sizeInAfter = compressImage.lengthSync() / 1024;
-        debugPrint("Size in After:" + sizeInAfter.toString() + "KB");
+        await imageCompressed(imagePathToCompress: singleImage!);
         notifyListeners();
       });
     }
@@ -137,6 +132,7 @@ class PostProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   clearImageVideo({bool isFirstTime = false}) {
     video.clear();

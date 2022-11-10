@@ -9,6 +9,7 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
+import 'package:als_frontend/screens/home/shimmer_effect/cmnt_screen_shimmmer_widget.dart';
 import 'package:als_frontend/screens/home/view/comment_widget.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
@@ -53,6 +54,8 @@ class SinglePostScreen extends StatefulWidget {
 }
 
 class _SinglePostScreenState extends State<SinglePostScreen> {
+  ScrollController controller = ScrollController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -64,6 +67,14 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
     } else {
       Provider.of<CommentProvider>(context, listen: false).initializeSinglePostSocket(widget.url);
     }
+
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange &&
+          Provider.of<CommentProvider>(context, listen: false).hasNextData) {
+        Provider.of<CommentProvider>(context, listen: false).updatePageNo(widget.url);
+      }
+    });
   }
 
   final TextEditingController commentController = TextEditingController();
@@ -97,49 +108,88 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
           builder: (context, newsFeedProvider, commentProvider, authProvider, child) => Scaffold(
                 backgroundColor: Colors.white,
                 bottomSheet: Container(
+                  height: 70,
+                  padding: const EdgeInsets.only(top: 5),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                       ],
                       borderRadius: BorderRadius.circular(0)),
-                  child: TextField(
-                    maxLines: null,
-                    textAlign: TextAlign.start,
-                    decoration: InputDecoration(
-                        suffixIcon: commentProvider.isCommentLoading
-                            ? const SizedBox(height: 40, width: 40, child: Center(child: CircularProgressIndicator()))
-                            : IconButton(
-                                onPressed: () {
-                                  commentProvider
-                                      .addComment(commentController.text, authProvider.name, authProvider.profileImage,
-                                          newsFeedProvider.singleNewsFeedModel.id!, int.parse(authProvider.userID), widget.url)
-                                      .then((value) {
-                                    if (value == true) {
-                                      newsFeedProvider.updateSingleCommentDataCount();
-                                      if (widget.isHomeScreen) {
-                                        Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                      } else if (widget.isProfileScreen) {
-                                        Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                      } else if (widget.isFromGroup) {
-                                        Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
-                                      } else if (widget.isFromPage) {
-                                        Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                  child: Column(
+                    children: [
+                      commentProvider.isShowCancelButton
+                          ? Row(
+                              children: [
+                                const SizedBox(width: 15),
+                                CustomText(title: 'Replying to ', color: Colors.black),
+                                CustomText(title: '${commentProvider.replyUserName} .', color: Colors.black, fontWeight: FontWeight.w700),
+                                InkWell(
+                                    onTap: () {
+                                      commentProvider.resetReply();
+                                    },
+                                    child: CustomText(title: 'Cancel', color: Colors.grey, fontWeight: FontWeight.w700)),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                      TextField(
+                        maxLines: 1,
+                        textAlign: TextAlign.start,
+                        decoration: InputDecoration(
+                            suffixIcon: commentProvider.isCommentLoading
+                                ? const SizedBox(height: 40, width: 40, child: Center(child: CupertinoActivityIndicator()))
+                                : IconButton(
+                                    onPressed: () {
+                                      if (commentProvider.isShowCancelButton) {
+                                        FocusScope.of(context).unfocus();
+                                        commentProvider.addReply(commentController.text, widget.url).then((value) {
+                                          if (value) {
+                                            commentController.clear();
+                                            Provider.of<NewsFeedProvider>(context, listen: false).updateSingleCommentDataCount();
+                                            if (widget.isHomeScreen) {
+                                              Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isProfileScreen) {
+                                              Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isFromGroup) {
+                                              Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isFromPage) {
+                                              Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            }
+                                          }
+                                        });
+                                      } else {
+                                        commentProvider
+                                            .addComment(commentController.text, authProvider.name, authProvider.profileImage,
+                                                newsFeedProvider.singleNewsFeedModel.id!, int.parse(authProvider.userID), widget.url)
+                                            .then((value) {
+                                          if (value == true) {
+                                            newsFeedProvider.updateSingleCommentDataCount();
+                                            if (widget.isHomeScreen) {
+                                              Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isProfileScreen) {
+                                              Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isFromGroup) {
+                                              Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            } else if (widget.isFromPage) {
+                                              Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(widget.index);
+                                            }
+                                          }
+                                        });
                                       }
-                                    }
-                                  });
 
-                                  commentController.text = "";
-                                  // timelineProvider.channelDismiss();
-                                  FocusScope.of(context).unfocus();
-                                },
-                                icon: Icon(FontAwesomeIcons.paperPlane, color: Palette.primary, size: height * 0.05 * .5),
-                              ),
-                        contentPadding: EdgeInsets.fromLTRB(width * 0.04, height * 0.017, width * 0.02, 00),
-                        hintText: "Write Comment Here...",
-                        hintStyle: GoogleFonts.lato(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black.withOpacity(.6)),
-                        border: InputBorder.none),
-                    controller: commentController,
+                                      commentController.text = "";
+                                      // timelineProvider.channelDismiss();
+                                      FocusScope.of(context).unfocus();
+                                    },
+                                    icon: Icon(FontAwesomeIcons.paperPlane, color: Palette.primary, size: height * 0.05 * .5),
+                                  ),
+                            contentPadding: EdgeInsets.fromLTRB(width * 0.04, height * 0.017, width * 0.02, 00),
+                            hintText: "Write ${commentProvider.isShowCancelButton ? 'Reply' : 'Comment'} Here...",
+                            hintStyle: GoogleFonts.lato(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black.withOpacity(.6)),
+                            border: InputBorder.none),
+                        controller: commentController,
+                      ),
+                    ],
                   ),
                 ),
                 body: newsFeedProvider.isLoading
@@ -147,15 +197,9 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                     : SafeArea(
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.3, offset: const Offset(0.0, 0.0))
-                            ],
-                          ),
+                          decoration: BoxDecoration(color: Colors.white),
                           child: SingleChildScrollView(
+                            controller: controller,
                             physics: const BouncingScrollPhysics(),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,6 +220,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                         ? ''
                                         : newsFeedProvider.singleNewsFeedModel.description!,
                                     style: latoStyle400Regular),
+                                SizedBox(height: 5),
                                 if ((newsFeedProvider.singleNewsFeedModel.totalImage! + newsFeedProvider.singleNewsFeedModel.totalVideo!) !=
                                     0)
                                   PostPhotoContainer(0, newsfeedModel: newsFeedProvider.singleNewsFeedModel),
@@ -393,9 +438,9 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                   alignment: Alignment.topCenter,
                                   child: commentProvider.comments.isEmpty
                                       ? Container(
-                                      height: 40,
-                                      alignment: Alignment.center,
-                                      child: Text('No Comment Found', style: latoStyle800ExtraBold.copyWith()))
+                                          height: 40,
+                                          alignment: Alignment.center,
+                                          child: Text('No Comment Found', style: latoStyle800ExtraBold.copyWith()))
                                       : ListView.builder(
                                           itemCount: commentProvider.comments.length,
                                           shrinkWrap: true,
@@ -418,7 +463,8 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                               isHomeScreen: widget.isHomeScreen,
                                             );
                                           }),
-                                )
+                                ),
+                                const SizedBox(height: 100)
                               ],
                             ),
                           ),

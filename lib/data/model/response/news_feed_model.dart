@@ -66,6 +66,7 @@ class NewsFeedData {
     description = json['description'];
     author = json['author'] != null ? Author.fromJson(json['author']) : null;
     page = json['page'] != null ? Page.fromJson(json['page']) : null;
+    group = json['group'] != null ? Group.fromJson(json['group']) : null;
     if (json.containsKey('share_post')) {
       sharePost = json['share_post'] != null ? SharePostModel.fromJson(json['share_post']) : null;
     } else {
@@ -110,6 +111,7 @@ class NewsFeedData {
   String? description;
   Author? author;
   Page? page;
+  Group? group;
   SharePostModel? sharePost;
   int? totalImage;
   List<ImagesData>? images;
@@ -312,7 +314,6 @@ class Group {
     this.category,
     this.coverPhoto,
     this.isPrivate,
-    this.avatar,
   });
 
   int? id;
@@ -320,7 +321,6 @@ class Group {
   String? category;
   String? coverPhoto;
   bool? isPrivate;
-  String? avatar;
 
   factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json["id"],
@@ -328,7 +328,6 @@ class Group {
         category: json["category"].toString(),
         coverPhoto: json["cover_photo"],
         isPrivate: json["is_private"] ?? false,
-        avatar: json["avatar"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -336,8 +335,7 @@ class Group {
         "name": name,
         "category": category,
         "cover_photo": coverPhoto,
-        "is_private": isPrivate ?? null,
-        "avatar": avatar ?? null,
+        "is_private": isPrivate ?? false,
       };
 }
 
@@ -418,7 +416,7 @@ class Post {
         totalImage: json["total_image"] ?? 0,
         images: (json['images'] != null) ? List<ImagesData>.from(json["images"].map((x) => ImagesData.fromJson(x))) : [],
         totalVideo: json["total_video"] ?? 0,
-        videos: (json['videos'] != null) ? List<Video>.from(json["videos"].map((x) => x)) : [],
+        videos: (json['videos'] != null) ? List<Video>.from(json["videos"].map((x) => Video.fromJson(x))) : [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -426,6 +424,7 @@ class Post {
         "description": description,
         "author": author!.toJson(),
         "total_image": totalImage,
+
         "images": List<dynamic>.from(images!.map((x) => x.toJson())),
         "total_video": totalVideo,
         "videos": List<dynamic>.from(videos!.map((x) => x)),

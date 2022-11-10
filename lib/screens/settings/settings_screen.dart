@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
+import 'package:als_frontend/screens/more/view/terms_and_condition.dart';
 import 'package:als_frontend/screens/settings/view/about_settings.dart';
 import 'package:als_frontend/screens/settings/view/help_desk.dart';
 import 'package:als_frontend/screens/settings/view/notifications_settings.dart';
@@ -98,12 +99,12 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(height: 20),
 
                         /*...................language............*/
-                        SettingsWidget(image: 'assets/svg/lang.svg', name: "Language", subname: "English", goingScreen: () {}),
+                        SettingsWidget(image: 'assets/svg/lang.svg', name: "Language", subName: "English", goingScreen: () {}),
                         const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/notifications.svg',
                           name: "notifications",
-                          subname: "",
+                          subName: "",
                           goingScreen: () {
                             Get.to(const NotificationSettings());
                           },
@@ -138,7 +139,7 @@ class SettingsScreen extends StatelessWidget {
                         SettingsWidget(
                           image: 'assets/svg/help.svg',
                           name: "Help",
-                          subname: "",
+                          subName: "",
                           goingScreen: () {
                             Get.to(const HelpDesk());
                           },
@@ -147,9 +148,18 @@ class SettingsScreen extends StatelessWidget {
                         SettingsWidget(
                           image: 'assets/svg/other.svg',
                           name: "Other",
-                          subname: "",
+                          subName: "",
                           goingScreen: () {
                             Get.to(const OtherSettings());
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        SettingsWidget(
+                          image: 'assets/svg/tarmscondition.svg',
+                          name: "Terms & Conditions",
+                          subName: "",
+                          goingScreen: () {
+                            Get.to(const TermsAndConditionsScreen());
                           },
                         ),
                       ],

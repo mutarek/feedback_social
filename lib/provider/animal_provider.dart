@@ -82,7 +82,7 @@ class AnimalProvider with ChangeNotifier {
   Future pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      image = await imageCompressed(imagePathToCompress: File(pickedFile.path), percentage: 50);
+      image = await imageCompressed(imagePathToCompress: File(pickedFile.path));
       notifyListeners();
     }
   }

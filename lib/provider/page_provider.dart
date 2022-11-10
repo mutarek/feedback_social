@@ -289,8 +289,7 @@ class PageProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int pageID, int postID, int index) async {
-    Response response = await newsfeedRepo.addLikeONPage(postID, pageID);
-    if (response.body['liked'] == true) {
+    if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       pageAllPosts[index].totalLike = pageAllPosts[index].totalLike! + 1;
     } else {
@@ -298,6 +297,7 @@ class PageProvider with ChangeNotifier {
       pageAllPosts[index].totalLike = pageAllPosts[index].totalLike! - 1;
     }
     notifyListeners();
+    await newsfeedRepo.addLikeONPage(postID, pageID);
   }
 
   changeLikeStatus(int value, int index) async {

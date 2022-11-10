@@ -7,6 +7,7 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     onTap: () {
                       openFeedbackAppOnPlayStore();
                     },
-                    backgroundColor: Palette.feedback,
+                    backgroundColor: AppColors.feedback,
                     textWhiteColor: true,
                     radius: 0,
                     fontSize: 13,

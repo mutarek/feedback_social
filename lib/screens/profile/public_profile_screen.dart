@@ -13,7 +13,6 @@ import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -66,37 +65,38 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                 : SingleChildScrollView(
                     controller: controller,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      SizedBox(
-                        height: 200,
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            CoverPhotoWidget(
-                                isTrue: false,
-                                back: () {
-                                  Get.back();
-                                },
-                                viewCoverPhoto: () {
-                                  Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.coverImage!));
-                                },
-                                coverPhoto: (publicProvider.publicProfileData.coverImage != null)
-                                    ? publicProvider.publicProfileData.coverImage!
-                                    : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
-                                coverPhotoChange: () {}),
-                            ProfilePhotowidget(
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(height: 230, width: width, color: Colors.white),
+                          CoverPhotoWidget(
+                              isTrue: false,
+                              back: () {
+                                Get.back();
+                              },
+                              viewCoverPhoto: () {
+                                Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.coverImage!));
+                              },
+                              coverPhoto: (publicProvider.publicProfileData.coverImage != null)
+                                  ? publicProvider.publicProfileData.coverImage!
+                                  : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
+                              coverPhotoChange: () {}),
+                          Positioned(
+                            bottom: 0,
+                            left: 30,
+                            child: ProfilePhotoWidget(
                               viewProfilePhoto: () {
                                 Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.profileImage!));
                               },
                               isTrue: false,
-                              profilePhotoChange: () {},
                               profileImage: (publicProvider.publicProfileData.profileImage != null)
                                   ? publicProvider.publicProfileData.profileImage!
                                   : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 9),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: CustomText(
@@ -157,12 +157,16 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                             child: ElevatedButton(
                                               child: const Text("Accept friend request"),
                                               onPressed: () {
-                                                // confirmFriendRequest.id =
-                                                //     provider.publicProfileData.friendRquestAcceptId;
-                                                //
-                                                // confirmFriendRequest.confirmRequest();
-                                                //
-                                                // refresh();
+                                                Provider.of<ProfileProvider>(context, listen: false)
+                                                    .acceptFriendRequest(
+                                                        publicProvider.publicProfileData.friendRquestAcceptId.toString(), widget.index,
+                                                        isFromFriendRequest: widget.isFromFriendRequestScreen)
+                                                    .then((value) {
+                                                  if (value) {
+                                                    publicProvider.acceptFriendRequest();
+                                                  }
+                                                });
+
                                               },
                                             ),
                                           )

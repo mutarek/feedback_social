@@ -105,8 +105,7 @@ class PublicProfileProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int postID, int index) async {
-    Response response = await newsfeedRepo.addLike(postID);
-    if (response.body['liked'] == true) {
+    if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       publicNewsFeedLists[index].totalLike = publicNewsFeedLists[index].totalLike! + 1;
     } else {
@@ -114,6 +113,7 @@ class PublicProfileProvider with ChangeNotifier {
       publicNewsFeedLists[index].totalLike = publicNewsFeedLists[index].totalLike! - 1;
     }
     notifyListeners();
+    await newsfeedRepo.addLike(postID);
   }
 
   void updateCommentDataCount(int index) {
@@ -162,6 +162,13 @@ class PublicProfileProvider with ChangeNotifier {
   }
 
   //TODO: ************************* for Send Friend Request cancel Friend Request or unfriend
+
+  acceptFriendRequest() {
+    publicProfileData.isFriend = true;
+    publicProfileData.friendRequestAccept = false;
+    publicProfileData.friendRequestSent = false;
+    notifyListeners();
+  }
 
   Future sendFriendRequest(Function callback) async {
     Response response = await profileRepo.sendFriendRequest(publicProfileData.id.toString());

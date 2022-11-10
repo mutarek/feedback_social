@@ -2,13 +2,15 @@ class SendFriendRequestModel {
   SendFriendRequestModel({
     this.id,
     this.fromUser,
-    this.timestamp,});
+    this.timestamp,
+  });
 
   SendFriendRequestModel.fromJson(dynamic json) {
     id = json['id'];
     fromUser = json['from_user'] != null ? FromUser.fromJson(json['from_user']) : null;
     timestamp = json['timestamp'];
   }
+
   num? id;
   FromUser? fromUser;
   String? timestamp;
@@ -22,7 +24,6 @@ class SendFriendRequestModel {
     map['timestamp'] = timestamp;
     return map;
   }
-
 }
 
 class FromUser {
@@ -31,7 +32,8 @@ class FromUser {
     this.firstName,
     this.lastName,
     this.email,
-    this.profileImage,});
+    this.profileImage,
+  });
 
   FromUser.fromJson(dynamic json) {
     id = json['id'];
@@ -40,6 +42,7 @@ class FromUser {
     email = json['email'];
     profileImage = json['profile_image'];
   }
+
   num? id;
   String? firstName;
   String? lastName;
@@ -55,5 +58,4 @@ class FromUser {
     map['profile_image'] = profileImage;
     return map;
   }
-
 }

@@ -67,6 +67,7 @@ Widget customNetworkImage2(BuildContext context, String imageUrl, {double? heigh
     cache: true,
     width: MediaQuery.of(context).size.width,
     height: height == 0 ? MediaQuery.of(context).size.height : height,
+    matchTextDirection: true,
     mode: ExtendedImageMode.none,
     fit: boxFit,
     loadStateChanged: (ExtendedImageState state) {
@@ -95,4 +96,16 @@ Widget customNetworkImage2(BuildContext context, String imageUrl, {double? heigh
       }
     },
   );
+}
+
+Widget circularImage(String imageUrl) {
+  return CachedNetworkImage(
+      placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
+      imageBuilder: (context, imageProvider) => Container(
+          width: 60.0,
+          height: 60.0,
+          decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: imageProvider, fit: BoxFit.contain))),
+      fit: BoxFit.contain,
+      imageUrl: imageUrl);
 }

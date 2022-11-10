@@ -4,6 +4,7 @@ import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/chat/components/chat_card.dart';
 import 'package:als_frontend/screens/chat/message_screen.dart';
+import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/screens/search/search_screen.dart';
 import 'package:als_frontend/widgets/circle_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -45,29 +46,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: CustomText(title: 'Chat ', color: Palette.primary, fontWeight: FontWeight.bold, fontSize: 27),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        actions: [
-          CircleButton(
-            radius: 35.0,
-            icon: Icons.search,
-            iconSize: 20.0,
-            onPressed: () {
-              Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
-              Get.to(SearchScreen());
-            },
-          ),
-        ],
-      ),
       body: RefreshIndicator(
         onRefresh: () {
           return _refresh(context);
         },
         child: Consumer<ChatProvider>(
           builder: (context, chatProvider, child) => chatProvider.isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(child: FriendReqShimmerWidget())
               : SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   controller: controller,

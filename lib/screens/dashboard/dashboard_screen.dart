@@ -5,7 +5,7 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/chat/chats_screen.dart';
-import 'package:als_frontend/screens/dashboard/page_or_group_decesion_group.dart';
+import 'package:als_frontend/screens/dashboard/friend_request_screen.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/screens/more/more_screen.dart';
 import 'package:als_frontend/screens/notification/notification_screen.dart';
@@ -42,8 +42,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
   }
 
-  int selected = 0;
-
   @override
   Widget build(BuildContext context) {
     return Consumer3<DashboardProvider, NotificationProvider, AuthProvider>(
@@ -79,7 +77,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             icon: SvgPicture.asset(ImagesModel.friendRequestURI,
                                 color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, width: 22, height: 22),
                             selectedColor: Colors.blue,
-                            title: Text('Group',
+                            title: Text('Friend',
                                 style: latoStyle600SemiBold.copyWith(
                                     color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, fontSize: 12))),
                         AnimatedBarItems(
@@ -142,7 +140,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       children: [
                         dashboardProvider.selectIndex == 0
                             ? AppBar(
-                                title: CustomText(title: 'Feedback', color: Palette.feedback, fontWeight: FontWeight.bold, fontSize: 27),
+                                title: CustomText(title: 'Feedback', color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 27),
                                 backgroundColor: Colors.white,
                                 elevation: 0,
                                 actions: [
@@ -174,7 +172,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   )
                                 ],
                               )
-                            : const SizedBox(),
+                            : AppBar(
+                                title: CustomText(
+                                    title: dashboardProvider.selectIndex == 1
+                                        ? 'Friend'
+                                        : dashboardProvider.selectIndex == 2
+                                            ? 'Notifications'
+                                            : dashboardProvider.selectIndex == 3
+                                                ? 'Chats'
+                                                : 'Feedback',
+                                    color: AppColors.feedback,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 27),
+                                backgroundColor: Colors.white,
+                                elevation: 0,
+                                actions: [
+                                  dashboardProvider.selectIndex == 3
+                                      ? CircleButton(
+                                          radius: 35.0,
+                                          icon: Icons.search,
+                                          iconSize: 20.0,
+                                          onPressed: () {
+                                            Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
+                                            Get.to(SearchScreen());
+                                          },
+                                        )
+                                      : SizedBox.shrink(),
+                                ],
+                              ),
                         Expanded(
                           child: PageView(
                             controller: controller,
@@ -187,7 +212,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             },
                             children: const [
                               HomeScreen(),
-                              PageOrGroupDecisionGroup(),
+                              FriendRequestSuggestionScreen(),
                               NotificationScreen(),
                               ChatsScreen(),
                               MoreScreen(),

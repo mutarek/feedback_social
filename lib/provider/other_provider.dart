@@ -24,8 +24,8 @@ class OtherProvider with ChangeNotifier {
         sourcePath: image.path,
         aspectRatio: CropAspectRatio(ratioX: ratioX, ratioY: ratioY),
         compressQuality: 100,
-        maxWidth: widget+200,
-        maxHeight: height+200,
+        maxWidth: widget + 200,
+        maxHeight: height + 200,
         compressFormat: ImageCompressFormat.jpg,
         uiSettings: [
           AndroidUiSettings(
@@ -44,6 +44,15 @@ class OtherProvider with ChangeNotifier {
       }
     }
     inProcess = false;
+    notifyListeners();
+  }
+
+  getImageWithOutCroup(ImageSource source) async {
+    selectedFile = null;
+    XFile? image = await ImagePicker().pickImage(source: source);
+    if (image != null) {
+      selectedFile = File(image.path);
+    }
     notifyListeners();
   }
 }

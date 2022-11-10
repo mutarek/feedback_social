@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'package:als_frontend/data/model/response/followers_model.dart';
 import 'package:als_frontend/data/model/response/friend_model.dart';
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
+import 'package:als_frontend/data/model/response/suggested_friend_model.dart';
+
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:http/http.dart' as Http;
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
@@ -119,10 +122,12 @@ class ProfileProvider with ChangeNotifier {
     newsFeedLists.insert(0, n);
     notifyListeners();
   }
+
   void deleteNewsfeedData(int index) {
     newsFeedLists.removeAt(index);
     notifyListeners();
   }
+
   ///TODO: for Current user profile
   UserProfileModel userprofileData = UserProfileModel();
   bool isProfileLoading = false;
@@ -143,8 +148,7 @@ class ProfileProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int postID, int index) async {
-    Response response = await newsfeedRepo.addLike(postID);
-    if (response.body['liked'] == true) {
+    if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
     } else {
@@ -152,6 +156,8 @@ class ProfileProvider with ChangeNotifier {
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
     }
     notifyListeners();
+
+    await newsfeedRepo.addLike(postID);
   }
 
   changeLikeStatus(int value, int index) async {
@@ -205,7 +211,7 @@ class ProfileProvider with ChangeNotifier {
   Future pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      image = await imageCompressed(imagePathToCompress: File(pickedFile.path), percentage: 50);
+      image = await imageCompressed(imagePathToCompress: File(pickedFile.path));
       notifyListeners();
     }
   }
@@ -307,18 +313,77 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO:   for Suggestion Friend Request Lists
+  List<SuggestFriendModel> suggestFriendRequestList = [];
+  bool isLoadingSuggestedFriend = false;
+
+  updateSuggestedPageNo() {
+    selectPage++;
+    callForGetAllSuggestFriendRequest(page: selectPage);
+    notifyListeners();
+  }
+
+  callForGetAllSuggestFriendRequest({int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      suggestFriendRequestList.clear();
+      suggestFriendRequestList = [];
+      isLoadingSuggestedFriend = true;
+      isBottomLoading = false;
+      hasNextData = false;
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    Response response = await profileRepo.sendSuggestFriendRequestLists(page);
+    isLoadingSuggestedFriend = false;
+    isBottomLoading = false;
+    if (response.statusCode == 200) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
+        SuggestFriendModel newsFeedData = SuggestFriendModel.fromJson(element);
+        suggestFriendRequestList.add(newsFeedData);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
+
   //TODO:   for send Friend Request Lists
+  int friendRequestSelectPage = 1;
+  bool isBottomLoadingFriendRequest = false;
+  bool hasNextDataFriendRequest = false;
+
+  updateUpcomingFriendsRequest() {
+    friendRequestSelectPage++;
+    callForgetAllFriendRequest(page: friendRequestSelectPage);
+    notifyListeners();
+  }
+
   List<SendFriendRequestModel> sendFriendRequestLists = [];
 
   callForgetAllFriendRequest({int page = 1}) async {
-    sendFriendRequestLists.clear();
-    sendFriendRequestLists = [];
-    _isLoading = true;
+    if (page == 1) {
+      friendRequestSelectPage = 1;
+      sendFriendRequestLists.clear();
+      sendFriendRequestLists = [];
+      _isLoading = true;
+      isBottomLoadingFriendRequest = false;
+      hasNextDataFriendRequest = false;
+    } else {
+      isBottomLoadingFriendRequest = true;
+      notifyListeners();
+    }
 
     Response response = await profileRepo.sendFriendRequestLists(page);
     _isLoading = false;
+    isBottomLoadingFriendRequest = false;
+    if (page == 1) callForGetAllSuggestFriendRequest();
     if (response.statusCode == 200) {
-      response.body.forEach((element) {
+      hasNextDataFriendRequest = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
         sendFriendRequestLists.add(SendFriendRequestModel.fromJson(element));
       });
     } else {
@@ -332,18 +397,42 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO: ************************* for Accept Friend Request or unfriend
+//TODO: ************************* for Send Friend Request cancel Friend Request or unfriend
 
-  Future acceptFriendRequest(String id, int index) async {
-    Response response = await profileRepo.acceptFriendRequest(id);
-    if (response.statusCode == 200) {
+  sendFriendRequest(int userID, int index) async {
+    Response response = await profileRepo.sendFriendRequest(userID.toString());
+    if (response.statusCode == 201) {
+      suggestFriendRequestList.removeAt(index);
       Fluttertoast.showToast(msg: response.body['message']);
-      removeRequestAfterCancelRequest(index);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
 
     notifyListeners();
+  }
+
+  Future cancelSuggestedFriend(int index) async {
+    suggestFriendRequestList.removeAt(index);
+    notifyListeners();
+  }
+
+  //TODO: ************************* for Accept Friend Request or unfriend
+
+  Future<bool> acceptFriendRequest(String id, int index, {bool isFromFollowers = false, bool isFromFriendRequest = false}) async {
+    Response response = await profileRepo.acceptFriendRequest(id);
+    if (response.statusCode == 200) {
+      Fluttertoast.showToast(msg: response.body['message']);
+      if (isFromFollowers) {
+        followersModelList[index].is_friend = true;
+      } else if (isFromFriendRequest) {
+        removeRequestAfterCancelRequest(index);
+      } else {}
+      notifyListeners();
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+      return false;
+    }
   }
 
   Future cancelFriendRequest(String id, int index) async {
@@ -358,27 +447,90 @@ class ProfileProvider with ChangeNotifier {
   }
 
   //TODO:   for get All Friend
-  List<FriendModel> friendLists = [];
 
-  callForGetAllFriends({int page = 1}) async {
-    friendLists.clear();
-    friendLists = [];
-    _isLoading = true;
+  List<FriendModel> paginationFriendLists = [];
 
+  updateAllFriendsPage() {
+    selectPage++;
+    callForGetAllFriendsPagination(page: selectPage);
+    notifyListeners();
+  }
+
+  callForGetAllFriendsPagination({int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      paginationFriendLists.clear();
+      paginationFriendLists = [];
+      isLoadingSuggestedFriend = true;
+      isBottomLoading = false;
+      hasNextData = false;
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
     Response response = await profileRepo.getAllFriends(page);
-    _isLoading = false;
+    isLoadingSuggestedFriend = false;
+    isBottomLoading = false;
     if (response.statusCode == 200) {
-      response.body.forEach((element) {
-        friendLists.add(FriendModel.fromJson(element));
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
+        FriendModel friendModel = FriendModel.fromJson(element);
+        paginationFriendLists.add(friendModel);
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
+
+    notifyListeners();
+  }
+
+  //TODO:   for get All Followers
+
+  List<FollowersModel> followersModelList = [];
+
+  updateAllFollowersPage() {
+    selectPage++;
+    callForGetAllFollowersPagination(page: selectPage);
+    notifyListeners();
+  }
+
+  callForGetAllFollowersPagination({int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      followersModelList.clear();
+      followersModelList = [];
+      isLoadingSuggestedFriend = true;
+      isBottomLoading = false;
+      hasNextData = false;
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    Response response = await profileRepo.getAllFollowers(page);
+    isLoadingSuggestedFriend = false;
+    isBottomLoading = false;
+    if (response.statusCode == 200) {
+      hasNextData = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
+        FollowersModel followersModel = FollowersModel.fromJson(element);
+        followersModelList.add(followersModel);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
+
+  removeFollowers(int index) {
+    followersModelList.removeAt(index);
+    userprofileData.followers!.removeAt(index);
+    userprofileData.friends!.removeAt(index);
     notifyListeners();
   }
 
   removeFriend(int index) {
-    friendLists.removeAt(index);
+    paginationFriendLists.removeAt(index);
     userprofileData.friends!.removeAt(index);
     notifyListeners();
   }
