@@ -2,26 +2,26 @@
 class FriendModel {
   FriendModel({
     this.id,
-    this.full_name,
+    this.fullName,
 
     this.profileImage,
   });
 
   FriendModel.fromJson(dynamic json) {
     id = json['id'];
-    full_name = json['full_name'];
+    fullName = json['full_name'];
 
     profileImage = json['profile_image'];
   }
 
   num? id;
-  String? full_name;
+  String? fullName;
   String? profileImage;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
-    map['full_name'] = full_name;
+    map['full_name'] = fullName;
     map['profile_image'] = profileImage;
     return map;
   }

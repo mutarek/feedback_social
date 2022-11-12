@@ -6,6 +6,7 @@ class AgeDuration {
 
   AgeDuration({this.days = 0, this.months = 0, this.years = 0});
 
+  @override
   String toString() {
     return 'Years: $years, Months: $months, Days: $days';
   }

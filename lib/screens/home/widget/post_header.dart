@@ -8,7 +8,9 @@ import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
@@ -81,20 +83,29 @@ class PostHeaderWidget extends StatelessWidget {
                               route(context, 0);
                             }
                           },
-                          child: Text(post.postType == AppConstant.postTypePage ? post.page!.name! : post.group!.name!,
-                              style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
+                          child: Row(
+                            children: [
+                              Text(post.postType == AppConstant.postTypePage ? post.page!.name! : post.group!.name!,
+                                  style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
+                              const SizedBox(width: 5),
+                              CircleAvatar(
+                                  child: CustomText(
+                                      title: post.postType == AppConstant.postTypePage ? "P" : "G", color: Colors.white, fontSize: 12),
+                                  backgroundColor: AppColors.feedback,
+                                  radius: 10)
+                            ],
+                          ),
                         ),
                         SizedBox(height: post.postType == AppConstant.postTypePage ? 4 : 0),
                         InkWell(
                           onTap: () {
                             route(context, 2);
                           },
-                          child: Text(
-                            Provider.of<AuthProvider>(context, listen: false).userID.toString() == post.author!.id.toString()
-                                ? "You Posted Here"
-                                : post.author!.fullName.toString() + " Posted Here",
-                            style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w400),
-                          ),
+                          child: CustomText(
+                              title: Provider.of<AuthProvider>(context, listen: false).userID.toString() == post.author!.id.toString()
+                                  ? "You Posted Here"
+                                  : post.author!.fullName.toString() + " Posted Here",
+                              fontSize: 12),
                         ),
                         Row(children: [
                           Text(getDate(post.timestamp!, context),

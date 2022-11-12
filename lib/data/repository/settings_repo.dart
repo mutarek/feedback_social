@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:http/http.dart' as Http;
+import 'package:http/http.dart' as http;
 
 import 'package:als_frontend/data/datasource/api_client.dart';
 import 'package:als_frontend/util/app_constant.dart';
@@ -102,7 +102,7 @@ class SettingsRepo {
   }
 
   Future<Response> addHelpDisk(String message, File problemsScreenshots) async {
-    Http.MultipartFile multipartFile = Http.MultipartFile(
+    http.MultipartFile multipartFile = http.MultipartFile(
         'image', problemsScreenshots.readAsBytes().asStream(), problemsScreenshots.lengthSync(),
         filename: problemsScreenshots.path.split("/").last);
     return await apiClient.putMultipartData(AppConstant.helpDiskURI, {"text": message}, [multipartFile]);
