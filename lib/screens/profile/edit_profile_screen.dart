@@ -1,12 +1,10 @@
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
-import 'package:als_frontend/old_code/widgets/profile/edit_profile_widget.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,7 +46,6 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -62,14 +59,14 @@ class _EditProfileState extends State<EditProfile> {
       ),
       body: Consumer<ProfileProvider>(builder: (context, provider, child) {
         return SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          physics: BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: height * 0.02),
               CustomText(title: 'Enter First Name:', fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               CustomTextField(
                 hintText: 'Write Here....',
                 controller: firstNameController,
@@ -79,7 +76,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: height * 0.01),
               CustomText(title: 'Enter Last Name:', fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               CustomTextField(
                 hintText: 'Write Here....',
                 controller: lastNameController,
@@ -89,7 +86,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: height * 0.01),
               CustomText(title: 'Enter your  Job about:', fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               CustomTextField(
                 hintText: 'Write Here....',
                 controller: presentCompanyController,
@@ -101,7 +98,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: height * 0.01),
               CustomText(title: 'Enter your  Education:', fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               CustomTextField(
                 hintText: 'Write Here....',
                 controller: presentEducationController,
@@ -129,7 +126,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: height * 0.01),
               CustomText(title: 'Enter your  Religion:', fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               CustomTextField(
                 hintText: 'Write Here....',
                 controller: religionController,
@@ -141,7 +138,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: height * 0.01),
               CustomText(title: 'Enter your  Current Location:', fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               CustomTextField(
                 hintText: 'Write Here....',
                 controller: liveInAddressController,
@@ -153,7 +150,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: height * 0.01),
               CustomText(title: 'Enter your permanent location:', fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
-              SizedBox(height: 7),
+              const SizedBox(height: 7),
               CustomTextField(
                 hintText: 'Write Here....',
                 controller: fromAddressController,
@@ -185,7 +182,7 @@ class _EditProfileState extends State<EditProfile> {
                         child: const Text("Save and change"),
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Palette.timeColor, textStyle: GoogleFonts.lato(fontWeight: FontWeight.bold)))
-                    : CircularProgressIndicator(),
+                    : const CircularProgressIndicator(),
               ),
               SizedBox(height: height * 0.02),
             ],

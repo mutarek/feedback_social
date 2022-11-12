@@ -16,8 +16,8 @@ class AppConstant {
   static const String unfriendURI = '/accounts/friends/unfriend/';
   static const String sendFriendRequestListURI = '/accounts/friends/friend-request/list/?size=10&page=';
   static const String sendSuggestFriendListURI = '/accounts/friends/suggestions/?size=10&page=';
-  static const String  friendListsURI = '/accounts/friends/list/?size=10&page=';
-  static const String  follwersListsURI = '/accounts/followers/list/?size=10&page=';
+  static const String friendListsURI = '/accounts/friends/list/?size=10&page=';
+  static const String follwersListsURI = '/accounts/followers/list/?size=10&page=';
 
   static const String profileURI = '/accounts/profile/';
   static const String uploadCoverImageURI = '/accounts/profile/update/cover-image/';
@@ -53,6 +53,7 @@ class AppConstant {
   static const String termsAndConditionUri = '/terms-condition/list/';
   static const String latestVersionUri = '/latest-version/';
   static const String helpDiskURI = '/settings/help-desk/';
+
   // Shared Key
   static const String theme = 'theme';
   static const String light = 'light';

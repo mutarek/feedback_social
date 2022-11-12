@@ -1,5 +1,7 @@
+import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/settings/help_chat_screen.dart';
+import 'package:als_frontend/screens/settings/widget/faq_question.dart';
 import 'package:als_frontend/screens/settings/widget/help_desk_widget.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -117,7 +119,7 @@ class HelpDesk extends StatelessWidget {
                     discription: "Find intelligent answer instantly",
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
-                      Get.snackbar("Info", "This Feature is coming soon");
+                    Get.to(FaqSceeen());
                     },
                   ),
                   SizedBox(height: height * 0.01),
@@ -127,7 +129,7 @@ class HelpDesk extends StatelessWidget {
                     discription: 'Get solution beamed to your inbox',
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
-                      Get.snackbar("Info", "This Feature is coming soon");
+                      openNewEmail("meektecit@gmail.com");
                     },
                   ),
                 ],
