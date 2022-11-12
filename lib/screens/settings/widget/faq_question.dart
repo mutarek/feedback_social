@@ -11,7 +11,7 @@ class FaqSceeen extends StatelessWidget {
         title: Text("FQA"),
       ),
       body: Column(
-        children: [
+        children: const [
           ExpansionTile(
             title: Text("What happens when you Login?"),
             leading: Icon(Icons.login), //add icon
@@ -35,8 +35,6 @@ class FaqSceeen extends StatelessWidget {
                 title: Text("This will authenticate your user and populate a shared instance of an authentication token. The additional information from the authentication call will be used to populate the shared User Profile instance with basic fields."),
 
               ),
-
-
               //more child menu
             ],
           ),

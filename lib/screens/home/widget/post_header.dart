@@ -95,7 +95,7 @@ class PostHeaderWidget extends StatelessWidget {
                             route(context, 2);
                           },
                           child: Text(
-                            Provider.of<AuthProvider>(context, listen: false).userID!.toString() ==
+                            Provider.of<AuthProvider>(context, listen: false).userID.toString() ==
                                     post.author!.id.toString()
                                 ? "You Posted Here"
                                 : post.author!.fullName.toString() + " Posted Here",
