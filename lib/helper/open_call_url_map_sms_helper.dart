@@ -1,4 +1,3 @@
-import 'package:email_launcher/email_launcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,10 +24,10 @@ openFeedbackAppOnPlayStore() async {
 }
 
 openNewEmail(String mail) async{
-  print("Mail called");
-  Email email = Email(
-      to: [mail],
-      subject: 'Seeking For Help',
-      body: 'Hello I am user of Feedback Social , now i am seeking for help');
-  await EmailLauncher.launch(email);
+  // print("Mail called");
+  // Email email = Email(
+  //     to: [mail],
+  //     subject: 'Seeking For Help',
+  //     body: 'Hello I am user of Feedback Social , now i am seeking for help');
+  // await EmailLauncher.launch(email);
 }
