@@ -1,8 +1,9 @@
-import 'package:als_frontend/old_code/provider/provider.dart';
+import 'package:als_frontend/old_code/provider/authentication/email_verify_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import '../../provider/authentication/forgot_password_provider.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -28,7 +29,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           child: Consumer2<EmailVerifyProvider, ForgotPasswordProvider>(
               builder: (context, provider, provider2, child) {
             return Column(
-              
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal:width*0.02),
@@ -92,7 +92,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             ),
                           ),
                           const Text(
-                            "OTP will exprired after 5 minutes",
+                            "OTP will expired after 5 minutes",
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w500,

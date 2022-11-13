@@ -15,6 +15,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import 'otp_screen.dart';
+
 // ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -111,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     padding: EdgeInsets.only(left: width * 0.5),
                                     child: TextButton(
                                         onPressed: () {
-                                          Get.to(const ForgotPassword());
+                                          Get.to(()=> EnterEmailOrPhone());
                                         },
                                         child: Text(
                                           getTranslated('Forgot password?', context)!,
