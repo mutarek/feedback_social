@@ -123,7 +123,7 @@ class SignUpScreen1 extends StatelessWidget {
                     return CustomConatinerButton(
                         child: (auth.isLoading == false)
                             ? const Icon(Icons.arrow_forward, color: Colors.white)
-                            : const CupertinoActivityIndicator(),
+                            : Center(child: const CupertinoActivityIndicator()),
                         ontap: () {
                           if (emailPhoneController.text.isEmpty) {
                             showMessage(

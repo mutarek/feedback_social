@@ -97,7 +97,7 @@ String emailorNumber;
                             return CustomConatinerButton(
                                 child: (auth.isLoading == false)
                                     ? const Icon(Icons.arrow_forward, color: Colors.white)
-                                    : const CircularProgressIndicator(),
+                                    : Center(child: const CircularProgressIndicator()),
                                 ontap: () {
                                   auth.otpVerify(pinController.text, (bool status, String message) {
                                     if (status) {
