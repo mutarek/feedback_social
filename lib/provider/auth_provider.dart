@@ -103,7 +103,7 @@ class AuthProvider with ChangeNotifier {
   otpVerify(String code, Function callback) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await authRepo.otpVerify(data, code, isEmail);
+    Response response = await authRepo.otpVerify(data, code, isNumber);
     _isLoading = false;
 
     if (response.statusCode == 200) {
