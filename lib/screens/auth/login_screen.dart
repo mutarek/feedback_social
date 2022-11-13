@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     padding: const EdgeInsets.symmetric(horizontal: 15),
                                     child: CustomTextField(
                                       fillColor: Colors.white,
-                                      hintText: getTranslated('E-mail', context),
+                                      hintText: getTranslated('Enter Your E-mail or Phone Number', context),
                                       borderRadius: 4,
                                       controller: emailController,
                                       verticalSize: 15,

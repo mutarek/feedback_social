@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,15 +10,26 @@ class AuthRepo {
 
   AuthRepo({required this.sharedPreferences, required this.apiClient});
 
-  Future<Response> login(String email, String password) async {
-    return await apiClient.postData(AppConstant.loginURI, {'email': email, 'password': password},
-        headers: {'Content-Type': 'application/json; charset=UTF-8'});
+  Future<Response> login(String emailOrPhone, String password) async {
+    Map map={};
+    if (isNumeric(emailOrPhone)) {
+      map.addAll({"mobile": emailOrPhone});
+    } else {
+      map.addAll({"email": emailOrPhone});
+    }
+    map.addAll({'password': password});
+    return await apiClient.postData(AppConstant.loginURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
-  Future<Response> signup(String firstName, String lastName, String dob, String gender, String email, String password) async {
-    return await apiClient.postData(AppConstant.signupURI,
-        {"first_name": firstName, "last_name": lastName, "email": email, "password": password, "date_of_birth": dob, "gender": gender},
-        headers: {'Content-Type': 'application/json; charset=UTF-8'});
+  Future<Response> signup(String firstName, String lastName, String dob, String gender, String emailOrPhone, String password) async {
+    Map map = {};
+    if (isNumeric(emailOrPhone)) {
+      map.addAll({"mobile": emailOrPhone});
+    } else {
+      map.addAll({"email": emailOrPhone});
+    }
+    map.addAll({"first_name": firstName, "last_name": lastName, "password": password, "date_of_birth": dob, "gender": gender});
+    return await apiClient.postData(AppConstant.signupURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
   Future<Response> otpSend(String emailOrPhone, bool isEmail) async {
