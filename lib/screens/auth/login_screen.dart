@@ -107,17 +107,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                       inputAction: TextInputAction.done,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: width * 0.5),
-                                    child: TextButton(
-                                        onPressed: () {
-                                          Get.to(  SignUpScreen1(isFromForgetPassword: true,));
-                                        },
-                                        child: Text(
-                                          getTranslated('Forgot password?', context)!,
-                                          style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
-                                        )),
-                                  ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(left: width * 0.5),
+                                  //   child: TextButton(
+                                  //       onPressed: () {
+                                  //         Get.to(  SignUpScreen1(isFromForgetPassword: true,));
+                                  //       },
+                                  //       child: Text(
+                                  //         getTranslated('Forgot password?', context)!,
+                                  //         style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
+                                  //       )),
+                                  // ),
                                   SizedBox(
                                     height: height * 0.06,
                                   ),
