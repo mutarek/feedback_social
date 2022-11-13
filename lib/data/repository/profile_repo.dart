@@ -1,7 +1,7 @@
 import 'package:als_frontend/data/datasource/api_client.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as Http;
+import 'package:http/http.dart' as http;
 
 class ProfileRepo {
   final ApiClient apiClient;
@@ -16,7 +16,7 @@ class ProfileRepo {
     return await apiClient.getData(AppConstant.profileURI);
   }
 
-  Future<Response> uploadPhoto(List<Http.MultipartFile> multipartData, {bool isCover = false}) async {
+  Future<Response> uploadPhoto(List<http.MultipartFile> multipartData, {bool isCover = false}) async {
     return await apiClient.putMultipartData(
         isCover ? AppConstant.uploadCoverImageURI : AppConstant.uploadProfileImageURI, {}, multipartData);
   }

@@ -2,7 +2,7 @@ import 'package:als_frontend/data/datasource/api_client.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as Http;
+import 'package:http/http.dart' as http;
 
 class PageRepo {
   final ApiClient apiClient;
@@ -29,7 +29,7 @@ class PageRepo {
     return await apiClient.postData(AppConstant.pageURI, map);
   }
 
-  Future<Response> createPageWithImageUpload(Map<String, String> body, List<Http.MultipartFile> multipartData) async {
+  Future<Response> createPageWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData) async {
     return await apiClient.postMultipartData(AppConstant.pageURI, body, multipartData);
   }
 
@@ -53,7 +53,7 @@ class PageRepo {
     return await apiClient.patchData(AppConstant.pageURI + "$pageID/", map);
   }
 
-  Future<Response> updatePageWithImageUpload(Map<String, String> body, List<Http.MultipartFile> multipartData, int pageID) async {
+  Future<Response> updatePageWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData, int pageID) async {
     return await apiClient.patchMultipartData(AppConstant.pageURI + "$pageID/", body, multipartData);
   }
 

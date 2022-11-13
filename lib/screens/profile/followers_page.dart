@@ -71,12 +71,12 @@ class _FollowersPageState extends State<FollowersPage> {
                           FollowersModel followersModel = profileProvider.followersModelList[index];
                           return FriendRequestWidget(
                             width: width,
-                            userName: followersModel.full_name.toString(),
-                            firstButtonName: followersModel.is_friend! ? "Friend" : "Confirm",
-                            secondButtonName: followersModel.is_friend! ? "Unfriend" : "Remove",
+                            userName: followersModel.fullName.toString(),
+                            firstButtonName: followersModel.isFriend! ? "Friend" : "Confirm",
+                            secondButtonName: followersModel.isFriend! ? "Unfriend" : "Remove",
                             firstButtonOnTab: () {
                               // called for accept friend request
-                              if (!followersModel.is_friend!) {
+                              if (!followersModel.isFriend!) {
                                 profileProvider.acceptFriendRequest(followersModel.id.toString(), index, isFromFollowers: true);
                               } else {
                                 //Called for public profile view
@@ -86,7 +86,7 @@ class _FollowersPageState extends State<FollowersPage> {
                               }
                             },
                             secondButtonOnTab: () {
-                              if (!followersModel.is_friend!) {
+                              if (!followersModel.isFriend!) {
                                 //Call when your clicked on Unfriend Button
 
                               } else {

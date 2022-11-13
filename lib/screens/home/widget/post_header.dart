@@ -8,7 +8,9 @@ import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
@@ -42,8 +44,7 @@ class PostHeaderWidget extends StatelessWidget {
       if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
       } else {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => PublicProfileScreen(post.author!.id.toString())));
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(post.author!.id.toString())));
       }
     }
   }
@@ -52,7 +53,7 @@ class PostHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        post.postType == AppConstant.postTypePage || post.postType == AppConstant.postTypeGroup && !isPage && !isGroup
+        (post.postType == AppConstant.postTypePage || post.postType == AppConstant.postTypeGroup) && !isPage && !isGroup
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,14 +67,13 @@ class PostHeaderWidget extends StatelessWidget {
                       }
                     },
                     child: ProfileAvatar(
-                        profileImageUrl: post.postType == AppConstant.postTypePage
-                            ? post.page!.avatar!
-                            : post.group!.coverPhoto!),
+                        profileImageUrl: post.postType == AppConstant.postTypePage ? post.page!.avatar! : post.group!.coverPhoto!),
                   ),
                   const SizedBox(width: 8.0),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         InkWell(
                           onTap: () {
@@ -83,29 +83,33 @@ class PostHeaderWidget extends StatelessWidget {
                               route(context, 0);
                             }
                           },
-                          child: Text(
-                              post.postType == AppConstant.postTypePage
-                                  ? post.page!.name!
-                                  : post.group!.name!,
-                              style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
+                          child: Row(
+                            children: [
+                              Text(post.postType == AppConstant.postTypePage ? post.page!.name! : post.group!.name!,
+                                  style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
+                              const SizedBox(width: 5),
+                              CircleAvatar(
+                                  child: CustomText(
+                                      title: post.postType == AppConstant.postTypePage ? "P" : "G", color: Colors.white, fontSize: 12),
+                                  backgroundColor: AppColors.feedback,
+                                  radius: 10)
+                            ],
+                          ),
                         ),
                         SizedBox(height: post.postType == AppConstant.postTypePage ? 4 : 0),
                         InkWell(
                           onTap: () {
                             route(context, 2);
                           },
-                          child: Text(
-                            Provider.of<AuthProvider>(context, listen: false).userID!.toString() ==
-                                    post.author!.id.toString()
-                                ? "You Posted Here"
-                                : post.author!.fullName.toString() + " Posted Here",
-                            style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w400),
-                          ),
+                          child: CustomText(
+                              title: Provider.of<AuthProvider>(context, listen: false).userID.toString() == post.author!.id.toString()
+                                  ? "You Posted Here"
+                                  : post.author!.fullName.toString() + " Posted Here",
+                              fontSize: 12),
                         ),
                         Row(children: [
                           Text(getDate(post.timestamp!, context),
-                              style: latoStyle400Regular.copyWith(
-                                  color: Colors.grey[600], fontSize: 12.0)),
+                              style: latoStyle400Regular.copyWith(color: Colors.grey[600], fontSize: 12.0)),
                           Icon(Icons.public, color: Colors.grey[600], size: 12.0)
                         ])
                       ],
@@ -114,16 +118,15 @@ class PostHeaderWidget extends StatelessWidget {
                 ],
               )
             : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   InkWell(
                       onTap: () {
-                        if (Provider.of<AuthProvider>(context, listen: false).userID ==
-                            post.author!.id.toString()) {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                        if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
                         } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => PublicProfileScreen(post.author!.id.toString())));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(post.author!.id.toString())));
                         }
                       },
                       child: ProfileAvatar(profileImageUrl: post.author!.profileImage!)),
@@ -131,25 +134,20 @@ class PostHeaderWidget extends StatelessWidget {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        if (Provider.of<AuthProvider>(context, listen: false).userID ==
-                            post.author!.id.toString()) {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                        if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
                         } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => PublicProfileScreen(post.author!.id.toString())));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(post.author!.id.toString())));
                         }
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(post.author!.fullName!,
-                              style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
+                          Text(post.author!.fullName!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                           Row(
                             children: [
                               Text(getDate(post.timestamp!, context),
-                                  style: latoStyle400Regular.copyWith(
-                                      color: Colors.grey[600], fontSize: 12.0)),
+                                  style: latoStyle400Regular.copyWith(color: Colors.grey[600], fontSize: 12.0)),
                               Icon(Icons.public, color: Colors.grey[600], size: 12.0)
                             ],
                           )
@@ -158,17 +156,12 @@ class PostHeaderWidget extends StatelessWidget {
                     ),
                   ),
                   Visibility(
-                    visible: post.author!.id.toString() !=
-                            Provider.of<AuthProvider>(context, listen: false).userID ||
-                        !isHomeScreen,
+                    visible: post.author!.id.toString() != Provider.of<AuthProvider>(context, listen: false).userID || !isHomeScreen,
                     child: IconButton(
                         icon: const Icon(Icons.more_horiz),
                         onPressed: () => {
                               moreMenuBottomSheet(context, post, index,
-                                  isFromProfile: isProfileScreen,
-                                  isForPage: isPage,
-                                  isFromGroupScreen: isGroup,
-                                  groupPageID: groupPageID)
+                                  isFromProfile: isProfileScreen, isForPage: isPage, isFromGroupScreen: isGroup, groupPageID: groupPageID)
                             }),
                   ),
                 ],

@@ -93,7 +93,7 @@ class PostStats extends StatelessWidget {
                                     padding: const EdgeInsets.all(7),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.blue,
+                                        color: AppColors.feedback,
                                         border: Border.all(color: Colors.white),
                                         boxShadow: [
                                           BoxShadow(
@@ -102,7 +102,7 @@ class PostStats extends StatelessWidget {
                                               spreadRadius: 3.0,
                                               offset: const Offset(0.0, 0.0))
                                         ]),
-                                    child: CustomText(title: post.totalLike.toString(), fontSize: 10),
+                                    child: CustomText(title: post.totalLike.toString(), fontSize: 10, color: Colors.white),
                                   ))
                       ],
                     ),
@@ -137,7 +137,7 @@ class PostStats extends StatelessWidget {
                                     padding: const EdgeInsets.all(7),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Colors.blue,
+                                        color: AppColors.feedback,
                                         border: Border.all(color: Colors.white),
                                         boxShadow: [
                                           BoxShadow(
@@ -146,7 +146,7 @@ class PostStats extends StatelessWidget {
                                               spreadRadius: 3.0,
                                               offset: const Offset(0.0, 0.0))
                                         ]),
-                                    child: CustomText(title: post.totalComment.toString(), fontSize: 10),
+                                    child: CustomText(title: post.totalComment.toString(), fontSize: 10, color: Colors.white),
                                   ))
                       ],
                     ),

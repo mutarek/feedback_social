@@ -1,5 +1,4 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';

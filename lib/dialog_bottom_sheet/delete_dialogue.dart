@@ -38,7 +38,7 @@ class DeleteDialogue extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Image.asset(ImagesModel.logo, width: 30, height: 30),
-                    Expanded(
+                    const Expanded(
                       child: CustomText(
                           title: 'Are you sure want to Delete this post?',
                           fontSize: 13,

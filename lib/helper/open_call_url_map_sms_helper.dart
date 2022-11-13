@@ -6,8 +6,8 @@ openFeedbackMessengerApp() async {
   String token = (prefs.getString('token') ?? '');
   String url = 'feedback://chatting.com/$token';
 
-  if (await canLaunch(url)) {
-    await launch(url);
+  if (await canLaunchUrl(Uri(scheme: url))) {
+    await launchUrl(Uri(scheme: url));
   } else {
     throw 'Could not launch $url';
   }
@@ -16,9 +16,18 @@ openFeedbackMessengerApp() async {
 openFeedbackAppOnPlayStore() async {
   String url = 'https://play.google.com/store/apps/details?id=com.als.feedback';
 
-  if (await canLaunch(url)) {
-    await launch(url);
+  if (await canLaunchUrl(Uri(scheme: url))) {
+    await launchUrl(Uri(scheme: url));
   } else {
     throw 'Could not launch $url';
+  }
+}
+
+openNewEmail(String mail) async {
+  final Uri params = Uri(scheme: 'mailto', path: mail, query: 'subject=Write your problems here...');
+  if (await canLaunchUrl(params)) {
+    await launchUrl(params);
+  } else {
+    throw 'Could not launch ${params.toString()}';
   }
 }

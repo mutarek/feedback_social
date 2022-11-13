@@ -423,7 +423,7 @@ class ProfileProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       Fluttertoast.showToast(msg: response.body['message']);
       if (isFromFollowers) {
-        followersModelList[index].is_friend = true;
+        followersModelList[index].isFriend = true;
       } else if (isFromFriendRequest) {
         removeRequestAfterCancelRequest(index);
       } else {}

@@ -97,6 +97,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                 child: Stack(
                   children: [
                     CachedNetworkImage(imageUrl: imageVideoLists[0].url),
+                    SizedBox(height: 150, width: MediaQuery.of(context).size.width),
                     Positioned(
                       left: 0,
                       right: 0,
@@ -109,7 +110,8 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                         child: IconButton(
                             onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                       ),
-                    )
+                    ),
+
                   ],
                 ),
               ),

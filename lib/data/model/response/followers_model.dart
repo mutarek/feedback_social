@@ -2,28 +2,28 @@
 class FollowersModel {
   FollowersModel.FollowersModel({
     this.id,
-    this.full_name,
-    this.is_friend,
+    this.fullName,
+    this.isFriend,
     this.profileImage,
   });
 
   FollowersModel.fromJson(dynamic json) {
     id = json['id'];
-    full_name = json['full_name'];
-    is_friend = json['is_friend'];
+    fullName = json['full_name'];
+    isFriend = json['is_friend'];
     profileImage = json['profile_image'];
   }
 
   num? id;
-  String? full_name;
+  String? fullName;
   String? profileImage;
-  bool? is_friend;
+  bool? isFriend;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
-    map['full_name'] = full_name;
-    map['is_friend'] = is_friend;
+    map['full_name'] = fullName;
+    map['is_friend'] = isFriend;
     map['profile_image'] = profileImage;
     return map;
   }

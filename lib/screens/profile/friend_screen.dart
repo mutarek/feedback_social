@@ -93,7 +93,7 @@ class _FriendScreenState extends State<FriendScreen> {
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text('${friendModel.full_name}', style: latoStyle600SemiBold.copyWith(fontSize: 12)),
+                                              Text('${friendModel.fullName}', style: latoStyle600SemiBold.copyWith(fontSize: 12)),
                                             ],
                                           ),
                                         ),

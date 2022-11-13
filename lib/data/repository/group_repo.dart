@@ -2,7 +2,7 @@ import 'package:als_frontend/data/datasource/api_client.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as Http;
+import 'package:http/http.dart' as http;
 
 class GroupRepo {
   final ApiClient apiClient;
@@ -26,7 +26,7 @@ class GroupRepo {
     return await apiClient.postData(AppConstant.groupUri, map);
   }
 
-  Future<Response> createGroupWithImageUpload(Map<String, String> body, List<Http.MultipartFile> multipartData) async {
+  Future<Response> createGroupWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData) async {
     return await apiClient.postMultipartData(AppConstant.groupUri, body, multipartData);
   }
 
@@ -34,7 +34,7 @@ class GroupRepo {
     return await apiClient.patchData(AppConstant.groupUri+"$groupID/", map);
   }
 
-  Future<Response> updateGroupWithImageUpload(Map<String, String> body, List<Http.MultipartFile> multipartData,int groupID) async {
+  Future<Response> updateGroupWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData,int groupID) async {
     return await apiClient.patchMultipartData(AppConstant.groupUri+"$groupID/", body, multipartData);
   }
 
