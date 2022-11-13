@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     padding: EdgeInsets.only(left: width * 0.5),
                                     child: TextButton(
                                         onPressed: () {
-                                          Get.to(const ForgotPassword());
+                                          Get.to(  SignUpScreen1(isFromForgetPassword: true,));
                                         },
                                         child: Text(
                                           getTranslated('Forgot password?', context)!,
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           });
                                     }),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   SizedBox(
@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               borderRadius: BorderRadius.circular(20),
                                             )),
                                         onPressed: () {
-                                          Get.to(SignUpScreen1());
+                                          Get.to(SignUpScreen1(isFromForgetPassword: false,));
                                         },
                                         child: Text(
                                           getTranslated('Create account', context)!,

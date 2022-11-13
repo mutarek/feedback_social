@@ -39,7 +39,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       preferredSize: Size(MediaQuery.of(context).size.width, appBarSize!),
       child: Container(
         height: appBarSize,
-        padding: EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.only(top: 30),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             color: !isShowHeaderColor ? AppColors.primaryColorDark : AppColors.primaryColorDark,
@@ -64,7 +64,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Text(title!,
                           style: const TextStyle(fontSize: 18, color: Colors.white), maxLines: 1, overflow: TextOverflow.ellipsis)),
                 ),
-                SizedBox(width: 10)
+                const SizedBox(width: 10)
               ],
             ),
           ],
