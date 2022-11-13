@@ -16,11 +16,10 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen1 extends StatelessWidget {
-  SignUpScreen1({Key? key,
-    required this.isFromForgetPassword
-  }) : super(key: key);
+  SignUpScreen1({Key? key, required this.isFromForgetPassword}) : super(key: key);
   final TextEditingController emailPhoneController = TextEditingController();
-  bool isFromForgetPassword;
+  final bool isFromForgetPassword;
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -62,7 +61,7 @@ class SignUpScreen1 extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                         child: Text(
-                          isFromForgetPassword?"Forget Password":"Registration",
+                          isFromForgetPassword ? "Forget Password" : "Registration",
                           // getTranslated('Registration', context)!,
                           style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
@@ -75,7 +74,7 @@ class SignUpScreen1 extends StatelessWidget {
                       children: [
                         Expanded(
                           child: SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             child: Column(
                               children: [
                                 SizedBox(height: height * 0.02),
@@ -88,7 +87,7 @@ class SignUpScreen1 extends StatelessWidget {
                                     textStyle: latoStyle600SemiBold.copyWith(color: colorPrimaryDark, fontSize: 16),
                                   ),
                                 ),
-                                SizedBox(height: 50),
+                                const SizedBox(height: 50),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 15),
                                   child: CustomTextField(
@@ -136,7 +135,10 @@ class SignUpScreen1 extends StatelessWidget {
                             auth.otpSend(emailPhoneController.text, !isNumber, (bool status, String message) {
                               if (status) {
                                 Fluttertoast.showToast(msg: message);
-                                Get.off( OTPScreen( isFromForgetPassword: isFromForgetPassword, emailorNumber: emailPhoneController.text.toString(),));
+                                Get.off(OTPScreen(
+                                  isFromForgetPassword: isFromForgetPassword,
+                                  emailorNumber: emailPhoneController.text.toString(),
+                                ));
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                               }
@@ -163,6 +165,7 @@ class SignUpScreen1 extends StatelessWidget {
     });
   }
 }
+
 class TsClip2 extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
