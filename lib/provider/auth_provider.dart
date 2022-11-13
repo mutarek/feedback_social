@@ -42,7 +42,7 @@ class AuthProvider with ChangeNotifier {
         authRepo.clearUserInformation();
         authRepo.clearToken();
       }
-      //authRepo.saveUserToken(response.body['token'].toString());
+      authRepo.saveUserToken(response.body['token'].toString());
       authRepo.saveUserInformation(response.body['id'].toString(), '${response.body['first_name']} ${response.body['last_name']}',
           '${response.body['profile_image']}', '${response.body['code']}', '${response.body['email']}');
       callback(true, 'Signup Successfully');

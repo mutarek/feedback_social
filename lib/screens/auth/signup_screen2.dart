@@ -2,6 +2,7 @@ import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
+import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -197,7 +198,7 @@ class SignupScreen2 extends StatelessWidget {
                                       (bool status, String message) {
                                     if (status) {
                                       Fluttertoast.showToast(msg: message);
-                                      Get.off(const LoginScreen());
+                                      Get.off(const DashboardScreen());
                                     } else {
                                       Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                     }
