@@ -121,6 +121,35 @@ class _LoginScreenState extends State<LoginScreen> {
                                   SizedBox(
                                     height: height * 0.06,
                                   ),
+                                  Container(
+                                    height: height * 0.05,
+                                    width: width * 0.4,
+                                    child: Consumer<AuthProvider>(builder: (context, auth, child) {
+                                      return CustomConatinerButton(
+                                          child: (auth.isLoading == false)
+                                              ? Center(child: Text("Login", style: latoStyle800ExtraBold.copyWith(color: Colors.white)))
+                                              : const CupertinoActivityIndicator(),
+                                          ontap: () {
+                                            if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+                                              showMessage(message: getTranslated('Please fill all the form', context), context: context);
+                                            } else {
+                                              auth.signIn(emailController.text, passwordController.text).then((value) {
+                                                if (value.status) {
+                                                  Fluttertoast.showToast(msg: value.message);
+                                                  Provider.of<NotificationProvider>(context, listen: false).check();
+                                                  Navigator.of(context)
+                                                      .pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
+                                                } else {
+                                                  Fluttertoast.showToast(msg: value.message, backgroundColor: Colors.red);
+                                                }
+                                              });
+                                            }
+                                          });
+                                    }),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   SizedBox(
                                     width: width * 0.6,
                                     child: ElevatedButton(
@@ -148,37 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                Positioned(
-                  top: height * 0.330,
-                  left: width * 0.3,
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: height * 0.4,
-                    width: width * 0.4,
-                    child: Consumer<AuthProvider>(builder: (context, auth, child) {
-                      return CustomConatinerButton(
-                          child: (auth.isLoading == false)
-                              ? Center(child: Text("Login", style: latoStyle800ExtraBold.copyWith(color: Colors.white)))
-                              : const CupertinoActivityIndicator(),
-                          ontap: () {
-                            if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-                              showMessage(message: getTranslated('Please fill all the form', context), context: context);
-                            } else {
-                              auth.signIn(emailController.text, passwordController.text).then((value) {
-                                if (value.status) {
-                                  Fluttertoast.showToast(msg: value.message);
-                                  Provider.of<NotificationProvider>(context, listen: false).check();
-                                  Navigator.of(context)
-                                      .pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
-                                } else {
-                                  Fluttertoast.showToast(msg: value.message, backgroundColor: Colors.red);
-                                }
-                              });
-                            }
-                          });
-                    }),
-                  ),
-                ),
+
               ],
             ),
           ));
