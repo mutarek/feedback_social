@@ -2,7 +2,6 @@ import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
-import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/auth/otp_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -17,9 +16,11 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen1 extends StatelessWidget {
-  SignUpScreen1({Key? key}) : super(key: key);
+  SignUpScreen1({Key? key,
+    required this.isFromForgetPassword
+  }) : super(key: key);
   final TextEditingController emailPhoneController = TextEditingController();
-
+  bool isFromForgetPassword;
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -61,7 +62,8 @@ class SignUpScreen1 extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                         child: Text(
-                          getTranslated('Registration', context)!,
+                          isFromForgetPassword?"Forget Password":"Registration",
+                          // getTranslated('Registration', context)!,
                           style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                       ),
@@ -131,11 +133,10 @@ class SignUpScreen1 extends StatelessWidget {
                             );
                           } else {
                             bool isNumber = isNumeric(emailPhoneController.text);
-
                             auth.otpSend(emailPhoneController.text, !isNumber, (bool status, String message) {
                               if (status) {
                                 Fluttertoast.showToast(msg: message);
-                                Get.off( OTPScreen());
+                                Get.off( OTPScreen( isFromForgetPassword: isFromForgetPassword, emailorNumber: emailPhoneController.text.toString(),));
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                               }
@@ -161,4 +162,18 @@ class SignUpScreen1 extends StatelessWidget {
       );
     });
   }
+}
+class TsClip2 extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height - 80);
+    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 120);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

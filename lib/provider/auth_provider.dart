@@ -184,6 +184,8 @@ class AuthProvider with ChangeNotifier {
     return true;
   }
 
+
+
   //TODO: for Logout
   bool checkTokenExist() {
     return authRepo.checkTokenExist();
