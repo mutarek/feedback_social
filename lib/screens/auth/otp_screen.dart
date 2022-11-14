@@ -1,6 +1,7 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/screens/auth/forgot_password_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/auth/signup_screen2.dart';
 import 'package:als_frontend/screens/auth/widget/rounded_with_cursor.dart';
@@ -15,9 +16,15 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class OTPScreen extends StatelessWidget {
-  OTPScreen({Key? key}) : super(key: key);
+  OTPScreen({Key? key,
+required this.isFromForgetPassword,
+required this.emailorNumber,
+  }) : super(key: key);
+bool isFromForgetPassword;
+String emailorNumber;
 
   final TextEditingController pinController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +97,15 @@ class OTPScreen extends StatelessWidget {
                             return CustomConatinerButton(
                                 child: (auth.isLoading == false)
                                     ? const Icon(Icons.arrow_forward, color: Colors.white)
-                                    : const CircularProgressIndicator(),
+                                    : Center(child: const CircularProgressIndicator()),
                                 ontap: () {
                                   auth.otpVerify(pinController.text, (bool status, String message) {
                                     if (status) {
                                       Fluttertoast.showToast(msg: message);
+                                      if(isFromForgetPassword)
+                                        {
+                                          Get.off(ForgotPasswordScreen(isFromForgetPassword: true, emailorPhonenumber: emailorNumber, otpcode:pinController.text ,));
+                                        }else
                                       Get.off(SignupScreen2());
                                     } else {
                                       Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
@@ -138,4 +149,18 @@ class OTPScreen extends StatelessWidget {
       );
     });
   }
+}
+class TsClip2 extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height - 80);
+    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 120);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

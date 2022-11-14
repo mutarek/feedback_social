@@ -188,7 +188,7 @@ class SignupScreen2 extends StatelessWidget {
                       return CustomConatinerButton(
                           child: (auth.isLoading == false)
                               ? const Icon(Icons.arrow_forward, color: Colors.white)
-                              : const CircularProgressIndicator(),
+                              : Center(child: const CircularProgressIndicator()),
                           ontap: () {
                             if (firstNameController.text.isEmpty ||
                                 passwordController.text.isEmpty ||

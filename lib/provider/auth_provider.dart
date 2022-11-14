@@ -45,6 +45,10 @@ class AuthProvider with ChangeNotifier {
       authRepo.saveUserToken(response.body['token'].toString());
       authRepo.saveUserInformation(response.body['id'].toString(), '${response.body['first_name']} ${response.body['last_name']}',
           '${response.body['profile_image']}', '${response.body['code']}', '${response.body['email']}');
+      name = '${response.body['first_name']} ${response.body['last_name']}';
+      userID = '${response.body['id']}';
+      userCode = '${response.body['code']}';
+      profileImage = '${response.body['profile_image']}';
       callback(true, 'Signup Successfully');
     } else {
       callback(false, response.statusText);
@@ -183,6 +187,8 @@ class AuthProvider with ChangeNotifier {
     authRepo.clearUserInformation();
     return true;
   }
+
+
 
   //TODO: for Logout
   bool checkTokenExist() {
