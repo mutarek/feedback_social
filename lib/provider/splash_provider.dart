@@ -25,6 +25,7 @@ class SplashProvider with ChangeNotifier {
     isLoading = true;
     Response response = await splashRepo.getCurrentAppVersion();
     isLoading = false;
+
     notifyListeners();
     if (response.statusCode == 200) {
       serverVersion = response.body['version'];
