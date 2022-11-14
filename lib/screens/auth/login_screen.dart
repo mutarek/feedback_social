@@ -51,7 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     height: height * 0.3,
                     width: width * 0.9,
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(width * 4))),
                   ),
                 ),
                 Column(
@@ -63,10 +66,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: width,
                         color: Colors.white,
                         child: Padding(
-                          padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
+                          padding: EdgeInsets.only(
+                              top: height * 0.06, left: width * 0.1),
                           child: Text(
                             getTranslated('Welcome', context)!,
-                            style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                            style: latoStyle400Regular.copyWith(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                           ),
                         ),
                       ),
@@ -82,10 +89,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   SizedBox(height: height * 0.02),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
                                     child: CustomTextField(
                                       fillColor: Colors.white,
-                                      hintText: getTranslated('Enter Your E-mail or Phone Number', context),
+                                      hintText: getTranslated(
+                                          'Enter Your E-mail or Phone Number',
+                                          context),
                                       borderRadius: 4,
                                       controller: emailController,
                                       verticalSize: 15,
@@ -97,10 +107,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(height: height * 0.02),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
                                     child: CustomTextField(
                                       fillColor: Colors.white,
-                                      hintText: getTranslated('Password', context),
+                                      hintText:
+                                          getTranslated('Password', context),
                                       borderRadius: 4,
                                       isPassword: true,
                                       controller: passwordController,
@@ -120,40 +132,67 @@ class _LoginScreenState extends State<LoginScreen> {
                                   //         style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
                                   //       )),
                                   // ),
-                                  // Padding(
-                                  //   padding: EdgeInsets.only(left: width * 0.5),
-                                  //   child: TextButton(
-                                  //       onPressed: () {
-                                  //         Get.to(  SignUpScreen1(isFromForgetPassword: true,));
-                                  //       },
-                                  //       child: Text(
-                                  //         getTranslated('Forgot password?', context)!,
-                                  //         style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
-                                  //       )),
-                                  // ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: width * 0.5),
+                                    child: TextButton(
+                                        onPressed: () {
+                                          Get.to(SignUpScreen1(isFromForgetPassword: true,));
+                                        },
+                                        child: Text(
+                                          getTranslated('Forgot password?', context)!,
+                                          style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
+                                        )),
+                                  ),
                                   SizedBox(
                                     height: height * 0.06,
                                   ),
                                   Container(
                                     height: height * 0.05,
                                     width: width * 0.4,
-                                    child: Consumer<AuthProvider>(builder: (context, auth, child) {
+                                    child: Consumer<AuthProvider>(
+                                        builder: (context, auth, child) {
                                       return CustomConatinerButton(
                                           child: (auth.isLoading == false)
-                                              ? Center(child: Text("Login", style: latoStyle800ExtraBold.copyWith(color: Colors.white)))
+                                              ? Center(
+                                                  child: Text("Login",
+                                                      style:
+                                                          latoStyle800ExtraBold
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .white)))
                                               : const CupertinoActivityIndicator(),
                                           ontap: () {
-                                            if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-                                              showMessage(message: getTranslated('Please fill all the form', context), context: context);
+                                            if (emailController.text.isEmpty ||
+                                                passwordController
+                                                    .text.isEmpty) {
+                                              showMessage(
+                                                  message: getTranslated(
+                                                      'Please fill all the form',
+                                                      context),
+                                                  context: context);
                                             } else {
-                                              auth.signIn(emailController.text, passwordController.text).then((value) {
+                                              auth
+                                                  .signIn(emailController.text,
+                                                      passwordController.text)
+                                                  .then((value) {
                                                 if (value.status) {
-                                                  Fluttertoast.showToast(msg: value.message);
-                                                  Provider.of<NotificationProvider>(context, listen: false).check();
+                                                  Fluttertoast.showToast(
+                                                      msg: value.message);
+                                                  Provider.of<NotificationProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .check();
                                                   Navigator.of(context)
-                                                      .pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
+                                                      .pushAndRemoveUntil(
+                                                          MaterialPageRoute(
+                                                              builder: (_) =>
+                                                                  const DashboardScreen()),
+                                                          (route) => false);
                                                 } else {
-                                                  Fluttertoast.showToast(msg: value.message, backgroundColor: Colors.red);
+                                                  Fluttertoast.showToast(
+                                                      msg: value.message,
+                                                      backgroundColor:
+                                                          Colors.red);
                                                 }
                                               });
                                             }
@@ -169,14 +208,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                         style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.white,
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                             )),
                                         onPressed: () {
-                                          Get.to(SignUpScreen1(isFromForgetPassword: false,));
+                                          Get.to(SignUpScreen1(
+                                            isFromForgetPassword: false,
+                                          ));
                                         },
                                         child: Text(
-                                          getTranslated('Create account', context)!,
-                                          style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.black),
+                                          getTranslated(
+                                              'Create account', context)!,
+                                          style: latoStyle400Regular.copyWith(
+                                              fontSize: 15,
+                                              color: Colors.black),
                                         )),
                                   ),
                                   const SizedBox(height: 20),
@@ -190,7 +235,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-
               ],
             ),
           ));
@@ -203,7 +247,8 @@ class TsClip2 extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 80);
-    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 120);
+    path.quadraticBezierTo(
+        size.width / 2, size.height, size.width, size.height - 120);
     path.lineTo(size.width, 0);
     path.close();
     return path;

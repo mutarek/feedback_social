@@ -16,15 +16,15 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class OTPScreen extends StatelessWidget {
-  OTPScreen({Key? key,
-required this.isFromForgetPassword,
-required this.emailorNumber,
+  OTPScreen({
+    Key? key,
+    required this.isFromForgetPassword,
+    required this.emailorNumber,
   }) : super(key: key);
-bool isFromForgetPassword;
-String emailorNumber;
+  bool isFromForgetPassword;
+  String emailorNumber;
 
   final TextEditingController pinController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,10 @@ String emailorNumber;
                   child: Container(
                     height: height * 0.4,
                     width: width * 0.4,
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(width * 4))),
                   ),
                 ),
                 Column(
@@ -58,10 +61,14 @@ String emailorNumber;
                         width: width,
                         color: Colors.white,
                         child: Padding(
-                          padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
+                          padding: EdgeInsets.only(
+                              top: height * 0.06, left: width * 0.1),
                           child: CustomText2(
                             title: 'OTP Verified',
-                            textStyle: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                            textStyle: latoStyle400Regular.copyWith(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                           ),
                         ),
                       ),
@@ -75,11 +82,15 @@ String emailorNumber;
                             title: 'Please Enter your 4 digit Valid OTP Number',
                             textAlign: TextAlign.center,
                             maxLines: 2,
-                            textStyle: latoStyle600SemiBold.copyWith(color: colorPrimaryDark, fontSize: 16),
+                            textStyle: latoStyle600SemiBold.copyWith(
+                                color: colorPrimaryDark, fontSize: 16),
                           ),
                         ),
                         const SizedBox(height: 50),
-                        Container(height: 100, child: RoundedWithCustomCursor(pinController, authProvider)),
+                        Container(
+                            height: 100,
+                            child: RoundedWithCustomCursor(
+                                pinController, authProvider)),
                         SizedBox(height: height * 0.02),
                       ],
                     ),
@@ -93,24 +104,48 @@ String emailorNumber;
                           alignment: Alignment.center,
                           height: height * 0.4,
                           width: width * 0.4,
-                          child: Consumer<AuthProvider>(builder: (context, auth, child) {
+                          child: Consumer<AuthProvider>(
+                              builder: (context, auth, child) {
                             return CustomConatinerButton(
                                 child: (auth.isLoading == false)
-                                    ? const Icon(Icons.arrow_forward, color: Colors.white)
-                                    : Center(child: const CircularProgressIndicator()),
+                                    ? const Icon(Icons.arrow_forward,
+                                        color: Colors.white)
+                                    : Center(
+                                        child:
+                                            const CircularProgressIndicator()),
                                 ontap: () {
-                                  auth.otpVerify(pinController.text, (bool status, String message) {
-                                    if (status) {
-                                      Fluttertoast.showToast(msg: message);
-                                      if(isFromForgetPassword)
-                                        {
-                                          Get.off(ForgotPasswordScreen(isFromForgetPassword: true, emailorPhonenumber: emailorNumber, otpcode:pinController.text ,));
-                                        }else
-                                      Get.off(SignupScreen2());
-                                    } else {
-                                      Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
-                                    }
-                                  });
+                                  if (isFromForgetPassword) {
+                                    auth.resetOtpVerify(pinController.text,
+                                        (bool status, String message) {
+                                      if (status) {
+                                        Fluttertoast.showToast(msg: message);
+                                        // go to set new password screen
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: message,
+                                            backgroundColor: Colors.red);
+                                      }
+                                    });
+                                  } else {
+                                    auth.otpVerify(pinController.text,
+                                        (bool status, String message) {
+                                      if (status) {
+                                        Fluttertoast.showToast(msg: message);
+                                        if (isFromForgetPassword) {
+                                          Get.off(ForgotPasswordScreen(
+                                            isFromForgetPassword: true,
+                                            emailorPhonenumber: emailorNumber,
+                                            otpcode: pinController.text,
+                                          ));
+                                        } else
+                                          Get.off(SignupScreen2());
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: message,
+                                            backgroundColor: Colors.red);
+                                      }
+                                    });
+                                  }
                                 });
                           }),
                         )
@@ -126,7 +161,8 @@ String emailorNumber;
                     child: Center(
                       child: authProvider.isLoading == true
                           ? const SizedBox()
-                          : (authProvider.minutes == 0 && authProvider.seconds == 0)
+                          : (authProvider.minutes == 0 &&
+                                  authProvider.seconds == 0)
                               ? CustomButton(
                                   onTap: () {
                                     authProvider.resetTime();
@@ -137,7 +173,10 @@ String emailorNumber;
                                   radius: 10)
                               : Text(
                                   "00 : 0${authProvider.minutes} : ${(authProvider.seconds > 9) ? authProvider.seconds : "0${authProvider.seconds}"}",
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
                                 ),
                     ),
                   ),
@@ -150,12 +189,14 @@ String emailorNumber;
     });
   }
 }
+
 class TsClip2 extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 80);
-    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 120);
+    path.quadraticBezierTo(
+        size.width / 2, size.height, size.width, size.height - 120);
     path.lineTo(size.width, 0);
     path.close();
     return path;

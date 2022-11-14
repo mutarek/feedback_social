@@ -132,17 +132,34 @@ class SignUpScreen1 extends StatelessWidget {
                             );
                           } else {
                             bool isNumber = isNumeric(emailPhoneController.text);
-                            auth.otpSend(emailPhoneController.text, !isNumber, (bool status, String message) {
-                              if (status) {
-                                Fluttertoast.showToast(msg: message);
-                                Get.off(OTPScreen(
-                                  isFromForgetPassword: isFromForgetPassword,
-                                  emailorNumber: emailPhoneController.text.toString(),
-                                ));
-                              } else {
-                                Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                            if(isFromForgetPassword)
+                              {
+                                auth.resetOtpSend(emailPhoneController.text, !isNumber, (bool status,String message){
+                                  if (status) {
+                                    Fluttertoast.showToast(msg: message);
+                                    Get.off(OTPScreen(
+                                      isFromForgetPassword: isFromForgetPassword,
+                                      emailorNumber: emailPhoneController.text.toString(),
+                                    ));
+                                  } else {
+                                    Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                                  }
+                                });
                               }
-                            });
+                            else
+                              {
+                                auth.otpSend(emailPhoneController.text, !isNumber, (bool status, String message) {
+                                  if (status) {
+                                    Fluttertoast.showToast(msg: message);
+                                    Get.off(OTPScreen(
+                                      isFromForgetPassword: isFromForgetPassword,
+                                      emailorNumber: emailPhoneController.text.toString(),
+                                    ));
+                                  } else {
+                                    Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                                  }
+                                });
+                              }
                           }
                         });
                   }),

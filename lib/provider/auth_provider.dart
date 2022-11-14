@@ -104,6 +104,26 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future resetOtpSend(String emailORPhone,bool isEmail, Function callback) async{
+    _isLoading = true;
+    data = emailORPhone;
+    isNumber = isEmail;
+    notifyListeners();
+    Response response = await authRepo.resetOtpSend(emailORPhone, isEmail);
+    _isLoading = false;
+
+    if(response.statusCode == 200)
+      {
+        startTimer();
+        callback(true,response.body['message']);
+      }
+    else
+      {
+        callback(false,response.statusText);
+      }
+    notifyListeners();
+  }
+
   otpVerify(String code, Function callback) async {
     _isLoading = true;
     notifyListeners();
@@ -116,6 +136,24 @@ class AuthProvider with ChangeNotifier {
       callback(false, response.statusText);
     }
     notifyListeners();
+  }
+
+  resetOtpVerify(String code,Function callback) async {
+    _isLoading =true;
+    notifyListeners();
+    Response response ; //await authRepo.resetOtpVerify(data,code,isNumber);
+    _isLoading = false;
+    // check response for reset otp verify
+    // if(response.statusCode ==200)
+    //   {
+    //     callback(true,"Verified, Please set a new password now");
+    //   }
+    // else
+    //   {
+    //     callback(false,response.statusText);
+    //   }
+    notifyListeners();
+
   }
 
   /////TODO: for time count

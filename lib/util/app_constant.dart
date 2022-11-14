@@ -10,6 +10,7 @@ class AppConstant {
   static const String loginURI = '/accounts/signin/';
   static const String signupURI = '/accounts/signup/';
   static const String otpSendURI = '/accounts/otp/send/';
+  static const String resetOtpSendURI = '/accounts/password/reset/';
   static const String otpVerifyURI = '/accounts/otp/verify/';
   static const String sendFriendRequestURI = '/accounts/friends/send-friend-request/';
   static const String cancelFriendRequestURI = '/accounts/friends/cancel-friend-request/';

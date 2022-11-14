@@ -17,7 +17,6 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
 
   @override
   void initState() {
-
     betterPlayerDataSource = BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       widget.videoURL,
@@ -49,8 +48,9 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
     //   ),
     // );
 
-    BetterPlayerController _betterPlayerController =
-        BetterPlayerController(const BetterPlayerConfiguration(), betterPlayerDataSource: betterPlayerDataSource);
+    BetterPlayerController _betterPlayerController = BetterPlayerController(
+        const BetterPlayerConfiguration(),
+        betterPlayerDataSource: betterPlayerDataSource);
     _betterPlayerController.play();
 
     return Scaffold(

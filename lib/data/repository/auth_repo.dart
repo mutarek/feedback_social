@@ -11,25 +11,34 @@ class AuthRepo {
   AuthRepo({required this.sharedPreferences, required this.apiClient});
 
   Future<Response> login(String emailOrPhone, String password) async {
-    Map map={};
-    if (isNumeric(emailOrPhone)) {
-      map.addAll({"mobile": emailOrPhone});
-    } else {
-      map.addAll({"email": emailOrPhone});
-    }
-    map.addAll({'password': password});
-    return await apiClient.postData(AppConstant.loginURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
-  }
-
-  Future<Response> signup(String firstName, String lastName, String dob, String gender, String emailOrPhone, String password) async {
     Map map = {};
     if (isNumeric(emailOrPhone)) {
       map.addAll({"mobile": emailOrPhone});
     } else {
       map.addAll({"email": emailOrPhone});
     }
-    map.addAll({"first_name": firstName, "last_name": lastName, "password": password, "date_of_birth": dob, "gender": gender});
-    return await apiClient.postData(AppConstant.signupURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
+    map.addAll({'password': password});
+    return await apiClient.postData(AppConstant.loginURI, map,
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
+  }
+
+  Future<Response> signup(String firstName, String lastName, String dob,
+      String gender, String emailOrPhone, String password) async {
+    Map map = {};
+    if (isNumeric(emailOrPhone)) {
+      map.addAll({"mobile": emailOrPhone});
+    } else {
+      map.addAll({"email": emailOrPhone});
+    }
+    map.addAll({
+      "first_name": firstName,
+      "last_name": lastName,
+      "password": password,
+      "date_of_birth": dob,
+      "gender": gender
+    });
+    return await apiClient.postData(AppConstant.signupURI, map,
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
   Future<Response> otpSend(String emailOrPhone, bool isEmail) async {
@@ -40,21 +49,37 @@ class AuthRepo {
       map = {"phone": emailOrPhone};
     }
 
-    return await apiClient.postData(AppConstant.otpSendURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
+    return await apiClient.postData(AppConstant.otpSendURI, map,
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
-  Future<Response> otpVerify(String emailOrPhone, String code, bool isEmail) async {
+  Future<Response> resetOtpSend(String emailOrPhone, bool isEmail) async {
+    Map map = {};
+    if (isEmail) {
+      map = {"email": emailOrPhone};
+    } else {
+      map = {"phone": emailOrPhone};
+    }
+
+    return await apiClient.postData(AppConstant.resetOtpSendURI, map,
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
+  }
+
+  Future<Response> otpVerify(
+      String emailOrPhone, String code, bool isEmail) async {
     Map map = {};
     if (isEmail) {
       map = {"email": emailOrPhone, "code": code};
     } else {
       map = {"phone": emailOrPhone, "code": code};
     }
-    return await apiClient.postData(AppConstant.otpVerifyURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
+    return await apiClient.postData(AppConstant.otpVerifyURI, map,
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
   //TODO: for save User Information
-  Future<void> saveUserInformation(String userID, String name, String image, String code, String email) async {
+  Future<void> saveUserInformation(String userID, String name, String image,
+      String code, String email) async {
     try {
       print("SSSS " + userID + " " + name + " " + image + " ");
       await sharedPreferences.setString(AppConstant.userID, userID);
