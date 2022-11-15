@@ -172,8 +172,10 @@ class ProfileProvider with ChangeNotifier {
   }
 
   void updateCommentDataCount(int index) {
-    newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
-    notifyListeners();
+    if (newsFeedLists.isNotEmpty) {
+      newsFeedLists[index].totalComment = newsFeedLists[index].totalComment! + 1;
+      notifyListeners();
+    }
   }
 
   Future updateData(String firstName, lastName, company, education, religion, liveInAdress, fromAdress, Function callBack) async {

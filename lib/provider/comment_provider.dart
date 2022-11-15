@@ -97,8 +97,8 @@ class CommentProvider with ChangeNotifier {
   }
 
   /////  ********    comment Web Socket
-  WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/191/comment/timeline_post/');
-  WebSocketChannel replyChannel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/191/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/post/191/comment/timeline_post/');
+  WebSocketChannel replyChannel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/post/191/comment/timeline_post/');
 
   userPostComments() {
     channel.stream.listen((data) {
@@ -133,17 +133,17 @@ class CommentProvider with ChangeNotifier {
   }
 
   initializeSocket(int postID) {
-    channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/comment/timeline_post/');
+    channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/post/$postID/comment/timeline_post/');
     userPostComments();
   }
 
   initializeSinglePostSocket(String url) {
-    channel = IOWebSocketChannel.connect('wss://als-social.com/ws${url.replaceAll('posts', 'post')}timeline_post/');
+    channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws${url.replaceAll('posts', 'post')}timeline_post/');
     userPostComments();
   }
 
   initializeReplySocket(int postID, int index) {
-    replyChannel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/$postID/comment/timeline_post/');
+    replyChannel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/post/$postID/comment/timeline_post/');
     userReplyComments(index);
   }
 

@@ -70,7 +70,7 @@ class CommentWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomText(title: commentModels.author!.fullName!, fontSize: 14,fontWeight: FontWeight.bold),
-                          CustomText(title: commentModels.comment!, fontSize: 10,color: Colors.black.withOpacity(.8)),
+                          CustomText(title: commentModels.comment!, fontSize: 14,color: Colors.black.withOpacity(.8)),
                           Container(
                               width: 65,
                               height: 25,

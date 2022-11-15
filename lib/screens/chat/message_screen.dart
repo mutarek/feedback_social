@@ -6,6 +6,8 @@ import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -47,8 +49,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
     controller = AutoScrollController(
         viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom), axis: scrollDirection);
     if (widget.isFromProfile) {
+      Provider.of<ChatProvider>(context, listen: false)
+          .initializeP2PChats((bool status) {}, isFromChatTwoUser: true, userID: widget.customerID);
     } else {
-
       Provider.of<ChatProvider>(context, listen: false).initializeP2PChats((bool status) {});
     }
 
@@ -62,7 +65,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 _scrollToIndex(0);
               });
             }
-          });
+          }, isFromChatTwoUser: true, userID: widget.customerID);
         }
       });
   }
@@ -80,7 +83,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
         return Future.value(true);
       },
       child: Scaffold(
-          backgroundColor: Color(0xffFBFAFF),
+          backgroundColor: const Color(0xffFBFAFF),
           appBar: buildAppBar(),
           body: BodyWidget(
             controller,
@@ -94,23 +97,17 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
-      automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
       elevation: 0,
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          BackButton(
-            onPressed: () {
-              Provider.of<ChatProvider>(context, listen: false).channelDismiss();
-              Navigator.of(context).pop();
-            },
-            color: Colors.black,
-          ),
           CircleAvatar(
               radius: 20,
               backgroundColor: AppColors.scaffold,
-              child: CircleAvatar(radius: 17, backgroundImage: NetworkImage(widget.imageURL))),
-          const SizedBox(width: kDefaultPadding * 0.75),
+              child: CircleAvatar(radius: 18, backgroundImage: NetworkImage(widget.imageURL))),
+          SizedBox(width: 7),
           Expanded(
             child: InkWell(
               onTap: () {
@@ -122,21 +119,24 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   }
                 }
               },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(widget.name, style: const TextStyle(fontSize: 16, color: Colors.black)),
-                  const Text("Active 3m ago", style: TextStyle(fontSize: 12, color: Colors.black))
-                ],
-              ),
+              child: CustomText(title: widget.name, textStyle: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
             ),
           )
         ],
       ),
+      leadingWidth: 40,
+      leading: IconButton(
+        icon: Icon(FontAwesomeIcons.arrowLeft, color: kPrimaryColor, size: 20),
+        onPressed: () {
+          Provider.of<ChatProvider>(context, listen: false).channelDismiss();
+          Navigator.of(context).pop();
+        },
+      ),
       actions: [
-        IconButton(icon: const Icon(FontAwesomeIcons.phone, color: Colors.black), onPressed: () {}),
-        IconButton(icon: const Icon(Icons.videocam, color: Colors.black), onPressed: () {}),
-        const SizedBox(width: kDefaultPadding / 2),
+        Icon(FontAwesomeIcons.phone, color: kPrimaryColor, size: 20),
+        const SizedBox(width: 15),
+        Icon(FontAwesomeIcons.video, color: kPrimaryColor, size: 20),
+        const SizedBox(width: 15),
       ],
     );
   }

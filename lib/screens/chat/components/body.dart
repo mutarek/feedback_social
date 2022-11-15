@@ -45,6 +45,7 @@ class BodyWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                     child: ListView.builder(
                       controller: controller,
+                      physics: const BouncingScrollPhysics(),
                       itemCount: chatProvider.p2pChatLists.length,
                       itemBuilder: (context, index) {
                         bool isSender =

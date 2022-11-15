@@ -39,7 +39,7 @@ class NotificationProvider with ChangeNotifier {
   }
 
   check() {
-    webSocketChannel = WebSocketChannel.connect(Uri.parse("wss://als-social.com/ws/notifications/${authRepo.getUserToken()}/"));
+    webSocketChannel = WebSocketChannel.connect(Uri.parse("wss://feedback-social.com/ws/notifications/${authRepo.getUserToken()}/"));
     webSocketChannel.stream.listen((event) {
       notificationUnread();
       initializeNotification(isFirstTime: false, isDataAddLast: false);

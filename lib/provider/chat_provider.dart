@@ -72,13 +72,13 @@ class ChatProvider with ChangeNotifier {
   bool hasNextData = false;
   int selectPage = 1;
 
-  updatePageNo(Function callBack) {
+  updatePageNo(Function callBack, {bool isFromChatTwoUser = false, int userID = 0}) {
     selectPage++;
-    initializeP2PChats(callBack, page: selectPage);
+    initializeP2PChats(callBack, page: selectPage, userID: userID, isFromChatTwoUser: isFromChatTwoUser);
     notifyListeners();
   }
 
-  initializeP2PChats(Function callBack, {int page = 1}) async {
+  initializeP2PChats(Function callBack, {int page = 1, bool isFromChatTwoUser = false, int userID = 0}) async {
     if (page == 1) {
       p2pChatLists.clear();
       p2pChatLists = [];
@@ -92,7 +92,13 @@ class ChatProvider with ChangeNotifier {
     }
     p2pChatListsTemp.clear();
     p2pChatListsTemp = [];
-    Response apiResponse = await chatRepo.getUserP2PChatLists(chatModels.id!, page);
+    Response apiResponse;
+    if (isFromChatTwoUser) {
+      apiResponse = await chatRepo.getChatMessageBetweenTwoUser(userID.toString(), page);
+    } else {
+      apiResponse = await chatRepo.getUserP2PChatLists(chatModels.id!, page);
+    }
+
     _isLoading = false;
     isBottomLoading = false;
     notifyListeners();
@@ -124,7 +130,7 @@ class ChatProvider with ChangeNotifier {
   bool isChangeValue = false;
 
   //TODO:  ********    for Web Socket
-  WebSocketChannel channel = IOWebSocketChannel.connect('wss://als-social.com/ws/post/191/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/post/191/comment/timeline_post/');
 
   userPostComments(AllMessageChatListModel model, int index, {bool isFromProfile = false}) {
     channel.stream.listen((data) {
@@ -152,7 +158,7 @@ class ChatProvider with ChangeNotifier {
   }
 
   initializeSocket(int index, {bool isFromProfile = false}) {
-    channel = IOWebSocketChannel.connect('wss://als-social.com/ws/messaging/thread/${chatModels.id}/');
+    channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
     userPostComments(chatModels, index, isFromProfile: isFromProfile);
   }
 
@@ -169,11 +175,12 @@ class ChatProvider with ChangeNotifier {
     anotherAddStatus = 0;
     hasConnection = false;
     if (result == true) {
+      Map map = {
+        "data": {"user_id": userID.toString(), "room_id": chatModels.id, "text": message},
+        "action": "chat"
+      };
       channel.sink.add(
-        jsonEncode({
-          "data": {"user_id": userID, "room_id": chatModels.id, "text": message},
-          "action": "chat"
-        }),
+        jsonEncode(map),
       );
     } else {
       ticker = Timer.periodic(const Duration(seconds: 5), (timer) async {
@@ -182,7 +189,7 @@ class ChatProvider with ChangeNotifier {
         if (result == true) {
           timer.cancel();
           ticker.cancel();
-          channel = IOWebSocketChannel.connect('wss://als-social.com/ws/messaging/thread/${chatModels.id}/');
+          channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
           channel.sink.add(
             jsonEncode({
               "data": {"user_id": userID, "room_id": chatModels.id, "text": message},

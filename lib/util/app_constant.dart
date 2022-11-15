@@ -49,6 +49,7 @@ class AppConstant {
   static const String blocklist = '/settings/block/';
   static const String messageRoomList = '/message-room-list/';
   static const String chatRoomListUri = '/chat-message-list/';
+  static const String chatMessageBetweenTwoUserURI = '/chat-message-between-two-user/';
   static const String messageRoomCreateList = '/message-room-create/';
   static const String getOtherSettingsValue = '/settings/other-settings/';
   static const String getNotificationSettingsValueUri = '/settings/notification/';
