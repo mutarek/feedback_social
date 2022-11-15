@@ -3,6 +3,7 @@ import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/forgot_password_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
+import 'package:als_frontend/screens/auth/set_new_password.dart';
 import 'package:als_frontend/screens/auth/signup_screen2.dart';
 import 'package:als_frontend/screens/auth/widget/rounded_with_cursor.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -115,11 +116,13 @@ class OTPScreen extends StatelessWidget {
                                             const CircularProgressIndicator()),
                                 ontap: () {
                                   if (isFromForgetPassword) {
-                                    auth.resetOtpVerify(pinController.text,
+                                    auth.otpVerify(pinController.text,
                                         (bool status, String message) {
                                       if (status) {
                                         Fluttertoast.showToast(msg: message);
-                                        // go to set new password screen
+                                        Get.off(() => SetNewPassword(
+                                            emailorNumber: emailorNumber,
+                                            otpCode: pinController.text));
                                       } else {
                                         Fluttertoast.showToast(
                                             msg: message,
@@ -131,13 +134,6 @@ class OTPScreen extends StatelessWidget {
                                         (bool status, String message) {
                                       if (status) {
                                         Fluttertoast.showToast(msg: message);
-                                        if (isFromForgetPassword) {
-                                          Get.off(ForgotPasswordScreen(
-                                            isFromForgetPassword: true,
-                                            emailorPhonenumber: emailorNumber,
-                                            otpcode: pinController.text,
-                                          ));
-                                        } else
                                           Get.off(SignupScreen2());
                                       } else {
                                         Fluttertoast.showToast(

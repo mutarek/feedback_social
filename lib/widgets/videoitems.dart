@@ -19,17 +19,17 @@ class _VideoItemsState extends State<VideoItems> {
   @override
   void initState() {
     _chewieController = ChewieController(
-      allowFullScreen: false,
+      allowFullScreen: true,
       videoPlayerController: widget.videoPlayerController,
       aspectRatio: 16 / 9,
-      autoInitialize: true,
+      autoInitialize: false,
       autoPlay: true,
-      looping: true,
+      looping: false,
       errorBuilder: (context, errorMessage) {
         return Center(
           child: Text(
             errorMessage,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.red),
           ),
         );
       },
