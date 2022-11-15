@@ -1,6 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
-import 'package:als_frontend/old_code/screens/screens.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/auth/signup_screen1.dart';
