@@ -41,6 +41,23 @@ class AuthRepo {
         headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
+  Future<Response> setNewPassword(String emailOrPhone, String newPassword,
+      String code) async {
+    Map map = {};
+    if (isNumeric(emailOrPhone)) {
+      map.addAll({"phone": emailOrPhone});
+    } else {
+      map.addAll({"email": emailOrPhone});
+    }
+    map.addAll({
+      "otp": code,
+      "new_password": newPassword,
+    });
+    return await apiClient.putData(
+        AppConstant.setNewPasswordURI, map,
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
+  }
+
   Future<Response> otpSend(String emailOrPhone, bool isEmail) async {
     Map map = {};
     if (isEmail) {
@@ -65,8 +82,8 @@ class AuthRepo {
         headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
-  Future<Response> otpVerify(
-      String emailOrPhone, String code, bool isEmail) async {
+  Future<Response> otpVerify(String emailOrPhone, String code,
+      bool isEmail) async {
     Map map = {};
     if (isEmail) {
       map = {"email": emailOrPhone, "code": code};

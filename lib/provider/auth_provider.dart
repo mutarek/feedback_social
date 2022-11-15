@@ -56,6 +56,22 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO:: for reset password in Section
+
+  Future resetPasswordConfirm(String emailOrPhone,String newPassword,String code,Function callback) async{
+    _isLoading = true;
+    notifyListeners();
+    Response response = await authRepo.setNewPassword(emailOrPhone, newPassword, code);
+    _isLoading = false;
+    if(response.statusCode == 200){
+      callback(true,"Password Set Successfully");
+    }else{
+      callback(false,response.statusText);
+      print(response.statusCode);
+    }
+    notifyListeners();
+  }
+
   //TODO:: for Sign in Section
 
   Future<CallBackResponse> signIn(String email, String password) async {
@@ -83,6 +99,8 @@ class AuthProvider with ChangeNotifier {
       return CallBackResponse(status: false, message: response.statusText!);
     }
   }
+
+
 
   String data = '';
   bool isNumber = false;
@@ -136,24 +154,6 @@ class AuthProvider with ChangeNotifier {
       callback(false, response.statusText);
     }
     notifyListeners();
-  }
-
-  resetOtpVerify(String code,Function callback) async {
-    _isLoading =true;
-    notifyListeners();
-    Response response ; //await authRepo.resetOtpVerify(data,code,isNumber);
-    _isLoading = false;
-    // check response for reset otp verify
-    // if(response.statusCode ==200)
-    //   {
-    //     callback(true,"Verified, Please set a new password now");
-    //   }
-    // else
-    //   {
-    //     callback(false,response.statusText);
-    //   }
-    notifyListeners();
-
   }
 
   /////TODO: for time count
