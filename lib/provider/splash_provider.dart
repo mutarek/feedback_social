@@ -23,6 +23,7 @@ class SplashProvider with ChangeNotifier {
 
   Future<bool> initializeVersion() async {
     isLoading = true;
+    notifyListeners();
     Response response = await splashRepo.getCurrentAppVersion();
     isLoading = false;
 

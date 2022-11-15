@@ -12,7 +12,7 @@ class ApiClient {
   final String appBaseUrl;
   final SharedPreferences sharedPreferences;
   static const String noInternetMessage = 'Connection to API server failed due to internet connection';
-  final int timeoutInSeconds = 30;
+  final int timeoutInSeconds = 60;
 
   String token = '';
   Map<String, String>? _mainHeaders;
