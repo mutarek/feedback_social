@@ -74,11 +74,11 @@ Future<void> init() async {
   sl.registerFactory(() => DashboardProvider());
   sl.registerFactory(() => OtherProvider());
   sl.registerFactory(() => SearchProvider(searchRepo: sl()));
-  sl.registerFactory(() => GroupProvider(groupRepo: sl(),newsfeedRepo: sl()));
-  sl.registerFactory(() => PageProvider(pageRepo: sl(),newsfeedRepo: sl()));
+  sl.registerFactory(() => GroupProvider(groupRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
+  sl.registerFactory(() => PageProvider(pageRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => AnimalProvider(animalRepo: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
-  sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(),newsfeedRepo: sl()));
+  sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => SettingsProvider(settingsRepo: sl()));
 
   // External

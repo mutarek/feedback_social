@@ -4,6 +4,7 @@ import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
+import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/page_repo.dart';
 import 'package:flutter/foundation.dart';
@@ -16,8 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PageProvider with ChangeNotifier {
   final PageRepo pageRepo;
   final NewsfeedRepo newsfeedRepo;
-
-  PageProvider({required this.pageRepo, required this.newsfeedRepo});
+  final AuthRepo authRepo;
+  PageProvider({required this.pageRepo, required this.newsfeedRepo,required this.authRepo});
 
   bool isLoading = false;
 
@@ -292,9 +293,13 @@ class PageProvider with ChangeNotifier {
     if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       pageAllPosts[index].totalLike = pageAllPosts[index].totalLike! + 1;
+      pageAllPosts[index]
+          .likedBy!
+          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
     } else {
       likesStatusAllData[index] = 0;
       pageAllPosts[index].totalLike = pageAllPosts[index].totalLike! - 1;
+      pageAllPosts[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
     }
     notifyListeners();
     await newsfeedRepo.addLikeONPage(postID, pageID);

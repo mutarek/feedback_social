@@ -8,6 +8,7 @@ import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/profile_video_model.dart';
+import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/group_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:flutter/foundation.dart';
@@ -20,8 +21,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class GroupProvider with ChangeNotifier {
   final GroupRepo groupRepo;
   final NewsfeedRepo newsfeedRepo;
-
-  GroupProvider({required this.groupRepo, required this.newsfeedRepo});
+  final AuthRepo authRepo;
+  GroupProvider({required this.groupRepo, required this.newsfeedRepo,required this.authRepo});
 
   bool isLoading = false;
   bool isLoadingSuggestedGroup = false;
@@ -314,9 +315,13 @@ class GroupProvider with ChangeNotifier {
     if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! + 1;
+      groupAllPosts[index]
+          .likedBy!
+          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
     } else {
       likesStatusAllData[index] = 0;
       groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! - 1;
+      groupAllPosts[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
     }
     notifyListeners();
     await newsfeedRepo.addLikeONGroup(postID, groupID);
@@ -326,9 +331,13 @@ class GroupProvider with ChangeNotifier {
     if (value == 1) {
       likesStatusAllData[index] = 1;
       groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! + 1;
+      groupAllPosts[index]
+          .likedBy!
+          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
     } else {
       likesStatusAllData[index] = 0;
       groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! - 1;
+      groupAllPosts[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
     }
     notifyListeners();
   }

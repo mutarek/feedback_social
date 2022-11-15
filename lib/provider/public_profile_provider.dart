@@ -2,6 +2,7 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/profile-images_model.dart';
 import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
+import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/profile_repo.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PublicProfileProvider with ChangeNotifier {
   final ProfileRepo profileRepo;
   final NewsfeedRepo newsfeedRepo;
-
-  PublicProfileProvider({required this.profileRepo, required this.newsfeedRepo});
+  final AuthRepo authRepo;
+  PublicProfileProvider({required this.profileRepo, required this.newsfeedRepo,required this.authRepo});
 
   bool _isLoading = false;
 
@@ -108,9 +109,13 @@ class PublicProfileProvider with ChangeNotifier {
     if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       publicNewsFeedLists[index].totalLike = publicNewsFeedLists[index].totalLike! + 1;
+      publicNewsFeedLists[index]
+          .likedBy!
+          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
     } else {
       likesStatusAllData[index] = 0;
       publicNewsFeedLists[index].totalLike = publicNewsFeedLists[index].totalLike! - 1;
+      publicNewsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
     }
     notifyListeners();
     await newsfeedRepo.addLike(postID);

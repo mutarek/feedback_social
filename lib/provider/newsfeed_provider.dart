@@ -81,9 +81,13 @@ class NewsFeedProvider with ChangeNotifier {
     if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
+      newsFeedLists[index]
+          .likedBy!
+          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
     } else {
       likesStatusAllData[index] = 0;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
+      newsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
     }
     notifyListeners();
     await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
@@ -93,9 +97,13 @@ class NewsFeedProvider with ChangeNotifier {
     if (value == 1) {
       likesStatusAllData[index] = 1;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
+      newsFeedLists[index]
+          .likedBy!
+          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
     } else {
       likesStatusAllData[index] = 0;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
+      newsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
     }
     notifyListeners();
   }
@@ -161,26 +169,24 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> singlePostLike(int postID, {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
-    Response response = await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
-    if (response.statusCode == 200) {
-      if (response.body['liked'] == true) {
-        isLikeMe = true;
-        singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! + 1;
-        notifyListeners();
-        return 1;
-      } else {
-        isLikeMe = false;
-        singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! - 1;
-        notifyListeners();
-        return 0;
-      }
+   singlePostLike(int postID,Function callBackFunction, {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
+    var contain = singleNewsFeedModel.likedBy!.where((element) => element.id.toString() == authRepo.getUserID());
+    if (contain.isEmpty) {
+      callBackFunction(true);
+      isLikeMe = true;
+      singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! + 1;
+      singleNewsFeedModel.likedBy!
+          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      callBackFunction(false);
+      isLikeMe = false;
+      singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! - 1;
+      singleNewsFeedModel.likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
     }
-
     notifyListeners();
-    return -1;
+
+    await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
+
   }
 
   void updateSingleCommentDataCount() {

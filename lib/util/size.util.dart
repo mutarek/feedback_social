@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+double getAppSizeHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height;
+}
+
+double getAppSizeWidth(BuildContext context) {
+  return MediaQuery.of(context).size.width;
+}
 class ThemeUtility {
   static const double baseHeight = 812.0;
   static const double baseWidth = 375.0;

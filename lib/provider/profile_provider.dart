@@ -151,9 +151,13 @@ class ProfileProvider with ChangeNotifier {
     if (likesStatusAllData[index] == 0) {
       likesStatusAllData[index] = 1;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
+      newsFeedLists[index]
+          .likedBy!
+          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
     } else {
       likesStatusAllData[index] = 0;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
+      newsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
     }
     notifyListeners();
 
@@ -164,9 +168,13 @@ class ProfileProvider with ChangeNotifier {
     if (value == 1) {
       likesStatusAllData[index] = 1;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
+      newsFeedLists[index]
+          .likedBy!
+          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
     } else {
       likesStatusAllData[index] = 0;
       newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
+      newsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
     }
     notifyListeners();
   }

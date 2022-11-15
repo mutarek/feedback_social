@@ -46,7 +46,7 @@ class AuthorPageDetailsModel {
     if (json['liked_by'] != null) {
       likedBy = [];
       json['liked_by'].forEach((v) {
-        likedBy?.add(LikedBy.fromJson(v));
+        likedBy?.add(LikedByPage.fromJson(v));
       });
     }
   }
@@ -63,7 +63,7 @@ class AuthorPageDetailsModel {
   List<Posts>? posts;
   bool? like;
   num? totalLike;
-  List<LikedBy>? likedBy;
+  List<LikedByPage>? likedBy;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -138,7 +138,7 @@ class Posts {
     if (json['liked_by'] != null) {
       likedBy = [];
       json['liked_by'].forEach((v) {
-        likedBy?.add(LikedBy.fromJson(v));
+        likedBy?.add(LikedByPage.fromJson(v));
       });
     }
     timestamp = json['timestamp'];
@@ -157,7 +157,7 @@ class Posts {
   num? totalComment;
   String? commentUrl;
   num? totalLike;
-  List<LikedBy>? likedBy;
+  List<LikedByPage>? likedBy;
   String? timestamp;
   bool? isShare;
   String? postType;
@@ -193,14 +193,14 @@ class Posts {
   }
 }
 
-class LikedBy {
-  LikedBy({
+class LikedByPage {
+  LikedByPage({
     this.id,
     this.fullName,
     this.profileImage,
   });
 
-  LikedBy.fromJson(dynamic json) {
+  LikedByPage.fromJson(dynamic json) {
     id = json['id'];
     fullName = json['full_name'];
     profileImage = json['profile_image'];

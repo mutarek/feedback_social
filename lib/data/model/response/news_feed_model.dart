@@ -149,9 +149,7 @@ class NewsFeedData {
     map['total_comment'] = totalComment;
     map['comment_url'] = commentUrl;
     map['total_like'] = totalLike;
-    if (likedBy != null) {
-      map['liked_by'] = likedBy?.map((v) => v.toJson()).toList();
-    }
+
     map['timestamp'] = timestamp;
     map['is_share'] = isShare;
     map['post_type'] = postType;
@@ -264,47 +262,19 @@ class Video {
 class LikedBy {
   LikedBy({
     this.id,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.dateOfBirth,
-    this.gender,
-    this.isActive,
+    this.name,
     this.profileImage,
   });
 
   int? id;
-  String? firstName;
-  String? lastName;
-  String? email;
-  DateTime? dateOfBirth;
-  String? gender;
-  bool? isActive;
+  String? name;
   String? profileImage;
 
   factory LikedBy.fromJson(Map<String, dynamic> json) => LikedBy(
         id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        email: json["email"],
-        dateOfBirth: json["date_of_birth"] == null ? null : DateTime.parse(json["date_of_birth"]),
-        gender: json["gender"],
-        isActive: json["is_active"],
+        name: json["full_name"],
         profileImage: json["profile_image"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "email": email,
-        "date_of_birth": dateOfBirth == null
-            ? null
-            : "${dateOfBirth!.year.toString().padLeft(4, '0')}-${dateOfBirth!.month.toString().padLeft(2, '0')}-${dateOfBirth!.day.toString().padLeft(2, '0')}",
-        "gender": gender,
-        "is_active": isActive,
-        "profile_image": profileImage,
-      };
 }
 
 class Group {
@@ -424,7 +394,6 @@ class Post {
         "description": description,
         "author": author!.toJson(),
         "total_image": totalImage,
-
         "images": List<dynamic>.from(images!.map((x) => x.toJson())),
         "total_video": totalVideo,
         "videos": List<dynamic>.from(videos!.map((x) => x)),

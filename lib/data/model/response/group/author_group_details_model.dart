@@ -198,7 +198,7 @@ class Posts {
     if (json['liked_by'] != null) {
       likedBy = [];
       json['liked_by'].forEach((v) {
-        likedBy?.add(LikedBy.fromJson(v));
+        likedBy?.add(LikedByGroup.fromJson(v));
       });
     }
     timestamp = json['timestamp'];
@@ -219,7 +219,7 @@ class Posts {
   num? totalComment;
   List<Comments>? comments;
   num? totalLike;
-  List<LikedBy>? likedBy;
+  List<LikedByGroup>? likedBy;
   String? timestamp;
   bool? isShare;
   String? postType;
@@ -485,8 +485,8 @@ class Creator {
   }
 }
 
-class LikedBy {
-  LikedBy({
+class LikedByGroup {
+  LikedByGroup({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -500,7 +500,7 @@ class LikedBy {
   bool isActive;
   String profileImage;
 
-  factory LikedBy.fromJson(Map<String, dynamic> json) => LikedBy(
+  factory LikedByGroup.fromJson(Map<String, dynamic> json) => LikedByGroup(
         id: json["id"] ?? 0,
         firstName: json["first_name"] ?? "",
         lastName: json["last_name"] ?? '',
@@ -531,7 +531,7 @@ class Reply {
   String comment;
   int parent;
   int post;
-  LikedBy author;
+  LikedByGroup author;
   List<dynamic> replies;
 
   factory Reply.fromJson(Map<String, dynamic> json) => Reply(
@@ -539,7 +539,7 @@ class Reply {
         comment: json["comment"],
         parent: json["parent"],
         post: json["post"],
-        author: LikedBy.fromJson(json["author"]),
+        author: LikedByGroup.fromJson(json["author"]),
         replies: List<dynamic>.from(json["replies"].map((x) => x)),
       );
 

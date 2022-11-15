@@ -107,7 +107,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
               radius: 20,
               backgroundColor: AppColors.scaffold,
               child: CircleAvatar(radius: 18, backgroundImage: NetworkImage(widget.imageURL))),
-          SizedBox(width: 7),
+          const SizedBox(width: 7),
           Expanded(
             child: InkWell(
               onTap: () {
@@ -126,16 +126,16 @@ class _MessagesScreenState extends State<MessagesScreen> {
       ),
       leadingWidth: 40,
       leading: IconButton(
-        icon: Icon(FontAwesomeIcons.arrowLeft, color: kPrimaryColor, size: 20),
+        icon: const Icon(FontAwesomeIcons.arrowLeft, color: kPrimaryColor, size: 20),
         onPressed: () {
           Provider.of<ChatProvider>(context, listen: false).channelDismiss();
           Navigator.of(context).pop();
         },
       ),
       actions: [
-        Icon(FontAwesomeIcons.phone, color: kPrimaryColor, size: 20),
+        const Icon(FontAwesomeIcons.phone, color: kPrimaryColor, size: 20),
         const SizedBox(width: 15),
-        Icon(FontAwesomeIcons.video, color: kPrimaryColor, size: 20),
+        const Icon(FontAwesomeIcons.video, color: kPrimaryColor, size: 20),
         const SizedBox(width: 15),
       ],
     );
