@@ -6,7 +6,6 @@ class AppConstant {
   static const String baseUrl = 'https://feedback-social.com';
   static const String baseUrl1 = 'https://feedback-social.com';
   static const String oldBaseUrl = 'https://als-social.com';
-
   static const String loginURI = '/accounts/signin/';
   static const String signupURI = '/accounts/signup/';
   static const String otpSendURI = '/accounts/otp/send/';
@@ -21,7 +20,6 @@ class AppConstant {
   static const String sendSuggestFriendListURI = '/accounts/friends/suggestions/?size=10&page=';
   static const String friendListsURI = '/accounts/friends/list/?size=10&page=';
   static const String follwersListsURI = '/accounts/followers/list/?size=10&page=';
-
   static const String profileURI = '/accounts/profile/';
   static const String uploadCoverImageURI = '/accounts/profile/update/cover-image/';
   static const String uploadProfileImageURI = '/accounts/profile/update/profile-image/';
