@@ -1,11 +1,8 @@
-import 'package:als_frontend/old_code/provider/post/single_video_show_provider.dart';
-import 'package:als_frontend/screens/home/home_screen.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/videoitems.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoDetailsScreen extends StatefulWidget {
@@ -38,8 +35,6 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
   }
 
   @override
-
-
   @override
   Widget build(BuildContext context) {
     // BetterPlayerDataSource betterPlayerDataSource = BetterPlayerDataSource(
@@ -66,19 +61,18 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
           leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
-               Get.back();
+                Get.back();
               }),
-          title: const CustomText(title: 'Feedback Watch', color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          title: const CustomText(
+              title: 'Feedback Watch',
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 16),
           backgroundColor: Colors.white,
           elevation: 0),
-      body: SafeArea(
-        child: Center(
-          child: AspectRatio(
-            aspectRatio: 16 / 9,
-            child: VideoItems(
-                videoPlayerController:
-                    VideoPlayerController.network(widget.videoURL)),
-          ),
+      body: Center(
+        child: VideoItems(
+          videoPlayerController: VideoPlayerController.network(widget.videoURL),
         ),
       ),
     );
