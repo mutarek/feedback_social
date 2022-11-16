@@ -32,7 +32,7 @@ class CustomText2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      getTranslated(title!, context) ?? "",
+      getTranslated(title!, context),
       textAlign: textAlign ?? TextAlign.left,
       maxLines: maxLines,
       overflow: overflow,

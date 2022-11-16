@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: EdgeInsets.only(
                               top: height * 0.06, left: width * 0.1),
                           child: Text(
-                            getTranslated('Welcome', context)!,
+                            getTranslated('Welcome', context),
                             style: latoStyle400Regular.copyWith(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Get.to(SignUpScreen1(isFromForgetPassword: true,));
                                         },
                                         child: Text(
-                                          getTranslated('Forgot password?', context)!,
+                                          getTranslated('Forgot password?', context),
                                           style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
                                         )),
                                   ),
@@ -218,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         },
                                         child: Text(
                                           getTranslated(
-                                              'Create account', context)!,
+                                              'Create account', context),
                                           style: latoStyle400Regular.copyWith(
                                               fontSize: 15,
                                               color: Colors.black),

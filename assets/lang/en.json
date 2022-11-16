@@ -1,6 +1,8 @@
 {
   "app_name": "Dyqan Taxi",
   "Welcome": "Welcome",
+  "Feedback": "Feedback",
+  "Chats": "Chats",
   "Forgot password?": "Forgot password?",
   "Password": "Password",
   "Login": "Login",
@@ -25,5 +27,10 @@
   "First Name": "First Name",
   "Last Name": "Last Name",
   "Date of birth": "Date of birth",
-  "Gender": "Gender"
+  "Gender": "Gender",
+  "Home": "Home",
+  "Friend": "Friend",
+  "Message": "Message",
+  "More": "More",
+  "Notifications": "Notifications"
 }
