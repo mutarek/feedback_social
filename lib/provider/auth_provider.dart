@@ -13,7 +13,7 @@ class CallBackResponse {
   CallBackResponse({this.status = false, this.message = ''});
 }
 
-class AuthProvider with ChangeNotifier {
+class  AuthProvider with ChangeNotifier {
   final AuthRepo authRepo;
 
   AuthProvider({required this.authRepo});
@@ -21,6 +21,12 @@ class AuthProvider with ChangeNotifier {
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
+  DateTime? selectedDate;
+
+   dateTimeChange(newDate,){
+     selectedDate = newDate;
+     notifyListeners();
+   }
 
   //TODO:: for Sign Up Section
 

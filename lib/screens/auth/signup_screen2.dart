@@ -1,3 +1,4 @@
+import 'package:als_frontend/helper/date_converter.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
@@ -6,13 +7,14 @@ import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
-import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen2 extends StatelessWidget {
@@ -23,6 +25,7 @@ class SignupScreen2 extends StatelessWidget {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  var selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,9 @@ class SignupScreen2 extends StatelessWidget {
                   child: Container(
                     height: height * 0.4,
                     width: width * 0.4,
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
                   ),
                 ),
                 Column(
@@ -59,7 +64,8 @@ class SignupScreen2 extends StatelessWidget {
                           padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                           child: CustomText2(
                             title: 'User Information',
-                            textStyle: latoStyle400Regular.copyWith(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                            textStyle: latoStyle400Regular.copyWith(
+                                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                         ),
                       ),
@@ -109,19 +115,45 @@ class SignupScreen2 extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CustomText2(title: "Date of birth", color: Colors.white, fontSize: 20),
+                                  const CustomText2(
+                                      title: "Date of birth", color: Colors.white, fontSize: 20),
                                   Container(
-                                    height: height * 0.045,
-                                    width: width * 0.4,
-                                    decoration: BoxDecoration(color: const Color(0xFF656B87), borderRadius: BorderRadius.circular(15.0)),
-                                    child: MaterialButton(
-                                      child: CustomText(
-                                          title: authProvider.buttonText, textStyle: latoStyle500Medium.copyWith(color: Colors.white)),
-                                      onPressed: () {
-                                        authProvider.showDateDialog(context);
-                                      },
-                                    ),
-                                  )
+                                      height: height * 0.045,
+                                      width: width * 0.4,
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xFF656B87),
+                                          borderRadius: BorderRadius.circular(15.0)),
+                                      child: ElevatedButton(
+                                          onPressed: () async {
+                                            selectedDate = await DatePicker.showSimpleDatePicker(
+                                              context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(1960),
+                                              lastDate: DateTime(2022),
+                                              dateFormat: 'yyyy MMMM dd',
+                                              locale: DateTimePickerLocale.en_us,
+                                              looping: true,
+                                            );
+
+                                            final snackBar = SnackBar(
+                                                content: Text("Date Picked $selectedDate"));
+                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                          },
+                                          child: Text(selectedDate == null
+                                              ? "select"
+                                              : selectedDate.toString()))
+
+                                      // MaterialButton(
+                                      //   child:
+                                      //
+                                      //
+                                      //   CustomText(
+                                      //       title: authProvider.buttonText, textStyle: latoStyle500Medium.copyWith(color: Colors.white)),
+                                      //   onPressed: () {
+                                      //     authProvider.showDateDialog(context);
+                                      //   },
+                                      // ),
+                                      )
                                 ],
                               ),
                             ),
@@ -131,7 +163,8 @@ class SignupScreen2 extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  CustomText2(title: "Gender", color: Colors.white, fontSize: 20),
+                                  const CustomText2(
+                                      title: "Gender", color: Colors.white, fontSize: 20),
                                   Container(
                                     height: height * 0.045,
                                     width: width * 0.4,
@@ -145,7 +178,10 @@ class SignupScreen2 extends StatelessWidget {
                                         value: authProvider.selectGender,
                                         items: authProvider.genderLists
                                             .map((item) => DropdownMenuItem<String>(
-                                                value: item, child: Text(item, style: const TextStyle(color: Colors.white, fontSize: 16))))
+                                                value: item,
+                                                child: Text(item,
+                                                    style: const TextStyle(
+                                                        color: Colors.white, fontSize: 16))))
                                             .toList(),
                                         onChanged: (item) {
                                           authProvider.changeGenderStatus(item!);
@@ -176,7 +212,6 @@ class SignupScreen2 extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 Positioned(
                   top: height * 0.65,
                   left: width * 0.47,
@@ -188,29 +223,30 @@ class SignupScreen2 extends StatelessWidget {
                       return CustomConatinerButton(
                           child: (auth.isLoading == false)
                               ? const Icon(Icons.arrow_forward, color: Colors.white)
-                              : Center(child: const CircularProgressIndicator()),
+                              : const Center(child: CircularProgressIndicator()),
                           ontap: () {
                             if (firstNameController.text.isEmpty ||
                                 passwordController.text.isEmpty ||
                                 authProvider.buttonText == 'Choose time') {
-                              showMessage(message: getTranslated('Please fill all the form', context), context: context);
+                              showMessage(
+                                  message: getTranslated('Please fill all the form', context),
+                                  context: context);
                             } else {
-                              auth.signup(firstNameController.text, lastNameController.text, passwordController.text,
-                                      (bool status, String message) {
-                                    if (status) {
-                                      Fluttertoast.showToast(msg: message);
-                                      Provider.of<NotificationProvider>(context, listen: false).check();
-                                      Get.off(const DashboardScreen());
-                                    } else {
-                                      Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
-                                    }
-                                  });
+                              auth.signup(firstNameController.text, lastNameController.text,
+                                  passwordController.text, (bool status, String message) {
+                                if (status) {
+                                  Fluttertoast.showToast(msg: message);
+                                  Provider.of<NotificationProvider>(context, listen: false).check();
+                                  Get.off(const DashboardScreen());
+                                } else {
+                                  Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                                }
+                              });
                             }
                           });
                     }),
                   ),
                 ),
-
               ],
             ),
           ),
