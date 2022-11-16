@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
@@ -7,6 +8,7 @@ import 'package:als_frontend/screens/animal/widget/owner_info_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,9 @@ class AddEditAnimalScreen extends StatefulWidget {
   final OnwerAnimalModel? animalModel;
   final int index;
 
-  const AddEditAnimalScreen({this.isEdit = false, this.animalModel, this.index = 0, Key? key}) : super(key: key);
+  const AddEditAnimalScreen(
+      {this.isEdit = false, this.animalModel, this.index = 0, Key? key})
+      : super(key: key);
 
   @override
   State<AddEditAnimalScreen> createState() => _AddEditAnimalScreenState();
@@ -64,21 +68,24 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Consumer2<AuthProvider, AnimalProvider>(
-        builder: (context, authProvider, animalProvider, child) => ModalProgressHUD(
+        builder: (context, authProvider, animalProvider, child) =>
+            ModalProgressHUD(
               inAsyncCall: animalProvider.isLoading,
               child: Scaffold(
                 appBar: AppBar(
                   backgroundColor: Colors.white,
                   iconTheme: const IconThemeData(color: Palette.primary),
-                  title:
-                      CustomText(title: '${widget.isEdit ? "Update" : "Add"} animal', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
+                  title: CustomText2(
+                      title: '${widget.isEdit ? "Update" : "Add"} animal',
+                      textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
                   elevation: 0,
                 ),
                 body: ListView(
                   physics: const BouncingScrollPhysics(),
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: height * 0.02),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.05, vertical: height * 0.02),
                       child: Column(
                         children: [
                           Row(
@@ -95,7 +102,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                               SizedBox(
                                 width: 120,
                                 child: CustomButton(
-                                    btnTxt: 'Your animals',
+                                    btnTxt: '${getTranslated('your_animals', context)}',
                                     onTap: () {
                                       Get.to(() => const MyAnimalScreen());
                                     },
@@ -106,15 +113,22 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                           ),
                           const SizedBox(height: 30),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-                            ]),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.withOpacity(.1),
+                                      blurRadius: 10.0,
+                                      spreadRadius: 3.0,
+                                      offset: const Offset(0.0, 0.0))
+                                ]),
                             child: Column(
                               children: [
                                 CustomTextField(
-                                  hintText: 'Animal name',
+                                  hintText: '${getTranslated('animal_name', context)}',
                                   controller: animalNameController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -124,7 +138,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: 'Species',
+                                  hintText: '${getTranslated('species', context)}',
                                   controller: speciesController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -134,7 +148,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: 'Genus',
+                                  hintText: '${getTranslated('genus', context)}',
                                   controller: genusController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -144,7 +158,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: 'Given name',
+                                  hintText: '${getTranslated('given_name', context)}',
                                   controller: givenNameController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -154,7 +168,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: 'Age',
+                                  hintText: '${getTranslated('age', context)}',
                                   controller: ageController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -165,37 +179,49 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
-                                    const Text(
-                                      "Gender",
-                                      style: TextStyle(color: Colors.black, fontSize: 20),
+                                     Text(
+                                      "${getTranslated('gender', context)}",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20),
                                     ),
                                     SizedBox(width: width * 0.2),
                                     Expanded(
                                       child: Container(
                                         height: height * 0.045,
-                                        decoration:
-                                            BoxDecoration(color: const Color(0xFF656B87), borderRadius: BorderRadius.circular(15.0)),
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFF656B87),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0)),
                                         child: Center(
                                           child: DropdownButton<String>(
-                                            dropdownColor: const Color(0xFF656B87),
+                                            dropdownColor:
+                                                const Color(0xFF656B87),
                                             value: animalProvider.selectGender,
                                             underline: const SizedBox.shrink(),
-                                            icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                                            icon: const Icon(
+                                                Icons.arrow_drop_down,
+                                                color: Colors.white),
                                             isExpanded: true,
                                             items: animalProvider.gender
-                                                .map((item) => DropdownMenuItem<String>(
-                                                    value: item,
-                                                    child: Center(
-                                                      child: Text(
-                                                        item,
-                                                        style: const TextStyle(color: Colors.white, fontSize: 16),
-                                                      ),
-                                                    )))
+                                                .map((item) =>
+                                                    DropdownMenuItem<String>(
+                                                        value: item,
+                                                        child: Center(
+                                                          child: Text(
+                                                            item,
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 16),
+                                                          ),
+                                                        )))
                                                 .toList(),
                                             onChanged: (item) {
-                                              animalProvider.changeGenderStatus(item!);
+                                              animalProvider
+                                                  .changeGenderStatus(item!);
                                             },
                                           ),
                                         ),
@@ -205,33 +231,53 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
-                                      "Pick a photo",
-                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                                     Text(
+                                      "${getTranslated('pick_a_photo', context)}",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                     InkWell(
                                       onTap: () => animalProvider.pickImage(),
                                       child: Container(
                                         height: 30,
                                         width: 90,
-                                        decoration: BoxDecoration(color: Palette.primary, borderRadius: BorderRadius.circular(13)),
+                                        decoration: BoxDecoration(
+                                            color: Palette.primary,
+                                            borderRadius:
+                                                BorderRadius.circular(13)),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: const [
-                                            Icon(Icons.photo, color: Colors.white),
-                                            Text("Photo", style: TextStyle(color: Colors.white)),
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children:  [
+                                            Icon(Icons.photo,
+                                                color: Colors.white),
+                                            Text("${getTranslated('photo', context)}",
+                                                style: TextStyle(
+                                                    color: Colors.white)),
                                           ],
                                         ),
                                       ),
                                     ),
                                     (animalProvider.image != null)
-                                        ? SizedBox(height: 40, width: 40, child: Image.file(animalProvider.image!))
-                                        : (widget.isEdit && widget.animalModel!.image != null)
+                                        ? SizedBox(
+                                            height: 40,
+                                            width: 40,
+                                            child: Image.file(
+                                                animalProvider.image!))
+                                        : (widget.isEdit &&
+                                                widget.animalModel!.image !=
+                                                    null)
                                             ? SizedBox(
-                                                height: 40, width: 40, child: customNetworkImage(context, widget.animalModel!.image!))
-                                            : const Text("No image selected"),
+                                                height: 40,
+                                                width: 40,
+                                                child: customNetworkImage(
+                                                    context,
+                                                    widget.animalModel!.image!))
+                                            :  Text("${getTranslated('no_images_elected', context)}"),
                                   ],
                                 ),
                                 const SizedBox(height: 20),
@@ -241,8 +287,12 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                   height: 40,
                                   onTap: () {
                                     if (widget.isEdit) {
-                                      animalProvider.updateAnimal(animalNameController.text, givenNameController.text,
-                                          speciesController.text, ageController.text, genusController.text, (bool status) {
+                                      animalProvider.updateAnimal(
+                                          animalNameController.text,
+                                          givenNameController.text,
+                                          speciesController.text,
+                                          ageController.text,
+                                          genusController.text, (bool status) {
                                         if (status) {
                                           animalNameController.clear();
                                           givenNameController.clear();
@@ -252,10 +302,15 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                           Get.back();
                                           Get.back();
                                         }
-                                      }, widget.animalModel!.id! as int, widget.index);
+                                      }, widget.animalModel!.id! as int,
+                                          widget.index);
                                     } else {
-                                      animalProvider.addAnimal(animalNameController.text, givenNameController.text, speciesController.text,
-                                          ageController.text, genusController.text, (bool status) {
+                                      animalProvider.addAnimal(
+                                          animalNameController.text,
+                                          givenNameController.text,
+                                          speciesController.text,
+                                          ageController.text,
+                                          genusController.text, (bool status) {
                                         if (status) {
                                           animalNameController.clear();
                                           givenNameController.clear();

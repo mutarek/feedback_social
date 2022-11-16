@@ -32,5 +32,19 @@
   "Friend": "Friend",
   "Message": "Message",
   "More": "More",
-  "Notifications": "Notifications"
+  "Notifications": "Notifications",
+  "Update": "Update",
+  "Add": "Add",
+  "animal": "Animal",
+  "your_animals": "Your Animals",
+  "animal_name": "Animal Name",
+  "species": "Species",
+  "given_name": "Given Name",
+  "age": "Age",
+  "gender": "Gender",
+  "pick_a_photo": "Pick A Photo",
+  "photo": "Photo",
+  "no_images_elected": "No Images Selected",
+  "animal_details": "Animal Details",
+  "edit": "Edit"
 }

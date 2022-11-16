@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/screens/animal/add_animal_screen.dart';
@@ -26,7 +27,7 @@ class AnimalDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Palette.primary),
-        title: CustomText(title: 'Animal Details', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
+        title: CustomText(title: '${getTranslated('animal_details', context)}', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
         elevation: 0,
       ),
       body: Consumer<AnimalProvider>(
@@ -63,7 +64,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                         animalProvider.changeGenderStatus(animalModel.gender!);
                                         Get.to(() => AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
                                       },
-                                      child: const Text("Edit")),
+                                      child:  Text("${getTranslated('edit', context)}")),
                                   ElevatedButton(
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
                                       onPressed: () {
