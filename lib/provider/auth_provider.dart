@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:als_frontend/data/repository/auth_repo.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -35,7 +36,7 @@ class AuthProvider with ChangeNotifier {
     } else {
       gender = '0';
     }
-    Response response = await authRepo.signup(firstName, lastName, buttonText, gender, data, password);
+    Response response = await authRepo.signup(firstName, lastName, dateTime, gender, data, password);
     _isLoading = false;
     if (response.statusCode == 201) {
       if (authRepo.checkTokenExist()) {
@@ -58,15 +59,15 @@ class AuthProvider with ChangeNotifier {
 
   //TODO:: for reset password in Section
 
-  Future resetPasswordConfirm(String emailOrPhone,String newPassword,String code,Function callback) async{
+  Future resetPasswordConfirm(String emailOrPhone, String newPassword, String code, Function callback) async {
     _isLoading = true;
     notifyListeners();
     Response response = await authRepo.setNewPassword(emailOrPhone, newPassword, code);
     _isLoading = false;
-    if(response.statusCode == 200){
-      callback(true,"Password Set Successfully");
-    }else{
-      callback(false,response.statusText);
+    if (response.statusCode == 200) {
+      callback(true, "Password Set Successfully");
+    } else {
+      callback(false, response.statusText);
       print(response.statusCode);
     }
     notifyListeners();
@@ -100,8 +101,6 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-
-
   String data = '';
   bool isNumber = false;
 
@@ -122,7 +121,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future resetOtpSend(String emailORPhone,bool isEmail, Function callback) async{
+  Future resetOtpSend(String emailORPhone, bool isEmail, Function callback) async {
     _isLoading = true;
     data = emailORPhone;
     isNumber = isEmail;
@@ -130,15 +129,12 @@ class AuthProvider with ChangeNotifier {
     Response response = await authRepo.resetOtpSend(emailORPhone, isEmail);
     _isLoading = false;
 
-    if(response.statusCode == 200)
-      {
-        startTimer();
-        callback(true,response.body['message']);
-      }
-    else
-      {
-        callback(false,response.statusText);
-      }
+    if (response.statusCode == 200) {
+      startTimer();
+      callback(true, response.body['message']);
+    } else {
+      callback(false, response.statusText);
+    }
     notifyListeners();
   }
 
@@ -197,17 +193,32 @@ class AuthProvider with ChangeNotifier {
   }
 
   //// TODO: for send User Information
-  DateTime _dateTime = DateTime.now();
-  String dateTime = "";
-  var buttonText = "Choose time";
+  String dateTime = "${DateTime.now().year.toString()}-${DateTime.now().month.toString()}-${DateTime.now().day.toString()}";
+  String dateTimeForUser = "${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}";
 
-  void showDateDialog(BuildContext context) {
-    showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(60), lastDate: DateTime.now()).then((value) {
-      _dateTime = value!;
-      buttonText = "${_dateTime.year.toString()}-${_dateTime.month.toString()}-${_dateTime.day.toString()}";
-      dateTime = buttonText;
-      notifyListeners();
-    });
+  void showDateDialog(BuildContext context) async {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) {
+        return Theme(
+          data: ThemeData.dark(),
+          child: Container(
+            height: 300,
+            color: Colors.black,
+            child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: DateTime.now(),
+                maximumDate: DateTime.now(),
+                dateOrder: DatePickerDateOrder.dmy,
+                onDateTimeChanged: (_dateTime) {
+                  dateTime = "${_dateTime.year.toString()}-${_dateTime.month.toString()}-${_dateTime.day.toString()}";
+                  dateTimeForUser = "${_dateTime.day.toString()}/${_dateTime.month.toString()}/${_dateTime.year.toString()}";
+                  notifyListeners();
+                }),
+          ), // This will change to light theme.
+        );
+      },
+    );
   }
 
   List<String> genderLists = ["Male", "Female", "Other"];
@@ -225,8 +236,6 @@ class AuthProvider with ChangeNotifier {
     authRepo.clearUserInformation();
     return true;
   }
-
-
 
   //TODO: for Logout
   bool checkTokenExist() {
