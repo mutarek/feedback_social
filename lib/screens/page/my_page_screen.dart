@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
@@ -46,7 +47,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         elevation: 0,
         title: Consumer<PageProvider>(
           builder: (context, pageProvider, child) => CustomText(
-            title: pageProvider.menuValue == 0 ? "Page" : "Suggested Page",
+            title: pageProvider.menuValue == 0 ? getTranslated("Page",context) : getTranslated("Suggested Page",context) ,
             textStyle: latoStyle700Bold.copyWith(color: Palette.primary, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
         ),
@@ -80,8 +81,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            expanded(context, provider, 'My Page', 0),
-                            expanded(context, provider, 'Other Page', 1),
+                            expanded(context, provider, getTranslated('My Page', context), 0),
+                            expanded(context, provider, getTranslated('Other Page', context), 1),
                           ],
                         ),
                       ),
@@ -118,12 +119,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget('Personal Page:'),
+                      titleMenuWidget(getTranslated("Personal Page:",context)),
                       Container(margin: const EdgeInsets.only(bottom: 10)),
                     ],
                   ),
                   (provider.authorPageLists.isEmpty)
-                      ? CustomText(title: 'You Haven\'t any Personal Page', textStyle: latoStyle400Regular.copyWith(fontSize: 16))
+                      ? CustomText(title: getTranslated("You Haven\'t any Personal Page", context), textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                       : Container(
                           height: 100,
                           alignment: Alignment.centerLeft,
@@ -170,7 +171,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget('Liked Pages:'),
+                      titleMenuWidget(getTranslated("Liked Pages:'", context)),
                       const SizedBox(height: 15),
                     ],
                   ),
@@ -189,9 +190,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 goToGroupOrPage: () {},
                                 groupOrPageImage: provider.likedPageLists[index].avatar,
                                 groupOrPageName: provider.likedPageLists[index].name,
-                                groupOrPageLikes: "${provider.likedPageLists[index].followers} Likes");
+                                groupOrPageLikes: "${provider.likedPageLists[index].followers} ${getTranslated("Likes", context)} ");
                           })
-                      : CustomText(title: 'No History found', textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
+                      : CustomText(title: getTranslated("No History found", context), textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
                 ],
               ),
             )),
@@ -219,7 +220,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     goToGroupOrPage: () {},
                     groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,
                     groupOrPageName: provider.allSuggestPageList[index].name,
-                    groupOrPageLikes: "${provider.allSuggestPageList[index].followers} Likes");
+                    groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${getTranslated("Likes", context)}");
               }),
     );
   }

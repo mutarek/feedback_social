@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
@@ -117,7 +118,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                               width: 100,
                               margin: const EdgeInsets.only(right: 15),
                               child: ElevatedButton(
-                                child: const Text("Message"),
+                                child:  Text(getTranslated("Message",context)),
                                 onPressed: () {
                                   Provider.of<ChatProvider>(context, listen: false).resetOneTime();
                                   Navigator.push(
@@ -139,7 +140,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 ? (publicProvider.publicProfileData.friendRequestSent == true)
                                     ? Expanded(
                                         child: ElevatedButton(
-                                          child: const Text("Cancel Friend request"),
+                                          child:  Text(getTranslated("Cancel Friend request", context)),
                                           onPressed: () {
                                             publicProvider.cancelFriendRequest((bool status) {
                                               if (status) {
@@ -155,7 +156,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                     : (publicProvider.publicProfileData.friendRequestAccept == true)
                                         ? Expanded(
                                             child: ElevatedButton(
-                                              child: const Text("Accept friend request"),
+                                              child:  Text(getTranslated("Accept friend request", context)),
                                               onPressed: () {
                                                 Provider.of<ProfileProvider>(context, listen: false)
                                                     .acceptFriendRequest(
@@ -172,7 +173,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                           )
                                         : Expanded(
                                             child: ElevatedButton(
-                                              child: const Text("Add friend"),
+                                              child:  Text(getTranslated("Add friend", context)),
                                               onPressed: () {
                                                 publicProvider.sendFriendRequest((bool status) {
                                                   if (status && widget.isFromFriendRequestScreen) {
@@ -184,7 +185,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                           )
                                 : Expanded(
                                     child: ElevatedButton(
-                                      child: const Text("Unfriend"),
+                                      child:  Text(getTranslated("Unfriend", context)),
                                       onPressed: () {
                                         publicProvider.unFriend((bool status) {
                                           if (widget.isFromFriendScreen) {
@@ -208,7 +209,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                               ? const Center(child: CircularProgressIndicator())
                                               : AlertDialog(
                                                   title: Text(
-                                                    "Do you want to block this User ?",
+                                                   getTranslated("Do you want to block this User ?", context) ,
                                                     style: latoStyle800ExtraBold,
                                                   ),
                                                   actions: [
@@ -220,7 +221,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                                             onPressed: () {
                                                               Navigator.of(ctx).pop();
                                                             },
-                                                            child: const Text("Cancel", style: button)),
+                                                            child:  Text(getTranslated("Cancel", context), style: button)),
                                                         const SizedBox(width: 15),
                                                         ElevatedButton(
                                                             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
@@ -235,7 +236,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                                                 }
                                                               });
                                                             },
-                                                            child: const Text("Block", style: button)),
+                                                            child:  Text(getTranslated("Block", context), style: button)),
                                                       ],
                                                     ),
                                                   ],
@@ -258,7 +259,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 "${publicProvider.publicProfileData.friends!.length}",
                                 style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                               ),
-                              Text(" Friends", style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
+                              Text(getTranslated(" Friends", context), style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
                               SizedBox(
                                 width: width * 0.2,
                               ),
@@ -267,7 +268,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                               ),
                               Text(
-                                " Followers",
+                               getTranslated(" Followers", context) ,
                                 style: GoogleFonts.lato(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -299,7 +300,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
-                                  child: CustomText(title: 'PHOTOS'),
+                                  child: CustomText(title: getTranslated("PHOTOS", context)),
                                 ),
                               ),
                             ),
@@ -319,7 +320,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5))),
-                                  child: CustomText(title: 'VIDEOS'),
+                                  child: CustomText(title: getTranslated("VIDEOS", context)),
                                 ),
                               ),
                             ),

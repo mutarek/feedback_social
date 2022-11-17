@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -50,8 +51,7 @@ class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageVie
                           children: <Widget>[
                             MaterialButton(
                                 color: Colors.green,
-                                child: const Text(
-                                  "Camera",
+                                child:  Text(getTranslated("Camera",context),
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {
@@ -59,8 +59,8 @@ class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageVie
                                 }),
                             MaterialButton(
                                 color: Colors.deepOrange,
-                                child: const Text(
-                                  "Device",
+                                child: Text(
+                                  getTranslated("Device",context),
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {

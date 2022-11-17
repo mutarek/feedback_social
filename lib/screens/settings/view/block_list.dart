@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,7 +49,7 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text("Block List", style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(getTranslated("Block List",context), style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: SafeArea(
         child: Consumer<SettingsProvider>(builder: (context, settingsProvider, child) {
@@ -103,7 +104,7 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
                                           onPressed: () {
                                             settingsProvider.unblockUser(settingsProvider.blocklist[index].id, index);
                                           },
-                                          child: const Text("Unblock", style: button)),
+                                          child:  Text(getTranslated("Unblock", context), style: button)),
                                       const SizedBox(width: 10),
                                     ],
                                   ),

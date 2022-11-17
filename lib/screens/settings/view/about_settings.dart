@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/profile/edit_profile_screen.dart';
@@ -39,7 +40,7 @@ class _AboutSettingsState extends State<AboutSettings> {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text("About", style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(getTranslated("About", context),style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: Consumer2<ProfileProvider, AuthProvider>(
         builder: (context, profileProvider, authProvider, child) => SafeArea(
@@ -77,9 +78,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Personal Information", style: GoogleFonts.lato(fontSize: 16)),
+                                Text(getTranslated("Personal Information", context), style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text("Name,gender,profile details", style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(getTranslated("Name,gender,profile details", context), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),
@@ -111,9 +112,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Password security", style: GoogleFonts.lato(fontSize: 16)),
+                                Text(getTranslated("Password security", context), style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text("change password", style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(getTranslated("change password", context), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),
@@ -145,9 +146,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Email Security", style: GoogleFonts.lato(fontSize: 16)),
+                                Text(getTranslated("Email Security", context), style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text("Change Email", style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(getTranslated("Change Email", context), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),
@@ -179,9 +180,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Block list", style: GoogleFonts.lato(fontSize: 16)),
+                                Text(getTranslated("Block list", context), style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text("See your block list", style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(getTranslated("See your block list", context), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),

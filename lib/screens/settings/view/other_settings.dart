@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,7 @@ class _OtherSettingsState extends State<OtherSettings> {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text("Other", style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(getTranslated("Other",context), style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: SafeArea(
         child: Padding(
@@ -77,7 +78,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                     height: 10,
                                   ),
                                   Text(
-                                    "Who can tag you ?",
+                                    getTranslated("Who can tag you ?", context),
                                     style: latoStyle500Medium.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(
@@ -86,7 +87,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "*  Anyone",
+                                       getTranslated("*  Anyone", context),
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),
@@ -105,7 +106,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "* Your follower",
+                                        getTranslated("* Your follower", context),
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),
@@ -125,7 +126,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "* Your following",
+                                       getTranslated("* Your following", context) ,
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),
@@ -179,7 +180,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                     height: 10,
                                   ),
                                   Text(
-                                    "Who can share Your post ?",
+                                    getTranslated("Who can share Your post ?", context),
                                     style: latoStyle500Medium.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(
@@ -188,7 +189,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "* Anyone",
+                                       getTranslated("* Anyone", context) ,
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),
@@ -207,7 +208,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "* Your follower",
+                                       getTranslated("* Your follower", context) ,
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),
@@ -226,7 +227,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "* Your following",
+                                        getTranslated("* Your following", context),
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),
@@ -279,7 +280,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                     height: 10,
                                   ),
                                   Text(
-                                    "Who can direct massage you ?",
+                                    getTranslated("Who can direct massage you ?", context),
                                     style: latoStyle500Medium.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(
@@ -288,7 +289,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "* Anyone",
+                                        getTranslated("* Anyone", context),
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),
@@ -307,7 +308,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "* Your follower",
+                                        getTranslated("* Your follower", context) ,
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),
@@ -326,7 +327,7 @@ class _OtherSettingsState extends State<OtherSettings> {
                                   Row(
                                     children: [
                                       Text(
-                                        "* Your following",
+                                        getTranslated("* Your following", context),
                                         style: latoStyle400Regular.copyWith(
                                           color: Colors.white,
                                         ),

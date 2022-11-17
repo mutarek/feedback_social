@@ -1,7 +1,5 @@
 import 'package:als_frontend/helper/number_helper.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
-import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/notification/single_post_screen.dart';
 import 'package:als_frontend/screens/notification/widget/notifications_card.dart';

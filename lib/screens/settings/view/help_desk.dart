@@ -1,4 +1,5 @@
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/settings/help_chat_screen.dart';
 import 'package:als_frontend/screens/settings/widget/faq_question.dart';
@@ -57,7 +58,7 @@ class HelpDesk extends StatelessWidget {
                                             size: 15,
                                           )))),
                               Text(
-                                "Need help?",
+                                getTranslated("Need help?",context),
                                 style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266)),
                               ),
                               Container(
@@ -76,7 +77,7 @@ class HelpDesk extends StatelessWidget {
                         ),
                         Center(
                             child: Text(
-                          "Help Centre",
+                          getTranslated("Help Centre", context),
                           style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266), fontSize: 40),
                         )),
                         SizedBox(height: height * 0.26, child: Image.asset("assets/background/help.png", fit: BoxFit.cover))
@@ -90,11 +91,11 @@ class HelpDesk extends StatelessWidget {
                       children: [
                         SizedBox(height: height * 0.02),
                         Text(
-                          "Tell us how we can help 👋",
+                          getTranslated("Tell us how we can help 👋", context),
                           style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266), fontSize: 16),
                         ),
                         Text(
-                          "our crew of superheroes are standing by\n for service & support",
+                          getTranslated("our crew of superheroes are standing by\n for service & support", context),
                           textAlign: TextAlign.center,
                           style: latoStyle500Medium.copyWith(color: const Color(0xffA4AEC0)),
                         ),
@@ -104,8 +105,8 @@ class HelpDesk extends StatelessWidget {
                   ),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.commentSms,
-                    textname: 'Write Problems',
-                    discription: 'Write your problems now',
+                    textname: getTranslated("Write Problems", context),
+                    discription: getTranslated("Write your problems now", context),
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
                       otherProvider.clearImage();
@@ -115,8 +116,8 @@ class HelpDesk extends StatelessWidget {
                   SizedBox(height: height * 0.01),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.question,
-                    textname: 'FAQs',
-                    discription: "Find intelligent answer instantly",
+                    textname: getTranslated("FAQs", context),
+                    discription: getTranslated("Find intelligent answer instantly", context),
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
                     Get.to(FaqSceeen());
@@ -125,8 +126,8 @@ class HelpDesk extends StatelessWidget {
                   SizedBox(height: height * 0.01),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.solidPaperPlane,
-                    textname: 'Email',
-                    discription: 'Get solution beamed to your inbox',
+                    textname: getTranslated("Email", context),
+                    discription: getTranslated("Get solution beamed to your inbox", context),
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
                       openNewEmail("meektecit@gmail.com");

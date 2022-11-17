@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -33,7 +34,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         }),
-                    title: CustomText(title: 'Type your problem', color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 16),
+                    title: CustomText(title: getTranslated("Type your problem",context), color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 16),
                     backgroundColor: Colors.white,
                     elevation: 0),
                 bottomNavigationBar: SizedBox(
@@ -42,7 +43,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                     children: [
                       Expanded(
                         child: CustomButton(
-                          btnTxt: 'Cancel',
+                          btnTxt: getTranslated("Cancel", context),
                           onTap: () {
                             Navigator.of(context).pop();
                           },
@@ -53,25 +54,25 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                       ),
                       Expanded(
                         child: CustomButton(
-                          btnTxt: 'Send',
+                          btnTxt: getTranslated("Send", context),
                           onTap: () {
                             if (problemsController.text.isEmpty) {
-                              showMessage(message: 'Please write your problems here', context: context);
+                              showMessage(message: getTranslated("Please write your problems here.", context), context: context);
                             } else if (problemsController.text.length < 10) {
-                              showMessage(message: 'Please write your problems at least 10 characters.', context: context);
+                              showMessage(message: getTranslated("Please write your problems at least 10 characters.", context), context: context);
                             } else if (otherProvider.selectedFile == null) {
-                              showMessage(message: 'Please Insert problems screenshots', context: context);
+                              showMessage(message: getTranslated("Please Insert problems screenshots", context), context: context);
                             } else {
                               settingsProvider.addMessageOnHelpDesk(problemsController.text, otherProvider.selectedFile!).then((value) {
                                 if (value) {
                                   showMessage(
-                                      message: 'We received your request , we will notify you as soon as possible . Feedback Support Team',
+                                      message: getTranslated("We received your request , we will notify you as soon as possible . Feedback Support Team", context),
                                       isError: false,
                                       context: context);
                                   problemsController.clear();
                                   Navigator.of(context).pop();
                                 } else {
-                                  showMessage(message: 'Failed...', context: context);
+                                  showMessage(message: getTranslated("Failed...", context), context: context);
                                 }
                               });
                             }
@@ -93,7 +94,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 15, right: 10),
                             child: CustomButton(
-                              btnTxt: 'Add screenshot',
+                              btnTxt: getTranslated("Add screenshot", context),
                               onTap: () {
                                 otherProvider.getImageWithOutCroup(ImageSource.gallery)!;
                               },
@@ -126,7 +127,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                                       )
                                     ],
                                   )
-                                : CustomText(title: 'No Image Selected', color: AppColors.feedback),
+                                : CustomText(title: getTranslated("No Image Selected", context), color: AppColors.feedback),
                           ),
                         ),
                       ],
@@ -137,7 +138,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                       fillColor: Colors.white,
                       borderRadius: 0,
                       isCancelShadow: true,
-                      hintText: 'Please Write your problems here...',
+                      hintText: getTranslated("Please Write your problems here...", context),
                       controller: problemsController,
                       inputAction: TextInputAction.done,
                     ),

@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -28,7 +29,7 @@ class PasswordUpdateSettings extends StatelessWidget {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text("Password Update", style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(getTranslated("Password Update",context), style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -39,29 +40,29 @@ class PasswordUpdateSettings extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-                Text("Enter your current password", style: latoStyle500Medium),
+                Text(getTranslated("Enter your current password", context), style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: currentPasswordContorller,
                   fillColor: const Color(0xfff1d3f2),
-                  hintText: "input your old password",
+                  hintText: getTranslated("input your old password", context),
                 ),
                 const SizedBox(height: 20),
-                Text("Enter new password", style: latoStyle500Medium),
+                Text(getTranslated("Enter new password", context), style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(controller: newPasswordContorller, fillColor: const Color(0xffd7f2d3), hintText: "input your new password"),
                 const SizedBox(height: 20),
-                Text("Repeat new password", style: latoStyle500Medium),
+                Text(getTranslated("Repeat new password", context), style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(
                   validation: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return getTranslated("Please enter some text", context);
                     }
                   },
                   controller: repeatPasswordContorller,
                   fillColor: const Color(0xffd7f2d3),
-                  hintText: "input your new password again",
+                  hintText: getTranslated("input your new password again", context),
                 ),
                 const SizedBox(height: 20),
                 Center(
@@ -77,7 +78,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                                   currentPasswordContorller.text, newPasswordContorller.text, repeatPasswordContorller.text);
                               if (provider.success) {
                                 Fluttertoast.showToast(
-                                    msg: "Successfully update",
+                                    msg: getTranslated("Successfully update", context),
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
                                     timeInSecForIosWeb: 1,
@@ -89,7 +90,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: "Please enter correct old password",
+                                  msg: getTranslated("Please enter correct old password", context),
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,
@@ -99,7 +100,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                               );
                             }
                           },
-                          child: const Text("Update"));
+                          child:  Text(getTranslated("Update", context)));
                     }),
                   ),
                 )

@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
@@ -42,7 +43,7 @@ class SearchScreen extends StatelessWidget {
                     SizedBox(width: width * 0.02),
                     Expanded(
                       child: CustomTextField(
-                        hintText: 'Search....',
+                        hintText: getTranslated("Search....",context),
                         controller: searchController,
                         inputType: TextInputType.text,
                         autoFocus: true,
@@ -68,7 +69,7 @@ class SearchScreen extends StatelessWidget {
                                 searchProvider.searchQuery(searchController.text);
                                 FocusScope.of(context).unfocus();
                               } else {
-                                Fluttertoast.showToast(msg: "Please Write somethings..");
+                                Fluttertoast.showToast(msg: getTranslated("Please Write somethings..", context));
                               }
                             },
                             icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 20)),
@@ -92,7 +93,7 @@ class SearchScreen extends StatelessWidget {
                                       onPressed: () {
                                         searchProvider.changeValue(1);
                                       },
-                                      child: Text("People",
+                                      child: Text(getTranslated("People", context),
                                           style: TextStyle(color: (searchProvider.value == 1) ? Colors.white : Colors.black)),
                                       style: ButtonStyle(
                                           backgroundColor: (searchProvider.value == 1)
@@ -103,7 +104,7 @@ class SearchScreen extends StatelessWidget {
                                       onPressed: () {
                                         searchProvider.changeValue(2);
                                       },
-                                      child: Text("Groups",
+                                      child: Text(getTranslated("Groups", context),
                                           style: TextStyle(color: (searchProvider.value == 2) ? Colors.white : Colors.black)),
                                       style: ButtonStyle(
                                           backgroundColor: (searchProvider.value == 2)
@@ -115,7 +116,7 @@ class SearchScreen extends StatelessWidget {
                                         searchProvider.changeValue(3);
                                       },
                                       child:
-                                          Text("Pages", style: TextStyle(color: (searchProvider.value == 3) ? Colors.white : Colors.black)),
+                                          Text(getTranslated("Pages", context), style: TextStyle(color: (searchProvider.value == 3) ? Colors.white : Colors.black)),
                                       style: ButtonStyle(
                                           backgroundColor: (searchProvider.value == 3)
                                               ? MaterialStateProperty.all<Color>(Palette.primary)
@@ -173,7 +174,7 @@ class SearchScreen extends StatelessWidget {
                                       )
                                     : (searchProvider.value == 2)
                                         ? (searchProvider.searchModel.groups == null)
-                                            ? const Center(child: Text("No search result found"))
+                                            ?  Center(child: Text(getTranslated("No search result found", context)))
                                             : Expanded(
                                                 child: ListView.builder(
                                                   shrinkWrap: true,
@@ -230,7 +231,7 @@ class SearchScreen extends StatelessWidget {
                                                 ),
                                               )
                                         : (searchProvider.searchModel.pages == null)
-                                            ? const Center(child: Text("No search result found"))
+                                            ? Center(child: Text(getTranslated("No search result found", context)))
                                             : Expanded(
                                                 child: ListView.builder(
                                                   shrinkWrap: true,

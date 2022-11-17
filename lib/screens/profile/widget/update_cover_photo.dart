@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
@@ -22,7 +23,7 @@ class UpdateCoverPhoto extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: Text("Upload a ${isCoverPhotoUpload ? "Cover" : "Profile"} picture", style: latoStyle800ExtraBold.copyWith(fontSize: 16)),
+        title: Text("${getTranslated("Upload a",context)} ${isCoverPhotoUpload ? getTranslated("Cover", context): getTranslated("Profile", context)} ${getTranslated("picture", context)}", style: latoStyle800ExtraBold.copyWith(fontSize: 16)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 68, 51, 51)),
           onPressed: () {
@@ -52,7 +53,7 @@ class UpdateCoverPhoto extends StatelessWidget {
                               ? const ChooseImageAndCropImageView(16, 9, 640, 260)
                               : const ChooseImageAndCropImageView(1, 1, 128, 128)));
                     },
-                    child: const Text("Pick image")),
+                    child:  Text(getTranslated("Pick image", context))),
                 ElevatedButton(
                     onPressed: () => profileProvider.uploadPhoto(
                           (bool status) {
@@ -64,7 +65,7 @@ class UpdateCoverPhoto extends StatelessWidget {
                           otherProvider.selectedFile!,
                           isCover: isCoverPhotoUpload,
                         ),
-                    child: const Text("Update"))
+                    child:  Text(getTranslated("Update", context)))
               ],
             ),
           ),

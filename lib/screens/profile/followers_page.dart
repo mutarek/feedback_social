@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/followers_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
@@ -45,7 +46,7 @@ class _FollowersPageState extends State<FollowersPage> {
               onPressed: () {
                 Get.back();
               }),
-          title: CustomText(title: 'All Followers', color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          title: CustomText(title: getTranslated("All Followers",context), color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
           backgroundColor: Colors.white,
           elevation: 0),
       body: Consumer2<ProfileProvider, PublicProfileProvider>(
@@ -59,7 +60,7 @@ class _FollowersPageState extends State<FollowersPage> {
                   children: [
                     Center(
                         child: CustomText(
-                      title: 'You Have (${profileProvider.followersModelList.length}) Followers ',
+                      title: '${getTranslated("You Have", context)}(${profileProvider.followersModelList.length})${getTranslated("Followers", context)} ',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
                     const SizedBox(height: 10),
@@ -72,8 +73,8 @@ class _FollowersPageState extends State<FollowersPage> {
                           return FriendRequestWidget(
                             width: width,
                             userName: followersModel.fullName.toString(),
-                            firstButtonName: followersModel.isFriend! ? "Friend" : "Confirm",
-                            secondButtonName: followersModel.isFriend! ? "Unfriend" : "Remove",
+                            firstButtonName: followersModel.isFriend! ? getTranslated("Friend", context) :getTranslated("Confirm", context),
+                            secondButtonName: followersModel.isFriend! ?getTranslated("Unfriend", context) :getTranslated("Remove", context),
                             firstButtonOnTab: () {
                               // called for accept friend request
                               if (!followersModel.isFriend!) {
