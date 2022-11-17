@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/repository/splash_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 
 class SplashProvider with ChangeNotifier {
@@ -8,7 +9,7 @@ class SplashProvider with ChangeNotifier {
   SplashProvider({required this.splashRepo});
 
   String? serverVersion;
-  String currentVersion = "1.0.18";
+  String currentVersion = "1.0.19";
   bool isLoading = false;
   bool isExistsVersion = false;
 
@@ -21,12 +22,13 @@ class SplashProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  int value = 0;
+
   Future<bool> initializeVersion() async {
     isLoading = true;
     notifyListeners();
     Response response = await splashRepo.getCurrentAppVersion();
     isLoading = false;
-
     notifyListeners();
     if (response.statusCode == 200) {
       serverVersion = response.body['version'];
@@ -38,7 +40,11 @@ class SplashProvider with ChangeNotifier {
         return false;
       }
     } else {
-      //Fluttertoast.showToast(msg: response.statusText!);
+      if (value <= 3) {
+        initializeVersion();
+        value++;
+      }
+      Fluttertoast.showToast(msg: response.statusText!);
       return false;
     }
   }
