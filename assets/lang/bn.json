@@ -28,8 +28,8 @@
   "Date of birth": "Date of birth",
   "Gender": "Gender",
   "Home": "Home",
-  "Friend": "Friend",
-  "Message": "Message",
+  "Friend": "বন্ধু",
+  "Message": "বার্তা",
   "More": "More",
   "Replying to": "Replying to",
   "Cancel": "Cancel",
@@ -241,7 +241,11 @@
   "View More+": "View More+",
   "You Posted Here": "You Posted Here",
   "Posted Here": " Posted Here",
-  "Terms and Conditions": " Terms and Conditions",
+  "Terms and Conditions": " নিয়ম ও শর্তাবলী",
   "View profile": " View profile",
-  "    logout": "     logout"
+  "    logout": "     logout",
+  "Change Language": "ভাষা পরিবর্তন করুন",
+  "Language": "ভাষা",
+  "Friend request": "Friend request",
+  "Suggested friend": "Suggested friend"
 }

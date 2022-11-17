@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
-import 'package:als_frontend/screens/auth/login_screen.dart';
-import 'package:als_frontend/screens/splash/no_internet_screen.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
+import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
+import 'package:als_frontend/screens/splash/no_internet_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:flutter/material.dart';

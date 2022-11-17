@@ -326,71 +326,76 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                         ),
                                       ),
                                 const SizedBox(height: 15.0),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 10, right: 15),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          if (newsFeedProvider.singleNewsFeedModel.totalLiked != 0) {
-                                            likeModalBottomView(context, newsFeedProvider.singleNewsFeedModel, true);
-                                          }
-                                        },
-                                        child: newsFeedProvider.singleNewsFeedModel.totalLiked == 0
-                                            ? const SizedBox.shrink()
-                                            : Row(
-                                                children: [
-                                                  Stack(
-                                                    clipBehavior: Clip.none,
-                                                    children: const [
-                                                      SizedBox(width: 45),
-                                                      Icon(FontAwesomeIcons.solidHeart, size: 20, color: kPrimaryColor),
-                                                      Positioned(
-                                                          left: 21,
-                                                          top: -2,
-                                                          child: Icon(FontAwesomeIcons.thumbsUp, size: 20, color: kPrimaryColor)),
-                                                    ],
-                                                  ),
-                                                  CustomText(
-                                                      title:
-                                                          ' ${newsFeedProvider.singleNewsFeedModel.totalLiked.toString()} ${newsFeedProvider.singleNewsFeedModel.totalLiked == 0 || newsFeedProvider.singleNewsFeedModel.totalLiked == 1 ? "Like" : "Likes"}',
+                                newsFeedProvider.singleNewsFeedModel.totalLiked == 0 &&
+                                        newsFeedProvider.singleNewsFeedModel.totalComment == 0 &&
+                                        newsFeedProvider.singleNewsFeedModel.totalShared == 0
+                                    ? const SizedBox.shrink()
+                                    : Padding(
+                                        padding: const EdgeInsets.only(left: 10, right: 15),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                if (newsFeedProvider.singleNewsFeedModel.totalLiked != 0) {
+                                                  likeModalBottomView(context, newsFeedProvider.singleNewsFeedModel, true);
+                                                }
+                                              },
+                                              child: newsFeedProvider.singleNewsFeedModel.totalLiked == 0
+                                                  ? const SizedBox.shrink()
+                                                  : Row(
+                                                      children: [
+                                                        Stack(
+                                                          clipBehavior: Clip.none,
+                                                          children: const [
+                                                            SizedBox(width: 45),
+                                                            Icon(FontAwesomeIcons.solidHeart, size: 20, color: kPrimaryColor),
+                                                            Positioned(
+                                                                left: 21,
+                                                                top: -2,
+                                                                child: Icon(FontAwesomeIcons.thumbsUp, size: 20, color: kPrimaryColor)),
+                                                          ],
+                                                        ),
+                                                        CustomText(
+                                                            title:
+                                                                ' ${newsFeedProvider.singleNewsFeedModel.totalLiked.toString()} ${newsFeedProvider.singleNewsFeedModel.totalLiked == 0 || newsFeedProvider.singleNewsFeedModel.totalLiked == 1 ? "Like" : "Likes"}',
+                                                            fontSize: 14,
+                                                            color: kPrimaryColor.withOpacity(.8)),
+                                                      ],
+                                                    ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                CustomText(
+                                                    title: newsFeedProvider.singleNewsFeedModel.totalComment == 0
+                                                        ? ""
+                                                        : '${newsFeedProvider.singleNewsFeedModel.totalComment.toString()} ${newsFeedProvider.singleNewsFeedModel.totalComment == 1 ? "comment" : "comments"}',
+                                                    fontSize: 14,
+                                                    color: kPrimaryColor.withOpacity(.8)),
+                                                InkWell(
+                                                  onTap: () {
+                                                    if (newsFeedProvider.singleNewsFeedModel.totalShared != 0) {
+                                                      likeModalBottomView(context, newsFeedProvider.singleNewsFeedModel, false);
+                                                    }
+                                                  },
+                                                  child: CustomText(
+                                                      title: newsFeedProvider.singleNewsFeedModel.totalShared == 0
+                                                          ? ""
+                                                          : '  ${newsFeedProvider.singleNewsFeedModel.totalShared.toString()} ${newsFeedProvider.singleNewsFeedModel.totalShared == 1 ? "share" : "shares"}',
                                                       fontSize: 14,
                                                       color: kPrimaryColor.withOpacity(.8)),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      Row(
-                                        children: [
-                                          CustomText(
-                                              title: newsFeedProvider.singleNewsFeedModel.totalComment == 0
-                                                  ? ""
-                                                  : '${newsFeedProvider.singleNewsFeedModel.totalComment.toString()} ${newsFeedProvider.singleNewsFeedModel.totalComment == 1 ? "comment" : "comments"}',
-                                              fontSize: 14,
-                                              color: kPrimaryColor.withOpacity(.8)),
-                                          InkWell(
-                                            onTap: () {
-                                              if (newsFeedProvider.singleNewsFeedModel.totalShared != 0) {
-                                                likeModalBottomView(context, newsFeedProvider.singleNewsFeedModel, false);
-                                              }
-                                            },
-                                            child: CustomText(
-                                                title: newsFeedProvider.singleNewsFeedModel.totalShared == 0
-                                                    ? ""
-                                                    : '  ${newsFeedProvider.singleNewsFeedModel.totalShared.toString()} ${newsFeedProvider.singleNewsFeedModel.totalShared == 1 ? "share" : "shares"}',
-                                                fontSize: 14,
-                                                color: kPrimaryColor.withOpacity(.8)),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  color: Colors.grey.withOpacity(.3),
-                                  height: 1,
-                                  margin: const EdgeInsets.only(top: 10, bottom: 5),
-                                ),
+                                newsFeedProvider.singleNewsFeedModel.totalLiked == 0 &&
+                                        newsFeedProvider.singleNewsFeedModel.totalComment == 0 &&
+                                        newsFeedProvider.singleNewsFeedModel.totalShared == 0
+                                    ? const SizedBox.shrink()
+                                    : Container(
+                                        color: Colors.grey.withOpacity(.3), height: 1, margin: const EdgeInsets.only(top: 10, bottom: 5)),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.max,

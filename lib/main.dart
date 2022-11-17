@@ -21,9 +21,11 @@ import 'package:als_frontend/provider/theme_provider.dart';
 import 'package:als_frontend/screens/splash/splash_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/util/theme/app_theme.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 import 'di_container.dart' as di;
@@ -63,6 +65,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<LanguageProvider>(context, listen: false).initializeAllLanguages();
     List<Locale> _locals = [];
     for (var language in AppConstant.languagesList) {
       _locals.add(Locale(language.languageCode, language.countryCode));
@@ -79,6 +82,11 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      scrollBehavior: MaterialScrollBehavior().copyWith(
+        dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+      ),
+      defaultTransition: Transition.topLevel,
+      transitionDuration: Duration(milliseconds: 500),
       supportedLocales: _locals,
       home: const SplashScreen(),
     );

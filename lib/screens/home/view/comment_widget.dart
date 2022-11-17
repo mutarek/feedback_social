@@ -70,8 +70,8 @@ class CommentWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomText(title: commentModels.author!.fullName!, fontSize: 14,fontWeight: FontWeight.bold),
-                          CustomText(title: commentModels.comment!, fontSize: 14,color: Colors.black.withOpacity(.8)),
+                          CustomText(title: commentModels.author!.fullName!, fontSize: 13,fontWeight: FontWeight.bold),
+                          CustomText(title: commentModels.comment!, fontSize: 17,color: Colors.black.withOpacity(.8)),
                           Container(
                               width: 65,
                               height: 25,
@@ -139,7 +139,7 @@ class CommentWidget extends StatelessWidget {
                         child: ListView.builder(
                             itemCount: commentProvider.comments[index].replies!.length,
                             shrinkWrap: true,
-                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                            padding: const EdgeInsets.fromLTRB(10,10,10,0),
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, i) {
                               return Column(
@@ -169,8 +169,8 @@ class CommentWidget extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(commentProvider.comments[index].replies![i].author!.fullName!,
-                                                style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500)),
-                                            Text(commentProvider.comments[index].replies![i].comment!, style: GoogleFonts.lato())
+                                                style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold)),
+                                            Text(commentProvider.comments[index].replies![i].comment!, style: GoogleFonts.lato(fontSize: 16))
                                           ],
                                         ),
                                       ),

@@ -64,6 +64,7 @@ class AppConstant {
   static const String token = 'token';
   static const String countryCode = 'country_code';
   static const String languageCode = 'language_code';
+  static const String selectLanguageIndex = 'select_language_index';
   static const String userID = 'userID';
   static const String userProfileImage = 'userprofile_image';
   static const String userName = 'username';

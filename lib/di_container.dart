@@ -20,6 +20,7 @@ import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/language_provider.dart';
+import 'package:als_frontend/provider/localization_controller.dart';
 import 'package:als_frontend/provider/localization_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
@@ -73,6 +74,7 @@ Future<void> init() async {
   sl.registerFactory(() => SplashProvider(splashRepo: sl()));
   sl.registerFactory(() => DashboardProvider());
   sl.registerFactory(() => OtherProvider());
+  sl.registerFactory(() => LocalizationController(sharedPreferences: sl()));
   sl.registerFactory(() => SearchProvider(searchRepo: sl()));
   sl.registerFactory(() => GroupProvider(groupRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => PageProvider(pageRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));

@@ -1,11 +1,15 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/language_provider.dart';
+import 'package:als_frontend/provider/localization_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/screens/more/view/terms_and_condition.dart';
+import 'package:als_frontend/screens/settings/language_screen.dart';
 import 'package:als_frontend/screens/settings/view/about_settings.dart';
 import 'package:als_frontend/screens/settings/view/help_desk.dart';
 import 'package:als_frontend/screens/settings/view/notifications_settings.dart';
 import 'package:als_frontend/screens/settings/view/other_settings.dart';
+import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,7 +36,7 @@ class SettingsScreen extends StatelessWidget {
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
         title: Text(
-          getTranslated("Settings",context),
+          getTranslated("Settings", context),
           style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black),
         ),
       ),
@@ -100,7 +104,14 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(height: 20),
 
                         /*...................language............*/
-                        SettingsWidget(image: 'assets/svg/lang.svg', name: "Language", subName: "English", goingScreen: () {}),
+                        Consumer<LocalizationProvider>(
+                            builder: (context, languageProvider, child) => SettingsWidget(
+                                image: 'assets/svg/lang.svg',
+                                name: "Language",
+                                subName: AppConstant.languagesList[languageProvider.getSelectLanguageIndexValue()].languageName,
+                                goingScreen: () {
+                                  Get.to(const LanguageScreen());
+                                })),
                         const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/notifications.svg',

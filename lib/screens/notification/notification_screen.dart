@@ -1,7 +1,7 @@
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
-import 'package:als_frontend/screens/notification/single_post_screen.dart';
+import 'package:als_frontend/screens/post/single_post_screen.dart';
 import 'package:als_frontend/screens/notification/widget/notifications_card.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';

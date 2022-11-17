@@ -67,7 +67,7 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                       child:
                           TabBar(indicator: BoxDecoration(color: AppColors.feedback, borderRadius: BorderRadius.circular(25)), tabs: const [
                         CustomText2(title: "Friend request"),
-                            CustomText2(title: "Suggested friend"),
+                        CustomText2(title: "Suggested friend"),
                       ]),
                     ),
                   ),
@@ -97,7 +97,7 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                                             },
                                             userName:
                                                 "${sendFriendRequestModel.fromUser!.firstName}${sendFriendRequestModel.fromUser!.lastName}",
-                                            firstButtonName: getTranslated('Confirm',context),
+                                            firstButtonName: getTranslated('Confirm', context),
                                             firstButtonColor: Colors.green,
                                             firstButtonOnTab: () {
                                               profileProvider.acceptFriendRequest(sendFriendRequestModel.id.toString(), index,

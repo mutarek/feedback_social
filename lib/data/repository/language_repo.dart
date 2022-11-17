@@ -3,7 +3,7 @@ import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/material.dart';
 
 class LanguageRepo {
-  List<LanguageModel> getAllLanguages({BuildContext? context}) {
+  List<LanguageModel> getAllLanguages() {
     return AppConstant.languagesList;
   }
 }

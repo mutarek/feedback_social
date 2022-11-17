@@ -23,12 +23,12 @@ class LanguageProvider with ChangeNotifier {
   void searchLanguage(String query, BuildContext context) {
     if (query.isEmpty) {
       _languages.clear();
-      _languages = languageRepo!.getAllLanguages(context: context);
+      _languages = languageRepo!.getAllLanguages();
       notifyListeners();
     } else {
       _selectIndex = -1;
       _languages = [];
-      languageRepo!.getAllLanguages(context: context).forEach((product) async {
+      languageRepo!.getAllLanguages().forEach((product) async {
         if (product.languageName.toLowerCase().contains(query.toLowerCase())) {
           _languages.add(product);
         }
@@ -37,10 +37,10 @@ class LanguageProvider with ChangeNotifier {
     }
   }
 
-  void initializeAllLanguages(BuildContext context) {
+  void initializeAllLanguages() {
     if (_languages.isEmpty) {
       _languages.clear();
-      _languages = languageRepo!.getAllLanguages(context: context);
+      _languages = languageRepo!.getAllLanguages();
     }
   }
 }

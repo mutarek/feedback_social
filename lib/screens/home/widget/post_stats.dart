@@ -3,7 +3,7 @@ import 'package:als_frontend/dialog_bottom_sheet/share_modal_bottom_sheet.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/view/like_view.dart';
-import 'package:als_frontend/screens/notification/single_post_screen.dart';
+import 'package:als_frontend/screens/post/single_post_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -57,72 +57,77 @@ class PostStats extends StatelessWidget {
               ]),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        if (post.totalLiked != 0) likeModalBottomView(context, post, true);
-                      },
-                      child: post.totalLiked == 0
-                          ? const SizedBox.shrink()
-                          : Row(
-                              children: [
-                                Stack(
-                                  clipBehavior: Clip.none,
-                                  children: const [
-                                    SizedBox(width: 45),
-                                    Icon(FontAwesomeIcons.solidHeart, size: 20, color: kPrimaryColor),
-                                    Positioned(left: 21, top: -2, child: Icon(FontAwesomeIcons.thumbsUp, size: 20, color: kPrimaryColor)),
-                                  ],
-                                ),
-                                CustomText(
-                                    title: ' ${post.totalLiked.toString()} ${post.totalLiked == 1 ? "Like" : "Likes"}',
+              post.totalLiked == 0 && post.totalShared == 0 && post.totalComment == 0
+                  ? const SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              if (post.totalLiked != 0) likeModalBottomView(context, post, true);
+                            },
+                            child: post.totalLiked == 0
+                                ? const SizedBox.shrink()
+                                : Row(
+                                    children: [
+                                      Stack(
+                                        clipBehavior: Clip.none,
+                                        children: const [
+                                          SizedBox(width: 45),
+                                          Icon(FontAwesomeIcons.solidHeart, size: 20, color: kPrimaryColor),
+                                          Positioned(
+                                              left: 21, top: -2, child: Icon(FontAwesomeIcons.thumbsUp, size: 20, color: kPrimaryColor)),
+                                        ],
+                                      ),
+                                      CustomText(
+                                          title: ' ${post.totalLiked.toString()} ${post.totalLiked == 1 ? "Like" : "Likes"}',
+                                          fontSize: 14,
+                                          color: kPrimaryColor.withOpacity(.8)),
+                                    ],
+                                  ),
+                          ),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+                                  Get.to(SinglePostScreen(post.commentUrl!,
+                                      isHomeScreen: isHomeScreen,
+                                      isProfileScreen: isFromProfile,
+                                      index: index,
+                                      postID: postID,
+                                      groupID: groupPageID,
+                                      isFromPage: isPage,
+                                      isFromGroup: isGroup));
+                                },
+                                child: CustomText(
+                                    title: post.totalComment == 0
+                                        ? ""
+                                        : '${post.totalComment.toString()} ${post.totalComment == 1 ? "comment" : "comments"}',
                                     fontSize: 14,
                                     color: kPrimaryColor.withOpacity(.8)),
-                              ],
-                            ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  if (post.totalShared != 0) likeModalBottomView(context, post, false);
+                                },
+                                child: CustomText(
+                                    title: post.totalShared == 0
+                                        ? ""
+                                        : '  ${post.totalShared.toString()} ${post.totalShared == 1 ? "share" : "shares"}',
+                                    fontSize: 14,
+                                    color: kPrimaryColor.withOpacity(.8)),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                            Get.to(SinglePostScreen(post.commentUrl!,
-                                isHomeScreen: isHomeScreen,
-                                isProfileScreen: isFromProfile,
-                                index: index,
-                                postID: postID,
-                                groupID: groupPageID,
-                                isFromPage: isPage,
-                                isFromGroup: isGroup));
-                          },
-                          child: CustomText(
-                              title: post.totalComment == 0
-                                  ? ""
-                                  : '${post.totalComment.toString()} ${post.totalComment == 1 ? "comment" : "comments"}',
-                              fontSize: 14,
-                              color: kPrimaryColor.withOpacity(.8)),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            if (post.totalShared != 0) likeModalBottomView(context, post, false);
-                          },
-                          child: CustomText(
-                              title: post.totalShared == 0
-                                  ? ""
-                                  : '  ${post.totalShared.toString()} ${post.totalShared == 1 ? "share" : "shares"}',
-                              fontSize: 14,
-                              color: kPrimaryColor.withOpacity(.8)),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Container(
+              post.totalLiked == 0 && post.totalShared == 0 && post.totalComment == 0
+                  ? const SizedBox.shrink()
+                  : Container(
                 color: Colors.grey.withOpacity(.3),
                 height: 1,
                 margin: const EdgeInsets.only(top: 10, bottom: 5),
