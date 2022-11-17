@@ -1,6 +1,6 @@
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/otp_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';

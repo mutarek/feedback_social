@@ -1,6 +1,6 @@
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/widgets/custom_text.dart';

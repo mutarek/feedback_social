@@ -3,8 +3,9 @@ import 'package:als_frontend/data/model/response/language_model.dart';
 
 class AppConstant {
   // API BASE URL
-  static const String baseUrl = 'https://feedback-social.com';
-  static const String baseUrl1 = 'https://feedback-social.com';
+  static const String baseUrl = 'https://testing.feedback-social.com';
+  static const String baseUrlTesting = 'https://testing.feedback-social.com';
+  static const String baseUrlLive = 'https://feedback-social.com';
   static const String oldBaseUrl = 'https://als-social.com';
   static const String loginURI = '/accounts/signin/';
   static const String signupURI = '/accounts/signup/';

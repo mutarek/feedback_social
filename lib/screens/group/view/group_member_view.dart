@@ -1,4 +1,4 @@
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';

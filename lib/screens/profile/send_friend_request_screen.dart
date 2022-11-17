@@ -1,7 +1,7 @@
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';

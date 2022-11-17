@@ -1,7 +1,7 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';

@@ -1,5 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';

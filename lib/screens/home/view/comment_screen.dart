@@ -1,8 +1,8 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
-import 'package:als_frontend/old_code/widgets/widgets.dart';
+import 'package:als_frontend/screens/home/view/comment_widget.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';

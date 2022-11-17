@@ -1,5 +1,5 @@
 import 'package:als_frontend/data/model/response/chat/AllMessageChatListModel.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/chat/components/chat_card.dart';

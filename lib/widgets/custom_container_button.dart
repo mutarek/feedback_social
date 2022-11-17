@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../old_code/const/palette.dart';
+import '../util/palette.dart';
 
 // ignore: must_be_immutable
 class CustomConatinerButton extends StatelessWidget {

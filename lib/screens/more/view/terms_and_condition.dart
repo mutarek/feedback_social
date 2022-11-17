@@ -1,4 +1,3 @@
-import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_text.dart';

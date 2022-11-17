@@ -1,5 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/home/view/video_details_screen.dart';
 import 'package:als_frontend/widgets/custom_text.dart';

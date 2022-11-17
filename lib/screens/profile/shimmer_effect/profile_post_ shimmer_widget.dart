@@ -1,4 +1,4 @@
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';

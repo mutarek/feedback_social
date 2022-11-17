@@ -1,6 +1,6 @@
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/screens/animal/add_animal_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';

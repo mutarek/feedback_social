@@ -1,5 +1,4 @@
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';

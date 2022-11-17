@@ -1,5 +1,4 @@
 import 'package:als_frontend/localization/app_localization.dart';
-import 'package:als_frontend/old_code/screens/screens.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
@@ -19,6 +18,7 @@ import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
+import 'package:als_frontend/screens/splash/splash_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/util/theme/app_theme.dart';
 import 'package:flutter/material.dart';

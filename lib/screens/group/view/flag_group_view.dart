@@ -1,4 +1,4 @@
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';

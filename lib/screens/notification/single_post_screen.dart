@@ -2,7 +2,7 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/dialog_bottom_sheet/share_modal_bottom_sheet.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/old_code/const/palette.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
