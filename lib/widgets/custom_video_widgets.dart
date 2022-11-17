@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:pod_player/pod_player.dart';
+
+class CustomVideoWidget extends StatefulWidget {
+  String videoUrl;
+
+
+  CustomVideoWidget(this.videoUrl);
+
+  @override
+  State<CustomVideoWidget> createState() => _CustomVideoWidgetState();
+}
+
+class _CustomVideoWidgetState extends State<CustomVideoWidget> {
+  late final PodPlayerController controller;
+  @override
+  void initState() {
+    controller = PodPlayerController(
+        playVideoFrom: PlayVideoFrom.network(
+          widget.videoUrl,
+        ),
+        podPlayerConfig: const PodPlayerConfig(
+            autoPlay: true,
+            isLooping: false,
+            videoQualityPriority: [360,720,1080]
+        ))
+      ..initialise();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: PodVideoPlayer(controller: controller),
+      ),
+    );
+  }
+}

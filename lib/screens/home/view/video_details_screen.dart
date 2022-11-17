@@ -1,4 +1,5 @@
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/custom_video_widgets.dart';
 import 'package:als_frontend/widgets/videoitems.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
@@ -71,9 +72,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
           backgroundColor: Colors.white,
           elevation: 0),
       body: Center(
-        child: VideoItems(
-          videoPlayerController: VideoPlayerController.network(widget.videoURL),
-        ),
+        child: CustomVideoWidget(widget.videoURL)
       ),
     );
   }
