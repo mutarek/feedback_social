@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/old_code/widgets/widgets.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
@@ -94,7 +95,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                               child: Align(
                                 alignment: Alignment.topCenter,
                                 child: commentProvider.comments.isEmpty
-                                    ? Center(child: Text('No Comment Found', style: latoStyle800ExtraBold.copyWith()))
+                                    ? Center(child: Text(getTranslated('No Comment Found',context), style: latoStyle800ExtraBold.copyWith()))
                                     : ListView.builder(
                                         itemCount: commentProvider.comments.length,
                                         itemBuilder: (context, index) {
@@ -180,7 +181,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
           child: TextField(
             textAlign: TextAlign.start,
             controller: commentController,
-            decoration: const InputDecoration.collapsed(hintText: "Comment here.."),
+            decoration:  InputDecoration.collapsed(hintText: getTranslated('Comment here..', context)),
           ),
         ),
       ),

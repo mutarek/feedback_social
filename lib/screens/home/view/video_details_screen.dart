@@ -1,10 +1,9 @@
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_video_widgets.dart';
-import 'package:als_frontend/widgets/videoitems.dart';
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
 
 class VideoDetailsScreen extends StatefulWidget {
   final String videoURL;
@@ -64,7 +63,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
               onPressed: () {
                 Get.back();
               }),
-          title: const CustomText(
+          title:  CustomText2(
               title: 'Feedback Watch',
               color: Colors.black,
               fontWeight: FontWeight.w500,

@@ -1,12 +1,13 @@
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/data/model/response/suggested_friend_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -65,8 +66,8 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                       decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(25)),
                       child:
                           TabBar(indicator: BoxDecoration(color: AppColors.feedback, borderRadius: BorderRadius.circular(25)), tabs: const [
-                        Text("Friend request"),
-                        Text("Suggested friend"),
+                        CustomText2(title: "Friend request"),
+                            CustomText2(title: "Suggested friend"),
                       ]),
                     ),
                   ),
@@ -75,7 +76,7 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                       profileProvider.isLoading
                           ? const FriendReqShimmerWidget()
                           : profileProvider.sendFriendRequestLists.isEmpty
-                              ? const Center(child: Text("you have no friend request"))
+                              ? const Center(child: CustomText2(title: "you have no friend request"))
                               : ListView(
                                   physics: const BouncingScrollPhysics(),
                                   controller: confirmFriendRequestController,
@@ -96,13 +97,13 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                                             },
                                             userName:
                                                 "${sendFriendRequestModel.fromUser!.firstName}${sendFriendRequestModel.fromUser!.lastName}",
-                                            firstButtonName: "Confirm",
+                                            firstButtonName: getTranslated('Confirm',context),
                                             firstButtonColor: Colors.green,
                                             firstButtonOnTab: () {
                                               profileProvider.acceptFriendRequest(sendFriendRequestModel.id.toString(), index,
                                                   isFromFriendRequest: true);
                                             },
-                                            secondButtonName: "cancel",
+                                            secondButtonName: getTranslated('cancel', context),
                                             secondButtonOnTab: () {
                                               profileProvider.cancelFriendRequest(sendFriendRequestModel.id.toString(), index);
                                             },
@@ -138,11 +139,11 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                                         gotoProfileScreen: () {},
                                         firstButtonColor: AppColors.postLikeCountContainer,
                                         userName: "${suggestFriendRequestModel.firstName}${suggestFriendRequestModel.lastName}",
-                                        firstButtonName: "Add friend",
+                                        firstButtonName: getTranslated('Add friend', context),
                                         firstButtonOnTab: () {
                                           profileProvider.sendFriendRequest(suggestFriendRequestModel.id as int, index);
                                         },
-                                        secondButtonName: "cancel",
+                                        secondButtonName: getTranslated('cancel', context),
                                         secondButtonOnTab: () {
                                           profileProvider.cancelSuggestedFriend(index);
                                         },

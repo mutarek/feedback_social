@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/CommentModels.dart';
 import 'package:als_frontend/helper/number_helper.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
@@ -76,7 +77,7 @@ class CommentWidget extends StatelessWidget {
                               height: 25,
                               margin: const EdgeInsets.only(top: 5),
                               child: CustomButton(
-                                btnTxt: 'Reply',
+                                btnTxt: getTranslated('Reply',context),
                                 textWhiteColor: true,
                                 isStroked: true,
                                 onTap: () {

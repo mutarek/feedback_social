@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       return CustomConatinerButton(
                                           child: (auth.isLoading == false)
                                               ? Center(
-                                                  child: Text("Login",
+                                                  child: Text(getTranslated('Login', context),
                                                       style:
                                                           latoStyle800ExtraBold
                                                               .copyWith(

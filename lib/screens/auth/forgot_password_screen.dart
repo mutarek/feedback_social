@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
@@ -47,7 +48,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                       child: Text(
-                        "Confirm Password",
+                        getTranslated('Confirm Password',context),
                         style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ),
@@ -67,7 +68,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(horizontal: 15),
                                 child: CustomTextField(
                                   fillColor: Colors.white,
-                                  hintText: "Enter new password",
+                                  hintText: getTranslated('Enter new password', context),
                                   borderRadius: 4,
                                   controller: passwordController,
                                   verticalSize: 15,

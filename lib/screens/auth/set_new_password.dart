@@ -66,7 +66,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                           padding: EdgeInsets.only(
                               top: height * 0.06, left: width * 0.1),
                           child: Text(
-                            "Set New Password",
+                            getTranslated('Set New Password', context),
                             // getTranslated('Registration', context)!,
                             style: latoStyle400Regular.copyWith(
                                 fontSize: 22,
@@ -104,7 +104,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                         horizontal: 15),
                                     child: CustomTextField(
                                       fillColor: Colors.white,
-                                      hintText: "New Password",
+                                      hintText: getTranslated('New Password', context),
                                       borderRadius: 4,
                                       controller: passwordController,
                                       verticalSize: 15,

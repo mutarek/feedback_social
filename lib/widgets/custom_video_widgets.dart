@@ -4,7 +4,6 @@ import 'package:pod_player/pod_player.dart';
 class CustomVideoWidget extends StatefulWidget {
   String videoUrl;
 
-
   CustomVideoWidget(this.videoUrl);
 
   @override
@@ -13,6 +12,7 @@ class CustomVideoWidget extends StatefulWidget {
 
 class _CustomVideoWidgetState extends State<CustomVideoWidget> {
   late final PodPlayerController controller;
+
   @override
   void initState() {
     controller = PodPlayerController(
@@ -22,8 +22,7 @@ class _CustomVideoWidgetState extends State<CustomVideoWidget> {
         podPlayerConfig: const PodPlayerConfig(
             autoPlay: true,
             isLooping: false,
-            videoQualityPriority: [360,720,1080]
-        ))
+            videoQualityPriority: [360, 720, 1080]))
       ..initialise();
     super.initState();
   }
@@ -33,6 +32,7 @@ class _CustomVideoWidgetState extends State<CustomVideoWidget> {
     controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

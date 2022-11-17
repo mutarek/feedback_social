@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
@@ -84,7 +85,7 @@ void likeModalBottomView(BuildContext context, NewsFeedData post) {
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text('${isMe ? "You" : likedBy.name}', style: latoStyle600SemiBold.copyWith(fontSize: 12)),
+                                                Text('${isMe ? getTranslated('You',context) : likedBy.name}', style: latoStyle600SemiBold.copyWith(fontSize: 12)),
                                               ],
                                             ),
                                           ),

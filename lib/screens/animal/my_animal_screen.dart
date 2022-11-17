@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
@@ -47,8 +48,8 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
           onTap: () {
             Get.back();
           },
-          child: const Text(
-            "FeedBack",
+          child:  Text(
+            getTranslated('Feedback',context),
             style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
         ),
@@ -70,7 +71,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "Your ID: ${authProvider.userCode}",
+                                "${getTranslated('Your_ID', context)}: ${authProvider.userCode}",
                                 style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
                               ),
                               SizedBox(width: width * 0.02),
@@ -79,7 +80,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                   children: [
                                     Expanded(
                                       child: CustomTextField(
-                                        hintText: 'Search with code',
+                                        hintText: getTranslated('Search with code', context),
                                         controller: searchController,
                                         inputType: TextInputType.number,
                                         inputAction: TextInputAction.done,
@@ -103,7 +104,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                                 Get.to(() => SearchAnimalScreen(searchController.text));
                                                 FocusScope.of(context).unfocus();
                                               } else {
-                                                Fluttertoast.showToast(msg: "Write 6 digits code to search");
+                                                Fluttertoast.showToast(msg: "${getTranslated('Write 6 digits code to search', context)}");
                                               }
                                             },
                                             icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 20)),
@@ -133,7 +134,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  CustomText(title: 'Your added animal', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
+                                  CustomText(title: '${getTranslated('Your added animal', context)}', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -147,13 +148,13 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                             animalProvider.clearImage();
                                             Get.to(() => AddEditAnimalScreen());
                                           },
-                                          child: const Text("Add"))
+                                          child:  Text(getTranslated('Add', context)))
                                     ],
                                   ),
                                   Expanded(
                                     child: (animalProvider.animals.isEmpty)
-                                        ? const Center(
-                                            child: Text("You have not added any animal yet"),
+                                        ?  Center(
+                                            child: Text(getTranslated('You have not added any animal yet', context)),
                                           )
                                         : ListView.builder(
                                             shrinkWrap: true,

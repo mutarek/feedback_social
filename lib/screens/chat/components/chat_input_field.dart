@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -55,7 +56,7 @@ class ChatInputField extends StatelessWidget {
                           controller.scrollToIndex(0, preferPosition: AutoScrollPosition.end);
                         },
                         controller: textEditingController,
-                        decoration: const InputDecoration(hintText: "Type message", border: InputBorder.none,enabledBorder: InputBorder.none),
+                        decoration:  InputDecoration(hintText: getTranslated("Type message",context), border: InputBorder.none,enabledBorder: InputBorder.none),
                       ),
                     ),
                     Icon(

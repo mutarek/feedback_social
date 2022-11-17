@@ -74,7 +74,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                           }
                                         });
                                       },
-                                      child: const Text("Delete")),
+                                      child:  Text("${getTranslated('delete', context)}")),
                                 ],
                               )
                             : const SizedBox.shrink(),

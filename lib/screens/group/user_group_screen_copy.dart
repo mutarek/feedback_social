@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
@@ -151,7 +152,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                           children: [
                                                             Text(groupProvider.groupDetailsModel.totalMember.toString(),
                                                                 style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
-                                                            const Text("Members"),
+                                                             Text(getTranslated('Members',context)),
                                                             SizedBox(height: height * 0.014),
                                                             InkWell(
                                                               onTap: () {
@@ -176,7 +177,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                                   children: [
                                                                     const Icon(FontAwesomeIcons.penToSquare, size: 14, color: Colors.white),
                                                                     SizedBox(width: width * 0.007),
-                                                                    Text("Edit Group",
+                                                                    Text(getTranslated('Edit Group', context),
                                                                         style: TextStyle(fontSize: height * 0.012, color: Colors.white))
                                                                   ],
                                                                 ),
@@ -195,10 +196,10 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                               height: height * 0.03,
                                               color: Colors.white,
                                               child: TabBar(tabs: [
-                                                Text("Discussion", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                                Text("Photos", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                                Text("Videos", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                                Text("Members", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                                Text(getTranslated('Discussion', context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                                Text(getTranslated('Photos', context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                                Text(getTranslated('Videos', context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                                Text(getTranslated('Members', context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                               ]),
                                             ),
                                           ],

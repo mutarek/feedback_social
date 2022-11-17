@@ -60,10 +60,9 @@ class SignUpScreen1 extends StatelessWidget {
                       color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
-                        child: Text(
-                          isFromForgetPassword ? "Forget Password" : "Registration",
-                          // getTranslated('Registration', context)!,
-                          style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                        child: CustomText2(
+                          title: isFromForgetPassword ? "Forget Password" : "Registration",
+                          textStyle: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                       ),
                     ),

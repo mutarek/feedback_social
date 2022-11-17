@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class OwnerInfoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomText(title: name,textStyle: latoStyle600SemiBold.copyWith(fontSize: 18)),
-            CustomText(title: 'Owner',textStyle: latoStyle400Regular.copyWith(fontSize: 15)),
+            CustomText(title: getTranslated('Owner',context),textStyle: latoStyle400Regular.copyWith(fontSize: 15)),
           ],
         )
       ],

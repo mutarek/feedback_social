@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
 import 'package:als_frontend/screens/home/view/video_details_screen.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
@@ -158,7 +159,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                       left: 50,
                       child: CustomButton(
                         onTap: () {},
-                        btnTxt: 'View More+',
+                        btnTxt: getTranslated('View More+',context),
                         fontSize: 12,
                         backgroundColor: Colors.green.withOpacity(.8),
                         textWhiteColor: true,

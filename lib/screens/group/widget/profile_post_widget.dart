@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,9 +47,9 @@ class PostWidget extends StatelessWidget {
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     controller: writingContoller,
-                    decoration: const InputDecoration(
+                    decoration:  InputDecoration(
                       border: InputBorder.none,
-                      hintText: "write Something",
+                      hintText: getTranslated('write Something',context),
                     )),
               ),
               Padding(
@@ -66,7 +67,7 @@ class PostWidget extends StatelessWidget {
                         FontAwesomeIcons.image,
                         size: height * 0.021,
                       ),
-                      InkWell(onTap: photoPost, child: const Text("  Photo")),
+                      InkWell(onTap: photoPost, child:  Text(getTranslated("Photo", context))),
                       SizedBox(
                         width: width * 0.06,
                       ),
@@ -76,7 +77,7 @@ class PostWidget extends StatelessWidget {
                             FontAwesomeIcons.video,
                             size: height * 0.021,
                           )),
-                      const Text("  video"),
+                       Text(getTranslated('video', context)),
                       Padding(
                           padding: EdgeInsets.only(left: width * 0.384),
                           child: InkWell(

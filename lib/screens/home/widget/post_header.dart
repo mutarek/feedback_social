@@ -1,6 +1,7 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/dialog_bottom_sheet/more_menu_bottom_sheet.dart';
 import 'package:als_frontend/helper/number_helper.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
@@ -103,8 +104,8 @@ class PostHeaderWidget extends StatelessWidget {
                           },
                           child: CustomText(
                               title: Provider.of<AuthProvider>(context, listen: false).userID.toString() == post.author!.id.toString()
-                                  ? "You Posted Here"
-                                  : post.author!.fullName.toString() + " Posted Here",
+                                  ? getTranslated('You Posted Here',context)
+                                  : post.author!.fullName.toString() + getTranslated('Posted Here', context),
                               fontSize: 12),
                         ),
                         Row(children: [

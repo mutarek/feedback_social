@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/animal/animal_details_screen.dart';
@@ -48,7 +49,7 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
                         children: [
                           Expanded(
                             child: CustomTextField(
-                              hintText: 'Search with code',
+                              hintText: getTranslated('Search with code',context),
                               controller: searchController,
                               inputType: TextInputType.number,
                               inputAction: TextInputAction.done,
@@ -71,7 +72,7 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
                                       animalProvider.searchAnimal(searchController.text);
                                       searchController.clear();
                                     } else {
-                                      Fluttertoast.showToast(msg: "Write 6 digits code to search");
+                                      Fluttertoast.showToast(msg: getTranslated('Write 6 digits code to search', context));
                                     }
                                   },
                                   icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 20)),
@@ -138,7 +139,7 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
                                           ),
                                         );
                                       })
-                                  : Center(child: CustomText(title: 'No Data Found',color: Colors.black,fontSize: 18)),
+                                  : Center(child: CustomText(title: getTranslated('No Data Found', context),color: Colors.black,fontSize: 18)),
                             )
                     ],
                   ),

@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
@@ -179,7 +180,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Icon(FontAwesomeIcons.plus, size: 8, color: Colors.white),
-                                Text("Invite", style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
+                                Text(getTranslated('Invite',context), style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
                               ],
                             ),
                           ),
@@ -193,7 +194,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                         children: [
                           Text(groupProvider.groupDetailsModel.totalMember.toString(),
                               style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
-                          const Text("Members"),
+                          Text(getTranslated('Members', context)),
                           SizedBox(height: height * 0.014),
                           InkWell(
                             onTap: () {
@@ -215,7 +216,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                 children: [
                                   const Icon(FontAwesomeIcons.penToSquare, size: 14, color: Colors.white),
                                   SizedBox(width: width * 0.007),
-                                  Text("Edit Group", style: TextStyle(fontSize: height * 0.012, color: Colors.white))
+                                  Text(getTranslated('Edit Group', context), style: TextStyle(fontSize: height * 0.012, color: Colors.white))
                                 ],
                               ),
                             ),
@@ -232,10 +233,10 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
           Container(
             color: Colors.white,
             child: Row(children: [
-              MenuButtonWidget("Discussion", 0, groupProvider, pageController),
-              MenuButtonWidget("Photos", 1, groupProvider, pageController),
-              MenuButtonWidget("Videos", 2, groupProvider, pageController),
-              MenuButtonWidget("Members", 3, groupProvider, pageController),
+              MenuButtonWidget(getTranslated('Discussion', context), 0, groupProvider, pageController),
+              MenuButtonWidget(getTranslated('Photos', context), 1, groupProvider, pageController),
+              MenuButtonWidget(getTranslated('Videos', context), 2, groupProvider, pageController),
+              MenuButtonWidget(getTranslated('Members', context), 3, groupProvider, pageController),
             ]),
           ),
         ],

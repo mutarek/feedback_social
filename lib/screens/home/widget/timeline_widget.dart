@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/helper/number_helper.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
@@ -140,7 +141,7 @@ class TimeLineWidget extends StatelessWidget {
                                               },
                                               child: Text(
                                                   newsFeedData.sharePost!.post!.author!.fullName! +
-                                                      " Posted Here",
+                                                      getTranslated('Posted Here',context),
                                                   style: latoStyle500Medium.copyWith(
                                                       fontWeight: FontWeight.w400)),
                                             )

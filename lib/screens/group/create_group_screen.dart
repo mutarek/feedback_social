@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
@@ -7,6 +8,7 @@ import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -84,10 +86,10 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(title: 'Enter Group name ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText2(title: 'Enter Group name ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         CustomTextField(
-                          hintText: 'Write here....',
+                          hintText: getTranslated('Write here....',context),
                           fillColor: Colors.white,
                           borderRadius: 10,
                           controller: groupNameController,
@@ -97,7 +99,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         const SizedBox(height: 13),
                         Row(
                           children: [
-                            CustomText(title: 'Group Is Private? ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                            CustomText2(title: 'Group Is Private? ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                             CupertinoSwitch(
                               value: groupProvider.groupISPrivate,
                               onChanged: (value) {
@@ -107,7 +109,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                           ],
                         ),
                         const SizedBox(height: 13),
-                        CustomText(title: 'Select Group Category ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText2(title: 'Select Group Category ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         Container(
                           width: width,
@@ -133,7 +135,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         ),
                         const SizedBox(height: 20),
                         CustomButton(
-                          btnTxt: widget.isUpdateGroup ? "Update" : "Add",
+                          btnTxt: widget.isUpdateGroup ? "${getTranslated('Update', context)}" : "${getTranslated('Add', context)}",
                           onTap: () {
                             if (groupNameController.text.isNotEmpty) {
                               if (widget.isUpdateGroup) {
@@ -152,7 +154,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                 });
                               }
                             } else {
-                              Fluttertoast.showToast(msg: "Please Write Group Name");
+                              Fluttertoast.showToast(msg: getTranslated('Please Write Group Name', context));
                             }
                           },
                           fontSize: 18,

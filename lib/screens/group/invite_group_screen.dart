@@ -1,7 +1,9 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/widget/friend_list_card.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,7 +43,7 @@ class _InviteGroupScreenState extends State<InviteGroupScreen> {
                         children: [
                           Expanded(
                             child: CustomTextField(
-                              hintText: 'write a name to search',
+                              hintText: getTranslated('write a name to search',context),
                               onChanged: (value) {
                                 groupProvider.searchUser(value!);
                               },
@@ -103,7 +105,7 @@ class _InviteGroupScreenState extends State<InviteGroupScreen> {
                                               image: groupProvider.friendsList[index].profileImage),
                                         );
                                       })
-                                  : Center(child: CustomText(title: 'No Data Found', color: Colors.black, fontSize: 18)),
+                                  : const Center(child: CustomText2(title: 'No Data Found', color: Colors.black, fontSize: 18)),
                             )
                     ],
                   ),

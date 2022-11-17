@@ -6,6 +6,7 @@ import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
                   ),
                 ),
                 const SizedBox(width: 5),
-                CustomText(
+                CustomText2(
                     title: 'Write Somethings',
                     textStyle: latoStyle400Regular.copyWith(fontWeight: FontWeight.w300, fontSize: 13, color: Colors.grey.withOpacity(.8))),
                 const SizedBox(width: 5),
@@ -77,7 +78,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
                           children: [
                             const Icon(Icons.photo_camera_back, size: 20, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText(title: 'Photo', textStyle: latoStyle700Bold.copyWith()),
+                            CustomText2(title: 'Photo', textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),
@@ -87,7 +88,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
                           children: [
                             const Icon(CupertinoIcons.video_camera, size: 28, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText(title: 'Video', textStyle: latoStyle700Bold.copyWith()),
+                            CustomText2(title: 'Video', textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),
@@ -97,7 +98,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
                           children: [
                             const Icon(Icons.calendar_month, size: 20, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText(title: 'Event', textStyle: latoStyle700Bold.copyWith()),
+                            CustomText2(title: 'Event', textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),

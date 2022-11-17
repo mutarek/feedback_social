@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/provider/provider.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -87,7 +88,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                               child: Padding(
                                 padding: EdgeInsets.only(top: height * 0.05, left: width * 0.1),
                                 child: Text(
-                                  "Registration",
+                                  getTranslated('Registration',context),
                                   style: TextStyle(fontSize: height * 0.035, fontWeight: FontWeight.bold, color: Colors.white),
                                 ),
                               ),
@@ -102,7 +103,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                     child: Center(
                                       child: Text(
                                         (provider.minutes == 0 && provider.seconds == 0)
-                                            ? "OTP is expired, resend to get OTP again"
+                                            ? "${getTranslated('OTP is expired, resend to get OTP again', context)}"
                                             : "00 : 0${provider.minutes} : ${(provider.seconds > 9) ? provider.seconds : "0${provider.seconds}"}",
                                         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
                                       ),
@@ -116,8 +117,8 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      const Text(
-                                        "Register with",
+                                       Text(
+                                        getTranslated('Register with', context),
                                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16),
                                       ),
                                       TextButton(
@@ -125,7 +126,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                             provider.emailLogin();
                                             setState(() {});
                                           },
-                                          child: Text((provider.isEmail == true) ? "Phone" : "Email",
+                                          child: Text((provider.isEmail == true) ? "${getTranslated('Phone', context)}" : "${getTranslated('Email', context)}",
                                               style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.w500, fontSize: 18)))
                                     ],
                                   ),
@@ -159,7 +160,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                           h: height * 0.05,
                                           w: width * 0.8,
                                           child: CustomTextField1(
-                                            hintText: (provider.isEmail == true) ? "Enter your  your email" : "Enter phone number",
+                                            hintText: (provider.isEmail == true) ? "${getTranslated('Enter your  your email', context)}" : "${getTranslated('Enter phone number', context)}",
                                             controller: (provider.isEmail == true) ? emailController : numberController,
                                           ),
                                         ),
@@ -172,13 +173,13 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                   provider.getCode(provider.email);
                                   if (provider.getCodeSuccess == true) {
                                     provider.resetTime();
-                                    Fluttertoast.showToast(msg: "An OPT has been send to your email");
+                                    Fluttertoast.showToast(msg: getTranslated('An OPT has been send to your email', context));
                                   } else {
-                                    Fluttertoast.showToast(msg: "Something went wrong!");
+                                    Fluttertoast.showToast(msg: getTranslated('Something went wrong!', context));
                                   }
                                 },
                                 child: Text(
-                                  "Didn't get code resend here",
+                                  getTranslated("Didn't get code resend here", context),
                                   style: GoogleFonts.lato(color: Palette.notificationColor),
                                 )),
                             Row(
@@ -191,7 +192,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                     child: (provider.otpSend == true)
                                         ? const CupertinoActivityIndicator()
                                         : Text(
-                                            "Get verified",
+                                            getTranslated('Get verified', context),
                                             style: GoogleFonts.lato(
                                               color: Colors.black,
                                               fontSize: 10,
@@ -229,7 +230,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                       h: height * 0.05,
                                       w: width * 0.36,
                                       child: CustomTextField1(
-                                        hintText: "Enter code",
+                                        hintText: getTranslated('Enter code', context),
                                         controller: codeController,
                                       ),
                                     ),
@@ -271,7 +272,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                               child: Padding(
                                 padding: EdgeInsets.only(top: height * 0.05, left: width * 0.1),
                                 child: Text(
-                                  "Registration",
+                                  getTranslated('Registration', context),
                                   style: TextStyle(fontSize: height * 0.035, fontWeight: FontWeight.bold, color: Colors.white),
                                 ),
                               ),
@@ -282,7 +283,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                 h: height * 0.05,
                                 w: width * 0.9,
                                 child: CustomTextField1(
-                                  hintText: "First Name",
+                                  hintText: getTranslated('First Name', context),
                                   controller: firstNameController,
                                 ),
                               ),
@@ -293,7 +294,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                 h: height * 0.05,
                                 w: width * 0.9,
                                 child: CustomTextField1(
-                                  hintText: "Last Name",
+                                  hintText: getTranslated('Last Name', context),
                                   controller: lastNameController,
                                 ),
                               ),
@@ -302,8 +303,8 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                               padding: const EdgeInsets.fromLTRB(28.0, 5, 25, 5),
                               child: Row(
                                 children: [
-                                  const Text(
-                                    "Date of birth",
+                                   Text(
+                                    getTranslated('Date of birth', context),
                                     style: TextStyle(color: Colors.white, fontSize: 20),
                                   ),
                                   const SizedBox(
@@ -333,8 +334,8 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                 padding: const EdgeInsets.fromLTRB(28.0, 5, 25, 5),
                                 child: Row(
                                   children: [
-                                    const Text(
-                                      "Gender",
+                                     Text(
+                                      getTranslated('Gender', context),
                                       style: TextStyle(color: Colors.white, fontSize: 20),
                                     ),
                                     const SizedBox(
@@ -378,7 +379,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                     h: height * 0.05,
                                     w: width * 0.9,
                                     child: CustomTextField1(
-                                      hintText: "Password",
+                                      hintText: getTranslated('Password', context),
                                       controller: passwordController,
                                       obsecureText: value.obsecureText,
                                       suffixIconButton: IconButton(
@@ -393,7 +394,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                               return Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  const Text("Register", style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold)),
+                                  Text(getTranslated('Register', context), style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold)),
                                   Padding(
                                     padding: EdgeInsets.only(right: width * 0.07),
                                     child: CustomConatinerButton(
@@ -406,7 +407,7 @@ class _EnterEmailOrPhoneState extends State<EnterEmailOrPhone> {
                                         ontap: () {
                                           if (passwordController.text.isEmpty) {
                                             showMessage(
-                                              message: "Please fill all ther form",
+                                              message: getTranslated('Please fill all the form', context),
                                               context: context,
                                             );
                                           } else {

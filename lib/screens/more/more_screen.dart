@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
@@ -62,7 +63,7 @@ class MoreScreen extends StatelessWidget {
                           onPressed: () {
                             Get.to(() => const ProfileScreen());
                           },
-                          child: const Text("View profile", style: button)),
+                          child: Text(getTranslated('View profile',context), style: button)),
                     ),
                   ),
                   //
@@ -127,7 +128,7 @@ class MoreScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(FontAwesomeIcons.arrowRightFromBracket),
-                            Text("    logout", style: GoogleFonts.lato(fontSize: h * 0.03)),
+                            Text(getTranslated('    logout', context), style: GoogleFonts.lato(fontSize: h * 0.03)),
                           ],
                         ),
                       ),
