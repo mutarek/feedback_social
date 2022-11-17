@@ -21,7 +21,7 @@ class AddPostScreen extends StatefulWidget {
   final bool isFromProfileScreen;
   final bool isForPage;
   final bool isEditPost;
-  final NewsFeedData? post;
+  final NewsFeedModel? post;
   final int index;
 
   const AddPostScreen(this.profileImage,
@@ -112,7 +112,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 onTap: () {
                   if (widget.isEditPost) {
                     postProvider
-                        .updatePost(descriptionController.text, widget.post!.id!,
+                        .updatePost(descriptionController.text, widget.post!.id! as int,
                             isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isForPage)
                         .then((value) {
                       descriptionController.clear();

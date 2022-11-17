@@ -32,4 +32,8 @@ class NewsfeedRepo {
   Future<Response> callForSinglePostFromNotification(String url) async {
     return await apiClient.getData(url);
   }
+
+  Future<Response> callForgetLikedShareUser(String url, int pageNo) async {
+    return await apiClient.getData('$url?page=$pageNo&size=20');
+  }
 }

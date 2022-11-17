@@ -1,77 +1,33 @@
-// To parse this JSON data, do
-//
-//     final newsfeedModel = newsfeedModelFromJson(jsonString);
-
-import 'dart:convert';
-
-NewsfeedModel newsfeedModelFromJson(String str) => NewsfeedModel.fromJson(json.decode(str));
-
-String newsfeedModelToJson(NewsfeedModel data) => json.encode(data.toJson());
-
-class NewsfeedModel {
-  NewsfeedModel({
-    this.count,
-    this.next,
-    this.previous,
-    this.results,
-  });
-
-  int? count;
-  String? next;
-  dynamic previous;
-  List<NewsFeedData>? results;
-
-  factory NewsfeedModel.fromJson(Map<String, dynamic> json) => NewsfeedModel(
-        count: json["count"],
-        next: json["next"],
-        previous: json["previous"],
-        results: List<NewsFeedData>.from(json["results"].map((x) => NewsFeedData.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "count": count,
-        "next": next,
-        "previous": previous,
-        "results": List<dynamic>.from(results!.map((x) => x.toJson())),
-      };
-}
-
-class NewsFeedData {
-  NewsFeedData({
+class NewsFeedModel {
+  NewsFeedModel({
     this.newsfeedId,
     this.isDelete,
     this.id,
     this.description,
     this.author,
-    this.page,
     this.totalImage,
     this.images,
     this.totalVideo,
     this.videos,
     this.totalComment,
     this.commentUrl,
-    this.totalLike,
-    this.likedBy,
-    this.timestamp,
+    this.totalLiked,
+    this.likedByUrl,
+    this.isLiked,
+    this.sharedByUrl,
+    this.totalShared,
     this.isShare,
-    this.sharePost,
     this.postType,
-    this.like,
+    this.timestamp,
+    this.sharePost,
   });
 
-  NewsFeedData.fromJson(dynamic json) {
-    newsfeedId = json['newsfeed_id'] ?? 0;
-    isDelete = json['is_delete'] ?? false;
+  NewsFeedModel.fromJson(dynamic json) {
+    newsfeedId = json['newsfeed_id'];
+    isDelete = json['is_delete'];
     id = json['id'];
     description = json['description'];
     author = json['author'] != null ? Author.fromJson(json['author']) : null;
-    page = json['page'] != null ? Page.fromJson(json['page']) : null;
-    group = json['group'] != null ? Group.fromJson(json['group']) : null;
-    if (json.containsKey('share_post')) {
-      sharePost = json['share_post'] != null ? SharePostModel.fromJson(json['share_post']) : null;
-    } else {
-      sharePost = SharePostModel();
-    }
     totalImage = json['total_image'];
     if (json['images'] != null) {
       images = [];
@@ -80,51 +36,49 @@ class NewsFeedData {
       });
     }
     totalVideo = json['total_video'];
-    if (json['videos'] != null || json['videos'].isNotEmpty) {
+    if (json['videos'] != null) {
       videos = [];
       json['videos'].forEach((v) {
-        videos?.add(Video.fromJson(v));
+        videos?.add(Videos.fromJson(v));
       });
-    } else {
-      videos = [];
     }
     totalComment = json['total_comment'];
     commentUrl = json['comment_url'];
-    totalLike = json['total_like'];
-    if (json['liked_by'] != null || json['liked_by'].isNotEmpty) {
-      likedBy = [];
-      json['liked_by'].forEach((v) {
-        likedBy?.add(LikedBy.fromJson(v));
-      });
-    } else {
-      likedBy = [];
-    }
-    timestamp = json['timestamp'];
-    isShare = json['is_share'] ?? false;
+    totalLiked = json['total_liked'];
+    likedByUrl = json['liked_by_url'];
+    isLiked = json['is_liked'];
+    sharedByUrl = json['shared_by_url'];
+    totalShared = json['total_shared'];
+    isShare = json['is_share'];
     postType = json['post_type'];
-    like = json['like'];
+    timestamp = json['timestamp'];
+    sharePost = json['share_post'] != null ? SharePost.fromJson(json['share_post']) : SharePost();
+    groupModel = json['group'] != null ? GroupModel.fromJson(json['group']) : GroupModel();
+    pageModel = json['page'] != null ? PageModel.fromJson(json['page']) : PageModel();
   }
 
-  int? newsfeedId;
+  num? newsfeedId;
   bool? isDelete;
-  int? id;
+  num? id;
   String? description;
   Author? author;
-  Page? page;
-  Group? group;
-  SharePostModel? sharePost;
-  int? totalImage;
+  num? totalImage;
   List<ImagesData>? images;
-  int? totalVideo;
-  List<Video>? videos;
-  int? totalComment;
+  num? totalVideo;
+  List<Videos>? videos;
+  num? totalComment;
   String? commentUrl;
-  int? totalLike;
-  List<LikedBy>? likedBy;
-  String? timestamp;
+  num? totalLiked;
+  String? likedByUrl;
+  bool? isLiked;
+  String? sharedByUrl;
+  num? totalShared;
   bool? isShare;
   String? postType;
-  bool? like;
+  String? timestamp;
+  SharePost? sharePost;
+  GroupModel? groupModel;
+  PageModel? pageModel;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -134,9 +88,6 @@ class NewsFeedData {
     map['description'] = description;
     if (author != null) {
       map['author'] = author?.toJson();
-    }
-    if (page != null) {
-      map['page'] = page?.toJson();
     }
     map['total_image'] = totalImage;
     if (images != null) {
@@ -148,12 +99,116 @@ class NewsFeedData {
     }
     map['total_comment'] = totalComment;
     map['comment_url'] = commentUrl;
-    map['total_like'] = totalLike;
-
-    map['timestamp'] = timestamp;
+    map['total_liked'] = totalLiked;
+    map['liked_by_url'] = likedByUrl;
+    map['is_liked'] = isLiked;
+    map['shared_by_url'] = sharedByUrl;
+    map['total_shared'] = totalShared;
     map['is_share'] = isShare;
     map['post_type'] = postType;
-    map['like'] = like;
+    map['timestamp'] = timestamp;
+    if (sharePost != null) {
+      map['share_post'] = sharePost?.toJson();
+    }
+    return map;
+  }
+}
+
+class SharePost {
+  SharePost({
+    this.post,
+    this.postUrl,
+    this.shareFrom,
+    this.timestamp,
+  });
+
+  SharePost.fromJson(dynamic json) {
+    post = json['post'] != null ? Post.fromJson(json['post']) : null;
+    postUrl = json['post_url'];
+    shareFrom = json['share_from'];
+    timestamp = json['timestamp'];
+  }
+
+  Post? post;
+  String? postUrl;
+  String? shareFrom;
+  String? timestamp;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (post != null) {
+      map['post'] = post?.toJson();
+    }
+    map['post_url'] = postUrl;
+    map['share_from'] = shareFrom;
+    map['timestamp'] = timestamp;
+    return map;
+  }
+}
+
+class Post {
+  Post(
+      {this.id,
+      this.description,
+      this.author,
+      this.totalImage,
+      this.images,
+      this.totalVideo,
+      this.videos,
+      this.pageModel,
+      this.groupModel});
+
+  Post.fromJson(dynamic json) {
+    id = json['id'];
+    description = json['description'];
+    author = json['author'] != null ? Author.fromJson(json['author']) : null;
+    totalImage = json['total_image']??0;
+    if (json['images'] != null) {
+      images = [];
+      json['images'].forEach((v) {
+        images?.add(ImagesData.fromJson(v));
+      });
+    }else{
+      images = [];
+    }
+    totalVideo = json['total_video']??0;
+    if (json['videos'] != null) {
+      videos = [];
+      json['videos'].forEach((v) {
+        videos?.add(Videos.fromJson(v));
+      });
+    }else{
+      videos = [];
+    }
+    pageModel = json['page'] != null ? PageModel.fromJson(json['page']) : PageModel();
+    groupModel = json['group'] != null ? GroupModel.fromJson(json['group']) : GroupModel();
+  }
+
+  num? id;
+  String? description;
+  Author? author;
+  PageModel? pageModel;
+  GroupModel? groupModel;
+  num? totalImage;
+  List<ImagesData>? images;
+  num? totalVideo;
+  List<Videos>? videos;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['description'] = description;
+    if (author != null) {
+      map['author'] = author?.toJson();
+    }
+    map['total_image'] = totalImage;
+    if (images != null) {
+      map['images'] = images?.map((v) => v.toJson()).toList();
+    }
+    map['total_video'] = totalVideo;
+    if (videos != null) {
+      map['videos'] = videos?.map((v) => v.toJson()).toList();
+    }
     return map;
   }
 }
@@ -176,40 +231,6 @@ class ImagesData {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['image'] = image;
-    return map;
-  }
-}
-
-class Page {
-  Page({
-    this.id,
-    this.name,
-    this.category,
-    this.coverPhoto,
-    this.avatar,
-  });
-
-  Page.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    category = json['category'].toString();
-    coverPhoto = json['cover_photo'];
-    avatar = json['avatar'];
-  }
-
-  num? id;
-  String? name;
-  String? category;
-  String? coverPhoto;
-  String? avatar;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['category'] = category;
-    map['cover_photo'] = coverPhoto;
-    map['avatar'] = avatar;
     return map;
   }
 }
@@ -240,45 +261,34 @@ class Author {
   }
 }
 
-class Video {
-  Video({
+class Videos {
+  Videos({
     this.id,
-    this.video,
     this.thumbnail,
+    this.video,
   });
 
-  int? id;
-  String? video;
+  Videos.fromJson(dynamic json) {
+    id = json['id'];
+    thumbnail = json['thumbnail'];
+    video = json['video'];
+  }
+
+  num? id;
   String? thumbnail;
+  String? video;
 
-  factory Video.fromJson(Map<String, dynamic> json) => Video(
-      id: json["id"],
-      video: json["video"],
-      thumbnail: json["thumbnail"] ?? "https://www.thejungleadventure.com/assets/images/logo/novideo.png");
-
-  Map<String, dynamic> toJson() => {"id": id, "video": video, "thumbnail": thumbnail};
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['thumbnail'] = thumbnail;
+    map['video'] = video;
+    return map;
+  }
 }
 
-class LikedBy {
-  LikedBy({
-    this.id,
-    this.name,
-    this.profileImage,
-  });
-
-  int? id;
-  String? name;
-  String? profileImage;
-
-  factory LikedBy.fromJson(Map<String, dynamic> json) => LikedBy(
-        id: json["id"],
-        name: json["full_name"],
-        profileImage: json["profile_image"],
-      );
-}
-
-class Group {
-  Group({
+class GroupModel {
+  GroupModel({
     this.id,
     this.name,
     this.category,
@@ -286,130 +296,7 @@ class Group {
     this.isPrivate,
   });
 
-  int? id;
-  String? name;
-  String? category;
-  String? coverPhoto;
-  bool? isPrivate;
-
-  factory Group.fromJson(Map<String, dynamic> json) => Group(
-        id: json["id"],
-        name: json["name"],
-        category: json["category"].toString(),
-        coverPhoto: json["cover_photo"],
-        isPrivate: json["is_private"] ?? false,
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "category": category,
-        "cover_photo": coverPhoto,
-        "is_private": isPrivate ?? false,
-      };
-}
-
-class ImageData {
-  ImageData({
-    this.id,
-    this.image,
-  });
-
-  int? id;
-  String? image;
-
-  factory ImageData.fromJson(Map<String, dynamic> json) => ImageData(
-        id: json["id"],
-        image: json["image"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "image": image,
-      };
-}
-
-class SharePost {
-  SharePost({
-    this.post,
-    this.postUrl,
-    this.shareFrom,
-    this.timestamp,
-  });
-
-  Post? post;
-  String? postUrl;
-  String? shareFrom;
-  String? timestamp;
-
-  factory SharePost.fromJson(Map<String, dynamic> json) => SharePost(
-        post: Post.fromJson(json["post"]),
-        postUrl: json["post_url"],
-        shareFrom: json["share_from"],
-        timestamp: json["timestamp"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "post": post!.toJson(),
-        "post_url": postUrl,
-        "share_from": shareFrom,
-        "timestamp": timestamp,
-      };
-}
-
-class Post {
-  Post({
-    this.id,
-    this.description,
-    this.author,
-    this.totalImage,
-    this.groupData,
-    this.images,
-    this.totalVideo,
-    this.videos,
-  });
-
-  int? id;
-  String? description;
-  Author? author;
-  GroupData? groupData;
-  int? totalImage;
-  List<ImagesData>? images;
-  int? totalVideo;
-  List<Video>? videos;
-
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
-        id: json["id"],
-        description: json["description"] ?? "",
-        author: Author.fromJson(json["author"]),
-        groupData: json["group"] != null ? GroupData.fromJson(json["group"]) : GroupData(),
-        totalImage: json["total_image"] ?? 0,
-        images: (json['images'] != null) ? List<ImagesData>.from(json["images"].map((x) => ImagesData.fromJson(x))) : [],
-        totalVideo: json["total_video"] ?? 0,
-        videos: (json['videos'] != null) ? List<Video>.from(json["videos"].map((x) => Video.fromJson(x))) : [],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "description": description,
-        "author": author!.toJson(),
-        "total_image": totalImage,
-        "images": List<dynamic>.from(images!.map((x) => x.toJson())),
-        "total_video": totalVideo,
-        "videos": List<dynamic>.from(videos!.map((x) => x)),
-      };
-}
-
-class GroupData {
-  GroupData({
-    this.id,
-    this.name,
-    this.category,
-    this.coverPhoto,
-    this.isPrivate,
-  });
-
-  GroupData.fromJson(dynamic json) {
+  GroupModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
     category = json['category'];
@@ -434,46 +321,36 @@ class GroupData {
   }
 }
 
-class EnumValues<T> {
-  Map<String, T>? map;
-  Map<T, String>? reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap ??= map!.map((k, v) => MapEntry(v, k));
-    return reverseMap!;
-  }
-}
-
-class SharePostModel {
-  SharePostModel({
-    this.post,
-    this.postUrl,
-    this.shareFrom,
-    this.timestamp,
+class PageModel {
+  PageModel({
+    this.id,
+    this.name,
+    this.category,
+    this.coverPhoto,
+    this.avatar,
   });
 
-  SharePostModel.fromJson(dynamic json) {
-    post = json['post'] != null ? Post.fromJson(json['post']) : null;
-    postUrl = json['post_url'];
-    shareFrom = json['share_from'];
-    timestamp = json['timestamp'];
+  PageModel.fromJson(dynamic json) {
+    id = json['id'];
+    name = json['name'];
+    category = json['category'];
+    coverPhoto = json['cover_photo'];
+    avatar = json['avatar'];
   }
 
-  Post? post;
-  String? postUrl;
-  String? shareFrom;
-  String? timestamp;
+  num? id;
+  String? name;
+  String? category;
+  String? coverPhoto;
+  String? avatar;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (post != null) {
-      map['post'] = post?.toJson();
-    }
-    map['post_url'] = postUrl;
-    map['share_from'] = shareFrom;
-    map['timestamp'] = timestamp;
+    map['id'] = id;
+    map['name'] = name;
+    map['category'] = category;
+    map['cover_photo'] = coverPhoto;
+    map['avatar'] = avatar;
     return map;
   }
 }

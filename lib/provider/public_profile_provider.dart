@@ -2,29 +2,25 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/profile-images_model.dart';
 import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
-import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/profile_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PublicProfileProvider with ChangeNotifier {
   final ProfileRepo profileRepo;
   final NewsfeedRepo newsfeedRepo;
-  final AuthRepo authRepo;
-  PublicProfileProvider({required this.profileRepo, required this.newsfeedRepo,required this.authRepo});
+
+  PublicProfileProvider({required this.profileRepo, required this.newsfeedRepo});
 
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
 
-  int position = 0;
-  List<NewsFeedData> publicNewsFeedLists = [];
+  List<NewsFeedModel> publicNewsFeedLists = [];
   bool isBottomLoading = false;
   int selectPage = 1;
-  List<int> likesStatusAllData = [];
   bool hasNextData = false;
 
   updatePageNo(String userID) {
@@ -41,9 +37,6 @@ class PublicProfileProvider with ChangeNotifier {
       _isLoading = true;
       isBottomLoading = false;
       hasNextData = false;
-      position = 0;
-      likesStatusAllData.clear();
-      likesStatusAllData = [];
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -51,34 +44,14 @@ class PublicProfileProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = (prefs.getString('userID') ?? '0');
     Response response = await profileRepo.getUserNewsfeedDataByUsingID(userID, page);
     _isLoading = false;
     isBottomLoading = false;
     callBackFunction(true);
-    int status = 0;
     if (response.statusCode == 200) {
       hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
-        NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
-
-        status = 0;
-        likesStatusAllData.add(0);
-        for (var e in newsFeedData.likedBy!) {
-          if (e.id.toString() == id) {
-            status = 1;
-            continue;
-          }
-        }
-        if (status == 0) {
-          likesStatusAllData[position] = 0;
-        } else {
-          likesStatusAllData[position] = 1;
-        }
-        position++;
-
-        publicNewsFeedLists.add(newsFeedData);
+        publicNewsFeedLists.add(NewsFeedModel.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
@@ -106,17 +79,14 @@ class PublicProfileProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int postID, int index) async {
-    if (likesStatusAllData[index] == 0) {
-      likesStatusAllData[index] = 1;
-      publicNewsFeedLists[index].totalLike = publicNewsFeedLists[index].totalLike! + 1;
-      publicNewsFeedLists[index]
-          .likedBy!
-          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
+    if (publicNewsFeedLists[index].isLiked == false) {
+      publicNewsFeedLists[index].totalLiked = publicNewsFeedLists[index].totalLiked! + 1;
+      publicNewsFeedLists[index].isLiked = true;
     } else {
-      likesStatusAllData[index] = 0;
-      publicNewsFeedLists[index].totalLike = publicNewsFeedLists[index].totalLike! - 1;
-      publicNewsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
+      publicNewsFeedLists[index].totalLiked = publicNewsFeedLists[index].totalLiked! - 1;
+      publicNewsFeedLists[index].isLiked = false;
     }
+
     notifyListeners();
     await newsfeedRepo.addLike(postID);
   }

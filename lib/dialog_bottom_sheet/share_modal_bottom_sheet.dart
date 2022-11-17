@@ -7,7 +7,7 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void shareBottomSheet(BuildContext context, String url, NewsFeedData newsfeedData) {
+void shareBottomSheet(BuildContext context, String url, NewsFeedModel newsfeedData) {
   TextEditingController shareController = TextEditingController();
 
   showModalBottomSheet<void>(

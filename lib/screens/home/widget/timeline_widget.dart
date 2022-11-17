@@ -15,7 +15,7 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class TimeLineWidget extends StatelessWidget {
-  final NewsFeedData newsFeedData;
+  final NewsFeedModel newsFeedData;
   final int index;
   final feedProvider;
   final bool isHomeScreen;
@@ -25,26 +25,18 @@ class TimeLineWidget extends StatelessWidget {
   final bool isPage;
 
   const TimeLineWidget(this.newsFeedData, this.index, this.feedProvider,
-      {this.isHomeScreen = false,
-      this.isProfileScreen = false,
-      this.isGroup = false,
-      this.isPage = false,
-      this.groupPageID = 0,
-      Key? key})
+      {this.isHomeScreen = false, this.isProfileScreen = false, this.isGroup = false, this.isPage = false, this.groupPageID = 0, Key? key})
       : super(key: key);
 
   void route(BuildContext context, int code) {
     if (newsFeedData.sharePost!.shareFrom == 'group' && code == 0) {
-      Get.to(
-          PublicGroupScreen(newsFeedData.sharePost!.post!.groupData!.id.toString(), index: index));
+      Get.to(PublicGroupScreen(newsFeedData.sharePost!.post!.groupModel!.id.toString(), index: index));
     } else {
-      if (Provider.of<AuthProvider>(context, listen: false).userID ==
-          newsFeedData.sharePost!.post!.author!.id.toString()) {
+      if (Provider.of<AuthProvider>(context, listen: false).userID == newsFeedData.sharePost!.post!.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
       } else {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) =>
-                PublicProfileScreen(newsFeedData.sharePost!.post!.author!.id.toString())));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => PublicProfileScreen(newsFeedData.sharePost!.post!.author!.id.toString())));
       }
     }
   }
@@ -57,13 +49,7 @@ class TimeLineWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey.withOpacity(.1),
-              blurRadius: 10.0,
-              spreadRadius: 3.3,
-              offset: const Offset(0.0, 0.0))
-        ],
+        boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.3, offset: const Offset(0.0, 0.0))],
       ),
       child: Column(
         children: [
@@ -80,25 +66,18 @@ class TimeLineWidget extends StatelessWidget {
                     isPage: isPage,
                     groupPageID: groupPageID,
                     isProfileScreen: isProfileScreen),
-                SizedBox(
-                    height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty
-                        ? 8.0
-                        : 0),
+                SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 8.0 : 0),
                 newsFeedData.description != null && newsFeedData.description!.isNotEmpty
                     ? Text(newsFeedData.description!, style: latoStyle400Regular)
                     : const SizedBox.shrink(),
-                SizedBox(
-                    height: newsFeedData.totalImage != 0 && newsFeedData.description != null
-                        ? 10.0
-                        : 0),
+                SizedBox(height: newsFeedData.totalImage != 0 && newsFeedData.description != null ? 10.0 : 0),
                 !newsFeedData.isShare!
                     ? const SizedBox()
                     : Container(
                         padding: const EdgeInsets.all(5),
                         margin: const EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.withOpacity(.1)),
-                            borderRadius: BorderRadius.circular(10)),
+                        decoration:
+                            BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(.1)), borderRadius: BorderRadius.circular(10)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -106,12 +85,11 @@ class TimeLineWidget extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    route(context,
-                                        newsFeedData.sharePost!.shareFrom == 'group' ? 0 : 1);
+                                    route(context, newsFeedData.sharePost!.shareFrom == 'group' ? 0 : 1);
                                   },
                                   child: ProfileAvatar(
                                       profileImageUrl: newsFeedData.sharePost!.shareFrom == 'group'
-                                          ? newsFeedData.sharePost!.post!.groupData!.coverPhoto!
+                                          ? newsFeedData.sharePost!.post!.groupModel!.coverPhoto!
                                           : newsFeedData.sharePost!.post!.author!.profileImage!),
                                 ),
                                 const SizedBox(width: 8.0),
@@ -121,36 +99,29 @@ class TimeLineWidget extends StatelessWidget {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          route(context,
-                                              newsFeedData.sharePost!.shareFrom == 'group' ? 0 : 1);
+                                          route(context, newsFeedData.sharePost!.shareFrom == 'group' ? 0 : 1);
                                         },
                                         child: Text(
                                             newsFeedData.sharePost!.shareFrom == 'group'
-                                                ? newsFeedData.sharePost!.post!.groupData!.name!
+                                                ? newsFeedData.sharePost!.post!.groupModel!.name!
                                                 : newsFeedData.sharePost!.post!.author!.fullName!,
-                                            style: latoStyle500Medium.copyWith(
-                                                fontWeight: FontWeight.w600)),
+                                            style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                                       ),
-                                      SizedBox(
-                                          height:
-                                              newsFeedData.sharePost!.shareFrom == 'group' ? 4 : 0),
+                                      SizedBox(height: newsFeedData.sharePost!.shareFrom == 'group' ? 4 : 0),
                                       newsFeedData.sharePost!.shareFrom == 'group'
                                           ? InkWell(
                                               onTap: () {
                                                 route(context, 1);
                                               },
                                               child: Text(
-                                                  newsFeedData.sharePost!.post!.author!.fullName! +
-                                                      getTranslated('Posted Here',context),
-                                                  style: latoStyle500Medium.copyWith(
-                                                      fontWeight: FontWeight.w400)),
+                                                  newsFeedData.sharePost!.post!.author!.fullName! + getTranslated('Posted Here', context),
+                                                  style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w400)),
                                             )
                                           : const SizedBox(),
                                       Row(
                                         children: [
                                           Text(getDate(newsFeedData.sharePost!.timestamp!, context),
-                                              style: latoStyle400Regular.copyWith(
-                                                  color: Colors.grey[600], fontSize: 12.0)),
+                                              style: latoStyle400Regular.copyWith(color: Colors.grey[600], fontSize: 12.0)),
                                           Icon(Icons.public, color: Colors.grey[600], size: 12.0)
                                         ],
                                       )
@@ -159,42 +130,30 @@ class TimeLineWidget extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                                height: newsFeedData.sharePost!.post!.description!.isNotEmpty
-                                    ? 8.0
-                                    : 0),
+                            SizedBox(height: newsFeedData.sharePost!.post!.description!.isNotEmpty ? 8.0 : 0),
                             newsFeedData.sharePost!.post!.description!.isNotEmpty
-                                ? Text(newsFeedData.sharePost!.post!.description!,
-                                    style: latoStyle400Regular)
+                                ? Text(newsFeedData.sharePost!.post!.description!, style: latoStyle400Regular)
                                 : const SizedBox(),
                             SizedBox(
-                                height: newsFeedData.sharePost!.post!.totalImage != 0 &&
-                                        newsFeedData.sharePost!.post!.description != null
+                                height: newsFeedData.sharePost!.post!.totalImage != 0 && newsFeedData.sharePost!.post!.description != null
                                     ? 10.0
                                     : 0),
-                            if ((newsFeedData.sharePost!.post!.totalImage! +
-                                    newsFeedData.sharePost!.post!.totalVideo!) !=
-                                0)
+                            if ((newsFeedData.sharePost!.post!.totalImage! + newsFeedData.sharePost!.post!.totalVideo!) != 0)
                               PostPhotoContainer(index,
-                                  newsfeedModel: NewsFeedData(
+                                  newsfeedModel: NewsFeedModel(
                                       totalImage: newsFeedData.sharePost!.post!.totalImage!,
                                       images: newsFeedData.sharePost!.post!.images!,
                                       totalVideo: newsFeedData.sharePost!.post!.totalVideo,
                                       videos: newsFeedData.sharePost!.post!.videos)),
-                            SizedBox(
-                                height: ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0)
-                                    ? 10.0
-                                    : 15.0),
+                            SizedBox(height: ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) ? 10.0 : 15.0),
                           ],
                         ),
                       )
               ],
             ),
           ),
-          if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0)
-            PostPhotoContainer(index, newsfeedModel: newsFeedData),
-          SizedBox(
-              height: ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) ? 10.0 : 15.0),
+          if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoContainer(index, newsfeedModel: newsFeedData),
+          SizedBox(height: ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) ? 10.0 : 15.0),
           PostStats(
               post: newsFeedData,
               index: index,

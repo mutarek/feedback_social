@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void moreMenuBottomSheet(BuildContext context, NewsFeedData newsFeedData, int index,
+void moreMenuBottomSheet(BuildContext context, NewsFeedModel newsFeedData, int index,
     {bool isFromProfile = false, bool isFromGroupScreen = false, bool isForPage = false, int groupPageID = 0}) {
   String userID = Provider.of<AuthProvider>(context, listen: false).userID;
   double height = 0;

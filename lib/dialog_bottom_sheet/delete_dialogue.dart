@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DeleteDialogue extends StatelessWidget {
-  final NewsFeedData newsFeedData;
+  final NewsFeedModel newsFeedData;
   final int index;
 
   DeleteDialogue(this.newsFeedData, this.index, {Key? key}) : super(key: key);

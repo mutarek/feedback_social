@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/liked_by_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
@@ -13,11 +14,10 @@ class NewsFeedProvider with ChangeNotifier {
   NewsFeedProvider({required this.newsFeedRepo, required this.authRepo});
 
   int position = 0;
-  List<NewsFeedData> newsFeedLists = [];
+  List<NewsFeedModel> newsFeedLists = [];
   bool isLoading = false;
   bool isBottomLoading = false;
   int selectPage = 1;
-  List<int> likesStatusAllData = [];
   bool hasNextData = false;
 
   updatePageNo() {
@@ -35,8 +35,6 @@ class NewsFeedProvider with ChangeNotifier {
       hasNextData = false;
       isBottomLoading = false;
       position = 0;
-      likesStatusAllData.clear();
-      likesStatusAllData = [];
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -48,28 +46,10 @@ class NewsFeedProvider with ChangeNotifier {
     Response response = await newsFeedRepo.getNewsFeedData(page);
     isLoading = false;
     isBottomLoading = false;
-    int status = 0;
     if (response.statusCode == 200) {
       hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
-        NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
-
-        status = 0;
-        likesStatusAllData.add(0);
-        for (var e in newsFeedData.likedBy!) {
-          if (e.id.toString() == authRepo.getUserID()) {
-            status = 1;
-            continue;
-          }
-        }
-        if (status == 0) {
-          likesStatusAllData[position] = 0;
-        } else {
-          likesStatusAllData[position] = 1;
-        }
-        position++;
-
-        newsFeedLists.add(newsFeedData);
+        newsFeedLists.add(NewsFeedModel.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
@@ -78,16 +58,12 @@ class NewsFeedProvider with ChangeNotifier {
   }
 
   addLike(int postID, int index, {bool isGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
-    if (likesStatusAllData[index] == 0) {
-      likesStatusAllData[index] = 1;
-      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
-      newsFeedLists[index]
-          .likedBy!
-          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
+    if (newsFeedLists[index].isLiked == false) {
+      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
+      newsFeedLists[index].isLiked = true;
     } else {
-      likesStatusAllData[index] = 0;
-      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
-      newsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
+      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+      newsFeedLists[index].isLiked = false;
     }
     notifyListeners();
     await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
@@ -95,15 +71,11 @@ class NewsFeedProvider with ChangeNotifier {
 
   changeLikeStatus(int value, int index) async {
     if (value == 1) {
-      likesStatusAllData[index] = 1;
-      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
-      newsFeedLists[index]
-          .likedBy!
-          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
+      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
+      newsFeedLists[index].isLiked = true;
     } else {
-      likesStatusAllData[index] = 0;
-      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
-      newsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
+      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+      newsFeedLists[index].isLiked = false;
     }
     notifyListeners();
   }
@@ -118,18 +90,15 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  NewsFeedData newsFeedData = NewsFeedData();
+  NewsFeedModel newsFeedData = NewsFeedModel();
 
-  addPostOnTimeLine(NewsFeedData n) async {
-    likesStatusAllData.insert(0, 0);
+  addPostOnTimeLine(NewsFeedModel n) async {
     newsFeedLists.insert(0, n);
     notifyListeners();
   }
 
-  updatePostOnTimeLine(int index, NewsFeedData n) async {
-    likesStatusAllData.removeAt(index);
+  updatePostOnTimeLine(int index, NewsFeedModel n) async {
     newsFeedLists.removeAt(index);
-    likesStatusAllData.insert(0, 0);
     newsFeedLists.insert(0, n);
     notifyListeners();
   }
@@ -144,53 +113,81 @@ class NewsFeedProvider with ChangeNotifier {
 
   /////// TODO: for single post
 
-  NewsFeedData singleNewsFeedModel = NewsFeedData();
-  bool isLikeMe = false;
-
+  NewsFeedModel singleNewsFeedModel = NewsFeedModel();
+  bool isLoadingSinglePost = true;
   callForSinglePosts(String url) async {
-    isLoading = true;
-    singleNewsFeedModel = NewsFeedData();
+    isLoadingSinglePost = true;
+    singleNewsFeedModel = NewsFeedModel();
     //notifyListeners();
     Response response = await newsFeedRepo.callForSinglePostFromNotification(url.replaceAll('comment/', ''));
-    isLoading = false;
-    isLikeMe = false;
+    isLoadingSinglePost = false;
     if (response.statusCode == 200) {
-      singleNewsFeedModel = NewsFeedData.fromJson(response.body);
-
-      for (var e in singleNewsFeedModel.likedBy!) {
-        if (e.id.toString() == authRepo.getUserID()) {
-          isLikeMe = true;
-          break;
-        }
-      }
+      singleNewsFeedModel = NewsFeedModel.fromJson(response.body);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
   }
 
-   singlePostLike(int postID,Function callBackFunction, {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
-    var contain = singleNewsFeedModel.likedBy!.where((element) => element.id.toString() == authRepo.getUserID());
-    if (contain.isEmpty) {
+  singlePostLike(int postID, Function callBackFunction, {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
+    if (singleNewsFeedModel.isLiked == false) {
       callBackFunction(true);
-      isLikeMe = true;
-      singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! + 1;
-      singleNewsFeedModel.likedBy!
-          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
+      singleNewsFeedModel.totalLiked = singleNewsFeedModel.totalLiked! + 1;
+      singleNewsFeedModel.isLiked = true;
     } else {
       callBackFunction(false);
-      isLikeMe = false;
-      singleNewsFeedModel.totalLike = singleNewsFeedModel.totalLike! - 1;
-      singleNewsFeedModel.likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
+      singleNewsFeedModel.totalLiked = singleNewsFeedModel.totalLiked! - 1;
+      singleNewsFeedModel.isLiked = false;
     }
     notifyListeners();
 
     await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
-
   }
 
   void updateSingleCommentDataCount() {
     singleNewsFeedModel.totalComment = singleNewsFeedModel.totalComment! + 1;
+    notifyListeners();
+  }
+
+  //TODO: call for get Liked by user list
+  List<LikedByModel> likedShareByModels = [];
+  bool isLoadingLiked = false;
+  bool isBottomLoadingLiked = false;
+  int selectPageLiked = 1;
+  bool hasNextDataLiked = false;
+
+  updateForLikedSharedUserLists(String url) {
+    selectPageLiked++;
+    initializeLikedShareByAllUser(url, page: selectPageLiked);
+    notifyListeners();
+  }
+
+  initializeLikedShareByAllUser(String url, {int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPageLiked = 1;
+      likedShareByModels.clear();
+      likedShareByModels = [];
+      isLoadingLiked = true;
+      hasNextDataLiked = false;
+      isBottomLoadingLiked = false;
+      notifyListeners();
+    } else {
+      isBottomLoadingLiked = true;
+      notifyListeners();
+    }
+
+    Response response = await newsFeedRepo.callForgetLikedShareUser(url, page);
+    isLoadingLiked = false;
+    isBottomLoadingLiked = false;
+    if (response.statusCode == 200) {
+      hasNextDataLiked = response.body['next'] != null ? true : false;
+      response.body['results'].forEach((element) {
+        likedShareByModels.add(LikedByModel.fromJson(element));
+      });
+      notifyListeners();
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
     notifyListeners();
   }
 }

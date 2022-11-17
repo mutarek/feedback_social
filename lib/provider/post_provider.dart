@@ -14,7 +14,7 @@ import 'package:http/http.dart' as Http;
 import 'package:image_picker/image_picker.dart';
 
 class PostResponse {
-  NewsFeedData? newsFeedData;
+  NewsFeedModel? newsFeedData;
   bool? status;
 
   PostResponse({this.newsFeedData, this.status});
@@ -62,12 +62,12 @@ class PostProvider with ChangeNotifier {
     isLoading = false;
     if (response.statusCode == 201 || response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Posted");
-      NewsFeedData n = NewsFeedData.fromJson(response.body);
+      NewsFeedModel n = NewsFeedModel.fromJson(response.body);
       notifyListeners();
       return PostResponse(newsFeedData: n, status: true);
     } else {
       Fluttertoast.showToast(msg: "Something went wrong!");
-      return PostResponse(newsFeedData: NewsFeedData(), status: false);
+      return PostResponse(newsFeedData: NewsFeedModel(), status: false);
     }
   }
 
@@ -96,12 +96,12 @@ class PostProvider with ChangeNotifier {
     isLoading = false;
     if (response.statusCode == 201 || response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Updated Successfully");
-      NewsFeedData n = NewsFeedData.fromJson(response.body);
+      NewsFeedModel n = NewsFeedModel.fromJson(response.body);
       notifyListeners();
       return PostResponse(newsFeedData: n, status: true);
     } else {
       Fluttertoast.showToast(msg: "Something went wrong!");
-      return PostResponse(newsFeedData: NewsFeedData(), status: false);
+      return PostResponse(newsFeedData: NewsFeedModel(), status: false);
     }
   }
 
@@ -156,7 +156,7 @@ class PostProvider with ChangeNotifier {
 
   List<ImageVideoDetectModel> imageVideoLists = [];
 
-  initializeImageVideo(NewsFeedData newsFeedData) {
+  initializeImageVideo(NewsFeedModel newsFeedData) {
     deletedImagesIDS.clear();
     deletedVideoIDS.clear();
     deletedImagesIDS = [];
@@ -225,7 +225,7 @@ class PostProvider with ChangeNotifier {
   }
 
   //// for Share post
-  Future<PostResponse> sharePost(String url, String description, NewsFeedData newsfeedData) async {
+  Future<PostResponse> sharePost(String url, String description, NewsFeedModel newsfeedData) async {
     isLoading = true;
     notifyListeners();
     Response response = await postRepo.sharePost(url, description);
@@ -233,8 +233,8 @@ class PostProvider with ChangeNotifier {
     isLoading = false;
     if (response.statusCode == 201) {
       Fluttertoast.showToast(msg: 'Post Share Successfully');
-      SharePostModel n = SharePostModel.fromJson(response.body);
-      NewsFeedData newsFeedData = newsfeedData;
+      SharePost n = SharePost.fromJson(response.body);
+      NewsFeedModel newsFeedData = newsfeedData;
       newsFeedData.isShare = true;
       newsFeedData.sharePost = n;
       newsFeedData.description = description;
@@ -247,7 +247,7 @@ class PostProvider with ChangeNotifier {
       return PostResponse(newsFeedData: newsFeedData, status: true);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
-      return PostResponse(newsFeedData: NewsFeedData(), status: false);
+      return PostResponse(newsFeedData: NewsFeedModel(), status: false);
     }
   }
 }

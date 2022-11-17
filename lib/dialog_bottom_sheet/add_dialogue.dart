@@ -10,7 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class AddDialogue extends StatelessWidget {
-  final NewsFeedData newsFeedData;
+  final NewsFeedModel newsFeedData;
 
   AddDialogue(this.newsFeedData, {Key? key}) : super(key: key);
   final TextEditingController reportController = TextEditingController();
@@ -101,7 +101,7 @@ class AddDialogue extends StatelessWidget {
                                   bool isFromGroup = newsFeedData.postType == 'group';
                                   bool isFromPage = newsFeedData.postType == 'page';
                                   postProvider
-                                      .reportPost(reportController.text.isEmpty ? "report post" : reportController.text, newsFeedData.id!,
+                                      .reportPost(reportController.text.isEmpty ? "report post" : reportController.text, newsFeedData.id! as int,
                                           isFromGroup: isFromGroup, isFromPage: isFromPage)
                                       .then((value) {
                                     if (value) {

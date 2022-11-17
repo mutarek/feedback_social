@@ -78,7 +78,7 @@ Future<void> init() async {
   sl.registerFactory(() => PageProvider(pageRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => AnimalProvider(animalRepo: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
-  sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
+  sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(),newsfeedRepo: sl()));
   sl.registerFactory(() => SettingsProvider(settingsRepo: sl()));
 
   // External

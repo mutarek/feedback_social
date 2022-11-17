@@ -11,14 +11,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as Http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class PageProvider with ChangeNotifier {
   final PageRepo pageRepo;
   final NewsfeedRepo newsfeedRepo;
   final AuthRepo authRepo;
-  PageProvider({required this.pageRepo, required this.newsfeedRepo,required this.authRepo});
+
+  PageProvider({required this.pageRepo, required this.newsfeedRepo, required this.authRepo});
 
   bool isLoading = false;
 
@@ -114,10 +114,10 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
     Response response;
     if (file != null) {
-      List<Http.MultipartFile> multipartFile = [];
+      List<http.MultipartFile> multipartFile = [];
 
       multipartFile
-          .add(Http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
+          .add(http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
 
       response = await pageRepo.createPageWithImageUpload({"name": groupName, "category": categoryValue.id.toString()}, multipartFile);
     } else {
@@ -164,9 +164,7 @@ class PageProvider with ChangeNotifier {
   }
 
   // TODO:: for Page All Posts
-  List<NewsFeedData> pageAllPosts = [];
-  List<int> likesStatusAllData = [];
-  int position = 0;
+  List<NewsFeedModel> pageAllPosts = [];
   bool isBottomLoading = false;
   int selectPage = 1;
   bool hasNextData = false;
@@ -190,9 +188,6 @@ class PageProvider with ChangeNotifier {
       isLoading = true;
       hasNextData = false;
       isBottomLoading = false;
-      position = 0;
-      likesStatusAllData.clear();
-      likesStatusAllData = [];
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -202,31 +197,12 @@ class PageProvider with ChangeNotifier {
     }
 
     Response response = await pageRepo.callForGetPageAllPosts(id, selectPage);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userID = (prefs.getString('userID') ?? '0');
-    int status = 0;
+
     isLoading = false;
     if (response.statusCode == 200) {
       hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
-        NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
-
-        status = 0;
-        likesStatusAllData.add(0);
-        for (var e in newsFeedData.likedBy!) {
-          if (e.id.toString() == userID) {
-            status = 1;
-            continue;
-          }
-        }
-        if (status == 0) {
-          likesStatusAllData[position] = 0;
-        } else {
-          likesStatusAllData[position] = 1;
-        }
-        position++;
-
-        pageAllPosts.add(newsFeedData);
+        pageAllPosts.add(NewsFeedModel.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
@@ -234,16 +210,13 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  addPagePostToTimeLine(NewsFeedData n) async {
+  addPagePostToTimeLine(NewsFeedModel n) async {
     pageAllPosts.insert(0, n);
-    likesStatusAllData.insert(0, 0);
     notifyListeners();
   }
 
-  updatePostOnTimeLine(int index, NewsFeedData n) async {
-    likesStatusAllData.removeAt(index);
+  updatePostOnTimeLine(int index, NewsFeedModel n) async {
     pageAllPosts.removeAt(index);
-    likesStatusAllData.insert(0, 0);
     pageAllPosts.insert(0, n);
     notifyListeners();
   }
@@ -255,10 +228,10 @@ class PageProvider with ChangeNotifier {
     Response response;
 
     if (file != null) {
-      List<Http.MultipartFile> multipartFile = [];
+      List<http.MultipartFile> multipartFile = [];
 
       multipartFile
-          .add(Http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
+          .add(http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
 
       response =
           await pageRepo.updatePageWithImageUpload({"name": groupName, "category": categoryValue.id.toString()}, multipartFile, pageID);
@@ -290,28 +263,25 @@ class PageProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int pageID, int postID, int index) async {
-    if (likesStatusAllData[index] == 0) {
-      likesStatusAllData[index] = 1;
-      pageAllPosts[index].totalLike = pageAllPosts[index].totalLike! + 1;
-      pageAllPosts[index]
-          .likedBy!
-          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
+    if (pageAllPosts[index].isLiked == false) {
+      pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! + 1;
+      pageAllPosts[index].isLiked = true;
     } else {
-      likesStatusAllData[index] = 0;
-      pageAllPosts[index].totalLike = pageAllPosts[index].totalLike! - 1;
-      pageAllPosts[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
+      pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
+      pageAllPosts[index].isLiked = false;
     }
+
     notifyListeners();
     await newsfeedRepo.addLikeONPage(postID, pageID);
   }
 
   changeLikeStatus(int value, int index) async {
     if (value == 1) {
-      likesStatusAllData[index] = 1;
-      pageAllPosts[index].totalLike = pageAllPosts[index].totalLike! + 1;
+      pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! + 1;
+      pageAllPosts[index].isLiked = true;
     } else {
-      likesStatusAllData[index] = 0;
-      pageAllPosts[index].totalLike = pageAllPosts[index].totalLike! - 1;
+      pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
+      pageAllPosts[index].isLiked = false;
     }
     notifyListeners();
   }

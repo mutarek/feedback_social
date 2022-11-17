@@ -12,7 +12,7 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class PhotoViewScreen extends StatelessWidget {
-  final NewsFeedData newsFeedData;
+  final NewsFeedModel newsFeedData;
   final List<ImageVideoDetectModel> imageVideo;
   final int index;
 

@@ -13,7 +13,7 @@ import 'package:get/route_manager.dart';
 import '../../../data/model/response/image_video_detect_model.dart';
 
 class PostPhotoContainer extends StatefulWidget {
-  final NewsFeedData newsfeedModel;
+  final NewsFeedModel newsfeedModel;
   final int index;
 
   const PostPhotoContainer(this.index, {Key? key, required this.newsfeedModel}) : super(key: key);
@@ -49,7 +49,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
 
         int j = 0;
 
-        for (int i = widget.newsfeedModel.sharePost!.post!.totalImage!;
+        for (int i = widget.newsfeedModel.sharePost!.post!.totalImage! as int;
             i < widget.newsfeedModel.sharePost!.post!.totalImage! + widget.newsfeedModel.sharePost!.post!.totalVideo!;
             i++) {
           imageVideoLists.add(ImageVideoDetectModel(false, widget.newsfeedModel.sharePost!.post!.videos![j].thumbnail!,
@@ -71,7 +71,9 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
 
         int j = 0;
 
-        for (int i = widget.newsfeedModel.totalImage!; i < widget.newsfeedModel.totalImage! + widget.newsfeedModel.totalVideo!; i++) {
+        for (int i = widget.newsfeedModel.totalImage! as int;
+            i < widget.newsfeedModel.totalImage! + widget.newsfeedModel.totalVideo!;
+            i++) {
           imageVideoLists.add(ImageVideoDetectModel(false, widget.newsfeedModel.videos![j].thumbnail!,
               widget.newsfeedModel.videos![j].video!, widget.newsfeedModel.videos![j].id!.toString()));
           j++;
@@ -112,7 +114,6 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                             onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -159,7 +160,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                       left: 50,
                       child: CustomButton(
                         onTap: () {},
-                        btnTxt: getTranslated('View More+',context),
+                        btnTxt: getTranslated('View More+', context),
                         fontSize: 12,
                         backgroundColor: Colors.green.withOpacity(.8),
                         textWhiteColor: true,

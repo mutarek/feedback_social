@@ -52,19 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      // separatorBuilder: (context, index) {
-                      //   return const SizedBox(height: 10.0);
-                      // },
                       itemCount: newsFeedProvider.newsFeedLists.length,
                       itemBuilder: (context, index) {
                         if (index == newsFeedProvider.newsFeedLists.length) {
                           return const CupertinoActivityIndicator();
                         }
 
-                        return Container(
-                            // margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                            child: TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
-                                isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id!));
+                        return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
+                            isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
                       }),
                   newsFeedProvider.isBottomLoading
                       ? Container(

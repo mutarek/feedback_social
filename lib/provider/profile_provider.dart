@@ -28,11 +28,9 @@ class ProfileProvider with ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  int position = 0;
-  List<NewsFeedData> newsFeedLists = [];
+  List<NewsFeedModel> newsFeedLists = [];
   bool isBottomLoading = false;
   int selectPage = 1;
-  List<int> likesStatusAllData = [];
   bool hasNextData = false;
 
   String message = "";
@@ -70,9 +68,6 @@ class ProfileProvider with ChangeNotifier {
       _isLoading = true;
       isBottomLoading = false;
       hasNextData = false;
-      position = 0;
-      likesStatusAllData.clear();
-      likesStatusAllData = [];
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -90,24 +85,7 @@ class ProfileProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
-        NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
-
-        status = 0;
-        likesStatusAllData.add(0);
-        for (var e in newsFeedData.likedBy!) {
-          if (e.id.toString() == id) {
-            status = 1;
-            continue;
-          }
-        }
-        if (status == 0) {
-          likesStatusAllData[position] = 0;
-        } else {
-          likesStatusAllData[position] = 1;
-        }
-        position++;
-
-        newsFeedLists.add(newsFeedData);
+        newsFeedLists.add(NewsFeedModel.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
@@ -115,10 +93,8 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  updatePostOnTimeLine(int index, NewsFeedData n) async {
-    likesStatusAllData.removeAt(index);
+  updatePostOnTimeLine(int index, NewsFeedModel n) async {
     newsFeedLists.removeAt(index);
-    likesStatusAllData.insert(0, 0);
     newsFeedLists.insert(0, n);
     notifyListeners();
   }
@@ -148,17 +124,14 @@ class ProfileProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int postID, int index) async {
-    if (likesStatusAllData[index] == 0) {
-      likesStatusAllData[index] = 1;
-      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
-      newsFeedLists[index]
-          .likedBy!
-          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
+    if (newsFeedLists[index].isLiked == false) {
+      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
+      newsFeedLists[index].isLiked = true;
     } else {
-      likesStatusAllData[index] = 0;
-      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
-      newsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
+      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+      newsFeedLists[index].isLiked = false;
     }
+
     notifyListeners();
 
     await newsfeedRepo.addLike(postID);
@@ -166,15 +139,11 @@ class ProfileProvider with ChangeNotifier {
 
   changeLikeStatus(int value, int index) async {
     if (value == 1) {
-      likesStatusAllData[index] = 1;
-      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! + 1;
-      newsFeedLists[index]
-          .likedBy!
-          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
+      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
+      newsFeedLists[index].isLiked = true;
     } else {
-      likesStatusAllData[index] = 0;
-      newsFeedLists[index].totalLike = newsFeedLists[index].totalLike! - 1;
-      newsFeedLists[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
+      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+      newsFeedLists[index].isLiked = false;
     }
     notifyListeners();
   }
@@ -261,8 +230,7 @@ class ProfileProvider with ChangeNotifier {
 
   //TODO: for Public All NewsfeedData
 
-  List<NewsFeedData> publicNewsFeedLists = [];
-  List<int> publicLikesStatusAllData = [];
+  List<NewsFeedModel> publicNewsFeedLists = [];
 
   updatePublicPageNo() {
     selectPage++;
@@ -278,9 +246,6 @@ class ProfileProvider with ChangeNotifier {
       _isLoading = true;
       isBottomLoading = false;
       hasNextData = false;
-      position = 0;
-      publicLikesStatusAllData.clear();
-      publicLikesStatusAllData = [];
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -294,28 +259,10 @@ class ProfileProvider with ChangeNotifier {
     _isLoading = false;
     isBottomLoading = false;
     callBackFunction(true);
-    int status = 0;
     if (response.statusCode == 200) {
       hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
-        NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
-
-        status = 0;
-        publicLikesStatusAllData.add(0);
-        for (var e in newsFeedData.likedBy!) {
-          if (e.id.toString() == id) {
-            status = 1;
-            continue;
-          }
-        }
-        if (status == 0) {
-          publicLikesStatusAllData[position] = 0;
-        } else {
-          publicLikesStatusAllData[position] = 1;
-        }
-        position++;
-
-        publicNewsFeedLists.add(newsFeedData);
+        publicNewsFeedLists.add(NewsFeedModel.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);

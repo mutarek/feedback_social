@@ -17,7 +17,7 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class PostHeaderWidget extends StatelessWidget {
-  final NewsFeedData post;
+  final NewsFeedModel post;
   final int index;
   final bool isHomeScreen;
   final bool isProfileScreen;
@@ -38,9 +38,9 @@ class PostHeaderWidget extends StatelessWidget {
 
   void route(BuildContext context, int code) {
     if (post.postType == AppConstant.postTypeGroup && code == 0) {
-      Get.to(PublicGroupScreen(post.group!.id.toString(), index: index));
+      Get.to(PublicGroupScreen(post.groupModel!.id.toString(), index: index));
     } else if (post.postType == AppConstant.postTypePage && code == 1) {
-      Get.to(PublicPageScreen(post.page!.id.toString(), index: index));
+      Get.to(PublicPageScreen(post.pageModel!.id.toString(), index: index));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
@@ -68,7 +68,7 @@ class PostHeaderWidget extends StatelessWidget {
                       }
                     },
                     child: ProfileAvatar(
-                        profileImageUrl: post.postType == AppConstant.postTypePage ? post.page!.avatar! : post.group!.coverPhoto!),
+                        profileImageUrl: post.postType == AppConstant.postTypePage ? post.pageModel!.avatar! : post.groupModel!.coverPhoto!),
                   ),
                   const SizedBox(width: 8.0),
                   Expanded(
@@ -86,7 +86,7 @@ class PostHeaderWidget extends StatelessWidget {
                           },
                           child: Row(
                             children: [
-                              Text(post.postType == AppConstant.postTypePage ? post.page!.name! : post.group!.name!,
+                              Text(post.postType == AppConstant.postTypePage ? post.pageModel!.name! : post.groupModel!.name!,
                                   style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                               const SizedBox(width: 5),
                               CircleAvatar(

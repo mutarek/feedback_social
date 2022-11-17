@@ -15,7 +15,7 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class PostStats extends StatelessWidget {
-  final NewsFeedData post;
+  final NewsFeedModel post;
   final int index;
   final int groupPageID;
   final int postID;
@@ -64,9 +64,9 @@ class PostStats extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        likeModalBottomView(context,post);
+                        if (post.totalLiked != 0) likeModalBottomView(context, post, true);
                       },
-                      child: post.totalLike == 0
+                      child: post.totalLiked == 0
                           ? const SizedBox.shrink()
                           : Row(
                               children: [
@@ -75,42 +75,49 @@ class PostStats extends StatelessWidget {
                                   children: const [
                                     SizedBox(width: 45),
                                     Icon(FontAwesomeIcons.solidHeart, size: 20, color: kPrimaryColor),
-                                    Positioned(
-                                        left: 21,
-                                        top: -2,
-                                        child: Icon(FontAwesomeIcons.thumbsUp, size: 20, color: kPrimaryColor)),
-
+                                    Positioned(left: 21, top: -2, child: Icon(FontAwesomeIcons.thumbsUp, size: 20, color: kPrimaryColor)),
                                   ],
                                 ),
                                 CustomText(
-                                    title:
-                                        ' ${post.totalLike.toString()} ${post.totalLike == 0 || post.totalLike == 1 ? "Like" : "Likes"}',
+                                    title: ' ${post.totalLiked.toString()} ${post.totalLiked == 1 ? "Like" : "Likes"}',
                                     fontSize: 14,
                                     color: kPrimaryColor.withOpacity(.8)),
                               ],
                             ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                        Get.to(SinglePostScreen(post.commentUrl!,
-                            isHomeScreen: isHomeScreen,
-                            isProfileScreen: isFromProfile,
-                            index: index,
-                            postID: postID,
-                            groupID: groupPageID,
-                            isFromPage: isPage,
-                            isFromGroup: isGroup));
-                      },
-                      child: Row(
-                        children: [
-                          CustomText(
-                              title:
-                                  '${post.totalComment.toString()} ${post.totalComment == 0 || post.totalComment == 1 ? "comment" : "comments"}',
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+                            Get.to(SinglePostScreen(post.commentUrl!,
+                                isHomeScreen: isHomeScreen,
+                                isProfileScreen: isFromProfile,
+                                index: index,
+                                postID: postID,
+                                groupID: groupPageID,
+                                isFromPage: isPage,
+                                isFromGroup: isGroup));
+                          },
+                          child: CustomText(
+                              title: post.totalComment == 0
+                                  ? ""
+                                  : '${post.totalComment.toString()} ${post.totalComment == 1 ? "comment" : "comments"}',
                               fontSize: 14,
                               color: kPrimaryColor.withOpacity(.8)),
-                        ],
-                      ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            if (post.totalShared != 0) likeModalBottomView(context, post, false);
+                          },
+                          child: CustomText(
+                              title: post.totalShared == 0
+                                  ? ""
+                                  : '  ${post.totalShared.toString()} ${post.totalShared == 1 ? "share" : "shares"}',
+                              fontSize: 14,
+                              color: kPrimaryColor.withOpacity(.8)),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -118,7 +125,7 @@ class PostStats extends StatelessWidget {
               Container(
                 color: Colors.grey.withOpacity(.3),
                 height: 1,
-                margin: EdgeInsets.only(top: 10, bottom: 5),
+                margin: const EdgeInsets.only(top: 10, bottom: 5),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
@@ -149,8 +156,8 @@ class PostStats extends StatelessWidget {
                         child: Stack(
                           clipBehavior: Clip.none,
                           children: [
-                            Icon((feedProvider.likesStatusAllData[index] == 1) ? Icons.favorite : Icons.favorite_border,
-                                size: 30, color: (feedProvider.likesStatusAllData[index] == 1) ? Colors.red : Colors.black),
+                            Icon((post.isLiked == true) ? Icons.favorite : Icons.favorite_border,
+                                size: 30, color: (post.isLiked == true) ? Colors.red : Colors.black),
                             // Positioned(
                             //     top: -13,
                             //     left: 20,

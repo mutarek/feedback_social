@@ -16,13 +16,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:http/http.dart' as Http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class GroupProvider with ChangeNotifier {
   final GroupRepo groupRepo;
   final NewsfeedRepo newsfeedRepo;
   final AuthRepo authRepo;
-  GroupProvider({required this.groupRepo, required this.newsfeedRepo,required this.authRepo});
+
+  GroupProvider({required this.groupRepo, required this.newsfeedRepo, required this.authRepo});
 
   bool isLoading = false;
   bool isLoadingSuggestedGroup = false;
@@ -236,8 +236,7 @@ class GroupProvider with ChangeNotifier {
   }
 
   // TODO:: for group All Posts
-  List<NewsFeedData> groupAllPosts = [];
-  List<int> likesStatusAllData = [];
+  List<NewsFeedModel> groupAllPosts = [];
   int position = 0;
   bool isBottomLoading = false;
   int selectPage = 1;
@@ -264,8 +263,6 @@ class GroupProvider with ChangeNotifier {
       isBottomLoading = false;
       position = 0;
       menuValue = 0;
-      likesStatusAllData.clear();
-      likesStatusAllData = [];
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -275,33 +272,14 @@ class GroupProvider with ChangeNotifier {
     }
 
     Response response = await groupRepo.callForGetGroupAllPosts(id, selectPage);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userID = (prefs.getString('userID') ?? '0');
-    int status = 0;
+
     isLoading = false;
     isBottomLoading = false;
 
     if (response.statusCode == 200) {
       hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
-        NewsFeedData newsFeedData = NewsFeedData.fromJson(element);
-
-        status = 0;
-        likesStatusAllData.add(0);
-        for (var e in newsFeedData.likedBy!) {
-          if (e.id.toString() == userID) {
-            status = 1;
-            continue;
-          }
-        }
-        if (status == 0) {
-          likesStatusAllData[position] = 0;
-        } else {
-          likesStatusAllData[position] = 1;
-        }
-        position++;
-
-        groupAllPosts.add(newsFeedData);
+        groupAllPosts.add(NewsFeedModel.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
@@ -312,32 +290,25 @@ class GroupProvider with ChangeNotifier {
   // for LIKE comment
 
   addLike(int groupID, int postID, int index) async {
-    if (likesStatusAllData[index] == 0) {
-      likesStatusAllData[index] = 1;
-      groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! + 1;
-      groupAllPosts[index]
-          .likedBy!
-          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
+    if (groupAllPosts[index].isLiked == false) {
+      groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! + 1;
+      groupAllPosts[index].isLiked = true;
     } else {
-      likesStatusAllData[index] = 0;
-      groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! - 1;
-      groupAllPosts[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
+      groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! - 1;
+      groupAllPosts[index].isLiked = false;
     }
+
     notifyListeners();
     await newsfeedRepo.addLikeONGroup(postID, groupID);
   }
 
   changeLikeStatus(int value, int index) async {
     if (value == 1) {
-      likesStatusAllData[index] = 1;
-      groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! + 1;
-      groupAllPosts[index]
-          .likedBy!
-          .add(LikedBy(id: int.parse(authRepo.getUserID()), name: authRepo.getUserName(), profileImage: authRepo.getUserProfile()));
+      groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! + 1;
+      groupAllPosts[index].isLiked = true;
     } else {
-      likesStatusAllData[index] = 0;
-      groupAllPosts[index].totalLike = groupAllPosts[index].totalLike! - 1;
-      groupAllPosts[index].likedBy!.removeWhere((element) => element.id.toString() == authRepo.getUserID());
+      groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! - 1;
+      groupAllPosts[index].isLiked = false;
     }
     notifyListeners();
   }
@@ -347,16 +318,13 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  addGroupPostTimeLine(NewsFeedData n) async {
+  addGroupPostTimeLine(NewsFeedModel n) async {
     groupAllPosts.insert(0, n);
-    likesStatusAllData.insert(0, 0);
     notifyListeners();
   }
 
-  updatePostOnTimeLine(int index, NewsFeedData n) async {
-    likesStatusAllData.removeAt(index);
+  updatePostOnTimeLine(int index, NewsFeedModel n) async {
     groupAllPosts.removeAt(index);
-    likesStatusAllData.insert(0, 0);
     groupAllPosts.insert(0, n);
     notifyListeners();
   }

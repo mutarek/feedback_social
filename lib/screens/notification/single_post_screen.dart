@@ -2,7 +2,6 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/dialog_bottom_sheet/share_modal_bottom_sheet.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
@@ -10,7 +9,6 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
-import 'package:als_frontend/screens/home/shimmer_effect/cmnt_screen_shimmmer_widget.dart';
 import 'package:als_frontend/screens/home/view/comment_widget.dart';
 import 'package:als_frontend/screens/home/view/like_view.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
@@ -18,6 +16,7 @@ import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -83,17 +82,15 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
   final TextEditingController commentController = TextEditingController();
   final TextEditingController replyController = TextEditingController();
 
-  void route(BuildContext context, int code, NewsFeedData newsFeedData) {
+  void route(BuildContext context, int code, NewsFeedModel newsFeedData) {
     if (newsFeedData.sharePost!.shareFrom == 'group' && code == 0) {
-      Get.to(PublicGroupScreen(newsFeedData.sharePost!.post!.groupData!.id.toString(), index: 0));
+      Get.to(PublicGroupScreen(newsFeedData.sharePost!.post!.groupModel!.id.toString(), index: 0));
     } else {
-      if (Provider.of<AuthProvider>(context, listen: false).userID ==
-          newsFeedData.sharePost!.post!.author!.id.toString()) {
+      if (Provider.of<AuthProvider>(context, listen: false).userID == newsFeedData.sharePost!.post!.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
       } else {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) =>
-                PublicProfileScreen(newsFeedData.sharePost!.post!.author!.id.toString())));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => PublicProfileScreen(newsFeedData.sharePost!.post!.author!.id.toString())));
       }
     }
   }
@@ -118,11 +115,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.withOpacity(.2),
-                            blurRadius: 10.0,
-                            spreadRadius: 3.0,
-                            offset: const Offset(0.0, 0.0))
+                        BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                       ],
                       borderRadius: BorderRadius.circular(0)),
                   child: Column(
@@ -131,21 +124,14 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                           ? Row(
                               children: [
                                 const SizedBox(width: 15),
-                                CustomText(
-                                    title: getTranslated('Replying to', context),
-                                    color: Colors.black),
-                                CustomText(
-                                    title: '${commentProvider.replyUserName} .',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700),
+                                CustomText(title: getTranslated('Replying to', context), color: Colors.black),
+                                CustomText(title: '${commentProvider.replyUserName} .', color: Colors.black, fontWeight: FontWeight.w700),
                                 InkWell(
                                     onTap: () {
                                       commentProvider.resetReply();
                                     },
                                     child: CustomText(
-                                        title: getTranslated('Cancel', context),
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w700)),
+                                        title: getTranslated('Cancel', context), color: Colors.grey, fontWeight: FontWeight.w700)),
                               ],
                             )
                           : const SizedBox.shrink(),
@@ -154,60 +140,41 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
                             suffixIcon: commentProvider.isCommentLoading
-                                ? const SizedBox(
-                                    height: 40,
-                                    width: 40,
-                                    child: Center(child: CupertinoActivityIndicator()))
+                                ? const SizedBox(height: 40, width: 40, child: Center(child: CupertinoActivityIndicator()))
                                 : IconButton(
                                     onPressed: () {
                                       if (commentProvider.isShowCancelButton) {
                                         FocusScope.of(context).unfocus();
-                                        commentProvider
-                                            .addReply(commentController.text, widget.url)
-                                            .then((value) {
+                                        commentProvider.addReply(commentController.text, widget.url).then((value) {
                                           if (value) {
                                             commentController.clear();
-                                            Provider.of<NewsFeedProvider>(context, listen: false)
-                                                .updateSingleCommentDataCount();
+                                            Provider.of<NewsFeedProvider>(context, listen: false).updateSingleCommentDataCount();
                                             if (widget.isHomeScreen) {
-                                              Provider.of<NewsFeedProvider>(context, listen: false)
-                                                  .updateCommentDataCount(widget.index);
+                                              Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                             } else if (widget.isProfileScreen) {
-                                              Provider.of<ProfileProvider>(context, listen: false)
-                                                  .updateCommentDataCount(widget.index);
+                                              Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                             } else if (widget.isFromGroup) {
-                                              Provider.of<GroupProvider>(context, listen: false)
-                                                  .updateCommentDataCount(widget.index);
+                                              Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                             } else if (widget.isFromPage) {
-                                              Provider.of<PageProvider>(context, listen: false)
-                                                  .updateCommentDataCount(widget.index);
+                                              Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                             }
                                           }
                                         });
                                       } else {
                                         commentProvider
-                                            .addComment(
-                                                commentController.text,
-                                                authProvider.name,
-                                                authProvider.profileImage,
-                                                newsFeedProvider.singleNewsFeedModel.id!,
-                                                int.parse(authProvider.userID),
-                                                widget.url)
+                                            .addComment(commentController.text, authProvider.name, authProvider.profileImage,
+                                                newsFeedProvider.singleNewsFeedModel.id! as int, int.parse(authProvider.userID), widget.url)
                                             .then((value) {
                                           if (value == true) {
                                             newsFeedProvider.updateSingleCommentDataCount();
                                             if (widget.isHomeScreen) {
-                                              Provider.of<NewsFeedProvider>(context, listen: false)
-                                                  .updateCommentDataCount(widget.index);
+                                              Provider.of<NewsFeedProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                             } else if (widget.isProfileScreen) {
-                                              Provider.of<ProfileProvider>(context, listen: false)
-                                                  .updateCommentDataCount(widget.index);
+                                              Provider.of<ProfileProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                             } else if (widget.isFromGroup) {
-                                              Provider.of<GroupProvider>(context, listen: false)
-                                                  .updateCommentDataCount(widget.index);
+                                              Provider.of<GroupProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                             } else if (widget.isFromPage) {
-                                              Provider.of<PageProvider>(context, listen: false)
-                                                  .updateCommentDataCount(widget.index);
+                                              Provider.of<PageProvider>(context, listen: false).updateCommentDataCount(widget.index);
                                             }
                                           }
                                         });
@@ -217,29 +184,24 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                       // timelineProvider.channelDismiss();
                                       FocusScope.of(context).unfocus();
                                     },
-                                    icon: Icon(FontAwesomeIcons.paperPlane,
-                                        color: Palette.primary, size: height * 0.05 * .5),
+                                    icon: Icon(FontAwesomeIcons.paperPlane, color: Palette.primary, size: height * 0.05 * .5),
                                   ),
-                            contentPadding:
-                                EdgeInsets.fromLTRB(width * 0.04, height * 0.017, width * 0.02, 00),
+                            contentPadding: EdgeInsets.fromLTRB(width * 0.04, height * 0.017, width * 0.02, 00),
                             hintText:
                                 "${getTranslated("Write", context)} ${commentProvider.isShowCancelButton ? getTranslated("Reply", context) : getTranslated("Comment", context)} ${getTranslated("Here...", context)}",
-                            hintStyle: GoogleFonts.lato(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15,
-                                color: Colors.black.withOpacity(.6)),
+                            hintStyle: GoogleFonts.lato(fontWeight: FontWeight.w500, fontSize: 15, color: Colors.black.withOpacity(.6)),
                             border: InputBorder.none),
                         controller: commentController,
                       ),
                     ],
                   ),
                 ),
-                body: newsFeedProvider.isLoading
+                body: newsFeedProvider.isLoadingSinglePost
                     ? const Center(child: CircularProgressIndicator())
                     : SafeArea(
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          decoration: BoxDecoration(color: Colors.white),
+                          decoration: const BoxDecoration(color: Colors.white),
                           child: SingleChildScrollView(
                             controller: controller,
                             physics: const BouncingScrollPhysics(),
@@ -247,30 +209,22 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                PostHeaderWidget(
-                                  post: newsFeedProvider.singleNewsFeedModel,
-                                  index: 0,
-                                ),
+                                PostHeaderWidget(post: newsFeedProvider.singleNewsFeedModel, index: 0),
                                 SizedBox(
-                                    height:
-                                        newsFeedProvider.singleNewsFeedModel.description == null ||
-                                                newsFeedProvider
-                                                    .singleNewsFeedModel.description!.isEmpty
-                                            ? 0
-                                            : 8.0),
+                                    height: newsFeedProvider.singleNewsFeedModel.description == null ||
+                                            newsFeedProvider.singleNewsFeedModel.description!.isEmpty
+                                        ? 0
+                                        : 8.0),
                                 Text(
                                     newsFeedProvider.singleNewsFeedModel.description == null ||
-                                            newsFeedProvider
-                                                .singleNewsFeedModel.description!.isEmpty
+                                            newsFeedProvider.singleNewsFeedModel.description!.isEmpty
                                         ? ''
                                         : newsFeedProvider.singleNewsFeedModel.description!,
                                     style: latoStyle400Regular),
-                                SizedBox(height: 5),
-                                if ((newsFeedProvider.singleNewsFeedModel.totalImage! +
-                                        newsFeedProvider.singleNewsFeedModel.totalVideo!) !=
+                                const SizedBox(height: 5),
+                                if ((newsFeedProvider.singleNewsFeedModel.totalImage! + newsFeedProvider.singleNewsFeedModel.totalVideo!) !=
                                     0)
-                                  PostPhotoContainer(0,
-                                      newsfeedModel: newsFeedProvider.singleNewsFeedModel),
+                                  PostPhotoContainer(0, newsfeedModel: newsFeedProvider.singleNewsFeedModel),
                                 !newsFeedProvider.singleNewsFeedModel.isShare!
                                     ? const SizedBox()
                                     : Container(
@@ -288,31 +242,13 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                                   onTap: () {
                                                     route(
                                                         context,
-                                                        newsFeedProvider.singleNewsFeedModel
-                                                                    .sharePost!.shareFrom ==
-                                                                'group'
-                                                            ? 0
-                                                            : 1,
+                                                        newsFeedProvider.singleNewsFeedModel.sharePost!.shareFrom == 'group' ? 0 : 1,
                                                         newsFeedProvider.singleNewsFeedModel);
                                                   },
                                                   child: ProfileAvatar(
-                                                      profileImageUrl: newsFeedProvider
-                                                                  .singleNewsFeedModel
-                                                                  .sharePost!
-                                                                  .shareFrom ==
-                                                              'group'
-                                                          ? newsFeedProvider
-                                                              .singleNewsFeedModel
-                                                              .sharePost!
-                                                              .post!
-                                                              .groupData!
-                                                              .coverPhoto!
-                                                          : newsFeedProvider
-                                                              .singleNewsFeedModel
-                                                              .sharePost!
-                                                              .post!
-                                                              .author!
-                                                              .profileImage!),
+                                                      profileImageUrl: newsFeedProvider.singleNewsFeedModel.sharePost!.shareFrom == 'group'
+                                                          ? newsFeedProvider.singleNewsFeedModel.sharePost!.post!.groupModel!.coverPhoto!
+                                                          : newsFeedProvider.singleNewsFeedModel.sharePost!.post!.author!.profileImage!),
                                                 ),
                                                 const SizedBox(width: 8.0),
                                                 Expanded(
@@ -323,79 +259,34 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                                         onTap: () {
                                                           route(
                                                               context,
-                                                              newsFeedProvider.singleNewsFeedModel
-                                                                          .sharePost!.shareFrom ==
-                                                                      'group'
-                                                                  ? 0
-                                                                  : 1,
+                                                              newsFeedProvider.singleNewsFeedModel.sharePost!.shareFrom == 'group' ? 0 : 1,
                                                               newsFeedProvider.singleNewsFeedModel);
                                                         },
                                                         child: Text(
-                                                            newsFeedProvider.singleNewsFeedModel
-                                                                        .sharePost!.shareFrom ==
-                                                                    'group'
-                                                                ? newsFeedProvider
-                                                                    .singleNewsFeedModel
-                                                                    .sharePost!
-                                                                    .post!
-                                                                    .groupData!
-                                                                    .name!
-                                                                : newsFeedProvider
-                                                                    .singleNewsFeedModel
-                                                                    .sharePost!
-                                                                    .post!
-                                                                    .author!
-                                                                    .fullName!,
-                                                            style: latoStyle500Medium.copyWith(
-                                                                fontWeight: FontWeight.w600)),
+                                                            newsFeedProvider.singleNewsFeedModel.sharePost!.shareFrom == 'group'
+                                                                ? newsFeedProvider.singleNewsFeedModel.sharePost!.post!.groupModel!.name!
+                                                                : newsFeedProvider.singleNewsFeedModel.sharePost!.post!.author!.fullName!,
+                                                            style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                                                       ),
                                                       SizedBox(
-                                                          height: newsFeedProvider
-                                                                      .singleNewsFeedModel
-                                                                      .sharePost!
-                                                                      .shareFrom ==
-                                                                  'group'
-                                                              ? 4
-                                                              : 0),
-                                                      newsFeedProvider.singleNewsFeedModel
-                                                                  .sharePost!.shareFrom ==
-                                                              'group'
+                                                          height:
+                                                              newsFeedProvider.singleNewsFeedModel.sharePost!.shareFrom == 'group' ? 4 : 0),
+                                                      newsFeedProvider.singleNewsFeedModel.sharePost!.shareFrom == 'group'
                                                           ? InkWell(
                                                               onTap: () {
-                                                                route(
-                                                                    context,
-                                                                    1,
-                                                                    newsFeedProvider
-                                                                        .singleNewsFeedModel);
+                                                                route(context, 1, newsFeedProvider.singleNewsFeedModel);
                                                               },
                                                               child: Text(
-                                                                  newsFeedProvider
-                                                                          .singleNewsFeedModel
-                                                                          .sharePost!
-                                                                          .post!
-                                                                          .author!
-                                                                          .fullName! +
+                                                                  newsFeedProvider.singleNewsFeedModel.sharePost!.post!.author!.fullName! +
                                                                       " Posted Here",
-                                                                  style:
-                                                                      latoStyle500Medium.copyWith(
-                                                                          fontWeight:
-                                                                              FontWeight.w400)),
+                                                                  style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w400)),
                                                             )
                                                           : const SizedBox(),
                                                       Row(
                                                         children: [
-                                                          Text(
-                                                              getDate(
-                                                                  newsFeedProvider
-                                                                      .singleNewsFeedModel
-                                                                      .sharePost!
-                                                                      .timestamp!,
-                                                                  context),
-                                                              style: latoStyle400Regular.copyWith(
-                                                                  color: Colors.grey[600],
-                                                                  fontSize: 12.0)),
-                                                          Icon(Icons.public,
-                                                              color: Colors.grey[600], size: 12.0)
+                                                          Text(getDate(newsFeedProvider.singleNewsFeedModel.sharePost!.timestamp!, context),
+                                                              style: latoStyle400Regular.copyWith(color: Colors.grey[600], fontSize: 12.0)),
+                                                          Icon(Icons.public, color: Colors.grey[600], size: 12.0)
                                                         ],
                                                       )
                                                     ],
@@ -404,52 +295,30 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                               ],
                                             ),
                                             SizedBox(
-                                                height: newsFeedProvider.singleNewsFeedModel
-                                                        .sharePost!.post!.description!.isNotEmpty
+                                                height: newsFeedProvider.singleNewsFeedModel.sharePost!.post!.description!.isNotEmpty
                                                     ? 8.0
                                                     : 0),
-                                            newsFeedProvider.singleNewsFeedModel.sharePost!.post!
-                                                    .description!.isNotEmpty
-                                                ? Text(
-                                                    newsFeedProvider.singleNewsFeedModel.sharePost!
-                                                        .post!.description!,
+                                            newsFeedProvider.singleNewsFeedModel.sharePost!.post!.description!.isNotEmpty
+                                                ? Text(newsFeedProvider.singleNewsFeedModel.sharePost!.post!.description!,
                                                     style: latoStyle400Regular)
                                                 : const SizedBox(),
                                             SizedBox(
-                                                height: newsFeedProvider.singleNewsFeedModel
-                                                                .sharePost!.post!.totalImage !=
-                                                            0 &&
-                                                        newsFeedProvider.singleNewsFeedModel
-                                                                .sharePost!.post!.description !=
-                                                            null
+                                                height: newsFeedProvider.singleNewsFeedModel.sharePost!.post!.totalImage != 0 &&
+                                                        newsFeedProvider.singleNewsFeedModel.sharePost!.post!.description != null
                                                     ? 10.0
                                                     : 0),
-                                            if ((newsFeedProvider.singleNewsFeedModel.sharePost!
-                                                        .post!.totalImage! +
-                                                    newsFeedProvider.singleNewsFeedModel.sharePost!
-                                                        .post!.totalVideo!) !=
+                                            if ((newsFeedProvider.singleNewsFeedModel.sharePost!.post!.totalImage! +
+                                                    newsFeedProvider.singleNewsFeedModel.sharePost!.post!.totalVideo!) !=
                                                 0)
                                               PostPhotoContainer(0,
-                                                  newsfeedModel: NewsFeedData(
-                                                      totalImage: newsFeedProvider
-                                                          .singleNewsFeedModel
-                                                          .sharePost!
-                                                          .post!
-                                                          .totalImage!,
-                                                      images: newsFeedProvider.singleNewsFeedModel
-                                                          .sharePost!.post!.images!,
-                                                      totalVideo: newsFeedProvider
-                                                          .singleNewsFeedModel
-                                                          .sharePost!
-                                                          .post!
-                                                          .totalVideo,
-                                                      videos: newsFeedProvider.singleNewsFeedModel
-                                                          .sharePost!.post!.videos)),
+                                                  newsfeedModel: NewsFeedModel(
+                                                      totalImage: newsFeedProvider.singleNewsFeedModel.sharePost!.post!.totalImage!,
+                                                      images: newsFeedProvider.singleNewsFeedModel.sharePost!.post!.images!,
+                                                      totalVideo: newsFeedProvider.singleNewsFeedModel.sharePost!.post!.totalVideo,
+                                                      videos: newsFeedProvider.singleNewsFeedModel.sharePost!.post!.videos)),
                                             SizedBox(
-                                                height: ((newsFeedProvider
-                                                                .singleNewsFeedModel.totalImage! +
-                                                            newsFeedProvider
-                                                                .singleNewsFeedModel.totalVideo!) !=
+                                                height: ((newsFeedProvider.singleNewsFeedModel.totalImage! +
+                                                            newsFeedProvider.singleNewsFeedModel.totalVideo!) !=
                                                         0)
                                                     ? 10.0
                                                     : 15.0),
@@ -464,39 +333,54 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          likeModalBottomView(
-                                              context, newsFeedProvider.singleNewsFeedModel);
+                                          if (newsFeedProvider.singleNewsFeedModel.totalLiked != 0) {
+                                            likeModalBottomView(context, newsFeedProvider.singleNewsFeedModel, true);
+                                          }
                                         },
-                                        child: Row(
-                                          children: [
-                                            Stack(
-                                              clipBehavior: Clip.none,
-                                              children: const [
-                                                SizedBox(width: 45),
-                                                Icon(FontAwesomeIcons.solidHeart,
-                                                    size: 20, color: kPrimaryColor),
-                                                Positioned(
-                                                    left: 21,
-                                                    top: -2,
-                                                    child: Icon(FontAwesomeIcons.thumbsUp,
-                                                        size: 20, color: kPrimaryColor)),
-                                              ],
-                                            ),
-                                            CustomText(
-                                                title:
-                                                    ' ${newsFeedProvider.singleNewsFeedModel.totalLike.toString()} ${newsFeedProvider.singleNewsFeedModel.totalLike == 0 || newsFeedProvider.singleNewsFeedModel.totalLike == 1 ? "Like" : "Likes"}',
-                                                fontSize: 14,
-                                                color: kPrimaryColor.withOpacity(.8)),
-                                          ],
-                                        ),
+                                        child: newsFeedProvider.singleNewsFeedModel.totalLiked == 0
+                                            ? const SizedBox.shrink()
+                                            : Row(
+                                                children: [
+                                                  Stack(
+                                                    clipBehavior: Clip.none,
+                                                    children: const [
+                                                      SizedBox(width: 45),
+                                                      Icon(FontAwesomeIcons.solidHeart, size: 20, color: kPrimaryColor),
+                                                      Positioned(
+                                                          left: 21,
+                                                          top: -2,
+                                                          child: Icon(FontAwesomeIcons.thumbsUp, size: 20, color: kPrimaryColor)),
+                                                    ],
+                                                  ),
+                                                  CustomText(
+                                                      title:
+                                                          ' ${newsFeedProvider.singleNewsFeedModel.totalLiked.toString()} ${newsFeedProvider.singleNewsFeedModel.totalLiked == 0 || newsFeedProvider.singleNewsFeedModel.totalLiked == 1 ? "Like" : "Likes"}',
+                                                      fontSize: 14,
+                                                      color: kPrimaryColor.withOpacity(.8)),
+                                                ],
+                                              ),
                                       ),
                                       Row(
                                         children: [
                                           CustomText(
-                                              title:
-                                                  '${newsFeedProvider.singleNewsFeedModel.totalComment.toString()} ${newsFeedProvider.singleNewsFeedModel.totalComment == 0 || newsFeedProvider.singleNewsFeedModel.totalComment == 1 ? "comment" : "comments"}',
+                                              title: newsFeedProvider.singleNewsFeedModel.totalComment == 0
+                                                  ? ""
+                                                  : '${newsFeedProvider.singleNewsFeedModel.totalComment.toString()} ${newsFeedProvider.singleNewsFeedModel.totalComment == 1 ? "comment" : "comments"}',
                                               fontSize: 14,
                                               color: kPrimaryColor.withOpacity(.8)),
+                                          InkWell(
+                                            onTap: () {
+                                              if (newsFeedProvider.singleNewsFeedModel.totalShared != 0) {
+                                                likeModalBottomView(context, newsFeedProvider.singleNewsFeedModel, false);
+                                              }
+                                            },
+                                            child: CustomText(
+                                                title: newsFeedProvider.singleNewsFeedModel.totalShared == 0
+                                                    ? ""
+                                                    : '  ${newsFeedProvider.singleNewsFeedModel.totalShared.toString()} ${newsFeedProvider.singleNewsFeedModel.totalShared == 1 ? "share" : "shares"}',
+                                                fontSize: 14,
+                                                color: kPrimaryColor.withOpacity(.8)),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -505,7 +389,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                 Container(
                                   color: Colors.grey.withOpacity(.3),
                                   height: 1,
-                                  margin: EdgeInsets.only(top: 10, bottom: 5),
+                                  margin: const EdgeInsets.only(top: 10, bottom: 5),
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -514,12 +398,9 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        newsFeedProvider.singlePostLike(
-                                            newsFeedProvider.singleNewsFeedModel.id!,
-                                            (bool status) {
+                                        newsFeedProvider.singlePostLike(newsFeedProvider.singleNewsFeedModel.id! as int, (bool status) {
                                           if (widget.isHomeScreen) {
-                                            newsFeedProvider.changeLikeStatus(
-                                                status ? 1 : 0, widget.index);
+                                            newsFeedProvider.changeLikeStatus(status ? 1 : 0, widget.index);
                                           } else if (widget.isProfileScreen) {
                                             Provider.of<ProfileProvider>(context, listen: false)
                                                 .changeLikeStatus(status ? 1 : 0, widget.index);
@@ -536,34 +417,11 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                           clipBehavior: Clip.none,
                                           children: [
                                             Icon(
-                                                (newsFeedProvider.isLikeMe)
+                                                (newsFeedProvider.singleNewsFeedModel.isLiked == true)
                                                     ? Icons.favorite
                                                     : Icons.favorite_border,
                                                 size: 30,
-                                                color: (newsFeedProvider.isLikeMe)
-                                                    ? Colors.red
-                                                    : Colors.black),
-                                            // Positioned(
-                                            //     top: -13,
-                                            //     left: 20,
-                                            //     child: newsFeedProvider.singleNewsFeedModel.totalLike == 0
-                                            //         ? const SizedBox.shrink()
-                                            //         : Container(
-                                            //             padding: const EdgeInsets.all(7),
-                                            //             decoration: BoxDecoration(
-                                            //                 shape: BoxShape.circle,
-                                            //                 color: Colors.blue,
-                                            //                 border: Border.all(color: Colors.white),
-                                            //                 boxShadow: [
-                                            //                   BoxShadow(
-                                            //                       color: Colors.grey.withOpacity(.2),
-                                            //                       blurRadius: 10.0,
-                                            //                       spreadRadius: 3.0,
-                                            //                       offset: const Offset(0.0, 0.0))
-                                            //                 ]),
-                                            //             child: CustomText(
-                                            //                 title: newsFeedProvider.singleNewsFeedModel.totalLike.toString(), fontSize: 10),
-                                            //           ))
+                                                color: (newsFeedProvider.singleNewsFeedModel.isLiked == true) ? Colors.red : Colors.black),
                                           ],
                                         ),
                                       ),
@@ -574,31 +432,8 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                       height: 40,
                                       child: Stack(
                                         clipBehavior: Clip.none,
-                                        children: [
-                                          const Icon(CupertinoIcons.chat_bubble,
-                                              size: 30, color: Colors.black),
-                                          // Positioned(
-                                          //     top: -13,
-                                          //     left: 20,
-                                          //     child: newsFeedProvider.singleNewsFeedModel.totalComment == 0
-                                          //         ? const SizedBox.shrink()
-                                          //         : Container(
-                                          //             padding: const EdgeInsets.all(7),
-                                          //             decoration: BoxDecoration(
-                                          //                 shape: BoxShape.circle,
-                                          //                 color: Colors.blue,
-                                          //                 border: Border.all(color: Colors.white),
-                                          //                 boxShadow: [
-                                          //                   BoxShadow(
-                                          //                       color: Colors.grey.withOpacity(.2),
-                                          //                       blurRadius: 10.0,
-                                          //                       spreadRadius: 3.0,
-                                          //                       offset: const Offset(0.0, 0.0))
-                                          //                 ]),
-                                          //             child: CustomText(
-                                          //                 title: newsFeedProvider.singleNewsFeedModel.totalComment.toString(),
-                                          //                 fontSize: 10),
-                                          //           ))
+                                        children: const [
+                                          Icon(CupertinoIcons.chat_bubble, size: 30, color: Colors.black),
                                         ],
                                       ),
                                     ),
@@ -609,23 +444,17 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                               shareBottomSheet(
                                                   context,
                                                   newsFeedProvider.singleNewsFeedModel.isShare!
-                                                      ? newsFeedProvider
-                                                          .singleNewsFeedModel.sharePost!.postUrl!
-                                                      : newsFeedProvider
-                                                          .singleNewsFeedModel.commentUrl!,
+                                                      ? newsFeedProvider.singleNewsFeedModel.sharePost!.postUrl!
+                                                      : newsFeedProvider.singleNewsFeedModel.commentUrl!,
                                                   newsFeedProvider.singleNewsFeedModel);
                                             },
                                             child: SizedBox(
                                               width: 35,
                                               height: 35,
-                                              child: SvgPicture.asset("assets/svg/share.svg",
-                                                  height: 30, color: Colors.black),
+                                              child: SvgPicture.asset("assets/svg/share.svg", height: 30, color: Colors.black),
                                             ),
                                           )
-                                        : InkWell(
-                                            onTap: () {},
-                                            child: const Icon(CupertinoIcons.bookmark,
-                                                size: 25, color: Colors.black)),
+                                        : InkWell(onTap: () {}, child: const Icon(CupertinoIcons.bookmark, size: 25, color: Colors.black)),
                                   ],
                                 ),
                                 const Divider(),
@@ -635,17 +464,11 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                       ? Container(
                                           height: 40,
                                           alignment: Alignment.center,
-                                          child: Text(getTranslated('No Comment Found', context),
-                                              style: latoStyle800ExtraBold.copyWith()))
+                                          child: Text(getTranslated('No Comment Found', context), style: latoStyle800ExtraBold.copyWith()))
                                       : ListView.builder(
                                           itemCount: commentProvider.comments.length,
                                           shrinkWrap: true,
-                                          padding: EdgeInsets.only(
-                                              bottom: newsFeedProvider
-                                                          .singleNewsFeedModel.totalComment! >
-                                                      5
-                                                  ? 40
-                                                  : 0),
+                                          padding: EdgeInsets.only(bottom: newsFeedProvider.singleNewsFeedModel.totalComment! > 5 ? 40 : 0),
                                           physics: const NeverScrollableScrollPhysics(),
                                           itemBuilder: (context, index) {
                                             return CommentWidget(
@@ -657,7 +480,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                               postIndex: widget.index,
                                               url: widget.url,
                                               replyController: replyController,
-                                              postID: newsFeedProvider.singleNewsFeedModel.id!,
+                                              postID: newsFeedProvider.singleNewsFeedModel.id! as int,
                                               isFromGroup: widget.isFromGroup,
                                               isFromPage: widget.isFromPage,
                                               isProfileScreen: widget.isProfileScreen,
