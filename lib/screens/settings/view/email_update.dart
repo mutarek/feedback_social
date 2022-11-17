@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
@@ -26,7 +27,7 @@ class EmailUpdateSettings extends StatelessWidget {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text("Email Update", style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(getTranslated("Email Update",context), style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -37,24 +38,24 @@ class EmailUpdateSettings extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-                Text("Enter your current Email", style: latoStyle500Medium),
+                Text(getTranslated("Enter your current Email", context), style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: currentMailController,
                   fillColor: const Color(0xfff1d3f2),
-                  hintText: "input your old Email",
+                  hintText: getTranslated("input your old Email", context),
                 ),
                 const SizedBox(height: 20),
-                Text("Enter new Email", style: latoStyle500Medium),
+                Text(getTranslated("Enter new Email", context), style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(controller: newMailController, fillColor: const Color(0xffd7f2d3), hintText: "input your new Email"),
                 const SizedBox(height: 20),
-                Text("Enter current password", style: latoStyle500Medium),
+                Text(getTranslated("Enter current password", context), style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: currentPasswordController,
                   fillColor: const Color(0xffd7f2d3),
-                  hintText: "input your password",
+                  hintText: getTranslated("input your password", context),
                 ),
                 const SizedBox(height: 20),
                 Center(
@@ -73,7 +74,7 @@ class EmailUpdateSettings extends StatelessWidget {
                               print("error");
                             }
                           },
-                          child: const Text("Update"));
+                          child:  Text(getTranslated("Update", context)));
                     }),
                   ),
                 )

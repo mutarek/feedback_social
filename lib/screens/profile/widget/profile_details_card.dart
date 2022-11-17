@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/profile/edit_profile_screen.dart';
@@ -33,7 +34,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.briefcase, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text("Company Name: ", style: GoogleFonts.lato(fontSize: 12)),
+                      Text(getTranslated("Company Name: ",context), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.presentCompany.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700)),
                     ],
                   ),
@@ -49,7 +50,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.graduationCap, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text("Education: ", style: GoogleFonts.lato(fontSize: 12)),
+                      Text(getTranslated("Education: ", context), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.presentEducation.toString(),
                           style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700))
                     ],
@@ -66,7 +67,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.user, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text("Gender: ", style: GoogleFonts.lato(fontSize: 12)),
+                      Text(getTranslated("Gender: ", context), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.gender.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700))
                     ],
                   ),
@@ -83,7 +84,7 @@ class ProfileDetailsCard extends StatelessWidget {
                       Icon(FontAwesomeIcons.personPraying, size: height * 0.019),
                       SizedBox(width: width * 0.03),
                       Text(
-                        "Religion: ",
+                        getTranslated("Religion: ", context),
                         style: GoogleFonts.lato(fontSize: 12),
                       ),
                       Text(userProfileModel!.religion.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700))
@@ -101,7 +102,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.locationDot, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text("Lives in: ", style: GoogleFonts.lato(fontSize: 12)),
+                      Text(getTranslated("Lives in: ", context), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.livesInAddress.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700)),
                     ],
                   ),
@@ -117,7 +118,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.house, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text("Home town: ", style: GoogleFonts.lato(fontSize: 12)),
+                      Text(getTranslated("Home town: ", context), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.fromAddress.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700))
                     ],
                   ),
@@ -140,7 +141,7 @@ class ProfileDetailsCard extends StatelessWidget {
                       decoration: BoxDecoration(color: Palette.scaffold, borderRadius: BorderRadius.circular(4)),
                       child: Center(
                         child:
-                            Text("Edit Profile", style: GoogleFonts.lato(color: Colors.black, fontSize: 10, fontWeight: FontWeight.w500)),
+                            Text(getTranslated("Edit Profile", context), style: GoogleFonts.lato(color: Colors.black, fontSize: 10, fontWeight: FontWeight.w500)),
                       ),
                     ),
                   )

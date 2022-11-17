@@ -98,7 +98,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             backgroundColor: AppColors.redColor,
                                             child: CustomText(
                                               title:
-                                                  '${notificationProvider.notificationCount > 9 ? "9+" : notificationProvider.notificationCount}',
+                                                  '${notificationProvider.notificationCount > 9 ? getTranslated("9+", context) : notificationProvider.notificationCount}',
                                               color: Colors.white,
                                               fontSize: 9,
                                             ),

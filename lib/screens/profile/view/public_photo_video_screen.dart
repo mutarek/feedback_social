@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/home/view/video_details_screen.dart';
@@ -49,7 +50,7 @@ class PublicPhotoViewScreen extends StatelessWidget {
             ),
           ),
         ),
-        title: CustomText(title: 'User ${isForImage ? "Photos" : "Videos"} Lists', color: Colors.black),
+        title: CustomText(title: '${getTranslated("User",context)} ${isForImage ? getTranslated("Photos", context): getTranslated("Videos", context)}${getTranslated("Lists",context)}', color: Colors.black),
       ),
       body: Consumer<PublicProfileProvider>(
         builder: (context, publicProfileProvider, child) => publicProfileProvider.isLoading

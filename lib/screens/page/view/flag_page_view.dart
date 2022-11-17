@@ -1,3 +1,4 @@
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
@@ -33,7 +34,7 @@ class FlagPageView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                    title: 'Personal Page', textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
+                                    title: getTranslated("Personal Page",context), textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
                                 const Icon(Icons.arrow_forward_ios_rounded, color: Palette.primary)
                               ],
                             ),
@@ -45,7 +46,7 @@ class FlagPageView extends StatelessWidget {
                           ],
                         ),
                         (provider.authorPageLists.isEmpty)
-                            ? CustomText(title: 'You Haven\'t any Personal Page', textStyle: latoStyle400Regular.copyWith(fontSize: 16))
+                            ? CustomText(title: getTranslated("You Haven't any Personal Page",context), textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                             : Container(
                                 height: 90,
                                 alignment: Alignment.centerLeft,
@@ -93,7 +94,7 @@ class FlagPageView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                    title: 'Suggested Pages', textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
+                                    title: getTranslated("Suggested Pages",context), textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
                                 const Icon(Icons.arrow_forward_ios_rounded, color: Palette.primary)
                               ],
                             ),
@@ -114,7 +115,7 @@ class FlagPageView extends StatelessWidget {
                                   goToGroupOrPage: () {},
                                   groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,
                                   groupOrPageName: provider.allSuggestPageList[index].name,
-                                  groupOrPageLikes: "${provider.allSuggestPageList[index].followers} Likes");
+                                  groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${getTranslated("Likes",context)} ");
                             }),
                       ],
                     ),

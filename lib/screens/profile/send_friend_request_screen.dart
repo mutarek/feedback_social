@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/helper/number_helper.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
@@ -30,7 +31,7 @@ class SendFriendRequestScreen extends StatelessWidget {
               Get.back();
             }),
         title: CustomText(
-            title: 'All Friends Request',
+            title: getTranslated("All Friends Request",context),
             color: Colors.black,
             fontWeight: FontWeight.w500,
             fontSize: 16),
@@ -49,7 +50,7 @@ class SendFriendRequestScreen extends StatelessWidget {
                     Center(
                         child: CustomText(
                       title:
-                          'You Have (${profileProvider.sendFriendRequestLists.length}) Friend Request',
+                          '${getTranslated("You Have", context)} (${profileProvider.sendFriendRequestLists.length}) ${getTranslated("Friend Request", context)}',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )), //this text is added for test commit
                     const SizedBox(height: 10),
@@ -128,7 +129,7 @@ class SendFriendRequestScreen extends StatelessWidget {
                                         width: 95,
                                         height: 35,
                                         child: CustomButton(
-                                          btnTxt: 'Accept',
+                                          btnTxt: getTranslated("Accept", context),
                                           textWhiteColor: true,
                                           backgroundColor: Colors.green,
                                           height: 30,
@@ -144,7 +145,7 @@ class SendFriendRequestScreen extends StatelessWidget {
                                         width: 95,
                                         height: 35,
                                         child: CustomButton(
-                                          btnTxt: 'Cancel',
+                                          btnTxt: getTranslated("Cancel", context),
                                           textWhiteColor: true,
                                           backgroundColor: Colors.red,
                                           height: 30,

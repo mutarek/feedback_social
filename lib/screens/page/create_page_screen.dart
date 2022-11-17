@@ -1,8 +1,7 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
-import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/old_code/const/palette.dart';
-import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
@@ -85,7 +84,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(title: 'Enter Page name ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText(title: getTranslated("Enter Page name",context), textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         CustomTextField(
                           hintText: 'Write here....',
@@ -96,7 +95,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                           inputAction: TextInputAction.done,
                         ),
                         const SizedBox(height: 13),
-                        CustomText(title: 'Select Page Category Type: ', textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText(title: getTranslated("Select Page Category Type:",context), textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         Container(
                           width: width,
@@ -122,7 +121,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                         ),
                         const SizedBox(height: 20),
                         CustomButton(
-                          btnTxt: widget.isUpdatePage ? "Update" : "Add",
+                          btnTxt: widget.isUpdatePage ? getTranslated("Update", context) : getTranslated("Add", context),
                           onTap: () {
                             if (pageNameController.text.isNotEmpty) {
                               if (widget.isUpdatePage) {
@@ -143,7 +142,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                                 });
                               }
                             } else {
-                              Fluttertoast.showToast(msg: "Please Write Page Name");
+                              Fluttertoast.showToast(msg: getTranslated("Please Write Page Name", context) );
                             }
                           },
                           fontSize: 18,

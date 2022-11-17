@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/friend_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
@@ -43,7 +44,7 @@ class _FriendScreenState extends State<FriendScreen> {
             onPressed: () {
               Get.back();
             }),
-        title: CustomText(title: 'All Friends', color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+        title: CustomText(title: getTranslated("All Friends",context), color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -58,7 +59,7 @@ class _FriendScreenState extends State<FriendScreen> {
                   children: [
                     Center(
                         child: CustomText(
-                      title: 'You Have (${profileProvider.paginationFriendLists.length}) Friend ',
+                      title: '${getTranslated("You Have", context)}(${profileProvider.paginationFriendLists.length}) ${getTranslated("Friend", context)}',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
                     const SizedBox(height: 10),

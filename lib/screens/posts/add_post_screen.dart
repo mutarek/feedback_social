@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
@@ -74,7 +75,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           children: [
                             const Icon(Icons.photo_camera_back, size: 20, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText(title: 'Photo', textStyle: latoStyle700Bold.copyWith()),
+                            CustomText(title: getTranslated("Photo",context), textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),
@@ -89,7 +90,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           children: [
                             const Icon(CupertinoIcons.video_camera, size: 28, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText(title: 'Video', textStyle: latoStyle700Bold.copyWith()),
+                            CustomText(title: getTranslated("Video", context), textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),
@@ -100,7 +101,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         children: [
                           const Icon(Icons.calendar_month, size: 20, color: Colors.grey),
                           const SizedBox(width: 5),
-                          CustomText(title: 'Event', textStyle: latoStyle700Bold.copyWith()),
+                          CustomText(title: getTranslated("Event", context), textStyle: latoStyle700Bold.copyWith()),
                         ],
                       ),
                     ),
@@ -187,7 +188,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       CircleAvatar(backgroundImage: NetworkImage(widget.profileImage), backgroundColor: Colors.grey.withOpacity(.4)),
                       Expanded(
                           child: CustomTextField(
-                        hintText: 'Write Somethings',
+                        hintText: getTranslated("Write Somethings", context),
                         fillColor: Colors.transparent,
                         isCancelShadow: true,
                         borderRadius: 0,
