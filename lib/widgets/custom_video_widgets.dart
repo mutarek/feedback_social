@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pod_player/pod_player.dart';
 
 class CustomVideoWidget extends StatefulWidget {
-  String videoUrl;
+  final String videoUrl;
 
-  CustomVideoWidget(this.videoUrl);
+  const CustomVideoWidget(this.videoUrl, {Key? key}) : super(key: key);
 
   @override
   State<CustomVideoWidget> createState() => _CustomVideoWidgetState();

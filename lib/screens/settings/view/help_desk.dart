@@ -4,13 +4,10 @@ import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/settings/help_chat_screen.dart';
 import 'package:als_frontend/screens/settings/widget/faq_question.dart';
 import 'package:als_frontend/screens/settings/widget/help_desk_widget.dart';
-import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class HelpDesk extends StatelessWidget {
@@ -120,7 +117,7 @@ class HelpDesk extends StatelessWidget {
                     discription: getTranslated("Find intelligent answer instantly", context),
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
-                    Get.to(FaqSceeen());
+                    Get.to(const FaqSceeen());
                     },
                   ),
                   SizedBox(height: height * 0.01),

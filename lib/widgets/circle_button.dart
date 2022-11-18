@@ -6,12 +6,12 @@ class CircleButton extends StatelessWidget {
   final void Function()? onPressed;
   final double radius;
 
-  const CircleButton({
+  const CircleButton({Key? key,
     required this.icon,
     required this.iconSize,
     required this.onPressed,
     required this.radius,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

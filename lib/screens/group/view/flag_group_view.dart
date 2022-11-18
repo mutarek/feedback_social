@@ -4,7 +4,6 @@ import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';

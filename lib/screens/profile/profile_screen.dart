@@ -58,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SafeArea(
         child: Consumer2<AuthProvider, ProfileProvider>(
           builder: (context, authProvider, profileProvider, child) => profileProvider.isLoading || profileProvider.isProfileLoading
-              ? const profilePostShimmerWidget()
+              ? const ProfilePostShimmerWidget()
               : RefreshIndicator(
                   onRefresh: () {
                     return _refresh(context);
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   flex: 1,
                                   child: GestureDetector(
                                     onTap: (){
-                                      Get.to(()=> FollowersPage());
+                                      Get.to(()=> const FollowersPage());
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,

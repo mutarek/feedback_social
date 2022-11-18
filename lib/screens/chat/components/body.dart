@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:als_frontend/data/model/response/chat/AllMessageChatListModel.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:flutter/material.dart';

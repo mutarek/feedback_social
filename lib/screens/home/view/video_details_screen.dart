@@ -1,4 +1,3 @@
-import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_video_widgets.dart';
 import 'package:better_player/better_player.dart';
@@ -63,7 +62,7 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
               onPressed: () {
                 Get.back();
               }),
-          title:  CustomText2(
+          title:  const CustomText2(
               title: 'Feedback Watch',
               color: Colors.black,
               fontWeight: FontWeight.w500,

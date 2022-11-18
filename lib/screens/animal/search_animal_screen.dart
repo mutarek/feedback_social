@@ -42,7 +42,7 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
       body: SafeArea(
         child: Consumer<AnimalProvider>(
             builder: (context, animalProvider, child) => Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Column(
                     children: [
                       Row(
@@ -80,13 +80,13 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
                           )
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       animalProvider.isLoadingSearch
-                          ? Center(child: CircularProgressIndicator())
+                          ? const Center(child: CircularProgressIndicator())
                           : Expanded(
                               child: animalProvider.searchAnimalLists.isNotEmpty
                                   ? ListView.builder(
-                                      physics: BouncingScrollPhysics(),
+                                      physics: const BouncingScrollPhysics(),
                                       itemCount: animalProvider.searchAnimalLists.length,
                                       itemBuilder: (context, index) {
                                         return InkWell(

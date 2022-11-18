@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/other_provider.dart';
@@ -52,7 +51,7 @@ class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageVie
                             MaterialButton(
                                 color: Colors.green,
                                 child:  Text(getTranslated("Camera",context),
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {
                                   otherProvider.getImage(ImageSource.camera, widget.ratioX, widget.ratioY, widget.width, widget.height);
@@ -61,7 +60,7 @@ class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageVie
                                 color: Colors.deepOrange,
                                 child: Text(
                                   getTranslated("Device",context),
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {
                                   otherProvider.getImage(ImageSource.gallery, widget.ratioX, widget.ratioY, widget.width, widget.height);

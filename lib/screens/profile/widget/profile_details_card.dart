@@ -133,7 +133,6 @@ class ProfileDetailsCard extends StatelessWidget {
                     onTap: () {
                       Provider.of<ProfileProvider>(context, listen: false).initializeGender(userProfileModel!.gender!);
                       Get.to(() => EditProfile(userprofileData: userProfileModel));
-                      print(userProfileModel);
                     },
                     child: Container(
                       height: height * 0.035,

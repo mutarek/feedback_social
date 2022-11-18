@@ -1,13 +1,12 @@
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/animal/widget/owner_info_widget.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
-import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/network_image.dart';
@@ -102,7 +101,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                               SizedBox(
                                 width: 120,
                                 child: CustomButton(
-                                    btnTxt: '${getTranslated('your_animals', context)}',
+                                    btnTxt: getTranslated('your_animals', context),
                                     onTap: () {
                                       Get.to(() => const MyAnimalScreen());
                                     },
@@ -128,7 +127,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                             child: Column(
                               children: [
                                 CustomTextField(
-                                  hintText: '${getTranslated('animal_name', context)}',
+                                  hintText: getTranslated('animal_name', context),
                                   controller: animalNameController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -138,7 +137,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: '${getTranslated('species', context)}',
+                                  hintText: getTranslated('species', context),
                                   controller: speciesController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -148,7 +147,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: '${getTranslated('genus', context)}',
+                                  hintText: getTranslated('genus', context),
                                   controller: genusController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -158,7 +157,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: '${getTranslated('given_name', context)}',
+                                  hintText: getTranslated('given_name', context),
                                   controller: givenNameController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -168,7 +167,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: '${getTranslated('age', context)}',
+                                  hintText: getTranslated('age', context),
                                   controller: ageController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -183,8 +182,8 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                      Text(
-                                      "${getTranslated('gender', context)}",
-                                      style: TextStyle(
+                                      getTranslated('gender', context),
+                                      style: const TextStyle(
                                           color: Colors.black, fontSize: 20),
                                     ),
                                     SizedBox(width: width * 0.2),
@@ -235,8 +234,8 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                      Text(
-                                      "${getTranslated('pick_a_photo', context)}",
-                                      style: TextStyle(
+                                      getTranslated('pick_a_photo', context),
+                                      style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w400),
                                     ),
@@ -253,10 +252,10 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children:  [
-                                            Icon(Icons.photo,
+                                            const Icon(Icons.photo,
                                                 color: Colors.white),
-                                            Text("${getTranslated('photo', context)}",
-                                                style: TextStyle(
+                                            Text(getTranslated('photo', context),
+                                                style: const TextStyle(
                                                     color: Colors.white)),
                                           ],
                                         ),
@@ -277,12 +276,12 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                                 child: customNetworkImage(
                                                     context,
                                                     widget.animalModel!.image!))
-                                            :  Text("${getTranslated('no_images_elected', context)}"),
+                                            :  Text(getTranslated('no_images_elected', context)),
                                   ],
                                 ),
                                 const SizedBox(height: 20),
                                 CustomButton(
-                                  btnTxt: '${widget.isEdit ? "Update" : "Add"}',
+                                  btnTxt: widget.isEdit ? "Update" : "Add",
                                   textWhiteColor: true,
                                   height: 40,
                                   onTap: () {

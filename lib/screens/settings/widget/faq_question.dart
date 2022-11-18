@@ -8,7 +8,7 @@ class FaqSceeen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("FQA"),
+        title: const Text("FQA"),
       ),
       body: Column(
         children: const [

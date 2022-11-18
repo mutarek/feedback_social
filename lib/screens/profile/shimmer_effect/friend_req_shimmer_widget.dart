@@ -13,7 +13,7 @@ class FriendReqShimmerWidget extends StatelessWidget {
       child: Scaffold(
         body: ListView.builder(
             itemCount: 20,
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               return Column(
 
@@ -23,7 +23,7 @@ class FriendReqShimmerWidget extends StatelessWidget {
               baseColor: Colors.black.withOpacity(.1),
               highlightColor: Colors.grey.withOpacity(.1),
                     child: Padding(
-                      padding:  EdgeInsets.only(left: 10,right: 10,top: 5,),
+                      padding:  const EdgeInsets.only(left: 10,right: 10,top: 5,),
                       child: Container(
                         height: 50,
 
@@ -36,7 +36,7 @@ class FriendReqShimmerWidget extends StatelessWidget {
                             Shimmer.fromColors(
                               baseColor: Colors.black.withOpacity(.1),
                               highlightColor: Colors.grey.withOpacity(.1),
-                              child: CircleAvatar(
+                              child: const CircleAvatar(
                                 radius: 20,
                                 backgroundColor: Colors.white,
                               ),

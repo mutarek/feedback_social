@@ -1,14 +1,10 @@
-import 'package:als_frontend/util/palette.dart';
-import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
-import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
-import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class profilePostShimmerWidget extends StatelessWidget {
+class ProfilePostShimmerWidget extends StatelessWidget {
 
 
-  const profilePostShimmerWidget( {Key? key}) : super(key: key);
+  const ProfilePostShimmerWidget( {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +17,7 @@ class profilePostShimmerWidget extends StatelessWidget {
               return Column(
 
                 children: [
-                  Container(
+                  SizedBox(
                     height: 250,
                     child: Stack(
                       children: [

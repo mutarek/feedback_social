@@ -71,7 +71,6 @@ class EmailUpdateSettings extends StatelessWidget {
                                 currentPasswordController.text.isNotEmpty) {
                               emailProvider.emailUpdate(currentMailController.text, newMailController.text, currentPasswordController.text);
                             } else {
-                              print("error");
                             }
                           },
                           child:  Text(getTranslated("Update", context)));

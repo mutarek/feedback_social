@@ -14,7 +14,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-import 'otp_screen.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
@@ -145,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   SizedBox(
                                     height: height * 0.06,
                                   ),
-                                  Container(
+                                  SizedBox(
                                     height: height * 0.05,
                                     width: width * 0.4,
                                     child: Consumer<AuthProvider>(

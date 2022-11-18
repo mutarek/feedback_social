@@ -42,7 +42,7 @@ class LanguageScreen extends StatelessWidget {
                         localizationProvider.setLanguage(
                             Locale(languageProvider.languages[index].languageCode, languageProvider.languages[index].countryCode), index);
                         Provider.of<DashboardProvider>(context, listen: false).changeSelectIndex(0);
-                        Helper.toRemoveUntilScreen(context, SplashScreen());
+                        Helper.toRemoveUntilScreen(context, const SplashScreen());
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 10),

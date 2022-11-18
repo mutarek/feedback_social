@@ -24,12 +24,12 @@ class CommentShimmerWidget extends StatelessWidget {
                   Shimmer.fromColors(
                     baseColor: Colors.black.withOpacity(.1),
                     highlightColor: Colors.grey.withOpacity(.1),
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 20,
                       backgroundColor: Colors.white,
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  const SizedBox(width: 5,),
                   Shimmer.fromColors(
                       baseColor: Colors.black.withOpacity(.1),
                       highlightColor: Colors.grey.withOpacity(.1),

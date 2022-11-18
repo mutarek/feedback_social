@@ -9,13 +9,13 @@ class ProfileAvatar extends StatelessWidget {
   final double scale;
   final double isActivescale;
 
-  const ProfileAvatar({
+  const ProfileAvatar({Key? key,
     required this.profileImageUrl,
     this.isActive = false,
     this.hasBorder = false,
     this.scale = 1.0,
     this.isActivescale = 1.0,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

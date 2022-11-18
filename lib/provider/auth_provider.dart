@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
@@ -68,7 +67,7 @@ class AuthProvider with ChangeNotifier {
       callback(true, "Password Set Successfully");
     } else {
       callback(false, response.statusText);
-      print(response.statusCode);
+      //print(response.statusCode);
     }
     notifyListeners();
   }

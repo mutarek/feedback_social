@@ -50,7 +50,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
           },
           child:  Text(
             getTranslated('Feedback',context),
-            style: TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
+            style: const TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
         ),
       ),
@@ -104,7 +104,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                                 Get.to(() => SearchAnimalScreen(searchController.text));
                                                 FocusScope.of(context).unfocus();
                                               } else {
-                                                Fluttertoast.showToast(msg: "${getTranslated('Write 6 digits code to search', context)}");
+                                                Fluttertoast.showToast(msg: getTranslated('Write 6 digits code to search', context));
                                               }
                                             },
                                             icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 20)),
@@ -134,7 +134,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  CustomText(title: '${getTranslated('Your added animal', context)}', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
+                                  CustomText(title: getTranslated('Your added animal', context), textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -146,7 +146,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                       ElevatedButton(
                                           onPressed: () {
                                             animalProvider.clearImage();
-                                            Get.to(() => AddEditAnimalScreen());
+                                            Get.to(() => const AddEditAnimalScreen());
                                           },
                                           child:  Text(getTranslated('Add', context)))
                                     ],

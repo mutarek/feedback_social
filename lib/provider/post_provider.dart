@@ -114,7 +114,7 @@ class PostProvider with ChangeNotifier {
   void pickImage() async {
     imageFile = [];
     var pickedFile = await _picker.pickMultiImage();
-    if (pickedFile!.isNotEmpty) {
+    if (pickedFile.isNotEmpty) {
       imageFile.addAll(pickedFile);
       imageFile.forEach((element) async {
         singleImage = File(element.path);

@@ -132,7 +132,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     CustomTextField(
                       maxLines: null,
                       fillColor: Colors.white,

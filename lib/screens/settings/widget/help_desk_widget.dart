@@ -46,7 +46,7 @@ class HelpDeskWidget extends StatelessWidget {
                   height: height*0.2,
                   width: width*0.15,
                   decoration: BoxDecoration(
-                      color: Color(0xffF1B8BC),
+                      color: const Color(0xffF1B8BC),
                       borderRadius: BorderRadius.circular(8)
                   ),
                   child: Center(child: Icon(icon,color: Colors.pinkAccent,)
@@ -58,8 +58,8 @@ class HelpDeskWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(height: height*0.02,),
-                Text(textname,style: latoStyle600SemiBold.copyWith(color:Color(0xff2E4266),fontSize: 20 ),),
-                Text(discription,style: latoStyle500Medium.copyWith(color:Color(0xff9EA8B9),fontSize: 10 ),),
+                Text(textname,style: latoStyle600SemiBold.copyWith(color:const Color(0xff2E4266),fontSize: 20 ),),
+                Text(discription,style: latoStyle500Medium.copyWith(color:const Color(0xff9EA8B9),fontSize: 10 ),),
               ],
             ),
           ],

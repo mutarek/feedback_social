@@ -62,7 +62,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
       body: Consumer<PublicProfileProvider>(
         builder: (context, publicProvider, child) => SafeArea(
             child: (publicProvider.isProfileLoading == true || publicProvider.isLoading == true)
-                ? const profilePostShimmerWidget()
+                ? const ProfilePostShimmerWidget()
                 : SingleChildScrollView(
                     controller: controller,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

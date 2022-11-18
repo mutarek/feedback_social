@@ -1,8 +1,7 @@
-import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
@@ -138,8 +137,8 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                           child: (auth.isLoading == false)
                               ? const Icon(Icons.arrow_forward,
                                   color: Colors.white)
-                              : Center(
-                                  child: const CupertinoActivityIndicator()),
+                              : const Center(
+                                  child: CupertinoActivityIndicator()),
                           ontap: () {
                             if (passwordController.text.isEmpty) {
                               showMessage(
@@ -155,7 +154,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                   (bool status, String message) {
                                     if(status){
                                       Fluttertoast.showToast(msg: message);
-                                      Get.offAll(()=> LoginScreen());
+                                      Get.offAll(()=> const LoginScreen());
                                     }
                                     else{
                                       Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);

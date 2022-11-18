@@ -45,10 +45,10 @@ class Message extends StatelessWidget {
               backgroundColor: kPrimaryColor,
               backgroundImage: NetworkImage(imageURL),
             ),
-            SizedBox(width: kDefaultPadding / 2),
+            const SizedBox(width: kDefaultPadding / 2),
           ],
           messageContaint(message),
-          if (isSender) MessageStatusDot(status: MessageStatus.viewed)
+          if (isSender) const MessageStatusDot(status: MessageStatus.viewed)
         ],
       ),
     );

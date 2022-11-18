@@ -14,7 +14,7 @@ class DeleteDialogue extends StatelessWidget {
   final NewsFeedModel newsFeedData;
   final int index;
 
-  DeleteDialogue(this.newsFeedData, this.index, {Key? key}) : super(key: key);
+  const DeleteDialogue(this.newsFeedData, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

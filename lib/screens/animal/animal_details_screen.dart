@@ -27,7 +27,7 @@ class AnimalDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Palette.primary),
-        title: CustomText(title: '${getTranslated('animal_details', context)}', textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
+        title: CustomText(title: getTranslated('animal_details', context), textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
         elevation: 0,
       ),
       body: Consumer<AnimalProvider>(
@@ -64,7 +64,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                         animalProvider.changeGenderStatus(animalModel.gender!);
                                         Get.to(() => AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
                                       },
-                                      child:  Text("${getTranslated('edit', context)}")),
+                                      child:  Text(getTranslated('edit', context))),
                                   ElevatedButton(
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
                                       onPressed: () {
@@ -74,7 +74,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                           }
                                         });
                                       },
-                                      child:  Text("${getTranslated('delete', context)}")),
+                                      child:  Text(getTranslated('delete', context))),
                                 ],
                               )
                             : const SizedBox.shrink(),

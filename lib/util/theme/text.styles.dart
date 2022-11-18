@@ -14,7 +14,6 @@ const TextStyle input = TextStyle(fontWeight: FontWeight.w400, color: AppColors.
 const TextStyle bodyText1 = TextStyle(fontWeight: FontWeight.w300, color: AppColors.black, fontSize: 12);
 const TextStyle bodyText2 = TextStyle(fontWeight: FontWeight.w300, color: AppColors.grey, fontSize: 10);
 const TextStyle subtitle1 = TextStyle(fontWeight: FontWeight.w300, color: AppColors.black, fontSize: 12);
-const TextStyle white_subtitle1 = TextStyle(fontWeight: FontWeight.w300, color: AppColors.whiteColorLight, fontSize: 12);
 const TextStyle subtitle2 = TextStyle(fontWeight: FontWeight.w300, color: AppColors.black, fontSize: 12);
 
 

@@ -124,7 +124,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     ],
                   ),
                   (provider.authorPageLists.isEmpty)
-                      ? CustomText(title: getTranslated("You Haven\'t any Personal Page", context), textStyle: latoStyle400Regular.copyWith(fontSize: 16))
+                      ? CustomText(title: getTranslated("You Haven't any Personal Page", context), textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                       : Container(
                           height: 100,
                           alignment: Alignment.centerLeft,

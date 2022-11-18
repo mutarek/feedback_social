@@ -2,7 +2,6 @@
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class NotificationWidget extends StatelessWidget {
   const NotificationWidget({
@@ -26,14 +25,14 @@ class NotificationWidget extends StatelessWidget {
       child: Row(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(width: 20,),
+          const SizedBox(width: 20,),
           Text(buttunName,style: latoStyle500Medium,),
-          Spacer(),
+          const Spacer(),
           CupertinoSwitch(
             value:buttunValue,
             onChanged: onChanged,
           ),
-          SizedBox(width: 10,),
+          const SizedBox(width: 10,),
         ],
       ),
     );

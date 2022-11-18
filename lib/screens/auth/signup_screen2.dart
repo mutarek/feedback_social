@@ -1,10 +1,9 @@
-import 'package:als_frontend/helper/date_converter.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
@@ -13,7 +12,6 @@ import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen2 extends StatelessWidget {

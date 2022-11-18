@@ -1,11 +1,9 @@
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
-import 'package:als_frontend/screens/auth/forgot_password_screen.dart';
-import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/auth/set_new_password.dart';
 import 'package:als_frontend/screens/auth/signup_screen2.dart';
 import 'package:als_frontend/screens/auth/widget/rounded_with_cursor.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
@@ -88,7 +86,7 @@ class OTPScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 50),
-                        Container(
+                        SizedBox(
                             height: 100,
                             child: RoundedWithCustomCursor(
                                 pinController, authProvider)),

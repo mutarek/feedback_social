@@ -57,6 +57,7 @@ Widget zoomableCustomNetworkImage(BuildContext context, String imageUrl, {double
           );
           break;
       }
+      return null;
     },
   );
 }
@@ -94,6 +95,7 @@ Widget customNetworkImage2(BuildContext context, String imageUrl, {double? heigh
           );
           break;
       }
+      return null;
     },
   );
 }

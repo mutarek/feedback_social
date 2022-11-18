@@ -1,16 +1,10 @@
 import 'package:als_frontend/data/model/response/chat/AllMessageChatListModel.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
-import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/chat/components/chat_card.dart';
 import 'package:als_frontend/screens/chat/message_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
-import 'package:als_frontend/screens/search/search_screen.dart';
-import 'package:als_frontend/widgets/circle_button.dart';
-import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class ChatsScreen extends StatefulWidget {

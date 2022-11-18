@@ -36,7 +36,7 @@ class ProfileCoverPhotoWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.black,
                       boxShadow: [
-                        BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: Offset(0.0, 0.0))
+                        BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                       ],
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                       border: Border.all(color: Colors.white, width: 2)),
@@ -62,7 +62,7 @@ class ProfileCoverPhotoWidget extends StatelessWidget {
                       color: const Color(0xffC4C4C4),
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       boxShadow: [
-                        BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: Offset(0.0, 0.0))
+                        BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                       ],
                       border: Border.all(color: Colors.white, width: 2)),
                   child: Padding(

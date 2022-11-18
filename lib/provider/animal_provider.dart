@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as Http;
+import 'package:http/http.dart' as http;
 
 class AnimalProvider with ChangeNotifier {
   final AnimalRepo animalRepo;
@@ -95,11 +95,11 @@ class AnimalProvider with ChangeNotifier {
   //TODO: for Add Animal
   addAnimal(String animalName, String givenName, String species, String age, String genus, Function callBackFunction) async {
     isLoading = true;
-    List<Http.MultipartFile> multipartFile = [];
+    List<http.MultipartFile> multipartFile = [];
 
     if (image != null) {
       multipartFile
-          .add(Http.MultipartFile('image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
+          .add(http.MultipartFile('image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
     }
 
     notifyListeners();
@@ -140,11 +140,11 @@ class AnimalProvider with ChangeNotifier {
   updateAnimal(
       String animalName, String givenName, String species, String age, String genus, Function callBackFunction, int id, int index) async {
     isLoading = true;
-    List<Http.MultipartFile> multipartFile = [];
+    List<http.MultipartFile> multipartFile = [];
 
     if (image != null) {
       multipartFile
-          .add(Http.MultipartFile('image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
+          .add(http.MultipartFile('image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
     }
 
     notifyListeners();
