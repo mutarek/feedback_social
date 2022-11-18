@@ -9,6 +9,8 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:label="FeedBack"
+        android:allowBackup="false"
+        android:fullBackupOnly="false"
         android:usesCleartextTraffic="true">
 
         <activity
