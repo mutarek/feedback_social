@@ -1,8 +1,10 @@
+import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
+import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/chat/chats_screen.dart';
 import 'package:als_frontend/screens/dashboard/friend_request_screen.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
@@ -14,6 +16,7 @@ import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/circle_button.dart';
+import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/network_image.dart';
@@ -46,8 +49,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<DashboardProvider, NotificationProvider, AuthProvider>(
-        builder: (context, dashboardProvider, notificationProvider, authProvider, child) => WillPopScope(
+    return Consumer4<DashboardProvider, NotificationProvider, AuthProvider, SplashProvider>(
+        builder: (context, dashboardProvider, notificationProvider, authProvider, splashProvider, child) => WillPopScope(
               onWillPop: () async {
                 if (dashboardProvider.selectIndex != 0) {
                   controller.jumpToPage(0);
@@ -204,6 +207,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       : SizedBox.shrink(),
                                 ],
                               ),
+                        splashProvider.isLoading || splashProvider.value == -2 || splashProvider.value == 1
+                            ? const SizedBox.shrink()
+                            : splashProvider.value == 0
+                                ? CustomButton(
+                                    btnTxt: 'Update available.',
+                                    onTap: () {
+                                      openFeedbackAppOnPlayStore();
+                                    },
+                                    backgroundColor: kErrorColor,
+                                    textWhiteColor: true,
+                                    radius: 0,
+                                    fontSize: 13,
+
+                                  )
+                                : const CustomButton(
+                                    btnTxt: 'Server Problems are found, and our maintainer working here please try sometime later. ',
+                                    backgroundColor: AppColors.feedback,
+                                    textWhiteColor: true,
+                                    radius: 0,
+                                    fontSize: 13,
+                                  ),
                         Expanded(
                           child: PageView(
                             controller: controller,

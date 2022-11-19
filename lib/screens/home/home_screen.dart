@@ -36,7 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<NewsFeedProvider, AuthProvider>(builder: (context, newsFeedProvider, authProvider, child) {
+    return Consumer2<NewsFeedProvider, AuthProvider>(
+        builder: (context, newsFeedProvider, authProvider, child) {
       return RefreshIndicator(
         onRefresh: () {
           return _refresh(context);

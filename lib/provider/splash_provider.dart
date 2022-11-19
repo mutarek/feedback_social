@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:als_frontend/data/repository/splash_repo.dart';
+import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:http/http.dart' as http;
 
 class SplashProvider with ChangeNotifier {
   final SplashRepo splashRepo;
@@ -9,7 +12,7 @@ class SplashProvider with ChangeNotifier {
   SplashProvider({required this.splashRepo});
 
   String? serverVersion;
-  String currentVersion = "1.0.21";
+  String currentVersion = "1.0.22";
   bool isLoading = false;
   bool isExistsVersion = false;
 
@@ -24,28 +27,27 @@ class SplashProvider with ChangeNotifier {
 
   int value = 0;
 
-  Future<bool> initializeVersion() async {
+  Future initializeVersion() async {
+    value = -2;
     isLoading = true;
     notifyListeners();
-    Response response = await splashRepo.getCurrentAppVersion();
+    http.Response _response = await http.get(Uri.parse(AppConstant.baseUrl + AppConstant.latestVersionUri),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'});
     isLoading = false;
     notifyListeners();
-    if (response.statusCode == 200) {
-      serverVersion = response.body['version'];
+    if (_response.statusCode == 200) {
+      serverVersion = jsonDecode(utf8.decode(_response.bodyBytes))['version'];
       checkVersion();
       notifyListeners();
       if (serverVersion == currentVersion) {
-        return true;
+        value = 1;
       } else {
-        return false;
+        value = 0;
       }
     } else {
-      if (value <= 3) {
-        initializeVersion();
-        value++;
-      }
-      Fluttertoast.showToast(msg: response.statusText!);
-      return false;
+      Fluttertoast.showToast(msg: 'Server error!');
+      value = -1;
     }
+    notifyListeners();
   }
 }

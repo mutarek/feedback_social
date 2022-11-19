@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
@@ -10,6 +11,7 @@ import 'package:als_frontend/screens/page/my_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/settings/widget/Settings_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
@@ -61,9 +63,13 @@ class MoreScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Get.to(() => const ProfileScreen());
+                            if (Provider.of<SplashProvider>(context, listen: false).value == 1) {
+                              Get.to(() => const ProfileScreen());
+                            } else {
+                              showMessage(context: context, message: 'Please Update apps first');
+                            }
                           },
-                          child: Text(getTranslated('View profile',context), style: button)),
+                          child: Text(getTranslated('View profile', context), style: button)),
                     ),
                   ),
                   //
