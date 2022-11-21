@@ -83,6 +83,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
   final TextEditingController commentController = TextEditingController();
   final TextEditingController replyController = TextEditingController();
 
+
   void route(BuildContext context, int code, NewsFeedModel newsFeedData) {
     if (newsFeedData.sharePost!.shareFrom == 'group' && code == 0) {
       Get.to(PublicGroupScreen(newsFeedData.sharePost!.post!.groupModel!.id.toString(), index: 0));
