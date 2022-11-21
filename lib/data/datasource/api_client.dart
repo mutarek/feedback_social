@@ -24,7 +24,6 @@ class ApiClient {
       token = '';
     }
     debugPrint('Token: $token');
-
     updateHeader(token);
   }
   void updateHeader(String token) {

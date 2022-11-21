@@ -9,6 +9,7 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
+import 'package:als_frontend/screens/home/shimmer_effect/timeline_post_shimmer_widget.dart';
 import 'package:als_frontend/screens/home/view/comment_widget.dart';
 import 'package:als_frontend/screens/home/view/like_view.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
@@ -197,7 +198,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                   ),
                 ),
                 body: newsFeedProvider.isLoadingSinglePost
-                    ? const Center(child: CircularProgressIndicator())
+                    ? const TimeLinePostShimmerWidget(20)
                     : SafeArea(
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
