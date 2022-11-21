@@ -177,6 +177,7 @@ class SignUpScreen1 extends StatelessWidget {
             ],
           ),
         ),
+
       );
     });
   }

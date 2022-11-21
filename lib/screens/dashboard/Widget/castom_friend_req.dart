@@ -14,7 +14,8 @@ class FriendRequestWidget extends StatelessWidget {
   final Color firstButtonColor;
   final String imgUrl;
 
-  const FriendRequestWidget({Key? key,
+  const FriendRequestWidget({
+    Key? key,
     required this.width,
     required this.userName,
     required this.firstButtonName,
@@ -33,44 +34,73 @@ class FriendRequestWidget extends StatelessWidget {
       child: Container(
         width: width,
         decoration: BoxDecoration(
-            boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))],
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(.2),
+                  blurRadius: 10.0,
+                  spreadRadius: 3.0,
+                  offset: const Offset(0.0, 0.0))
+            ],
             borderRadius: BorderRadius.circular(8),
             color: AppColors.whiteColorLight),
         child: Row(
           children: [
-            SizedBox(width: width * 0.02),
-            InkWell(
-              onTap: gotoProfileScreen,
-              child: CircleAvatar(radius: width * 0.07, backgroundColor: AppColors.scaffold, backgroundImage: NetworkImage(imgUrl)),
-            ),
-            SizedBox(width: width * 0.02),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  Text(userName, style: latoStyle800ExtraBold),
-                  Row(
-                    children: [
-                      Expanded(
-                          flex: 1,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(backgroundColor: firstButtonColor),
-                              onPressed: firstButtonOnTab,
-                              child: Text(firstButtonName))),
-                      const SizedBox(width: 10),
-                      Expanded(
-                          flex: 1,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(backgroundColor: Colors.red.withOpacity(0.7)),
-                              onPressed: secondButtonOnTab,
-                              child: Text(secondButtonName))),
-                      const SizedBox(width: 10),
-                    ],
-                  )
-                ],
+              flex: 1,
+              child: InkWell(
+                onTap: gotoProfileScreen,
+                child: CircleAvatar(
+                    radius: width * 0.07,
+                    backgroundColor: AppColors.scaffold,
+                    backgroundImage: NetworkImage(imgUrl)),
               ),
-            )
+            ),
+            Expanded(
+              flex: 2,
+              child: Text(userName, style: TextStyle(fontSize: 12)),
+            ),
+            Expanded(
+                flex: 2,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1,color: Colors.blueGrey),
+                    borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Following',
+                      style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )),
+            SizedBox(width: width * 0.02),
+            // Expanded(
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       const SizedBox(height: 10),
+            //       Row(
+            //         children: [
+            //           // Expanded(
+            //           //     flex: 1,
+            //           //     child: ElevatedButton(
+            //           //         style: ElevatedButton.styleFrom(backgroundColor: firstButtonColor),
+            //           //         onPressed: firstButtonOnTab,
+            //           //         child: Text(firstButtonName))),
+            //           // const SizedBox(width: 10),
+            //           Expanded(
+            //               flex: 1,
+            //               child: ElevatedButton(
+            //                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red.withOpacity(0.7)),
+            //                   onPressed: secondButtonOnTab,
+            //                   child: Text(secondButtonName))),
+            //           const SizedBox(width: 10),
+            //         ],
+            //       )
+            //     ],
+            //   ),
+            // )
           ],
         ),
       ),
