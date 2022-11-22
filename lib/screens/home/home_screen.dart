@@ -1,7 +1,9 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
+import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/home/shimmer_effect/timeline_post_shimmer_widget.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
+import 'package:als_frontend/screens/home/widget/post_status_widget.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<NewsFeedProvider, AuthProvider>(
-        builder: (context, newsFeedProvider, authProvider, child) {
+    return Consumer3<NewsFeedProvider, AuthProvider,PostProvider>(
+        builder: (context, newsFeedProvider, authProvider,postProvider, child) {
       return RefreshIndicator(
         onRefresh: () {
           return _refresh(context);
@@ -50,6 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       child: createPostWidget(context, authProvider, newsFeedProvider: newsFeedProvider, isForGroup: false)),
+                  postProvider.isLoading?Visibility(
+                    visible: true,
+                    child: postProvider.isLoading?postStatusWidget(context, authProvider, postProvider,true,postProvider.status):postStatusWidget(context, authProvider, postProvider,false,postProvider.status),
+                  ):Visibility(
+                    visible: false,
+                    child: postProvider.isLoading?postStatusWidget(context, authProvider, postProvider,true,postProvider.status):postStatusWidget(context, authProvider, postProvider,false,postProvider.status),
+                  ),
                   ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
