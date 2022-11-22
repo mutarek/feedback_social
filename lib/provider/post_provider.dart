@@ -16,7 +16,6 @@ import 'package:image_picker/image_picker.dart';
 class PostResponse {
   NewsFeedModel? newsFeedData;
   bool? status;
-
   PostResponse({this.newsFeedData, this.status});
 }
 
@@ -28,6 +27,7 @@ class PostProvider with ChangeNotifier {
 
   bool isLoading = false;
   List<Http.MultipartFile> multipartFile = [];
+  String body = "";
 
   calculateMultipartFile() {
     multipartFile.clear();
@@ -48,7 +48,15 @@ class PostProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  disCardPost(){
+    status = 1;
+    isLoading = false;
+    notifyListeners();
+  }
+
+  int status = 0;
   Future<PostResponse> addPost(String postText, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
+    body = postText;
     isLoading = true;
     calculateMultipartFile();
     Response response;
@@ -59,13 +67,17 @@ class PostProvider with ChangeNotifier {
     } else {
       response = await postRepo.submitPost({"description": postText}, multipartFile);
     }
-    isLoading = false;
     if (response.statusCode == 201 || response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Posted");
       NewsFeedModel n = NewsFeedModel.fromJson(response.body);
+      isLoading = false;
+      status = 0;
       notifyListeners();
       return PostResponse(newsFeedData: n, status: true);
     } else {
+      isLoading = true;
+      status = 1;
+      notifyListeners();
       Fluttertoast.showToast(msg: "Something went wrong!");
       return PostResponse(newsFeedData: NewsFeedModel(), status: false);
     }
