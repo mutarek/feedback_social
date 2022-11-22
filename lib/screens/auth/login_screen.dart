@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/screens/auth/email_phone_auth.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
@@ -210,9 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   BorderRadius.circular(20),
                                             )),
                                         onPressed: () {
-                                          Get.to(SignUpScreen1(
-                                            isFromForgetPassword: false,
-                                          ));
+                                          Get.to(EmailOrPhoneNumber());
                                         },
                                         child: Text(
                                           getTranslated(
