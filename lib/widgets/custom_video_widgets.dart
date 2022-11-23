@@ -37,7 +37,10 @@ class _CustomVideoWidgetState extends State<CustomVideoWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: PodVideoPlayer(controller: controller),
+        child: PodVideoPlayer(
+          frameAspectRatio: controller.isInitialised?controller.videoPlayerValue!.size.width/controller.videoPlayerValue!.size.height:19/9,
+          videoAspectRatio: controller.isInitialised?controller.videoPlayerValue!.size.width/controller.videoPlayerValue!.size.height:19/9,
+            controller: controller),
       ),
     );
   }
