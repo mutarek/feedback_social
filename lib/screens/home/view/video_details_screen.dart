@@ -1,22 +1,14 @@
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_video_widgets.dart';
-import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class VideoDetailsScreen extends StatefulWidget {
+class VideoDetailsScreen extends StatelessWidget {
   final String videoURL;
+  final String videoThumbnailURl;
 
-  const VideoDetailsScreen(
-      {this.videoURL = '', Key? key})
-      : super(key: key);
+  const VideoDetailsScreen(this.videoThumbnailURl, {this.videoURL = '', Key? key}) : super(key: key);
 
-  @override
-  State<VideoDetailsScreen> createState() => _VideoDetailsScreenState();
-}
-
-class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,15 +18,10 @@ class _VideoDetailsScreenState extends State<VideoDetailsScreen> {
               onPressed: () {
                 Get.back();
               }),
-          title: const CustomText2(
-              title: 'Feedback Watch',
-              color: Colors.black,
-              fontWeight: FontWeight.w500,
-              fontSize: 16),
+          title: const CustomText2(title: 'Feedback Watch', color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
           backgroundColor: Colors.white,
           elevation: 0),
-      body: Center(
-          child: CustomVideoWidget(widget.videoURL)),
+      body: Center(child: CustomVideoWidget(videoURL, videoThumbnailURl)),
     );
   }
 }

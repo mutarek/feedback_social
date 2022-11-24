@@ -76,6 +76,8 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   pod_player: ^0.1.0
   any_link_preview: ^2.0.9
+  country_picker: ^2.0.17
+
 
   
 dev_dependencies: 

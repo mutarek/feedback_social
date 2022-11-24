@@ -48,7 +48,7 @@ class _GroupImageVideoViewState extends State<GroupImageVideoView> {
                           Get.to(() => SingleImageView(imageURL: groupProvider.groupImagesLists[index].image));
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => VideoDetailsScreen(videoURL: groupProvider.groupVideoLists[index].video)));
+                              builder: (_) => VideoDetailsScreen(groupProvider.groupVideoLists[index].thumbnail!,videoURL: groupProvider.groupVideoLists[index].video)));
                         }
                       },
                       child: Stack(
