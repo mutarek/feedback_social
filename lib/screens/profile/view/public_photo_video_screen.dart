@@ -50,7 +50,10 @@ class PublicPhotoViewScreen extends StatelessWidget {
             ),
           ),
         ),
-        title: CustomText(title: '${getTranslated("User",context)} ${isForImage ? getTranslated("Photos", context): getTranslated("Videos", context)}${getTranslated("Lists",context)}', color: Colors.black),
+        title: CustomText(
+            title:
+                '${getTranslated("User", context)} ${isForImage ? getTranslated("Photos", context) : getTranslated("Videos", context)}${getTranslated("Lists", context)}',
+            color: Colors.black),
       ),
       body: Consumer<PublicProfileProvider>(
         builder: (context, publicProfileProvider, child) => publicProfileProvider.isLoading
@@ -67,17 +70,13 @@ class PublicPhotoViewScreen extends StatelessWidget {
                           Get.to(() => SingleImageView(imageURL: publicProfileProvider.publicAllImages[index].image));
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => VideoDetailsScreen(videoURL: publicProfileProvider.publicAllVideo[index].video)));
+                              builder: (_) => VideoDetailsScreen(publicProfileProvider.publicAllVideo[index].thumbnail!,videoURL: publicProfileProvider.publicAllVideo[index].video)));
                         }
                       },
                       child: Stack(
                         children: [
                           Container(
-                           decoration: BoxDecoration(
-                             color: Colors.white,
-                             border: Border.all(),
-                             borderRadius: BorderRadius.circular(2)
-                           ),
+                            decoration: BoxDecoration(color: Colors.white, border: Border.all(), borderRadius: BorderRadius.circular(2)),
                             child: Center(
                               child: CachedNetworkImage(
                                   imageUrl: isForImage

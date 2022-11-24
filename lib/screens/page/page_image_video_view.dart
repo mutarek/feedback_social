@@ -43,7 +43,8 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
                       Get.to(() => SingleImageView(imageURL: pageProvider.pageDetailsModel!.photos![index].image!));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => VideoDetailsScreen(videoURL: pageProvider.pageDetailsModel!.videos![index].video)));
+                          builder: (_) => VideoDetailsScreen('',
+                              videoURL: pageProvider.pageDetailsModel!.videos![index].video)));
                     }
                   },
                   child: Stack(

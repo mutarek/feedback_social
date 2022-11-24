@@ -93,7 +93,8 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
               child: customNetworkImage(context, imageVideoLists[0].url))
           : InkWell(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideoLists[0].url2)));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(imageVideoLists[0].url, videoURL: imageVideoLists[0].url2)));
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 8),
@@ -111,7 +112,11 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
                         child: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (_) => VideoDetailsScreen(imageVideoLists[0].url, videoURL: imageVideoLists[0].url2)));
+                            },
+                            icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                       ),
                     ),
                   ],
@@ -149,7 +154,11 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
                         child: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (_) => VideoDetailsScreen(imageVideoLists[index].url, videoURL: imageVideoLists[index].url2)));
+                            },
+                            icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                       ),
                     )
                   : const SizedBox.shrink(),

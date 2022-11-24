@@ -1,8 +1,10 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/helper/number_helper.dart';
+import 'package:als_frontend/helper/url_checkig_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
+import 'package:als_frontend/screens/home/widget/any_link_preview.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
@@ -67,8 +69,11 @@ class TimeLineWidget extends StatelessWidget {
                     groupPageID: groupPageID,
                     isProfileScreen: isProfileScreen),
                 SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 8.0 : 0),
-                newsFeedData.description != null && newsFeedData.description!.isNotEmpty
-                    ? Text(newsFeedData.description!, style: latoStyle400Regular)
+                newsFeedData.totalImage==0 && newsFeedData.description!=null && newsFeedData.description!.isNotEmpty && newsFeedData.description!.contains("http")?
+                Text(newsFeedData.description!, style: latoStyle400Regular):Text('', style: latoStyle400Regular),
+                SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 8.0 : 0),
+               newsFeedData.description != null && newsFeedData.description!.isNotEmpty
+                    ? newsFeedData.totalImage==0 && newsFeedData.description!.contains("http")?AnyListPreview(extractdescription(newsFeedData.description!)):Text(newsFeedData.description!, style: latoStyle400Regular)
                     : const SizedBox.shrink(),
                 SizedBox(height: newsFeedData.totalImage != 0 && newsFeedData.description != null ? 10.0 : 0),
                 !newsFeedData.isShare!

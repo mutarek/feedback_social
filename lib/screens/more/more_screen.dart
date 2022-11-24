@@ -91,7 +91,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Get.to(const likedPageSuggestedPage());
+                      Get.to(const LikedPageSuggestedPage());
                     },
                   ),
 

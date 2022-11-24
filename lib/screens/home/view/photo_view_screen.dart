@@ -47,7 +47,7 @@ class PhotoViewScreen extends StatelessWidget {
                       onTap: () {
                         if (!imageVideo[index].isImage) {
                           Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(videoURL: imageVideo[index].url2)));
+                              .push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(imageVideo[index].url,videoURL: imageVideo[index].url2)));
                         } else {
                           Get.to(() => SingleImageView(imageURL: imageVideo[index].url));
                         }
