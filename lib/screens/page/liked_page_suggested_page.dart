@@ -88,9 +88,9 @@ class _likedPageSuggestedPageState extends State<likedPageSuggestedPage> {
                 child: Row(
                   children: [
                     Text(getTranslated("My pages", context), style: latoStyle700Bold),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
-                      padding: EdgeInsets.only(top: 5),
+                      padding: const EdgeInsets.only(top: 5),
                       child: Text("See all", style: latoStyle100Thin.copyWith(fontSize: 10)),
                     ),
                   ],
@@ -155,7 +155,7 @@ class _likedPageSuggestedPageState extends State<likedPageSuggestedPage> {
                     Text(getTranslated("Page you liked", context) ,style: latoStyle700Bold),
                     const Spacer(),
                     Padding(
-                      padding: EdgeInsets.only(top: 5),
+                      padding: const EdgeInsets.only(top: 5),
                       child: Text(getTranslated("See all", context), style: latoStyle100Thin.copyWith(fontSize: 10)),
                     ),
                   ],
@@ -163,7 +163,7 @@ class _likedPageSuggestedPageState extends State<likedPageSuggestedPage> {
               ),
               SizedBox(
                 height: height * 0.26,
-                child: pageProvider.allSuggestPageList.isEmpty?CupertinoActivityIndicator():ListView.builder(
+                child: pageProvider.allSuggestPageList.isEmpty?const CupertinoActivityIndicator():ListView.builder(
                     itemCount: pageProvider.allSuggestPageList.length>2?pageProvider.allSuggestPageList.length:2,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
