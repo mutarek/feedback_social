@@ -14,6 +14,7 @@ import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -90,30 +91,18 @@ class TimeLineWidget extends StatelessWidget {
                             newsFeedData.description!.isNotEmpty
                         ? 8.0
                         : 0),
-                newsFeedData.totalImage == 0 &&
-                        newsFeedData.description != null &&
+                newsFeedData.description != null &&
                         newsFeedData.description!.isNotEmpty &&
                         newsFeedData.description!.contains("http")
-                    ? Column(
-                  children: [
-                    for(var link in extractdescription(newsFeedData.description!))
-                      InkWell(
-                        onTap: (){
-                          openNewLink(link);
+                    ? MarkdownBody(
+                        onTapLink: (text, href, title) {
+                          href != null ? openNewLink(href) : null;
                         },
-                        child: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: '${link}',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.blue,fontSize: 17),
-                            ),
-                          ],
-                        ),
-                    ),
+                        selectable: true,
+                        data: newsFeedData.description!,
+                        styleSheet:
+                            MarkdownStyleSheet(a: TextStyle(fontSize: 17),p: latoStyle500Medium),
                       )
-                  ],
-                )
                     : SizedBox(),
                 SizedBox(
                     height: newsFeedData.description != null &&
@@ -121,14 +110,17 @@ class TimeLineWidget extends StatelessWidget {
                         ? 8.0
                         : 0),
                 newsFeedData.description != null &&
-                        newsFeedData.description!.isNotEmpty
-                    ? newsFeedData.totalImage == 0 &&
-                            newsFeedData.description!.contains("http")
-                        ? AnyListPreview(
-                            extractdescription(newsFeedData.description!))
-                        : Text(newsFeedData.description!,
-                            style: latoStyle400Regular)
-                    : const SizedBox.shrink(),
+                        newsFeedData.description!.isNotEmpty &&
+                        newsFeedData.totalImage == 0 &&
+                        newsFeedData.description!.contains("http")
+                    ? AnyListPreview(
+                        extractdescription(newsFeedData.description!))
+                    : newsFeedData.description!.contains("http")
+                        ? SizedBox()
+                        : Text(
+                            newsFeedData.description!,
+                            style: latoStyle700Bold,
+                          ),
                 SizedBox(
                     height: newsFeedData.totalImage != 0 &&
                             newsFeedData.description != null

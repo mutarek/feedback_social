@@ -116,7 +116,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => VideoDetailsScreen(imageVideoLists[0].url, videoURL: imageVideoLists[0].url2)));
                             },
-                            icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                            icon: Icon(Icons.video_collection_rounded, color: Colors.black, size: 38)),
                       ),
                     ),
                   ],

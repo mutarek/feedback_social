@@ -1,3 +1,4 @@
+import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,7 +48,7 @@ class _AnyListPreviewState extends State<AnyListPreview> {
     return Container(
       child: AnyLinkPreview(
         onTap: (){
-          Get.snackbar("Web", "You clicked on url",snackPosition: SnackPosition.BOTTOM);
+          openNewLink(widget.url[widget.url.length-1]);
         },
         link: widget.url.isEmpty?"https://feedback-social.com/":widget.url[widget.url.length-1],
         displayDirection: UIDirection.uiDirectionHorizontal,
