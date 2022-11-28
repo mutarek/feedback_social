@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:als_frontend/data/model/response/chat/AllMessageChatListModel.dart';
-import 'package:als_frontend/data/model/response/chat/ChatMessageModel.dart';
+import 'package:als_frontend/data/model/response/chat/all_message_chat_list_model.dart';
+import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/chat_repo.dart';
 import 'package:flutter/material.dart';
@@ -148,7 +148,7 @@ class ChatProvider with ChangeNotifier {
       isChangeValue = false;
       notifyListeners();
     }, onDone: () {
-      print("disconected");
+      debugPrint("disconected");
     });
   }
 
@@ -214,7 +214,7 @@ class ChatProvider with ChangeNotifier {
               timer.cancel();
               ticker.cancel();
             }
-            print("Trying for connect : disconected");
+            debugPrint("Trying for connect : disconected");
           }, onError: (error) {
             if (value > 5) {
               timer.cancel();

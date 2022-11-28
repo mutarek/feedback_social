@@ -9,7 +9,6 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';

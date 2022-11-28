@@ -19,6 +19,6 @@ class CommentRepo {
   }
 
   Future<Response> addReply(String url, String commentID, String comment) async {
-    return await apiClient.postData('${url}$commentID/reply/', {"comment": comment});
+    return await apiClient.postData('$url$commentID/reply/', {"comment": comment});
   }
 }

@@ -1,9 +1,11 @@
-import 'package:get/get.dart';
+
+
+import 'package:flutter/cupertino.dart';
 
 bool hasValidUrl(String value) {
   String pattern = r'(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
-  RegExp regExp = new RegExp(pattern);
-  if (value.length == 0) {
+  RegExp regExp = RegExp(pattern);
+  if (value.isEmpty) {
     return false;
   }
   else if (regExp.hasMatch(value)) {
@@ -25,7 +27,9 @@ List<String> extractdescription(String text){
   List<String> urls = urlMatches.map(
           (urlMatch) => text.substring(urlMatch.start, urlMatch.end))
       .toList();
-  urls.forEach((x) => print(x));
+  for (var x in urls) {
+    debugPrint(x);
+  }
   return urls;
 }
 

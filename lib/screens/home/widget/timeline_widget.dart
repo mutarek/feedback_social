@@ -101,9 +101,9 @@ class TimeLineWidget extends StatelessWidget {
                         selectable: true,
                         data: newsFeedData.description!,
                         styleSheet:
-                            MarkdownStyleSheet(a: TextStyle(fontSize: 17),p: latoStyle500Medium),
+                            MarkdownStyleSheet(a: const TextStyle(fontSize: 17),p: latoStyle500Medium),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 SizedBox(
                     height: newsFeedData.description != null &&
                             newsFeedData.description!.isNotEmpty
@@ -115,7 +115,7 @@ class TimeLineWidget extends StatelessWidget {
                         newsFeedData.description!.contains("http")
                     ? AnyLinkPreviewGlobalWidget(extractdescription(newsFeedData.description!),120.0,double.infinity,10.0)
                     : newsFeedData.description!.contains("http")
-                        ? SizedBox()
+                        ? const SizedBox()
                         : Text(
                             newsFeedData.description!,
                             style: latoStyle700Bold,

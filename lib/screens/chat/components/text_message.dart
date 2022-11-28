@@ -1,4 +1,4 @@
-import 'package:als_frontend/data/model/response/chat/ChatMessageModel.dart';
+import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/helper/url_checkig_helper.dart';
 import 'package:als_frontend/screens/chat/widget/any_link_preview_chat_widget.dart';
@@ -41,7 +41,7 @@ class TextMessage extends StatelessWidget {
                   data: message!.text!,
                   shrinkWrap: true,
                   styleSheet: MarkdownStyleSheet(
-                      a: TextStyle(fontSize: 12)),
+                      a: const TextStyle(fontSize: 12)),
                 ),
                 const SizedBox(height: 10,),
                 AnyLinkPreviewChat(extractdescription(message!.text!))

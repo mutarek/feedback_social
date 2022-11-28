@@ -1,7 +1,6 @@
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AnyLinkPreviewGlobalWidget extends StatefulWidget {
   AnyLinkPreviewGlobalWidget(this.url,this.height,this.width,this.radius, {Key? key}) : super(key: key);
@@ -63,12 +62,12 @@ class _AnyListPreviewState extends State<AnyLinkPreviewGlobalWidget> {
         showMultimedia: true,
         bodyMaxLines: 2,
         bodyTextOverflow: TextOverflow.ellipsis,
-        titleStyle: TextStyle(
+        titleStyle: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
           fontSize: 15,
         ),
-        bodyStyle: TextStyle(color: Colors.grey, fontSize: 12),
+        bodyStyle: const TextStyle(color: Colors.grey, fontSize: 12),
       ),
     );
   }

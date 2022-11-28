@@ -270,9 +270,9 @@ class Image {
       };
 }
 
-enum PostType { GROUP }
+enum PostType { group }
 
-final postTypeValues = EnumValues({"group": PostType.GROUP});
+final postTypeValues = EnumValues({"group": PostType.group});
 
 class Video {
   Video({

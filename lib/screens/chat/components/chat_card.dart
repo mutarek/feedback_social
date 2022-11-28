@@ -1,4 +1,4 @@
-import 'package:als_frontend/data/model/response/chat/AllMessageChatListModel.dart';
+import 'package:als_frontend/data/model/response/chat/all_message_chat_list_model.dart';
 import 'package:als_frontend/helper/date_converter.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';

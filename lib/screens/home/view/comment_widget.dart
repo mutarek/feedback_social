@@ -1,4 +1,4 @@
-import 'package:als_frontend/data/model/response/CommentModels.dart';
+import 'package:als_frontend/data/model/response/comment_models.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/helper/url_checkig_helper.dart';
@@ -277,7 +277,7 @@ class CommentWidget extends StatelessWidget {
                                                 commentProvider.comments[index]
                                                     .replies![i].comment!,
                                                 style: GoogleFonts.lato(
-                                                    fontSize: 16))
+                                                    fontSize: 16)),
                                           ],
                                         ),
                                       ),

@@ -15,10 +15,9 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class SetNewPassword extends StatefulWidget {
-  SetNewPassword({Key? key, required this.emailorNumber, required this.otpCode})
-      : super(key: key);
-  String emailorNumber;
-  String otpCode;
+  const SetNewPassword({Key? key, required this.emailOrNumber, required this.otpCode}) : super(key: key);
+  final String emailOrNumber;
+  final String otpCode;
 
   @override
   State<SetNewPassword> createState() => _SetNewPasswordState();
@@ -47,10 +46,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                   child: Container(
                     height: height * 0.4,
                     width: width * 0.4,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(width * 4))),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
                   ),
                 ),
                 Column(
@@ -62,15 +58,11 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                         width: width,
                         color: Colors.white,
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              top: height * 0.06, left: width * 0.1),
+                          padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                           child: Text(
                             getTranslated('Set New Password', context),
                             // getTranslated('Registration', context)!,
-                            style: latoStyle400Regular.copyWith(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                            style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                         ),
                       ),
@@ -86,21 +78,17 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                 children: [
                                   SizedBox(height: height * 0.02),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 35),
+                                    padding: const EdgeInsets.symmetric(horizontal: 35),
                                     child: CustomText2(
                                       title: 'Please Enter a new password',
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
-                                      textStyle: latoStyle600SemiBold.copyWith(
-                                          color: colorPrimaryDark,
-                                          fontSize: 16),
+                                      textStyle: latoStyle600SemiBold.copyWith(color: colorPrimaryDark, fontSize: 16),
                                     ),
                                   ),
                                   const SizedBox(height: 50),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
+                                    padding: const EdgeInsets.symmetric(horizontal: 15),
                                     child: CustomTextField(
                                       fillColor: Colors.white,
                                       hintText: getTranslated('New Password', context),
@@ -108,8 +96,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                       controller: passwordController,
                                       verticalSize: 15,
                                       autoFillHints: AutofillHints.email,
-                                      autoFillHints2:
-                                          AutofillHints.telephoneNumber,
+                                      autoFillHints2: AutofillHints.telephoneNumber,
                                       inputType: TextInputType.emailAddress,
                                       inputAction: TextInputAction.done,
                                     ),
@@ -131,35 +118,27 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                     alignment: Alignment.center,
                     height: height * 0.4,
                     width: width * 0.4,
-                    child:
-                        Consumer<AuthProvider>(builder: (context, auth, child) {
+                    child: Consumer<AuthProvider>(builder: (context, auth, child) {
                       return CustomConatinerButton(
                           child: (auth.isLoading == false)
-                              ? const Icon(Icons.arrow_forward,
-                                  color: Colors.white)
-                              : const Center(
-                                  child: CupertinoActivityIndicator()),
+                              ? const Icon(Icons.arrow_forward, color: Colors.white)
+                              : const Center(child: CupertinoActivityIndicator()),
                           ontap: () {
                             if (passwordController.text.isEmpty) {
                               showMessage(
-                                message: getTranslated(
-                                    'Please fill all the form', context),
+                                message: getTranslated('Please fill all the form', context),
                                 context: context,
                               );
                             } else {
-                              auth.resetPasswordConfirm(
-                                  widget.emailorNumber,
-                                  passwordController.text.toString(),
-                                  widget.otpCode,
+                              auth.resetPasswordConfirm(widget.emailOrNumber, passwordController.text.toString(), widget.otpCode,
                                   (bool status, String message) {
-                                    if(status){
-                                      Fluttertoast.showToast(msg: message);
-                                      Get.offAll(()=> const LoginScreen());
-                                    }
-                                    else{
-                                      Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
-                                    }
-                                  });
+                                if (status) {
+                                  Fluttertoast.showToast(msg: message);
+                                  Get.offAll(() => const LoginScreen());
+                                } else {
+                                  Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                                }
+                              });
                             }
                           });
                     }),
@@ -179,8 +158,7 @@ class TsClip2 extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 80);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 120);
+    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 120);
     path.lineTo(size.width, 0);
     path.close();
     return path;

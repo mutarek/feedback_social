@@ -187,8 +187,8 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                                 ),
                                                                 Text(
                                                                   (groupProvider.groupDetailsModel.isMember == false)
-                                                                      ? "${getTranslated('Join Group', context)}"
-                                                                      : "${getTranslated('Leave', context)}",
+                                                                      ? getTranslated('Join Group', context)
+                                                                      : getTranslated('Leave', context),
                                                                   style: TextStyle(fontSize: height * 0.012, color: Colors.white),
                                                                 )
                                                               ],
@@ -208,10 +208,10 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                           height: height * 0.03,
                                           color: Colors.white,
                                           child: TabBar(tabs: [
-                                            Text("${getTranslated('Discussion', context)}", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                            Text("${getTranslated('Photos', context)}", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                            Text("${getTranslated('Videos', context)}", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                            Text("${getTranslated('Members', context)}", style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                            Text(getTranslated('Discussion', context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                            Text(getTranslated('Photos', context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                            Text(getTranslated('Videos', context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                            Text(getTranslated('Members', context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                           ]),
                                         ),
                                       ],

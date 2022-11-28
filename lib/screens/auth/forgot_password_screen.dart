@@ -14,8 +14,8 @@ class ForgotPasswordScreen extends StatelessWidget {
  final String emailorPhonenumber;
  final String otpcode;
 
-   FocusNode passwordFocus = FocusNode();
-   TextEditingController passwordController = TextEditingController();
+   final FocusNode passwordFocus = FocusNode();
+   final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;

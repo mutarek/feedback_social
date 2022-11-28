@@ -58,6 +58,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                     if (value == null || value.isEmpty) {
                       return getTranslated("Please enter some text", context);
                     }
+                    return null;
                   },
                   controller: repeatPasswordContorller,
                   fillColor: const Color(0xffd7f2d3),

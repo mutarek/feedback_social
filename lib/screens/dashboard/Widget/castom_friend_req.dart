@@ -1,6 +1,4 @@
 import 'package:als_frontend/util/theme/app_colors.dart';
-import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 
 class FriendRequestWidget extends StatelessWidget {
@@ -57,17 +55,17 @@ class FriendRequestWidget extends StatelessWidget {
             ),
             Expanded(
               flex: 2,
-              child: Text(userName, style: TextStyle(fontSize: 12)),
+              child: Text(userName, style: const TextStyle(fontSize: 12)),
             ),
             Expanded(
                 flex: 2,
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     border: Border.all(width: 1,color: Colors.blueGrey),
                     borderRadius: BorderRadius.circular(5)
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Following',
                       style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
