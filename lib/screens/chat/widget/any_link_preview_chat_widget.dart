@@ -3,16 +3,16 @@ import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AnyListPreview extends StatefulWidget {
-  AnyListPreview(this.url, {Key? key}) : super(key: key);
+class AnyLinkPreviewChat extends StatefulWidget {
+  AnyLinkPreviewChat(this.url, {Key? key}) : super(key: key);
 
   List url = [];
 
   @override
-  State<AnyListPreview> createState() => _AnyListPreviewState();
+  State<AnyLinkPreviewChat> createState() => _AnyListPreviewState();
 }
 
-class _AnyListPreviewState extends State<AnyListPreview> {
+class _AnyListPreviewState extends State<AnyLinkPreviewChat> {
 
   @override
   void initState() {
@@ -46,6 +46,8 @@ class _AnyListPreviewState extends State<AnyListPreview> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 50,
+      width: 200,
       child: AnyLinkPreview(
         onTap: (){
           openNewLink(widget.url[widget.url.length-1]);

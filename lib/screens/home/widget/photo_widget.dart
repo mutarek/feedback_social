@@ -107,16 +107,22 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                       right: 0,
                       top: 0,
                       bottom: 0,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
-                        child: IconButton(
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => VideoDetailsScreen(imageVideoLists[0].url, videoURL: imageVideoLists[0].url2)));
-                            },
-                            icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                      child: Center(
+                        child: Container(
+                          height: 75,
+                          width: 75,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                              border: Border.all(width: 3,color: Colors.white),
+                              ),
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (_) => VideoDetailsScreen(imageVideoLists[0].url, videoURL: imageVideoLists[0].url2)));
+                              },
+                              icon: Icon(Icons.play_arrow, color: Colors.white, size: 38)),
+                        ),
                       ),
                     ),
                   ],

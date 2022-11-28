@@ -31,3 +31,11 @@ openNewEmail(String mail) async {
     throw 'Could not launch ${params.toString()}';
   }
 }
+openNewLink(String link) async{
+  if (await canLaunch(link)) {
+    await launch(link);
+  } else {
+    throw 'Could not launch $link';
+  }
+}
+

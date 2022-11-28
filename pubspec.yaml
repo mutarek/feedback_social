@@ -77,6 +77,7 @@ dependencies:
   pod_player: ^0.1.0
   any_link_preview: ^2.0.9
   country_picker: ^2.0.17
+  flutter_markdown: ^0.6.13
 
 
 

@@ -28,3 +28,8 @@ List<String> extractdescription(String text){
   urls.forEach((x) => print(x));
   return urls;
 }
+
+String removeAllUrl(String text){
+  final newString = text.replaceAll(RegExp(r"(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"), "");
+  return newString;
+}
