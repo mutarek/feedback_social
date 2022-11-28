@@ -1,8 +1,12 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/page/public_page_screen.dart';
+import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
 
 class likedPageSuggestedPage extends StatefulWidget {
@@ -110,37 +114,42 @@ class _likedPageSuggestedPageState extends State<likedPageSuggestedPage> {
                           ),
                           itemCount: pageProvider.authorPageLists.length>5?pageProvider.authorPageLists.length:5,
                           itemBuilder: (BuildContext ctx, index) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CircleAvatar(
-                                  radius: 24,
-                                  backgroundColor: Colors.black12,
-                                  backgroundImage:
-                                      NetworkImage(pageProvider.authorPageLists[index].avatar),
-                                ),
-                                SizedBox(
-                                  width: width * 0.01,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: height * 0.01,
-                                    ),
-                                    Text(pageProvider.authorPageLists[index].name,
-                                        style: latoStyle700Bold),
-                                    const SizedBox(
-                                      height: 2,
-                                    ),
-                                    Text(
-                                        "${pageProvider.authorPageLists[index].followers.toString()} ${getTranslated("Followers", context)}",
-                                        style: latoStyle100Thin.copyWith(fontSize: 10)),
-                                  ],
-                                )
-                              ],
+                            return InkWell(
+                              onTap: (){
+                                Get.to(UserPageScreen(pageProvider.authorPageLists[index].id.toString(), index));
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 24,
+                                    backgroundColor: Colors.black12,
+                                    backgroundImage:
+                                        NetworkImage(pageProvider.authorPageLists[index].avatar),
+                                  ),
+                                  SizedBox(
+                                    width: width * 0.01,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: height * 0.01,
+                                      ),
+                                      Text(pageProvider.authorPageLists[index].name,
+                                          style: latoStyle700Bold),
+                                      const SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                          "${pageProvider.authorPageLists[index].followers.toString()} ${getTranslated("Followers", context)}",
+                                          style: latoStyle100Thin.copyWith(fontSize: 10)),
+                                    ],
+                                  )
+                                ],
+                              ),
                             );
                           }),
                 ),
@@ -166,39 +175,46 @@ class _likedPageSuggestedPageState extends State<likedPageSuggestedPage> {
                 child: pageProvider.allSuggestPageList.isEmpty?const CupertinoActivityIndicator():ListView.builder(
                     itemCount: pageProvider.allSuggestPageList.length>2?pageProvider.allSuggestPageList.length:2,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                          leading:  CircleAvatar(
-                            radius: 24,
-                            backgroundColor: Colors.black12,
-                            backgroundImage: NetworkImage(pageProvider.allSuggestPageList[index].avatar),
-                          ),
-                          trailing: Container(
-                            height: height * 0.027,
-                            width: width * 0.15,
-                            decoration: BoxDecoration(
-                                color: const Color(0xff090D2A),
-                                borderRadius: BorderRadius.circular(4)),
-                            child: Center(
-                                child: Text(
-                                  getTranslated("Follow", context),
-                                  style:
-                                  latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 10),
-                                )),
-                          ),
-                          title: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: height * 0.01,
-                              ),
-                              Text(pageProvider.allSuggestPageList[index].name, style: latoStyle700Bold),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              Text("${pageProvider.allSuggestPageList[index].followers.toString()} ${getTranslated("Followers", context)}", style: latoStyle100Thin.copyWith(fontSize: 10)),
-                            ],
-                          ));
+                      return InkWell(
+                        onTap: (){
+                        Get.to(PublicPageScreen(
+                            pageProvider.allSuggestPageList[index].id.toString()
+                        ));
+                        },
+                        child: ListTile(
+                            leading:  CircleAvatar(
+                              radius: 24,
+                              backgroundColor: Colors.black12,
+                              backgroundImage: NetworkImage(pageProvider.allSuggestPageList[index].avatar),
+                            ),
+                            trailing: Container(
+                              height: height * 0.027,
+                              width: width * 0.15,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xff090D2A),
+                                  borderRadius: BorderRadius.circular(4)),
+                              child: Center(
+                                  child: Text(
+                                    getTranslated("Follow", context),
+                                    style:
+                                    latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 10),
+                                  )),
+                            ),
+                            title: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: height * 0.01,
+                                ),
+                                Text(pageProvider.allSuggestPageList[index].name, style: latoStyle700Bold),
+                                const SizedBox(
+                                  height: 2,
+                                ),
+                                Text("${pageProvider.allSuggestPageList[index].followers.toString()} ${getTranslated("Followers", context)}", style: latoStyle100Thin.copyWith(fontSize: 10)),
+                              ],
+                            )),
+                      );
                     }),
               ),
             ],
