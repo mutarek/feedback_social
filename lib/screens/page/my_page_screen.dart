@@ -47,7 +47,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         elevation: 0,
         title: Consumer<PageProvider>(
           builder: (context, pageProvider, child) => CustomText(
-            title: pageProvider.menuValue == 0 ? getTranslated("Page",context) : getTranslated("Suggested Page",context) ,
+            title: pageProvider.menuValue == 0 ? getTranslated("Page", context) : getTranslated("Suggested Page", context),
             textStyle: latoStyle700Bold.copyWith(color: Palette.primary, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
         ),
@@ -97,7 +97,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
                           provider.changeMenuValue(i);
                         },
-                        children: <Widget>[myPageView(provider), mySuggestedView(provider)],
+                        children: <Widget>[
+                          myPageView(provider),
+                          mySuggestedView(provider),
+                        ],
                       ),
                     ),
                   ],
@@ -119,12 +122,14 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget(getTranslated("Personal Page:",context)),
+                      titleMenuWidget(getTranslated("Personal Page:", context)),
                       Container(margin: const EdgeInsets.only(bottom: 10)),
                     ],
                   ),
                   (provider.authorPageLists.isEmpty)
-                      ? CustomText(title: getTranslated("You Haven't any Personal Page", context), textStyle: latoStyle400Regular.copyWith(fontSize: 16))
+                      ? CustomText(
+                          title: getTranslated("You Haven't any Personal Page", context),
+                          textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                       : Container(
                           height: 100,
                           alignment: Alignment.centerLeft,
@@ -192,7 +197,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 groupOrPageName: provider.likedPageLists[index].name,
                                 groupOrPageLikes: "${provider.likedPageLists[index].followers} ${getTranslated("Likes", context)} ");
                           })
-                      : CustomText(title: getTranslated("No History found", context), textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
+                      : CustomText(
+                          title: getTranslated("No History found", context), textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
                 ],
               ),
             )),
