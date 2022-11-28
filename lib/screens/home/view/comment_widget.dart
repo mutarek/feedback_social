@@ -87,7 +87,7 @@ class CommentWidget extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                           commentModels.comment!.contains("https")
                               ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
@@ -104,7 +104,12 @@ class CommentWidget extends StatelessWidget {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    AnyLinkPreviewGlobalWidget(extractdescription(commentModels.comment!),60.0,200.0,3),
+                                    AnyLinkPreviewGlobalWidget(
+                                        extractdescription(
+                                            commentModels.comment!),
+                                        60.0,
+                                        200.0,
+                                        3),
                                   ],
                                 )
                               : CustomText(
@@ -250,34 +255,92 @@ class CommentWidget extends StatelessWidget {
                                                     fontSize: 14,
                                                     fontWeight:
                                                         FontWeight.bold)),
-                                            commentProvider.comments[index].replies![i].comment!.contains("http")?
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                MarkdownBody(
-                                                  onTapLink: (text, href, title) {
-                                                    href != null ? openNewLink(href) : null;
-                                                  },
-                                                  selectable: true,
-                                                  data: commentProvider.comments[index].replies![i].comment!,
-                                                  styleSheet: MarkdownStyleSheet(
-                                                      a: TextStyle(fontSize: 17),
-                                                      p: latoStyle500Medium),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                AnyLinkPreviewGlobalWidget(extractdescription(
-                                                    commentProvider.comments[index].replies![i].comment!),55.0,200.0,3),
-                                              ],
-                                            )
-                                                :Text(
-                                                commentProvider.comments[index]
-                                                    .replies![i].comment!,
-                                                style: GoogleFonts.lato(
-                                                    fontSize: 16)),
+                                            commentProvider.comments[index]
+                                                    .replies![i].comment!
+                                                    .contains("http")
+                                                ? Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      MarkdownBody(
+                                                        onTapLink: (text, href,
+                                                            title) {
+                                                          href != null
+                                                              ? openNewLink(
+                                                                  href)
+                                                              : null;
+                                                        },
+                                                        selectable: true,
+                                                        data: commentProvider
+                                                            .comments[index]
+                                                            .replies![i]
+                                                            .comment!,
+                                                        styleSheet:
+                                                            MarkdownStyleSheet(
+                                                                a: TextStyle(
+                                                                    fontSize:
+                                                                        17),
+                                                                p: latoStyle500Medium),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      AnyLinkPreviewGlobalWidget(
+                                                          extractdescription(
+                                                              commentProvider
+                                                                  .comments[
+                                                                      index]
+                                                                  .replies![i]
+                                                                  .comment!),
+                                                          55.0,
+                                                          200.0,
+                                                          3),
+                                                    ],
+                                                  )
+                                                : Text(
+                                                    commentProvider
+                                                        .comments[index]
+                                                        .replies![i]
+                                                        .comment!,
+                                                    style: GoogleFonts.lato(
+                                                        fontSize: 16)),
+                                            // Text(
+                                            //     commentProvider.comments[index]
+                                            //         .replies![i].comment!,
+                                            //     style: GoogleFonts.lato(
+                                            //         fontSize: 16))
+                                            commentProvider.comments[index]
+                                                    .replies![i].comment!
+                                                    .contains('https')
+                                                ? MarkdownBody(
+                                                    onTapLink:
+                                                        (text, href, title) {
+                                                      href != null
+                                                          ? openNewLink(href)
+                                                          : null;
+                                                    },
+                                                    selectable: true,
+                                                    data: commentProvider
+                                                        .comments[index]
+                                                        .replies![i]
+                                                        .comment!,
+                                                    styleSheet: MarkdownStyleSheet(
+                                                        a: const TextStyle(
+                                                            fontSize: 17,
+                                                            color: Colors.blue),
+                                                        p: latoStyle500Medium),
+                                                  )
+                                                : Text(
+                                                    commentProvider
+                                                        .comments[index]
+                                                        .replies![i]
+                                                        .comment!,
+                                                    style: GoogleFonts.lato(
+                                                        fontSize: 16))
                                           ],
                                         ),
                                       ),
