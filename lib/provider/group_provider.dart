@@ -15,7 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as Http;
+import 'package:http/http.dart' as http;
 
 class GroupProvider with ChangeNotifier {
   final GroupRepo groupRepo;
@@ -127,10 +127,10 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
     Response response;
     if (file != null) {
-      List<Http.MultipartFile> multipartFile = [];
+      List<http.MultipartFile> multipartFile = [];
 
       multipartFile
-          .add(Http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
+          .add(http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
 
       response = await groupRepo.createGroupWithImageUpload(
           {"name": groupName, "category": categoryValue.id.toString(), "is_private": groupISPrivate.toString()}, multipartFile);
@@ -162,10 +162,10 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
     Response response;
     if (file != null) {
-      List<Http.MultipartFile> multipartFile = [];
+      List<http.MultipartFile> multipartFile = [];
 
       multipartFile
-          .add(Http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
+          .add(http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
 
       response = await groupRepo.updateGroupWithImageUpload(
           {"name": groupName, "category": categoryValue.id.toString(), "is_private": groupISPrivate.toString()}, multipartFile, groupID);

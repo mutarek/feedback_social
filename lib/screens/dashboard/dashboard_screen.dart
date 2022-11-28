@@ -75,7 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             icon: SvgPicture.asset(ImagesModel.homeURI,
                                 color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, width: 22, height: 22),
                             selectedColor: Colors.blue,
-                            title: Text('${getTranslated('Home', context)}',
+                            title: Text(getTranslated('Home', context),
                                 style: latoStyle600SemiBold.copyWith(
                                     color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, fontSize: 12))),
                         AnimatedBarItems(
@@ -147,7 +147,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       children: [
                         dashboardProvider.selectIndex == 0
                             ? AppBar(
-                                title: CustomText2(title: 'Feedback', color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 27),
+                                title: const CustomText2(title: 'Feedback', color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 27),
                                 backgroundColor: Colors.white,
                                 elevation: 0,
                                 actions: [
@@ -204,7 +204,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             Get.to(SearchScreen());
                                           },
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                                 ],
                               ),
                         splashProvider.isLoading || splashProvider.value == -2 || splashProvider.value == 1

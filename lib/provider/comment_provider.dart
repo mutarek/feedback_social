@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:als_frontend/data/model/response/CommentModels.dart';
+import 'package:als_frontend/data/model/response/comment_models.dart';
 import 'package:als_frontend/data/repository/comment_repo.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';

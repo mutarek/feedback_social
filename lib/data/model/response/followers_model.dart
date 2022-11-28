@@ -1,6 +1,6 @@
 
 class FollowersModel {
-  FollowersModel.FollowersModel({
+  FollowersModel({
     this.id,
     this.fullName,
     this.isFriend,

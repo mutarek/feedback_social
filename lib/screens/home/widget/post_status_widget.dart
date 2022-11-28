@@ -6,20 +6,20 @@ import 'package:flutter/material.dart';
 Widget postStatusWidget(BuildContext context, AuthProvider authProvider,
     PostProvider postProvider, bool isLoading, int status) {
   return Container(
-    padding: EdgeInsets.only(left: 10, right: 10),
+    padding: const EdgeInsets.only(left: 10, right: 10),
     height: 50,
     width: double.infinity,
     child: Card(
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
             child: Image.network(authProvider.profileImage),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Text(status==1?"Opps! Failed":isLoading?"Posting....":"Posted",style: latoStyle700Bold,),
@@ -46,7 +46,7 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider,
                               child:const Text('Retry')))
                     ],
                   )
-                : Text(''),
+                : const Text(''),
           )
         ],
       ),

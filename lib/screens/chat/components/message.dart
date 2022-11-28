@@ -1,4 +1,4 @@
-import 'package:als_frontend/data/model/response/chat/ChatMessageModel.dart';
+import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/screens/chat/components/text_message.dart';
 import 'package:als_frontend/screens/chat/enum/enum.dart';
 import 'package:als_frontend/util/size.util.dart';

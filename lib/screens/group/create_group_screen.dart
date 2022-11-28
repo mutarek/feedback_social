@@ -135,7 +135,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         ),
                         const SizedBox(height: 20),
                         CustomButton(
-                          btnTxt: widget.isUpdateGroup ? "${getTranslated('Update', context)}" : "${getTranslated('Add', context)}",
+                          btnTxt: widget.isUpdateGroup ? getTranslated('Update', context) : getTranslated('Add', context),
                           onTap: () {
                             if (groupNameController.text.isNotEmpty) {
                               if (widget.isUpdateGroup) {

@@ -2,7 +2,6 @@ import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/otp_screen.dart';
 import 'package:als_frontend/util/palette.dart';
-import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
@@ -71,7 +70,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                             child: Column(
                               children: [
                             TabBar(
-                                    indicator: UnderlineTabIndicator(
+                                    indicator: const UnderlineTabIndicator(
                                         borderSide: BorderSide(width: 1.0, color: Colors.white),
                                         insets: EdgeInsets.symmetric(horizontal: 16.0)),
                                     tabs: [
@@ -120,16 +119,16 @@ class EmailOrPhoneNumber extends StatelessWidget {
                                                       authProvider.pickupCountry(context);
                                                       },
                                                         child: Padding(
-                                                          padding: EdgeInsets.only(left: 20),
-                                                            child: Text("${authProvider.code}",style: latoStyle800ExtraBold,))),
-                                                     Divider(
+                                                          padding: const EdgeInsets.only(left: 20),
+                                                            child: Text(authProvider.code,style: latoStyle800ExtraBold,))),
+                                                     const Divider(
                                                        color: Colors.black,
                                                      ),
                                                       Expanded(child:
                                                           TextField(
                                                             controller: phoneController,
                                                             keyboardType: TextInputType.number,
-                                                            decoration: InputDecoration(
+                                                            decoration: const InputDecoration(
                                                               hintText: "Phone Number",
 
 
@@ -143,7 +142,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                                             ),
                                           ),
                                           Padding(
-                                            padding:  EdgeInsets.only(bottom: 20,left: 10,right: 10),
+                                            padding:  const EdgeInsets.only(bottom: 20,left: 10,right: 10),
                                             child: SizedBox(
                                               height: height*0.05,
                                               child:

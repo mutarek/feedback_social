@@ -1,4 +1,4 @@
-import 'package:als_frontend/data/model/response/CommentModels.dart';
+import 'package:als_frontend/data/model/response/comment_models.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
@@ -239,7 +239,7 @@ class CommentWidget extends StatelessWidget {
                                               selectable: true,
                                               data: commentProvider.comments[index].replies![i].comment!,
                                               styleSheet:
-                                              MarkdownStyleSheet(a: TextStyle(fontSize: 17,color: Colors.blue),p: latoStyle500Medium),
+                                              MarkdownStyleSheet(a: const TextStyle(fontSize: 17,color: Colors.blue),p: latoStyle500Medium),
                                             ):Text(
                                              commentProvider.comments[index]
                                                    .replies![i].comment!,

@@ -1,7 +1,6 @@
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AnyListPreview extends StatefulWidget {
   AnyListPreview(this.url, {Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class _AnyListPreviewState extends State<AnyListPreview> {
     if (_isValid) {
       Metadata? _metadata = await AnyLinkPreview.getMetadata(
         link: url,
-        cache: Duration(days: 7),
+        cache: const Duration(days: 7),
         proxyUrl: "https://cors-anywhere.herokuapp.com/", // Needed for web app
       );
       debugPrint("URL6 => ${_metadata?.title}");
@@ -55,12 +54,12 @@ class _AnyListPreviewState extends State<AnyListPreview> {
         showMultimedia: true,
         bodyMaxLines: 5,
         bodyTextOverflow: TextOverflow.ellipsis,
-        titleStyle: TextStyle(
+        titleStyle: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
           fontSize: 15,
         ),
-        bodyStyle: TextStyle(color: Colors.grey, fontSize: 12),
+        bodyStyle: const TextStyle(color: Colors.grey, fontSize: 12),
       ),
     );
   }

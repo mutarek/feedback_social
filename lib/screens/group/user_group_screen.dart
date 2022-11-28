@@ -261,17 +261,15 @@ class MenuButtonWidget extends StatelessWidget {
           groupProvider.changeMenuValue(value);
           pageController.jumpToPage(value);
         },
-        child: Container(
-          child: Column(
-            children: [
-              CustomText(title: title, color: Colors.black),
-              SizedBox(height: 5),
-              Container(
-                height: 2,
-                color: groupProvider.menuValue == value ? Colors.red : Colors.transparent,
-              )
-            ],
-          ),
+        child: Column(
+          children: [
+            CustomText(title: title, color: Colors.black),
+            const SizedBox(height: 5),
+            Container(
+              height: 2,
+              color: groupProvider.menuValue == value ? Colors.red : Colors.transparent,
+            )
+          ],
         ),
       ),
     );

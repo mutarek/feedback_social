@@ -267,10 +267,10 @@ class AuthProvider with ChangeNotifier {
         countryListTheme: CountryListThemeData(
           flagSize: 25,
           backgroundColor: Colors.white,
-          textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+          textStyle: const TextStyle(fontSize: 16, color: Colors.blueGrey),
           bottomSheetHeight: 500, // Optional. Country list modal height
           //Optional. Sets the border radius for the bottomsheet.
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
           ),

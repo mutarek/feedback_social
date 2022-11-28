@@ -1,4 +1,4 @@
-import 'package:als_frontend/data/model/response/chat/AllMessageChatListModel.dart';
+import 'package:als_frontend/data/model/response/chat/all_message_chat_list_model.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/screens/chat/components/chat_card.dart';
 import 'package:als_frontend/screens/chat/message_screen.dart';

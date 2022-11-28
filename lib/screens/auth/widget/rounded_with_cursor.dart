@@ -31,7 +31,6 @@ class _RoundedWithCustomCursorState extends State<RoundedWithCustomCursor> {
   Widget build(BuildContext context) {
     const focusedBorderColor = Colors.white;
     const fillColor = Colors.white;
-    const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
 
     final defaultPinTheme = PinTheme(
       width: 56,
