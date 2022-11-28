@@ -156,7 +156,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                       Get.to(const MyPage());
                                     },
                                     child: Text("See all",
-                                        style: latoStyle100Thin.copyWith(fontSize: 10))),
+                                        style: latoStyle300Light.copyWith(fontSize: 10,color: Colors.black))),
                               ),
                             ],
                           ),
@@ -201,7 +201,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                                   pageProvider.authorPageLists[index].avatar),
                                             ),
                                             SizedBox(
-                                              width: width * 0.01,
+                                              width: width * 0.03,
                                             ),
                                             Column(
                                               mainAxisAlignment: MainAxisAlignment.start,
@@ -216,8 +216,8 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                                   height: 2,
                                                 ),
                                                 Text(
-                                                    "${pageProvider.authorPageLists[index].followers.toString()} ${getTranslated("Followers", context)}",
-                                                    style: latoStyle100Thin.copyWith(fontSize: 10)),
+                                                    "${pageProvider.authorPageLists[index].followers.toString()} ${getTranslated(" Followers", context)}",
+                                                    style: latoStyle400Regular.copyWith(fontSize: 10,color: Colors.grey)),
                                               ],
                                             )
                                           ],
@@ -243,7 +243,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                     Get.to(const YourLikedPage());
                                   },
                                   child: Text(getTranslated("See all", context),
-                                      style: latoStyle100Thin.copyWith(fontSize: 10)),
+                                      style:  latoStyle300Light.copyWith(fontSize: 10,color: Colors.black)),
                                 ),
                               ),
                             ],
@@ -305,7 +305,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                               ),
                                               Text(
                                                   "${pageProvider.likedPageLists[index].followers.toString()} ${getTranslated("Followers", context)}",
-                                                  style: latoStyle100Thin.copyWith(fontSize: 10)),
+                                                  style: latoStyle400Regular.copyWith(fontSize: 10,color: Colors.grey)),
                                             ],
                                           )),
                                     );
