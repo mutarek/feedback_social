@@ -1,17 +1,19 @@
 import 'package:als_frontend/data/model/response/CommentModels.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
+import 'package:als_frontend/helper/url_checkig_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/any_link_preview_global_widget.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CommentWidget extends StatelessWidget {
@@ -83,10 +85,32 @@ class CommentWidget extends StatelessWidget {
                               title: commentModels.author!.fullName!,
                               fontSize: 13,
                               fontWeight: FontWeight.bold),
-                          CustomText(
-                              title: commentModels.comment!,
-                              fontSize: 17,
-                              color: Colors.black.withOpacity(.8)),
+                          commentModels.comment!.contains("https")
+                              ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    MarkdownBody(
+                                      onTapLink: (text, href, title) {
+                                        href != null ? openNewLink(href) : null;
+                                      },
+                                      selectable: true,
+                                      data: commentModels.comment!,
+                                      styleSheet: MarkdownStyleSheet(
+                                          a: TextStyle(fontSize: 17),
+                                          p: latoStyle500Medium),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    AnyLinkPreviewGlobalWidget(extractdescription(commentModels.comment!),60.0,200.0,3),
+                                  ],
+                                )
+                              : CustomText(
+                                  title: commentModels.comment!,
+                                  fontSize: 17,
+                                  color: Colors.black.withOpacity(.8)),
                           Container(
                               width: 65,
                               height: 25,
@@ -226,25 +250,34 @@ class CommentWidget extends StatelessWidget {
                                                     fontSize: 14,
                                                     fontWeight:
                                                         FontWeight.bold)),
-                                            // Text(
-                                            //     commentProvider.comments[index]
-                                            //         .replies![i].comment!,
-                                            //     style: GoogleFonts.lato(
-                                            //         fontSize: 16))
-                                            commentProvider.comments[index].replies![i].comment!.contains('https')?
-                                            MarkdownBody(
-                                              onTapLink: (text, href, title) {
-                                                href != null ? openNewLink(href) : null;
-                                              },
-                                              selectable: true,
-                                              data: commentProvider.comments[index].replies![i].comment!,
-                                              styleSheet:
-                                              MarkdownStyleSheet(a: TextStyle(fontSize: 17,color: Colors.blue),p: latoStyle500Medium),
-                                            ):Text(
-                                             commentProvider.comments[index]
-                                                   .replies![i].comment!,
-                                                 style: GoogleFonts.lato(
-                                                   fontSize: 16))
+                                            commentProvider.comments[index].replies![i].comment!.contains("http")?
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                MarkdownBody(
+                                                  onTapLink: (text, href, title) {
+                                                    href != null ? openNewLink(href) : null;
+                                                  },
+                                                  selectable: true,
+                                                  data: commentProvider.comments[index].replies![i].comment!,
+                                                  styleSheet: MarkdownStyleSheet(
+                                                      a: TextStyle(fontSize: 17),
+                                                      p: latoStyle500Medium),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                AnyLinkPreviewGlobalWidget(extractdescription(
+                                                    commentProvider.comments[index].replies![i].comment!),55.0,200.0,3),
+                                              ],
+                                            )
+                                                :Text(
+                                                commentProvider.comments[index]
+                                                    .replies![i].comment!,
+                                                style: GoogleFonts.lato(
+                                                    fontSize: 16))
                                           ],
                                         ),
                                       ),

@@ -3,11 +3,8 @@ import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/helper/url_checkig_helper.dart';
 import 'package:als_frontend/screens/chat/widget/any_link_preview_chat_widget.dart';
 import 'package:als_frontend/util/size.util.dart';
-import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-
-import '../../home/widget/any_link_preview.dart';
 
 class TextMessage extends StatelessWidget {
   const TextMessage({Key? key, this.message, this.isSender = false})
