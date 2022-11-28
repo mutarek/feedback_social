@@ -1,14 +1,17 @@
 import 'package:als_frontend/data/model/response/CommentModels.dart';
 import 'package:als_frontend/helper/number_helper.dart';
+import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 
 class CommentWidget extends StatelessWidget {
@@ -56,33 +59,49 @@ class CommentWidget extends StatelessWidget {
                   children: [
                     InkWell(
                         onTap: () {
-                          if (Provider.of<AuthProvider>(context, listen: false).userID == commentModels.author!.id.toString()) {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                          if (Provider.of<AuthProvider>(context, listen: false)
+                                  .userID ==
+                              commentModels.author!.id.toString()) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const ProfileScreen()));
                           } else {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) => PublicProfileScreen(commentModels.author!.id.toString())));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => PublicProfileScreen(
+                                    commentModels.author!.id.toString())));
                           }
                         },
-                        child: CircleAvatar(backgroundImage: NetworkImage(commentModels.author!.profileImage!))),
+                        child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                commentModels.author!.profileImage!))),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomText(title: commentModels.author!.fullName!, fontSize: 13,fontWeight: FontWeight.bold),
-                          CustomText(title: commentModels.comment!, fontSize: 17,color: Colors.black.withOpacity(.8)),
+                          CustomText(
+                              title: commentModels.author!.fullName!,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold),
+                          CustomText(
+                              title: commentModels.comment!,
+                              fontSize: 17,
+                              color: Colors.black.withOpacity(.8)),
                           Container(
                               width: 65,
                               height: 25,
                               margin: const EdgeInsets.only(top: 5),
                               child: CustomButton(
-                                btnTxt: getTranslated('Reply',context),
+                                btnTxt: getTranslated('Reply', context),
                                 textWhiteColor: true,
                                 isStroked: true,
                                 onTap: () {
-                                  commentProvider.addReplyUserNameAndIndex(commentModels.author!.fullName!, url, index);
-                                  commentProvider.changeExpandedForOpen(index, postID, commentModels.id as int);
+                                  commentProvider.addReplyUserNameAndIndex(
+                                      commentModels.author!.fullName!,
+                                      url,
+                                      index);
+                                  commentProvider.changeExpandedForOpen(
+                                      index, postID, commentModels.id as int);
                                 },
                                 fontSize: 12,
                                 radius: 4,
@@ -92,13 +111,17 @@ class CommentWidget extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text(getDate(commentModels.timestamp!, context), style: GoogleFonts.lato(fontSize: 11, fontWeight: FontWeight.w500))
+                    Text(getDate(commentModels.timestamp!, context),
+                        style: GoogleFonts.lato(
+                            fontSize: 11, fontWeight: FontWeight.w500))
                   ],
                 ),
                 const SizedBox(height: 10),
                 Container(
                   margin: const EdgeInsets.only(bottom: 10, left: 45),
-                  decoration: BoxDecoration(color: Colors.grey.withOpacity(.1), borderRadius: BorderRadius.circular(10)),
+                  decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(.1),
+                      borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     children: [
                       // Visibility(
@@ -135,48 +158,103 @@ class CommentWidget extends StatelessWidget {
                       //   ),
                       // ),
                       Visibility(
-                        visible: commentProvider.comments[index].replies!.isNotEmpty,
+                        visible:
+                            commentProvider.comments[index].replies!.isNotEmpty,
                         child: ListView.builder(
-                            itemCount: commentProvider.comments[index].replies!.length,
+                            itemCount:
+                                commentProvider.comments[index].replies!.length,
                             shrinkWrap: true,
-                            padding: const EdgeInsets.fromLTRB(10,10,10,0),
+                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, i) {
                               return Column(
                                 children: [
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       InkWell(
                                           onTap: () {
-                                            if (Provider.of<AuthProvider>(context, listen: false).userID ==
-                                                commentProvider.comments[index].replies![i].author!.id.toString()) {
-                                              Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                                            if (Provider.of<AuthProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .userID ==
+                                                commentProvider.comments[index]
+                                                    .replies![i].author!.id
+                                                    .toString()) {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          const ProfileScreen()));
                                             } else {
-                                              Navigator.of(context).push(MaterialPageRoute(
-                                                  builder: (_) => PublicProfileScreen(
-                                                      commentProvider.comments[index].replies![i].author!.id.toString())));
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          PublicProfileScreen(
+                                                              commentProvider
+                                                                  .comments[
+                                                                      index]
+                                                                  .replies![i]
+                                                                  .author!
+                                                                  .id
+                                                                  .toString())));
                                             }
                                           },
                                           child: CircleAvatar(
-                                              backgroundImage:
-                                                  NetworkImage(commentProvider.comments[index].replies![i].author!.profileImage!))),
+                                              backgroundImage: NetworkImage(
+                                                  commentProvider
+                                                      .comments[index]
+                                                      .replies![i]
+                                                      .author!
+                                                      .profileImage!))),
                                       const SizedBox(width: 10),
                                       Expanded(
                                         child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text(commentProvider.comments[index].replies![i].author!.fullName!,
-                                                style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold)),
-                                            Text(commentProvider.comments[index].replies![i].comment!, style: GoogleFonts.lato(fontSize: 16))
+                                            Text(
+                                                commentProvider
+                                                    .comments[index]
+                                                    .replies![i]
+                                                    .author!
+                                                    .fullName!,
+                                                style: GoogleFonts.lato(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            // Text(
+                                            //     commentProvider.comments[index]
+                                            //         .replies![i].comment!,
+                                            //     style: GoogleFonts.lato(
+                                            //         fontSize: 16))
+                                            commentProvider.comments[index].replies![i].comment!.contains('https')?
+                                            MarkdownBody(
+                                              onTapLink: (text, href, title) {
+                                                href != null ? openNewLink(href) : null;
+                                              },
+                                              selectable: true,
+                                              data: commentProvider.comments[index].replies![i].comment!,
+                                              styleSheet:
+                                              MarkdownStyleSheet(a: TextStyle(fontSize: 17,color: Colors.blue),p: latoStyle500Medium),
+                                            ):Text(
+                                             commentProvider.comments[index]
+                                                   .replies![i].comment!,
+                                                 style: GoogleFonts.lato(
+                                                   fontSize: 16))
                                           ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Container(height: 1, color: Colors.white, margin: const EdgeInsets.only(top: 5, bottom: 5))
+                                  Container(
+                                      height: 1,
+                                      color: Colors.white,
+                                      margin: const EdgeInsets.only(
+                                          top: 5, bottom: 5))
                                 ],
                               );
                             }),
