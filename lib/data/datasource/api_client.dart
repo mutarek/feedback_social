@@ -5,7 +5,7 @@ import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
-import 'package:http/http.dart' as Http;
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiClient {
@@ -33,7 +33,7 @@ class ApiClient {
   Future<Response> getData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers}) async {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-      Http.Response _response = await Http.get(
+      http.Response _response = await http.get(
         Uri.parse(appBaseUrl + uri),
         headers: headers ?? _mainHeaders,
       ).timeout(Duration(seconds: timeoutInSeconds));
@@ -47,7 +47,7 @@ class ApiClient {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
       debugPrint('====> API Body: $body');
-      Http.Response _response = await Http.post(
+      http.Response _response = await http.post(
         Uri.parse(appBaseUrl + uri),
         body: jsonEncode(body),
         headers: headers ?? _mainHeaders,
@@ -61,7 +61,7 @@ class ApiClient {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
       debugPrint('====> API Body: $body');
-      Http.Response _response = await Http.patch(
+      http.Response _response = await http.patch(
         Uri.parse(appBaseUrl + uri),
         body: jsonEncode(body),
         headers: headers ?? _mainHeaders,
@@ -72,53 +72,53 @@ class ApiClient {
     }
   }
 
-  Future<Response> postMultipartData(String uri, Map<String, String> body, List<Http.MultipartFile> multipartBody,
+  Future<Response> postMultipartData(String uri, Map<String, String> body, List<http.MultipartFile> multipartBody,
       {Map<String, String>? headers}) async {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
       debugPrint('====> API Body: $body with ${multipartBody.length} files');
-      Http.MultipartRequest _request = Http.MultipartRequest('POST', Uri.parse(appBaseUrl + uri));
+      http.MultipartRequest _request = http.MultipartRequest('POST', Uri.parse(appBaseUrl + uri));
       _request.headers.addAll(headers ?? _mainHeaders!);
       if(multipartBody.isNotEmpty){
         _request.files.addAll(multipartBody);
       }
       _request.fields.addAll(body);
-      Http.Response _response = await Http.Response.fromStream(await _request.send());
+      http.Response _response = await http.Response.fromStream(await _request.send());
       return handleResponse(_response, uri);
     } catch (e) {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
-  Future<Response> patchMultipartData(String uri, Map<String, String> body, List<Http.MultipartFile> multipartBody,
+  Future<Response> patchMultipartData(String uri, Map<String, String> body, List<http.MultipartFile> multipartBody,
       {Map<String, String>? headers}) async {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
       debugPrint('====> API Body: $body with ${multipartBody.length} files');
-      Http.MultipartRequest _request = Http.MultipartRequest('PATCH', Uri.parse(appBaseUrl + uri));
+      http.MultipartRequest _request = http.MultipartRequest('PATCH', Uri.parse(appBaseUrl + uri));
       _request.headers.addAll(headers ?? _mainHeaders!);
       if(multipartBody.isNotEmpty){
         _request.files.addAll(multipartBody);
       }
       _request.fields.addAll(body);
-      Http.Response _response = await Http.Response.fromStream(await _request.send());
+      http.Response _response = await http.Response.fromStream(await _request.send());
       return handleResponse(_response, uri);
     } catch (e) {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
-  Future<Response> putMultipartData(String uri, Map<String, String> body, List<Http.MultipartFile> multipartBody,
+  Future<Response> putMultipartData(String uri, Map<String, String> body, List<http.MultipartFile> multipartBody,
       {Map<String, String>? headers}) async {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
       debugPrint('====> API Body: $body with ${multipartBody.length} files');
-      Http.MultipartRequest _request = Http.MultipartRequest('PUT', Uri.parse(appBaseUrl + uri));
+      http.MultipartRequest _request = http.MultipartRequest('PUT', Uri.parse(appBaseUrl + uri));
       _request.headers.addAll(headers ?? _mainHeaders!);
       if(multipartBody.isNotEmpty){
         _request.files.addAll(multipartBody);
       }
       _request.fields.addAll(body);
-      Http.Response _response = await Http.Response.fromStream(await _request.send());
+      http.Response _response = await http.Response.fromStream(await _request.send());
       return handleResponse(_response, uri);
     } catch (e) {
       return const Response(statusCode: 1, statusText: noInternetMessage);
@@ -129,7 +129,7 @@ class ApiClient {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
       debugPrint('====> API Body: $body');
-      Http.Response _response = await Http.put(
+      http.Response _response = await http.put(
         Uri.parse(appBaseUrl + uri),
         body: jsonEncode(body),
         headers: headers ?? _mainHeaders,
@@ -143,7 +143,7 @@ class ApiClient {
   Future<Response> deleteData(String uri, {Map<String, String>? headers}) async {
     try {
       debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-      Http.Response _response = await Http.delete(
+      http.Response _response = await http.delete(
         Uri.parse(appBaseUrl + uri),
         headers: headers ?? _mainHeaders,
       ).timeout(Duration(seconds: timeoutInSeconds));
@@ -153,7 +153,7 @@ class ApiClient {
     }
   }
 
-  Response handleResponse(Http.Response response, String uri) {
+  Response handleResponse(http.Response response, String uri) {
     dynamic _body;
     try {
       _body = jsonDecode(utf8.decode(response.bodyBytes));

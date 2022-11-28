@@ -2,16 +2,18 @@ import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 
-class AnyListPreview extends StatefulWidget {
-  AnyListPreview(this.url, {Key? key}) : super(key: key);
-
+class AnyLinkPreviewGlobalWidget extends StatefulWidget {
+  AnyLinkPreviewGlobalWidget(this.url,this.height,this.width,this.radius, {Key? key}) : super(key: key);
+  double height;
+  double width;
+  double radius;
   List url = [];
 
   @override
-  State<AnyListPreview> createState() => _AnyListPreviewState();
+  State<AnyLinkPreviewGlobalWidget> createState() => _AnyListPreviewState();
 }
 
-class _AnyListPreviewState extends State<AnyListPreview> {
+class _AnyListPreviewState extends State<AnyLinkPreviewGlobalWidget> {
 
   @override
   void initState() {
@@ -45,14 +47,20 @@ class _AnyListPreviewState extends State<AnyListPreview> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(5),
+      height: widget.height,
+      width: widget.width,
       child: AnyLinkPreview(
         onTap: (){
           openNewLink(widget.url[widget.url.length-1]);
         },
+        borderRadius: widget.radius,
+        errorBody: "Ops! Not Found",
+        errorTitle: "Ops! Not Found",
         link: widget.url.isEmpty?"https://feedback-social.com/":widget.url[widget.url.length-1],
         displayDirection: UIDirection.uiDirectionHorizontal,
         showMultimedia: true,
-        bodyMaxLines: 5,
+        bodyMaxLines: 2,
         bodyTextOverflow: TextOverflow.ellipsis,
         titleStyle: const TextStyle(
           color: Colors.black,

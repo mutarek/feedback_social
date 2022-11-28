@@ -5,7 +5,6 @@ import 'package:als_frontend/helper/url_checkig_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
-import 'package:als_frontend/screens/home/widget/any_link_preview.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
@@ -13,6 +12,7 @@ import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/any_link_preview_global_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/route_manager.dart';
@@ -113,8 +113,7 @@ class TimeLineWidget extends StatelessWidget {
                         newsFeedData.description!.isNotEmpty &&
                         newsFeedData.totalImage == 0 &&
                         newsFeedData.description!.contains("http")
-                    ? AnyListPreview(
-                        extractdescription(newsFeedData.description!))
+                    ? AnyLinkPreviewGlobalWidget(extractdescription(newsFeedData.description!),120.0,double.infinity,10.0)
                     : newsFeedData.description!.contains("http")
                         ? const SizedBox()
                         : Text(
