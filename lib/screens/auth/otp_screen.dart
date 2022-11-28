@@ -15,13 +15,9 @@ import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class OTPScreen extends StatelessWidget {
-  OTPScreen({
-    Key? key,
-    required this.isFromForgetPassword,
-    required this.emailorNumber,
-  }) : super(key: key);
-  bool isFromForgetPassword;
-  String emailorNumber;
+  OTPScreen({Key? key, required this.isFromForgetPassword, required this.emailOrNumber}) : super(key: key);
+  final bool isFromForgetPassword;
+  final String emailOrNumber;
 
   final TextEditingController pinController = TextEditingController();
 
@@ -102,7 +98,7 @@ class OTPScreen extends StatelessWidget {
                                     auth.otpVerify(pinController.text, (bool status, String message) {
                                       if (status) {
                                         Fluttertoast.showToast(msg: message);
-                                        Get.off(() => SetNewPassword(emailOrNumber: emailorNumber, otpCode: pinController.text));
+                                        Get.off(() => SetNewPassword(emailOrNumber: emailOrNumber, otpCode: pinController.text));
                                       } else {
                                         Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                       }

@@ -34,19 +34,19 @@ class AppColors {
   static const Color textFont = Color(0xFF000000);
   static const Color timeColor = Color(0xFFFF8C31);
 
-  static const Color HOME_BG = Color(0xffF0F0F0);
+  static const Color homeBG = Color(0xffF0F0F0);
   static const Color redColor = Color(0xffFF0000);
-  static const Color COLUMBIA_BLUE = Color(0xff92C6FF);
+  static const Color columbiaBlue = Color(0xff92C6FF);
   static const Color accentColor = Color(0xFFE6A537);
-  static const Color SELLER_TXT = Color(0xff92C6FF);
+  static const Color sellerText = Color(0xff92C6FF);
   static const Color postLikeCommentContainer = Color(0xffDDEFFD);
   static const Color postLikeCountContainer = Color(0xff195FC7);
   static const Color black = Color(0xFF252525);
-  static const Color ICON_BG = Color(0xffF9F9F9);
+  static const Color iconBg = Color(0xffF9F9F9);
   static const Color grey = Color(0xFF909090);
-  static const Color LOW_GREEN = Color(0xffEFF6FE);
+  static const Color lowGreen = Color(0xffEFF6FE);
   static const Color lightGrey = Color(0xFFDADADA);
-  static const Color YELLOW = Color(0xFFFFAA47);
+  static const Color yellow = Color(0xFFFFAA47);
 
   static const Color bodyTextColorOverride = Color(0xFF020202);
 

@@ -10,7 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as Http;
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class PostResponse {
@@ -26,7 +26,7 @@ class PostProvider with ChangeNotifier {
   PostProvider({required this.postRepo, required this.authRepo});
 
   bool isLoading = false;
-  List<Http.MultipartFile> multipartFile = [];
+  List<http.MultipartFile> multipartFile = [];
   String body = "";
 
   calculateMultipartFile() {
@@ -34,7 +34,7 @@ class PostProvider with ChangeNotifier {
     multipartFile = [];
     if (afterConvertImageLists.isNotEmpty) {
       for (int i = 0; i < afterConvertImageLists.length; i++) {
-        multipartFile.add(Http.MultipartFile(
+        multipartFile.add(http.MultipartFile(
             'image', afterConvertImageLists[i].readAsBytes().asStream(), afterConvertImageLists[i].lengthSync(),
             filename: afterConvertImageLists[i].path.split("/").last));
       }
@@ -42,7 +42,7 @@ class PostProvider with ChangeNotifier {
     if (video.isNotEmpty) {
       for (int i = 0; i < video.length; i++) {
         multipartFile.add(
-            Http.MultipartFile('video', video[i].readAsBytes().asStream(), video[i].lengthSync(), filename: video[i].path.split("/").last));
+            http.MultipartFile('video', video[i].readAsBytes().asStream(), video[i].lengthSync(), filename: video[i].path.split("/").last));
       }
     }
     notifyListeners();

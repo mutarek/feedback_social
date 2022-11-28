@@ -20,7 +20,7 @@ class YourLikedPage extends StatelessWidget {
         title: Text( getTranslated("liked page", context),style: latoStyle800ExtraBold,),
 
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

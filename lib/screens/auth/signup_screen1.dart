@@ -138,7 +138,7 @@ class SignUpScreen1 extends StatelessWidget {
                                     Fluttertoast.showToast(msg: message);
                                     Get.off(OTPScreen(
                                       isFromForgetPassword: isFromForgetPassword,
-                                      emailorNumber: emailPhoneController.text.toString(),
+                                      emailOrNumber: emailPhoneController.text.toString(),
                                     ));
                                   } else {
                                     Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
@@ -152,7 +152,7 @@ class SignUpScreen1 extends StatelessWidget {
                                     Fluttertoast.showToast(msg: message);
                                     Get.off(OTPScreen(
                                       isFromForgetPassword: isFromForgetPassword,
-                                      emailorNumber: emailPhoneController.text.toString(),
+                                      emailOrNumber: emailPhoneController.text.toString(),
                                     ));
                                   } else {
                                     Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);

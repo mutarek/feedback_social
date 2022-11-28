@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:als_frontend/data/model/response/notification_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/notification_repo.dart';
@@ -5,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class NotificationProvider with ChangeNotifier {
@@ -43,9 +44,14 @@ class NotificationProvider with ChangeNotifier {
     webSocketChannel.stream.listen((event) {
       notificationUnread();
       initializeNotification(isFirstTime: false, isDataAddLast: false);
-    }, onDone: () {
+    }, onDone: () async {
+      await Future.delayed(const Duration(seconds: 5));
       check();
-    });
+    }, onError: (e) async {
+      debugPrint('Server error: $e');
+      await Future.delayed(const Duration(seconds: 5));
+      check();
+    }, cancelOnError: true);
   }
 
   List<NotificationModel> notificationLists = [];
@@ -101,9 +107,9 @@ class NotificationProvider with ChangeNotifier {
   }
 
   channelDismiss() {
-    // if (webSocketChannel.sink.isBlank!) {
-    //   webSocketChannel.sink.close();
-    //   notifyListeners();
-    // }
+    if (webSocketChannel.isBlank != null && webSocketChannel.isBlank!) {
+      webSocketChannel.sink.close();
+      notifyListeners();
+    }
   }
 }

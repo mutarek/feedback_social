@@ -214,7 +214,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                                 Fluttertoast.showToast(msg: message);
                                 Get.off(OTPScreen(
                                   isFromForgetPassword: false,
-                                  emailorNumber: emailController.text.toString(),
+                                  emailOrNumber: emailController.text.toString(),
                                 ));
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
@@ -227,7 +227,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                                 Fluttertoast.showToast(msg: message);
                                 Get.off(OTPScreen(
                                   isFromForgetPassword: false,
-                                  emailorNumber: auth.code+phoneController.text.toString(),
+                                  emailOrNumber: auth.code+phoneController.text.toString(),
                                 ));
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);

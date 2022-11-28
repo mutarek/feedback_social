@@ -179,9 +179,7 @@ class ChatProvider with ChangeNotifier {
         "data": {"user_id": userID.toString(), "room_id": chatModels.id, "text": message},
         "action": "chat"
       };
-      channel.sink.add(
-        jsonEncode(map),
-      );
+      channel.sink.add(jsonEncode(map));
     } else {
       ticker = Timer.periodic(const Duration(seconds: 5), (timer) async {
         value++;

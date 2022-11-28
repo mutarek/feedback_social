@@ -64,9 +64,9 @@ class MessageStatusDot extends StatelessWidget {
   Widget build(BuildContext context) {
     Color dotColor(MessageStatus status) {
       switch (status) {
-        case MessageStatus.not_sent:
+        case MessageStatus.notSent:
           return kErrorColor;
-        case MessageStatus.not_view:
+        case MessageStatus.notView:
           return Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.1);
         case MessageStatus.viewed:
           return kPrimaryColor;
@@ -78,9 +78,9 @@ class MessageStatusDot extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 15,left: 10),
       child: Icon(
-        status == MessageStatus.not_sent ? Icons.close : FontAwesomeIcons.checkDouble,
+        status == MessageStatus.notSent ? Icons.close : FontAwesomeIcons.checkDouble,
         size: 8,
-        color: status == MessageStatus.not_sent ? Colors.red: Colors.green,
+        color: status == MessageStatus.notSent ? Colors.red: Colors.green,
       ),
     );
   }

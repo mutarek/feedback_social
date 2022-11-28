@@ -20,7 +20,6 @@ import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/route_manager.dart';
@@ -45,6 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1);
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
+    Provider.of<NotificationProvider>(context, listen: false).notificationUnread();
   }
 
   @override
@@ -147,7 +147,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       children: [
                         dashboardProvider.selectIndex == 0
                             ? AppBar(
-                                title: const CustomText2(title: 'Feedback', color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 27),
+                                title: const CustomText2(
+                                    title: 'Feedback', color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 27),
                                 backgroundColor: Colors.white,
                                 elevation: 0,
                                 actions: [
@@ -219,7 +220,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     textWhiteColor: true,
                                     radius: 0,
                                     fontSize: 13,
-
                                   )
                                 : const CustomButton(
                                     btnTxt: 'Server Problems are found, and our maintainer working here please try sometime later. ',

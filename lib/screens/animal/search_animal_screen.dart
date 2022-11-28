@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 class SearchAnimalScreen extends StatefulWidget {
   final String code;
 
-  SearchAnimalScreen(this.code, {Key? key}) : super(key: key);
+  const SearchAnimalScreen(this.code, {Key? key}) : super(key: key);
 
   @override
   State<SearchAnimalScreen> createState() => _SearchAnimalScreenState();

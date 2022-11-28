@@ -198,8 +198,7 @@ class SignupScreen2 extends StatelessWidget {
                               ? const Icon(Icons.arrow_forward, color: Colors.white)
                               : const Center(child: CircularProgressIndicator()),
                           ontap: () {
-                            if (firstNameController.text.isEmpty ||
-                                passwordController.text.isEmpty ) {
+                            if (firstNameController.text.isEmpty || passwordController.text.isEmpty) {
                               showMessage(message: getTranslated('Please fill all the form', context), context: context);
                             } else {
                               auth.signup(firstNameController.text, lastNameController.text, passwordController.text,

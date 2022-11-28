@@ -98,10 +98,10 @@ class CommentWidget extends StatelessWidget {
                                       selectable: true,
                                       data: commentModels.comment!,
                                       styleSheet: MarkdownStyleSheet(
-                                          a: TextStyle(fontSize: 17),
+                                          a: const TextStyle(fontSize: 17),
                                           p: latoStyle500Medium),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     AnyLinkPreviewGlobalWidget(
@@ -281,12 +281,12 @@ class CommentWidget extends StatelessWidget {
                                                             .comment!,
                                                         styleSheet:
                                                             MarkdownStyleSheet(
-                                                                a: TextStyle(
+                                                                a: const TextStyle(
                                                                     fontSize:
                                                                         17),
                                                                 p: latoStyle500Medium),
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         height: 5,
                                                       ),
                                                       AnyLinkPreviewGlobalWidget(

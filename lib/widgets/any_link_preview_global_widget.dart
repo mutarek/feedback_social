@@ -47,7 +47,7 @@ class _AnyListPreviewState extends State<AnyLinkPreviewGlobalWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       height: widget.height,
       width: widget.width,
       child: AnyLinkPreview(

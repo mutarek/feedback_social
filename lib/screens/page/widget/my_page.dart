@@ -20,7 +20,7 @@ class MyPage extends StatelessWidget {
         title: Text( getTranslated("My page", context),style: latoStyle800ExtraBold,),
 
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

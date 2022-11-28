@@ -5,7 +5,7 @@ import 'package:als_frontend/data/model/response/send_friend_request_model.dart'
 import 'package:als_frontend/data/model/response/suggested_friend_model.dart';
 
 import 'package:als_frontend/data/repository/auth_repo.dart';
-import 'package:http/http.dart' as Http;
+import 'package:http/http.dart' as http;
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
@@ -81,7 +81,6 @@ class ProfileProvider with ChangeNotifier {
     _isLoading = false;
     isBottomLoading = false;
     callBackFunction(true);
-    int status = 0;
     if (response.statusCode == 200) {
       hasNextData = response.body['next'] != null ? true : false;
       response.body['results'].forEach((element) {
@@ -199,13 +198,13 @@ class ProfileProvider with ChangeNotifier {
 
   uploadPhoto(Function callBackFunction, File file, {bool isCover = false}) async {
     isLoadingForUploadPhoto = true;
-    List<Http.MultipartFile> multipartFile = [];
+    List<http.MultipartFile> multipartFile = [];
     if (isCover) {
       multipartFile
-          .add(Http.MultipartFile('cover_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
+          .add(http.MultipartFile('cover_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
     } else {
       multipartFile
-          .add(Http.MultipartFile('profile_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
+          .add(http.MultipartFile('profile_image', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
     }
 
     notifyListeners();

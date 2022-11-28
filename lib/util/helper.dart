@@ -26,7 +26,7 @@ class Helper {
     Navigator.pushAndRemoveUntil(context, SlideRightToLeft(page: screen), (route) => false);
   }
 
-  static showSnack(context, message, {color: colorPrimaryLight, duration = 2}) {
+  static showSnack(context, message, {color = colorPrimaryLight, duration = 2}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message, style: const TextStyle(fontSize: 14)), backgroundColor: color, duration: Duration(seconds: duration)));
   }
