@@ -131,11 +131,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
           Navigator.of(context).pop();
         },
       ),
-      actions: [
-        const Icon(FontAwesomeIcons.phone, color: kPrimaryColor, size: 20),
-        const SizedBox(width: 15),
-        const Icon(FontAwesomeIcons.video, color: kPrimaryColor, size: 20),
-        const SizedBox(width: 15),
+      actions: const [
+        Icon(FontAwesomeIcons.phone, color: kPrimaryColor, size: 20),
+        SizedBox(width: 15),
+        Icon(FontAwesomeIcons.video, color: kPrimaryColor, size: 20),
+        SizedBox(width: 15),
       ],
     );
   }

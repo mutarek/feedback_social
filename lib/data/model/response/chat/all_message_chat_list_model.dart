@@ -5,7 +5,7 @@ class AllMessageChatListModel {
     this.updateAt,
     this.lastSms,
     this.users,
-    this.chatGroup,
+    //this.chatGroup,
   });
 
   AllMessageChatListModel.fromJson(dynamic json) {
@@ -19,7 +19,7 @@ class AllMessageChatListModel {
         users?.add(Users.fromJson(v));
       });
     }
-    chatGroup = json['chat_group'] != null ? ChatGroup.fromJson(json['chat_group']) : ChatGroup(name: '', avatar: '');
+    //chatGroup = json['chat_group'] != null ? ChatGroup.fromJson(json['chat_group']) : ChatGroup(name: '', avatar: '');
   }
 
   String? id;
@@ -27,7 +27,7 @@ class AllMessageChatListModel {
   String? updateAt;
   String? lastSms;
   List<Users>? users;
-  ChatGroup? chatGroup;
+  // ChatGroup? chatGroup;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -38,34 +38,31 @@ class AllMessageChatListModel {
     if (users != null) {
       map['users'] = users?.map((v) => v.toJson()).toList();
     }
-    if (chatGroup != null) {
-      map['chat_group'] = chatGroup?.toJson();
-    }
     return map;
   }
 }
 
-class ChatGroup {
-  ChatGroup({
-    this.name,
-    this.avatar,
-  });
-
-  ChatGroup.fromJson(dynamic json) {
-    name = json['name'];
-    avatar = json['avatar'];
-  }
-
-  String? name;
-  String? avatar;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['name'] = name;
-    map['avatar'] = avatar;
-    return map;
-  }
-}
+// class ChatGroup {
+//   ChatGroup({
+//     this.name,
+//     this.avatar,
+//   });
+//
+//   ChatGroup.fromJson(dynamic json) {
+//     name = json['name'];
+//     avatar = json['avatar'];
+//   }
+//
+//   String? name;
+//   String? avatar;
+//
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['name'] = name;
+//     map['avatar'] = avatar;
+//     return map;
+//   }
+// }
 
 class Users {
   Users({

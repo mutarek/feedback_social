@@ -29,7 +29,7 @@ class ChatCard extends StatelessWidget {
                   backgroundColor: AppColors.facebookColor,
                   child: CircleAvatar(
                       radius: 24,
-                      backgroundImage: NetworkImage(chat.roomType == "G" ? chat.chatGroup!.avatar! : chat.users![0].profileImage!)),
+                      backgroundImage: NetworkImage(chat.users![0].profileImage!)),
                 ),
               ],
             ),
@@ -39,10 +39,10 @@ class ChatCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(chat.roomType == "G" ? chat.chatGroup!.name! : chat.users![0].fullName!,
+                    Text(chat.users![0].fullName!,
                         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                     const SizedBox(height: 8),
-                    Opacity(opacity: 0.64, child: Text(chat.lastSms!, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                    Opacity(opacity: 0.64, child: Text(chat.lastSms!.isEmpty?"No Message":chat.lastSms.toString(), maxLines: 1, overflow: TextOverflow.ellipsis)),
                   ],
                 ),
               ),

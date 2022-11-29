@@ -69,12 +69,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                             index: index,
                                             isForGroup: allMessageChatListModel.roomType == "G" ? true : false,
                                             customerID: allMessageChatListModel.users![0].id as int,
-                                            imageURL: allMessageChatListModel.roomType == "G"
-                                                ? allMessageChatListModel.chatGroup!.avatar!
-                                                : allMessageChatListModel.users![0].profileImage!,
-                                            name: allMessageChatListModel.roomType == "G"
-                                                ? allMessageChatListModel.chatGroup!.name!
-                                                : allMessageChatListModel.users![0].fullName!,
+                                            imageURL: allMessageChatListModel.users![0].profileImage!,
+                                            name: allMessageChatListModel.users![0].fullName!,
                                           )));
                             }),
                       ),
