@@ -67,6 +67,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
               )
             : const SizedBox.shrink(),
       ),
+
       body: Consumer<GroupProvider>(
           builder: (context, provider, child) => provider.isLoading
               ? const Center(child: FriendReqShimmerWidget())
