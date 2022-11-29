@@ -42,7 +42,7 @@ class ChatCard extends StatelessWidget {
                     Text(chat.users![0].fullName!,
                         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                     const SizedBox(height: 8),
-                    Opacity(opacity: 0.64, child: Text(chat.lastSms!.isEmpty?"No Message":chat.lastSms.toString(), maxLines: 1, overflow: TextOverflow.ellipsis)),
+                    Opacity(opacity: 0.64, child: Text(chat.lastSms!.isEmpty?"":chat.lastSms.toString(), maxLines: 1, overflow: TextOverflow.ellipsis)),
                   ],
                 ),
               ),
