@@ -5,6 +5,8 @@ import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -70,22 +72,33 @@ class ChatInputField extends StatelessWidget {
                             onTap: () {
                               String userID = chatProvider.userID();
                               String message = textEditingController.text;
-                              if (chatProvider.isOneTime && isFromProfile) {
-                                chatProvider.createRoom(userID, customerID.toString(), message, index).then((value) {
-                                  Timer(const Duration(seconds: 1), () {
-                                    controller.animateTo(controller.position.maxScrollExtent,
-                                        duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
+                              if(message.isEmpty){
+                                Fluttertoast.showToast(
+                                    msg: "Type a message",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
+                              }else{
+                                if (chatProvider.isOneTime && isFromProfile) {
+                                  chatProvider.createRoom(userID, customerID.toString(), message, index).then((value) {
+                                    Timer(const Duration(seconds: 1), () {
+                                      controller.animateTo(controller.position.maxScrollExtent,
+                                          duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
+                                    });
                                   });
-                                });
-                              } else {
-                                chatProvider.addPost(userID, message, (int value) {
-                                  Timer(const Duration(seconds: 1), () {
-                                    controller.animateTo(controller.position.maxScrollExtent,
-                                        duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
-                                  });
-                                }, index);
+                                } else {
+                                  chatProvider.addPost(userID, message, (int value) {
+                                    Timer(const Duration(seconds: 1), () {
+                                      controller.animateTo(controller.position.maxScrollExtent,
+                                          duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
+                                    });
+                                  }, index);
+                                }
                               }
-
                               textEditingController.clear();
                             },
                             child: const Icon(Icons.send, color: kPrimaryColor)),
