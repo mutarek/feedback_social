@@ -72,14 +72,17 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                 children: [
                   InkWell(
                     onTap: () {
-                      _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+                      _pageController.animateToPage(0,
+                          duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                       pageProvider.changeMenuValue(0);
                     },
                     child: Container(
                       height: height * 0.035,
                       width: width * 0.24,
                       decoration: pageProvider.menuValue == 0
-                          ? BoxDecoration(color: const Color(0xff090D2A), borderRadius: BorderRadius.circular(4))
+                          ? BoxDecoration(
+                              color: const Color(0xff090D2A),
+                              borderRadius: BorderRadius.circular(4))
                           : BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               color: Colors.white,
@@ -88,7 +91,8 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           child: Text(
                         getTranslated("My page", context),
                         style: latoStyle200ExtraLight.copyWith(
-                            color: pageProvider.menuValue == 0 ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
+                            color: pageProvider.menuValue == 0 ? Colors.white : Colors.black,
+                            fontWeight: FontWeight.bold),
                       )),
                     ),
                   ),
@@ -97,14 +101,17 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                   ),
                   InkWell(
                     onTap: () {
-                      _pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+                      _pageController.animateToPage(1,
+                          duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                       pageProvider.changeMenuValue(1);
                     },
                     child: Container(
                       height: height * 0.035,
                       width: width * 0.24,
                       decoration: pageProvider.menuValue == 1
-                          ? BoxDecoration(color: const Color(0xff090D2A), borderRadius: BorderRadius.circular(4))
+                          ? BoxDecoration(
+                              color: const Color(0xff090D2A),
+                              borderRadius: BorderRadius.circular(4))
                           : BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               color: Colors.white,
@@ -113,7 +120,8 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           child: Text(
                         getTranslated("Suggestion", context),
                         style: latoStyle200ExtraLight.copyWith(
-                            color: pageProvider.menuValue == 0 ? Colors.black : Colors.white, fontWeight: FontWeight.bold),
+                            color: pageProvider.menuValue == 0 ? Colors.black : Colors.white,
+                            fontWeight: FontWeight.bold),
                       )),
                     ),
                   )
@@ -147,7 +155,8 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                     onTap: () {
                                       Get.to(const MyPage());
                                     },
-                                    child: Text("See all", style: latoStyle100Thin.copyWith(fontSize: 10))),
+                                    child: Text("See all",
+                                        style: latoStyle300Light.copyWith(fontSize: 10,color: Colors.black))),
                               ),
                             ],
                           ),
@@ -168,11 +177,18 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                       childAspectRatio: 2.7,
                                       crossAxisSpacing: 10,
                                     ),
-                                    itemCount: pageProvider.authorPageLists.length < 5 ? pageProvider.authorPageLists.length : 5,
+                                    itemCount: 5 > pageProvider.authorPageLists.length
+                                        ? pageProvider.authorPageLists.length
+                                        : 5,
+                                    // > 5
+                                    // ? pageProvider.authorPageLists.length
+                                    // : 5,
                                     itemBuilder: (BuildContext ctx, index) {
                                       return InkWell(
                                         onTap: () {
-                                          Get.to(UserPageScreen(pageProvider.authorPageLists[index].id.toString(), index));
+                                          Get.to(UserPageScreen(
+                                              pageProvider.authorPageLists[index].id.toString(),
+                                              index));
                                         },
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
@@ -181,10 +197,11 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                             CircleAvatar(
                                               radius: 24,
                                               backgroundColor: Colors.black12,
-                                              backgroundImage: NetworkImage(pageProvider.authorPageLists[index].avatar),
+                                              backgroundImage: NetworkImage(
+                                                  pageProvider.authorPageLists[index].avatar),
                                             ),
                                             SizedBox(
-                                              width: width * 0.01,
+                                              width: width * 0.03,
                                             ),
                                             Column(
                                               mainAxisAlignment: MainAxisAlignment.start,
@@ -193,13 +210,14 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                                 SizedBox(
                                                   height: height * 0.01,
                                                 ),
-                                                Text(pageProvider.authorPageLists[index].name, style: latoStyle700Bold),
+                                                Text(pageProvider.authorPageLists[index].name,
+                                                    style: latoStyle700Bold),
                                                 const SizedBox(
                                                   height: 2,
                                                 ),
                                                 Text(
-                                                    "${pageProvider.authorPageLists[index].followers.toString()} ${getTranslated("Followers", context)}",
-                                                    style: latoStyle100Thin.copyWith(fontSize: 10)),
+                                                    "${pageProvider.authorPageLists[index].followers.toString()} ${getTranslated(" Followers", context)}",
+                                                    style: latoStyle400Regular.copyWith(fontSize: 10,color: Colors.grey)),
                                               ],
                                             )
                                           ],
@@ -215,7 +233,8 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             children: [
-                              Text(getTranslated("Page you liked", context), style: latoStyle700Bold),
+                              Text(getTranslated("Page you liked", context),
+                                  style: latoStyle700Bold),
                               const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
@@ -223,7 +242,8 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                   onTap: () {
                                     Get.to(const YourLikedPage());
                                   },
-                                  child: Text(getTranslated("See all", context), style: latoStyle100Thin.copyWith(fontSize: 10)),
+                                  child: Text(getTranslated("See all", context),
+                                      style:  latoStyle300Light.copyWith(fontSize: 10,color: Colors.black)),
                                 ),
                               ),
                             ],
@@ -233,35 +253,42 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           height: height * 0.26,
                           child: pageProvider.likedPageLists.isEmpty
                               ? Center(
-                                  child: Text(
-                                  getTranslated("you don,t like any page", context),
+                                  child:  Text(
+                                    getTranslated("you don,t like any page", context),
+
                                   style: latoStyle500Medium,
                                 ))
                               : ListView.builder(
-                                  itemCount: 2 > pageProvider.likedPageLists.length ? pageProvider.likedPageLists.length : 2,
+                                  itemCount: 2 > pageProvider.likedPageLists.length
+                                      ? pageProvider.likedPageLists.length
+                                      : 2,
                                   // > 2
                                   // ? pageProvider.allSuggestPageList.length
                                   // : 2,
                                   itemBuilder: (BuildContext context, int index) {
                                     return InkWell(
                                       onTap: () {
-                                        Get.to(PublicPageScreen(pageProvider.likedPageLists[index].id.toString()));
+                                        Get.to(PublicPageScreen(
+                                            pageProvider.likedPageLists[index].id.toString()));
                                       },
                                       child: ListTile(
                                           leading: CircleAvatar(
                                             radius: 24,
                                             backgroundColor: Colors.black12,
-                                            backgroundImage: NetworkImage(pageProvider.likedPageLists[index].avatar),
+                                            backgroundImage: NetworkImage(
+                                                pageProvider.likedPageLists[index].avatar),
                                           ),
                                           trailing: Container(
                                             height: height * 0.027,
                                             width: width * 0.15,
-                                            decoration:
-                                                BoxDecoration(color: const Color(0xff090D2A), borderRadius: BorderRadius.circular(4)),
+                                            decoration: BoxDecoration(
+                                                color: const Color(0xff090D2A),
+                                                borderRadius: BorderRadius.circular(4)),
                                             child: Center(
                                                 child: Text(
                                               getTranslated("Follow", context),
-                                              style: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 10),
+                                              style: latoStyle600SemiBold.copyWith(
+                                                  color: Colors.white, fontSize: 10),
                                             )),
                                           ),
                                           title: Column(
@@ -271,13 +298,14 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                               SizedBox(
                                                 height: height * 0.01,
                                               ),
-                                              Text(pageProvider.likedPageLists[index].name, style: latoStyle700Bold),
+                                              Text(pageProvider.likedPageLists[index].name,
+                                                  style: latoStyle700Bold),
                                               const SizedBox(
                                                 height: 2,
                                               ),
                                               Text(
                                                   "${pageProvider.likedPageLists[index].followers.toString()} ${getTranslated("Followers", context)}",
-                                                  style: latoStyle100Thin.copyWith(fontSize: 10)),
+                                                  style: latoStyle400Regular.copyWith(fontSize: 10,color: Colors.grey)),
                                             ],
                                           )),
                                     );
@@ -299,22 +327,27 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(PublicPageScreen(pageProvider.allSuggestPageList[index].id.toString()));
+                              Get.to(PublicPageScreen(
+                                  pageProvider.allSuggestPageList[index].id.toString()));
                             },
                             child: ListTile(
                                 leading: CircleAvatar(
                                   radius: 24,
                                   backgroundColor: Colors.black12,
-                                  backgroundImage: NetworkImage(pageProvider.allSuggestPageList[index].avatar),
+                                  backgroundImage:
+                                      NetworkImage(pageProvider.allSuggestPageList[index].avatar),
                                 ),
                                 trailing: Container(
                                   height: height * 0.027,
                                   width: width * 0.15,
-                                  decoration: BoxDecoration(color: const Color(0xff090D2A), borderRadius: BorderRadius.circular(4)),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xff090D2A),
+                                      borderRadius: BorderRadius.circular(4)),
                                   child: Center(
                                       child: Text(
                                     getTranslated("Follow", context),
-                                    style: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 10),
+                                    style: latoStyle600SemiBold.copyWith(
+                                        color: Colors.white, fontSize: 10),
                                   )),
                                 ),
                                 title: Column(
@@ -324,7 +357,8 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                     SizedBox(
                                       height: height * 0.01,
                                     ),
-                                    Text(pageProvider.allSuggestPageList[index].name, style: latoStyle700Bold),
+                                    Text(pageProvider.allSuggestPageList[index].name,
+                                        style: latoStyle700Bold),
                                     const SizedBox(
                                       height: 2,
                                     ),

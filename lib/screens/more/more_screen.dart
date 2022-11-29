@@ -1,5 +1,6 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
+import 'package:als_frontend/screens/group/liked_group_suggested_group.dart';
 import 'package:als_frontend/screens/page/liked_page_suggested_page.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
@@ -81,7 +82,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Get.to(const MyGroupScreen());
+                      Get.to(const LikedGroupSuggestedGroup());
                     },
                   ),
 
