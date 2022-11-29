@@ -2,11 +2,12 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
-import 'package:als_frontend/screens/page/create_page_screen.dart';
+import 'package:als_frontend/screens/group/public_group_screen.dart';
+import 'package:als_frontend/screens/group/user_group_screen_copy.dart';
+import 'package:als_frontend/screens/group/widget/joined_group.dart';
+import 'package:als_frontend/screens/group/widget/my_group.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
-import 'package:als_frontend/screens/page/widget/my_page.dart';
-import 'package:als_frontend/screens/page/widget/your_liked_page.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -156,7 +157,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: InkWell(
                                     onTap: () {
-                                      Get.to(const MyPage());
+                                      Get.to(const MyGroup());
                                     },
                                     child: Text("See all",
                                         style: latoStyle300Light.copyWith(fontSize: 10,color: Colors.black))),
@@ -183,13 +184,10 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                 itemCount: 5 > groupProvider.authorGroupList.length
                                     ? groupProvider.authorGroupList.length
                                     : 5,
-                                // > 5
-                                // ? pageProvider.authorPageLists.length
-                                // : 5,
                                 itemBuilder: (BuildContext ctx, index) {
                                   return InkWell(
                                     onTap: () {
-                                      Get.to(UserPageScreen(
+                                      Get.to(UserGroupScreen(
                                           groupProvider.authorGroupList[index].id.toString(),
                                           index));
                                     },
@@ -243,7 +241,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: InkWell(
                                   onTap: () {
-                                    Get.to(const YourLikedPage());
+                                    Get.to(const JoinedGroup());
                                   },
                                   child: Text(getTranslated("See all", context),
                                       style:  latoStyle300Light.copyWith(fontSize: 10,color: Colors.black)),
@@ -271,7 +269,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                               itemBuilder: (BuildContext context, int index) {
                                 return InkWell(
                                   onTap: () {
-                                    Get.to(PublicPageScreen(
+                                    Get.to(PublicGroupScreen(
                                         groupProvider.myGroupList[index].id.toString()));
                                   },
                                   child: ListTile(
@@ -330,7 +328,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(PublicPageScreen(
+                              Get.to(PublicGroupScreen(
                                   groupProvider.allSuggestGroupList[index].id.toString()));
                             },
                             child: ListTile(
