@@ -243,4 +243,11 @@ class SettingsProvider extends ChangeNotifier {
       return false;
     }
   }
+  //TODO for menu value
+  int menuValue = 0;
+
+  changeMenuValue(int value) {
+    menuValue = value;
+    notifyListeners();
+  }
 }
