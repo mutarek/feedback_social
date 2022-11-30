@@ -8,37 +8,35 @@ class FaqAllQuestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool indexValue = false;
     return Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Consumer<SettingsProvider>(builder: (context, provider, child) {
           return ListView.builder(
               itemCount: 3,
               itemBuilder: (context, index) {
-                return Container(
-                    margin: const EdgeInsets.only(top: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8), color: const Color(0xffF5F7FA)),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text("whats your mind"),
-                            IconButton(
-                                onPressed: () {
-                                  provider.updateSingleItem(index);
-                                },
-                                icon: provider.oldIndex ==index && provider.indexValue == true
-                                    ? Icon(FontAwesomeIcons.arrowDown)
-                                    : Icon(FontAwesomeIcons.arrowRight))
-                          ],
-                        ),
-                        Text(
-                          "sdvklsndvkslvsvknkvwnkvlnkvn         ebwfbwnfwn        wjfwbwjbv      wewe  vjjvjvskncsdncksdckncwcsdc   svsvsjvsjv      jvsvsvk",
-                          maxLines: provider.oldIndex == index && provider.indexValue == true ? 3 : 1,
-                        )
-                      ],
-                    ));
+                return InkWell(
+                  onTap: () {
+                    provider.updateSingleItem(index);
+                  },
+                  child: Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffF5F7FA)),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(child: Text("whats your mind")),
+                              provider.oldIndex == index ? Icon(FontAwesomeIcons.arrowDown) : Icon(FontAwesomeIcons.arrowRight)
+                            ],
+                          ),
+                          Text(
+                            "sdvklsndvkslvsvknkvwnkvlnkvn         ebwfbwnfwn        wjfwbwjbv      wewe  vjjvjvskncsdncksdckncwcsdc   svsvsjvsjv      jvsvsvk",
+                            maxLines: provider.oldIndex == index ? null : 1,
+                          )
+                        ],
+                      )),
+                );
               });
         }));
   }
