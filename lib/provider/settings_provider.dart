@@ -23,7 +23,8 @@ class SettingsProvider extends ChangeNotifier {
   Future passwordUpdate(String oldPassword, String newPassword, String confirmPassword) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await settingsRepo.passwordUpdate(oldPassword, newPassword, confirmPassword);
+    Response response =
+        await settingsRepo.passwordUpdate(oldPassword, newPassword, confirmPassword);
     if (response.statusCode == 200) {
       success = true;
       notifyListeners();
@@ -243,6 +244,7 @@ class SettingsProvider extends ChangeNotifier {
       return false;
     }
   }
+
   //TODO for menu value
   int menuValue = 0;
 
@@ -250,4 +252,25 @@ class SettingsProvider extends ChangeNotifier {
     menuValue = value;
     notifyListeners();
   }
+
+//TODO for index value
+  bool indexValue = false;
+  int oldIndex = -1;
+
+  updateSingleItem(int currentClick){
+    oldIndex = currentClick;
+    indexValue = true;
+    notifyListeners();
+  }
+
+
+  // changeIndexValue(int currentClick) {
+  //   oldIndex == currentClick;
+  //   if (indexValue == false) {
+  //     indexValue = true;
+  //   } else {
+  //     indexValue = false;
+  //   }
+  //   notifyListeners();
+  // }
 }

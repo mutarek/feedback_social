@@ -2,8 +2,6 @@ import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/screens/settings/widget/faq_all_question.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/custom_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -144,7 +142,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                       ),
                     )),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Padding(
@@ -174,7 +172,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                         )),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     //TODO: SING UP QUESTION
@@ -200,7 +198,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                         )),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     //TODO: log in QUESTION
@@ -226,7 +224,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                         )),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     //TODO: page  QUESTION
@@ -265,8 +263,11 @@ class _FaqSceeenState extends State<FaqSceeen> {
 
                     settingProvider.changeMenuValue(i);
                   },
-                  children: <Widget>[
-                    FaqAllQuestion()
+                  children:  [
+                    FaqAllQuestion(),
+                    Text("bjdbjbakcjacajkc"),
+                    Text("data")
+                    
                   ],
                 ),
               ),
