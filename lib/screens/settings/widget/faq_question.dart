@@ -72,19 +72,6 @@ class _FaqSceeenState extends State<FaqSceeen> {
                             style: latoStyle700Bold.copyWith(color: const Color(0xff2E4266)),
                           ),
                           SizedBox(),
-                          // Container(
-                          //     height: height * 0.05,
-                          //     width: width * 0.1,
-                          //     decoration: BoxDecoration(boxShadow: [
-                          //       BoxShadow(color: Colors.black.withOpacity(.09), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)
-                          //     ], borderRadius: BorderRadius.circular(8), color: Colors.white),
-                          //     child: Center(
-                          //         child: IconButton(
-                          //             onPressed: () {},
-                          //             icon: const Icon(
-                          //               FontAwesomeIcons.barsStaggered,
-                          //               size: 15,
-                          //             )))),
                         ],
                       ),
                     ),
@@ -106,8 +93,8 @@ class _FaqSceeenState extends State<FaqSceeen> {
                     height: 40,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.black26)),
                     child: TextFormField(
-                      onChanged: (value){
-                       settingProvider.initializeSearch(value);
+                      onChanged: (value) {
+                        settingProvider.initializeSearch(value);
                       },
                       decoration: InputDecoration(
                         prefixIcon: const Icon(FontAwesomeIcons.magnifyingGlass, color: Colors.blue),
@@ -120,111 +107,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                     )),
               ),
               const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  children: [
-                    //TODO: all question list
-                    InkWell(
-                      onTap: () {
-                        _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-                        settingProvider.changeMenuValue(0);
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: settingProvider.menuValue == 0 ? Colors.blue : Colors.grey, width: 1)),
-                        child: Center(
-                            child: Text(
-                          "All",
-                          style: latoStyle400Regular.copyWith(color: settingProvider.menuValue == 0 ? Colors.blue : Colors.black45),
-                        )),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //TODO: SING UP QUESTION
-                    InkWell(
-                      onTap: () {
-                        _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-                        settingProvider.changeMenuValue(1);
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: settingProvider.menuValue == 1 ? Colors.blue : Colors.grey, width: 1)),
-                        child: Center(
-                            child: Text(
-                          "Sign up",
-                          style: latoStyle400Regular.copyWith(color: settingProvider.menuValue == 1 ? Colors.blue : Colors.black45),
-                        )),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //TODO: log in QUESTION
-                    InkWell(
-                      onTap: () {
-                        _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-                        settingProvider.changeMenuValue(2);
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: settingProvider.menuValue == 2 ? Colors.blue : Colors.grey, width: 1)),
-                        child: Center(
-                            child: Text(
-                          "Sign in",
-                          style: latoStyle400Regular.copyWith(color: settingProvider.menuValue == 2 ? Colors.blue : Colors.black45),
-                        )),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //TODO: page  QUESTION
-                    InkWell(
-                      onTap: () {
-                        _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-                        settingProvider.changeMenuValue(3);
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: settingProvider.menuValue == 3 ? Colors.blue : Colors.grey, width: 1)),
-                        child: Center(
-                            child: Text(
-                          "Page",
-                          style: latoStyle400Regular.copyWith(color: settingProvider.menuValue == 3 ? Colors.blue : Colors.black45),
-                        )),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: PageView(
-                  controller: _pageController,
-                  physics: const ClampingScrollPhysics(),
-                  onPageChanged: (int i) {
-                    FocusScope.of(context).requestFocus(FocusNode());
-
-                    settingProvider.changeMenuValue(i);
-                  },
-                  children: [FaqAllQuestion(), Text("bjdbjbakcjacajkc"), Text("data")],
-                ),
-              ),
+              Expanded(flex: 2, child: FaqAllQuestion()),
             ],
           );
         }),

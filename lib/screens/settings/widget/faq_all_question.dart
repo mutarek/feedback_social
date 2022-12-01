@@ -22,41 +22,52 @@ class _FaqAllQuestionState extends State<FaqAllQuestion> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.only(left: 10, right: 10),
         child: Consumer<SettingsProvider>(builder: (context, provider, child) {
           return ListView.builder(
-              itemCount: provider.faqdata.length,
+              itemCount: provider.faqLists.length,
+              physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                return provider.faqdata.isEmpty? Center(child: CircularProgressIndicator()):InkWell(
-                  onTap: () {
-                    provider.updateSingleItem(index);
-                  },
-                  child: Container(
-                      margin: const EdgeInsets.only(top: 10,left: 10,right: 10,bottom: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8), color: const Color(0xffF5F7FA)),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                  child: Text(
-                                    provider.faqdata[index].question.toString(),
-                                    style: latoStyle700Bold.copyWith(color: Color(0xff293B5D)),
-                                  )),
-                              provider.oldIndex == index
-                                  ? Icon(FontAwesomeIcons.arrowDown,size: 10,color: Colors.blue,)
-                                  : Icon(FontAwesomeIcons.arrowRight,size: 10,color: Colors.blueAccent.shade400,)
-                            ],
-                          ),
-                          Text(
-                            provider.faqdata[index].answer.toString(),style: latoStyle500Medium.copyWith(color: Color(0xff5C6D88)),
-                            maxLines: provider.oldIndex == index ? null : 1,
-                          )
-                        ],
-                      )),
-                );
+                return provider.isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : InkWell(
+                        onTap: () {
+                          provider.updateSingleItem(index);
+                        },
+                        child: Container(
+                            margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffF5F7FA)),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                        child: Text(
+                                      provider.faqLists[index].question.toString(),
+                                      style: latoStyle700Bold.copyWith(color: Color(0xff293B5D)),
+                                    )),
+                                    provider.oldIndex == index
+                                        ? Icon(
+                                            FontAwesomeIcons.arrowDown,
+                                            size: 10,
+                                            color: Colors.blue,
+                                          )
+                                        : Icon(
+                                            FontAwesomeIcons.arrowRight,
+                                            size: 10,
+                                            color: Colors.blueAccent.shade400,
+                                          )
+                                  ],
+                                ),
+                                Text(
+                                  provider.faqLists[index].answer.toString(),
+                                  style: latoStyle500Medium.copyWith(color: Color(0xff5C6D88)),
+                                  maxLines: provider.oldIndex == index ? null : 1,
+                                )
+                              ],
+                            )),
+                      );
               });
         }));
   }

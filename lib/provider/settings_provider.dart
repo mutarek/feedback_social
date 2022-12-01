@@ -267,21 +267,22 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   ////TODO: for faq question list
-  List<FaqModel> faqdata = [];
+  List<FaqModel> faqLists = [];
+  List<FaqModel> faqListTemp = [];
 
   initializeFaqQuestion() async {
     _isLoading = true;
-    faqdata.clear();
-    faqdata = [];
-    faqtempls.clear();
-    faqtempls = [];
+    faqLists.clear();
+    faqLists = [];
+    faqListTemp.clear();
+    faqListTemp = [];
     Response response = await settingsRepo.faqQuestionDataGet();
     _isLoading = false;
     if (response.statusCode == 200) {
       response.body.forEach((element) {
-        faqdata.add(FaqModel.fromJson(element));
+        faqLists.add(FaqModel.fromJson(element));
       });
-      faqtempls.addAll(faqdata);
+      faqListTemp.addAll(faqLists);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
@@ -289,17 +290,16 @@ class SettingsProvider extends ChangeNotifier {
   }
 
 ////TODO: for faq question list scarch
-  List<FaqModel> faqtempls = [];
 
   initializeSearch(String query) {
-    faqdata.clear();
-    faqdata = [];
+    faqLists.clear();
+    faqLists = [];
     if (query.isEmpty) {
-      faqdata.addAll(faqtempls);
+      faqLists.addAll(faqListTemp);
     } else {
-      for (var element in faqtempls) {
-        if (element.question!.toLowerCase().contains(query.toLowerCase()) || element.answer!.toLowerCase().contains(query.toLowerCase())) {
-          faqdata.add(element);
+      for (var element in faqListTemp) {
+        if (element.question!.toLowerCase().contains(query.toLowerCase())) {
+          faqLists.add(element);
         }
       }
     }
