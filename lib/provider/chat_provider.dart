@@ -5,6 +5,7 @@ import 'package:als_frontend/data/model/response/chat/all_message_chat_list_mode
 import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/chat_repo.dart';
+import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
@@ -130,7 +131,7 @@ class ChatProvider with ChangeNotifier {
   bool isChangeValue = false;
 
   //TODO:  ********    for Web Socket
-  WebSocketChannel channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/post/191/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/post/191/comment/timeline_post/');
 
   userPostComments(AllMessageChatListModel model, int index, {bool isFromProfile = false}) {
     channel.stream.listen((data) {
@@ -158,7 +159,7 @@ class ChatProvider with ChangeNotifier {
   }
 
   initializeSocket(int index, {bool isFromProfile = false}) {
-    channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+    channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/messaging/thread/${chatModels.id}/');
     userPostComments(chatModels, index, isFromProfile: isFromProfile);
   }
 
@@ -187,7 +188,7 @@ class ChatProvider with ChangeNotifier {
         if (result == true) {
           timer.cancel();
           ticker.cancel();
-          channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+          channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/messaging/thread/${chatModels.id}/');
           channel.sink.add(
             jsonEncode({
               "data": {"user_id": userID, "room_id": chatModels.id, "text": message},
