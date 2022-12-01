@@ -58,7 +58,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SplashRepo(apiClient: sl()));
   sl.registerLazySingleton(() => SettingsRepo( apiClient:sl()));
   sl.registerLazySingleton(() => SearchRepo( apiClient:sl()));
-  sl.registerLazySingleton(() => ChatRepo( apiClient:sl(),authRepo: sl()));
+  sl.registerLazySingleton(() => ChatRepo( apiClient:sl(),authRepo: sl(),sharedPreferences: sl()));
 
 
   // Provider

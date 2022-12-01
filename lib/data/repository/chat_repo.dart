@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatRepo {
   final ApiClient apiClient;
   final AuthRepo authRepo;
+  final SharedPreferences sharedPreferences;
 
-  ChatRepo({required this.apiClient, required this.authRepo});
+  ChatRepo({required this.apiClient, required this.authRepo, required this.sharedPreferences});
 
   Future<Response> getUserAllChatLists(int pageNO) async {
     return await apiClient.getData(AppConstant.messageRoomList + "?page=$pageNO&size=10");
@@ -23,5 +28,19 @@ class ChatRepo {
 
   Future<Response> callForGetRoomID(String userID) async {
     return await apiClient.postData(AppConstant.messageRoomCreateList, {"user": userID});
+  }
+
+  List<ChatMessageModel> getChatData() {
+    List<String> chatsSave = sharedPreferences.getStringList(AppConstant.chats) ?? [];
+    List<ChatMessageModel> chatData = [];
+
+    chatsSave.forEach((cart) => chatData.add(ChatMessageModel.fromJson(jsonDecode(cart))));
+    return chatData;
+  }
+
+  void addToChatList(List<ChatMessageModel> chatList) {
+    List<String> chats = [];
+    chatList.forEach((chat) => chats.add(jsonEncode(chat)));
+    sharedPreferences.setStringList(AppConstant.chats, chats);
   }
 }

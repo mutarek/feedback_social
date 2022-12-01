@@ -130,7 +130,7 @@ class ChatProvider with ChangeNotifier {
   bool isChangeValue = false;
 
   //TODO:  ********    for Web Socket
-  WebSocketChannel channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/post/191/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/post/191/comment/timeline_post/');
 
   userPostComments(AllMessageChatListModel model, int index, {bool isFromProfile = false}) {
     channel.stream.listen((data) {
@@ -158,7 +158,7 @@ class ChatProvider with ChangeNotifier {
   }
 
   initializeSocket(int index, {bool isFromProfile = false}) {
-    channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+    channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/${chatModels.id}/');
     userPostComments(chatModels, index, isFromProfile: isFromProfile);
   }
 
@@ -187,7 +187,7 @@ class ChatProvider with ChangeNotifier {
         if (result == true) {
           timer.cancel();
           ticker.cancel();
-          channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+          channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/${chatModels.id}/');
           channel.sink.add(
             jsonEncode({
               "data": {"user_id": userID, "room_id": chatModels.id, "text": message},
@@ -224,6 +224,10 @@ class ChatProvider with ChangeNotifier {
         if (value > 5 || hasConnection) {
           timer.cancel();
           ticker.cancel();
+
+          List<ChatMessageModel> chatModels = chatRepo.getChatData();
+          chatModels.add(ChatMessageModel(id: 11, text: '', timestamp: ''));
+          chatRepo.addToChatList(chatModels);
         }
         notifyListeners();
       });
@@ -271,4 +275,7 @@ class ChatProvider with ChangeNotifier {
     chatModels = c;
     notifyListeners();
   }
+
+// for save message
+
 }
