@@ -24,7 +24,8 @@ class SettingsProvider extends ChangeNotifier {
   Future passwordUpdate(String oldPassword, String newPassword, String confirmPassword) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await settingsRepo.passwordUpdate(oldPassword, newPassword, confirmPassword);
+    Response response = await settingsRepo.passwordUpdate(
+        oldPassword, newPassword, confirmPassword);
     if (response.statusCode == 200) {
       success = true;
       notifyListeners();
@@ -144,8 +145,7 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
     Response response = await settingsRepo.updateOtherSettings(value, slNo);
 
-    if (response.statusCode == 200) {
-    } else {
+    if (response.statusCode == 200) {} else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
   }
@@ -205,8 +205,7 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
     Response response = await settingsRepo.updateOtherSettings(value, slNo);
 
-    if (response.statusCode == 200) {
-    } else {
+    if (response.statusCode == 200) {} else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
   }
@@ -265,8 +264,10 @@ class SettingsProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
   ////TODO: for faq question list
-List<FaqModel> faqdata = [];
+  List<FaqModel> faqdata = [];
+
   initializeFaqQuestion() async {
     _isLoading = true;
     faqdata.clear();
@@ -281,6 +282,27 @@ List<FaqModel> faqdata = [];
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
+  }
+
+////TODO: for faq question list scarch
+  List<FaqModel> faqtempls = [];
+
+
+  initializeSearch(String query) {
+    faqdata.clear();
+    faqdata = [];
+    if (query.isEmpty) {
+      faqdata.addAll(faqtempls);
+    } else {
+      for (var element in faqtempls) {
+        if (
+        element.question!.toLowerCase().contains(query.toLowerCase()) ||
+            element.answer!.toLowerCase().contains(query.toLowerCase())
+        ){
+          faqdata.add(element);
+        }
+      }
+    }
   }
 
 }
