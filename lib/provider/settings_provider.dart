@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
+import 'package:als_frontend/data/model/response/settings/faq_model.dart';
 import 'package:als_frontend/data/model/response/settings/notification_model.dart';
 import 'package:als_frontend/data/model/response/settings/other_settings_model.dart';
 import 'package:als_frontend/data/model/response/settings/privcay_model.dart';
@@ -23,7 +24,8 @@ class SettingsProvider extends ChangeNotifier {
   Future passwordUpdate(String oldPassword, String newPassword, String confirmPassword) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await settingsRepo.passwordUpdate(oldPassword, newPassword, confirmPassword);
+    Response response = await settingsRepo.passwordUpdate(
+        oldPassword, newPassword, confirmPassword);
     if (response.statusCode == 200) {
       success = true;
       notifyListeners();
@@ -143,8 +145,7 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
     Response response = await settingsRepo.updateOtherSettings(value, slNo);
 
-    if (response.statusCode == 200) {
-    } else {
+    if (response.statusCode == 200) {} else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
   }
@@ -204,8 +205,7 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
     Response response = await settingsRepo.updateOtherSettings(value, slNo);
 
-    if (response.statusCode == 200) {
-    } else {
+    if (response.statusCode == 200) {} else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
   }
@@ -264,4 +264,45 @@ class SettingsProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  ////TODO: for faq question list
+  List<FaqModel> faqdata = [];
+
+  initializeFaqQuestion() async {
+    _isLoading = true;
+    faqdata.clear();
+    faqdata = [];
+    Response response = await settingsRepo.faqQuestionDataGet();
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        faqdata.add(FaqModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+////TODO: for faq question list scarch
+  List<FaqModel> faqtempls = [];
+
+
+  initializeSearch(String query) {
+    faqdata.clear();
+    faqdata = [];
+    if (query.isEmpty) {
+      faqdata.addAll(faqtempls);
+    } else {
+      for (var element in faqtempls) {
+        if (
+        element.question!.toLowerCase().contains(query.toLowerCase()) ||
+            element.answer!.toLowerCase().contains(query.toLowerCase())
+        ){
+          faqdata.add(element);
+        }
+      }
+    }
+  }
+
 }

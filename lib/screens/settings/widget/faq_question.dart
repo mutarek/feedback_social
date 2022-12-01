@@ -106,6 +106,9 @@ class _FaqSceeenState extends State<FaqSceeen> {
                     height: 40,
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.black26)),
                     child: TextFormField(
+                      onChanged: (value){
+                       settingProvider.initializeSearch(value);
+                      },
                       decoration: InputDecoration(
                         prefixIcon: const Icon(FontAwesomeIcons.magnifyingGlass, color: Colors.blue),
                         focusedBorder: InputBorder.none,
