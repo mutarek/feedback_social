@@ -100,6 +100,10 @@ class SettingsRepo {
   Future<Response> termsAndCondition() async {
     return await apiClient.getData(AppConstant.termsAndConditionUri);
   }
+  ///TODO: Faq question list get
+  Future<Response> faqQuestionDataGet() async {
+    return await apiClient.getData(AppConstant.faqQuestionUri);
+  }
 
   Future<Response> addHelpDisk(String message, File problemsScreenshots) async {
     http.MultipartFile multipartFile = http.MultipartFile(

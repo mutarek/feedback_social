@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
+import 'package:als_frontend/data/model/response/settings/faq_model.dart';
 import 'package:als_frontend/data/model/response/settings/notification_model.dart';
 import 'package:als_frontend/data/model/response/settings/other_settings_model.dart';
 import 'package:als_frontend/data/model/response/settings/privcay_model.dart';
@@ -264,4 +265,22 @@ class SettingsProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+  ////TODO: for faq question list
+List<FaqModel> faqdata = [];
+  initializeFaqQuestion() async {
+    _isLoading = true;
+    faqdata.clear();
+    faqdata = [];
+    Response response = await settingsRepo.faqQuestionDataGet();
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        faqdata.add(FaqModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
 }

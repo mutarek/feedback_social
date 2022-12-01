@@ -54,6 +54,7 @@ class AppConstant {
   static const String getOtherSettingsValue = '/settings/other-settings/';
   static const String getNotificationSettingsValueUri = '/settings/notification/';
   static const String termsAndConditionUri = '/terms-condition/list/';
+  static const String faqQuestionUri = '/settings/faq/';
   static const String latestVersionUri = '/latest-version/';
   static const String helpDiskURI = '/settings/help-desk/';
 
