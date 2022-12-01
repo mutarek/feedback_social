@@ -200,8 +200,8 @@ class NewsFeedProvider with ChangeNotifier {
   }
 
   void pushLocalMessage() {
-    if (sharedPreferences!.containsKey('chat_list_key')) {
-      List<String>? message = sharedPreferences!.getStringList('chat_list_key');
+    if (sharedPreferences!.containsKey('AppConstant.offlineChatList')) {
+      List<String>? message = sharedPreferences!.getStringList('AppConstant.offlineChatList');
       for (var element in message!) {
         //TODO: push message to socket and clear cache
         Get.snackbar('data', element);

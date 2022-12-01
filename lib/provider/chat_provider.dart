@@ -6,6 +6,7 @@ import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/chat_repo.dart';
+import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
@@ -82,16 +83,16 @@ class ChatProvider with ChangeNotifier {
     for (var element in offlinechat) {
       chats.add(element.message);
     }
-    if(sharedPreferences!.containsKey("chat_list_key")){
-      List<String>? oldMessages = sharedPreferences!.getStringList('chat_list_key');
+    if(sharedPreferences!.containsKey(AppConstant.offlineChatList)){
+      List<String>? oldMessages = sharedPreferences!.getStringList(AppConstant.offlineChatList);
       for(var singleMessage in oldMessages!){
         chats.add(singleMessage);
       }
     }
     else{
-      sharedPreferences!.setStringList('chat_list_key', chats);
+      sharedPreferences!.setStringList(AppConstant.offlineChatList, chats);
     }
-    sharedPreferences!.setStringList('chat_list_key', chats);
+    sharedPreferences!.setStringList(AppConstant.offlineChatList, chats);
     if(result) {
       getOfflineMessageList();
     }
