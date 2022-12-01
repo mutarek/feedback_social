@@ -78,7 +78,7 @@ class AuthProvider with ChangeNotifier {
   Future<CallBackResponse> signIn(String email, String password) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await authRepo.login(email, password);
+    Response response = await authRepo.login(email, password, isSelectEmail);
     _isLoading = false;
 
     if (response.statusCode == 200) {
@@ -259,39 +259,37 @@ class AuthProvider with ChangeNotifier {
     userCode = authRepo.getUserCode();
     notifyListeners();
   }
-//TODO: for countery code picker
+
+//TODO: for country code picker
   String code = "+880";
-  void pickupCountry(BuildContext context){
+
+  void pickupCountry(BuildContext context) {
     showCountryPicker(
         context: context,
         countryListTheme: CountryListThemeData(
           flagSize: 25,
           backgroundColor: Colors.white,
           textStyle: const TextStyle(fontSize: 16, color: Colors.blueGrey),
-          bottomSheetHeight: 500, // Optional. Country list modal height
-          //Optional. Sets the border radius for the bottomsheet.
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
+          bottomSheetHeight: 500,
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
           //Optional. Styles the search field.
           inputDecoration: InputDecoration(
             labelText: 'Search',
             hintText: 'Start typing to search',
             prefixIcon: const Icon(Icons.search),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: const Color(0xFF8C98A8).withOpacity(0.2),
-              ),
-            ),
+            border: OutlineInputBorder(borderSide: BorderSide(color: const Color(0xFF8C98A8).withOpacity(0.2))),
           ),
         ),
         onSelect: (Country country) {
-         code ="+"+country.phoneCode;
-         notifyListeners();
-        }
-
-    );
+          code = "+" + country.phoneCode;
+          notifyListeners();
+        });
   }
 
+  bool isSelectEmail = false;
+
+  void changeSelectStatus(bool value) {
+    isSelectEmail = value;
+    notifyListeners();
+  }
 }

@@ -15,13 +15,13 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:provider/provider.dart';
 
 class EmailOrPhoneNumber extends StatelessWidget {
-   EmailOrPhoneNumber({Key? key}) : super(key: key);
+  EmailOrPhoneNumber({Key? key}) : super(key: key);
 
-  TextEditingController emailController =TextEditingController();
-  TextEditingController phoneController =TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
@@ -69,7 +69,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                             physics: const BouncingScrollPhysics(),
                             child: Column(
                               children: [
-                            TabBar(
+                                TabBar(
                                     indicator: const UnderlineTabIndicator(
                                         borderSide: BorderSide(width: 1.0, color: Colors.white),
                                         insets: EdgeInsets.symmetric(horizontal: 16.0)),
@@ -83,102 +83,83 @@ class EmailOrPhoneNumber extends StatelessWidget {
                                         style: latoStyle500Medium.copyWith(color: Colors.white),
                                       ),
                                     ]),
-
-
                                 const SizedBox(height: 50),
                                 SizedBox(
                                     height: height * 0.4,
-                                    child: Consumer<AuthProvider>(
-
-                                      builder: (context,authProvider,child) {
-                                        return TabBarView(children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 10,right: 10),
+                                    child: Consumer<AuthProvider>(builder: (context, authProvider, child) {
+                                      return TabBarView(children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 10, right: 10),
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 35),
+                                                child: CustomText2(
+                                                  title: 'Please Enter your  phone number',
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                  textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: height * 0.02,
+                                              ),
+                                              Container(
+                                                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(9)),
+                                                  child: Row(
+                                                    children: [
+                                                      InkWell(
+                                                          onTap: () {
+                                                            authProvider.pickupCountry(context);
+                                                          },
+                                                          child: Padding(
+                                                              padding: const EdgeInsets.only(left: 20),
+                                                              child: Text(authProvider.code, style: latoStyle800ExtraBold))),
+                                                      const Divider(color: Colors.black),
+                                                      Expanded(
+                                                          child: TextField(
+                                                        controller: phoneController,
+                                                        keyboardType: TextInputType.number,
+                                                        decoration: const InputDecoration(hintText: "Phone Number"),
+                                                      )),
+                                                    ],
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
+                                          child: SizedBox(
+                                            height: height * 0.05,
                                             child: Column(
                                               children: [
                                                 Padding(
                                                   padding: const EdgeInsets.symmetric(horizontal: 35),
                                                   child: CustomText2(
-                                                    title: 'Please Enter your  phone number',
+                                                    title: "Please Enter Your E-mail",
                                                     textAlign: TextAlign.center,
                                                     maxLines: 2,
                                                     textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16),
                                                   ),
                                                 ),
-                                                SizedBox(height: height*0.02,),
-                                                Container(
-
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                    borderRadius: BorderRadius.circular(9)
-                                                  ),
-                                                  child: Row(
-                                                    children: [
-                                                    InkWell(
-                                                      onTap: (){
-                                                      authProvider.pickupCountry(context);
-                                                      },
-                                                        child: Padding(
-                                                          padding: const EdgeInsets.only(left: 20),
-                                                            child: Text(authProvider.code,style: latoStyle800ExtraBold,))),
-                                                     const Divider(
-                                                       color: Colors.black,
-                                                     ),
-                                                      Expanded(child:
-                                                          TextField(
-                                                            controller: phoneController,
-                                                            keyboardType: TextInputType.number,
-                                                            decoration: const InputDecoration(
-                                                              hintText: "Phone Number",
-
-
-                                                            ),
-                                                          )
-                                                      ),
-                                                    ],
-                                                  )
+                                                SizedBox(
+                                                  height: height * 0.02,
+                                                ),
+                                                CustomTextField(
+                                                  fillColor: Colors.white,
+                                                  hintText: getTranslated('Enter Your E-mail', context),
+                                                  borderRadius: 4,
+                                                  controller: emailController,
+                                                  verticalSize: 15,
+                                                  autoFillHints: AutofillHints.email,
+                                                  inputType: TextInputType.emailAddress,
                                                 ),
                                               ],
                                             ),
                                           ),
-                                          Padding(
-                                            padding:  const EdgeInsets.only(bottom: 20,left: 10,right: 10),
-                                            child: SizedBox(
-                                              height: height*0.05,
-                                              child:
-
-                                              Column(
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 35),
-                                                    child: CustomText2(
-                                                      title: "Please Enter Your E-mail",
-                                                      textAlign: TextAlign.center,
-                                                      maxLines: 2,
-                                                      textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: height*0.02,),
-                                                  CustomTextField(
-                                                    fillColor: Colors.white,
-                                                    hintText: getTranslated('Enter Your E-mail', context),
-                                                    borderRadius: 4,
-                                                    controller: emailController,
-                                                    verticalSize: 15,
-                                                    autoFillHints: AutofillHints.email,
-                                                    inputType: TextInputType.emailAddress,
-                                                  ),
-
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ]);
-                                      }
-                                    )
-
-
-                                ),
+                                        ),
+                                      ]);
+                                    })),
                                 SizedBox(height: height * 0.02),
                               ],
                             ),
@@ -208,7 +189,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                               context: context,
                             );
                           }
-                          if(emailController.text.isNotEmpty){
+                          if (emailController.text.isNotEmpty) {
                             auth.otpSend(emailController.text, true, (bool status, String message) {
                               if (status) {
                                 Fluttertoast.showToast(msg: message);
@@ -221,21 +202,20 @@ class EmailOrPhoneNumber extends StatelessWidget {
                               }
                             });
                           }
-                          if(phoneController.text.isNotEmpty){
-                            auth.otpSend(auth.code+phoneController.text, false, (bool status, String message) {
+                          if (phoneController.text.isNotEmpty) {
+                            auth.otpSend(auth.code + phoneController.text, false, (bool status, String message) {
                               if (status) {
                                 Fluttertoast.showToast(msg: message);
                                 Get.off(OTPScreen(
                                   isFromForgetPassword: false,
-                                  emailOrNumber: auth.code+phoneController.text.toString(),
+                                  emailOrNumber: auth.code + phoneController.text.toString(),
                                 ));
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                               }
                             });
                           }
-                        }
-                        );
+                        });
                   }),
                 ),
               ),
@@ -252,7 +232,6 @@ class EmailOrPhoneNumber extends StatelessWidget {
             ],
           ),
         ),
-
 
         // body: Column(
         //   crossAxisAlignment: CrossAxisAlignment.center,

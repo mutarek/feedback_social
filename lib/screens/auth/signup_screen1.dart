@@ -1,10 +1,9 @@
-import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/otp_screen.dart';
-import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
@@ -19,166 +18,211 @@ class SignUpScreen1 extends StatelessWidget {
   SignUpScreen1({Key? key, required this.isFromForgetPassword}) : super(key: key);
   final TextEditingController emailPhoneController = TextEditingController();
   final bool isFromForgetPassword;
+  TextEditingController phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Builder(builder: (context) {
-      return Scaffold(
-        backgroundColor: Palette.primary,
-        // appBar: AppBar(
-        //   elevation: 0,
-        //   backgroundColor: Palette.primary,
-        //   leading: SizedBox.shrink(),
-        //   centerTitle: true,
-        //   title:
-        //       Text(getTranslated('Registration', context)!, style: latoStyle500Medium.copyWith(color: Colors.white, fontSize: fontSize18)),
-        // ),
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          child: Stack(
-            children: [
-              Positioned(
-                top: height * 0.75,
-                left: width * 0.6,
-                child: Container(
-                  height: height * 0.4,
-                  width: width * 0.4,
-                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
-                ),
-              ),
-              Column(
-                children: [
-                  ClipPath(
-                    clipper: TsClip2(),
-                    child: Container(
-                      height: height * 0.25,
-                      width: width,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
-                        child: CustomText2(
-                          title: isFromForgetPassword ? "Forget Password" : "Registration",
-                          textStyle: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+      return Consumer<AuthProvider>(
+          builder: (context, auth, child) => Scaffold(
+                backgroundColor: Palette.primary,
+                // appBar: AppBar(
+                //   elevation: 0,
+                //   backgroundColor: Palette.primary,
+                //   leading: SizedBox.shrink(),
+                //   centerTitle: true,
+                //   title:
+                //       Text(getTranslated('Registration', context)!, style: latoStyle500Medium.copyWith(color: Colors.white, fontSize: fontSize18)),
+                // ),
+                body: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: height * 0.75,
+                        left: width * 0.6,
+                        child: Container(
+                          height: height * 0.4,
+                          width: width * 0.4,
+                          decoration:
+                              BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
                         ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
+                      Column(
+                        children: [
+                          ClipPath(
+                            clipper: TsClip2(),
+                            child: Container(
+                              height: height * 0.25,
+                              width: width,
+                              color: Colors.white,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
+                                child: CustomText2(
+                                  title: isFromForgetPassword ? "Forget Password" : "Registration",
+                                  textStyle: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                SizedBox(height: height * 0.02),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 35),
-                                  child: CustomText2(
-                                    title: 'Please Enter your email address or phone number',
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    textStyle: latoStyle600SemiBold.copyWith(color: colorPrimaryDark, fontSize: 16),
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    physics: const BouncingScrollPhysics(),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: height * 0.005),
+                                        Container(
+                                          height: 50,
+                                          margin: const EdgeInsets.only(bottom: 15),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                  width: 80,
+                                                  child: CustomButton(
+                                                    btnTxt: 'Email',
+                                                    onTap: () {
+                                                      auth.changeSelectStatus(false);
+                                                    },
+                                                    textWhiteColor: !auth.isSelectEmail,
+                                                    backgroundColor: !auth.isSelectEmail ? Palette.primary : Colors.white,
+                                                  )),
+                                              const SizedBox(width: 15),
+                                              SizedBox(
+                                                  width: 80,
+                                                  child: CustomButton(
+                                                    btnTxt: 'Phone',
+                                                    onTap: () {
+                                                      auth.changeSelectStatus(true);
+                                                    },
+                                                    textWhiteColor: auth.isSelectEmail,
+                                                    backgroundColor: auth.isSelectEmail ? Palette.primary : Colors.white,
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        auth.isSelectEmail
+                                            ? Container(
+                                                margin: const EdgeInsets.symmetric(horizontal: 15),
+                                                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(9)),
+                                                child: Row(
+                                                  children: [
+                                                    InkWell(
+                                                        onTap: () {
+                                                          auth.pickupCountry(context);
+                                                        },
+                                                        child: Padding(
+                                                            padding: const EdgeInsets.only(left: 20),
+                                                            child: Text(auth.code, style: latoStyle800ExtraBold))),
+                                                    const Divider(color: Colors.black),
+                                                    Expanded(
+                                                        child: TextField(
+                                                      controller: phoneController,
+                                                      keyboardType: TextInputType.number,
+                                                      decoration: const InputDecoration(hintText: "Phone Number"),
+                                                    )),
+                                                  ],
+                                                ))
+                                            : Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                                child: CustomTextField(
+                                                  fillColor: Colors.white,
+                                                  hintText: 'Enter Your E-mail',
+                                                  borderRadius: 9,
+                                                  controller: emailPhoneController,
+                                                  verticalSize: 15,
+                                                  autoFillHints: AutofillHints.email,
+                                                  inputType: TextInputType.emailAddress,
+                                                ),
+                                              ),
+                                        SizedBox(height: height * 0.02),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                                const SizedBox(height: 50),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                                  child: CustomTextField(
-                                    fillColor: Colors.white,
-                                    hintText: getTranslated('Email/Phone No', context),
-                                    borderRadius: 4,
-                                    controller: emailPhoneController,
-                                    verticalSize: 15,
-                                    autoFillHints: AutofillHints.email,
-                                    autoFillHints2: AutofillHints.telephoneNumber,
-                                    inputType: TextInputType.emailAddress,
-                                    inputAction: TextInputAction.done,
-                                  ),
-                                ),
-                                SizedBox(height: height * 0.02),
                               ],
                             ),
                           ),
+                        ],
+                      ),
+                      Positioned(
+                        top: height * 0.65,
+                        left: width * 0.48,
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: height * 0.4,
+                          width: width * 0.4,
+                          child: Consumer<AuthProvider>(builder: (context, auth, child) {
+                            return CustomConatinerButton(
+                                child: (auth.isLoading == false)
+                                    ? const Icon(Icons.arrow_forward, color: Colors.white)
+                                    : const Center(child: CupertinoActivityIndicator()),
+                                ontap: () {
+                                  if (!auth.isSelectEmail && emailPhoneController.text.isEmpty) {
+                                    showMessage(
+                                      message: getTranslated('Please fill all the form', context),
+                                      context: context,
+                                    );
+                                  } else if (auth.isSelectEmail && phoneController.text.isEmpty) {
+                                    showMessage(
+                                      message: getTranslated('Please fill all the form', context),
+                                      context: context,
+                                    );
+                                  } else {
+                                    if (isFromForgetPassword) {
+                                      auth.resetOtpSend(!auth.isSelectEmail ? emailPhoneController.text : auth.code + phoneController.text,
+                                          !auth.isSelectEmail, (bool status, String message) {
+                                        if (status) {
+                                          Fluttertoast.showToast(msg: message);
+                                          Get.off(OTPScreen(
+                                            isFromForgetPassword: isFromForgetPassword,
+                                            emailOrNumber: emailPhoneController.text.toString(),
+                                          ));
+                                        } else {
+                                          Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                                        }
+                                      });
+                                    } else {
+                                      auth.otpSend(emailPhoneController.text, false, (bool status, String message) {
+                                        if (status) {
+                                          Fluttertoast.showToast(msg: message);
+                                          Get.off(OTPScreen(
+                                            isFromForgetPassword: isFromForgetPassword,
+                                            emailOrNumber: emailPhoneController.text.toString(),
+                                          ));
+                                        } else {
+                                          Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
+                                        }
+                                      });
+                                    }
+                                  }
+                                });
+                          }),
                         ),
-                      ],
-                    ),
+                      ),
+                      Positioned(
+                        top: height * 0.65,
+                        left: width * 0.1,
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: height * 0.4,
+                          width: width * 0.4,
+                          child:
+                              CustomText2(title: 'Send OTP', textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Positioned(
-                top: height * 0.65,
-                left: width * 0.48,
-                child: Container(
-                  alignment: Alignment.center,
-                  height: height * 0.4,
-                  width: width * 0.4,
-                  child: Consumer<AuthProvider>(builder: (context, auth, child) {
-                    return CustomConatinerButton(
-                        child: (auth.isLoading == false)
-                            ? const Icon(Icons.arrow_forward, color: Colors.white)
-                            : const Center(child: CupertinoActivityIndicator()),
-                        ontap: () {
-                          if (emailPhoneController.text.isEmpty) {
-                            showMessage(
-                              message: getTranslated('Please fill all the form', context),
-                              context: context,
-                            );
-                          } else {
-                            bool isNumber = isNumeric(emailPhoneController.text);
-                            if(isFromForgetPassword)
-                              {
-                                auth.resetOtpSend(emailPhoneController.text, !isNumber, (bool status,String message){
-                                  if (status) {
-                                    Fluttertoast.showToast(msg: message);
-                                    Get.off(OTPScreen(
-                                      isFromForgetPassword: isFromForgetPassword,
-                                      emailOrNumber: emailPhoneController.text.toString(),
-                                    ));
-                                  } else {
-                                    Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
-                                  }
-                                });
-                              }
-                            else
-                              {
-                                auth.otpSend(emailPhoneController.text, !isNumber, (bool status, String message) {
-                                  if (status) {
-                                    Fluttertoast.showToast(msg: message);
-                                    Get.off(OTPScreen(
-                                      isFromForgetPassword: isFromForgetPassword,
-                                      emailOrNumber: emailPhoneController.text.toString(),
-                                    ));
-                                  } else {
-                                    Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
-                                  }
-                                });
-                              }
-                          }
-                        });
-                  }),
                 ),
-              ),
-              Positioned(
-                top: height * 0.65,
-                left: width * 0.1,
-                child: Container(
-                  alignment: Alignment.center,
-                  height: height * 0.4,
-                  width: width * 0.4,
-                  child: CustomText2(title: 'Send OTP', textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-      );
+              ));
     });
   }
 }
