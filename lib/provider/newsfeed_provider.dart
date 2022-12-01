@@ -1,11 +1,15 @@
+import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/data/model/response/liked_by_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
+import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NewsFeedProvider with ChangeNotifier {
   final NewsfeedRepo newsFeedRepo;
@@ -19,6 +23,7 @@ class NewsFeedProvider with ChangeNotifier {
   bool isBottomLoading = false;
   int selectPage = 1;
   bool hasNextData = false;
+  late SharedPreferences? sharedPreferences;
 
   updatePageNo() {
     selectPage++;
@@ -26,7 +31,10 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
   initializeAllFeedData({int page = 1, bool isFirstTime = true}) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    pushLocalMessage();
     if (page == 1) {
       selectPage = 1;
       newsFeedLists.clear();
@@ -189,5 +197,17 @@ class NewsFeedProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: response.statusText!);
     }
     notifyListeners();
+  }
+
+  void pushLocalMessage() {
+    if (sharedPreferences!.containsKey('chat_list_key')) {
+      List<String>? message = sharedPreferences!.getStringList('chat_list_key');
+      for (var element in message!) {
+        //TODO: push message to socket and clear cache
+        Get.snackbar('data', element);
+      }
+      //TODO: REMOVE ALL LOCAL MESSAGES FROM SHAredPreferences
+      //sharedPreferences?.remove('chat_list_key');
+    }
   }
 }

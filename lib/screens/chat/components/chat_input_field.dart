@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/util/size.util.dart';
@@ -7,8 +9,10 @@ import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatInputField extends StatelessWidget {
   ChatInputField(this.controller, this.index, {this.customerID = 0, this.isFromProfile = false, Key? key}) : super(key: key);
@@ -19,6 +23,9 @@ class ChatInputField extends StatelessWidget {
   final int index;
   final bool isFromProfile;
   final int customerID;
+  bool hasConnection = false;
+  late final prefs;
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +76,8 @@ class ChatInputField extends StatelessWidget {
                     chatProvider.sendMessageLoading
                         ? const Center(child: CircularProgressIndicator())
                         : InkWell(
-                            onTap: () {
+                            onTap: () async{
+                              bool result = await InternetConnectionChecker().hasConnection;
                               String userID = chatProvider.userID();
                               String message = textEditingController.text;
                               if(message.isEmpty){
@@ -83,20 +91,25 @@ class ChatInputField extends StatelessWidget {
                                     fontSize: 16.0
                                 );
                               }else{
-                                if (chatProvider.isOneTime && isFromProfile) {
-                                  chatProvider.createRoom(userID, customerID.toString(), message, index).then((value) {
-                                    Timer(const Duration(seconds: 1), () {
-                                      controller.animateTo(controller.position.maxScrollExtent,
-                                          duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
+                                if(result){
+                                  if (chatProvider.isOneTime && isFromProfile) {
+                                    chatProvider.createRoom(userID, customerID.toString(), message, index).then((value) {
+                                      Timer(const Duration(seconds: 1), () {
+                                        controller.animateTo(controller.position.maxScrollExtent,
+                                            duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
+                                      });
                                     });
-                                  });
-                                } else {
-                                  chatProvider.addPost(userID, message, (int value) {
-                                    Timer(const Duration(seconds: 1), () {
-                                      controller.animateTo(controller.position.maxScrollExtent,
-                                          duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
-                                    });
-                                  }, index);
+                                  } else {
+                                    chatProvider.addPost(userID, message, (int value) {
+                                      Timer(const Duration(seconds: 1), () {
+                                        controller.animateTo(controller.position.maxScrollExtent,
+                                            duration: const Duration(milliseconds: 250), curve: Curves.easeInOutCubic);
+                                      });
+                                    }, index);
+                                  }
+                                }
+                                else{
+                                  chatProvider.saveMessageToLocalStorage(userID, customerID.toString(), message, index);
                                 }
                               }
                               textEditingController.clear();
@@ -111,4 +124,5 @@ class ChatInputField extends StatelessWidget {
       ),
     );
   }
+
 }

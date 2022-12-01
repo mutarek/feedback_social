@@ -5,6 +5,7 @@ import 'package:als_frontend/screens/chat/message_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -20,13 +21,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 
   ScrollController controller = ScrollController();
+  bool hasConnection = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Provider.of<ChatProvider>(context, listen: false).initializeAllChats();
-
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
@@ -37,7 +38,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: Colors.white,
       body: RefreshIndicator(
@@ -59,6 +60,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         itemBuilder: (context, index) => ChatCard(
                             chat: chatProvider.allChatsLists[index],
                             press: () {
+
                               AllMessageChatListModel allMessageChatListModel = chatProvider.allChatsLists[index];
                               chatProvider.changeChantModel(allMessageChatListModel);
                               chatProvider.initializeSocket(index);

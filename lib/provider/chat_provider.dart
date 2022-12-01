@@ -3,12 +3,14 @@ import 'dart:convert';
 
 import 'package:als_frontend/data/model/response/chat/all_message_chat_list_model.dart';
 import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
+import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/chat_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -19,12 +21,14 @@ class ChatProvider with ChangeNotifier {
   ChatProvider({required this.chatRepo, required this.authRepo});
 
   bool _isLoading = false;
+  static SharedPreferences? sharedPreferences;
 
   bool get isLoading => _isLoading;
 
 //TODO; Get ALl Chats
   List<AllMessageChatListModel> allChatsLists = [];
   List<AllMessageChatListModel> allChatsListsCopy = [];
+  List<OfflineChat> offlineChatList = [];
 
   updatePageNoAllChats() {
     selectPage++;
@@ -65,6 +69,44 @@ class ChatProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void saveMessageToLocalStorage(String userID, String customerID, String message, int index) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    List<OfflineChat> offlineChatList = [];
+    offlineChatList.add(OfflineChat(message: message));
+    addToOfflineChat(offlineChatList);
+  }
+
+  void addToOfflineChat(List<OfflineChat> offlinechat) async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    List<String> chats = [];
+    for (var element in offlinechat) {
+      chats.add(element.message);
+    }
+    if(sharedPreferences!.containsKey("chat_list_key")){
+      List<String>? oldMessages = sharedPreferences!.getStringList('chat_list_key');
+      for(var singleMessage in oldMessages!){
+        chats.add(singleMessage);
+      }
+    }
+    else{
+      sharedPreferences!.setStringList('chat_list_key', chats);
+    }
+    sharedPreferences!.setStringList('chat_list_key', chats);
+    if(result) {
+      getOfflineMessageList();
+    }
+  }
+
+  void getOfflineMessageList() {
+    if (sharedPreferences!.containsKey('chat_list_key')) {
+      List<String>? message = sharedPreferences!.getStringList('chat_list_key');
+      for (var element in message!) {
+        //TODO: push message to web socket
+        Get.snackbar('data', element);
+      }
+    }
+  }
+
 //TODO; Get p2p Chats
   List<ChatMessageModel> p2pChatLists = [];
   List<ChatMessageModel> p2pChatListsTemp = [];
@@ -72,13 +114,16 @@ class ChatProvider with ChangeNotifier {
   bool hasNextData = false;
   int selectPage = 1;
 
-  updatePageNo(Function callBack, {bool isFromChatTwoUser = false, int userID = 0}) {
+  updatePageNo(Function callBack,
+      {bool isFromChatTwoUser = false, int userID = 0}) {
     selectPage++;
-    initializeP2PChats(callBack, page: selectPage, userID: userID, isFromChatTwoUser: isFromChatTwoUser);
+    initializeP2PChats(callBack,
+        page: selectPage, userID: userID, isFromChatTwoUser: isFromChatTwoUser);
     notifyListeners();
   }
 
-  initializeP2PChats(Function callBack, {int page = 1, bool isFromChatTwoUser = false, int userID = 0}) async {
+  initializeP2PChats(Function callBack,
+      {int page = 1, bool isFromChatTwoUser = false, int userID = 0}) async {
     if (page == 1) {
       p2pChatLists.clear();
       p2pChatLists = [];
@@ -94,7 +139,8 @@ class ChatProvider with ChangeNotifier {
     p2pChatListsTemp = [];
     Response apiResponse;
     if (isFromChatTwoUser) {
-      apiResponse = await chatRepo.getChatMessageBetweenTwoUser(userID.toString(), page);
+      apiResponse =
+          await chatRepo.getChatMessageBetweenTwoUser(userID.toString(), page);
     } else {
       apiResponse = await chatRepo.getUserP2PChatLists(chatModels.id!, page);
     }
@@ -130,13 +176,16 @@ class ChatProvider with ChangeNotifier {
   bool isChangeValue = false;
 
   //TODO:  ********    for Web Socket
-  WebSocketChannel channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/post/191/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect(
+      'wss://feedback-social.com/ws/post/191/comment/timeline_post/');
 
-  userPostComments(AllMessageChatListModel model, int index, {bool isFromProfile = false}) {
+  userPostComments(AllMessageChatListModel model, int index,
+      {bool isFromProfile = false}) {
     channel.stream.listen((data) {
       isChangeValue = true;
       notifyListeners();
-      ChatMessageModel commentData = ChatMessageModel.fromJson(jsonDecode(data)['chat_data']);
+      ChatMessageModel commentData =
+          ChatMessageModel.fromJson(jsonDecode(data)['chat_data']);
       p2pChatLists.add(commentData);
       if (!isFromProfile) {
         allChatsLists[index].lastSms = commentData.text;
@@ -158,7 +207,8 @@ class ChatProvider with ChangeNotifier {
   }
 
   initializeSocket(int index, {bool isFromProfile = false}) {
-    channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+    channel = IOWebSocketChannel.connect(
+        'wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
     userPostComments(chatModels, index, isFromProfile: isFromProfile);
   }
 
@@ -176,7 +226,11 @@ class ChatProvider with ChangeNotifier {
     hasConnection = false;
     if (result == true) {
       Map map = {
-        "data": {"user_id": userID.toString(), "room_id": chatModels.id, "text": message},
+        "data": {
+          "user_id": userID.toString(),
+          "room_id": chatModels.id,
+          "text": message
+        },
         "action": "chat"
       };
       channel.sink.add(jsonEncode(map));
@@ -187,16 +241,22 @@ class ChatProvider with ChangeNotifier {
         if (result == true) {
           timer.cancel();
           ticker.cancel();
-          channel = IOWebSocketChannel.connect('wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+          channel = IOWebSocketChannel.connect(
+              'wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
           channel.sink.add(
             jsonEncode({
-              "data": {"user_id": userID, "room_id": chatModels.id, "text": message},
+              "data": {
+                "user_id": userID,
+                "room_id": chatModels.id,
+                "text": message
+              },
               "action": "chat"
             }),
           );
           status(1);
           channel.stream.listen((data) {
-            ChatMessageModel commentData = ChatMessageModel.fromJson(jsonDecode(data)['chat_data']);
+            ChatMessageModel commentData =
+                ChatMessageModel.fromJson(jsonDecode(data)['chat_data']);
             p2pChatLists.add(commentData);
             allChatsLists[index].lastSms = commentData.text;
             allChatsLists[index].updateAt = commentData.timestamp;
@@ -245,14 +305,16 @@ class ChatProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> createRoom(String userID, String customerID, String message, int index) async {
+  Future<int> createRoom(
+      String userID, String customerID, String message, int index) async {
     _isLoading = true;
     notifyListeners();
     Response apiResponse = await chatRepo.callForGetRoomID(customerID);
     _isLoading = false;
     isOneTime = false;
     if (apiResponse.statusCode == 200) {
-      AllMessageChatListModel messageChatListModel = AllMessageChatListModel.fromJson(apiResponse.body);
+      AllMessageChatListModel messageChatListModel =
+          AllMessageChatListModel.fromJson(apiResponse.body);
       changeChantModel(messageChatListModel);
       initializeSocket(0, isFromProfile: true);
       addPost(userID, message, (status) {}, index);
@@ -271,4 +333,5 @@ class ChatProvider with ChangeNotifier {
     chatModels = c;
     notifyListeners();
   }
+
 }
