@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
+import 'package:als_frontend/data/model/response/settings/faq_model.dart';
 import 'package:als_frontend/data/model/response/settings/notification_model.dart';
 import 'package:als_frontend/data/model/response/settings/other_settings_model.dart';
 import 'package:als_frontend/data/model/response/settings/privcay_model.dart';
@@ -261,6 +262,46 @@ class SettingsProvider extends ChangeNotifier {
       oldIndex = -1;
     } else {
       oldIndex = currentClick;
+    }
+    notifyListeners();
+  }
+
+  ////TODO: for faq question list
+  List<FaqModel> faqLists = [];
+  List<FaqModel> faqListTemp = [];
+
+  initializeFaqQuestion() async {
+    _isLoading = true;
+    faqLists.clear();
+    faqLists = [];
+    faqListTemp.clear();
+    faqListTemp = [];
+    Response response = await settingsRepo.faqQuestionDataGet();
+    _isLoading = false;
+    if (response.statusCode == 200) {
+      response.body.forEach((element) {
+        faqLists.add(FaqModel.fromJson(element));
+      });
+      faqListTemp.addAll(faqLists);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+    notifyListeners();
+  }
+
+////TODO: for faq question list scarch
+
+  initializeSearch(String query) {
+    faqLists.clear();
+    faqLists = [];
+    if (query.isEmpty) {
+      faqLists.addAll(faqListTemp);
+    } else {
+      for (var element in faqListTemp) {
+        if (element.question!.toLowerCase().contains(query.toLowerCase())) {
+          faqLists.add(element);
+        }
+      }
     }
     notifyListeners();
   }

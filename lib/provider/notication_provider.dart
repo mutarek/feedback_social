@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:als_frontend/data/model/response/notification_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/notification_repo.dart';
+import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -40,7 +41,7 @@ class NotificationProvider with ChangeNotifier {
   }
 
   check() {
-    webSocketChannel = WebSocketChannel.connect(Uri.parse("wss://feedback-social.com/ws/notifications/${authRepo.getUserToken()}/"));
+    webSocketChannel = WebSocketChannel.connect(Uri.parse("${AppConstant.socketBaseUrl}ws/notifications/${authRepo.getUserToken()}/"));
     webSocketChannel.stream.listen((event) {
       notificationUnread();
       initializeNotification(isFirstTime: false, isDataAddLast: false);

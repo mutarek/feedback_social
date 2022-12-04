@@ -3,10 +3,15 @@ import 'package:als_frontend/data/model/response/language_model.dart';
 
 class AppConstant {
   // API BASE URL
-  static const String baseUrl = 'https://testing.feedback-social.com';
+  static const String baseUrl = 'https://feedback-social.com';
   static const String baseUrlTesting = 'https://testing.feedback-social.com';
   static const String baseUrlLive = 'https://feedback-social.com';
+
+  static const String socketBaseUrl = 'wss://feedback-social.com/';
+  static const String socketBaseUrlTesting = 'wss://testing.feedback-social.com/';
+  static const String socketBaseUrlLive = 'wss://feedback-social.com/';
   static const String oldBaseUrl = 'https://als-social.com';
+
   static const String loginURI = '/accounts/signin/';
   static const String signupURI = '/accounts/signup/';
   static const String otpSendURI = '/accounts/otp/send/';
@@ -54,6 +59,7 @@ class AppConstant {
   static const String getOtherSettingsValue = '/settings/other-settings/';
   static const String getNotificationSettingsValueUri = '/settings/notification/';
   static const String termsAndConditionUri = '/terms-condition/list/';
+  static const String faqQuestionUri = '/settings/faq/';
   static const String latestVersionUri = '/latest-version/';
   static const String helpDiskURI = '/settings/help-desk/';
 

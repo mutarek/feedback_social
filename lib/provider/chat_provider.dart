@@ -139,7 +139,7 @@ class ChatProvider with ChangeNotifier {
   bool isChangeValue = false;
 
   //TODO:  ********    for Web Socket
-  WebSocketChannel channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/post/191/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/post/191/comment/timeline_post/');
 
   userPostComments(AllMessageChatListModel model, int index,
       {bool isFromProfile = false}) {
@@ -169,8 +169,7 @@ class ChatProvider with ChangeNotifier {
   }
 
   initializeSocket(int index, {bool isFromProfile = false}) {
-
-    channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+    channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/messaging/thread/${chatModels.id}/');
     userPostComments(chatModels, index, isFromProfile: isFromProfile);
   }
 
@@ -203,7 +202,7 @@ class ChatProvider with ChangeNotifier {
         if (result == true) {
           timer.cancel();
           ticker.cancel();
-          channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+          channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/messaging/thread/${chatModels.id}/');
           channel.sink.add(
             jsonEncode({
               "data": {

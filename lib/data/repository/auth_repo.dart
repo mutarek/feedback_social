@@ -10,9 +10,9 @@ class AuthRepo {
 
   AuthRepo({required this.sharedPreferences, required this.apiClient});
 
-  Future<Response> login(String emailOrPhone, String password) async {
+  Future<Response> login(String emailOrPhone, String password,bool isPhone) async {
     Map map = {};
-    if (isNumeric(emailOrPhone)) {
+    if (isPhone) {
       map.addAll({"mobile": emailOrPhone});
     } else {
       map.addAll({"email": emailOrPhone});
