@@ -163,12 +163,9 @@ class PublicProfileProvider with ChangeNotifier {
     Response response = await profileRepo.sendFriendRequest(id);
     if (response.statusCode == 201) {
       Fluttertoast.showToast(msg: response.body['message']);
-      callForPublicProfileData(publicProfileData.id.toString(), isShowLoading: false);
     } else {
       Fluttertoast.showToast(msg: response.statusText!);
     }
-
-    notifyListeners();
   }
 
   Future cancelFriendRequest(Function callback) async {

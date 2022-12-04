@@ -271,6 +271,12 @@ class ProfileProvider with ChangeNotifier {
 
   //TODO:   for Suggestion Friend Request Lists
   List<SuggestFriendModel> suggestFriendRequestList = [];
+
+  removeSuggestionFriend(int position) {
+    suggestFriendRequestList.removeAt(position);
+    notifyListeners();
+  }
+
   bool isLoadingSuggestedFriend = false;
 
   updateSuggestedPageNo() {
