@@ -2,8 +2,6 @@ import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/screens/settings/widget/faq_all_question.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/custom_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -37,19 +35,17 @@ class _FaqSceeenState extends State<FaqSceeen> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Consumer<SettingsProvider>(builder: (context, settingProvider, child) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Consumer<SettingsProvider>(builder: (context, settingProvider, child) {
           return Column(
             children: [
               Container(
                 height: 250,
                 decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/background/books.png"),
-                      alignment: Alignment.bottomLeft,
-                      fit: BoxFit.cover),
+                  image:
+                      DecorationImage(image: AssetImage("assets/background/books.png"), alignment: Alignment.bottomLeft, fit: BoxFit.cover),
                   color: Color(0xffF5EACA),
                 ),
                 child: Column(
@@ -63,42 +59,32 @@ class _FaqSceeenState extends State<FaqSceeen> {
                               height: height * 0.05,
                               width: width * 0.1,
                               decoration: BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(.09),
-                                    offset: const Offset(0, 0),
-                                    blurRadius: 20,
-                                    spreadRadius: 3)
+                                BoxShadow(color: Colors.black.withOpacity(.09), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)
                               ], borderRadius: BorderRadius.circular(8), color: Colors.white),
                               child: Center(
                                   child: IconButton(
                                       onPressed: () {
                                         Get.back();
                                       },
-                                      icon: const Icon(
-                                        FontAwesomeIcons.arrowLeft,
-                                        size: 15,
-                                      )))),
+                                      icon: const Icon(FontAwesomeIcons.arrowLeft, size: 15)))),
                           Text(
                             getTranslated("FAQ?", context),
                             style: latoStyle700Bold.copyWith(color: const Color(0xff2E4266)),
                           ),
-                          Container(
-                              height: height * 0.05,
-                              width: width * 0.1,
-                              decoration: BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(.09),
-                                    offset: const Offset(0, 0),
-                                    blurRadius: 20,
-                                    spreadRadius: 3)
-                              ], borderRadius: BorderRadius.circular(8), color: Colors.white),
-                              child: Center(
-                                  child: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        FontAwesomeIcons.barsStaggered,
-                                        size: 15,
-                                      )))),
+                          SizedBox(),
+                          // Container(
+                          //     height: height * 0.05,
+                          //     width: width * 0.1,
+                          //     decoration: BoxDecoration(boxShadow: [
+                          //       BoxShadow(color: Colors.black.withOpacity(.09), offset: const Offset(0, 0), blurRadius: 20, spreadRadius: 3)
+                          //     ], borderRadius: BorderRadius.circular(8), color: Colors.white),
+                          //     child: Center(
+                          //         child: IconButton(
+                          //             onPressed: () {},
+                          //             icon: const Icon(
+                          //               FontAwesomeIcons.barsStaggered,
+                          //               size: 15,
+                          //             )))),
                         ],
                       ),
                     ),
@@ -106,17 +92,8 @@ class _FaqSceeenState extends State<FaqSceeen> {
                       padding: const EdgeInsets.only(left: 50, top: 30),
                       child: Row(
                         children: [
-                          Text(
-                            "Questions?\n We've got instant answers",
-                            style: latoStyle800ExtraBold,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Icon(
-                              Icons.electric_bolt,
-                              color: Colors.yellow,
-                            ),
-                          )
+                          Text("Questions?\n We've got instant answers", style: latoStyle800ExtraBold),
+                          const Padding(padding: EdgeInsets.only(top: 10), child: Icon(Icons.electric_bolt, color: Colors.yellow))
                         ],
                       ),
                     )
@@ -127,15 +104,10 @@ class _FaqSceeenState extends State<FaqSceeen> {
                 padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                 child: Container(
                     height: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.black26)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.black26)),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          FontAwesomeIcons.magnifyingGlass,
-                          color: Colors.blue,
-                        ),
+                        prefixIcon: const Icon(FontAwesomeIcons.magnifyingGlass, color: Colors.blue),
                         focusedBorder: InputBorder.none,
                         border: InputBorder.none,
                         hintText: "Search for keywords...",
@@ -144,9 +116,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                       ),
                     )),
               ),
-              SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Row(
@@ -154,8 +124,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                     //TODO: all question list
                     InkWell(
                       onTap: () {
-                        _pageController.animateToPage(0,
-                            duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+                        _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                         settingProvider.changeMenuValue(0);
                       },
                       child: Container(
@@ -163,25 +132,21 @@ class _FaqSceeenState extends State<FaqSceeen> {
                         width: 70,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: settingProvider.menuValue == 0 ? Colors.blue : Colors.grey,
-                                width: 1)),
+                            border: Border.all(color: settingProvider.menuValue == 0 ? Colors.blue : Colors.grey, width: 1)),
                         child: Center(
                             child: Text(
                           "All",
-                          style: latoStyle400Regular.copyWith(
-                              color: settingProvider.menuValue == 0 ? Colors.blue : Colors.black45),
+                          style: latoStyle400Regular.copyWith(color: settingProvider.menuValue == 0 ? Colors.blue : Colors.black45),
                         )),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     //TODO: SING UP QUESTION
                     InkWell(
                       onTap: () {
-                        _pageController.animateToPage(0,
-                            duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+                        _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                         settingProvider.changeMenuValue(1);
                       },
                       child: Container(
@@ -189,25 +154,21 @@ class _FaqSceeenState extends State<FaqSceeen> {
                         width: 70,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: settingProvider.menuValue == 1 ? Colors.blue : Colors.grey,
-                                width: 1)),
+                            border: Border.all(color: settingProvider.menuValue == 1 ? Colors.blue : Colors.grey, width: 1)),
                         child: Center(
                             child: Text(
                           "Sign up",
-                          style: latoStyle400Regular.copyWith(
-                              color: settingProvider.menuValue == 1 ? Colors.blue : Colors.black45),
+                          style: latoStyle400Regular.copyWith(color: settingProvider.menuValue == 1 ? Colors.blue : Colors.black45),
                         )),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     //TODO: log in QUESTION
                     InkWell(
                       onTap: () {
-                        _pageController.animateToPage(0,
-                            duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+                        _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                         settingProvider.changeMenuValue(2);
                       },
                       child: Container(
@@ -215,25 +176,21 @@ class _FaqSceeenState extends State<FaqSceeen> {
                         width: 70,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: settingProvider.menuValue == 2 ? Colors.blue : Colors.grey,
-                                width: 1)),
+                            border: Border.all(color: settingProvider.menuValue == 2 ? Colors.blue : Colors.grey, width: 1)),
                         child: Center(
                             child: Text(
                           "Sign in",
-                          style: latoStyle400Regular.copyWith(
-                              color: settingProvider.menuValue == 2 ? Colors.blue : Colors.black45),
+                          style: latoStyle400Regular.copyWith(color: settingProvider.menuValue == 2 ? Colors.blue : Colors.black45),
                         )),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     //TODO: page  QUESTION
                     InkWell(
                       onTap: () {
-                        _pageController.animateToPage(0,
-                            duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+                        _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                         settingProvider.changeMenuValue(3);
                       },
                       child: Container(
@@ -241,14 +198,11 @@ class _FaqSceeenState extends State<FaqSceeen> {
                         width: 70,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: settingProvider.menuValue == 3 ? Colors.blue : Colors.grey,
-                                width: 1)),
+                            border: Border.all(color: settingProvider.menuValue == 3 ? Colors.blue : Colors.grey, width: 1)),
                         child: Center(
                             child: Text(
                           "Page",
-                          style: latoStyle400Regular.copyWith(
-                              color: settingProvider.menuValue == 3 ? Colors.blue : Colors.black45),
+                          style: latoStyle400Regular.copyWith(color: settingProvider.menuValue == 3 ? Colors.blue : Colors.black45),
                         )),
                       ),
                     ),
@@ -265,9 +219,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
 
                     settingProvider.changeMenuValue(i);
                   },
-                  children: <Widget>[
-                    FaqAllQuestion()
-                  ],
+                  children: [FaqAllQuestion(), Text("bjdbjbakcjacajkc"), Text("data")],
                 ),
               ),
             ],

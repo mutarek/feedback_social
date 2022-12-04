@@ -70,44 +70,6 @@ class ChatProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void saveMessageToLocalStorage(String userID, String customerID, String message, int index) async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    List<OfflineChat> offlineChatList = [];
-    offlineChatList.add(OfflineChat(message: message));
-    addToOfflineChat(offlineChatList);
-  }
-
-  void addToOfflineChat(List<OfflineChat> offlinechat) async {
-    bool result = await InternetConnectionChecker().hasConnection;
-    List<String> chats = [];
-    for (var element in offlinechat) {
-      chats.add(element.message);
-    }
-    if(sharedPreferences!.containsKey(AppConstant.offlineChatList)){
-      List<String>? oldMessages = sharedPreferences!.getStringList(AppConstant.offlineChatList);
-      for(var singleMessage in oldMessages!){
-        chats.add(singleMessage);
-      }
-    }
-    else{
-      sharedPreferences!.setStringList(AppConstant.offlineChatList, chats);
-    }
-    sharedPreferences!.setStringList(AppConstant.offlineChatList, chats);
-    if(result) {
-      getOfflineMessageList();
-    }
-  }
-
-  void getOfflineMessageList() {
-    if (sharedPreferences!.containsKey('chat_list_key')) {
-      List<String>? message = sharedPreferences!.getStringList('chat_list_key');
-      for (var element in message!) {
-        //TODO: push message to web socket
-        Get.snackbar('data', element);
-      }
-    }
-  }
-
 //TODO; Get p2p Chats
   List<ChatMessageModel> p2pChatLists = [];
   List<ChatMessageModel> p2pChatListsTemp = [];
@@ -177,8 +139,7 @@ class ChatProvider with ChangeNotifier {
   bool isChangeValue = false;
 
   //TODO:  ********    for Web Socket
-  WebSocketChannel channel = IOWebSocketChannel.connect(
-      'wss://feedback-social.com/ws/post/191/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/post/191/comment/timeline_post/');
 
   userPostComments(AllMessageChatListModel model, int index,
       {bool isFromProfile = false}) {
@@ -208,8 +169,8 @@ class ChatProvider with ChangeNotifier {
   }
 
   initializeSocket(int index, {bool isFromProfile = false}) {
-    channel = IOWebSocketChannel.connect(
-        'wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+
+    channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/${chatModels.id}/');
     userPostComments(chatModels, index, isFromProfile: isFromProfile);
   }
 
@@ -242,8 +203,7 @@ class ChatProvider with ChangeNotifier {
         if (result == true) {
           timer.cancel();
           ticker.cancel();
-          channel = IOWebSocketChannel.connect(
-              'wss://feedback-social.com/ws/messaging/thread/${chatModels.id}/');
+          channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/${chatModels.id}/');
           channel.sink.add(
             jsonEncode({
               "data": {
@@ -273,7 +233,7 @@ class ChatProvider with ChangeNotifier {
               timer.cancel();
               ticker.cancel();
             }
-            debugPrint("Trying for connect : disconected");
+            debugPrint("Trying for connect : disconnected");
           }, onError: (error) {
             if (value > 5) {
               timer.cancel();
@@ -285,6 +245,9 @@ class ChatProvider with ChangeNotifier {
         if (value > 5 || hasConnection) {
           timer.cancel();
           ticker.cancel();
+          List<OfflineChat> chatModel = chatRepo.getChatData();
+          chatModel.add(OfflineChat(userId: userID,roomID: chatModels.id.toString(),message: message,index: index));
+          chatRepo.addToChatList(chatModel);
         }
         notifyListeners();
       });
@@ -292,7 +255,6 @@ class ChatProvider with ChangeNotifier {
 
     status(1);
     sendMessageLoading = false;
-
     notifyListeners();
   }
 
@@ -334,5 +296,4 @@ class ChatProvider with ChangeNotifier {
     chatModels = c;
     notifyListeners();
   }
-
 }

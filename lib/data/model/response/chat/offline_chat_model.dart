@@ -1,12 +1,24 @@
-class OfflineChat{
-  final String message;
+class OfflineChat {
+  String? userId;
+  String? roomID;
+  String? message;
+  int? index;
 
-  OfflineChat({required this.message});
+  OfflineChat({this.userId, this.roomID, this.message,this.index});
 
-  factory OfflineChat.fromJson(Map<String,dynamic> json){
-    return OfflineChat(message:json['message']);
+  OfflineChat.fromJson(dynamic json) {
+    userId = json['userid'];
+    roomID = json['roomid'];
+    message = json['message'];
+    index = json['index'];
   }
-  static Map<String,dynamic> toMap(OfflineChat offlineChat) => {
-    "message" : offlineChat.message
-  };
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['userid'] = userId;
+    map['roomid'] = roomID;
+    map['message'] = message;
+    map['index'] = index;
+    return map;
+  }
 }

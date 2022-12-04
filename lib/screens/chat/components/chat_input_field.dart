@@ -91,7 +91,6 @@ class ChatInputField extends StatelessWidget {
                                     fontSize: 16.0
                                 );
                               }else{
-                                if(result){
                                   if (chatProvider.isOneTime && isFromProfile) {
                                     chatProvider.createRoom(userID, customerID.toString(), message, index).then((value) {
                                       Timer(const Duration(seconds: 1), () {
@@ -107,10 +106,6 @@ class ChatInputField extends StatelessWidget {
                                       });
                                     }, index);
                                   }
-                                }
-                                else{
-                                  chatProvider.saveMessageToLocalStorage(userID, customerID.toString(), message, index);
-                                }
                               }
                               textEditingController.clear();
                             },

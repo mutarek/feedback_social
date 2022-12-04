@@ -74,6 +74,7 @@ class AppConstant {
   static const String postTypePage = 'page';
   static const String postTypeGroup = 'group';
   static const String postTypeTimeline = 'timeline';
+  static const String chats = 'chats';
 
   static List<LanguageModel> languagesList = [
     LanguageModel(imageUrl: '', languageName: 'English', countryCode: 'US', languageCode: 'en'),

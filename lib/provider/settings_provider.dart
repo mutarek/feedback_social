@@ -243,11 +243,25 @@ class SettingsProvider extends ChangeNotifier {
       return false;
     }
   }
+
   //TODO for menu value
   int menuValue = 0;
 
   changeMenuValue(int value) {
     menuValue = value;
+    notifyListeners();
+  }
+
+//TODO for index value
+
+  int oldIndex = -1;
+
+  updateSingleItem(int currentClick) {
+    if (oldIndex == currentClick) {
+      oldIndex = -1;
+    } else {
+      oldIndex = currentClick;
+    }
     notifyListeners();
   }
 }

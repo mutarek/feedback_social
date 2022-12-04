@@ -1,15 +1,24 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:als_frontend/data/model/response/chat/all_message_chat_list_model.dart';
+import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/data/model/response/liked_by_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
+import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class NewsFeedProvider with ChangeNotifier {
   final NewsfeedRepo newsFeedRepo;
@@ -30,7 +39,6 @@ class NewsFeedProvider with ChangeNotifier {
     initializeAllFeedData(page: selectPage);
     notifyListeners();
   }
-
 
   initializeAllFeedData({int page = 1, bool isFirstTime = true}) async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -65,7 +73,10 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  addLike(int postID, int index, {bool isGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
+  addLike(int postID, int index,
+      {bool isGroup = false,
+      bool isFromPage = false,
+      int groupPageID = 0}) async {
     if (newsFeedLists[index].isLiked == false) {
       newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
       newsFeedLists[index].isLiked = true;
@@ -74,7 +85,8 @@ class NewsFeedProvider with ChangeNotifier {
       newsFeedLists[index].isLiked = false;
     }
     notifyListeners();
-    await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
+    await newsFeedRepo.addLike(postID,
+        isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
   }
 
   changeLikeStatus(int value, int index) async {
@@ -123,11 +135,13 @@ class NewsFeedProvider with ChangeNotifier {
 
   NewsFeedModel singleNewsFeedModel = NewsFeedModel();
   bool isLoadingSinglePost = true;
+
   callForSinglePosts(String url) async {
     isLoadingSinglePost = true;
     singleNewsFeedModel = NewsFeedModel();
     //notifyListeners();
-    Response response = await newsFeedRepo.callForSinglePostFromNotification(url.replaceAll('comment/', ''));
+    Response response = await newsFeedRepo
+        .callForSinglePostFromNotification(url.replaceAll('comment/', ''));
     isLoadingSinglePost = false;
     if (response.statusCode == 200) {
       singleNewsFeedModel = NewsFeedModel.fromJson(response.body);
@@ -137,7 +151,8 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  singlePostLike(int postID, Function callBackFunction, {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
+  singlePostLike(int postID, Function callBackFunction,
+      {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
     if (singleNewsFeedModel.isLiked == false) {
       callBackFunction(true);
       singleNewsFeedModel.totalLiked = singleNewsFeedModel.totalLiked! + 1;
@@ -149,7 +164,8 @@ class NewsFeedProvider with ChangeNotifier {
     }
     notifyListeners();
 
-    await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
+    await newsFeedRepo.addLike(postID,
+        isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
   }
 
   void updateSingleCommentDataCount() {
@@ -170,7 +186,8 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  initializeLikedShareByAllUser(String url, {int page = 1, bool isFirstTime = true}) async {
+  initializeLikedShareByAllUser(String url,
+      {int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPageLiked = 1;
       likedShareByModels.clear();
@@ -200,14 +217,39 @@ class NewsFeedProvider with ChangeNotifier {
   }
 
   void pushLocalMessage() {
-    if (sharedPreferences!.containsKey('AppConstant.offlineChatList')) {
-      List<String>? message = sharedPreferences!.getStringList('AppConstant.offlineChatList');
-      for (var element in message!) {
+    if (sharedPreferences!.containsKey(AppConstant.chats)) {
+      List<String> chatsSave =
+          sharedPreferences!.getStringList(AppConstant.chats) ?? [];
+      List<OfflineChat> chatData = [];
+      chatsSave.forEach(
+          (cart) => chatData.add(OfflineChat.fromJson(jsonDecode(cart))));
+      for (var element in chatData) {
         //TODO: push message to socket and clear cache
-        Get.snackbar('data', element);
+        Get.snackbar("data", element.message.toString());
+        addPost(element.userId.toString(), element.roomID.toString(),
+            element.message.toString(), element.index!);
       }
       //TODO: REMOVE ALL LOCAL MESSAGES FROM SHAredPreferences
-      //sharedPreferences?.remove('chat_list_key');
+    }
+  }
+
+  WebSocketChannel channel = IOWebSocketChannel.connect(
+      'wss://testing.feedback-social.com/ws/post/191/comment/timeline_post/');
+
+  addPost(String userID, String roomID, String message, int index) async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/$roomID/');
+    if (result == true) {
+      Map map = {
+        "data": {
+          "user_id": userID,
+          "room_id": roomID,
+          "text": message
+        },
+        "action": "chat"
+      };
+      channel.sink.add(jsonEncode(map));
+      sharedPreferences!.remove(AppConstant.chats);
     }
   }
 }
