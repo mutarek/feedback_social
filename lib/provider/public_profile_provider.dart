@@ -159,6 +159,18 @@ class PublicProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future addFriend(String id) async {
+    Response response = await profileRepo.sendFriendRequest(id);
+    if (response.statusCode == 201) {
+      Fluttertoast.showToast(msg: response.body['message']);
+      callForPublicProfileData(publicProfileData.id.toString(), isShowLoading: false);
+    } else {
+      Fluttertoast.showToast(msg: response.statusText!);
+    }
+
+    notifyListeners();
+  }
+
   Future cancelFriendRequest(Function callback) async {
     Response response = await profileRepo.cancelFriendRequest(publicProfileData.friendRequestSentId.toString());
     if (response.statusCode == 204) {

@@ -1,8 +1,9 @@
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/data/model/response/suggested_friend_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
-import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
+import 'package:als_frontend/provider/public_profile_provider.dart';
+import 'package:als_frontend/screens/dashboard/Widget/custom_friend_request_widget.dart';
+import 'package:als_frontend/screens/dashboard/Widget/custom_suggested_friend_widget.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -15,31 +16,38 @@ class FriendRequestSuggestionScreen extends StatefulWidget {
   const FriendRequestSuggestionScreen({Key? key}) : super(key: key);
 
   @override
-  State<FriendRequestSuggestionScreen> createState() => _FriendRequestSuggestionScreenState();
+  State<FriendRequestSuggestionScreen> createState() =>
+      _FriendRequestSuggestionScreenState();
 }
 
-class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionScreen> {
+class _FriendRequestSuggestionScreenState
+    extends State<FriendRequestSuggestionScreen> {
   ScrollController controller = ScrollController();
   ScrollController confirmFriendRequestController = ScrollController();
 
   @override
   void initState() {
     // TODO: implement initState
-    Provider.of<ProfileProvider>(context, listen: false).callForgetAllFriendRequest();
+    Provider.of<ProfileProvider>(context, listen: false)
+        .callForgetAllFriendRequest();
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
           Provider.of<ProfileProvider>(context, listen: false).hasNextData) {
-        Provider.of<ProfileProvider>(context, listen: false).updateSuggestedPageNo();
+        Provider.of<ProfileProvider>(context, listen: false)
+            .updateSuggestedPageNo();
       }
     });
 
     // TODO: implement confirm friend req
     confirmFriendRequestController.addListener(() {
-      if (confirmFriendRequestController.offset >= confirmFriendRequestController.position.maxScrollExtent &&
+      if (confirmFriendRequestController.offset >=
+              confirmFriendRequestController.position.maxScrollExtent &&
           !confirmFriendRequestController.position.outOfRange &&
-          Provider.of<ProfileProvider>(context, listen: false).hasNextDataFriendRequest) {
-        Provider.of<ProfileProvider>(context, listen: false).updateUpcomingFriendsRequest();
+          Provider.of<ProfileProvider>(context, listen: false)
+              .hasNextDataFriendRequest) {
+        Provider.of<ProfileProvider>(context, listen: false)
+            .updateUpcomingFriendsRequest();
       }
     });
 
@@ -54,8 +62,9 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
       length: 2,
       child: Scaffold(
           backgroundColor: AppColors.scaffold,
-          body: Consumer<ProfileProvider>(
-            builder: (context, profileProvider, child) => Padding(
+          body: Consumer2<ProfileProvider, PublicProfileProvider>(
+            builder: (context, profileProvider, publicProvider, child) =>
+                Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               child: Column(
                 children: [
@@ -63,12 +72,17 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
                       height: height * 0.055,
-                      decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(25)),
-                      child:
-                          TabBar(indicator: BoxDecoration(color: AppColors.feedback, borderRadius: BorderRadius.circular(25)), tabs: const [
-                        CustomText2(title: "Friend request"),
-                        CustomText2(title: "Suggested friend"),
-                      ]),
+                      decoration: BoxDecoration(
+                          color: Colors.black26,
+                          borderRadius: BorderRadius.circular(25)),
+                      child: TabBar(
+                          indicator: BoxDecoration(
+                              color: AppColors.feedback,
+                              borderRadius: BorderRadius.circular(25)),
+                          tabs: const [
+                            CustomText2(title: "Friend request"),
+                            CustomText2(title: "Suggested friend"),
+                          ]),
                     ),
                   ),
                   Expanded(
@@ -76,45 +90,65 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                       profileProvider.isLoading
                           ? const FriendReqShimmerWidget()
                           : profileProvider.sendFriendRequestLists.isEmpty
-                              ? const Center(child: CustomText2(title: "you have no friend request"))
+                              ? const Center(
+                                  child: CustomText2(
+                                      title: "you have no friend request"))
                               : ListView(
                                   physics: const BouncingScrollPhysics(),
                                   controller: confirmFriendRequestController,
                                   children: [
                                     ListView.builder(
-                                        physics: const NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
-                                        itemCount: profileProvider.sendFriendRequestLists.length,
+                                        itemCount: profileProvider
+                                            .sendFriendRequestLists.length,
                                         itemBuilder: (context, index) {
-                                          SendFriendRequestModel sendFriendRequestModel = profileProvider.sendFriendRequestLists[index];
-                                          return FriendRequestWidget(
-                                            width: width,
-                                            imgUrl: sendFriendRequestModel.fromUser!.profileImage!,
-                                            gotoProfileScreen: () {
-                                              Navigator.of(context).push(MaterialPageRoute(
-                                                  builder: (_) => PublicProfileScreen(sendFriendRequestModel.fromUser!.id.toString(),
-                                                      index: index, isFromFriendRequestScreen: true)));
-                                            },
+                                          SendFriendRequestModel
+                                              sendFriendRequestModel =
+                                              profileProvider
+                                                      .sendFriendRequestLists[
+                                                  index];
+
+                                          return CustomFriendRequestWidget(
+                                            imgUrl: sendFriendRequestModel
+                                                .fromUser!.profileImage!,
                                             userName:
                                                 "${sendFriendRequestModel.fromUser!.firstName}${sendFriendRequestModel.fromUser!.lastName}",
-                                            firstButtonName: getTranslated('Confirm', context),
-                                            firstButtonColor: Colors.green,
-                                            firstButtonOnTab: () {
-                                              profileProvider.acceptFriendRequest(sendFriendRequestModel.id.toString(), index,
-                                                  isFromFriendRequest: true);
+                                            gotoProfileScreen: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          PublicProfileScreen(
+                                                              sendFriendRequestModel
+                                                                  .fromUser!.id
+                                                                  .toString(),
+                                                              index: index,
+                                                              isFromFriendRequestScreen:
+                                                                  true)));
                                             },
-                                            secondButtonName: getTranslated('cancel', context),
-                                            secondButtonOnTab: () {
-                                              profileProvider.cancelFriendRequest(sendFriendRequestModel.id.toString(), index);
+                                            cancelButtonTap: () {
+                                              profileProvider.removeRequestAfterCancelRequest(index);
+                                            },
+                                            confirmButtonTap: () {
+                                              profileProvider.sendFriendRequestLists.removeAt(index);
+                                              profileProvider
+                                                  .acceptFriendRequest(
+                                                      sendFriendRequestModel.id
+                                                          .toString(),
+                                                      index);
                                             },
                                           );
                                         }),
                                     profileProvider.isBottomLoadingFriendRequest
                                         ? Container(
-                                            width: MediaQuery.of(context).size.width,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                             height: 100,
                                             alignment: Alignment.center,
-                                            child: const CupertinoActivityIndicator())
+                                            child:
+                                                const CupertinoActivityIndicator())
                                         : const SizedBox.shrink(),
                                   ],
                                 ),
@@ -128,33 +162,50 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                               controller: controller,
                               children: [
                                 ListView.builder(
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: profileProvider.suggestFriendRequestList.length,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: profileProvider
+                                        .suggestFriendRequestList.length,
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) {
-                                      SuggestFriendModel suggestFriendRequestModel = profileProvider.suggestFriendRequestList[index];
-                                      return FriendRequestWidget(
-                                        width: width,
-                                        imgUrl: suggestFriendRequestModel.profileImage!,
-                                        gotoProfileScreen: () {},
-                                        firstButtonColor: AppColors.postLikeCountContainer,
-                                        userName: "${suggestFriendRequestModel.firstName}${suggestFriendRequestModel.lastName}",
-                                        firstButtonName: getTranslated('Add friend', context),
-                                        firstButtonOnTab: () {
-                                          profileProvider.sendFriendRequest(suggestFriendRequestModel.id as int, index);
+                                      SuggestFriendModel
+                                          suggestFriendRequestModel =
+                                          profileProvider
+                                              .suggestFriendRequestList[index];
+                                      return CustomSuggestedFriendsWidget(
+                                        imgUrl: suggestFriendRequestModel
+                                            .profileImage!,
+                                        gotoProfileScreen: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (_) => PublicProfileScreen(
+                                                      suggestFriendRequestModel
+                                                          .id
+                                                          .toString(),
+                                                      index: index,
+                                                      isFromFriendRequestScreen:
+                                                          true)));
                                         },
-                                        secondButtonName: getTranslated('cancel', context),
-                                        secondButtonOnTab: () {
-                                          profileProvider.cancelSuggestedFriend(index);
+                                        userName: suggestFriendRequestModel
+                                                .firstName
+                                                .toString() +
+                                            " " +
+                                            suggestFriendRequestModel.lastName
+                                                .toString(),
+                                        addFriendButtonTap: () {
+                                          profileProvider.suggestFriendRequestList.removeAt(index);
+                                          publicProvider.addFriend(suggestFriendRequestModel.id.toString());
                                         },
                                       );
                                     }),
                                 profileProvider.isBottomLoading
                                     ? Container(
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         height: 100,
                                         alignment: Alignment.center,
-                                        child: const CupertinoActivityIndicator())
+                                        child:
+                                            const CupertinoActivityIndicator())
                                     : const SizedBox.shrink(),
                               ],
                             )

@@ -1,32 +1,26 @@
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class FriendRequestWidget extends StatelessWidget {
-  final double width;
+class CustomFriendRequestWidget extends StatelessWidget {
   final String userName;
-  final String firstButtonName;
-  final String secondButtonName;
-  final VoidCallback firstButtonOnTab;
-  final VoidCallback secondButtonOnTab;
+  final VoidCallback cancelButtonTap;
+  final VoidCallback confirmButtonTap;
   final VoidCallback gotoProfileScreen;
-  final Color firstButtonColor;
   final String imgUrl;
 
-  const FriendRequestWidget({
+  const CustomFriendRequestWidget({
     Key? key,
-    required this.width,
     required this.userName,
-    required this.firstButtonName,
-    required this.secondButtonName,
-    required this.firstButtonOnTab,
-    required this.secondButtonOnTab,
+    required this.cancelButtonTap,
+    required this.confirmButtonTap,
     required this.gotoProfileScreen,
-    required this.firstButtonColor,
     required this.imgUrl,
-  }) : super(key: key);
 
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(
@@ -60,22 +54,6 @@ class FriendRequestWidget extends StatelessWidget {
               flex: 2,
               child: Text(userName, style: const TextStyle(fontSize: 12)),
             ),
-            // Expanded(
-            //     flex: 2,
-            //     child: Container(
-            //       padding: const EdgeInsets.all(10),
-            //       decoration: BoxDecoration(
-            //         border: Border.all(width: 1,color: Colors.blueGrey),
-            //         borderRadius: BorderRadius.circular(5)
-            //       ),
-            //       child: const Center(
-            //         child: Text(
-            //           'Confirm',
-            //           style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
-            //         ),
-            //       ),
-            //     )),
-            //SizedBox(width: width * 0.02),
             Expanded(
               flex: 4,
               child: Column(
@@ -86,17 +64,41 @@ class FriendRequestWidget extends StatelessWidget {
                     children: [
                       Expanded(
                           flex: 1,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(backgroundColor: Colors.red.withOpacity(0.7)),
-                              onPressed: secondButtonOnTab,
-                              child: Text(secondButtonName))),
+                          child: InkWell(
+                            onTap: cancelButtonTap,
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  border: Border.all(width: 1,color: Colors.blueGrey),
+                                  borderRadius: BorderRadius.circular(5)
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),),
                       const SizedBox(width: 10),
                       Expanded(
                           flex: 1,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(backgroundColor: Colors.red.withOpacity(0.7)),
-                              onPressed: secondButtonOnTab,
-                              child: Text(secondButtonName))),
+                          child: InkWell(
+                            onTap: confirmButtonTap,
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  border: Border.all(width: 1,color: Colors.blueGrey),
+                                  borderRadius: BorderRadius.circular(5)
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Confirm',
+                                  style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),),
                       const SizedBox(width: 10),
                     ],
                   )
