@@ -144,6 +144,7 @@ class PostHeaderWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          this.post.postType == AppConstant.postTypePage?Text(post.pageModel!.name!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)):
                           Text(post.author!.fullName!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                           Row(
                             children: [

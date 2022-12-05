@@ -107,7 +107,7 @@ class TimeLineWidget extends StatelessWidget {
                 SizedBox(
                     height: newsFeedData.description != null &&
                             newsFeedData.description!.isNotEmpty
-                        ? 8.0
+                        ? 1.0
                         : 0),
                 newsFeedData.description != null &&
                         newsFeedData.description!.isNotEmpty &&
