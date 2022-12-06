@@ -6,6 +6,7 @@ import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/page/widget/my_page.dart';
 import 'package:als_frontend/screens/page/widget/your_liked_page.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -335,7 +336,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                   radius: 24,
                                   backgroundColor: Colors.black12,
                                   backgroundImage:
-                                      NetworkImage(pageProvider.allSuggestPageList[index].avatar),
+                                  CachedNetworkImageProvider(pageProvider.allSuggestPageList[index].avatar),
                                 ),
                                 trailing: Container(
                                   height: height * 0.027,

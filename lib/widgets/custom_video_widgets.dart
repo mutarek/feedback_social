@@ -46,6 +46,9 @@ class _CustomVideoWidgetState extends State<CustomVideoWidget> {
           videoThumbnail: widget.thumbnailURL.isNotEmpty
               ? DecorationImage(image: NetworkImage(thumbnailURLFinal), fit: BoxFit.cover)
               : DecorationImage(image: AssetImage(thumbnailURLFinal), fit: BoxFit.cover),
+          podProgressBarConfig: const PodProgressBarConfig(
+
+          ),
         ),
       ),
     );

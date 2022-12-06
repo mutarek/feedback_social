@@ -1,6 +1,7 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 Widget postStatusWidget(BuildContext context, AuthProvider authProvider,
@@ -14,7 +15,7 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider,
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: Image.network(authProvider.profileImage),
+            child: CachedNetworkImage(imageUrl: authProvider.profileImage),
           ),
           const SizedBox(
             width: 10,

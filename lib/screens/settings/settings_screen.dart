@@ -9,6 +9,7 @@ import 'package:als_frontend/screens/settings/view/help_desk.dart';
 import 'package:als_frontend/screens/settings/view/notifications_settings.dart';
 import 'package:als_frontend/screens/settings/view/other_settings.dart';
 import 'package:als_frontend/util/app_constant.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -63,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
                               backgroundColor: Colors.blue,
                               child: CircleAvatar(
                                 radius: 35,
-                                backgroundImage: NetworkImage(
+                                backgroundImage: CachedNetworkImageProvider(
                                   provider.profileImage,
                                 ),
                               ),

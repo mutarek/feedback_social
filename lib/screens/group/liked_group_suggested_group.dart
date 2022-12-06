@@ -9,6 +9,7 @@ import 'package:als_frontend/screens/group/widget/my_group.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -198,7 +199,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                         CircleAvatar(
                                           radius: 24,
                                           backgroundColor: Colors.black12,
-                                          backgroundImage: NetworkImage(
+                                          backgroundImage: CachedNetworkImageProvider(
                                               groupProvider.authorGroupList[index].coverPhoto),
                                         ),
                                         SizedBox(
@@ -336,7 +337,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                   radius: 24,
                                   backgroundColor: Colors.black12,
                                   backgroundImage:
-                                  NetworkImage(groupProvider.allSuggestGroupList[index].coverPhoto),
+                                  CachedNetworkImageProvider(groupProvider.allSuggestGroupList[index].coverPhoto),
                                 ),
                                 trailing: Container(
                                   height: height * 0.027,

@@ -7,6 +7,7 @@ import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -105,7 +106,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
           CircleAvatar(
               radius: 20,
               backgroundColor: AppColors.scaffold,
-              child: CircleAvatar(radius: 18, backgroundImage: NetworkImage(widget.imageURL))),
+              child: CircleAvatar(radius: 18, backgroundImage: CachedNetworkImageProvider(widget.imageURL))),
           const SizedBox(width: 7),
           Expanded(
             child: InkWell(

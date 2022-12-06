@@ -1,4 +1,5 @@
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomSuggestedFriendsWidget extends StatelessWidget {
@@ -44,7 +45,7 @@ class CustomSuggestedFriendsWidget extends StatelessWidget {
                   child: CircleAvatar(
                       radius: width * 0.07,
                       backgroundColor: AppColors.scaffold,
-                      backgroundImage: NetworkImage(imgUrl)),
+                      backgroundImage: CachedNetworkImageProvider(imgUrl)),
                 ),
               ),
             ),
