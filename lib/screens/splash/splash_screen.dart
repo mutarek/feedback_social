@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
+import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
@@ -29,7 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     navigate();
-    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1);
+    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(isFirstTime: true);
+    Provider.of<ProfileProvider>(context, listen: false).initializeUserData();
     super.initState();
   }
 
@@ -50,21 +52,21 @@ class _SplashScreenState extends State<SplashScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
 
-              BounceInDown(child: Text("F",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInUp(child: Text("e",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInDown(child: Text("e",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInUp(child: Text("d",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInDown(child: Text("b",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInUp(child: Text("a",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInDown(child: Text("c",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInUp(child: Text("k",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              SizedBox(width: 10,),
-              BounceInRight(child: Text("S",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInLeft(child: Text("o",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInRight(child: Text("c",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInLeft(child: Text("i",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInRight(child: Text("a",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
-              BounceInLeft(child: Text("l",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInDown(child: Text("F",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInUp(child: Text("e",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInDown(child: Text("e",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInUp(child: Text("d",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInDown(child: Text("b",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInUp(child: Text("a",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInDown(child: Text("c",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInUp(child: Text("k",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              const SizedBox(width: 10,),
+              BounceInRight(child: Text("S",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInLeft(child: Text("o",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInRight(child: Text("c",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInLeft(child: Text("i",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInRight(child: Text("a",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
+              BounceInLeft(child: Text("l",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:const Duration(seconds: 2) ),
 
             ],
           ),
