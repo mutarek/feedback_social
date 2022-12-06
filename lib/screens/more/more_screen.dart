@@ -83,7 +83,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Get.to(const LikedGroupSuggestedGroup());
+                      Get.to(const LikedGroupSuggestedGroup(),transition:AppConstant.changeRouteAnimation,duration: AppConstant.durationAnimation);
                     },
                   ),
 

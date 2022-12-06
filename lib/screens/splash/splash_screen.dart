@@ -1,13 +1,17 @@
 import 'dart:io';
 
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:als_frontend/screens/splash/no_internet_screen.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     navigate();
+    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1);
     super.initState();
   }
 
@@ -31,7 +36,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(child: SizedBox(height: 100, width: 100, child: Image.asset('assets/logo/logo.jpeg'))),
+      body: Column( mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(child: Lottie.asset('assets/animations/splash.json')),
+          Text("Feedback Social",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22),)
+          // Center(child: SizedBox(height: 100, width: 100, child: Image.asset('assets/logo/logo.jpeg'))),
+        ],
+      ),
     );
   }
 
@@ -49,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }
     if (connection == true) {
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 3), () {
         if (Provider.of<AuthProvider>(context, listen: false).getUserToken().isEmpty) {
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
         } else {
