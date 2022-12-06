@@ -1,5 +1,6 @@
 //constant key
 import 'package:als_frontend/data/model/response/language_model.dart';
+import 'package:get/get.dart';
 
 class AppConstant {
   // API BASE URL
@@ -82,6 +83,9 @@ class AppConstant {
   static const String postTypeGroup = 'group';
   static const String postTypeTimeline = 'timeline';
   static const String chats = 'chats';
+  static const Transition changeRouteAnimation = Transition.zoom;
+  static const Duration durationAnimation = Duration(seconds: 1);
+
 
   static List<LanguageModel> languagesList = [
     LanguageModel(imageUrl: '', languageName: 'English', countryCode: 'US', languageCode: 'en'),

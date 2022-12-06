@@ -42,7 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
 
-    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1);
+    // Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1);
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
     Provider.of<NotificationProvider>(context, listen: false).notificationUnread();
   }
