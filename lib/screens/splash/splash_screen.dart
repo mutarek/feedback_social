@@ -9,6 +9,7 @@ import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:als_frontend/screens/splash/no_internet_screen.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:lottie/lottie.dart';
@@ -39,9 +40,35 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Column( mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(child: Lottie.asset('assets/animations/splash.json')),
-          Text("Feedback Social",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22),)
-          // Center(child: SizedBox(height: 100, width: 100, child: Image.asset('assets/logo/logo.jpeg'))),
+
+          Center(child: Lottie.asset('assets/animations/splash2.json')),
+          BounceInDown(child: SizedBox(height: 30, width: 30, child: Image.asset('assets/logo/logo.jpeg'))),
+
+          BounceInDown(child: Text("Wellcome to",style: latoStyle800ExtraBold.copyWith(color: AppColors.timeColor,fontSize: 22),)),
+          Row(
+           mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+
+              BounceInDown(child: Text("F",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInUp(child: Text("e",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInDown(child: Text("e",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInUp(child: Text("d",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInDown(child: Text("b",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInUp(child: Text("a",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInDown(child: Text("c",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInUp(child: Text("k",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              SizedBox(width: 10,),
+              BounceInRight(child: Text("S",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInLeft(child: Text("o",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInRight(child: Text("c",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInLeft(child: Text("i",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInRight(child: Text("a",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+              BounceInLeft(child: Text("l",style: latoStyle800ExtraBold.copyWith(color: AppColors.feedback,fontSize: 22)),duration:Duration(seconds: 2) ),
+
+            ],
+          ),
+
         ],
       ),
     );
@@ -61,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }
     if (connection == true) {
-      Future.delayed(const Duration(seconds: 3), () {
+      Future.delayed(const Duration(seconds: 5), () {
         if (Provider.of<AuthProvider>(context, listen: false).getUserToken().isEmpty) {
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
         } else {
