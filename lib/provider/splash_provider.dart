@@ -13,6 +13,7 @@ class SplashProvider with ChangeNotifier {
 
   String? serverVersion;
   String currentVersion = "1.0.23";
+
   bool isLoading = false;
   bool isExistsVersion = false;
 
