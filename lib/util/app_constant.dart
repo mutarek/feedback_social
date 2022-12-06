@@ -24,6 +24,7 @@ class AppConstant {
   static const String cancelFriendRequestURI = '/accounts/friends/cancel-friend-request/';
   static const String acceptFriendRequestURI = '/accounts/friends/accept-friend-request/';
   static const String unfriendURI = '/accounts/friends/unfriend/';
+
   static const String sendFriendRequestListURI = '/accounts/friends/friend-request/list/?size=10&page=';
   static const String sendSuggestFriendListURI = '/accounts/friends/suggestions/?size=10&page=';
   static const String friendListsURI = '/accounts/friends/list/?size=10&page=';
