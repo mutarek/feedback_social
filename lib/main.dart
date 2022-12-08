@@ -17,6 +17,7 @@ import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
+import 'package:als_frontend/provider/test/auth_provider1.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
 import 'package:als_frontend/screens/splash/splash_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
@@ -53,7 +54,8 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<SettingsProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<PageProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>())
+      ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<AuthProvider1>())
     ],
     child: const MyApp(),
   ));

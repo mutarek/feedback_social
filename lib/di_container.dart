@@ -1,4 +1,6 @@
 import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/datasource/remote/dio/dio_client.dart';
+import 'package:als_frontend/data/datasource/remote/dio/logging_interceptor.dart';
 import 'package:als_frontend/data/repository/animal_repo.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/chat_repo.dart';
@@ -13,6 +15,7 @@ import 'package:als_frontend/data/repository/profile_repo.dart';
 import 'package:als_frontend/data/repository/search_repo.dart';
 import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:als_frontend/data/repository/splash_repo.dart';
+import 'package:als_frontend/data/repository/test/auth_repo1.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
@@ -32,8 +35,10 @@ import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
+import 'package:als_frontend/provider/test/auth_provider1.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
 import 'package:als_frontend/util/app_constant.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,9 +48,10 @@ final sl = GetIt.instance;
 Future<void> init() async {
   // Core
   sl.registerLazySingleton(() => ApiClient(appBaseUrl: AppConstant.baseUrl, sharedPreferences: sl()));
-
+  sl.registerLazySingleton(() => DioClient(AppConstant.baseUrl, sl(), sharedPreferences: sl(), loggingInterceptor: sl()));
   // Repository
   sl.registerLazySingleton(() => LanguageRepo());
+  sl.registerLazySingleton(() => AuthRepo1(dioClient: sl(),sharedPreferences: sl()));
   sl.registerLazySingleton(() => CommentRepo(apiClient: sl()));
   sl.registerLazySingleton(() => AuthRepo(sharedPreferences: sl(),apiClient: sl()));
   sl.registerLazySingleton(() => ProfileRepo(apiClient: sl()));
@@ -66,6 +72,7 @@ Future<void> init() async {
   sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl()));
   sl.registerFactory(() => LanguageProvider(languageRepo: sl()));
   sl.registerFactory(() => AuthProvider(authRepo: sl()));
+  sl.registerFactory(() => AuthProvider1(authRepo: sl()));
   sl.registerFactory(() => NewsFeedProvider(newsFeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => ChatProvider(chatRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => CommentProvider(commentRepo: sl()));
@@ -86,4 +93,6 @@ Future<void> init() async {
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton(() => Dio());
+  sl.registerLazySingleton(() => LoggingInterceptor());
 }
