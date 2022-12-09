@@ -57,13 +57,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
-  auto_orientation:
-    dependency: "direct main"
-    description:
-      name: auto_orientation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.1"
   better_player:
     dependency: "direct main"
     description:
@@ -267,6 +260,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.6"
+  easy_localization:
+    dependency: "direct main"
+    description:
+      name: easy_localization
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
+  easy_logger:
+    dependency: transitive
+    description:
+      name: easy_logger
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   extended_image:
     dependency: "direct main"
     description:
@@ -665,13 +672,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.5"
-  material_design_icons_flutter:
-    dependency: "direct main"
-    description:
-      name: material_design_icons_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.6996"
   meta:
     dependency: transitive
     description:
@@ -693,13 +693,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.1"
-  native_device_orientation:
-    dependency: "direct main"
-    description:
-      name: native_device_orientation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.4"
   nested:
     dependency: transitive
     description:
@@ -999,20 +992,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.6"
-  socket_io_client:
-    dependency: "direct main"
-    description:
-      name: socket_io_client
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
-  socket_io_common:
-    dependency: transitive
-    description:
-      name: socket_io_common
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
   source_span:
     dependency: transitive
     description:
