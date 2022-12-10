@@ -87,9 +87,10 @@ class DioClient {
     }
   }
 
-  Future<Response> postMultipartData(
+
+  Future<Response> patch(
     String uri, {
-    data, required List<MultipartFile> multipartBody,
+    data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -97,7 +98,7 @@ class DioClient {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      var response = await dio!.post(
+      var response = await dio!.patch(
         uri,
         data: data,
         queryParameters: queryParameters,
@@ -113,6 +114,7 @@ class DioClient {
       rethrow;
     }
   }
+
 
   Future<Response> put(
     String uri, {
