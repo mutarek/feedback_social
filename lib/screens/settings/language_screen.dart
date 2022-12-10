@@ -1,11 +1,9 @@
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/language_provider.dart';
 import 'package:als_frontend/provider/localization_provider.dart';
-import 'package:als_frontend/screens/splash/splash_screen.dart';
 import 'package:als_frontend/util/dimensions.dart';
-import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
@@ -38,11 +36,13 @@ class LanguageScreen extends StatelessWidget {
                   itemCount: languageProvider.languages.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                      onTap: () {
-                        localizationProvider.setLanguage(
-                            Locale(languageProvider.languages[index].languageCode, languageProvider.languages[index].countryCode), index);
-                        Provider.of<DashboardProvider>(context, listen: false).changeSelectIndex(0);
-                        Helper.toRemoveUntilScreen(context, const SplashScreen());
+                      onTap: () async {
+                        await context.setLocale(Locale(languageProvider.languages[index].languageCode));
+
+                        // localizationProvider.setLanguage(
+                        //     Locale(languageProvider.languages[index].languageCode, languageProvider.languages[index].countryCode), index);
+                        // Provider.of<DashboardProvider>(context, listen: false).changeSelectIndex(0);
+                        // Helper.toRemoveUntilScreen(context, const SplashScreen());
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 10),
