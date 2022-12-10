@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Center(child: Lottie.asset('assets/animations/splash2.json')),
           BounceInDown(child: SizedBox(height: 30, width: 30, child: Image.asset('assets/logo/logo.jpeg'))),
 
-          BounceInDown(child: Text("Wellcome to",style: latoStyle800ExtraBold.copyWith(color: AppColors.timeColor,fontSize: 22),)),
+          BounceInDown(child: Text("Welcome to",style: latoStyle800ExtraBold.copyWith(color: AppColors.timeColor,fontSize: 22),)),
           Row(
            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

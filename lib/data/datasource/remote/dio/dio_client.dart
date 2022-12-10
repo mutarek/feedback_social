@@ -14,11 +14,14 @@ class DioClient {
   Dio? dio;
   String? token;
 
-  DioClient(this.baseUrl, Dio? dioC, {this.loggingInterceptor, this.sharedPreferences}) {
+  DioClient(this.baseUrl, Dio? dioC,
+      {this.loggingInterceptor, this.sharedPreferences}) {
     token = sharedPreferences!.getString(AppConstant.token) ?? "";
     debugPrint('Token: $token');
     dio = dioC ?? Dio();
-    Map<String, String> headerMap = {'Content-Type': 'application/json; charset=UTF-8'};
+    Map<String, String> headerMap = {
+      'Content-Type': 'application/json; charset=UTF-8'
+    };
     if (token!.isNotEmpty) {
       headerMap.addAll({'Authorization': 'Bearer $token'});
     }
@@ -60,6 +63,33 @@ class DioClient {
   Future<Response> post(
     String uri, {
     data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    try {
+      var response = await dio!.post(
+        uri,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response;
+    } on FormatException catch (_) {
+      throw const FormatException("Unable to process the data");
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postMultipartData(
+    String uri, {
+    data, required List<MultipartFile> multipartBody,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
