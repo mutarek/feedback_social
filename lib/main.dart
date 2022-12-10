@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/app_localization.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
@@ -26,7 +25,6 @@ import 'package:als_frontend/util/theme/app_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -61,9 +59,9 @@ void main() async {
     ],
     child: EasyLocalization(
         path: 'assets/lang',
-        supportedLocales: [Locale('en'), Locale('bn')],
-        fallbackLocale: Locale('en'),
-        assetLoader: CodegenLoader(),
+        supportedLocales: const [Locale('en'), Locale('bn')],
+        fallbackLocale: const Locale('en'),
+        assetLoader: const CodegenLoader(),
         child: const MyApp()),
   ));
 }

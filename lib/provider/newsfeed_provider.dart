@@ -1,20 +1,15 @@
-import 'dart:async';
 import 'dart:convert';
 
-import 'package:als_frontend/data/model/response/chat/all_message_chat_list_model.dart';
-import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/data/model/response/liked_by_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
-import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';

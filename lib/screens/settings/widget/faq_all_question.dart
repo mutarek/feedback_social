@@ -26,17 +26,17 @@ class _FaqAllQuestionState extends State<FaqAllQuestion> {
         child: Consumer<SettingsProvider>(builder: (context, provider, child) {
           return ListView.builder(
               itemCount: provider.faqLists.length,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 return provider.isLoading
-                    ? Center(child: CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : InkWell(
                         onTap: () {
                           provider.updateSingleItem(index);
                         },
                         child: Container(
                             margin: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
-                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffF5F7FA)),
                             child: Column(
                               children: [
@@ -45,10 +45,10 @@ class _FaqAllQuestionState extends State<FaqAllQuestion> {
                                     Expanded(
                                         child: Text(
                                       provider.faqLists[index].question.toString(),
-                                      style: latoStyle700Bold.copyWith(color: Color(0xff293B5D)),
+                                      style: latoStyle700Bold.copyWith(color: const Color(0xff293B5D)),
                                     )),
                                     provider.oldIndex == index
-                                        ? Icon(
+                                        ? const Icon(
                                             FontAwesomeIcons.arrowDown,
                                             size: 10,
                                             color: Colors.blue,
@@ -62,7 +62,7 @@ class _FaqAllQuestionState extends State<FaqAllQuestion> {
                                 ),
                                 Text(
                                   provider.faqLists[index].answer.toString(),
-                                  style: latoStyle500Medium.copyWith(color: Color(0xff5C6D88)),
+                                  style: latoStyle500Medium.copyWith(color: const Color(0xff5C6D88)),
                                   maxLines: provider.oldIndex == index ? null : 1,
                                 )
                               ],

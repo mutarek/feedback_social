@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:als_frontend/data/datasource/api_client.dart';
-import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
