@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Padding(
                               padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                               child: Text(
-                                LocaleKeys.Welcome.tr,
+                                LocaleKeys.welcome.tr,
                                 style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                               ),
                             ),
