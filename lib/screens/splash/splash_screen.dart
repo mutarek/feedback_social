@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
