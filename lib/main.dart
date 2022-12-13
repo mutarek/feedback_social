@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/app_localization.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
@@ -20,11 +19,12 @@ import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/test/auth_provider1.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
 import 'package:als_frontend/screens/splash/splash_screen.dart';
+import 'package:als_frontend/translations/codegen_loader.g.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/util/theme/app_theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +33,7 @@ import 'di_container.dart' as di;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-
+  await EasyLocalization.ensureInitialized();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
@@ -57,7 +57,12 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<AuthProvider1>())
     ],
-    child: const MyApp(),
+    child: EasyLocalization(
+        path: 'assets/lang',
+        supportedLocales: const [Locale('en'), Locale('bn')],
+        fallbackLocale: const Locale('en'),
+        assetLoader: const CodegenLoader(),
+        child: const MyApp()),
   ));
 }
 
@@ -74,21 +79,24 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       title: 'Feedback',
-      locale: Provider.of<LocalizationProvider>(context).locale,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      // locale: Provider.of<LocalizationProvider>(context).locale,
       theme: Provider.of<ThemeProvider>(context).darkTheme ? AppTheme.getDarkModeTheme() : AppTheme.getLightModeTheme(),
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        AppLocalization.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      // localizationsDelegates: const [
+      //   AppLocalization.delegate,
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
       ),
       defaultTransition: Transition.topLevel,
       transitionDuration: const Duration(milliseconds: 500),
-      supportedLocales: _locals,
+      // supportedLocales: _locals,
       home: const SplashScreen(),
     );
   }

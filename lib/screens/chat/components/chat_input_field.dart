@@ -1,18 +1,14 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatInputField extends StatelessWidget {
   ChatInputField(this.controller, this.index, {this.customerID = 0, this.isFromProfile = false, Key? key}) : super(key: key);

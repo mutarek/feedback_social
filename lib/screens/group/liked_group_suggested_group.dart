@@ -6,8 +6,6 @@ import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen_copy.dart';
 import 'package:als_frontend/screens/group/widget/joined_group.dart';
 import 'package:als_frontend/screens/group/widget/my_group.dart';
-import 'package:als_frontend/screens/page/public_page_screen.dart';
-import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';

@@ -71,7 +71,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                             getTranslated("FAQ?", context),
                             style: latoStyle700Bold.copyWith(color: const Color(0xff2E4266)),
                           ),
-                          SizedBox(),
+                          const SizedBox(),
                         ],
                       ),
                     ),
@@ -107,7 +107,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                     )),
               ),
               const SizedBox(height: 10),
-              Expanded(flex: 2, child: FaqAllQuestion()),
+              const Expanded(flex: 2, child: FaqAllQuestion()),
             ],
           );
         }),

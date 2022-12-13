@@ -18,12 +18,12 @@ class FaqModel {
   String? answer;
 
   factory FaqModel.fromJson(Map<String, dynamic> json) => FaqModel(
-    question: json["question"] ?? null,
-    answer: json["answer"] ?? null,
+    question: json["question"],
+    answer: json["answer"],
   );
 
   Map<String, dynamic> toJson() => {
-    "question": question ?? null,
-    "answer": answer ?? null,
+    "question": question,
+    "answer": answer,
   };
 }

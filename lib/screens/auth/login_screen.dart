@@ -1,11 +1,11 @@
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/provider/test/auth_provider1.dart';
-import 'package:als_frontend/screens/auth/email_phone_auth.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
+import 'package:als_frontend/screens/auth/email_phone_auth.dart';
 import 'package:als_frontend/screens/auth/signup_screen1.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    Provider.of<AuthProvider1>(context, listen: false).signIn('admin@gmail.com', 'r@123456781');
+    // Provider.of<AuthProvider1>(context, listen: false).signIn('admin@gmail.com', 'r@123456781');
     return Builder(builder: (context) {
       return Consumer<AuthProvider>(
           builder: (context, auth, child) => Scaffold(
@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Padding(
                               padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                               child: Text(
-                                getTranslated('Welcome', context),
+                                LocaleKeys.welcome.tr,
                                 style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                               ),
                             ),

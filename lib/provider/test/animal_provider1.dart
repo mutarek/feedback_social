@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:als_frontend/data/model/response/Search_animal_model.dart';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
-import 'package:als_frontend/data/repository/animal_repo.dart';
 import 'package:als_frontend/data/repository/test/animal_repo1.dart';
 import 'package:als_frontend/helper/image_compressure.dart';
 import 'package:flutter/foundation.dart';
