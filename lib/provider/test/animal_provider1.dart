@@ -127,9 +127,9 @@ class AnimalProvider1 with ChangeNotifier {
   deleteAnimal(int animalID, int index, Function callback) async {
     isLoading = true;
     notifyListeners();
-    Response response = await animalRepo.deleteAnimal(animalID);
+    ApiResponse response = await animalRepo1.deleteAnimal(animalID);
     isLoading = false;
-    if (response.statusCode == 204) {
+    if (response.response.statusCode == 204) {
       animals.removeAt(index);
       Fluttertoast.showToast(msg: "Animal Deleted Successfully");
       callback(true);
@@ -144,21 +144,18 @@ class AnimalProvider1 with ChangeNotifier {
   updateAnimal(
       String animalName, String givenName, String species, String age, String genus, Function callBackFunction, int id, int index) async {
     isLoading = true;
-    List<http.MultipartFile> multipartFile = [];
+    formData = FormData();
 
     if (image != null) {
-      multipartFile
-          .add(http.MultipartFile('image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
+      formData.files.add(
+          MapEntry('image', MultipartFile(image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last)));
     }
 
     notifyListeners();
-    Response response = await animalRepo.updateAnimal(
-        {"animal_name": animalName, "given_name": givenName, "species": species, "gender": selectGender, "age": age, "genus": genus},
-        multipartFile,
-        id);
+    ApiResponse response = await animalRepo1.updateAnimal(formData,id);
     isLoading = false;
-    if (response.statusCode == 200) {
-      OnwerAnimalModel ownerAnimalModel = OnwerAnimalModel.fromJson(response.body);
+    if (response.response.statusCode == 200) {
+      OnwerAnimalModel ownerAnimalModel = OnwerAnimalModel.fromJson(response.response.data);
       animals.removeAt(index);
       animals.add(ownerAnimalModel);
       callBackFunction(true);
@@ -179,10 +176,10 @@ class AnimalProvider1 with ChangeNotifier {
     searchAnimalLists.clear();
     searchAnimalLists = [];
     if (!isFirstTime) notifyListeners();
-    Response response = await animalRepo.searchAnimal(code);
+    ApiResponse response = await animalRepo1.searchAnimal(code);
     isLoadingSearch = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         SearchAnimalModel animal = SearchAnimalModel.fromJson(element);
         searchAnimalLists.add(animal);
       });
