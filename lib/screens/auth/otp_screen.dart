@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/set_new_password.dart';
 import 'package:als_frontend/screens/auth/signup_screen2.dart';
 import 'package:als_frontend/screens/auth/widget/rounded_with_cursor.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -11,6 +12,7 @@ import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -55,7 +57,7 @@ class OTPScreen extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                           child: CustomText2(
-                            title: 'OTP Verified',
+                            title: LocaleKeys.oTPVerified.tr,
                             textStyle: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                         ),
@@ -67,7 +69,7 @@ class OTPScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 35),
                           child: CustomText2(
-                            title: 'Please Enter your 4 digit Valid OTP Number',
+                            title: LocaleKeys.pleaseEnterYour4DigitValidOTPNumber.tr,
                             textAlign: TextAlign.center,
                             maxLines: 2,
                             textStyle: latoStyle600SemiBold.copyWith(color: colorPrimaryDark, fontSize: 16),
@@ -133,7 +135,7 @@ class OTPScreen extends StatelessWidget {
                                   onTap: () {
                                     authProvider.resetTime();
                                   },
-                                  btnTxt: getTranslated('Resend', context),
+                                  btnTxt: LocaleKeys.resend.tr,
                                   backgroundColor: Colors.transparent,
                                   textWhiteColor: true,
                                   radius: 10)

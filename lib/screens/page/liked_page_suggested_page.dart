@@ -5,10 +5,12 @@ import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/page/widget/my_page.dart';
 import 'package:als_frontend/screens/page/widget/your_liked_page.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +61,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                     width: width * 0.26,
                   ),
                   Text(
-                    getTranslated('Pages', context),
+                    LocaleKeys.pages.tr,
                     style: latoStyle500Medium,
                   )
                 ],
@@ -90,7 +92,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                               border: Border.all(color: Colors.black, width: 1)),
                       child: Center(
                           child: Text(
-                        getTranslated("My page", context),
+                            LocaleKeys.my_Page.tr,
                         style: latoStyle200ExtraLight.copyWith(
                             color: pageProvider.menuValue == 0 ? Colors.white : Colors.black,
                             fontWeight: FontWeight.bold),
@@ -148,7 +150,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             children: [
-                              Text(getTranslated("My pages", context), style: latoStyle700Bold),
+                              Text(LocaleKeys.my_Page.tr, style: latoStyle700Bold),
                               const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
@@ -169,7 +171,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                             child: pageProvider.authorPageLists.isEmpty
                                 ? Center(
                                     child: Text(
-                                    getTranslated("Sorry you don't have any page", context),
+                                      LocaleKeys.you_HaveNot_any_Personal_Page.tr,
                                     style: latoStyle700Bold,
                                   ))
                                 : GridView.builder(
@@ -234,7 +236,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             children: [
-                              Text(getTranslated("Page you liked", context),
+                              Text(LocaleKeys.page_you_liked.tr,
                                   style: latoStyle700Bold),
                               const Spacer(),
                               Padding(
@@ -243,7 +245,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                   onTap: () {
                                     Get.to(const YourLikedPage());
                                   },
-                                  child: Text(getTranslated("See all", context),
+                                  child: Text(LocaleKeys.see_all.tr,
                                       style:  latoStyle300Light.copyWith(fontSize: 10,color: Colors.black)),
                                 ),
                               ),
@@ -255,7 +257,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           child: pageProvider.likedPageLists.isEmpty
                               ? Center(
                                   child:  Text(
-                                    getTranslated("you don,t like any page", context),
+                                    LocaleKeys.you_doNot_like_any_page.tr,
 
                                   style: latoStyle500Medium,
                                 ))
@@ -287,7 +289,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                                 borderRadius: BorderRadius.circular(4)),
                                             child: Center(
                                                 child: Text(
-                                              getTranslated("Follow", context),
+                                                  LocaleKeys.follow.tr,
                                               style: latoStyle600SemiBold.copyWith(
                                                   color: Colors.white, fontSize: 10),
                                             )),
@@ -305,7 +307,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                                 height: 2,
                                               ),
                                               Text(
-                                                  "${pageProvider.likedPageLists[index].followers.toString()} ${getTranslated("Followers", context)}",
+                                                  "${pageProvider.likedPageLists[index].followers.toString()} ${LocaleKeys.followers.tr}",
                                                   style: latoStyle400Regular.copyWith(fontSize: 10,color: Colors.grey)),
                                             ],
                                           )),
@@ -346,7 +348,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                       borderRadius: BorderRadius.circular(4)),
                                   child: Center(
                                       child: Text(
-                                    getTranslated("Follow", context),
+                                        LocaleKeys.follow.tr,
                                     style: latoStyle600SemiBold.copyWith(
                                         color: Colors.white, fontSize: 10),
                                   )),
@@ -364,7 +366,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                       height: 2,
                                     ),
                                     Text(
-                                        "${pageProvider.allSuggestPageList[index].followers.toString()} ${getTranslated("Followers", context)}",
+                                        "${pageProvider.allSuggestPageList[index].followers.toString()} ${LocaleKeys.followers.tr}",
                                         style: latoStyle100Thin.copyWith(fontSize: 10)),
                                   ],
                                 )),

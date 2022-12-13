@@ -1,6 +1,7 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/otp_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
@@ -11,6 +12,7 @@ import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -88,7 +90,7 @@ class SignUpScreen1 extends StatelessWidget {
                                               SizedBox(
                                                   width: 80,
                                                   child: CustomButton(
-                                                    btnTxt: 'Email',
+                                                    btnTxt: LocaleKeys.email.tr,
                                                     onTap: () {
                                                       auth.changeSelectStatus(false);
                                                     },
@@ -99,7 +101,7 @@ class SignUpScreen1 extends StatelessWidget {
                                               SizedBox(
                                                   width: 80,
                                                   child: CustomButton(
-                                                    btnTxt: 'Phone',
+                                                    btnTxt: LocaleKeys.phone.tr,
                                                     onTap: () {
                                                       auth.changeSelectStatus(true);
                                                     },
@@ -135,7 +137,7 @@ class SignUpScreen1 extends StatelessWidget {
                                                 padding: const EdgeInsets.symmetric(horizontal: 15),
                                                 child: CustomTextField(
                                                   fillColor: Colors.white,
-                                                  hintText: 'Enter Your E-mail',
+                                                  hintText: LocaleKeys.enter_Your_Email.tr,
                                                   borderRadius: 9,
                                                   controller: emailPhoneController,
                                                   verticalSize: 15,
@@ -168,12 +170,12 @@ class SignUpScreen1 extends StatelessWidget {
                                 ontap: () {
                                   if (!auth.isSelectEmail && emailPhoneController.text.isEmpty) {
                                     showMessage(
-                                      message: getTranslated('Please fill all the form', context),
+                                      message: LocaleKeys.please_fill_all_the_form.tr,
                                       context: context,
                                     );
                                   } else if (auth.isSelectEmail && phoneController.text.isEmpty) {
                                     showMessage(
-                                      message: getTranslated('Please fill all the form', context),
+                                      message: LocaleKeys.please_fill_all_the_form.tr,
                                       context: context,
                                     );
                                   } else {
@@ -216,7 +218,7 @@ class SignUpScreen1 extends StatelessWidget {
                           height: height * 0.4,
                           width: width * 0.4,
                           child:
-                              CustomText2(title: 'Send OTP', textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
+                              CustomText2(title: LocaleKeys.send_OTP.tr, textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
                         ),
                       ),
                     ],

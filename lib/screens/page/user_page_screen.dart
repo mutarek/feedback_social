@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
@@ -13,6 +14,7 @@ import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -177,9 +179,7 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                                             .bold),
                                                               ),
                                                               Text(
-                                                                  getTranslated(
-                                                                      " Followers",
-                                                                      context),
+                                                                  LocaleKeys.followers.tr,
                                                                   style: GoogleFonts.lato(
                                                                       fontSize:
                                                                           10,
@@ -274,9 +274,7 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                                       width: width *
                                                                           0.007),
                                                                   Text(
-                                                                      getTranslated(
-                                                                          "Edit Page",
-                                                                          context),
+                                                                      LocaleKeys.edit_Page.tr,
                                                                       style: TextStyle(
                                                                           fontSize: height *
                                                                               0.012,
@@ -301,20 +299,17 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                 const EdgeInsets.only(top: 2),
                                             child: TabBar(tabs: [
                                               Text(
-                                                  getTranslated(
-                                                      "Post", context),
+                                                  LocaleKeys.post.tr,
                                                   style: TextStyle(
                                                       fontSize: height * 0.013,
                                                       color: Colors.black)),
                                               Text(
-                                                  getTranslated(
-                                                      "Photos", context),
+                                                  LocaleKeys.photos.tr,
                                                   style: TextStyle(
                                                       fontSize: height * 0.013,
                                                       color: Colors.black)),
                                               Text(
-                                                  getTranslated(
-                                                      "Videos", context),
+                                                  LocaleKeys.videos.tr,
                                                   style: TextStyle(
                                                       fontSize: height * 0.013,
                                                       color: Colors.black)),

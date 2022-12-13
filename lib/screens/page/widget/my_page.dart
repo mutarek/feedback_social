@@ -4,9 +4,12 @@ import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
+
+import '../../../translations/locale_keys.g.dart';
 
 class MyPage extends StatelessWidget {
   const MyPage({Key? key}) : super(key: key);
@@ -17,7 +20,7 @@ class MyPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text( getTranslated("My page", context),style: latoStyle800ExtraBold,),
+        title: Text(LocaleKeys.my_Page.tr,style: latoStyle800ExtraBold,),
 
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
@@ -53,7 +56,7 @@ class MyPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(4)),
                             child: Center(
                                 child: Text(
-                                  getTranslated("Follow", context),
+                                  LocaleKeys.follow.tr,
                                   style: latoStyle600SemiBold.copyWith(
                                       color: Colors.white, fontSize: 10),
                                 )),
@@ -71,7 +74,7 @@ class MyPage extends StatelessWidget {
                                 height: 2,
                               ),
                               Text(
-                                  "${pageProvider.authorPageLists[index].followers.toString()} ${getTranslated("Followers", context)}",
+                                  "${pageProvider.authorPageLists[index].followers.toString()} ${LocaleKeys.followers.tr}",
                                   style: latoStyle100Thin.copyWith(fontSize: 10)),
                             ],
                           )),

@@ -2,12 +2,14 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
 import 'package:als_frontend/screens/home/view/video_details_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../data/model/response/image_video_detect_model.dart';
@@ -175,7 +177,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                       left: 50,
                       child: CustomButton(
                         onTap: () {},
-                        btnTxt: getTranslated('View More+', context),
+                        btnTxt: LocaleKeys.view_More.tr,
                         fontSize: 12,
                         backgroundColor: Colors.green.withOpacity(.8),
                         textWhiteColor: true,

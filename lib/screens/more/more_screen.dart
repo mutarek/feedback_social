@@ -9,12 +9,14 @@ import 'package:als_frontend/screens/group/liked_group_suggested_group.dart';
 import 'package:als_frontend/screens/page/liked_page_suggested_page.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/settings/widget/Settings_widget.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +72,7 @@ class MoreScreen extends StatelessWidget {
                               showMessage(context: context, message: 'Please Update apps first');
                             }
                           },
-                          child: Text(getTranslated('View profile', context), style: button)),
+                          child: Text(LocaleKeys.view_profile.tr , style: button)),
                     ),
                   ),
                   //
@@ -136,7 +138,7 @@ class MoreScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(FontAwesomeIcons.arrowRightFromBracket),
-                            Text(getTranslated('    logout', context), style: GoogleFonts.lato(fontSize: h * 0.03)),
+                            Text(LocaleKeys.logout.tr, style: GoogleFonts.lato(fontSize: h * 0.03)),
                           ],
                         ),
                       ),

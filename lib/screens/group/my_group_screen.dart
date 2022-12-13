@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
@@ -12,6 +13,7 @@ import 'package:als_frontend/widgets/app_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -177,7 +179,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget(getTranslated('Joined Group:', context)),
+                      titleMenuWidget(LocaleKeys.joined_Group.tr),
                       const SizedBox(height: 15),
                     ],
                   ),
@@ -198,7 +200,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                                 groupOrPageName: provider.myGroupList[index].name,
                                 groupOrPageLikes: "${provider.myGroupList[index].totalMember} Members");
                           })
-                      : CustomText2(title: 'No History found', textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
+                      : CustomText2(title: LocaleKeys.no_Data_Found.tr, textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
                 ],
               ),
             )),

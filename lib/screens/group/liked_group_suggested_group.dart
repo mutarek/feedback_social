@@ -6,10 +6,12 @@ import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen_copy.dart';
 import 'package:als_frontend/screens/group/widget/joined_group.dart';
 import 'package:als_frontend/screens/group/widget/my_group.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +63,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                     width: width * 0.26,
                   ),
                   Text(
-                    getTranslated('Groups', context),
+                   LocaleKeys.groups.tr,
                     style: latoStyle500Medium,
                   )
                 ],
@@ -92,7 +94,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           border: Border.all(color: Colors.black, width: 1)),
                       child: Center(
                           child: Text(
-                            getTranslated("My Group", context),
+                            LocaleKeys.my_Group.tr,
                             style: latoStyle200ExtraLight.copyWith(
                                 color: groupProvider.menuValue == 0 ? Colors.white : Colors.black,
                                 fontWeight: FontWeight.bold),
@@ -121,7 +123,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           border: Border.all(color: Colors.black, width: 1)),
                       child: Center(
                           child: Text(
-                            getTranslated("Suggestion", context),
+                            LocaleKeys.suggestion.tr,
                             style: latoStyle200ExtraLight.copyWith(
                                 color: groupProvider.menuValue == 0 ? Colors.black : Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -150,7 +152,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             children: [
-                              Text(getTranslated("My Groups", context), style: latoStyle700Bold),
+                              Text(LocaleKeys.my_Group.tr, style: latoStyle700Bold),
                               const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
@@ -158,7 +160,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                     onTap: () {
                                       Get.to(const MyGroup());
                                     },
-                                    child: Text("See all",
+                                    child: Text(LocaleKeys.see_all.tr,
                                         style: latoStyle300Light.copyWith(fontSize: 10,color: Colors.black))),
                               ),
                             ],
@@ -171,7 +173,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                             child: groupProvider.authorGroupList.isEmpty
                                 ? Center(
                                 child: Text(
-                                  getTranslated("Sorry you don't have any page", context),
+                                 LocaleKeys.sorry_you_doNot_have_any_page.tr,
                                   style: latoStyle700Bold,
                                 ))
                                 : GridView.builder(
@@ -233,7 +235,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             children: [
-                              Text(getTranslated("Group you liked", context),
+                              Text(LocaleKeys.group_you_liked.tr,
                                   style: latoStyle700Bold),
                               const Spacer(),
                               Padding(
@@ -242,7 +244,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                   onTap: () {
                                     Get.to(const JoinedGroup());
                                   },
-                                  child: Text(getTranslated("See all", context),
+                                  child: Text(LocaleKeys.see_all.tr,
                                       style:  latoStyle300Light.copyWith(fontSize: 10,color: Colors.black)),
                                 ),
                               ),
@@ -254,7 +256,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           child: groupProvider.myGroupList.isEmpty
                               ? Center(
                               child:  Text(
-                                getTranslated("you don,t like any group", context),
+                                LocaleKeys.you_donNot_like_any_group.tr,
 
                                 style: latoStyle500Medium,
                               ))
@@ -286,7 +288,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                             borderRadius: BorderRadius.circular(4)),
                                         child: Center(
                                             child: Text(
-                                              getTranslated("joined", context),
+                                              LocaleKeys.joined.tr,
                                               style: latoStyle600SemiBold.copyWith(
                                                   color: Colors.white, fontSize: 10),
                                             )),
@@ -345,7 +347,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                       borderRadius: BorderRadius.circular(4)),
                                   child: Center(
                                       child: Text(
-                                        getTranslated("join", context),
+                                        LocaleKeys.join.tr,
                                         style: latoStyle600SemiBold.copyWith(
                                             color: Colors.white, fontSize: 10),
                                       )),

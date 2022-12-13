@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
@@ -12,6 +13,7 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +51,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
             Get.back();
           },
           child:  Text(
-            getTranslated('Feedback',context),
+            LocaleKeys.feedback.tr,
             style: const TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
         ),
@@ -71,7 +73,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "${getTranslated('Your_ID', context)}: ${authProvider.userCode}",
+                                "${LocaleKeys.your_ID.tr}: ${authProvider.userCode}",
                                 style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
                               ),
                               SizedBox(width: width * 0.02),
@@ -80,7 +82,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                   children: [
                                     Expanded(
                                       child: CustomTextField(
-                                        hintText: getTranslated('Search with code', context),
+                                        hintText: LocaleKeys.search_with_code.tr,
                                         controller: searchController,
                                         inputType: TextInputType.number,
                                         inputAction: TextInputAction.done,
@@ -104,7 +106,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                                 Get.to(() => SearchAnimalScreen(searchController.text));
                                                 FocusScope.of(context).unfocus();
                                               } else {
-                                                Fluttertoast.showToast(msg: getTranslated('Write 6 digits code to search', context));
+                                                Fluttertoast.showToast(msg: LocaleKeys.write_6_digits_code_to_search.tr);
                                               }
                                             },
                                             icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 20)),
@@ -134,7 +136,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  CustomText(title: getTranslated('Your added animal', context), textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
+                                  CustomText(title: LocaleKeys.your_added_animal.tr, textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -154,7 +156,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                   Expanded(
                                     child: (animalProvider.animals.isEmpty)
                                         ?  Center(
-                                            child: Text(getTranslated('You have not added any animal yet', context)),
+                                            child: Text(LocaleKeys.you_have_not_added_any_animal_yet.tr),
                                           )
                                         : ListView.builder(
                                             shrinkWrap: true,

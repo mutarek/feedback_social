@@ -1,6 +1,7 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
@@ -11,6 +12,7 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -83,10 +85,10 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(title: getTranslated("Enter Page name",context), textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText(title: LocaleKeys.enter_Page_name.tr, textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         CustomTextField(
-                          hintText: 'Write here....',
+                          hintText: LocaleKeys.write_here.tr,
                           fillColor: Colors.white,
                           borderRadius: 10,
                           controller: pageNameController,
@@ -94,7 +96,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                           inputAction: TextInputAction.done,
                         ),
                         const SizedBox(height: 13),
-                        CustomText(title: getTranslated("Select Page Category Type:",context), textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText(title: LocaleKeys.select_Page_Category_Type.tr, textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         Container(
                           width: width,
@@ -120,7 +122,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                         ),
                         const SizedBox(height: 20),
                         CustomButton(
-                          btnTxt: widget.isUpdatePage ? getTranslated("Update", context) : getTranslated("Add", context),
+                          btnTxt: widget.isUpdatePage ? LocaleKeys.update.tr : LocaleKeys.add.tr,
                           onTap: () {
                             if (pageNameController.text.isNotEmpty) {
                               if (widget.isUpdatePage) {
@@ -141,7 +143,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                                 });
                               }
                             } else {
-                              Fluttertoast.showToast(msg: getTranslated("Please Write Page Name", context) );
+                              Fluttertoast.showToast(msg: LocaleKeys.please_Write_Page_Name);
                             }
                           },
                           fontSize: 18,

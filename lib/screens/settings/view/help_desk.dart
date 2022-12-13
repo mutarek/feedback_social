@@ -4,6 +4,7 @@ import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/settings/help_chat_screen.dart';
 import 'package:als_frontend/screens/settings/widget/faq_question.dart';
 import 'package:als_frontend/screens/settings/widget/help_desk_widget.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -55,7 +56,7 @@ class HelpDesk extends StatelessWidget {
                                             size: 15,
                                           )))),
                               Text(
-                                getTranslated("Need help?",context),
+                                LocaleKeys.need_help.tr,
                                 style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266)),
                               ),
                               Container(
@@ -74,7 +75,7 @@ class HelpDesk extends StatelessWidget {
                         ),
                         Center(
                             child: Text(
-                          getTranslated("Help Centre", context),
+                              LocaleKeys.help_Centre.tr,
                           style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266), fontSize: 40),
                         )),
                         SizedBox(height: height * 0.26, child: Image.asset("assets/background/help.png", fit: BoxFit.cover))
@@ -88,11 +89,11 @@ class HelpDesk extends StatelessWidget {
                       children: [
                         SizedBox(height: height * 0.02),
                         Text(
-                          getTranslated("Tell us how we can help 👋", context),
+                          LocaleKeys.tell_us_how_we_can_help.tr,
                           style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266), fontSize: 16),
                         ),
                         Text(
-                          getTranslated("our crew of superheroes are standing by\n for service & support", context),
+                          LocaleKeys.our_crew_of_superheroes_are_standing.tr,
                           textAlign: TextAlign.center,
                           style: latoStyle500Medium.copyWith(color: const Color(0xffA4AEC0)),
                         ),
@@ -102,8 +103,8 @@ class HelpDesk extends StatelessWidget {
                   ),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.commentSms,
-                    textname: getTranslated("Write Problems", context),
-                    discription: getTranslated("Write your problems now", context),
+                    textname: LocaleKeys.write_Problems.tr,
+                    discription: LocaleKeys.write_your_problems_now.tr,
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
                       otherProvider.clearImage();
@@ -113,8 +114,8 @@ class HelpDesk extends StatelessWidget {
                   SizedBox(height: height * 0.01),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.question,
-                    textname: getTranslated("FAQs", context),
-                    discription: getTranslated("Find intelligent answer instantly", context),
+                    textname: LocaleKeys.fAQs.tr,
+                    discription: LocaleKeys.find_intelligent_answer_instantly.tr,
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
                     Get.to(const FaqSceeen());
@@ -123,8 +124,8 @@ class HelpDesk extends StatelessWidget {
                   SizedBox(height: height * 0.01),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.solidPaperPlane,
-                    textname: getTranslated("Email", context),
-                    discription: getTranslated("Get solution beamed to your inbox", context),
+                    textname: LocaleKeys.email.tr,
+                    discription:LocaleKeys.get_solution_beamed_to_your_inbox.tr,
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
                       openNewEmail("meektecit@gmail.com");
