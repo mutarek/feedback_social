@@ -14,7 +14,7 @@ class AnimalRepo {
     return await apiClient.getData(AppConstant.animalOwnerURI + "${authRepo.getUserID()}/?page=$page");
   }
 
-  Future<Response> addedAnimal(Map<String, String> body, List<http.MultipartFile> multipartData) async {
+  Future<Response> addedAnimal(Map<String, String> body, List<http.MultipartFile> multipartData) async{
     return await apiClient.postMultipartData(AppConstant.animalUri, body, multipartData);
   }
 
