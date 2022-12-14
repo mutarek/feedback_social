@@ -65,36 +65,92 @@ class PageRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-  //
-  // Future<Response> createPageWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData) async {
-  //   return await apiClient.postMultipartData(AppConstant.pageURI, body, multipartData);
-  // }
-  //
-  // Future<Response> callForGetPageAllPosts(String pageID,int page) async {
-  //   return await apiClient.getData("/posts/page/$pageID/?page=$page");
-  // }
-  //
-  // Future<Response> callForGetPageAllImages(String pageId) async {
-  //   return await apiClient.getData("/page/$pageId/image/list/");
-  // }
-  //
-  // Future<Response> callForGetPageAllVideo(String pageID) async {
-  //   return await apiClient.getData("/page/$pageID/video/list/");
-  // }
-  //
-  // Future<Response> callForGetPageDetails(String pageID) async {
-  //   return await apiClient.getData(AppConstant.pageURI + "$pageID/");
-  // }
-  //
-  // Future<Response> updatePageWithoutImageUpload(Map map, int pageID) async {
-  //   return await apiClient.patchData(AppConstant.pageURI + "$pageID/", map);
-  // }
-  //
-  // Future<Response> updatePageWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData, int pageID) async {
-  //   return await apiClient.patchMultipartData(AppConstant.pageURI + "$pageID/", body, multipartData);
-  // }
-  //
-  // Future<Response> pageLikeUnlike(String pageId) async {
-  //   return await apiClient.postData("/page/$pageId/like/", {});
-  // }
+
+  Future<ApiResponse> createPageWithImageUpload(FormData formData) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.post(AppConstant.pageURI,data: formData);
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> callForGetPageAllPosts(String pageID,int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.get("/posts/page/$pageID/?page=$page");
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> callForGetPageAllImages(String pageId) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.get("/page/$pageId/image/list/");
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> callForGetPageAllVideo(String pageID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.get("/page/$pageID/video/list/");
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> callForGetPageDetails(String pageID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.get(AppConstant.pageURI + "$pageID/");
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> updatePageWithoutImageUpload(Map map, int pageID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.patch(AppConstant.pageURI + "$pageID/", data: map);
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> updatePageWithImageUpload(FormData formData, int pageID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.patch(AppConstant.pageURI + "$pageID/", data: formData);
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> pageLikeUnlike(String pageId) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.post("/page/$pageId/like/",data: {});
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
 }
