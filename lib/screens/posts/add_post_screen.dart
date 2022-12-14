@@ -6,12 +6,14 @@ import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/posts/view/video_view.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -75,7 +77,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           children: [
                             const Icon(Icons.photo_camera_back, size: 20, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText(title: getTranslated("Photo",context), textStyle: latoStyle700Bold.copyWith()),
+                            CustomText(title: LocaleKeys.photos.tr, textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),
@@ -90,7 +92,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           children: [
                             const Icon(CupertinoIcons.video_camera, size: 28, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText(title: getTranslated("Video", context), textStyle: latoStyle700Bold.copyWith()),
+                            CustomText(title: LocaleKeys.video.tr, textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),
@@ -101,7 +103,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         children: [
                           const Icon(Icons.calendar_month, size: 20, color: Colors.grey),
                           const SizedBox(width: 5),
-                          CustomText(title: getTranslated("Event", context), textStyle: latoStyle700Bold.copyWith()),
+                          CustomText(title: LocaleKeys.event.tr, textStyle: latoStyle700Bold.copyWith()),
                         ],
                       ),
                     ),
@@ -188,7 +190,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       CircleAvatar(backgroundImage: NetworkImage(widget.profileImage), backgroundColor: Colors.grey.withOpacity(.4)),
                       Expanded(
                           child: CustomTextField(
-                        hintText: getTranslated("Write Somethings", context),
+                        hintText: LocaleKeys.write_Something.tr,
                         fillColor: Colors.transparent,
                         isCancelShadow: true,
                         borderRadius: 0,

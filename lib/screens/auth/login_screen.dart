@@ -54,8 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Container(
                         height: height * 0.3,
                         width: width * 0.9,
-                        decoration:
-                            BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(width * 4))),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(width * 4))),
                       ),
                     ),
                     Column(
@@ -67,10 +69,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: width,
                             color: Colors.white,
                             child: Padding(
-                              padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
+                              padding: EdgeInsets.only(
+                                  top: height * 0.06, left: width * 0.1),
                               child: Text(
                                 LocaleKeys.welcome.tr,
-                                style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                                style: latoStyle400Regular.copyWith(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
                               ),
                             ),
                           ),
@@ -88,30 +94,42 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                       Container(
                                         height: 50,
-                                        margin: const EdgeInsets.only(bottom: 15),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 15),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             SizedBox(
                                                 width: 80,
                                                 child: CustomButton(
-                                                  btnTxt: 'Email',
+                                                  btnTxt: LocaleKeys.email.tr,
                                                   onTap: () {
-                                                    auth.changeSelectStatus(false);
+                                                    auth.changeSelectStatus(
+                                                        false);
                                                   },
-                                                  textWhiteColor: !auth.isSelectEmail,
-                                                  backgroundColor: !auth.isSelectEmail ? Palette.primary : Colors.white,
+                                                  textWhiteColor:
+                                                      !auth.isSelectEmail,
+                                                  backgroundColor:
+                                                      !auth.isSelectEmail
+                                                          ? Palette.primary
+                                                          : Colors.white,
                                                 )),
                                             const SizedBox(width: 15),
                                             SizedBox(
                                                 width: 80,
                                                 child: CustomButton(
-                                                  btnTxt: 'Phone',
+                                                  btnTxt: LocaleKeys.phone.tr,
                                                   onTap: () {
-                                                    auth.changeSelectStatus(true);
+                                                    auth.changeSelectStatus(
+                                                        true);
                                                   },
-                                                  textWhiteColor: auth.isSelectEmail,
-                                                  backgroundColor: auth.isSelectEmail ? Palette.primary : Colors.white,
+                                                  textWhiteColor:
+                                                      auth.isSelectEmail,
+                                                  backgroundColor:
+                                                      auth.isSelectEmail
+                                                          ? Palette.primary
+                                                          : Colors.white,
                                                 )),
                                           ],
                                         ),
@@ -119,46 +137,68 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                       auth.isSelectEmail
                                           ? Container(
-                                              margin: const EdgeInsets.symmetric(horizontal: 15),
-                                              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(9)),
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 15),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(9)),
                                               child: Row(
                                                 children: [
                                                   InkWell(
                                                       onTap: () {
-                                                        auth.pickupCountry(context);
+                                                        auth.pickupCountry(
+                                                            context);
                                                       },
                                                       child: Padding(
-                                                          padding: const EdgeInsets.only(left: 20),
-                                                          child: Text(auth.code, style: latoStyle800ExtraBold))),
-                                                  const Divider(color: Colors.black),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 20),
+                                                          child: Text(auth.code,
+                                                              style:
+                                                                  latoStyle800ExtraBold))),
+                                                  const Divider(
+                                                      color: Colors.black),
                                                   Expanded(
                                                       child: TextField(
                                                     controller: phoneController,
-                                                    keyboardType: TextInputType.number,
-                                                    decoration: const InputDecoration(hintText: "Phone Number"),
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            hintText:
+                                                                "Phone Number"),
                                                   )),
                                                 ],
                                               ))
                                           : Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 15),
                                               child: CustomTextField(
                                                 fillColor: Colors.white,
-                                                hintText: 'Enter Your E-mail',
+                                                hintText: LocaleKeys
+                                                    .enter_Your_Email.tr,
                                                 borderRadius: 9,
                                                 controller: emailController,
                                                 verticalSize: 15,
-                                                autoFillHints: AutofillHints.email,
-                                                inputType: TextInputType.emailAddress,
+                                                autoFillHints:
+                                                    AutofillHints.email,
+                                                inputType:
+                                                    TextInputType.emailAddress,
                                                 focusNode: emailFocus,
                                                 nextFocus: passwordFocus,
                                               ),
                                             ),
                                       SizedBox(height: height * 0.02),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
                                         child: CustomTextField(
                                           fillColor: Colors.white,
-                                          hintText: getTranslated('Password', context),
+                                          hintText: LocaleKeys.password.tr,
                                           borderRadius: 9,
                                           isPassword: true,
                                           controller: passwordController,
@@ -179,14 +219,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                       //       )),
                                       // ),
                                       Padding(
-                                        padding: EdgeInsets.only(left: width * 0.5),
+                                        padding:
+                                            EdgeInsets.only(left: width * 0.5),
                                         child: TextButton(
                                             onPressed: () {
-                                              Get.to(SignUpScreen1(isFromForgetPassword: true));
+                                              Get.to(SignUpScreen1(
+                                                  isFromForgetPassword: true));
                                             },
                                             child: Text(
-                                              getTranslated('Forgot password?', context),
-                                              style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
+                                             LocaleKeys.forgotPassword.tr,
+                                              style:
+                                                  latoStyle400Regular.copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 16),
                                             )),
                                       ),
                                       SizedBox(height: height * 0.06),
@@ -196,24 +241,49 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: CustomConatinerButton(
                                             child: (auth.isLoading == false)
                                                 ? Center(
-                                                    child: Text(getTranslated('Login', context),
-                                                        style: latoStyle800ExtraBold.copyWith(color: Colors.white)))
+                                                    child: Text(
+                                                       LocaleKeys.login.tr,
+                                                        style:
+                                                            latoStyle800ExtraBold
+                                                                .copyWith(
+                                                                    color: Colors
+                                                                        .white)))
                                                 : const CupertinoActivityIndicator(),
                                             ontap: () {
-                                              if (passwordController.text.isEmpty) {
-                                                showMessage(message: getTranslated('Please fill all the form', context), context: context);
+                                              if (passwordController
+                                                  .text.isEmpty) {
+                                                showMessage(
+                                                    message: LocaleKeys.please_fill_all_the_form.tr,
+                                                    context: context);
                                               } else {
                                                 auth
-                                                    .signIn(!auth.isSelectEmail ? emailController.text : auth.code + phoneController.text,
+                                                    .signIn(
+                                                        !auth.isSelectEmail
+                                                            ? emailController
+                                                                .text
+                                                            : auth.code +
+                                                                phoneController
+                                                                    .text,
                                                         passwordController.text)
                                                     .then((value) {
                                                   if (value.status) {
-                                                    Fluttertoast.showToast(msg: value.message);
-                                                    Provider.of<NotificationProvider>(context, listen: false).check();
-                                                    Navigator.of(context).pushAndRemoveUntil(
-                                                        MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
+                                                    Fluttertoast.showToast(
+                                                        msg: value.message);
+                                                    Provider.of<NotificationProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .check();
+                                                    Navigator.of(context)
+                                                        .pushAndRemoveUntil(
+                                                            MaterialPageRoute(
+                                                                builder: (_) =>
+                                                                    const DashboardScreen()),
+                                                            (route) => false);
                                                   } else {
-                                                    Fluttertoast.showToast(msg: value.message, backgroundColor: Colors.red);
+                                                    Fluttertoast.showToast(
+                                                        msg: value.message,
+                                                        backgroundColor:
+                                                            Colors.red);
                                                   }
                                                 });
                                               }
@@ -225,13 +295,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
                                                 backgroundColor: Colors.white,
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20))),
                                             onPressed: () {
                                               Get.to(EmailOrPhoneNumber());
                                             },
                                             child: Text(
-                                              getTranslated('Create account', context),
-                                              style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.black),
+                                              LocaleKeys.createAccount.tr,
+                                              style:
+                                                  latoStyle400Regular.copyWith(
+                                                      fontSize: 15,
+                                                      color: Colors.black),
                                             )),
                                       ),
                                       const SizedBox(height: 20),
@@ -257,7 +333,8 @@ class TsClip2 extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 80);
-    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 120);
+    path.quadraticBezierTo(
+        size.width / 2, size.height, size.width, size.height - 120);
     path.lineTo(size.width, 0);
     path.close();
     return path;

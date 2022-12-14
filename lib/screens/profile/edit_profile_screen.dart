@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
@@ -7,6 +8,7 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +58,7 @@ class _EditProfileState extends State<EditProfile> {
               Get.back();
             },
             icon: const Icon(FontAwesomeIcons.arrowLeft, color: Colors.black)),
-        title: CustomText(title: getTranslated("Update Profile Info",context), color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+        title: CustomText(title: LocaleKeys.update_Profile_Info.tr, color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
       ),
       body: Consumer<ProfileProvider>(builder: (context, provider, child) {
         return SingleChildScrollView(
@@ -66,30 +68,30 @@ class _EditProfileState extends State<EditProfile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: height * 0.02),
-              CustomText(title: getTranslated("Enter First Name:", context), fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
+              CustomText(title: LocaleKeys.enter_First_Name.tr, fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
               const SizedBox(height: 7),
               CustomTextField(
-                hintText: getTranslated("Write Here....", context),
+                hintText: LocaleKeys.write_here.tr,
                 controller: firstNameController,
                 fillColor: Colors.white,
                 borderRadius: 5,
                 verticalSize: 13,
               ),
               SizedBox(height: height * 0.01),
-              CustomText(title:  getTranslated("Enter Last Name:", context), fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
+              CustomText(title:  LocaleKeys.enter_Last_Name.tr, fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
               const SizedBox(height: 7),
               CustomTextField(
-                hintText: getTranslated("Write Here....", context),
+                hintText: LocaleKeys.write_here.tr,
                 controller: lastNameController,
                 fillColor: Colors.white,
                 borderRadius: 5,
                 verticalSize: 13,
               ),
               SizedBox(height: height * 0.01),
-              CustomText(title: getTranslated("Enter your  Job about:", context), fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
+              CustomText(title: LocaleKeys.enter_your_Job_about.tr, fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
               const SizedBox(height: 7),
               CustomTextField(
-                hintText: getTranslated("Write Here....", context),
+                hintText: LocaleKeys.write_here.tr,
                 controller: presentCompanyController,
                 fillColor: Colors.white,
                 borderRadius: 5,
@@ -98,10 +100,10 @@ class _EditProfileState extends State<EditProfile> {
                 isShowPrefixIcon: true,
               ),
               SizedBox(height: height * 0.01),
-              CustomText(title: getTranslated("Enter your  Education:", context), fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
+              CustomText(title: LocaleKeys.enter_your_Education.tr, fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
               const SizedBox(height: 7),
               CustomTextField(
-                hintText:getTranslated("Write Here....", context),
+                hintText:LocaleKeys.write_here.tr,
                 controller: presentEducationController,
                 fillColor: Colors.white,
                 borderRadius: 5,
@@ -110,7 +112,7 @@ class _EditProfileState extends State<EditProfile> {
                 isShowPrefixIcon: true,
               ),
               SizedBox(height: height * 0.01),
-              CustomText(title: getTranslated("Select your  Gender:", context), fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
+              CustomText(title: LocaleKeys.select_your_Gender.tr, fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
               DropdownButton(
                 value: provider.selectDGenderValue,
                 icon: const Icon(Icons.keyboard_arrow_down),
@@ -126,10 +128,10 @@ class _EditProfileState extends State<EditProfile> {
                 },
               ),
               SizedBox(height: height * 0.01),
-              CustomText(title: getTranslated("Enter your  Religion:", context), fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
+              CustomText(title: LocaleKeys.enter_your_Religion.tr, fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
               const SizedBox(height: 7),
               CustomTextField(
-                hintText: getTranslated("Write Here....", context),
+                hintText: LocaleKeys.write_here.tr,
                 controller: religionController,
                 fillColor: Colors.white,
                 borderRadius: 5,
@@ -138,10 +140,10 @@ class _EditProfileState extends State<EditProfile> {
                 isShowPrefixIcon: true,
               ),
               SizedBox(height: height * 0.01),
-              CustomText(title: getTranslated("Enter your  Current Location:", context), fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
+              CustomText(title: LocaleKeys.enter_your_Current_Location.tr, fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
               const SizedBox(height: 7),
               CustomTextField(
-                hintText: getTranslated("Write Here....", context),
+                hintText: LocaleKeys.write_here.tr,
                 controller: liveInAddressController,
                 fillColor: Colors.white,
                 borderRadius: 5,
@@ -150,10 +152,10 @@ class _EditProfileState extends State<EditProfile> {
                 isShowPrefixIcon: true,
               ),
               SizedBox(height: height * 0.01),
-              CustomText(title: getTranslated("Enter your permanent location:", context), fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
+              CustomText(title: "Enter your permanent location:", fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
               const SizedBox(height: 7),
               CustomTextField(
-                hintText: getTranslated("Write Here....", context),
+                hintText: LocaleKeys.write_here.tr,
                 controller: fromAddressController,
                 fillColor: Colors.white,
                 borderRadius: 5,
@@ -180,7 +182,7 @@ class _EditProfileState extends State<EditProfile> {
                             }
                           });
                         },
-                        child:  Text(getTranslated("Save and change", context)),
+                        child:  Text(LocaleKeys.save_and_change.tr),
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Palette.timeColor, textStyle: GoogleFonts.lato(fontWeight: FontWeight.bold)))
                     : const CircularProgressIndicator(),

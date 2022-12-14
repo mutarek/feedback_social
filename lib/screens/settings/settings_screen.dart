@@ -8,6 +8,7 @@ import 'package:als_frontend/screens/settings/view/about_settings.dart';
 import 'package:als_frontend/screens/settings/view/help_desk.dart';
 import 'package:als_frontend/screens/settings/view/notifications_settings.dart';
 import 'package:als_frontend/screens/settings/view/other_settings.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -36,7 +37,7 @@ class SettingsScreen extends StatelessWidget {
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
         title: Text(
-          getTranslated("Settings", context),
+          LocaleKeys.settings.tr,
           style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black),
         ),
       ),
@@ -78,7 +79,7 @@ class SettingsScreen extends StatelessWidget {
                                 children: [
                                   Text(provider.name, style: GoogleFonts.lato(fontSize: 16)),
                                   const SizedBox(height: 2),
-                                  Text("personal info", style: GoogleFonts.lato(color: const Color(0xff9C9EA2)))
+                                  Text(LocaleKeys.personal_Information.tr, style: GoogleFonts.lato(color: const Color(0xff9C9EA2)))
                                 ],
                               ),
                             ),
@@ -100,7 +101,7 @@ class SettingsScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Text(getTranslated("Others", context), style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w400)),
+                        Text(LocaleKeys.others.tr, style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w400)),
                         const SizedBox(height: 20),
 
                         /*...................language............*/
@@ -115,7 +116,7 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/notifications.svg',
-                          name: getTranslated("notifications", context),
+                          name: LocaleKeys.notifications.tr,
                           subName: "",
                           goingScreen: () {
                             Get.to(const NotificationSettings());
@@ -135,7 +136,7 @@ class SettingsScreen extends StatelessWidget {
                               )),
                             ),
                             const SizedBox(width: 10),
-                            Text(getTranslated("Dark Mode", context), style: GoogleFonts.lato(fontSize: 16)),
+                            Text(LocaleKeys.dark_Mode.tr, style: GoogleFonts.lato(fontSize: 16)),
                             const Spacer(),
                             Consumer<SettingsProvider>(builder: (context, settingsProvider, child) {
                               return CupertinoSwitch(
@@ -150,7 +151,7 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/help.svg',
-                          name: getTranslated("Help", context),
+                          name: LocaleKeys.help.tr,
                           subName: "",
                           goingScreen: () {
                             Get.to(const HelpDesk());
@@ -159,7 +160,7 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/other.svg',
-                          name: getTranslated("Other", context),
+                          name: LocaleKeys.others.tr,
                           subName: "",
                           goingScreen: () {
                             Get.to(const OtherSettings());
@@ -168,7 +169,7 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/tarmscondition.svg',
-                          name: getTranslated("Terms & Conditions", context),
+                          name: LocaleKeys.terms_and_Conditions.tr,
                           subName: "",
                           goingScreen: () {
                             Get.to(const TermsAndConditionsScreen());

@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/home/view/video_details_screen.dart';
@@ -8,6 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +54,7 @@ class PublicPhotoViewScreen extends StatelessWidget {
         ),
         title: CustomText(
             title:
-                '${getTranslated("User", context)} ${isForImage ? getTranslated("Photos", context) : getTranslated("Videos", context)}${getTranslated("Lists", context)}',
+                '${LocaleKeys.user.tr} ${isForImage ? LocaleKeys.photos.tr : LocaleKeys.video.tr}${LocaleKeys.lists.tr}',
             color: Colors.black),
       ),
       body: Consumer<PublicProfileProvider>(

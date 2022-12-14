@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
@@ -9,6 +10,7 @@ import 'package:als_frontend/screens/page/page_image_video_view.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -126,7 +128,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                             "${pageProvider.pageDetailsModel!.totalLike}",
                                                             style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold),
                                                           ),
-                                                          Text(getTranslated(" Followers",context), style: GoogleFonts.lato(fontSize: 10, color: Colors.black))
+                                                          Text(LocaleKeys.followers.tr, style: GoogleFonts.lato(fontSize: 10, color: Colors.black))
                                                         ],
                                                       ),
                                                     )
@@ -160,7 +162,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                             children: [
                                                               const Icon(Icons.thumb_up_sharp, size: 16, color: Colors.white),
                                                               Text(
-                                                                (pageProvider.pageDetailsModel!.like == false) ? getTranslated("Like", context) : getTranslated("Liked", context),
+                                                                (pageProvider.pageDetailsModel!.like == false) ? LocaleKeys.likes.tr : LocaleKeys.liked.tr,
                                                                 style: TextStyle(fontSize: height * 0.015, color: Colors.white),
                                                               )
                                                             ],
@@ -180,9 +182,9 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                         color: Colors.white,
                                         margin: const EdgeInsets.only(top: 2),
                                         child: TabBar(tabs: [
-                                          Text(getTranslated("Post", context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                          Text(getTranslated("Photos", context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                          Text(getTranslated("Videos", context), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                          Text(LocaleKeys.post.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                          Text(LocaleKeys.photos.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                          Text(LocaleKeys.videos.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                         ]),
                                       ),
                                     ],

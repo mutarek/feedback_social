@@ -1,10 +1,12 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,7 +30,7 @@ class PasswordUpdateSettings extends StatelessWidget {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text(getTranslated("Password Update",context), style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(LocaleKeys.password_security.tr, style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -39,30 +41,30 @@ class PasswordUpdateSettings extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-                Text(getTranslated("Enter your current password", context), style: latoStyle500Medium),
+                Text(LocaleKeys.enter_your_current_password.tr, style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: currentPasswordContorller,
                   fillColor: const Color(0xfff1d3f2),
-                  hintText: getTranslated("input your old password", context),
+                  hintText: LocaleKeys.input_your_old_password.tr,
                 ),
                 const SizedBox(height: 20),
-                Text(getTranslated("Enter new password", context), style: latoStyle500Medium),
+                Text(LocaleKeys.new_Password.tr, style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(controller: newPasswordContorller, fillColor: const Color(0xffd7f2d3), hintText: "input your new password"),
                 const SizedBox(height: 20),
-                Text(getTranslated("Repeat new password", context), style: latoStyle500Medium),
+                Text(LocaleKeys.repeat_new_password.tr, style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(
                   validation: (value) {
                     if (value == null || value.isEmpty) {
-                      return getTranslated("Please enter some text", context);
+                      return LocaleKeys.please_enter_some_text.tr;
                     }
                     return null;
                   },
                   controller: repeatPasswordContorller,
                   fillColor: const Color(0xffd7f2d3),
-                  hintText: getTranslated("input your new password again", context),
+                  hintText: LocaleKeys.input_your_new_password_again.tr,
                 ),
                 const SizedBox(height: 20),
                 Center(
@@ -78,7 +80,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                                   currentPasswordContorller.text, newPasswordContorller.text, repeatPasswordContorller.text);
                               if (provider.success) {
                                 Fluttertoast.showToast(
-                                    msg: getTranslated("Successfully update", context),
+                                    msg: LocaleKeys.successfully_update.tr,
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
                                     timeInSecForIosWeb: 1,
@@ -90,7 +92,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: getTranslated("Please enter correct old password", context),
+                                  msg: LocaleKeys.please_enter_correct_old_password.tr,
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,
@@ -100,7 +102,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                               );
                             }
                           },
-                          child:  Text(getTranslated("Update", context)));
+                          child:  Text(LocaleKeys.update.tr));
                     }),
                   ),
                 )

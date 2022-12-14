@@ -30,6 +30,7 @@
   "home": "Home",
   "friend": "বন্ধু",
   "message": "বার্তা",
+  "phone_number": "Phone Number",
   "more": "More",
   "replying_to": "Replying to",
   "cancel": "Cancel",
@@ -258,5 +259,6 @@
   "join": "join",
   "Joined_group": "Joined group",
   "mY_group": "MY group",
-  "faq": "FAQ?"
+  "faq": "FAQ?",
+  "update_available": "Update available."
 }

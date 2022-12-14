@@ -1,3 +1,4 @@
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_video_widgets.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class VideoDetailsScreen extends StatelessWidget {
               onPressed: () {
                 Get.back();
               }),
-          title: const CustomText2(title: 'Feedback Watch', color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          title:  CustomText2(title: LocaleKeys.feedback_Watch.tr, color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
           backgroundColor: Colors.white,
           elevation: 0),
       body: Center(child: CustomVideoWidget(videoURL, videoThumbnailURl)),

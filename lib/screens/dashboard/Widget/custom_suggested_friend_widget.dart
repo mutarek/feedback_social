@@ -1,6 +1,8 @@
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomSuggestedFriendsWidget extends StatelessWidget {
   final String userName;
@@ -63,9 +65,9 @@ class CustomSuggestedFriendsWidget extends StatelessWidget {
                       border: Border.all(width: 1,color: Colors.blueGrey),
                       borderRadius: BorderRadius.circular(5)
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        'Add Friend',
+                        LocaleKeys.add_friend.tr,
                         style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
                       ),
                     ),

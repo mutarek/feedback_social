@@ -8,11 +8,13 @@ import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -104,8 +106,8 @@ class PostHeaderWidget extends StatelessWidget {
                           },
                           child: CustomText(
                               title: Provider.of<AuthProvider>(context, listen: false).userID.toString() == post.author!.id.toString()
-                                  ? getTranslated('You Posted Here',context)
-                                  : post.author!.fullName.toString() + getTranslated('Posted Here', context),
+                                  ? LocaleKeys.you_Posted_Here.tr
+                                  : post.author!.fullName.toString() + LocaleKeys.posted_Here.tr,
                               fontSize: 12),
                         ),
                         Row(children: [

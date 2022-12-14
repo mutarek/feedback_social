@@ -1,5 +1,5 @@
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/screens/animal/add_animal_screen.dart';
@@ -8,6 +8,7 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class AnimalDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Palette.primary),
-        title: CustomText(title: getTranslated('animal_details', context), textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
+        title: CustomText(title: LocaleKeys.animal_details.tr, textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
         elevation: 0,
       ),
       body: Consumer<AnimalProvider>(
@@ -64,7 +65,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                         animalProvider.changeGenderStatus(animalModel.gender!);
                                         Get.to(() => AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
                                       },
-                                      child:  Text(getTranslated('edit', context))),
+                                      child:  Text(LocaleKeys.edit.tr)),
                                   ElevatedButton(
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
                                       onPressed: () {
@@ -74,7 +75,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                           }
                                         });
                                       },
-                                      child:  Text(getTranslated('delete', context))),
+                                      child:  Text(LocaleKeys.delete.tr)),
                                 ],
                               )
                             : const SizedBox.shrink(),

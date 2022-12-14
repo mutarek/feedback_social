@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
@@ -129,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           style: GoogleFonts.lato(
                                               fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                                         ),
-                                        Text(getTranslated(" Friends",context), style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
+                                        Text(LocaleKeys.friends.tr, style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
                                       ],
                                     ),
                                   ),
@@ -148,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           style:
                                               GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                                         ),
-                                        Text(getTranslated(" Followers", context), style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
+                                        Text(LocaleKeys.followers.tr, style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
                                       ],
                                     ),
                                   ),

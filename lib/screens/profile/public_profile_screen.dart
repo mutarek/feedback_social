@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
@@ -15,6 +16,7 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -118,7 +120,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                               width: 100,
                               margin: const EdgeInsets.only(right: 15),
                               child: ElevatedButton(
-                                child:  Text(getTranslated("Message",context)),
+                                child:  Text(LocaleKeys.message.tr),
                                 onPressed: () {
                                   Provider.of<ChatProvider>(context, listen: false).resetOneTime();
                                   Navigator.push(
@@ -140,7 +142,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 ? (publicProvider.publicProfileData.friendRequestSent == true)
                                     ? Expanded(
                                         child: ElevatedButton(
-                                          child:  Text(getTranslated("Cancel Friend request", context)),
+                                          child:  Text(LocaleKeys.cancel_Friend_request.tr),
                                           onPressed: () {
                                             publicProvider.cancelFriendRequest((bool status) {
                                               if (status) {
@@ -156,7 +158,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                     : (publicProvider.publicProfileData.friendRequestAccept == true)
                                         ? Expanded(
                                             child: ElevatedButton(
-                                              child:  Text(getTranslated("Accept friend request", context)),
+                                              child:  Text(LocaleKeys.accept_friend_request.tr),
                                               onPressed: () {
                                                 Provider.of<ProfileProvider>(context, listen: false)
                                                     .acceptFriendRequest(
@@ -173,7 +175,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                           )
                                         : Expanded(
                                             child: ElevatedButton(
-                                              child:  Text(getTranslated("Add friend", context)),
+                                              child:  Text(LocaleKeys.add_friend.tr),
                                               onPressed: () {
                                                 publicProvider.sendFriendRequest((bool status) {
                                                   if (status && widget.isFromFriendRequestScreen) {
@@ -185,7 +187,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                           )
                                 : Expanded(
                                     child: ElevatedButton(
-                                      child:  Text(getTranslated("Unfriend", context)),
+                                      child:  Text(LocaleKeys.unfriend.tr),
                                       onPressed: () {
                                         publicProvider.unFriend((bool status) {
                                           if (widget.isFromFriendScreen) {
@@ -209,7 +211,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                               ? const Center(child: CircularProgressIndicator())
                                               : AlertDialog(
                                                   title: Text(
-                                                   getTranslated("Do you want to block this User ?", context) ,
+                                                    LocaleKeys.do_you_want_to_block_this_User.tr ,
                                                     style: latoStyle800ExtraBold,
                                                   ),
                                                   actions: [
@@ -221,7 +223,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                                             onPressed: () {
                                                               Navigator.of(ctx).pop();
                                                             },
-                                                            child:  Text(getTranslated("Cancel", context), style: button)),
+                                                            child:  Text(LocaleKeys.cancel.tr, style: button)),
                                                         const SizedBox(width: 15),
                                                         ElevatedButton(
                                                             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
@@ -236,7 +238,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                                                 }
                                                               });
                                                             },
-                                                            child:  Text(getTranslated("Block", context), style: button)),
+                                                            child:  Text(LocaleKeys.block.tr, style: button)),
                                                       ],
                                                     ),
                                                   ],
@@ -259,7 +261,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 "${publicProvider.publicProfileData.friends!.length}",
                                 style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                               ),
-                              Text(getTranslated(" Friends", context), style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
+                              Text(LocaleKeys.friends.tr, style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
                               SizedBox(
                                 width: width * 0.2,
                               ),
@@ -268,7 +270,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                 style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                               ),
                               Text(
-                               getTranslated(" Followers", context) ,
+                                LocaleKeys.followers.tr ,
                                 style: GoogleFonts.lato(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -300,7 +302,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
-                                  child: CustomText(title: getTranslated("PHOTOS", context)),
+                                  child: CustomText(title: LocaleKeys.photos.tr),
                                 ),
                               ),
                             ),
