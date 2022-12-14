@@ -9,7 +9,7 @@ class SearchRepo1{
   final DioClient dioClient;
   final AuthRepo authRepo;
 
-  SearchRepo1(this.dioClient, this.authRepo);
+  SearchRepo1({required this.dioClient,required this.authRepo});
 
   Future<ApiResponse> searchData(String query) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));

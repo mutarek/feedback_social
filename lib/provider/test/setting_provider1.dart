@@ -11,10 +11,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../data/model/response/settings/privcay_model.dart';
 
-class SettingProvider with ChangeNotifier{
+class SettingProvider1 with ChangeNotifier{
   final SettingRepo1 settingsRepo;
 
-  SettingProvider(this.settingsRepo);
+  SettingProvider1({required this.settingsRepo});
 
   int selectPage = 1;
   bool success = false;

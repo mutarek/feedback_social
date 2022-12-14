@@ -12,7 +12,7 @@ class NotificationProvider1 with ChangeNotifier{
   final NotificationRepo1 notificationRepo;
   final AuthRepo1 authRepo;
 
-  NotificationProvider1(this.notificationRepo, this.authRepo);
+  NotificationProvider1({required this.notificationRepo,required this.authRepo});
 
   bool isLoading = false;
   late WebSocketChannel webSocketChannel;

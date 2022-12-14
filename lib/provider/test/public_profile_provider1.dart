@@ -12,7 +12,7 @@ class PubLicProfileProvider1 with ChangeNotifier{
   final ProfileRepo1 profileRepo;
   final NewsfeedRepo1 newsfeedRepo;
 
-  PubLicProfileProvider1(this.profileRepo, this.newsfeedRepo);
+  PubLicProfileProvider1({required this.profileRepo,required this.newsfeedRepo});
 
   bool _isLoading = false;
 

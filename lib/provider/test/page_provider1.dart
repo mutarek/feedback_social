@@ -17,7 +17,7 @@ class PageProvider1 with ChangeNotifier{
   final NewsfeedRepo1 newsfeedRepo;
   final AuthRepo1 authRepo;
 
-  PageProvider1(this.pageRepo, this.newsfeedRepo, this.authRepo);
+  PageProvider1({required this.pageRepo,required this.newsfeedRepo,required this.authRepo});
 
   bool isLoading = false;
 

@@ -16,6 +16,13 @@ import 'package:als_frontend/data/repository/search_repo.dart';
 import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:als_frontend/data/repository/splash_repo.dart';
 import 'package:als_frontend/data/repository/test/auth_repo1.dart';
+import 'package:als_frontend/data/repository/test/notification_repo1.dart';
+import 'package:als_frontend/data/repository/test/page_repo1.dart';
+import 'package:als_frontend/data/repository/test/post_repo1.dart';
+import 'package:als_frontend/data/repository/test/profile_repo1.dart';
+import 'package:als_frontend/data/repository/test/search_repo1.dart';
+import 'package:als_frontend/data/repository/test/setting_repo1.dart';
+import 'package:als_frontend/data/repository/test/splash_repo1.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
@@ -36,11 +43,21 @@ import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/test/auth_provider1.dart';
+import 'package:als_frontend/provider/test/other_provider1.dart';
+import 'package:als_frontend/provider/test/page_provider1.dart';
+import 'package:als_frontend/provider/test/post_provider1.dart';
+import 'package:als_frontend/provider/test/public_profile_provider1.dart';
+import 'package:als_frontend/provider/test/search_provider1.dart';
+import 'package:als_frontend/provider/test/setting_provider1.dart';
+import 'package:als_frontend/provider/test/splash_provider1.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'provider/test/notification_provider1.dart';
+import 'provider/test/profile_provider1.dart';
 
 
 final sl = GetIt.instance;
@@ -65,6 +82,13 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SettingsRepo( apiClient:sl()));
   sl.registerLazySingleton(() => SearchRepo( apiClient:sl()));
   sl.registerLazySingleton(() => ChatRepo( apiClient:sl(),authRepo: sl(),sharedPreferences: sl()));
+  sl.registerLazySingleton(() => NotificationRepo1(dioClient: sl()));
+  sl.registerLazySingleton(() => PageRepo1(dioClient: sl(),authRepo: sl()));
+  sl.registerLazySingleton(() => PostRepo1(dioClient: sl()));
+  sl.registerLazySingleton(() => ProfileRepo1(dioClient: sl(), authRepo: sl()));
+  sl.registerLazySingleton(() => SearchRepo1(dioClient: sl(),authRepo: sl()));
+  sl.registerLazySingleton(() => SettingRepo1(dioClient: sl(),authRepo: sl()));
+  sl.registerLazySingleton(() => SplashRepo1(dioClient: sl(),authRepo: sl()));
 
 
   // Provider
@@ -89,6 +113,15 @@ Future<void> init() async {
   sl.registerFactory(() => ProfileProvider(profileRepo: sl(),newsfeedRepo: sl(),authRepo: sl()));
   sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(),newsfeedRepo: sl()));
   sl.registerFactory(() => SettingsProvider(settingsRepo: sl()));
+  sl.registerFactory(() => NotificationProvider1(notificationRepo: sl(),authRepo: sl()));
+  sl.registerFactory(() => OtherProvider1());
+  sl.registerFactory(() => PageProvider1(pageRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
+  sl.registerFactory(() => PostProvider1(postRepo: sl(),authRepo: sl()));
+  sl.registerFactory(() => ProfileProvider1(profileRepo: sl(), newsfeedRepo: sl(),authRepo: sl()));
+  sl.registerFactory(() => PubLicProfileProvider1(profileRepo: sl(), newsfeedRepo: sl()));
+  sl.registerFactory(() => SearchProvider1(searchRepo: sl()));
+  sl.registerFactory(() => SettingProvider1(settingsRepo: sl()));
+  sl.registerFactory(() => SplashProvider1(splashRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

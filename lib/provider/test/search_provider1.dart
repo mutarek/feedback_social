@@ -8,7 +8,7 @@ import '../../data/model/response/search_model.dart';
 class SearchProvider1 with ChangeNotifier{
   final SearchRepo1 searchRepo;
 
-  SearchProvider1(this.searchRepo);
+  SearchProvider1({required this.searchRepo});
 
   bool isLoading = false;
   SearchModel searchModel = SearchModel();

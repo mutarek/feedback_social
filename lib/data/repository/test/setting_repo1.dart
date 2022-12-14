@@ -11,7 +11,7 @@ class SettingRepo1{
   final DioClient dioClient;
   final AuthRepo authRepo;
 
-  SettingRepo1(this.dioClient, this.authRepo);
+  SettingRepo1({required this.dioClient,required this.authRepo});
 
   Future<ApiResponse> passwordUpdate(String oldPassword, String newPassword, String confirmPassword) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));

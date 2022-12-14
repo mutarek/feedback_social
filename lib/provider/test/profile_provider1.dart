@@ -23,7 +23,7 @@ class ProfileProvider1 with ChangeNotifier{
   final NewsfeedRepo1 newsfeedRepo;
   final AuthRepo1 authRepo;
 
-  ProfileProvider1(this.profileRepo, this.newsfeedRepo, this.authRepo);
+  ProfileProvider1({required this.profileRepo,required this.newsfeedRepo,required this.authRepo});
 
   bool _isLoading = false;
 

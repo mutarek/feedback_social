@@ -6,10 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-class SplashProvider with ChangeNotifier{
+class SplashProvider1 with ChangeNotifier{
   final SplashRepo1 splashRepo;
 
-  SplashProvider(this.splashRepo);
+  SplashProvider1({required this.splashRepo});
 
   String? serverVersion;
   String currentVersion = "1.0.24";

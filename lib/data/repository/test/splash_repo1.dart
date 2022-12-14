@@ -10,7 +10,7 @@ class SplashRepo1{
   final DioClient dioClient;
   final AuthRepo authRepo;
 
-  SplashRepo1(this.dioClient, this.authRepo);
+  SplashRepo1({required this.dioClient,required this.authRepo});
 
   Future<ApiResponse> getCurrentAppVersion() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));

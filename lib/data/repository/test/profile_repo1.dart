@@ -9,7 +9,7 @@ class ProfileRepo1 {
   final DioClient dioClient;
   final AuthRepo authRepo;
 
-  ProfileRepo1(this.dioClient, this.authRepo);
+  ProfileRepo1({ required this.dioClient,required this.authRepo});
 
   Future<ApiResponse> getUserNewsfeedDataByUsingID(
       String userID, int page) async {
