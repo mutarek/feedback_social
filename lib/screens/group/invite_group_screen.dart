@@ -2,10 +2,12 @@ import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/widget/friend_list_card.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class InviteGroupScreen extends StatefulWidget {
@@ -42,7 +44,7 @@ class _InviteGroupScreenState extends State<InviteGroupScreen> {
                         children: [
                           Expanded(
                             child: CustomTextField(
-                              hintText: getTranslated('write a name to search',context),
+                              hintText: LocaleKeys.write_a_name_to_search.tr,
                               onChanged: (value) {
                                 groupProvider.searchUser(value!);
                                 return null;
@@ -95,7 +97,7 @@ class _InviteGroupScreenState extends State<InviteGroupScreen> {
                                                 builder: (_) => PublicProfileScreen(groupProvider.friendsList[index].id.toString())));
                                           },
                                           child: FriendListCard(
-                                              verb: "Invite",
+                                              verb: LocaleKeys.invite.tr,
                                               onPressed: () {
                                                 groupProvider.sendInvitation(widget.groupID, groupProvider.friendsList[index].id, index);
                                               },
@@ -105,7 +107,7 @@ class _InviteGroupScreenState extends State<InviteGroupScreen> {
                                               image: groupProvider.friendsList[index].profileImage),
                                         );
                                       })
-                                  : const Center(child: CustomText2(title: 'No Data Found', color: Colors.black, fontSize: 18)),
+                                  :  Center(child: CustomText2(title: LocaleKeys.no_Data_Found.tr, color: Colors.black, fontSize: 18)),
                             )
                     ],
                   ),

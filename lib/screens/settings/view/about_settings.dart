@@ -5,9 +5,11 @@ import 'package:als_frontend/screens/profile/edit_profile_screen.dart';
 import 'package:als_frontend/screens/settings/view/block_list.dart';
 import 'package:als_frontend/screens/settings/view/email_update.dart';
 import 'package:als_frontend/screens/settings/view/password_update.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,7 +42,7 @@ class _AboutSettingsState extends State<AboutSettings> {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text(getTranslated("About", context),style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(LocaleKeys.about.tr,style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: Consumer2<ProfileProvider, AuthProvider>(
         builder: (context, profileProvider, authProvider, child) => SafeArea(
@@ -78,9 +80,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(getTranslated("Personal Information", context), style: GoogleFonts.lato(fontSize: 16)),
+                                Text(LocaleKeys.personal_Information.tr, style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text(getTranslated("Name,gender,profile details", context), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(LocaleKeys.name_gender_profile_details.tr, style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),
@@ -112,9 +114,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(getTranslated("Password security", context), style: GoogleFonts.lato(fontSize: 16)),
+                                Text(LocaleKeys.password_security.tr, style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text(getTranslated("change password", context), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(LocaleKeys.change_password.tr, style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),
@@ -146,9 +148,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(getTranslated("Email Security", context), style: GoogleFonts.lato(fontSize: 16)),
+                                Text(LocaleKeys.email_Security.tr, style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text(getTranslated("Change Email", context), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(LocaleKeys.change_Email.tr, style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),
@@ -180,9 +182,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(getTranslated("Block list", context), style: GoogleFonts.lato(fontSize: 16)),
+                                Text(LocaleKeys.block_list.tr, style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text(getTranslated("See your block list", context), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(LocaleKeys.see_your_block_list.tr, style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),

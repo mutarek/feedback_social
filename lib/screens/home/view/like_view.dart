@@ -6,12 +6,14 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 void likeModalBottomView(BuildContext context, NewsFeedModel post, bool isLike) {
@@ -114,7 +116,7 @@ void likeModalBottomView(BuildContext context, NewsFeedModel post, bool isLike) 
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        Text('${isMe ? getTranslated('You', context) : likedBy.fullName}',
+                                                        Text('${isMe ? LocaleKeys.you.tr : likedBy.fullName}',
                                                             style: latoStyle600SemiBold.copyWith(fontSize: 12)),
                                                       ],
                                                     ),

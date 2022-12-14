@@ -1,4 +1,5 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
@@ -10,6 +11,7 @@ import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_w
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +49,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         elevation: 0,
         title: Consumer<PageProvider>(
           builder: (context, pageProvider, child) => CustomText(
-            title: pageProvider.menuValue == 0 ? getTranslated("Page", context) : getTranslated("Suggested Page", context),
+            title: pageProvider.menuValue == 0 ? LocaleKeys.pages.tr : LocaleKeys.suggested_Page.tr,
             textStyle: latoStyle700Bold.copyWith(color: Palette.primary, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
         ),
@@ -81,8 +83,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            expanded(context, provider, getTranslated('My Page', context), 0),
-                            expanded(context, provider, getTranslated('Other Page', context), 1),
+                            expanded(context, provider, LocaleKeys.my_Page.tr, 0),
+                            expanded(context, provider, LocaleKeys.other_Page.tr, 1),
                           ],
                         ),
                       ),
@@ -122,13 +124,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget(getTranslated("Personal Page:", context)),
+                      titleMenuWidget(LocaleKeys.personal_Page.tr),
                       Container(margin: const EdgeInsets.only(bottom: 10)),
                     ],
                   ),
                   (provider.authorPageLists.isEmpty)
                       ? CustomText(
-                          title: getTranslated("You Haven't any Personal Page", context),
+                          title: LocaleKeys.you_HaveNot_any_Personal_Page.tr,
                           textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                       : Container(
                           height: 100,
@@ -176,7 +178,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget(getTranslated("Liked Pages:'", context)),
+                      titleMenuWidget(LocaleKeys.liked_page.tr),
                       const SizedBox(height: 15),
                     ],
                   ),
@@ -195,10 +197,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 goToGroupOrPage: () {},
                                 groupOrPageImage: provider.likedPageLists[index].avatar,
                                 groupOrPageName: provider.likedPageLists[index].name,
-                                groupOrPageLikes: "${provider.likedPageLists[index].followers} ${getTranslated("Likes", context)} ");
+                                groupOrPageLikes: "${provider.likedPageLists[index].followers} ${LocaleKeys.likes.tr} ");
                           })
                       : CustomText(
-                          title: getTranslated("No History found", context), textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
+                          title: LocaleKeys.no_History_found.tr, textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
                 ],
               ),
             )),
@@ -226,7 +228,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     goToGroupOrPage: () {},
                     groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,
                     groupOrPageName: provider.allSuggestPageList[index].name,
-                    groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${getTranslated("Likes", context)}");
+                    groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${LocaleKeys.likes.tr}");
               }),
     );
   }

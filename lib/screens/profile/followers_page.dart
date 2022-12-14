@@ -5,6 +5,7 @@ import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _FollowersPageState extends State<FollowersPage> {
               onPressed: () {
                 Get.back();
               }),
-          title: CustomText(title: getTranslated("All Followers",context), color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          title: CustomText(title: LocaleKeys.all_Followers.tr, color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
           backgroundColor: Colors.white,
           elevation: 0),
       body: Consumer2<ProfileProvider, PublicProfileProvider>(
@@ -60,7 +61,7 @@ class _FollowersPageState extends State<FollowersPage> {
                   children: [
                     Center(
                         child: CustomText(
-                      title: '${getTranslated("You Have", context)}(${profileProvider.followersModelList.length})${getTranslated("Followers", context)} ',
+                      title: '${LocaleKeys.you_Have.tr}(${profileProvider.followersModelList.length})${getTranslated("Followers", context)} ',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
                     const SizedBox(height: 10),
@@ -73,8 +74,8 @@ class _FollowersPageState extends State<FollowersPage> {
                           return FriendRequestWidget(
                             width: width,
                             userName: followersModel.fullName.toString(),
-                            firstButtonName: followersModel.isFriend! ? getTranslated("Friend", context) :getTranslated("Confirm", context),
-                            secondButtonName: followersModel.isFriend! ?getTranslated("Unfriend", context) :getTranslated("Remove", context),
+                            firstButtonName: followersModel.isFriend! ? LocaleKeys.friend.tr :LocaleKeys.confirm.tr,
+                            secondButtonName: followersModel.isFriend! ?LocaleKeys.unfriend.tr :LocaleKeys.remove.tr,
                             firstButtonOnTab: () {
                               // called for accept friend request
                               if (!followersModel.isFriend!) {

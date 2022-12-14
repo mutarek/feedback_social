@@ -12,6 +12,7 @@ import 'package:als_frontend/screens/more/more_screen.dart';
 import 'package:als_frontend/screens/notification/notification_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/search/search_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -22,6 +23,7 @@ import 'package:als_frontend/widgets/custom_text2.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -75,14 +77,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             icon: SvgPicture.asset(ImagesModel.homeURI,
                                 color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, width: 22, height: 22),
                             selectedColor: Colors.blue,
-                            title: Text(getTranslated('Home', context),
+                            title: Text(LocaleKeys.home.tr,
                                 style: latoStyle600SemiBold.copyWith(
                                     color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, fontSize: 12))),
                         AnimatedBarItems(
                             icon: SvgPicture.asset(ImagesModel.friendRequestURI,
                                 color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, width: 22, height: 22),
                             selectedColor: Colors.blue,
-                            title: Text(getTranslated('Friend', context),
+                            title: Text(LocaleKeys.friend.tr,
                                 style: latoStyle600SemiBold.copyWith(
                                     color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, fontSize: 12))),
                         AnimatedBarItems(
@@ -109,14 +111,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ],
                             ),
                             selectedColor: Colors.blue,
-                            title: Text(getTranslated('Notifications', context),
+                            title: Text(LocaleKeys.notifications.tr,
                                 style: latoStyle600SemiBold.copyWith(
                                     color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, fontSize: 12))),
                         AnimatedBarItems(
                             icon: SvgPicture.asset(ImagesModel.chatingURI,
                                 color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, width: 22, height: 22),
                             selectedColor: Colors.blue,
-                            title: Text(getTranslated('Message', context),
+                            title: Text(LocaleKeys.message.tr,
                                 style: latoStyle600SemiBold.copyWith(
                                     color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, fontSize: 12))),
                         AnimatedBarItems(
@@ -124,7 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, width: 22, height: 22),
                             backgroundColor: Colors.blue,
                             title: CustomText2(
-                              title: 'More',
+                              title: LocaleKeys.more.tr,
                               textStyle: latoStyle600SemiBold.copyWith(
                                   color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, fontSize: 12),
                             )),
@@ -147,8 +149,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       children: [
                         dashboardProvider.selectIndex == 0
                             ? AppBar(
-                                title: const CustomText2(
-                                    title: 'Feedback', color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 27),
+                                title: CustomText2(
+                                    title: LocaleKeys.feedback.tr, color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 27),
                                 backgroundColor: Colors.white,
                                 elevation: 0,
                                 actions: [
@@ -212,7 +214,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ? const SizedBox.shrink()
                             : splashProvider.value == 0
                                 ? CustomButton(
-                                    btnTxt: 'Update available.',
+                                    btnTxt: "Update available.",
                                     onTap: () {
                                       openFeedbackAppOnPlayStore();
                                     },

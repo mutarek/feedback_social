@@ -1,7 +1,9 @@
 
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/other_provider.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +52,7 @@ class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageVie
                           children: <Widget>[
                             MaterialButton(
                                 color: Colors.green,
-                                child:  Text(getTranslated("Camera",context),
+                                child:  Text(LocaleKeys.camera.tr,
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {
@@ -59,7 +61,7 @@ class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageVie
                             MaterialButton(
                                 color: Colors.deepOrange,
                                 child: Text(
-                                  getTranslated("Device",context),
+                                  LocaleKeys.device.tr,
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 onPressed: () {

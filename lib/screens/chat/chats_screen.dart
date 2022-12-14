@@ -5,7 +5,6 @@ import 'package:als_frontend/screens/chat/message_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 class ChatsScreen extends StatefulWidget {

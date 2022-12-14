@@ -1,8 +1,10 @@
 import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
    ForgotPasswordScreen({Key? key,
@@ -48,7 +50,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                       child: Text(
-                        getTranslated('Confirm Password',context),
+                        LocaleKeys.confirm_Password.tr,
                         style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ),
@@ -68,7 +70,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(horizontal: 15),
                                 child: CustomTextField(
                                   fillColor: Colors.white,
-                                  hintText: getTranslated('Enter new password', context),
+                                  hintText: LocaleKeys.enter_new_password.tr,
                                   borderRadius: 4,
                                   controller: passwordController,
                                   verticalSize: 15,

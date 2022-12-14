@@ -7,12 +7,14 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/any_link_preview_global_widget.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -121,7 +123,7 @@ class CommentWidget extends StatelessWidget {
                               height: 25,
                               margin: const EdgeInsets.only(top: 5),
                               child: CustomButton(
-                                btnTxt: getTranslated('Reply', context),
+                                btnTxt: LocaleKeys.reply.tr,
                                 textWhiteColor: true,
                                 isStroked: true,
                                 onTap: () {

@@ -1,8 +1,10 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,7 +48,7 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text(getTranslated("Block List",context), style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(LocaleKeys.block_list.tr, style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: SafeArea(
         child: Consumer<SettingsProvider>(builder: (context, settingsProvider, child) {
@@ -101,7 +103,7 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
                                           onPressed: () {
                                             settingsProvider.unblockUser(settingsProvider.blocklist[index].id, index);
                                           },
-                                          child:  Text(getTranslated("Unblock", context), style: button)),
+                                          child:  Text(LocaleKeys.unblock.tr, style: button)),
                                       const SizedBox(width: 10),
                                     ],
                                   ),

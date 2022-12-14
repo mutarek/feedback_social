@@ -1,6 +1,7 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -60,7 +61,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                         child: Padding(
                           padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                           child: Text(
-                            getTranslated('Set New Password', context),
+                            LocaleKeys.set_New_Password.tr,
                             // getTranslated('Registration', context)!,
                             style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
@@ -80,7 +81,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 35),
                                     child: CustomText2(
-                                      title: 'Please Enter a new password',
+                                      title: LocaleKeys.enter_new_password.tr,
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
                                       textStyle: latoStyle600SemiBold.copyWith(color: colorPrimaryDark, fontSize: 16),
@@ -91,7 +92,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                     padding: const EdgeInsets.symmetric(horizontal: 15),
                                     child: CustomTextField(
                                       fillColor: Colors.white,
-                                      hintText: getTranslated('New Password', context),
+                                      hintText: LocaleKeys.new_Password.tr,
                                       borderRadius: 4,
                                       controller: passwordController,
                                       verticalSize: 15,
@@ -126,7 +127,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                           ontap: () {
                             if (passwordController.text.isEmpty) {
                               showMessage(
-                                message: getTranslated('Please fill all the form', context),
+                                message: LocaleKeys.please_fill_all_the_form.tr,
                                 context: context,
                               );
                             } else {

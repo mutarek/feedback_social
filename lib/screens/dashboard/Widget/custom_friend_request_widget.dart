@@ -1,5 +1,7 @@
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomFriendRequestWidget extends StatelessWidget {
   final String userName;
@@ -72,9 +74,9 @@ class CustomFriendRequestWidget extends StatelessWidget {
                                   border: Border.all(width: 1,color: Colors.blueGrey),
                                   borderRadius: BorderRadius.circular(5)
                               ),
-                              child: const Center(
+                              child:  Center(
                                 child: Text(
-                                  'Cancel',
+                                  LocaleKeys.cancel.tr,
                                   style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -91,9 +93,9 @@ class CustomFriendRequestWidget extends StatelessWidget {
                                   border: Border.all(width: 1,color: Colors.blueGrey),
                                   borderRadius: BorderRadius.circular(5)
                               ),
-                              child: const Center(
+                              child:  Center(
                                 child: Text(
-                                  'Confirm',
+                                  LocaleKeys.confirm.tr,
                                   style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
                                 ),
                               ),

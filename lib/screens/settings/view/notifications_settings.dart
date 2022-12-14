@@ -1,6 +1,7 @@
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/screens/settings/widget/notification_widget.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,7 +35,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text(getTranslated("Notifications",context), style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(LocaleKeys.notifications.tr, style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: SafeArea(
         child: Padding(
@@ -48,42 +49,42 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(height: 10),
-                    NotificationWidget(buttunName:getTranslated("Push notification", context) , buttunValue: settingsProvider.notificationModel!.isPush!,
+                    NotificationWidget(buttunName:LocaleKeys.push_notification.tr , buttunValue: settingsProvider.notificationModel!.isPush!,
                         onChanged: (value) {
                           settingsProvider.changeNotificationSettingsStatus(value!, 0);
                           return null;
                         }),
                     const SizedBox(height: 30),
-                    NotificationWidget(buttunName: getTranslated("Friend notification", context), buttunValue: settingsProvider.notificationModel!.isFriend!, onChanged: (value) {
+                    NotificationWidget(buttunName: LocaleKeys.friend_notification.tr, buttunValue: settingsProvider.notificationModel!.isFriend!, onChanged: (value) {
                       settingsProvider.changeNotificationSettingsStatus(value!, 1);
                       return null;
                     }),
                     const SizedBox(height: 30),
-                    NotificationWidget(buttunName: getTranslated("Follower notification", context), buttunValue: settingsProvider.notificationModel!.isFollower!, onChanged: (value) {
+                    NotificationWidget(buttunName: LocaleKeys.follower_notification.tr, buttunValue: settingsProvider.notificationModel!.isFollower!, onChanged: (value) {
                       settingsProvider.changeNotificationSettingsStatus(value!, 2);
                       return null;
                     }),
                     const SizedBox(height: 30),
-                    NotificationWidget(buttunName: getTranslated("Following notification", context), buttunValue: settingsProvider.notificationModel!.isFollowing!, onChanged: (value) {
+                    NotificationWidget(buttunName: LocaleKeys.follower_notification.tr, buttunValue: settingsProvider.notificationModel!.isFollowing!, onChanged: (value) {
                       settingsProvider.changeNotificationSettingsStatus(value!, 3);
                       return null;
                     }),
                     const SizedBox(height: 30),
                     NotificationWidget(
                         buttunName:
-                            getTranslated("like notification", context),
+                        LocaleKeys.like_notification.tr,
                         buttunValue: settingsProvider.notificationModel!.isLike!,
                         onChanged: (value) {
                           settingsProvider.changeNotificationSettingsStatus(value!, 4);
                           return null;
                         }),
                     const SizedBox(height: 30),
-                    NotificationWidget(buttunName: getTranslated("Comment notification", context), buttunValue: settingsProvider.notificationModel!.isComment!, onChanged: (value) {
+                    NotificationWidget(buttunName: LocaleKeys.comment_notification.tr, buttunValue: settingsProvider.notificationModel!.isComment!, onChanged: (value) {
                       settingsProvider.changeNotificationSettingsStatus(value!, 5);
                       return null;
                     }),
                     const SizedBox(height: 30),
-                    NotificationWidget(buttunName: getTranslated("Share notification", context), buttunValue: settingsProvider.notificationModel!.isShare!, onChanged: (value) {
+                    NotificationWidget(buttunName: LocaleKeys.share_notification.tr, buttunValue: settingsProvider.notificationModel!.isShare!, onChanged: (value) {
                       settingsProvider.changeNotificationSettingsStatus(value!, 6);
                       return null;
                     }),
