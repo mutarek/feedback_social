@@ -6,11 +6,11 @@ import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:dio/dio.dart';
 
-class PageRepo {
+class PageRepo1 {
   final DioClient dioClient;
   final AuthRepo authRepo;
 
-  PageRepo({required this.dioClient, required this.authRepo});
+  PageRepo1({required this.dioClient, required this.authRepo});
 
   Future<ApiResponse> getAuthorPage() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
