@@ -123,72 +123,72 @@ class AnimalProvider1 with ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO: delete animal
-  deleteAnimal(int animalID, int index, Function callback) async {
-    isLoading = true;
-    notifyListeners();
-    Response response = await animalRepo.deleteAnimal(animalID);
-    isLoading = false;
-    if (response.statusCode == 204) {
-      animals.removeAt(index);
-      Fluttertoast.showToast(msg: "Animal Deleted Successfully");
-      callback(true);
-    } else {
-      Fluttertoast.showToast(msg: "Animal Deleted Wrong!");
-      callback(false);
-    }
-    notifyListeners();
-  }
-
-  //TODO: for Update Animal
-  updateAnimal(
-      String animalName, String givenName, String species, String age, String genus, Function callBackFunction, int id, int index) async {
-    isLoading = true;
-    List<http.MultipartFile> multipartFile = [];
-
-    if (image != null) {
-      multipartFile
-          .add(http.MultipartFile('image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
-    }
-
-    notifyListeners();
-    Response response = await animalRepo.updateAnimal(
-        {"animal_name": animalName, "given_name": givenName, "species": species, "gender": selectGender, "age": age, "genus": genus},
-        multipartFile,
-        id);
-    isLoading = false;
-    if (response.statusCode == 200) {
-      OnwerAnimalModel ownerAnimalModel = OnwerAnimalModel.fromJson(response.body);
-      animals.removeAt(index);
-      animals.add(ownerAnimalModel);
-      callBackFunction(true);
-      Fluttertoast.showToast(msg: "Updated Successfully");
-    } else {
-      callBackFunction(false);
-      Fluttertoast.showToast(msg: "Something went wrong!");
-    }
-    notifyListeners();
-  }
-
-  //TODO: for Update Animal
-  List<SearchAnimalModel> searchAnimalLists = [];
-  bool isLoadingSearch = false;
-
-  searchAnimal(String code, {bool isFirstTime = true}) async {
-    isLoadingSearch = true;
-    searchAnimalLists.clear();
-    searchAnimalLists = [];
-    if (!isFirstTime) notifyListeners();
-    Response response = await animalRepo.searchAnimal(code);
-    isLoadingSearch = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
-        SearchAnimalModel animal = SearchAnimalModel.fromJson(element);
-        searchAnimalLists.add(animal);
-      });
-    } else {
-      Fluttertoast.showToast(msg: "Something went wrong!");
-    }
-    notifyListeners();
-  }
+  // //TODO: delete animal
+  // deleteAnimal(int animalID, int index, Function callback) async {
+  //   isLoading = true;
+  //   notifyListeners();
+  //   Response response = await animalRepo.deleteAnimal(animalID);
+  //   isLoading = false;
+  //   if (response.statusCode == 204) {
+  //     animals.removeAt(index);
+  //     Fluttertoast.showToast(msg: "Animal Deleted Successfully");
+  //     callback(true);
+  //   } else {
+  //     Fluttertoast.showToast(msg: "Animal Deleted Wrong!");
+  //     callback(false);
+  //   }
+  //   notifyListeners();
+  // }
+  //
+  // //TODO: for Update Animal
+  // updateAnimal(
+  //     String animalName, String givenName, String species, String age, String genus, Function callBackFunction, int id, int index) async {
+  //   isLoading = true;
+  //   List<http.MultipartFile> multipartFile = [];
+  //
+  //   if (image != null) {
+  //     multipartFile
+  //         .add(http.MultipartFile('image', image!.readAsBytes().asStream(), image!.lengthSync(), filename: image!.path.split("/").last));
+  //   }
+  //
+  //   notifyListeners();
+  //   Response response = await animalRepo.updateAnimal(
+  //       {"animal_name": animalName, "given_name": givenName, "species": species, "gender": selectGender, "age": age, "genus": genus},
+  //       multipartFile,
+  //       id);
+  //   isLoading = false;
+  //   if (response.statusCode == 200) {
+  //     OnwerAnimalModel ownerAnimalModel = OnwerAnimalModel.fromJson(response.body);
+  //     animals.removeAt(index);
+  //     animals.add(ownerAnimalModel);
+  //     callBackFunction(true);
+  //     Fluttertoast.showToast(msg: "Updated Successfully");
+  //   } else {
+  //     callBackFunction(false);
+  //     Fluttertoast.showToast(msg: "Something went wrong!");
+  //   }
+  //   notifyListeners();
+  // }
+  //
+  // //TODO: for Update Animal
+  // List<SearchAnimalModel> searchAnimalLists = [];
+  // bool isLoadingSearch = false;
+  //
+  // searchAnimal(String code, {bool isFirstTime = true}) async {
+  //   isLoadingSearch = true;
+  //   searchAnimalLists.clear();
+  //   searchAnimalLists = [];
+  //   if (!isFirstTime) notifyListeners();
+  //   Response response = await animalRepo.searchAnimal(code);
+  //   isLoadingSearch = false;
+  //   if (response.statusCode == 200) {
+  //     response.body.forEach((element) {
+  //       SearchAnimalModel animal = SearchAnimalModel.fromJson(element);
+  //       searchAnimalLists.add(animal);
+  //     });
+  //   } else {
+  //     Fluttertoast.showToast(msg: "Something went wrong!");
+  //   }
+  //   notifyListeners();
+  // }
 }
