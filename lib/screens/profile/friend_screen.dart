@@ -1,5 +1,4 @@
 import 'package:als_frontend/data/model/response/friend_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
@@ -61,7 +60,7 @@ class _FriendScreenState extends State<FriendScreen> {
                   children: [
                     Center(
                         child: CustomText(
-                      title: '${LocaleKeys.you_Have.tr()}(${profileProvider.paginationFriendLists.length}) ${getTranslated("Friend", context)}',
+                      title: '${LocaleKeys.you_Have.tr()}(${profileProvider.paginationFriendLists.length}) ${LocaleKeys.friend.tr()}',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
                     const SizedBox(height: 10),

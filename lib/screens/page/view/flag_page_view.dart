@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
@@ -117,7 +116,7 @@ class FlagPageView extends StatelessWidget {
                                   goToGroupOrPage: () {},
                                   groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,
                                   groupOrPageName: provider.allSuggestPageList[index].name,
-                                  groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${getTranslated("Likes",context)} ");
+                                  groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${LocaleKeys.likes.tr()} ");
                             }),
                       ],
                     ),

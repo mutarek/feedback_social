@@ -1,6 +1,5 @@
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/helper/number_helper.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
@@ -52,7 +51,7 @@ class SendFriendRequestScreen extends StatelessWidget {
                     Center(
                         child: CustomText(
                       title:
-                          '${LocaleKeys.you_Have.tr()} (${profileProvider.sendFriendRequestLists.length}) ${getTranslated("Friend Request", context)}',
+                          '${LocaleKeys.you_Have.tr()} (${profileProvider.sendFriendRequestLists.length}) ${LocaleKeys.friend_Request.tr()}',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )), //this text is added for test commit
                     const SizedBox(height: 10),

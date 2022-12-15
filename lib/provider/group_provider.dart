@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
@@ -11,11 +12,10 @@ import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/group_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as http;
 
 class GroupProvider with ChangeNotifier {
   final GroupRepo groupRepo;
@@ -32,14 +32,14 @@ class GroupProvider with ChangeNotifier {
 
   initializeSuggestGroup() async {
     isLoadingSuggestedGroup = true;
-    Response response = await groupRepo.getAllSuggestGroup();
+    ApiResponse response = await groupRepo.getAllSuggestGroup();
     isLoadingSuggestedGroup = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         allSuggestGroupList.add(AllGroupModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -54,15 +54,15 @@ class GroupProvider with ChangeNotifier {
     allSuggestGroupList.clear();
     allSuggestGroupList = [];
     menuValue = 0;
-    Response response = await groupRepo.getAllJoinGroup();
+    ApiResponse response = await groupRepo.getAllJoinGroup();
 
-    if (response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
       initializeAuthorGroup();
-      response.body.forEach((element) {
+      response.response.data.forEach((element) {
         myGroupList.add(AllGroupModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -73,15 +73,15 @@ class GroupProvider with ChangeNotifier {
   initializeAuthorGroup() async {
     authorGroupList.clear();
     authorGroupList = [];
-    Response response = await groupRepo.getOwnGroupList();
+    ApiResponse response = await groupRepo.getOwnGroupList();
     isLoading = false;
     notifyListeners();
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         authorGroupList.add(AllGroupModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -93,15 +93,15 @@ class GroupProvider with ChangeNotifier {
     isLoading = true;
     items.clear();
     items = [];
-    Response response = await groupRepo.getCategory();
+    ApiResponse response = await groupRepo.getCategory();
     isLoading = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         items.add(CategoryModel.fromJson(element));
       });
       categoryValue = items[0];
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -120,38 +120,41 @@ class GroupProvider with ChangeNotifier {
     groupISPrivate = value;
     if (!isFirstTime) notifyListeners();
   }
-
+  FormData formData = FormData();
   // TODO: for create and update Group
   createGroup(String groupName, File? file, Function callback) async {
     isLoading = true;
-    notifyListeners();
-    Response response;
+    formData = FormData();
+    ApiResponse response;
+
     if (file != null) {
-      List<http.MultipartFile> multipartFile = [];
+      formData.files.add(
+          MapEntry('cover_photo', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+      formData.fields.addAll([
+        MapEntry('name', groupName),
+        MapEntry('category', categoryValue.id.toString()),
+        MapEntry('is_private', groupISPrivate.toString()),
+      ]);
 
-      multipartFile
-          .add(http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
-
-      response = await groupRepo.createGroupWithImageUpload(
-          {"name": groupName, "category": categoryValue.id.toString(), "is_private": groupISPrivate.toString()}, multipartFile);
+      response = await groupRepo.createGroupWithImageUpload(formData);
     } else {
       response =
-          await groupRepo.createGroupWithoutImageUpload({"name": groupName, "category": categoryValue.id, "is_private": groupISPrivate});
+      await groupRepo.createGroupWithoutImageUpload({"name": groupName, "category": categoryValue.id, "is_private": groupISPrivate});
     }
     isLoading = false;
-    if (response.statusCode == 201) {
+    if (response.response.statusCode == 201) {
       authorGroupList.add(AllGroupModel(
-          id: response.body['id'],
-          name: response.body['name'],
-          category: response.body['category'],
-          coverPhoto: response.body['cover_photo'],
-          isPrivate: response.body['is_private'],
-          totalMember: response.body['total_member']));
+          id: response.response.data['id'],
+          name: response.response.data['name'],
+          category: response.response.data['category'],
+          coverPhoto: response.response.data['cover_photo'],
+          isPrivate: response.response.data['is_private'],
+          totalMember: response.response.data['total_member']));
       Fluttertoast.showToast(msg: "Created successfully");
       callback(true);
     } else {
       callback(false);
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -160,32 +163,32 @@ class GroupProvider with ChangeNotifier {
   updateGroup(String groupName, File? file, Function callback, int groupID, int index) async {
     isLoading = true;
     notifyListeners();
-    Response response;
-    if (file != null) {
-      List<http.MultipartFile> multipartFile = [];
-
-      multipartFile
-          .add(http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
-
-      response = await groupRepo.updateGroupWithImageUpload(
-          {"name": groupName, "category": categoryValue.id.toString(), "is_private": groupISPrivate.toString()}, multipartFile, groupID);
+    ApiResponse response;
+    if (file != null) {formData.files.add(
+        MapEntry('cover_photo', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+    formData.fields.addAll([
+      MapEntry('name', groupName),
+      MapEntry('category', categoryValue.id.toString()),
+      MapEntry('is_private', groupISPrivate.toString()),
+    ]);
+      response = await groupRepo.updateGroupWithImageUpload(formData, groupID);
     } else {
       response = await groupRepo
           .updateGroupWithoutImageUpload({"name": groupName, "category": categoryValue.id, "is_private": groupISPrivate}, groupID);
     }
     isLoading = false;
-    if (response.statusCode == 200) {
-      authorGroupList[index].id = response.body['id'];
-      authorGroupList[index].name = response.body['name'];
-      authorGroupList[index].category = response.body['category'];
-      authorGroupList[index].coverPhoto = response.body['cover_photo'];
-      authorGroupList[index].totalMember = response.body['total_member'];
+    if (response.response.statusCode == 200) {
+      authorGroupList[index].id = response.response.data['id'];
+      authorGroupList[index].name = response.response.data['name'];
+      authorGroupList[index].category = response.response.data['category'];
+      authorGroupList[index].coverPhoto = response.response.data['cover_photo'];
+      authorGroupList[index].totalMember = response.response.data['total_member'];
 
       Fluttertoast.showToast(msg: "Update successfully");
       callback(true);
     } else {
       callback(false);
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -206,13 +209,13 @@ class GroupProvider with ChangeNotifier {
     groupAllPosts = [];
     groupDetailsModel = AuthorGroupDetailsModel();
     // notifyListeners();
-    Response response = await groupRepo.callForGetGroupDetails(id);
+    ApiResponse response = await groupRepo.callForGetGroupDetails(id);
     callForGetAllGroupMembers(id);
     isLoading = false;
-    if (response.statusCode == 200) {
-      groupDetailsModel = AuthorGroupDetailsModel.fromJson(response.body);
+    if (response.response.statusCode == 200) {
+      groupDetailsModel = AuthorGroupDetailsModel.fromJson(response.response.data);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -223,14 +226,14 @@ class GroupProvider with ChangeNotifier {
   callForGetAllGroupMembers(String id) async {
     groupMembersLists.clear();
     groupMembersLists = [];
-    Response response = await groupRepo.callForGetGroupMembers(id);
+    ApiResponse response = await groupRepo.callForGetGroupMembers(id);
 
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         groupMembersLists.add(GroupMembersModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -271,18 +274,18 @@ class GroupProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    Response response = await groupRepo.callForGetGroupAllPosts(id, selectPage);
+    ApiResponse response = await groupRepo.callForGetGroupAllPosts(id, selectPage);
 
     isLoading = false;
     isBottomLoading = false;
 
-    if (response.statusCode == 200) {
-      hasNextData = response.body['next'] != null ? true : false;
-      response.body['results'].forEach((element) {
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
         groupAllPosts.add(NewsFeedModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -338,14 +341,14 @@ class GroupProvider with ChangeNotifier {
     groupImagesLists.clear();
     groupImagesLists = [];
     //notifyListeners();
-    Response response = await groupRepo.callForGetGroupAllImages(groupID.toString());
+    ApiResponse response = await groupRepo.callForGetGroupAllImages(groupID.toString());
     isLoadingForGroupImageVideo = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         groupImagesLists.add(GroupImagesModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -358,14 +361,14 @@ class GroupProvider with ChangeNotifier {
     groupVideoLists.clear();
     groupVideoLists = [];
     //notifyListeners();
-    Response response = await groupRepo.callForGetGroupAllVideo(groupID.toString());
+    ApiResponse response = await groupRepo.callForGetGroupAllVideo(groupID.toString());
     isLoadingForGroupImageVideo = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         groupVideoLists.add(ProfileVideoModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -381,15 +384,15 @@ class GroupProvider with ChangeNotifier {
     friendsListTemp.clear();
     friendsListTemp = [];
     //notifyListeners();
-    Response response = await groupRepo.callForGetAllGroupMemberWhoNotMember(groupID.toString());
+    ApiResponse response = await groupRepo.callForGetAllGroupMemberWhoNotMember(groupID.toString());
     isLoading = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         friendsList.add(FriendListModel.fromJson(element));
       });
       friendsListTemp.addAll(friendsList);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -412,24 +415,24 @@ class GroupProvider with ChangeNotifier {
 
 // TODO: for send invitation
   sendInvitation(int groupID, int userID, int index) async {
-    Response response = await groupRepo.sendInvitation(groupID.toString(), userID);
+    ApiResponse response = await groupRepo.sendInvitation(groupID.toString(), userID);
 
-    if (response.statusCode == 201) {
-      Fluttertoast.showToast(msg: response.body['message']);
+    if (response.response.statusCode == 201) {
+      Fluttertoast.showToast(msg: response.response.data['message']);
       friendsList.removeAt(index);
       friendsListTemp.removeAt(index);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
 
 // TODO: for member Join
   memberJoin(int groupID, {bool isFromMyGroup = false, int index = 0}) async {
-    Response response = await groupRepo.memberJoin(groupID.toString());
+    ApiResponse response = await groupRepo.memberJoin(groupID.toString());
 
-    if (response.statusCode == 201) {
-      Fluttertoast.showToast(msg: response.body['message']);
+    if (response.response.statusCode == 201) {
+      Fluttertoast.showToast(msg: response.response.data['message']);
       groupDetailsModel.totalMember = groupDetailsModel.totalMember! + 1;
       groupDetailsModel.isMember = true;
       callForGetAllGroupMembers(groupID.toString());
@@ -446,16 +449,16 @@ class GroupProvider with ChangeNotifier {
                 totalMember: groupDetailsModel.totalMember! as int));
       }
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
 
 // TODO: for member Join
   leaveGroup(int groupID, {int index = 0, bool isFromMYGroup = false}) async {
-    Response response = await groupRepo.leaveGroup(groupID.toString());
+    ApiResponse response = await groupRepo.leaveGroup(groupID.toString());
 
-    if (response.statusCode == 204) {
+    if (response.response.statusCode == 204) {
       Fluttertoast.showToast(msg: 'Successfully leave this group');
       groupDetailsModel.totalMember = groupDetailsModel.totalMember! - 1;
       groupDetailsModel.isMember = false;
@@ -465,7 +468,7 @@ class GroupProvider with ChangeNotifier {
         myGroupList.removeAt(index);
       }
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }

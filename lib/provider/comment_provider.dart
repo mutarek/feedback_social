@@ -1,11 +1,10 @@
 import 'dart:convert';
-
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/comment_models.dart';
 import 'package:als_frontend/data/repository/comment_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -41,19 +40,19 @@ class CommentProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    Response response = await commentRepo.getAllCommentData(url);
+    ApiResponse response = await commentRepo.getAllCommentData(url);
     isLoading = false;
     isBottomLoading = false;
-    if (response.statusCode == 200) {
-      hasNextData = response.body['next'] != null ? true : false;
-      response.body['results'].forEach((element) {
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
         CommentModels comment = CommentModels.fromJson(element);
 
         comments.insert(0, comment);
         isOpenComment.insert(0, false);
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -62,16 +61,16 @@ class CommentProvider with ChangeNotifier {
     comments.clear();
     comments = [];
     isLoading = true;
-    Response response = await commentRepo.getAllGroupCommentData(postID, groupID);
+    ApiResponse response = await commentRepo.getAllGroupCommentData(postID, groupID);
     isLoading = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         CommentModels comment = CommentModels.fromJson(element);
 
         comments.insert(0, comment);
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -80,12 +79,12 @@ class CommentProvider with ChangeNotifier {
 
   Future<bool> addComment(String comment, String fullName, String profileImage, int postID, int userID, String url) async {
     isCommentLoading = true;
-    Response response = await commentRepo.addComment(url, comment);
+    ApiResponse response = await commentRepo.addComment(url, comment);
     isCommentLoading = false;
-    if (response.statusCode == 201) {
+    if (response.response.statusCode == 201) {
       Fluttertoast.showToast(msg: "commented");
 
-      CommentModels c = CommentModels.fromJson(response.body);
+      CommentModels c = CommentModels.fromJson(response.response.data);
       debugPrint(jsonEncode({"data": c.toJson()}));
       channel.sink.add(jsonEncode({"data": c.toJson()}));
 
@@ -168,18 +167,18 @@ class CommentProvider with ChangeNotifier {
   Future<bool> addReply(String comment, String url) async {
     isCommentLoading = true;
     notifyListeners();
-    Response response = await commentRepo.addReply(url, comments[replyIndex].id.toString(), comment);
+    ApiResponse response = await commentRepo.addReply(url, comments[replyIndex].id.toString(), comment);
     isCommentLoading = false;
-    if (response.statusCode == 201) {
+    if (response.response.statusCode == 201) {
       Replies c = Replies(
-        id: response.body['id'],
-        comment: response.body['comment'],
-        post: response.body['post'],
-        parent: response.body['parent'],
+        id: response.response.data['id'],
+        comment: response.response.data['comment'],
+        post: response.response.data['post'],
+        parent: response.response.data['parent'],
         author: Author(
-            id: response.body['author']['id'],
-            fullName: response.body['author']['full_name'],
-            profileImage: response.body['author']['profile_image']),
+            id: response.response.data['author']['id'],
+            fullName: response.response.data['author']['full_name'],
+            profileImage: response.response.data['author']['profile_image']),
       );
       debugPrint(jsonEncode({"data": c.toJson()}));
       replyChannel.sink.add(jsonEncode({"data": c.toJson()}));

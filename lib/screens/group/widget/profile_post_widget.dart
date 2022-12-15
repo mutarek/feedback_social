@@ -1,5 +1,6 @@
-import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,6 +19,7 @@ class PostWidget extends StatelessWidget {
   final VoidCallback share;
   final String userProfilePhoto;
   final TextEditingController writingContoller;
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -47,9 +49,9 @@ class PostWidget extends StatelessWidget {
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     controller: writingContoller,
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: getTranslated('write Something',context),
+                      hintText: LocaleKeys.write_Something.tr(),
                     )),
               ),
               Padding(
@@ -67,7 +69,7 @@ class PostWidget extends StatelessWidget {
                         FontAwesomeIcons.image,
                         size: height * 0.021,
                       ),
-                      InkWell(onTap: photoPost, child:  Text(getTranslated("Photo", context))),
+                      InkWell(onTap: photoPost, child: Text(LocaleKeys.photo.tr())),
                       SizedBox(
                         width: width * 0.06,
                       ),
@@ -77,7 +79,7 @@ class PostWidget extends StatelessWidget {
                             FontAwesomeIcons.video,
                             size: height * 0.021,
                           )),
-                       Text(getTranslated('video', context)),
+                      Text(LocaleKeys.video.tr()),
                       Padding(
                           padding: EdgeInsets.only(left: width * 0.384),
                           child: InkWell(
@@ -90,8 +92,7 @@ class PostWidget extends StatelessWidget {
                                     borderRadius: BorderRadius.only(
                                       bottomRight: Radius.circular(5),
                                     )),
-                                child: Icon(FontAwesomeIcons.solidPaperPlane,
-                                    size: height * 0.021)),
+                                child: Icon(FontAwesomeIcons.solidPaperPlane, size: height * 0.021)),
                           ))
                     ],
                   ),

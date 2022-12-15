@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -61,7 +62,7 @@ class ChatInputField extends StatelessWidget {
                           controller.scrollToIndex(0, preferPosition: AutoScrollPosition.end);
                         },
                         controller: textEditingController,
-                        decoration:  InputDecoration(hintText: getTranslated("Type message",context), border: InputBorder.none,enabledBorder: InputBorder.none),
+                        decoration:  InputDecoration(hintText:LocaleKeys.type_message.tr(), border: InputBorder.none,enabledBorder: InputBorder.none),
                       ),
                     ),
                     Icon(

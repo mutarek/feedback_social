@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';

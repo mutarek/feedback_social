@@ -1,16 +1,17 @@
 import 'dart:io';
 
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/settings/block_list_model.dart';
 import 'package:als_frontend/data/model/response/settings/faq_model.dart';
 import 'package:als_frontend/data/model/response/settings/notification_model.dart';
 import 'package:als_frontend/data/model/response/settings/other_settings_model.dart';
-import 'package:als_frontend/data/model/response/settings/privcay_model.dart';
 import 'package:als_frontend/data/repository/settings_repo.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 
-class SettingsProvider extends ChangeNotifier {
+import '../data/model/response/settings/privcay_model.dart';
+
+class SettingsProvider with ChangeNotifier{
   final SettingsRepo settingsRepo;
 
   SettingsProvider({required this.settingsRepo});
@@ -24,24 +25,24 @@ class SettingsProvider extends ChangeNotifier {
   Future passwordUpdate(String oldPassword, String newPassword, String confirmPassword) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await settingsRepo.passwordUpdate(oldPassword, newPassword, confirmPassword);
-    if (response.statusCode == 200) {
+    ApiResponse response = await settingsRepo.passwordUpdate(oldPassword, newPassword, confirmPassword);
+    if (response.response.statusCode == 200) {
       success = true;
       notifyListeners();
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
   }
 
   Future emailUpdate(String oldMail, String newMail, String confirmPassword) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await settingsRepo.emailUpdate(oldMail, newMail, confirmPassword);
-    if (response.statusCode == 200) {
+    ApiResponse response = await settingsRepo.emailUpdate(oldMail, newMail, confirmPassword);
+    if (response.response.statusCode == 200) {
       success = true;
       notifyListeners();
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
   }
 
@@ -51,7 +52,7 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-/////TODO: for block list
+  /////TODO: for block list
   List<Result> blocklist = [];
   bool isBottomLoading = false;
   bool hasNextData = false;
@@ -72,16 +73,16 @@ class SettingsProvider extends ChangeNotifier {
       notifyListeners();
     }
 
-    Response response = await settingsRepo.blockList(page);
+    ApiResponse response = await settingsRepo.blockList(page);
     _isLoading = false;
     isBottomLoading = false;
-    if (response.statusCode == 200) {
-      hasNextData = response.body['next'] != null ? true : false;
-      response.body['results'].forEach((element) {
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
         blocklist.add(Result.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -92,12 +93,12 @@ class SettingsProvider extends ChangeNotifier {
   unblockUser(int userID, int index) async {
     isUnblockLoading = true;
     notifyListeners();
-    Response response = await settingsRepo.unBlockUser(userID);
+    ApiResponse response = await settingsRepo.unBlockUser(userID);
     isUnblockLoading = false;
-    if (response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
       blocklist.removeAt(index);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -107,12 +108,12 @@ class SettingsProvider extends ChangeNotifier {
   initializeNotificationSettingsValue() async {
     _isLoading = true;
     notificationModel = NotificationSettingsModel();
-    Response response = await settingsRepo.notificationValue();
+    ApiResponse response = await settingsRepo.notificationValue();
     _isLoading = false;
-    if (response.statusCode == 200) {
-      notificationModel = NotificationSettingsModel.fromJson(response.body);
+    if (response.response.statusCode == 200) {
+      notificationModel = NotificationSettingsModel.fromJson(response.response.data);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -142,11 +143,11 @@ class SettingsProvider extends ChangeNotifier {
         break;
     }
     notifyListeners();
-    Response response = await settingsRepo.updateOtherSettings(value, slNo);
+    ApiResponse response = await settingsRepo.updateOtherSettings(value, slNo);
 
-    if (response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
   }
 
@@ -155,12 +156,12 @@ class SettingsProvider extends ChangeNotifier {
   initializeOtherSettingsValue() async {
     _isLoading = true;
     otherSettingsValue = OtherSettingsModel();
-    Response response = await settingsRepo.otherSettingsValue();
+    ApiResponse response = await settingsRepo.otherSettingsValue();
     _isLoading = false;
-    if (response.statusCode == 200) {
-      otherSettingsValue = OtherSettingsModel.fromJson(response.body);
+    if (response.response.statusCode == 200) {
+      otherSettingsValue = OtherSettingsModel.fromJson(response.response.data);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -203,29 +204,29 @@ class SettingsProvider extends ChangeNotifier {
         break;
     }
     notifyListeners();
-    Response response = await settingsRepo.updateOtherSettings(value, slNo);
+    ApiResponse response = await settingsRepo.updateOtherSettings(value, slNo);
 
-    if (response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
   }
 
-// TODO: for terms & section
+  // TODO: for terms & section
   List<PrivacyPolicyModel> privacyPolicyModel = [];
 
   initializeTermsAndCondition() async {
     _isLoading = true;
     privacyPolicyModel.clear();
     privacyPolicyModel = [];
-    Response response = await settingsRepo.termsAndCondition();
+    ApiResponse response = await settingsRepo.termsAndCondition();
     _isLoading = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         privacyPolicyModel.add(PrivacyPolicyModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -234,13 +235,13 @@ class SettingsProvider extends ChangeNotifier {
   Future<bool> addMessageOnHelpDesk(String message, File problemsScreenshots) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await settingsRepo.addHelpDisk(message, problemsScreenshots);
+    ApiResponse response = await settingsRepo.addHelpDisk(message, problemsScreenshots);
     _isLoading = false;
     notifyListeners();
-    if (response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
       return true;
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
       return false;
     }
   }
@@ -253,7 +254,7 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-//TODO for index value
+  //TODO for index value
 
   int oldIndex = -1;
 
@@ -276,15 +277,16 @@ class SettingsProvider extends ChangeNotifier {
     faqLists = [];
     faqListTemp.clear();
     faqListTemp = [];
-    Response response = await settingsRepo.faqQuestionDataGet();
+    ApiResponse response = await settingsRepo.faqQuestionDataGet();
     _isLoading = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         faqLists.add(FaqModel.fromJson(element));
       });
       faqListTemp.addAll(faqLists);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response
+      .statusMessage!);
     }
     notifyListeners();
   }
@@ -305,4 +307,5 @@ class SettingsProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
 }

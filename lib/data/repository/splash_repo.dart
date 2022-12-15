@@ -1,13 +1,24 @@
-import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/datasource/remote/dio/dio_client.dart';
+import 'package:als_frontend/data/model/response/base/api_response.dart';
+import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:dio/dio.dart';
 
-class SplashRepo {
-  final ApiClient apiClient;
+import '../datasource/remote/exception/api_error_handler.dart';
 
-  SplashRepo({required this.apiClient});
+class SplashRepo{
+  final DioClient dioClient;
+  final AuthRepo authRepo;
 
-  Future<Response> getCurrentAppVersion() async {
-    return await apiClient.getData(AppConstant.latestVersionUri, headers: {'Content-Type': 'application/json; charset=UTF-8'});
+  SplashRepo({required this.dioClient,required this.authRepo});
+
+  Future<ApiResponse> getCurrentAppVersion() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.latestVersionUri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 }

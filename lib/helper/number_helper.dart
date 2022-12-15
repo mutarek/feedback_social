@@ -1,5 +1,6 @@
 import 'package:als_frontend/helper/age_helper.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 String getDate(String date, BuildContext context) {
@@ -10,14 +11,14 @@ String getDate(String date, BuildContext context) {
   int hourCompare = DateTime.now().hour - time.hour;
   int minuteCompare = DateTime.now().minute - time.minute;
   createTime = age.years > 0
-      ? "${age.years} ${getTranslated('ye ago', context)}"
+      ? "${age.years} ${LocaleKeys.ye_ago.tr()}"
       : age.months > 0
-          ? "${age.months} ${getTranslated('mo ago', context)}"
+          ? "${age.months} ${LocaleKeys.mo_ago.tr()}"
           : age.days > 0
-              ? "${age.days} ${getTranslated('da ago', context)}"
+              ? "${age.days} ${LocaleKeys.da_ago.tr()}"
               : hourCompare > 0
-                  ? "$hourCompare ${getTranslated('ho ago', context)}"
-                  : "$minuteCompare ${getTranslated('mi ago', context)}";
+                  ? "$hourCompare ${LocaleKeys.ho_ago.tr()}"
+                  : "$minuteCompare ${LocaleKeys.mi_ago.tr()}";
 
   return createTime;
 }

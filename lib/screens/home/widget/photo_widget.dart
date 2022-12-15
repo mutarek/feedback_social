@@ -1,5 +1,4 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
 import 'package:als_frontend/screens/home/view/video_details_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';

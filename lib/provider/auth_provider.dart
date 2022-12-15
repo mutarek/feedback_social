@@ -1,11 +1,12 @@
 import 'dart:async';
 
+import 'package:als_frontend/data/model/response/base/api_response.dart';
+import 'package:als_frontend/data/model/response/base/error_response.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 
 class CallBackResponse {
   bool status;
@@ -22,6 +23,8 @@ class AuthProvider with ChangeNotifier {
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
+  String data = '';
+  bool isNumber = false;
 
   //TODO:: for Sign Up Section
 
@@ -36,23 +39,35 @@ class AuthProvider with ChangeNotifier {
     } else {
       gender = '0';
     }
-    Response response = await authRepo.signup(firstName, lastName, dateTime, gender, data, password);
+    ApiResponse apiResponse = await authRepo.signup(firstName, lastName, dateTime, gender, data, password);
     _isLoading = false;
-    if (response.statusCode == 201) {
+    if (apiResponse.response.statusCode == 201) {
       if (authRepo.checkTokenExist()) {
         authRepo.clearUserInformation();
         authRepo.clearToken();
       }
-      authRepo.saveUserToken(response.body['token'].toString());
-      authRepo.saveUserInformation(response.body['id'].toString(), '${response.body['first_name']} ${response.body['last_name']}',
-          '${response.body['profile_image']}', '${response.body['code']}', '${response.body['email']}');
-      name = '${response.body['first_name']} ${response.body['last_name']}';
-      userID = '${response.body['id']}';
-      userCode = '${response.body['code']}';
-      profileImage = '${response.body['profile_image']}';
+      authRepo.saveUserToken(apiResponse.response.data['token'].toString());
+      authRepo.saveUserInformation(
+          apiResponse.response.data['id'].toString(),
+          '${apiResponse.response.data['first_name']} ${apiResponse.response.data['last_name']}',
+          '${apiResponse.response.data['profile_image']}',
+          '${apiResponse.response.data['code']}',
+          '${apiResponse.response.data['email']}');
+      name = '${apiResponse.response.data['first_name']} ${apiResponse.response.data['last_name']}';
+      userID = '${apiResponse.response.data['id']}';
+      userCode = '${apiResponse.response.data['code']}';
+      profileImage = '${apiResponse.response.data['profile_image']}';
       callback(true, 'Signup Successfully');
     } else {
-      callback(false, response.statusText);
+      String errorMessage;
+      if (apiResponse.error is String) {
+        debugPrint(apiResponse.error.toString());
+        errorMessage = apiResponse.error.toString();
+      } else {
+        ErrorResponse errorResponse = apiResponse.error;
+        errorMessage = errorResponse.toString();
+      }
+      callback(false, errorMessage);
     }
     notifyListeners();
   }
@@ -62,12 +77,12 @@ class AuthProvider with ChangeNotifier {
   Future resetPasswordConfirm(String emailOrPhone, String newPassword, String code, Function callback) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await authRepo.setNewPassword(emailOrPhone, newPassword, code);
+    ApiResponse apiResponse = await authRepo.setNewPassword(emailOrPhone, newPassword, code);
     _isLoading = false;
-    if (response.statusCode == 200) {
+    if (apiResponse.response.statusCode == 200) {
       callback(true, "Password Set Successfully");
     } else {
-      callback(false, response.statusText);
+      callback(false, apiResponse.error.toString());
       //print(response.statusCode);
     }
     notifyListeners();
@@ -78,76 +93,96 @@ class AuthProvider with ChangeNotifier {
   Future<CallBackResponse> signIn(String email, String password) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await authRepo.login(email, password, isSelectEmail);
+    ApiResponse apiResponse = await authRepo.login(email, password, isSelectEmail, onSendProgress: (int sentBytes, int totalBytes) {
+      progressPercent = sentBytes / totalBytes * 100;
+      print("Progress: $progressPercent %");
+      if (progressPercent == 100) {
+        // dispose();
+        print('finished');
+      }
+    });
     _isLoading = false;
 
-    if (response.statusCode == 200) {
+    if (apiResponse.response.statusCode == 200) {
       if (authRepo.checkTokenExist()) {
         authRepo.clearUserInformation();
         authRepo.clearToken();
       }
-      authRepo.saveUserToken(response.body['token'].toString());
-      authRepo.saveUserInformation(response.body['id'].toString(), '${response.body['first_name']} ${response.body['last_name']}',
-          '${response.body['profile_image']}', '${response.body['code']}', '${response.body['email']}');
-      name = '${response.body['first_name']} ${response.body['last_name']}';
-      userID = '${response.body['id']}';
-      userCode = '${response.body['code']}';
-      profileImage = '${response.body['profile_image']}';
+      authRepo.saveUserToken(apiResponse.response.data['token'].toString());
+      authRepo.saveUserInformation(
+          apiResponse.response.data['id'].toString(),
+          '${apiResponse.response.data['first_name']} ${apiResponse.response.data['last_name']}',
+          '${apiResponse.response.data['profile_image']}',
+          '${apiResponse.response.data['code']}',
+          '${apiResponse.response.data['email']}');
+      name = '${apiResponse.response.data['first_name']} ${apiResponse.response.data['last_name']}';
+      userID = '${apiResponse.response.data['id']}';
+      userCode = '${apiResponse.response.data['code']}';
+      profileImage = '${apiResponse.response.data['profile_image']}';
       notifyListeners();
       return CallBackResponse(status: true, message: 'Login Successfully');
     } else {
       notifyListeners();
-      return CallBackResponse(status: false, message: response.statusText!);
+      String errorMessage;
+      if (apiResponse.error is String) {
+        debugPrint(apiResponse.error.toString());
+        errorMessage = apiResponse.error.toString();
+      } else {
+        ErrorResponse errorResponse = apiResponse.error;
+        errorMessage = errorResponse.toString();
+      }
+      return CallBackResponse(status: false, message: errorMessage);
     }
   }
 
-  String data = '';
-  bool isNumber = false;
-
+  // for OTP send
   Future otpSend(String emailORPhone, bool isEmail, Function callback) async {
     _isLoading = true;
     data = emailORPhone;
     isNumber = isEmail;
     notifyListeners();
-    Response response = await authRepo.otpSend(emailORPhone, isEmail);
+    ApiResponse apiResponse = await authRepo.otpSend(emailORPhone, isEmail);
     _isLoading = false;
 
-    if (response.statusCode == 200) {
+    if (apiResponse.response.statusCode == 200) {
       startTimer();
-      callback(true, response.body['message']);
+      callback(true, apiResponse.response.data['message']);
     } else {
-      callback(false, response.statusText);
+      callback(false, apiResponse.error.toString());
     }
     notifyListeners();
   }
 
+  // for Reset OTP Send
   Future resetOtpSend(String emailORPhone, bool isEmail, Function callback) async {
     _isLoading = true;
     data = emailORPhone;
     isNumber = isEmail;
     notifyListeners();
-    Response response = await authRepo.resetOtpSend(emailORPhone, isEmail);
+    ApiResponse apiResponse = await authRepo.resetOtpSend(emailORPhone, isEmail);
     _isLoading = false;
 
-    if (response.statusCode == 200) {
+    if (apiResponse.response.statusCode == 200) {
       startTimer();
-      callback(true, response.body['message']);
+      callback(true, apiResponse.response.data['message']);
     } else {
-      callback(false, response.statusText);
+      callback(false, apiResponse.error.toString());
     }
     notifyListeners();
   }
 
+  // for OTP Verify
+
   otpVerify(String code, Function callback) async {
     _isLoading = true;
     notifyListeners();
-    Response response = await authRepo.otpVerify(data, code, isNumber);
+    ApiResponse apiResponse = await authRepo.otpVerify(data, code, isNumber);
     _isLoading = false;
 
-    if (response.statusCode == 200) {
+    if (apiResponse.response.statusCode == 200) {
       callback(true, 'Successfully Verified');
     } else {
-      callback(false, response.statusText);
+      callback(false, apiResponse.error.toString());
     }
     notifyListeners();
   }

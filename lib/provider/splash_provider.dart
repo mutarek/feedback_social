@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:als_frontend/data/repository/splash_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-class SplashProvider with ChangeNotifier {
+class SplashProvider with ChangeNotifier{
   final SplashRepo splashRepo;
 
   SplashProvider({required this.splashRepo});

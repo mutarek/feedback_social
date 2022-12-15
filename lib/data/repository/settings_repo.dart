@@ -1,37 +1,69 @@
 import 'dart:io';
-import 'package:http/http.dart' as http;
 
-import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/datasource/remote/dio/dio_client.dart';
+import 'package:als_frontend/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:als_frontend/data/model/response/base/api_response.dart';
+import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:dio/dio.dart';
 
-class SettingsRepo {
-  final ApiClient apiClient;
+class SettingsRepo{
+  final DioClient dioClient;
+  final AuthRepo authRepo;
 
-  SettingsRepo({required this.apiClient});
+  SettingsRepo({required this.dioClient,required this.authRepo});
 
-  Future<Response> passwordUpdate(String oldPassword, String newPassword, String confirmPassword) async {
-    return await apiClient.putData(
-        AppConstant.passwordUpdate, {"old_password": oldPassword, "new_password": newPassword, "confirm_password": confirmPassword});
+  Future<ApiResponse> passwordUpdate(String oldPassword, String newPassword, String confirmPassword) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.put(AppConstant.passwordUpdate,data:{"old_password": oldPassword, "new_password": newPassword, "confirm_password": confirmPassword} );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> emailUpdate(String oldMail, String newMail, String confirmPassword) async {
-    return await apiClient.putData(AppConstant.emailUpdate, {"old_email": oldMail, "new_email": newMail, "password": confirmPassword});
+  Future<ApiResponse> emailUpdate(String oldMail, String newMail, String confirmPassword) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.put(AppConstant.emailUpdate,data: {"old_email": oldMail, "new_email": newMail, "password": confirmPassword});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> blockList(int page) async {
-    return await apiClient.getData("${AppConstant.blocklist}?page=$page");
+  Future<ApiResponse> blockList(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.blocklist}?page=$page");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> unBlockUser(int userID) async {
-    return await apiClient.deleteData("/settings/block/$userID/delete/");
+  Future<ApiResponse> unBlockUser(int userID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.delete("/settings/block/$userID/delete/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> notificationValue() async {
-    return await apiClient.getData(AppConstant.getNotificationSettingsValueUri);
+  Future<ApiResponse> notificationValue() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.getNotificationSettingsValueUri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> updateOtherSettings(bool status, int slNo) async {
+  Future<ApiResponse> updateOtherSettings(bool status, int slNo) async {
     Map map = {};
     switch (slNo) {
       case 0:
@@ -62,14 +94,26 @@ class SettingsRepo {
         map['is_following_message'] = status;
         break;
     }
-    return await apiClient.patchData(AppConstant.getOtherSettingsValue, map);
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.patch(AppConstant.getOtherSettingsValue,data: map);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> otherSettingsValue() async {
-    return await apiClient.getData(AppConstant.getOtherSettingsValue);
+  Future<ApiResponse> otherSettingsValue() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.getOtherSettingsValue);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> updateNotificationSettings(bool status, int slNo) async {
+  Future<ApiResponse> updateNotificationSettings(bool status, int slNo) async {
     Map map = {};
     switch (slNo) {
       case 0:
@@ -94,21 +138,48 @@ class SettingsRepo {
         map['is_share'] = status;
         break;
     }
-    return await apiClient.patchData(AppConstant.getNotificationSettingsValueUri, map);
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.patch(AppConstant.getNotificationSettingsValueUri,data: map);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> termsAndCondition() async {
-    return await apiClient.getData(AppConstant.termsAndConditionUri);
+  Future<ApiResponse> termsAndCondition() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.patch(AppConstant.termsAndConditionUri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
   ///TODO: Faq question list get
-  Future<Response> faqQuestionDataGet() async {
-    return await apiClient.getData(AppConstant.faqQuestionUri);
+  Future<ApiResponse> faqQuestionDataGet() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.faqQuestionUri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> addHelpDisk(String message, File problemsScreenshots) async {
-    http.MultipartFile multipartFile = http.MultipartFile(
-        'image', problemsScreenshots.readAsBytes().asStream(), problemsScreenshots.lengthSync(),
-        filename: problemsScreenshots.path.split("/").last);
-    return await apiClient.putMultipartData(AppConstant.helpDiskURI, {"text": message}, [multipartFile]);
+  Future<ApiResponse> addHelpDisk(String message, File problemsScreenshots) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      FormData formData = FormData();
+      formData.fields.add(MapEntry('text',message));
+      formData.files.add(MapEntry(
+          'image',
+          MultipartFile(problemsScreenshots.readAsBytes().asStream(), problemsScreenshots.lengthSync(),
+              filename: problemsScreenshots.path.split("/").last)));
+      response = await dioClient.post(AppConstant.helpDiskURI,data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 }

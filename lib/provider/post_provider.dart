@@ -1,21 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/image_video_detect_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/post_repo.dart';
 import 'package:als_frontend/helper/image_compressure.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class PostResponse {
   NewsFeedModel? newsFeedData;
   bool? status;
+
   PostResponse({this.newsFeedData, this.status});
 }
 
@@ -26,50 +27,53 @@ class PostProvider with ChangeNotifier {
   PostProvider({required this.postRepo, required this.authRepo});
 
   bool isLoading = false;
-  List<http.MultipartFile> multipartFile = [];
+  FormData formData = FormData();
   String body = "";
 
   calculateMultipartFile() {
-    multipartFile.clear();
-    multipartFile = [];
+    formData = FormData();
+
     if (afterConvertImageLists.isNotEmpty) {
       for (int i = 0; i < afterConvertImageLists.length; i++) {
-        multipartFile.add(http.MultipartFile(
-            'image', afterConvertImageLists[i].readAsBytes().asStream(), afterConvertImageLists[i].lengthSync(),
-            filename: afterConvertImageLists[i].path.split("/").last));
+        formData.files.add(MapEntry(
+            'image',
+            MultipartFile(afterConvertImageLists[i].readAsBytes().asStream(), afterConvertImageLists[i].lengthSync(),
+                filename: afterConvertImageLists[i].path.split("/").last)));
       }
     }
     if (video.isNotEmpty) {
       for (int i = 0; i < video.length; i++) {
-        multipartFile.add(
-            http.MultipartFile('video', video[i].readAsBytes().asStream(), video[i].lengthSync(), filename: video[i].path.split("/").last));
+        formData.files.add(MapEntry(
+            'video', MultipartFile(video[i].readAsBytes().asStream(), video[i].lengthSync(), filename: video[i].path.split("/").last)));
       }
     }
     notifyListeners();
   }
 
-  disCardPost(){
+  disCardPost() {
     status = 1;
     isLoading = false;
     notifyListeners();
   }
 
   int status = 0;
+
   Future<PostResponse> addPost(String postText, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
     body = postText;
     isLoading = true;
     calculateMultipartFile();
-    Response response;
+    ApiResponse apiResponse;
+    formData.fields.add(MapEntry('description', postText));
     if (isFromGroup) {
-      response = await postRepo.submitPostTOGroupBYUSINGGroupID({"description": postText}, multipartFile, groupPageID);
+      apiResponse = await postRepo.submitPostTOGroupBYUSINGGroupID(formData, groupPageID);
     } else if (isFromPage) {
-      response = await postRepo.submitPostTOPageBYUSINGPageID({"description": postText}, multipartFile, groupPageID);
+      apiResponse = await postRepo.submitPostTOPageBYUSINGPageID(formData, groupPageID);
     } else {
-      response = await postRepo.submitPost({"description": postText}, multipartFile);
+      apiResponse = await postRepo.submitPost(formData);
     }
-    if (response.statusCode == 201 || response.statusCode == 200) {
+    if (apiResponse.response.statusCode == 201 || apiResponse.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Posted");
-      NewsFeedModel n = NewsFeedModel.fromJson(response.body);
+      NewsFeedModel n = NewsFeedModel.fromJson(apiResponse.response.data);
       isLoading = false;
       status = 0;
       notifyListeners();
@@ -86,29 +90,22 @@ class PostProvider with ChangeNotifier {
   Future<PostResponse> updatePost(String postText, int id, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
     isLoading = true;
     calculateMultipartFile();
-    Response response;
+    ApiResponse apiResponse;
+    formData.fields.add(MapEntry('description', postText));
+    formData.fields.add(MapEntry('deleted_image', jsonEncode(deletedImagesIDS)));
+    formData.fields.add(MapEntry('deleted_video', jsonEncode(deletedVideoIDS)));
+
     if (isFromGroup) {
-      response = await postRepo.updatePostTOGroupBYUSINGGroupID(
-          {"description": postText, "deleted_image": jsonEncode(deletedImagesIDS), "deleted_video": jsonEncode(deletedVideoIDS)},
-          multipartFile,
-          groupPageID,
-          id);
+      apiResponse = await postRepo.updatePostTOGroupBYUSINGGroupID(formData, groupPageID, id);
     } else if (isFromPage) {
-      response = await postRepo.updatePostTOPageBYUSINGPageID(
-          {"description": postText, "deleted_image": jsonEncode(deletedImagesIDS), "deleted_video": jsonEncode(deletedVideoIDS)},
-          multipartFile,
-          groupPageID,
-          id);
+      apiResponse = await postRepo.updatePostTOPageBYUSINGPageID(formData, groupPageID, id);
     } else {
-      response = await postRepo.updatePost(
-          {"description": postText, "deleted_image": jsonEncode(deletedImagesIDS), "deleted_video": jsonEncode(deletedVideoIDS)},
-          multipartFile,
-          id);
+      apiResponse = await postRepo.updatePost(formData, id);
     }
     isLoading = false;
-    if (response.statusCode == 201 || response.statusCode == 200) {
+    if (apiResponse.response.statusCode == 201 || apiResponse.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Updated Successfully");
-      NewsFeedModel n = NewsFeedModel.fromJson(response.body);
+      NewsFeedModel n = NewsFeedModel.fromJson(apiResponse.response.data);
       notifyListeners();
       return PostResponse(newsFeedData: n, status: true);
     } else {
@@ -128,12 +125,12 @@ class PostProvider with ChangeNotifier {
     var pickedFile = await _picker.pickMultiImage();
     if (pickedFile.isNotEmpty) {
       imageFile.addAll(pickedFile);
-      imageFile.forEach((element) async {
+      for (var element in imageFile) {
         singleImage = File(element.path);
         afterConvertImageLists.add(await imageCompressed(imagePathToCompress: singleImage!));
         await imageCompressed(imagePathToCompress: singleImage!);
         notifyListeners();
-      });
+      }
     }
   }
 
@@ -144,7 +141,6 @@ class PostProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   clearImageVideo({bool isFirstTime = false}) {
     video.clear();
@@ -200,7 +196,7 @@ class PostProvider with ChangeNotifier {
   //// for report post
   Future<bool> reportPost(String report, int id, {bool isFromGroup = false, bool isFromPage = false}) async {
     isLoading = true;
-    Response response;
+    ApiResponse response;
     if (isFromGroup) {
       response = await postRepo.reportGroupPost({"report_note": report, "report_type": "1"}, id);
     } else if (isFromPage) {
@@ -209,7 +205,7 @@ class PostProvider with ChangeNotifier {
       response = await postRepo.reportPost({"report_note": report}, id);
     }
     isLoading = false;
-    if (response.statusCode == 201 || response.statusCode == 200) {
+    if (response.response.statusCode == 201 || response.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Report Added Successfully On this post");
       notifyListeners();
       return true;
@@ -223,15 +219,15 @@ class PostProvider with ChangeNotifier {
   Future<bool> deletePost(String url) async {
     isLoading = true;
     notifyListeners();
-    Response response = await postRepo.deletePost(url);
+    ApiResponse response = await postRepo.deletePost(url);
 
     isLoading = false;
-    if (response.statusCode == 204 || response.statusCode == 301) {
+    if (response.response.statusCode == 204 || response.response.statusCode == 301) {
       Fluttertoast.showToast(msg: 'Post Deleted Successfully');
       notifyListeners();
       return true;
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.error!.toString());
       return false;
     }
   }
@@ -240,12 +236,12 @@ class PostProvider with ChangeNotifier {
   Future<PostResponse> sharePost(String url, String description, NewsFeedModel newsfeedData) async {
     isLoading = true;
     notifyListeners();
-    Response response = await postRepo.sharePost(url, description);
+    ApiResponse response = await postRepo.sharePost(url, description);
 
     isLoading = false;
-    if (response.statusCode == 201) {
+    if (response.response.statusCode == 201) {
       Fluttertoast.showToast(msg: 'Post Share Successfully');
-      SharePost n = SharePost.fromJson(response.body);
+      SharePost n = SharePost.fromJson(response.response.data);
       NewsFeedModel newsFeedData = newsfeedData;
       newsFeedData.isShare = true;
       newsFeedData.sharePost = n;
@@ -258,7 +254,7 @@ class PostProvider with ChangeNotifier {
       notifyListeners();
       return PostResponse(newsFeedData: newsFeedData, status: true);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.error.toString());
       return PostResponse(newsFeedData: NewsFeedModel(), status: false);
     }
   }

@@ -1,6 +1,5 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
@@ -91,7 +90,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         CustomText(title: LocaleKeys.enter_Group_name.tr(), textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         CustomTextField(
-                          hintText: getTranslated('Write here....',context),
+                          hintText: LocaleKeys.write_here.tr(),
                           fillColor: Colors.white,
                           borderRadius: 10,
                           controller: groupNameController,
@@ -137,7 +136,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         ),
                         const SizedBox(height: 20),
                         CustomButton(
-                          btnTxt: widget.isUpdateGroup ? getTranslated('Update', context) : getTranslated('Add', context),
+                          btnTxt: widget.isUpdateGroup ? LocaleKeys.update.tr() : LocaleKeys.add.tr(),
                           onTap: () {
                             if (groupNameController.text.isNotEmpty) {
                               if (widget.isUpdateGroup) {

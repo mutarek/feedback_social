@@ -1,5 +1,4 @@
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/settings/help_chat_screen.dart';
 import 'package:als_frontend/screens/settings/widget/faq_question.dart';

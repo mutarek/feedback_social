@@ -19,7 +19,6 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/circle_button.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
-import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +26,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
-
-import '../../localization/language_constrants.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -103,7 +100,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             backgroundColor: AppColors.redColor,
                                             child: CustomText(
                                               title:
-                                                  '${notificationProvider.notificationCount > 9 ? getTranslated("9+", context) : notificationProvider.notificationCount}',
+                                                  '${notificationProvider.notificationCount > 9 ? LocaleKeys.nine_plus.tr() : notificationProvider.notificationCount}',
                                               color: Colors.white,
                                               fontSize: 9,
                                             ),

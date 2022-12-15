@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/data/model/response/liked_by_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
@@ -16,10 +16,10 @@ import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class NewsFeedProvider with ChangeNotifier {
-  final NewsfeedRepo newsFeedRepo;
-  final AuthRepo authRepo;
+  final NewsfeedRepo newsFeedRepo1;
+  final AuthRepo authRepo1;
 
-  NewsFeedProvider({required this.newsFeedRepo, required this.authRepo});
+  NewsFeedProvider({required this.newsFeedRepo1, required this.authRepo1});
 
   int position = 0;
   List<NewsFeedModel> newsFeedLists = [];
@@ -54,24 +54,24 @@ class NewsFeedProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    Response response = await newsFeedRepo.getNewsFeedData(page);
+    ApiResponse response = await newsFeedRepo1.getNewsFeedData(page);
     isLoading = false;
     isBottomLoading = false;
-    if (response.statusCode == 200) {
-      hasNextData = response.body['next'] != null ? true : false;
-      response.body['results'].forEach((element) {
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
         newsFeedLists.add(NewsFeedModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
 
   addLike(int postID, int index,
       {bool isGroup = false,
-      bool isFromPage = false,
-      int groupPageID = 0}) async {
+        bool isFromPage = false,
+        int groupPageID = 0}) async {
     if (newsFeedLists[index].isLiked == false) {
       newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
       newsFeedLists[index].isLiked = true;
@@ -80,7 +80,7 @@ class NewsFeedProvider with ChangeNotifier {
       newsFeedLists[index].isLiked = false;
     }
     notifyListeners();
-    await newsFeedRepo.addLike(postID,
+    await newsFeedRepo1.addLike(postID,
         isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
   }
 
@@ -135,13 +135,13 @@ class NewsFeedProvider with ChangeNotifier {
     isLoadingSinglePost = true;
     singleNewsFeedModel = NewsFeedModel();
     //notifyListeners();
-    Response response = await newsFeedRepo
+    ApiResponse response = await newsFeedRepo1
         .callForSinglePostFromNotification(url.replaceAll('comment/', ''));
     isLoadingSinglePost = false;
-    if (response.statusCode == 200) {
-      singleNewsFeedModel = NewsFeedModel.fromJson(response.body);
+    if (response.response.statusCode == 200) {
+      singleNewsFeedModel = NewsFeedModel.fromJson(response.response.data);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -159,7 +159,7 @@ class NewsFeedProvider with ChangeNotifier {
     }
     notifyListeners();
 
-    await newsFeedRepo.addLike(postID,
+    await newsFeedRepo1.addLike(postID,
         isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
   }
 
@@ -196,17 +196,17 @@ class NewsFeedProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    Response response = await newsFeedRepo.callForgetLikedShareUser(url, page);
+    ApiResponse response = await newsFeedRepo1.callForgetLikedShareUser(url, page);
     isLoadingLiked = false;
     isBottomLoadingLiked = false;
-    if (response.statusCode == 200) {
-      hasNextDataLiked = response.body['next'] != null ? true : false;
-      response.body['results'].forEach((element) {
+    if (response.response.statusCode == 200) {
+      hasNextDataLiked = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
         likedShareByModels.add(LikedByModel.fromJson(element));
       });
       notifyListeners();
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.data!);
     }
     notifyListeners();
   }
@@ -217,7 +217,7 @@ class NewsFeedProvider with ChangeNotifier {
           sharedPreferences!.getStringList(AppConstant.chats) ?? [];
       List<OfflineChat> chatData = [];
       chatsSave.forEach(
-          (cart) => chatData.add(OfflineChat.fromJson(jsonDecode(cart))));
+              (cart) => chatData.add(OfflineChat.fromJson(jsonDecode(cart))));
       for (var element in chatData) {
         //TODO: push message to socket and clear cache
         Get.snackbar("data", element.message.toString());

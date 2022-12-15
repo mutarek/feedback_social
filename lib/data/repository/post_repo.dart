@@ -1,56 +1,112 @@
-import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/datasource/remote/dio/dio_client.dart';
+import 'package:als_frontend/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/util/app_constant.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class PostRepo {
-  final ApiClient apiClient;
+  final DioClient dioClient;
 
-  PostRepo({required this.apiClient});
+  PostRepo({required this.dioClient});
 
-  Future<Response> submitPost(Map<String, String> body, List<http.MultipartFile> multipartData) async {
-    return await apiClient.postMultipartData("${AppConstant.postsUri}user/create/", body, multipartData);
+  Response response = Response(requestOptions: RequestOptions(path: '22222'));
+
+  Future<ApiResponse> submitPost(FormData formData) async {
+    try {
+      response = await dioClient.post("${AppConstant.postsUri}user/create/", data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> updatePost(Map<String, String> body, List<http.MultipartFile> multipartData, int id) async {
-    return await apiClient.patchMultipartData("${AppConstant.postsUri}$id/", body, multipartData);
+  Future<ApiResponse> updatePost(FormData formData, int id) async {
+    try {
+      response = await dioClient.patch("${AppConstant.postsUri}$id/", data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> submitPostTOGroupBYUSINGGroupID(Map<String, String> body, List<http.MultipartFile> multipartData, int groupID) async {
-    return await apiClient.postMultipartData("${AppConstant.postsGroupUri}$groupID/", body, multipartData);
+  Future<ApiResponse> submitPostTOGroupBYUSINGGroupID(FormData formData, int groupID) async {
+    try {
+      response = await dioClient.post("${AppConstant.postsGroupUri}$groupID/", data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> updatePostTOGroupBYUSINGGroupID(
-      Map<String, String> body, List<http.MultipartFile> multipartData, int groupID, int id) async {
-    return await apiClient.patchMultipartData("${AppConstant.postsGroupUri}$groupID/$id/", body, multipartData);
+  Future<ApiResponse> updatePostTOGroupBYUSINGGroupID(FormData formData, int groupID, int id) async {
+    try {
+      response = await dioClient.patch("${AppConstant.postsGroupUri}$groupID/$id/", data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> submitPostTOPageBYUSINGPageID(Map<String, String> body, List<http.MultipartFile> multipartData, int pageID) async {
-    return await apiClient.postMultipartData("${AppConstant.postPageURI}$pageID/", body, multipartData);
+  Future<ApiResponse> submitPostTOPageBYUSINGPageID(FormData formData, int pageID) async {
+    try {
+      response = await dioClient.post("${AppConstant.postPageURI}$pageID/", data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> updatePostTOPageBYUSINGPageID(
-      Map<String, String> body, List<http.MultipartFile> multipartData, int pageID, int id) async {
-    return await apiClient.patchMultipartData("${AppConstant.postPageURI}$pageID/$id/", body, multipartData);
+  Future<ApiResponse> updatePostTOPageBYUSINGPageID(FormData formData, int pageID, int id) async {
+    try {
+      response = await dioClient.patch("${AppConstant.postPageURI}$pageID/$id/", data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> reportPost(Map<String, String> body, int id) async {
-    return await apiClient.postData("${AppConstant.postsUri}post-report/$id/", body);
+  Future<ApiResponse> reportPost(Map<String, String> body, int id) async {
+    try {
+      response = await dioClient.post("${AppConstant.postsUri}post-report/$id/", data: body);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> reportPagePost(Map<String, String> body, int id) async {
-    return await apiClient.postData("${AppConstant.postsUri}page-post-report/$id/", body);
+  Future<ApiResponse> reportPagePost(Map<String, String> body, int id) async {
+    try {
+      response = await dioClient.post("${AppConstant.postsUri}page-post-report/$id/", data: body);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> reportGroupPost(Map<String, String> body, int id) async {
-    return await apiClient.postData("${AppConstant.postsUri}group-post-report/$id/", body);
+  Future<ApiResponse> reportGroupPost(Map<String, String> body, int id) async {
+    try {
+      response = await dioClient.post("${AppConstant.postsUri}group-post-report/$id/", data: body);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> deletePost(String url) async {
-    return await apiClient.deleteData(url.replaceAll("comment/", ""));
+  Future<ApiResponse> deletePost(String url) async {
+    try {
+      response = await dioClient.delete(url.replaceAll("comment/", ""));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> sharePost(String url, String description) async {
-    return await apiClient.postData("${url.replaceAll("comment/", "")}share/", {"description": description});
+  Future<ApiResponse> sharePost(String url, String description) async {
+    try {
+      response = await dioClient.post("${url.replaceAll("comment/", "")}share/", data: {"description": description});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 }

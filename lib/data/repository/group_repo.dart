@@ -1,80 +1,189 @@
-import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+
+import '../datasource/remote/dio/dio_client.dart';
+
+double progressPercent = 0;
 
 class GroupRepo {
-  final ApiClient apiClient;
-  final AuthRepo authRepo;
+  final DioClient dioClient;
+  final AuthRepo authRepo1;
 
-  GroupRepo({required this.apiClient, required this.authRepo});
+  GroupRepo({
+    required this.dioClient,
+    required this.authRepo1,
+  });
 
-  Future<Response> getAllSuggestGroup() async {
-    return await apiClient.getData(AppConstant.groupSuggestAllURI);
+  Future<ApiResponse> getAllSuggestGroup() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.groupSuggestAllURI);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getAllJoinGroup() async {
-    return await apiClient.getData(AppConstant.groupJoinAllURI);
+  Future<ApiResponse> getAllJoinGroup() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.groupJoinAllURI);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getOwnGroupList() async {
-    return await apiClient.getData("${AppConstant.groupCreatorAllURI}${authRepo.getUserID()}/all");
+  Future<ApiResponse> getOwnGroupList() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.groupCreatorAllURI}${authRepo1.getUserID()}/all");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> createGroupWithoutImageUpload(Map map) async {
-    return await apiClient.postData(AppConstant.groupUri, map);
+  Future<ApiResponse> createGroupWithoutImageUpload(Map map) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post(AppConstant.groupUri, data: map);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> createGroupWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData) async {
-    return await apiClient.postMultipartData(AppConstant.groupUri, body, multipartData);
+  Future<ApiResponse> createGroupWithImageUpload(FormData formData) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post(AppConstant.groupUri, data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> updateGroupWithoutImageUpload(Map map,int groupID) async {
-    return await apiClient.patchData("${AppConstant.groupUri}$groupID/", map);
+  Future<ApiResponse> updateGroupWithoutImageUpload(Map map, int groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.patch("${AppConstant.groupUri}$groupID/", data: map);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> updateGroupWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData,int groupID) async {
-    return await apiClient.patchMultipartData("${AppConstant.groupUri}$groupID/", body, multipartData);
+  Future<ApiResponse> updateGroupWithImageUpload(FormData formData, int groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.patch("${AppConstant.groupUri}$groupID/", data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> callForGetGroupDetails(String groupID) async {
-    return await apiClient.getData("${AppConstant.groupUri}$groupID/");
+  Future<ApiResponse> callForGetGroupDetails(String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.groupUri}$groupID/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> callForGetGroupMembers(String groupID) async {
-    return await apiClient.getData("${AppConstant.groupUri}$groupID/member/all/");
+  Future<ApiResponse> callForGetGroupMembers(String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.groupUri}$groupID/member/all/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> callForGetGroupAllPosts(String groupID,int page) async {
-    return await apiClient.getData("/posts/group/$groupID/?page=$page");
+  Future<ApiResponse> callForGetGroupAllPosts(String groupID, int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("/posts/group/$groupID/?page=$page");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> callForGetGroupAllImages(String groupID) async {
-    return await apiClient.getData("/group/$groupID/image/list/");
+  Future<ApiResponse> callForGetGroupAllImages(String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("/group/$groupID/image/list/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> callForGetGroupAllVideo(String groupID) async {
-    return await apiClient.getData("/group/$groupID/video/list/");
+  Future<ApiResponse> callForGetGroupAllVideo(String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("/group/$groupID/video/list/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> callForGetAllGroupMemberWhoNotMember(String groupID) async {
-    return await apiClient.getData("/group/$groupID/friend/list/");
+  Future<ApiResponse> callForGetAllGroupMemberWhoNotMember(String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("/group/$groupID/friend/list/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> memberJoin(String groupID) async {
-    return await apiClient.postData("/group/$groupID/member/join/", {});
+  Future<ApiResponse> memberJoin(String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post("/group/$groupID/member/join/", data: {});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> leaveGroup(String groupID) async {
-    return await apiClient.deleteData("/group/$groupID/member/leave/");
+  Future<ApiResponse> leaveGroup(String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.delete("/group/$groupID/member/leave/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> sendInvitation(String groupID, int userID) async {
-    return await apiClient.postData("/group/$groupID/$userID/invitation-send/", {});
+  Future<ApiResponse> sendInvitation(String groupID, int userID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post("/group/$groupID/$userID/invitation-send/", data: {});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getCategory() async {
-    return await apiClient.getData(AppConstant.groupCategoryUri);
+  Future<ApiResponse> getCategory() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.groupCategoryUri);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 }

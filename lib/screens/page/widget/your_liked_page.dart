@@ -1,5 +1,4 @@
 
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
@@ -55,8 +54,7 @@ class YourLikedPage extends StatelessWidget {
                                 color: const Color(0xff090D2A),
                                 borderRadius: BorderRadius.circular(4)),
                             child: Center(
-                                child: Text(
-                                  getTranslated("Follow", context),
+                                child: Text(LocaleKeys.follow.tr(),
                                   style: latoStyle600SemiBold.copyWith(
                                       color: Colors.white, fontSize: 10),
                                 )),

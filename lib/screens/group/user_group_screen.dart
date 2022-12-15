@@ -1,4 +1,4 @@
-import 'package:als_frontend/localization/language_constrants.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
@@ -12,6 +12,7 @@ import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
@@ -180,7 +181,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Icon(FontAwesomeIcons.plus, size: 8, color: Colors.white),
-                                Text(getTranslated('Invite',context), style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
+                                Text(LocaleKeys.invite.tr(), style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
                               ],
                             ),
                           ),
@@ -194,7 +195,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                         children: [
                           Text(groupProvider.groupDetailsModel.totalMember.toString(),
                               style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
-                          Text(getTranslated('Members', context)),
+                          Text(LocaleKeys.members.tr()),
                           SizedBox(height: height * 0.014),
                           InkWell(
                             onTap: () {
@@ -216,7 +217,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                 children: [
                                   const Icon(FontAwesomeIcons.penToSquare, size: 14, color: Colors.white),
                                   SizedBox(width: width * 0.007),
-                                  Text(getTranslated('Edit Group', context), style: TextStyle(fontSize: height * 0.012, color: Colors.white))
+                                  Text(LocaleKeys.edit_Group.tr(), style: TextStyle(fontSize: height * 0.012, color: Colors.white))
                                 ],
                               ),
                             ),
@@ -233,10 +234,10 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
           Container(
             color: Colors.white,
             child: Row(children: [
-              MenuButtonWidget(getTranslated('Discussion', context), 0, groupProvider, pageController),
-              MenuButtonWidget(getTranslated('Photos', context), 1, groupProvider, pageController),
-              MenuButtonWidget(getTranslated('Videos', context), 2, groupProvider, pageController),
-              MenuButtonWidget(getTranslated('Members', context), 3, groupProvider, pageController),
+              MenuButtonWidget(LocaleKeys.discussion.tr(), 0, groupProvider, pageController),
+              MenuButtonWidget(LocaleKeys.photos.tr(), 1, groupProvider, pageController),
+              MenuButtonWidget(LocaleKeys.videos.tr(), 2, groupProvider, pageController),
+              MenuButtonWidget(LocaleKeys.members.tr(), 3, groupProvider, pageController),
             ]),
           ),
         ],

@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
@@ -322,7 +321,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                                   decoration: const BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.only(topRight: Radius.circular(5), bottomRight: Radius.circular(5))),
-                                  child: CustomText(title: getTranslated("VIDEOS", context)),
+                                  child: CustomText(title: LocaleKeys.videos.tr()),
                                 ),
                               ),
                             ),

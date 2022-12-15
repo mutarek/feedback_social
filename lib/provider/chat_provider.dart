@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/chat/all_message_chat_list_model.dart';
 import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
@@ -8,8 +8,6 @@ import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/chat_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';
@@ -54,12 +52,12 @@ class ChatProvider with ChangeNotifier {
     }
 
     // notifyListeners();
-    Response apiResponse = await chatRepo.getUserAllChatLists(page);
+    ApiResponse apiResponse = await chatRepo.getUserAllChatLists(page);
     _isLoading = false;
     isBottomLoading = false;
-    if (apiResponse.statusCode == 200) {
-      hasNextData = apiResponse.body['next'] != null ? true : false;
-      apiResponse.body['results'].forEach((element) {
+    if (apiResponse.response.statusCode == 200) {
+      hasNextData = apiResponse.response.data['next'] != null ? true : false;
+      apiResponse.response.data['results'].forEach((element) {
         allChatsLists.add(AllMessageChatListModel.fromJson(element));
       });
       allChatsListsCopy.addAll(allChatsLists);
@@ -100,10 +98,10 @@ class ChatProvider with ChangeNotifier {
     }
     p2pChatListsTemp.clear();
     p2pChatListsTemp = [];
-    Response apiResponse;
+    ApiResponse apiResponse;
     if (isFromChatTwoUser) {
       apiResponse =
-          await chatRepo.getChatMessageBetweenTwoUser(userID.toString(), page);
+      await chatRepo.getChatMessageBetweenTwoUser(userID.toString(), page);
     } else {
       apiResponse = await chatRepo.getUserP2PChatLists(chatModels.id!, page);
     }
@@ -111,9 +109,9 @@ class ChatProvider with ChangeNotifier {
     _isLoading = false;
     isBottomLoading = false;
     notifyListeners();
-    if (apiResponse.statusCode == 200) {
-      hasNextData = apiResponse.body['next'] != null ? true : false;
-      apiResponse.body['results'].forEach((element) {
+    if (apiResponse.response.statusCode == 200) {
+      hasNextData = apiResponse.response.data['next'] != null ? true : false;
+      apiResponse.response.data['results'].forEach((element) {
         p2pChatListsTemp.add(ChatMessageModel.fromJson(element));
       });
 
@@ -147,7 +145,7 @@ class ChatProvider with ChangeNotifier {
       isChangeValue = true;
       notifyListeners();
       ChatMessageModel commentData =
-          ChatMessageModel.fromJson(jsonDecode(data)['chat_data']);
+      ChatMessageModel.fromJson(jsonDecode(data)['chat_data']);
       p2pChatLists.add(commentData);
       if (!isFromProfile) {
         allChatsLists[index].lastSms = commentData.text;
@@ -216,7 +214,7 @@ class ChatProvider with ChangeNotifier {
           status(1);
           channel.stream.listen((data) {
             ChatMessageModel commentData =
-                ChatMessageModel.fromJson(jsonDecode(data)['chat_data']);
+            ChatMessageModel.fromJson(jsonDecode(data)['chat_data']);
             p2pChatLists.add(commentData);
             allChatsLists[index].lastSms = commentData.text;
             allChatsLists[index].updateAt = commentData.timestamp;
@@ -271,12 +269,12 @@ class ChatProvider with ChangeNotifier {
       String userID, String customerID, String message, int index) async {
     _isLoading = true;
     notifyListeners();
-    Response apiResponse = await chatRepo.callForGetRoomID(customerID);
+    ApiResponse apiResponse = await chatRepo.callForGetRoomID(customerID);
     _isLoading = false;
     isOneTime = false;
-    if (apiResponse.statusCode == 200) {
+    if (apiResponse.response.statusCode == 200) {
       AllMessageChatListModel messageChatListModel =
-          AllMessageChatListModel.fromJson(apiResponse.body);
+      AllMessageChatListModel.fromJson(apiResponse.response.data);
       changeChantModel(messageChatListModel);
       initializeSocket(0, isFromProfile: true);
       addPost(userID, message, (status) {}, index);

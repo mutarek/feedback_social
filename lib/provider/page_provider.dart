@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
@@ -7,18 +8,16 @@ import 'package:als_frontend/data/model/response/page/author_page_details_model.
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/page_repo.dart';
-import 'package:flutter/foundation.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as http;
 
-class PageProvider with ChangeNotifier {
+class PageProvider with ChangeNotifier{
   final PageRepo pageRepo;
   final NewsfeedRepo newsfeedRepo;
   final AuthRepo authRepo;
 
-  PageProvider({required this.pageRepo, required this.newsfeedRepo, required this.authRepo});
+  PageProvider({required this.pageRepo,required this.newsfeedRepo,required this.authRepo});
 
   bool isLoading = false;
 
@@ -26,14 +25,14 @@ class PageProvider with ChangeNotifier {
   List<AuthorPageModel> likedPageLists = [];
 
   initializeLikedPageLists() async {
-    Response response = await pageRepo.getAllLikedPageLists();
+    ApiResponse response = await pageRepo.getAllLikedPageLists();
     isLoading = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         likedPageLists.add(AuthorPageModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -42,14 +41,14 @@ class PageProvider with ChangeNotifier {
   List<AuthorPageModel> allSuggestPageList = [];
 
   initializeSuggestPage() async {
-    Response response = await pageRepo.getAllSuggestedPage();
+    ApiResponse response = await pageRepo.getAllSuggestedPage();
     isLoading = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         allSuggestPageList.add(AuthorPageModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -65,18 +64,18 @@ class PageProvider with ChangeNotifier {
     likedPageLists = [];
     allSuggestPageList.clear();
     allSuggestPageList = [];
-    Response response = await pageRepo.getAuthorPage();
+    ApiResponse response = await pageRepo.getAuthorPage();
     initializeLikedPageLists();
     initializeSuggestPage();
     isLoading = false;
     notifyListeners();
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         authorPageLists.add(AuthorPageModel.fromJson(element));
       });
     } else {
       isLoading = false;
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -88,15 +87,15 @@ class PageProvider with ChangeNotifier {
     isLoading = true;
     items.clear();
     items = [];
-    Response response = await pageRepo.getCategory();
+    ApiResponse response = await pageRepo.getCategory();
     isLoading = false;
-    if (response.statusCode == 200) {
-      response.body.forEach((element) {
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
         items.add(CategoryModel.fromJson(element));
       });
       categoryValue = items[0];
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -112,39 +111,40 @@ class PageProvider with ChangeNotifier {
   createPage(String groupName, File? file, Function callback) async {
     isLoading = true;
     notifyListeners();
-    Response response;
+    ApiResponse response;
     if (file != null) {
-      List<http.MultipartFile> multipartFile = [];
-
-      multipartFile
-          .add(http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
-
-      response = await pageRepo.createPageWithImageUpload({"name": groupName, "category": categoryValue.id.toString()}, multipartFile);
+      FormData formData = FormData();
+      formData.files.add(MapEntry(
+          'cover_photo',
+          MultipartFile(file.readAsBytes().asStream(), file.lengthSync(),
+              filename: file.path.split("/").last)));
+      formData.fields.add(MapEntry('name',groupName));
+      formData.fields.add(MapEntry('category',categoryValue.id.toString()));
+      response = await pageRepo.createPageWithImageUpload(formData);
     } else {
       response = await pageRepo.createPageWithoutImageUpload({"name": groupName, "category": categoryValue.id});
     }
     isLoading = false;
-    if (response.statusCode == 201) {
+    if (response.response.statusCode == 201) {
       authorPageLists.insert(
           0,
           AuthorPageModel(
-              id: response.body['id'],
-              name: response.body['name'],
-              category: response.body['category'],
-              coverPhoto: response.body['cover_photo'],
-              avatar: response.body['avatar'],
+              id: response.response.data['id'],
+              name: response.response.data['name'],
+              category: response.response.data['category'],
+              coverPhoto: response.response.data['cover_photo'],
+              avatar: response.response.data['avatar'],
               followers: 0));
 
       Fluttertoast.showToast(msg: "Page Created successfully");
       callback(true);
     } else {
       callback(false);
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
 
-  //TODO: for Group Details
   AuthorPageDetailsModel? pageDetailsModel;
 
   callForGetPageInformation(String id) async {
@@ -152,12 +152,12 @@ class PageProvider with ChangeNotifier {
 
     pageDetailsModel = AuthorPageDetailsModel();
     // notifyListeners();
-    Response response = await pageRepo.callForGetPageDetails(id);
+    ApiResponse response = await pageRepo.callForGetPageDetails(id);
 
-    if (response.statusCode == 200) {
-      pageDetailsModel = AuthorPageDetailsModel.fromJson(response.body);
+    if (response.response.statusCode == 200) {
+      pageDetailsModel = AuthorPageDetailsModel.fromJson(response.response.data);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     isLoading = false;
     notifyListeners();
@@ -196,16 +196,16 @@ class PageProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    Response response = await pageRepo.callForGetPageAllPosts(id, selectPage);
+    ApiResponse response = await pageRepo.callForGetPageAllPosts(id, selectPage);
 
     isLoading = false;
-    if (response.statusCode == 200) {
-      hasNextData = response.body['next'] != null ? true : false;
-      response.body['results'].forEach((element) {
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
         pageAllPosts.add(NewsFeedModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -221,46 +221,41 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-// TODO: for update Page
   Future<bool> updatePage(String groupName, File? file, int pageID, int index) async {
     isLoading = true;
     notifyListeners();
-    Response response;
-
+    ApiResponse response;
+    FormData formData = FormData();
     if (file != null) {
-      List<http.MultipartFile> multipartFile = [];
-
-      multipartFile
-          .add(http.MultipartFile('cover_photo', file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last));
-
+      formData.files.add(MapEntry('cover_photo',MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+      formData.fields.add(MapEntry('name',groupName));
+      formData.fields.add(MapEntry('category',categoryValue.id.toString()));
       response =
-          await pageRepo.updatePageWithImageUpload({"name": groupName, "category": categoryValue.id.toString()}, multipartFile, pageID);
+      await pageRepo.updatePageWithImageUpload(formData, pageID);
     } else {
       response = await pageRepo.updatePageWithoutImageUpload({"name": groupName, "category": categoryValue.id}, pageID);
     }
     isLoading = false;
-    if (response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
       authorPageLists.removeAt(index);
       authorPageLists.insert(
           0,
           AuthorPageModel(
-              id: response.body['id'],
-              coverPhoto: response.body['cover_photo'],
-              category: response.body['category'],
-              avatar: response.body['avatar'],
-              name: response.body['name'],
-              followers: response.body['total_like']));
+              id: response.response.data['id'],
+              coverPhoto:response.response.data['cover_photo'],
+              category: response.response.data['category'],
+              avatar: response.response.data['avatar'],
+              name: response.response.data['name'],
+              followers: response.response.data['total_like']));
       Fluttertoast.showToast(msg: "Update successfully");
       notifyListeners();
       return true;
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
     return false;
   }
-
-  // for LIKE comment
 
   addLike(int pageID, int postID, int index) async {
     if (pageAllPosts[index].isLiked == false) {
@@ -296,12 +291,10 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-//// ****************************************************
-
   pageLikeUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
-    Response response = await pageRepo.pageLikeUnlike(pageID.toString());
-    if (response.statusCode == 200) {
-      if (response.body['liked'] == true) {
+    ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString());
+    if (response.response.statusCode == 200) {
+      if (response.response.data['liked'] == true) {
         pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
         pageDetailsModel!.like = true;
         if (isFromMyPageScreen) {
@@ -331,4 +324,5 @@ class PageProvider with ChangeNotifier {
     menuValue = value;
     notifyListeners();
   }
+
 }

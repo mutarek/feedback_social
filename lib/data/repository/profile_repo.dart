@@ -1,45 +1,91 @@
-import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/datasource/remote/dio/dio_client.dart';
+import 'package:als_frontend/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:als_frontend/data/model/response/base/api_response.dart';
+import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class ProfileRepo {
-  final ApiClient apiClient;
+  final DioClient dioClient;
+  final AuthRepo authRepo;
 
-  ProfileRepo({required this.apiClient});
+  ProfileRepo({ required this.dioClient,required this.authRepo});
 
-  Future<Response> getUserNewsfeedDataByUsingID(String userID, int page) async {
-    return await apiClient.getData('/posts/user/$userID/?page=$page');
+  Future<ApiResponse> getUserNewsfeedDataByUsingID(
+      String userID, int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get('/posts/user/$userID/?page=$page');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getUserInfo() async {
-    return await apiClient.getData(AppConstant.profileURI);
+  Future<ApiResponse> getUserInfo() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.profileURI);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> uploadPhoto(List<http.MultipartFile> multipartData, {bool isCover = false}) async {
-    return await apiClient.putMultipartData(
-        isCover ? AppConstant.uploadCoverImageURI : AppConstant.uploadProfileImageURI, {}, multipartData);
+  Future<ApiResponse> uploadPhoto(FormData formData,
+      {bool isCover = false}) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post(
+          isCover
+              ? AppConstant.uploadCoverImageURI
+              : AppConstant.uploadProfileImageURI,
+          data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getPublicProfileInfo(String id) async {
-    return await apiClient.getData('${AppConstant.profileURI}$id/');
+  Future<ApiResponse> getPublicProfileInfo(String id) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get('${AppConstant.profileURI}$id/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getPublicProfileImageList(String id) async {
-    return await apiClient.getData('${AppConstant.profileURI}$id/image/list/');
+  Future<ApiResponse> getPublicProfileImageList(String id) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+          await dioClient.get('${AppConstant.profileURI}$id/image/list/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getPublicProfileVideoList(String id) async {
-    return await apiClient.getData('${AppConstant.profileURI}$id/video/list/');
+  Future<ApiResponse> getPublicProfileVideoList(String id) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+          await dioClient.get('${AppConstant.profileURI}$id/video/list/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
   /*........................edit profile repo..............*/
 
-  Future<Response> updateProfileDetails(
-      String firstName, lastName, company, education, gender, religion, liveInAddress, fromAddress) async {
-    return await apiClient.putData(
-      AppConstant.editProfile,
-      {
+  Future<ApiResponse> updateProfileDetails(String firstName, lastName, company,
+      education, gender, religion, liveInAddress, fromAddress) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.put(AppConstant.editProfile, data: {
         'first_name': firstName,
         'last_name': lastName,
         'gender': gender,
@@ -48,44 +94,110 @@ class ProfileRepo {
         'religion': religion,
         'company': company,
         'education': education
-      },
-    );
+      });
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
   /*                Friend Request    */
-  Future<Response> sendFriendRequest(String id) async {
-    return await apiClient.postData('${AppConstant.sendFriendRequestURI}$id/', {});
+  Future<ApiResponse> sendFriendRequest(String id) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+      await dioClient.post('${AppConstant.sendFriendRequestURI}$id/',data: {});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> acceptFriendRequest(String id) async {
-    return await apiClient.postData('${AppConstant.acceptFriendRequestURI}$id/', {});
+  Future<ApiResponse> acceptFriendRequest(String id) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+      await dioClient.post('${AppConstant.acceptFriendRequestURI}$id/',data: {});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> cancelFriendRequest(String id) async {
-    return await apiClient.deleteData('${AppConstant.cancelFriendRequestURI}$id/');
+  Future<ApiResponse> cancelFriendRequest(String id) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+      await dioClient.delete('${AppConstant.cancelFriendRequestURI}$id/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> unfriend(String id) async {
-    return await apiClient.postData('${AppConstant.unfriendURI}$id/', {});
+  Future<ApiResponse> unfriend(String id) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+      await dioClient.post('${AppConstant.unfriendURI}$id/',data: {});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> sendFriendRequestLists(int page) async {
-    return await apiClient.getData('${AppConstant.sendFriendRequestListURI}$page');
+  Future<ApiResponse> sendFriendRequestLists(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+      await dioClient.get('${AppConstant.sendFriendRequestListURI}$page');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> sendSuggestFriendRequestLists(int page) async {
-    return await apiClient.getData('${AppConstant.sendSuggestFriendListURI}$page');
+  Future<ApiResponse> sendSuggestFriendRequestLists(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+      await dioClient.get('${AppConstant.sendSuggestFriendListURI}$page');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getAllFriends(int page) async {
-    return await apiClient.getData('${AppConstant.friendListsURI}$page');
+  Future<ApiResponse> getAllFriends(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+      await dioClient.get('${AppConstant.friendListsURI}$page');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getAllFollowers(int page) async {
-    return await apiClient.getData('${AppConstant.follwersListsURI}$page');
+  Future<ApiResponse> getAllFollowers(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+      await dioClient.get('${AppConstant.follwersListsURI}$page');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> blockUser(int id) async {
-    return await apiClient.postData('/settings/block/$id/create/', {});
+  Future<ApiResponse> blockUser(int id) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response =
+      await dioClient.post('/settings/block/$id/create/',data: {});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 }

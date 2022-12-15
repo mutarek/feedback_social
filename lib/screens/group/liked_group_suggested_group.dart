@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
@@ -204,7 +203,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                                   height: 2,
                                                 ),
                                                 Text(
-                                                    "${groupProvider.authorGroupList[index].totalMember.toString()} ${getTranslated(" Members", context)}",
+                                                    "${groupProvider.authorGroupList[index].totalMember.toString()} ${LocaleKeys.members.tr()}",
                                                     style: latoStyle400Regular.copyWith(fontSize: 10, color: Colors.grey)),
                                               ],
                                             )
@@ -283,7 +282,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                                 height: 2,
                                               ),
                                               Text(
-                                                  "${groupProvider.myGroupList[index].totalMember.toString()} ${getTranslated("Members", context)}",
+                                                  "${groupProvider.myGroupList[index].totalMember.toString()} ${LocaleKeys.members.tr()}",
                                                   style: latoStyle400Regular.copyWith(fontSize: 10, color: Colors.grey)),
                                             ],
                                           )),
@@ -336,7 +335,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                       height: 2,
                                     ),
                                     Text(
-                                        "${groupProvider.allSuggestGroupList[index].totalMember.toString()} ${getTranslated("Followers", context)}",
+                                        "${groupProvider.allSuggestGroupList[index].totalMember.toString()} ${LocaleKeys.followers.tr()}",
                                         style: latoStyle100Thin.copyWith(fontSize: 10)),
                                   ],
                                 )),

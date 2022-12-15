@@ -1,5 +1,4 @@
 import 'package:als_frontend/data/model/response/followers_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
@@ -62,7 +61,7 @@ class _FollowersPageState extends State<FollowersPage> {
                   children: [
                     Center(
                         child: CustomText(
-                      title: '${LocaleKeys.you_Have.tr()}(${profileProvider.followersModelList.length})${getTranslated("Followers", context)} ',
+                      title: '${LocaleKeys.you_Have.tr()}(${profileProvider.followersModelList.length})${LocaleKeys.followers.tr()} ',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
                     const SizedBox(height: 10),

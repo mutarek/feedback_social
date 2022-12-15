@@ -1,11 +1,11 @@
-import 'package:als_frontend/data/model/response/search_model.dart';
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/repository/search_repo.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 
-class SearchProvider with ChangeNotifier {
+import '../data/model/response/search_model.dart';
+
+class SearchProvider with ChangeNotifier{
   final SearchRepo searchRepo;
 
   SearchProvider({required this.searchRepo});
@@ -17,17 +17,16 @@ class SearchProvider with ChangeNotifier {
     isLoading = true;
     searchModel = SearchModel();
     notifyListeners();
-    Response response = await searchRepo.searchData(query);
+    ApiResponse response = await searchRepo.searchData(query);
     isLoading = false;
     isFirstTime = false;
-    if (response.statusCode == 200 && response.body.isNotEmpty) {
-      searchModel = SearchModel.fromJson(response.body);
+    if (response.response.statusCode == 200 && response.response.data.isNotEmpty) {
+      searchModel = SearchModel.fromJson(response.response.data);
     } else {
-      Fluttertoast.showToast(msg: response.statusText!);
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
-
   int value = 1;
 
   changeValue(int status) {

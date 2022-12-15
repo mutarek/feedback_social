@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/create_page_screen.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
@@ -121,8 +120,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                               color: Colors.white,
                               border: Border.all(color: Colors.black, width: 1)),
                       child: Center(
-                          child: Text(
-                        getTranslated("Suggestion", context),
+                          child: Text(LocaleKeys.suggestion.tr(),
                         style: latoStyle200ExtraLight.copyWith(
                             color: pageProvider.menuValue == 0 ? Colors.black : Colors.white,
                             fontWeight: FontWeight.bold),
@@ -220,7 +218,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                                   height: 2,
                                                 ),
                                                 Text(
-                                                    "${pageProvider.authorPageLists[index].followers.toString()} ${getTranslated(" Followers", context)}",
+                                                    "${pageProvider.authorPageLists[index].followers.toString()} ${LocaleKeys.followers.tr()}",
                                                     style: latoStyle400Regular.copyWith(fontSize: 10,color: Colors.grey)),
                                               ],
                                             )

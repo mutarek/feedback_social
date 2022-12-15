@@ -1,78 +1,117 @@
-import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/datasource/remote/dio/dio_client.dart';
+import 'package:als_frontend/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/util/app_constant.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+double progressPercent = 0;
+
 class AuthRepo {
-  final ApiClient apiClient;
+  final DioClient dioClient;
   final SharedPreferences sharedPreferences;
 
-  AuthRepo({required this.sharedPreferences, required this.apiClient});
+  AuthRepo({required this.dioClient, required this.sharedPreferences});
 
-  Future<Response> login(String emailOrPhone, String password, bool isPhone) async {
-    Map map = {};
-    if (isPhone) {
-      map.addAll({"mobile": emailOrPhone});
-    } else {
-      map.addAll({"email": emailOrPhone});
+  Future<ApiResponse> login(String emailOrPhone, String password, bool isPhone, {ProgressCallback? onSendProgress}) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      Map map = {};
+      if (isPhone) {
+        map.addAll({"mobile": emailOrPhone});
+      } else {
+        map.addAll({"email": emailOrPhone});
+      }
+      map.addAll({'password': password});
+      response = await dioClient.post(AppConstant.loginURI, data: map, onSendProgress: onSendProgress);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
-    map.addAll({'password': password});
-    return await apiClient.postData(AppConstant.loginURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
-  Future<Response> signup(String firstName, String lastName, String dob, String gender, String emailOrPhone, String password) async {
-    Map map = {};
-    if (isNumeric(emailOrPhone)) {
-      map.addAll({"mobile": emailOrPhone});
-    } else {
-      map.addAll({"email": emailOrPhone});
+  Future<ApiResponse> signup(String firstName, String lastName, String dob, String gender, String emailOrPhone, String password,
+      {ProgressCallback? onSendProgress}) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      Map map = {};
+      if (isNumeric(emailOrPhone)) {
+        map.addAll({"mobile": emailOrPhone});
+      } else {
+        map.addAll({"email": emailOrPhone});
+      }
+      map.addAll({"first_name": firstName, "last_name": lastName, "password": password, "date_of_birth": dob, "gender": gender});
+      response = await dioClient.post(AppConstant.signupURI, data: map, onSendProgress: onSendProgress);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
-    map.addAll({"first_name": firstName, "last_name": lastName, "password": password, "date_of_birth": dob, "gender": gender});
-    return await apiClient.postData(AppConstant.signupURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
-  Future<Response> setNewPassword(String emailOrPhone, String newPassword, String code) async {
-    Map map = {};
-    if (isNumeric(emailOrPhone)) {
-      map.addAll({"phone": emailOrPhone});
-    } else {
-      map.addAll({"email": emailOrPhone});
+  Future<ApiResponse> setNewPassword(String emailOrPhone, String newPassword, String code, {ProgressCallback? onSendProgress}) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      Map map = {};
+      if (isNumeric(emailOrPhone)) {
+        map.addAll({"phone": emailOrPhone});
+      } else {
+        map.addAll({"email": emailOrPhone});
+      }
+      map.addAll({"otp": code, "new_password": newPassword});
+      response = await dioClient.put(AppConstant.setNewPasswordURI, data: map, onSendProgress: onSendProgress);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
-    map.addAll({"otp": code, "new_password": newPassword});
-    return await apiClient.putData(AppConstant.setNewPasswordURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
-  Future<Response> otpSend(String emailOrPhone, bool isEmail) async {
-    Map map = {};
-    if (isEmail) {
-      map = {"email": emailOrPhone};
-    } else {
-      map = {"phone": emailOrPhone};
+  Future<ApiResponse> otpSend(String emailOrPhone, bool isEmail, {ProgressCallback? onSendProgress}) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      Map map = {};
+      if (isEmail) {
+        map = {"email": emailOrPhone};
+      } else {
+        map = {"phone": emailOrPhone};
+      }
+      response = await dioClient.post(AppConstant.setNewPasswordURI, data: map, onSendProgress: onSendProgress);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
-
-    return await apiClient.postData(AppConstant.otpSendURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
-  Future<Response> resetOtpSend(String emailOrPhone, bool isEmail) async {
-    Map map = {};
-    if (isEmail) {
-      map = {"email": emailOrPhone};
-    } else {
-      map = {"phone": emailOrPhone};
+  Future<ApiResponse> resetOtpSend(String emailOrPhone, bool isEmail, {ProgressCallback? onSendProgress}) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      Map map = {};
+      if (isEmail) {
+        map = {"email": emailOrPhone};
+      } else {
+        map = {"phone": emailOrPhone};
+      }
+      response = await dioClient.post(AppConstant.setNewPasswordURI, data: map, onSendProgress: onSendProgress);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
-
-    return await apiClient.postData(AppConstant.resetOtpSendURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
-  Future<Response> otpVerify(String emailOrPhone, String code, bool isEmail) async {
-    Map map = {};
-    if (isEmail) {
-      map = {"email": emailOrPhone, "code": code};
-    } else {
-      map = {"phone": emailOrPhone, "code": code};
+  Future<ApiResponse> otpVerify(String emailOrPhone, String code, bool isEmail, {ProgressCallback? onSendProgress}) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      Map map = {};
+      if (isEmail) {
+        map = {"email": emailOrPhone, "code": code};
+      } else {
+        map = {"phone": emailOrPhone, "code": code};
+      }
+      response = await dioClient.post(AppConstant.setNewPasswordURI, data: map, onSendProgress: onSendProgress);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
-    return await apiClient.postData(AppConstant.otpVerifyURI, map, headers: {'Content-Type': 'application/json; charset=UTF-8'});
   }
 
   //TODO: for save User Information
@@ -141,9 +180,10 @@ class AuthRepo {
 
   // for  user token
   Future<void> saveUserToken(String token) async {
+    dioClient.token = token;
+    dioClient.dio!.options.headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'};
+
     try {
-      apiClient.token = token;
-      apiClient.updateHeader(token);
       await sharedPreferences.setString(AppConstant.token, token);
     } catch (e) {
       rethrow;

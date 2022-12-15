@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
@@ -126,7 +125,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget(getTranslated('Personal Groups:',context)),
+                      titleMenuWidget(LocaleKeys.personal_Groups.tr()),
                       Container(margin: const EdgeInsets.only(bottom: 10)),
                     ],
                   ),

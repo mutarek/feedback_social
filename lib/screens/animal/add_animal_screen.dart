@@ -1,5 +1,4 @@
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
@@ -99,7 +98,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                               SizedBox(
                                 width: 120,
                                 child: CustomButton(
-                                    btnTxt: getTranslated('your_animals', context),
+                                    btnTxt: LocaleKeys.your_animals.tr(),
                                     onTap: () {
                                       Get.to(() => const MyAnimalScreen());
                                     },
@@ -118,7 +117,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                             child: Column(
                               children: [
                                 CustomTextField(
-                                  hintText: getTranslated('animal_name', context),
+                                  hintText: LocaleKeys.animal_name.tr(),
                                   controller: animalNameController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -128,7 +127,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: getTranslated('species', context),
+                                  hintText:LocaleKeys.species.tr(),
                                   controller: speciesController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -138,7 +137,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: getTranslated('genus', context),
+                                  hintText: 'Genus',
                                   controller: genusController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -148,7 +147,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: getTranslated('given_name', context),
+                                  hintText: LocaleKeys.given_name.tr(),
                                   controller: givenNameController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -158,7 +157,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 ),
                                 const SizedBox(height: 10),
                                 CustomTextField(
-                                  hintText: getTranslated('age', context),
+                                  hintText: LocaleKeys.age.tr(),
                                   controller: ageController,
                                   borderRadius: 5,
                                   fillColor: Colors.white,
@@ -172,7 +171,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
                                     Text(
-                                      getTranslated('gender', context),
+                                      LocaleKeys.gender.tr(),
                                       style: const TextStyle(color: Colors.black, fontSize: 20),
                                     ),
                                     SizedBox(width: width * 0.2),
@@ -212,7 +211,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      getTranslated('pick_a_photo', context),
+                                      LocaleKeys.pick_a_photo.tr(),
                                       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                                     ),
                                     InkWell(
@@ -225,7 +224,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             const Icon(Icons.photo, color: Colors.white),
-                                            Text(getTranslated('photo', context), style: const TextStyle(color: Colors.white)),
+                                            Text(LocaleKeys.photo.tr(), style: const TextStyle(color: Colors.white)),
                                           ],
                                         ),
                                       ),
@@ -235,7 +234,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                         : (widget.isEdit && widget.animalModel!.image != null)
                                             ? SizedBox(
                                                 height: 40, width: 40, child: customNetworkImage(context, widget.animalModel!.image!))
-                                            : Text(getTranslated('no_images_elected', context)),
+                                            : Text(LocaleKeys.no_images_elected.tr()),
                                   ],
                                 ),
                                 const SizedBox(height: 20),

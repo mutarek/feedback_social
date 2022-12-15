@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/other_provider.dart';

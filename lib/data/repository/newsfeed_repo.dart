@@ -1,39 +1,82 @@
-import 'package:als_frontend/data/datasource/api_client.dart';
+import 'package:als_frontend/data/datasource/remote/dio/dio_client.dart';
+import 'package:als_frontend/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/util/app_constant.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:dio/dio.dart';
+
+double progressPercent = 0;
 
 class NewsfeedRepo {
-  final ApiClient apiClient;
+  final DioClient dioClient;
 
-  NewsfeedRepo({required this.apiClient});
+  NewsfeedRepo({required this.dioClient});
 
-  Future<Response> getNewsFeedData(int page) async {
-    return await apiClient.getData(AppConstant.newsFeedURI + page.toString());
-  }
-
-  Future<Response> addLike(int postID, {bool isGroup = false, bool isFromLike = false, int groupPageID = 0}) async {
-    if (isGroup) {
-      return await apiClient.postData('/posts/group/$groupPageID/$postID/like/', {});
-    } else if (isFromLike) {
-      return await apiClient.postData('/posts/$postID/like/', {});
-    } else {
-      return await apiClient.postData('/posts/$postID/like/', {});
+  Future<ApiResponse> getNewsFeedData(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.newsFeedURI + page.toString());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<Response> addLikeONGroup(int postID, int groupID) async {
-    return await apiClient.postData('/posts/group/$groupID/$postID/like/', {});
+  Future<ApiResponse> addLike(int postID, {bool isGroup = false, bool isFromLike = false, int groupPageID = 0}) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+
+    try {
+      if (isGroup) {
+        response = await dioClient.post('/posts/group/$groupPageID/$postID/like/', data: {});
+        return ApiResponse.withSuccess(response);
+      } else if (isFromLike) {
+        response = await dioClient.post('/posts/$postID/like/', data: {});
+        return ApiResponse.withSuccess(response);
+      } else {
+        response = await dioClient.post('/posts/$postID/like/', data: {});
+        return ApiResponse.withSuccess(response);
+      }
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> addLikeONPage(int postID, int groupID) async {
-    return await apiClient.postData('/posts/page/$groupID/$postID/like/', {});
+  Future<ApiResponse> addLikeONGroup(int postID, int groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post('/posts/group/$groupID/$postID/like/', data: {});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> callForSinglePostFromNotification(String url) async {
-    return await apiClient.getData(url);
+  Future<ApiResponse> addLikeONPage(int postID, int groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post('/posts/page/$groupID/$postID/like/', data: {});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> callForgetLikedShareUser(String url, int pageNo) async {
-    return await apiClient.getData('$url?page=$pageNo&size=20');
+  Future<ApiResponse> callForSinglePostFromNotification(String url) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(url);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> callForgetLikedShareUser(String url, int pageNo) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get('$url?page=$pageNo&size=20');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 }

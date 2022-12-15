@@ -1,6 +1,4 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
-import 'package:als_frontend/provider/localization_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/screens/more/view/terms_and_condition.dart';
 import 'package:als_frontend/screens/settings/language_screen.dart';
@@ -106,14 +104,13 @@ class SettingsScreen extends StatelessWidget {
                         const SizedBox(height: 20),
 
                         /*...................language............*/
-                        Consumer<LocalizationProvider>(
-                            builder: (context, languageProvider, child) => SettingsWidget(
-                                image: 'assets/svg/lang.svg',
-                                name: "Language",
-                                subName: AppConstant.languagesList[languageProvider.getSelectLanguageIndexValue()].languageName,
-                                goingScreen: () {
-                                  Get.to(const LanguageScreen());
-                                })),
+                        SettingsWidget(
+                            image: 'assets/svg/lang.svg',
+                            name: "Language",
+                            subName: AppConstant.languagesList[0].languageName,
+                            goingScreen: () {
+                              Get.to(const LanguageScreen());
+                            }),
                         const SizedBox(height: 20),
                         SettingsWidget(
                           image: 'assets/svg/notifications.svg',

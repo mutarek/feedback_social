@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
@@ -151,7 +150,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                             animalProvider.clearImage();
                                             Get.to(() => const AddEditAnimalScreen());
                                           },
-                                          child:  Text(getTranslated('Add', context)))
+                                          child:  Text(LocaleKeys.add.tr()))
                                     ],
                                   ),
                                   Expanded(

@@ -1,24 +1,53 @@
-import 'package:als_frontend/data/datasource/api_client.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 
-class CommentRepo {
-  final ApiClient apiClient;
+import 'package:als_frontend/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:als_frontend/data/model/response/base/api_response.dart';
+import 'package:dio/dio.dart';
 
-  CommentRepo({required this.apiClient});
+import '../datasource/remote/dio/dio_client.dart';
 
-  Future<Response> getAllCommentData(String url) async {
-    return await apiClient.getData("$url?page=1");
+double progressPercent = 0;
+class CommentRepo{
+
+  final DioClient dioClient;
+
+  CommentRepo({required this.dioClient});
+  Future<ApiResponse> getAllCommentData(String url) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response =   await dioClient.get("$url?page=1");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> getAllGroupCommentData(int postId, int groupID) async {
-    return await apiClient.getData('/posts/group/$groupID/$postId/comment/');
+
+  Future<ApiResponse>getAllGroupCommentData(int postId, int groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path:  '22222'));
+    try{
+      response = await  dioClient.get('post/group/$postId/comment/');
+      return ApiResponse.withSuccess(response);
+    }catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+  Future<ApiResponse> addComment(String url, String comment) async {
+    Response response = Response(requestOptions: RequestOptions(path:  '22222'));
+    try{
+      response = await dioClient.post('${url}create/', data: comment);
+      return ApiResponse.withSuccess(response);
+    }catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 
-  Future<Response> addComment(String url, String comment) async {
-    return await apiClient.postData('${url}create/', {"comment": comment});
-  }
-
-  Future<Response> addReply(String url, String commentID, String comment) async {
-    return await apiClient.postData('$url$commentID/reply/', {"comment": comment});
+  Future<ApiResponse> addReply(String url, String commentID, String comment) async {
+    Response response = Response(requestOptions: RequestOptions(path:  '22222'));
+    try{
+      response = await dioClient.post('$url$commentID/reply/',data: comment);
+      return ApiResponse.withSuccess(response);
+    }catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
   }
 }
