@@ -23,7 +23,7 @@ class VideoDetailsScreen extends StatelessWidget {
           title:  CustomText(title: LocaleKeys.feedback_Watch.tr(), color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
           backgroundColor: Colors.white,
           elevation: 0),
-      body: Center(child: CustomVideoWidget(videoURL, videoThumbnailURl)),
+      body: CustomVideoWidget(videoURL, videoThumbnailURl)
     );
   }
 }

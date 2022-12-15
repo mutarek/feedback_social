@@ -14,6 +14,7 @@ class CustomVideoWidget extends StatefulWidget {
 
 class _CustomVideoWidgetState extends State<CustomVideoWidget> {
   late final PodPlayerController controller;
+  late final PodPlayerController secondVideoController;
   String thumbnailURLFinal = '';
 
   @override
@@ -24,33 +25,67 @@ class _CustomVideoWidgetState extends State<CustomVideoWidget> {
         playVideoFrom: PlayVideoFrom.network(widget.videoUrl),
         podPlayerConfig: const PodPlayerConfig(autoPlay: true, isLooping: false, videoQualityPriority: [360, 720, 1080]))
       ..initialise();
+    customSecondPlayer();
     super.initState();
+  }
+
+  void customSecondPlayer(){
+    secondVideoController = PodPlayerController(
+        playVideoFrom: PlayVideoFrom.network(widget.videoUrl),
+        podPlayerConfig: const PodPlayerConfig(autoPlay: false, isLooping: false, videoQualityPriority: [360, 720, 1080]))
+      ..initialise();
   }
 
   @override
   void dispose() {
     controller.dispose();
+    secondVideoController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: PodVideoPlayer(
-          frameAspectRatio:  1,
-          // videoAspectRatio: controller.isInitialised ? controller.videoPlayerValue!.size.aspectRatio : 1,
-          controller: controller,
-          matchFrameAspectRatioToVideo: true,
-          matchVideoAspectRatioToFrame: true,
-          videoThumbnail: widget.thumbnailURL.isNotEmpty
-              ? DecorationImage(image: NetworkImage(thumbnailURLFinal), fit: BoxFit.cover)
-              : DecorationImage(image: AssetImage(thumbnailURLFinal), fit: BoxFit.cover),
-          podProgressBarConfig: const PodProgressBarConfig(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 8,),
+            Card(
+              elevation: 20,
+              child: PodVideoPlayer(
+                frameAspectRatio:  1,
+                // videoAspectRatio: controller.isInitialised ? controller.videoPlayerValue!.size.aspectRatio : 1,
+                controller: controller,
+                matchFrameAspectRatioToVideo: true,
+                matchVideoAspectRatioToFrame: true,
+                videoThumbnail: widget.thumbnailURL.isNotEmpty
+                    ? DecorationImage(image: NetworkImage(thumbnailURLFinal), fit: BoxFit.cover)
+                    : DecorationImage(image: AssetImage(thumbnailURLFinal), fit: BoxFit.cover),
+                podProgressBarConfig: const PodProgressBarConfig(
 
-          ),
+                ),
+              ),
+            ),
+            SizedBox(height: 8,),
+            Card(
+              elevation: 20,
+              child: PodVideoPlayer(
+                frameAspectRatio:  1,
+                // videoAspectRatio: controller.isInitialised ? controller.videoPlayerValue!.size.aspectRatio : 1,
+                controller: secondVideoController,
+                matchFrameAspectRatioToVideo: true,
+                matchVideoAspectRatioToFrame: true,
+                videoThumbnail: widget.thumbnailURL.isNotEmpty
+                    ? DecorationImage(image: NetworkImage(thumbnailURLFinal), fit: BoxFit.cover)
+                    : DecorationImage(image: AssetImage(thumbnailURLFinal), fit: BoxFit.cover),
+                podProgressBarConfig: const PodProgressBarConfig(
+
+                ),
+              ),
+            ),
+          ],
         ),
-      ),
+      )
     );
   }
 }
