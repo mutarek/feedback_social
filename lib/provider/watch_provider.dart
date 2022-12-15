@@ -30,24 +30,19 @@ class WatchProvider with ChangeNotifier{
       hasNextData = false;
       isBottomLoading = false;
       position = 0;
-      if (!isFirstTime) {
-        notifyListeners();
+      notifyListeners();
+      ApiResponse response = await watchRepo.getAllVideos(page);
+      isLoading = false;
+      isBottomLoading = false;
+      if (response.response.statusCode == 200) {
+        hasNextData = response.response.data['next'] != null ? true : false;
+        response.response.data['results'].forEach((element) {
+          watchLists.add(WatchListModel.fromJson(element));
+        });
+      } else {
+        Fluttertoast.showToast(msg: response.response.statusMessage!);
       }
-    } else {
-      isBottomLoading = true;
       notifyListeners();
     }
-    ApiResponse response = await watchRepo.getAllVideos(page);
-    isLoading = false;
-    isBottomLoading = false;
-    if (response.response.statusCode == 200) {
-      hasNextData = response.response.data['next'] != null ? true : false;
-      response.response.data['results'].forEach((element) {
-        watchLists.add(WatchListModel.fromJson(element));
-      });
-    } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-    }
-    notifyListeners();
   }
 }
