@@ -11,7 +11,7 @@ class NotificationRepo {
   Future<ApiResponse> getAllNotification(int pageNo) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get(AppConstant.notificationListURI + "?page=$pageNo&size=10");
+      response = await dioClient.get("${AppConstant.notificationListURI}?page=$pageNo&size=10");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -22,7 +22,7 @@ class NotificationRepo {
   Future<ApiResponse> getNotificationUnreadCount() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.post(AppConstant.notificationUnreadCountURI,data: {});
+      response = await dioClient.post(AppConstant.baseUrl+AppConstant.notificationUnreadCountURI,data: {});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

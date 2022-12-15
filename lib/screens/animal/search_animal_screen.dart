@@ -11,7 +11,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class SearchAnimalScreen extends StatefulWidget {

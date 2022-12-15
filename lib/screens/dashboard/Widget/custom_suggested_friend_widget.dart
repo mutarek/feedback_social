@@ -20,7 +20,6 @@ class CustomSuggestedFriendsWidget extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(top: 10),

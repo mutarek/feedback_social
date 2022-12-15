@@ -6,8 +6,6 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
 
 class YourLikedPage extends StatelessWidget {

@@ -280,8 +280,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                                                 route(context, 1, newsFeedProvider.singleNewsFeedModel);
                                                               },
                                                               child: Text(
-                                                                  newsFeedProvider.singleNewsFeedModel.sharePost!.post!.author!.fullName! +
-                                                                      " Posted Here",
+                                                                  "${newsFeedProvider.singleNewsFeedModel.sharePost!.post!.author!.fullName!} Posted Here",
                                                                   style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w400)),
                                                             )
                                                           : const SizedBox(),

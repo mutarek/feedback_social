@@ -245,9 +245,9 @@ class AuthProvider with ChangeNotifier {
                 initialDateTime: DateTime.now(),
                 maximumDate: DateTime.now(),
                 dateOrder: DatePickerDateOrder.dmy,
-                onDateTimeChanged: (_dateTime) {
-                  dateTime = "${_dateTime.year.toString()}-${_dateTime.month.toString()}-${_dateTime.day.toString()}";
-                  dateTimeForUser = "${_dateTime.day.toString()}/${_dateTime.month.toString()}/${_dateTime.year.toString()}";
+                onDateTimeChanged: (dateTimeValue) {
+                  dateTime = "${dateTimeValue.year.toString()}-${dateTimeValue.month.toString()}-${dateTimeValue.day.toString()}";
+                  dateTimeForUser = "${dateTimeValue.day.toString()}/${dateTimeValue.month.toString()}/${dateTimeValue.year.toString()}";
                   notifyListeners();
                 }),
           ), // This will change to light theme.
@@ -316,7 +316,7 @@ class AuthProvider with ChangeNotifier {
           ),
         ),
         onSelect: (Country country) {
-          code = "+" + country.phoneCode;
+          code = "+${country.phoneCode}";
           notifyListeners();
         });
   }

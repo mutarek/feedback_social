@@ -62,18 +62,6 @@ class MessageStatusDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color dotColor(MessageStatus status) {
-      switch (status) {
-        case MessageStatus.notSent:
-          return kErrorColor;
-        case MessageStatus.notView:
-          return Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.1);
-        case MessageStatus.viewed:
-          return kPrimaryColor;
-        default:
-          return Colors.transparent;
-      }
-    }
 
     return Padding(
       padding: const EdgeInsets.only(top: 15,left: 10),

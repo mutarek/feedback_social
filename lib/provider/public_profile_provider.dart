@@ -1,6 +1,6 @@
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
-import 'package:als_frontend/data/model/response/profile-images_model.dart';
+import 'package:als_frontend/data/model/response/profile_images_model.dart';
 import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';

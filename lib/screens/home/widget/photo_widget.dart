@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:get/route_manager.dart';
 
 import '../../../data/model/response/image_video_detect_model.dart';
 

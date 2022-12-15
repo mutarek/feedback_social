@@ -9,6 +9,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'chat_input_field.dart';
 import 'message.dart';
 
+// ignore: must_be_immutable
 class BodyWidget extends StatelessWidget {
   BodyWidget(this.controller, this.index, {this.customerID = 0, this.isFromProfile = false, required this.imageURL, Key? key})
       : super(key: key);

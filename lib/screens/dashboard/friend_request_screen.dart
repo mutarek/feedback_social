@@ -50,7 +50,6 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -138,9 +137,7 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                                               builder: (_) => PublicProfileScreen(suggestFriendRequestModel.id.toString(),
                                                   index: index, isFromFriendRequestScreen: true)));
                                         },
-                                        userName: suggestFriendRequestModel.firstName.toString() +
-                                            " " +
-                                            suggestFriendRequestModel.lastName.toString(),
+                                        userName: "${suggestFriendRequestModel.firstName} ${suggestFriendRequestModel.lastName}",
                                         addFriendButtonTap: () {
                                           profileProvider.removeSuggestionFriend(index);
                                           publicProvider.addFriend(suggestFriendRequestModel.id.toString());

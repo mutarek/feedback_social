@@ -94,34 +94,34 @@ class SearchScreen extends StatelessWidget {
                                       onPressed: () {
                                         searchProvider.changeValue(1);
                                       },
-                                      child: Text(LocaleKeys.people.tr(),
-                                          style: TextStyle(color: (searchProvider.value == 1) ? Colors.white : Colors.black)),
                                       style: ButtonStyle(
                                           backgroundColor: (searchProvider.value == 1)
                                               ? MaterialStateProperty.all<Color>(Palette.primary)
                                               : MaterialStateProperty.all<Color>(Colors.white)),
+                                      child: Text(LocaleKeys.people.tr(),
+                                          style: TextStyle(color: (searchProvider.value == 1) ? Colors.white : Colors.black)),
                                     ),
                                     ElevatedButton(
                                       onPressed: () {
                                         searchProvider.changeValue(2);
                                       },
-                                      child: Text(LocaleKeys.group.tr(),
-                                          style: TextStyle(color: (searchProvider.value == 2) ? Colors.white : Colors.black)),
                                       style: ButtonStyle(
                                           backgroundColor: (searchProvider.value == 2)
                                               ? MaterialStateProperty.all<Color>(Palette.primary)
                                               : MaterialStateProperty.all<Color>(Colors.white)),
+                                      child: Text(LocaleKeys.group.tr(),
+                                          style: TextStyle(color: (searchProvider.value == 2) ? Colors.white : Colors.black)),
                                     ),
                                     ElevatedButton(
                                       onPressed: () {
                                         searchProvider.changeValue(3);
                                       },
-                                      child:
-                                          Text(LocaleKeys.pages.tr(), style: TextStyle(color: (searchProvider.value == 3) ? Colors.white : Colors.black)),
                                       style: ButtonStyle(
                                           backgroundColor: (searchProvider.value == 3)
                                               ? MaterialStateProperty.all<Color>(Palette.primary)
                                               : MaterialStateProperty.all<Color>(Colors.white)),
+                                      child:
+                                          Text(LocaleKeys.pages.tr(), style: TextStyle(color: (searchProvider.value == 3) ? Colors.white : Colors.black)),
                                     ),
                                   ],
                                 ),

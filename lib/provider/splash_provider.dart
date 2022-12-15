@@ -27,7 +27,7 @@ class SplashProvider with ChangeNotifier{
   }
 
   int value = 0;
-
+//bool result = await InternetConnectionChecker().hasConnection;
   Future initializeVersion() async {
     value = -2;
     isLoading = true;

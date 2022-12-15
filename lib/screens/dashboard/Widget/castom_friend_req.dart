@@ -48,7 +48,7 @@ class FriendRequestWidget extends StatelessWidget {
               child: InkWell(
                 onTap: gotoProfileScreen,
                 child: Padding(
-                  padding: EdgeInsets.all(3),
+                  padding: const EdgeInsets.all(3),
                   child: CircleAvatar(
                       radius: width * 0.07,
                       backgroundColor: AppColors.scaffold,

@@ -14,7 +14,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -73,7 +72,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                "${LocaleKeys.your_ID.tr}: ${authProvider.userCode}",
+                                "${LocaleKeys.your_ID.tr()}: ${authProvider.userCode}",
                                 style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
                               ),
                               SizedBox(width: width * 0.02),

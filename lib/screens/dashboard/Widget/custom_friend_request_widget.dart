@@ -21,7 +21,6 @@ class CustomFriendRequestWidget extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(top: 10),
@@ -44,7 +43,7 @@ class CustomFriendRequestWidget extends StatelessWidget {
               child: InkWell(
                 onTap: gotoProfileScreen,
                 child: Padding(
-                  padding: EdgeInsets.all(3),
+                  padding: const EdgeInsets.all(3),
                   child: CircleAvatar(
                       radius: width * 0.07,
                       backgroundColor: AppColors.scaffold,
@@ -77,7 +76,7 @@ class CustomFriendRequestWidget extends StatelessWidget {
                               child:  Center(
                                 child: Text(
                                   LocaleKeys.cancel.tr(),
-                                  style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
+                                  style: const TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -96,7 +95,7 @@ class CustomFriendRequestWidget extends StatelessWidget {
                               child:  Center(
                                 child: Text(
                                   LocaleKeys.confirm.tr(),
-                                  style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
+                                  style: const TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),

@@ -22,26 +22,26 @@ class _AnyListPreviewState extends State<AnyLinkPreviewGlobalWidget> {
   }
 
   void _getMetadata(String url) async {
-    bool _isValid = _getUrlValid(url);
-    if (_isValid) {
-      Metadata? _metadata = await AnyLinkPreview.getMetadata(
+    bool isValid = _getUrlValid(url);
+    if (isValid) {
+      Metadata? metadata = await AnyLinkPreview.getMetadata(
         link: url,
         cache: const Duration(days: 7),
         proxyUrl: "https://cors-anywhere.herokuapp.com/", // Needed for web app
       );
-      debugPrint("URL6 => ${_metadata?.title}");
-      debugPrint(_metadata?.desc);
+      debugPrint("URL6 => ${metadata?.title}");
+      debugPrint(metadata?.desc);
     } else {
       debugPrint("URL is not valid");
     }
   }
 
   bool _getUrlValid(String url) {
-    bool _isUrlValid = AnyLinkPreview.isValidLink(
+    bool isUrlValid = AnyLinkPreview.isValidLink(
       url,
       protocols: ['http', 'https'],
     );
-    return _isUrlValid;
+    return isUrlValid;
   }
 
   @override

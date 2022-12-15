@@ -3,7 +3,6 @@ import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {

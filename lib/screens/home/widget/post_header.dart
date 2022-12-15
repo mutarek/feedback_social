@@ -91,10 +91,10 @@ class PostHeaderWidget extends StatelessWidget {
                                   style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                               const SizedBox(width: 5),
                               CircleAvatar(
-                                  child: CustomText(
-                                      title: post.postType == AppConstant.postTypePage ? "P" : "G", color: Colors.white, fontSize: 12),
                                   backgroundColor: AppColors.feedback,
-                                  radius: 10)
+                                  radius: 10,
+                                  child: CustomText(
+                                      title: post.postType == AppConstant.postTypePage ? "P" : "G", color: Colors.white, fontSize: 12))
                             ],
                           ),
                         ),
@@ -145,7 +145,7 @@ class PostHeaderWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          this.post.postType == AppConstant.postTypePage?Text(post.pageModel!.name!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)):
+                          post.postType == AppConstant.postTypePage?Text(post.pageModel!.name!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)):
                           Text(post.author!.fullName!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                           Row(
                             children: [

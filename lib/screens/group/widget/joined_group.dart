@@ -22,7 +22,7 @@ class JoinedGroup extends StatelessWidget {
           style: latoStyle800ExtraBold,
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

@@ -120,9 +120,9 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                                             otherProvider.clearImage();
                                           },
                                           child: const CircleAvatar(
-                                            child: Icon(Icons.close, color: Colors.white, size: 18),
                                             backgroundColor: AppColors.feedback,
                                             radius: 13,
+                                            child: Icon(Icons.close, color: Colors.white, size: 18),
                                           ),
                                         ),
                                       )

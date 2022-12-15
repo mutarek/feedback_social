@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +31,7 @@ class LoggingInterceptor extends InterceptorsWrapper {
         debugPrint(responseAsString.substring(i * maxCharactersPerLine, endingIndex));
       }
     } else {
-      debugPrint(response.data);
+      debugPrint(jsonEncode(response.data.toString()));
     }
 
     debugPrint("<-- END HTTP");

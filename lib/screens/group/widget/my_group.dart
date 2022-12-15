@@ -19,7 +19,7 @@ class MyGroup extends StatelessWidget {
         centerTitle: true,
         title: Text(LocaleKeys.my_Group.tr(), style: latoStyle800ExtraBold),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

@@ -151,7 +151,7 @@ class _EditProfileState extends State<EditProfile> {
                 isShowPrefixIcon: true,
               ),
               SizedBox(height: height * 0.01),
-              CustomText(title: "Enter your permanent location:", fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
+              const CustomText(title: "Enter your permanent location:", fontSize: 15, fontWeight: FontWeight.normal, color: Colors.black),
               const SizedBox(height: 7),
               CustomTextField(
                 hintText: LocaleKeys.write_here.tr(),
@@ -181,9 +181,9 @@ class _EditProfileState extends State<EditProfile> {
                             }
                           });
                         },
-                        child:  Text(LocaleKeys.save_and_change.tr()),
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Palette.timeColor, textStyle: GoogleFonts.lato(fontWeight: FontWeight.bold)))
+                            backgroundColor: Palette.timeColor, textStyle: GoogleFonts.lato(fontWeight: FontWeight.bold)),
+                        child:  Text(LocaleKeys.save_and_change.tr()))
                     : const CircularProgressIndicator(),
               ),
               SizedBox(height: height * 0.02),

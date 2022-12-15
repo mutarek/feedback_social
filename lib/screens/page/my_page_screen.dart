@@ -12,7 +12,6 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class MyPageScreen extends StatefulWidget {
@@ -61,8 +60,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   Provider.of<OtherProvider>(context, listen: false).clearImage();
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreatePageScreen()));
                 },
-                child: const Icon(Icons.add, color: Colors.white),
                 backgroundColor: Colors.blue,
+                child: const Icon(Icons.add, color: Colors.white),
               )
             : const SizedBox.shrink(),
       ),

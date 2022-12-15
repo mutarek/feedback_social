@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/data/model/response/liked_by_model.dart';
@@ -216,8 +217,9 @@ class NewsFeedProvider with ChangeNotifier {
       List<String> chatsSave =
           sharedPreferences!.getStringList(AppConstant.chats) ?? [];
       List<OfflineChat> chatData = [];
-      chatsSave.forEach(
-              (cart) => chatData.add(OfflineChat.fromJson(jsonDecode(cart))));
+      for (var cart in chatsSave) {
+        chatData.add(OfflineChat.fromJson(jsonDecode(cart)));
+      }
       for (var element in chatData) {
         //TODO: push message to socket and clear cache
         Get.snackbar("data", element.message.toString());
