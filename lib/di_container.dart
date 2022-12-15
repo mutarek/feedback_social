@@ -13,6 +13,7 @@ import 'package:als_frontend/data/repository/profile_repo.dart';
 import 'package:als_frontend/data/repository/search_repo.dart';
 import 'package:als_frontend/data/repository/settings_repo.dart';
 import 'package:als_frontend/data/repository/splash_repo.dart';
+import 'package:als_frontend/data/repository/watch_repo.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
@@ -29,6 +30,7 @@ import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
+import 'package:als_frontend/provider/watch_provider.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -55,6 +57,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SearchRepo(dioClient: sl(), authRepo: sl()));
   sl.registerLazySingleton(() => SettingsRepo(dioClient: sl(), authRepo: sl()));
   sl.registerLazySingleton(() => SplashRepo(dioClient: sl(), authRepo: sl()));
+  sl.registerLazySingleton(() => WatchRepo(dioClient: sl()));
 
   // Provider
   sl.registerFactory(() => ThemeProvider(sharedPreferences: sl(), splashRepo: sl()));
@@ -74,6 +77,7 @@ Future<void> init() async {
   sl.registerFactory(() => SearchProvider(searchRepo: sl()));
   sl.registerFactory(() => SettingsProvider(settingsRepo: sl()));
   sl.registerFactory(() => SplashProvider(splashRepo: sl()));
+  sl.registerFactory(() => WatchProvider(watchRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

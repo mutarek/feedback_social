@@ -15,6 +15,7 @@ import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
+import 'package:als_frontend/provider/watch_provider.dart';
 import 'package:als_frontend/screens/splash/splash_screen.dart';
 import 'package:als_frontend/translations/codegen_loader.g.dart';
 import 'package:als_frontend/util/helper.dart';
@@ -55,6 +56,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => di.sl<CommentProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<GroupProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<WatchProvider>()),
         ],
         child: const MyApp(),
       )));
