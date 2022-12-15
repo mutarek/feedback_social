@@ -5,13 +5,13 @@ import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/view/like_view.dart';
 import 'package:als_frontend/screens/post/single_post_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class PostStats extends StatelessWidget {
@@ -116,14 +116,16 @@ class PostStats extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                        Get.to(SinglePostScreen(post.commentUrl!,
-                            isHomeScreen: isHomeScreen,
-                            isProfileScreen: isFromProfile,
-                            index: index,
-                            postID: postID,
-                            groupID: groupPageID,
-                            isFromPage: isPage,
-                            isFromGroup: isGroup));
+                        Helper.toScreen(
+                            context,
+                            SinglePostScreen(post.commentUrl!,
+                                isHomeScreen: isHomeScreen,
+                                isProfileScreen: isFromProfile,
+                                index: index,
+                                postID: postID,
+                                groupID: groupPageID,
+                                isFromPage: isPage,
+                                isFromGroup: isGroup));
                       },
                       child: SizedBox(
                         width: 40,
@@ -169,83 +171,84 @@ class PostStats extends StatelessWidget {
                     ),
                   ],
                 ),
-
               ),
               post.totalLiked == 0 && post.totalShared == 0 && post.totalComment == 0
                   ? const SizedBox.shrink()
                   : Container(
-                color: Colors.grey.withOpacity(.3),
-                height: 1,
-                margin: const EdgeInsets.only(top: 5, bottom: 10),
-              ),
+                      color: Colors.grey.withOpacity(.3),
+                      height: 1,
+                      margin: const EdgeInsets.only(top: 5, bottom: 10),
+                    ),
               post.totalLiked == 0 && post.totalShared == 0 && post.totalComment == 0
                   ? const SizedBox.shrink()
                   : Padding(
-                padding: const EdgeInsets.only(left: 10, right: 15,bottom: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        if (post.totalLiked != 0) likeModalBottomView(context, post, true);
-                      },
-                      child: post.totalLiked == 0
-                          ? const SizedBox.shrink()
-                          : Row(
+                      padding: const EdgeInsets.only(left: 10, right: 15, bottom: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: const [
-                              SizedBox(width: 45),
-                              Icon(FontAwesomeIcons.solidHeart, size: 20, color: kPrimaryColor),
-                              Positioned(
-                                  left: 21, top: -2, child: Icon(FontAwesomeIcons.thumbsUp, size: 20, color: kPrimaryColor)),
+                          InkWell(
+                            onTap: () {
+                              if (post.totalLiked != 0) likeModalBottomView(context, post, true);
+                            },
+                            child: post.totalLiked == 0
+                                ? const SizedBox.shrink()
+                                : Row(
+                                    children: [
+                                      Stack(
+                                        clipBehavior: Clip.none,
+                                        children: const [
+                                          SizedBox(width: 45),
+                                          Icon(FontAwesomeIcons.solidHeart, size: 20, color: kPrimaryColor),
+                                          Positioned(
+                                              left: 21, top: -2, child: Icon(FontAwesomeIcons.thumbsUp, size: 20, color: kPrimaryColor)),
+                                        ],
+                                      ),
+                                      CustomText(
+                                          title: ' ${post.totalLiked.toString()} ${post.totalLiked == 1 ? "Like" : "Likes"}',
+                                          fontSize: 14,
+                                          color: kPrimaryColor.withOpacity(.8)),
+                                    ],
+                                  ),
+                          ),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+                                  Helper.toScreen(
+                                      context,
+                                      SinglePostScreen(post.commentUrl!,
+                                          isHomeScreen: isHomeScreen,
+                                          isProfileScreen: isFromProfile,
+                                          index: index,
+                                          postID: postID,
+                                          groupID: groupPageID,
+                                          isFromPage: isPage,
+                                          isFromGroup: isGroup));
+                                },
+                                child: CustomText(
+                                    title: post.totalComment == 0
+                                        ? ""
+                                        : '${post.totalComment.toString()} ${post.totalComment == 1 ? "comment" : "comments"}',
+                                    fontSize: 14,
+                                    color: kPrimaryColor.withOpacity(.8)),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  if (post.totalShared != 0) likeModalBottomView(context, post, false);
+                                },
+                                child: CustomText(
+                                    title: post.totalShared == 0
+                                        ? ""
+                                        : '  ${post.totalShared.toString()} ${post.totalShared == 1 ? "share" : "shares"}',
+                                    fontSize: 14,
+                                    color: kPrimaryColor.withOpacity(.8)),
+                              ),
                             ],
                           ),
-                          CustomText(
-                              title: ' ${post.totalLiked.toString()} ${post.totalLiked == 1 ? "Like" : "Likes"}',
-                              fontSize: 14,
-                              color: kPrimaryColor.withOpacity(.8)),
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                            Get.to(SinglePostScreen(post.commentUrl!,
-                                isHomeScreen: isHomeScreen,
-                                isProfileScreen: isFromProfile,
-                                index: index,
-                                postID: postID,
-                                groupID: groupPageID,
-                                isFromPage: isPage,
-                                isFromGroup: isGroup));
-                          },
-                          child: CustomText(
-                              title: post.totalComment == 0
-                                  ? ""
-                                  : '${post.totalComment.toString()} ${post.totalComment == 1 ? "comment" : "comments"}',
-                              fontSize: 14,
-                              color: kPrimaryColor.withOpacity(.8)),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            if (post.totalShared != 0) likeModalBottomView(context, post, false);
-                          },
-                          child: CustomText(
-                              title: post.totalShared == 0
-                                  ? ""
-                                  : '  ${post.totalShared.toString()} ${post.totalShared == 1 ? "share" : "shares"}',
-                              fontSize: 14,
-                              color: kPrimaryColor.withOpacity(.8)),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         );

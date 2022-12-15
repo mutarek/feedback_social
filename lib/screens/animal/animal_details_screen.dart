@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/owner_animal_model.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/screens/animal/add_animal_screen.dart';
@@ -8,7 +9,6 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +63,8 @@ class AnimalDetailsScreen extends StatelessWidget {
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
                                       onPressed: () {
                                         animalProvider.changeGenderStatus(animalModel.gender!);
-                                        Get.to(() => AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
+                                        Helper.toScreen(context, AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
+
                                       },
                                       child:  Text(LocaleKeys.edit.tr())),
                                   ElevatedButton(
@@ -71,7 +72,8 @@ class AnimalDetailsScreen extends StatelessWidget {
                                       onPressed: () {
                                         animalProvider.deleteAnimal(animalModel.id as int, index, (bool status) {
                                           if (status) {
-                                            Get.back();
+                                            Navigator.of(context).pop();
+
                                           }
                                         });
                                       },
@@ -86,7 +88,8 @@ class AnimalDetailsScreen extends StatelessWidget {
                             alignment: Alignment.center,
                             child: InkWell(
                               onTap: () {
-                                Get.to(() => SingleImageView(imageURL: animalModel.image!));
+                                Helper.toScreen(context, SingleImageView(imageURL: animalModel.image!));
+
                               },
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10), child: customNetworkImage(context, animalModel.image!)),

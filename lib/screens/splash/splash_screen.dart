@@ -1,4 +1,3 @@
-
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
@@ -6,11 +5,11 @@ import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:als_frontend/screens/splash/no_internet_screen.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -119,8 +118,7 @@ class _SplashScreenState extends State<SplashScreen> {
         }
       });
     } else {
-      Get.to(const NoInternetScreen());
+      Helper.toScreen(context, const NoInternetScreen());
     }
-
   }
 }

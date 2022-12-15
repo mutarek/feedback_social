@@ -3,16 +3,16 @@ import 'package:als_frontend/screens/auth/set_new_password.dart';
 import 'package:als_frontend/screens/auth/signup_screen2.dart';
 import 'package:als_frontend/screens/auth/widget/rounded_with_cursor.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/route_manager.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
 class OTPScreen extends StatelessWidget {
@@ -99,7 +99,7 @@ class OTPScreen extends StatelessWidget {
                                     auth.otpVerify(pinController.text, (bool status, String message) {
                                       if (status) {
                                         Fluttertoast.showToast(msg: message);
-                                        Get.off(() => SetNewPassword(emailOrNumber: emailOrNumber, otpCode: pinController.text));
+                                        Helper.toScreen(context, SetNewPassword(emailOrNumber: emailOrNumber, otpCode: pinController.text));
                                       } else {
                                         Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                       }
@@ -108,7 +108,7 @@ class OTPScreen extends StatelessWidget {
                                     auth.otpVerify(pinController.text, (bool status, String message) {
                                       if (status) {
                                         Fluttertoast.showToast(msg: message);
-                                        Get.off(SignupScreen2());
+                                        Helper.toScreen(context, SignupScreen2());
                                       } else {
                                         Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                       }

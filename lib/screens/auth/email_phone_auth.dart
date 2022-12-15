@@ -1,6 +1,7 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/otp_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
@@ -11,7 +12,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class EmailOrPhoneNumber extends StatelessWidget {
@@ -193,10 +193,8 @@ class EmailOrPhoneNumber extends StatelessWidget {
                             auth.otpSend(emailController.text, true, (bool status, String message) {
                               if (status) {
                                 Fluttertoast.showToast(msg: message);
-                                Get.off(OTPScreen(
-                                  isFromForgetPassword: false,
-                                  emailOrNumber: emailController.text.toString(),
-                                ));
+                                Helper.toScreen(
+                                    context, OTPScreen(isFromForgetPassword: false, emailOrNumber: emailController.text.toString()));
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                               }
@@ -206,10 +204,8 @@ class EmailOrPhoneNumber extends StatelessWidget {
                             auth.otpSend(auth.code + phoneController.text, false, (bool status, String message) {
                               if (status) {
                                 Fluttertoast.showToast(msg: message);
-                                Get.off(OTPScreen(
-                                  isFromForgetPassword: false,
-                                  emailOrNumber: auth.code + phoneController.text.toString(),
-                                ));
+                                Helper.toScreen(context,
+                                    OTPScreen(isFromForgetPassword: false, emailOrNumber: auth.code + phoneController.text.toString()));
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                               }
@@ -226,7 +222,8 @@ class EmailOrPhoneNumber extends StatelessWidget {
                   alignment: Alignment.center,
                   height: height * 0.4,
                   width: width * 0.4,
-                  child: CustomText(title: LocaleKeys.send_OTP.tr(), textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
+                  child: CustomText(
+                      title: LocaleKeys.send_OTP.tr(), textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
                 ),
               ),
             ],

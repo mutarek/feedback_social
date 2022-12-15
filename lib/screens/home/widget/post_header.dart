@@ -9,12 +9,12 @@ import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/app_constant.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class PostHeaderWidget extends StatelessWidget {
@@ -39,9 +39,9 @@ class PostHeaderWidget extends StatelessWidget {
 
   void route(BuildContext context, int code) {
     if (post.postType == AppConstant.postTypeGroup && code == 0) {
-      Get.to(PublicGroupScreen(post.groupModel!.id.toString(), index: index));
+      Helper.toScreen(context,  PublicGroupScreen(post.groupModel!.id.toString(), index: index));
     } else if (post.postType == AppConstant.postTypePage && code == 1) {
-      Get.to(PublicPageScreen(post.pageModel!.id.toString(), index: index));
+      Helper.toScreen(context,  PublicPageScreen(post.pageModel!.id.toString(), index: index));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));

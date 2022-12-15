@@ -4,18 +4,17 @@ import 'package:als_frontend/screens/auth/email_phone_auth.dart';
 import 'package:als_frontend/screens/auth/signup_screen1.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/route_manager.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -183,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         padding: EdgeInsets.only(left: width * 0.5),
                                         child: TextButton(
                                             onPressed: () {
-                                              Get.to(SignUpScreen1(isFromForgetPassword: true));
+                                              Helper.toScreen(context, SignUpScreen1(isFromForgetPassword: true));
                                             },
                                             child: Text(
                                               LocaleKeys.forget_Password.tr(),
@@ -228,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 backgroundColor: Colors.white,
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
                                             onPressed: () {
-                                              Get.to(EmailOrPhoneNumber());
+                                              Helper.toScreen(context, EmailOrPhoneNumber());
                                             },
                                             child: Text(
                                               LocaleKeys.create_account.tr(),

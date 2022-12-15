@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
@@ -12,7 +13,6 @@ import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen2 extends StatelessWidget {
@@ -207,7 +207,7 @@ class SignupScreen2 extends StatelessWidget {
                                 if (status) {
                                   Fluttertoast.showToast(msg: message);
                                   Provider.of<NotificationProvider>(context, listen: false).check();
-                                  Get.off(const DashboardScreen());
+                                  Helper.toScreen(context,const DashboardScreen());
                                 } else {
                                   Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                 }

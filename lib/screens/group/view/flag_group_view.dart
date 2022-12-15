@@ -1,3 +1,4 @@
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
@@ -6,7 +7,6 @@ import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +58,8 @@ class FlagGroupView extends StatelessWidget {
                                     return InkWell(
                                       onTap: () {
                                         provider.loadingStart();
-                                        Get.to(UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
+                                        Helper.toScreen(context,  UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
+
                                       },
 
                                       child: Padding(
@@ -110,7 +111,8 @@ class FlagGroupView extends StatelessWidget {
                               return CustomPageGroupButton(
                                   onTap: () {
                                     provider.loadingStart();
-                                    Get.to(PublicGroupScreen(provider.allSuggestGroupList[index].id.toString()));
+                                    Helper.toScreen(context,  PublicGroupScreen(provider.allSuggestGroupList[index].id.toString()));
+
                                   },
                                   goToGroupOrPage: () {},
                                   groupOrPageImage: provider.allSuggestGroupList[index].coverPhoto,

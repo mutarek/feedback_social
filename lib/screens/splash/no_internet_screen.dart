@@ -1,8 +1,8 @@
 
 
 import 'package:als_frontend/screens/splash/splash_screen.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class NoInternetScreen extends StatefulWidget {
   const NoInternetScreen({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    Get.to(const SplashScreen());
+                    Helper.toScreen(context, const SplashScreen());
                   },
                   child: const Text("Refresh")),
             ],
