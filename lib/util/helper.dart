@@ -8,28 +8,28 @@ import 'package:flutter/material.dart';
 class Helper {
   static final navigatorKey = GlobalKey<NavigatorState>();
 
-  static toScreen(context, screen) {
-    Navigator.push(context, SlideRightToLeft(page: screen));
+  static toScreen(screen) {
+    Navigator.push(navigatorKey.currentState!.context, SlideRightToLeft(page: screen));
   }
 
   static back() {
     Navigator.of(navigatorKey.currentState!.context).pop();
   }
 
-  static toReplacementScreenSlideRightToLeft(context, screen) {
-    Navigator.pushReplacement(context, SlideRightToLeft(page: screen));
+  static toReplacementScreenSlideRightToLeft(screen) {
+    Navigator.pushReplacement(navigatorKey.currentState!.context, SlideRightToLeft(page: screen));
   }
 
-  static toReplacementScreenSlideLeftToRight(context, screen) {
-    Navigator.pushReplacement(context, SlideLeftToRight(page: screen));
+  static toReplacementScreenSlideLeftToRight(screen) {
+    Navigator.pushReplacement(navigatorKey.currentState!.context, SlideLeftToRight(page: screen));
   }
 
-  static toRemoveUntilScreen(context, screen) {
-    Navigator.pushAndRemoveUntil(context, SlideRightToLeft(page: screen), (route) => false);
+  static toRemoveUntilScreen(screen) {
+    Navigator.pushAndRemoveUntil(navigatorKey.currentState!.context, SlideRightToLeft(page: screen), (route) => false);
   }
 
-  static onWillPop(context, screen) {
-    Navigator.pushAndRemoveUntil(context, SlideRightToLeft(page: screen), (route) => false);
+  static onWillPop(screen) {
+    Navigator.pushAndRemoveUntil(navigatorKey.currentState!.context, SlideRightToLeft(page: screen), (route) => false);
   }
 
   static showSnack(context, message, {color = colorPrimaryLight, duration = 2}) {

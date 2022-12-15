@@ -35,7 +35,7 @@ class TimeLineWidget extends StatelessWidget {
 
   void route(BuildContext context, int code) {
     if (newsFeedData.sharePost!.shareFrom == 'group' && code == 0) {
-      Helper.toScreen(context, PublicGroupScreen(newsFeedData.sharePost!.post!.groupModel!.id.toString(), index: index));
+      Helper.toScreen(PublicGroupScreen(newsFeedData.sharePost!.post!.groupModel!.id.toString(), index: index));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == newsFeedData.sharePost!.post!.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));

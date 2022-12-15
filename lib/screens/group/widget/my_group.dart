@@ -32,7 +32,7 @@ class MyGroup extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Helper.toScreen(context, PublicPageScreen(groupProvider.authorGroupList[index].id.toString()));
+                    Helper.toScreen(PublicPageScreen(groupProvider.authorGroupList[index].id.toString()));
                   },
                   child: ListTile(
                       leading: CircleAvatar(

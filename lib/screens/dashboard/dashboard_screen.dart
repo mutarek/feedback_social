@@ -157,7 +157,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     iconSize: 20.0,
                                     onPressed: () {
                                       Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
-                                      Helper.toScreen(context, SearchScreen());
+                                      Helper.toScreen(SearchScreen());
 
                                     },
                                   ),
@@ -165,7 +165,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: InkWell(
                                       onTap: () {
-                                        Helper.toScreen(context, const ProfileScreen());
+                                        Helper.toScreen(const ProfileScreen());
 
                                       },
                                       child: Container(
@@ -203,7 +203,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           iconSize: 20.0,
                                           onPressed: () {
                                             Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
-                                            Helper.toScreen(context, SearchScreen());
+                                            Helper.toScreen(SearchScreen());
                                           },
                                         )
                                       : const SizedBox.shrink(),

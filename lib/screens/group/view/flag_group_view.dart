@@ -58,7 +58,7 @@ class FlagGroupView extends StatelessWidget {
                                     return InkWell(
                                       onTap: () {
                                         provider.loadingStart();
-                                        Helper.toScreen(context,  UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
+                                        Helper.toScreen(UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
 
                                       },
 
@@ -111,7 +111,7 @@ class FlagGroupView extends StatelessWidget {
                               return CustomPageGroupButton(
                                   onTap: () {
                                     provider.loadingStart();
-                                    Helper.toScreen(context,  PublicGroupScreen(provider.allSuggestGroupList[index].id.toString()));
+                                    Helper.toScreen(PublicGroupScreen(provider.allSuggestGroupList[index].id.toString()));
 
                                   },
                                   goToGroupOrPage: () {},

@@ -100,7 +100,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 child: CustomButton(
                                     btnTxt: LocaleKeys.your_animals.tr(),
                                     onTap: () {
-                                      Helper.toScreen(context, MyAnimalScreen());
+                                      Helper.toScreen( MyAnimalScreen());
                                     },
                                     textWhiteColor: true,
                                     fontSize: 15),

@@ -207,7 +207,7 @@ class SignupScreen2 extends StatelessWidget {
                                 if (status) {
                                   Fluttertoast.showToast(msg: message);
                                   Provider.of<NotificationProvider>(context, listen: false).check();
-                                  Helper.toScreen(context,const DashboardScreen());
+                                  Helper.toScreen(const DashboardScreen());
                                 } else {
                                   Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                 }

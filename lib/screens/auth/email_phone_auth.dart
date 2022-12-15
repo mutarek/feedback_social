@@ -194,7 +194,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                               if (status) {
                                 Fluttertoast.showToast(msg: message);
                                 Helper.toScreen(
-                                    context, OTPScreen(isFromForgetPassword: false, emailOrNumber: emailController.text.toString()));
+                                    OTPScreen(isFromForgetPassword: false, emailOrNumber: emailController.text.toString()));
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                               }
@@ -204,7 +204,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                             auth.otpSend(auth.code + phoneController.text, false, (bool status, String message) {
                               if (status) {
                                 Fluttertoast.showToast(msg: message);
-                                Helper.toScreen(context,
+                                Helper.toScreen(
                                     OTPScreen(isFromForgetPassword: false, emailOrNumber: auth.code + phoneController.text.toString()));
                               } else {
                                 Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);

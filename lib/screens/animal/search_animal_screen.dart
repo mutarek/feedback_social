@@ -111,7 +111,7 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
                                             }
                                             bool isEdit =
                                                 Provider.of<AuthProvider>(context, listen: false).userCode == searchCode ? true : false;
-                                            Helper.toScreen(context, AnimalDetailsScreen(o, index, isEditDelete: isEdit));
+                                            Helper.toScreen(AnimalDetailsScreen(o, index, isEditDelete: isEdit));
                                           },
                                           child: Card(
                                             child: ListTile(

@@ -58,7 +58,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           List<String> noticeType2 = ['friend'];
                           Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                           if (noticeType.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
-                            Helper.toScreen(context, SinglePostScreen("${notificationProvider.notificationLists[index].url!}comment/"));
+                            Helper.toScreen(SinglePostScreen("${notificationProvider.notificationLists[index].url!}comment/"));
                           } else if (noticeType2.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => PublicProfileScreen(notificationProvider.notificationLists[index].actor!.id.toString())));

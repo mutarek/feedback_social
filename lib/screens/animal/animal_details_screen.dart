@@ -63,7 +63,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
                                       onPressed: () {
                                         animalProvider.changeGenderStatus(animalModel.gender!);
-                                        Helper.toScreen(context, AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
+                                        Helper.toScreen( AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
 
                                       },
                                       child:  Text(LocaleKeys.edit.tr())),
@@ -88,7 +88,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                             alignment: Alignment.center,
                             child: InkWell(
                               onTap: () {
-                                Helper.toScreen(context, SingleImageView(imageURL: animalModel.image!));
+                                Helper.toScreen( SingleImageView(imageURL: animalModel.image!));
 
                               },
                               child: ClipRRect(

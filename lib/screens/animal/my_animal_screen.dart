@@ -102,7 +102,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                             splashColor: Colors.green,
                                             onPressed: () {
                                               if (searchController.text.isNotEmpty && searchController.text.length == 6) {
-                                                Helper.toScreen(context, SearchAnimalScreen(searchController.text));
+                                                Helper.toScreen( SearchAnimalScreen(searchController.text));
                                                 FocusScope.of(context).unfocus();
                                               } else {
                                                 Fluttertoast.showToast(msg: LocaleKeys.write_6_digits_code_to_search.tr());
@@ -147,7 +147,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                       ElevatedButton(
                                           onPressed: () {
                                             animalProvider.clearImage();
-                                            Helper.toScreen(context, AddEditAnimalScreen());
+                                            Helper.toScreen( AddEditAnimalScreen());
                                           },
                                           child: Text(LocaleKeys.add.tr()))
                                     ],
@@ -163,7 +163,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                             itemBuilder: (context, index) {
                                               return InkWell(
                                                 onTap: () {
-                                                  Helper.toScreen(context, AnimalDetailsScreen(animalProvider.animals[index], index));
+                                                  Helper.toScreen( AnimalDetailsScreen(animalProvider.animals[index], index));
                                                 },
                                                 child: Card(
                                                   child: ListTile(

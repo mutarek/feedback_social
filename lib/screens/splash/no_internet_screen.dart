@@ -33,7 +33,7 @@ class _NoInternetScreenState extends State<NoInternetScreen> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    Helper.toScreen(context, const SplashScreen());
+                    Helper.toScreen(const SplashScreen());
                   },
                   child: const Text("Refresh")),
             ],

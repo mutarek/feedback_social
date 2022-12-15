@@ -147,7 +147,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: InkWell(
                                     onTap: () {
-                                      Helper.toScreen(context, const MyGroup());
+                                      Helper.toScreen(const MyGroup());
                                     },
                                     child: Text(LocaleKeys.see_all.tr(),
                                         style: latoStyle300Light.copyWith(fontSize: 10, color: Colors.black))),
@@ -176,7 +176,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                       return InkWell(
                                         onTap: () {
                                           Helper.toScreen(
-                                              context, UserGroupScreen(groupProvider.authorGroupList[index].id.toString(), index));
+                                              UserGroupScreen(groupProvider.authorGroupList[index].id.toString(), index));
                                         },
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
@@ -225,7 +225,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: InkWell(
                                   onTap: () {
-                                    Helper.toScreen(context, const JoinedGroup());
+                                    Helper.toScreen(const JoinedGroup());
                                   },
                                   child:
                                       Text(LocaleKeys.see_all.tr(), style: latoStyle300Light.copyWith(fontSize: 10, color: Colors.black)),
@@ -250,7 +250,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                   itemBuilder: (BuildContext context, int index) {
                                     return InkWell(
                                       onTap: () {
-                                        Helper.toScreen(context, PublicGroupScreen(groupProvider.myGroupList[index].id.toString()));
+                                        Helper.toScreen(PublicGroupScreen(groupProvider.myGroupList[index].id.toString()));
                                       },
                                       child: ListTile(
                                           leading: CircleAvatar(
@@ -291,7 +291,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           padding: const EdgeInsets.only(left: 250, top: 50),
                           child: FloatingActionButton(
                             onPressed: () {
-                              Helper.toScreen(context, const CreateGroupScreen());
+                              Helper.toScreen(const CreateGroupScreen());
                             },
                             child: const Icon(CupertinoIcons.plus),
                           ),
@@ -303,7 +303,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Helper.toScreen(context, PublicGroupScreen(groupProvider.allSuggestGroupList[index].id.toString()));
+                              Helper.toScreen(PublicGroupScreen(groupProvider.allSuggestGroupList[index].id.toString()));
                             },
                             child: ListTile(
                                 leading: CircleAvatar(

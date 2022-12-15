@@ -5,7 +5,6 @@ import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/chat_repo.dart';
 import 'package:als_frontend/data/repository/comment_repo.dart';
 import 'package:als_frontend/data/repository/group_repo.dart';
-import 'package:als_frontend/data/repository/language_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/notification_repo.dart';
 import 'package:als_frontend/data/repository/page_repo.dart';
@@ -43,7 +42,6 @@ Future<void> init() async {
   // Core
   sl.registerLazySingleton(() => DioClient(AppConstant.baseUrl, sl(), sharedPreferences: sl(), loggingInterceptor: sl()));
   // Repository
-  sl.registerLazySingleton(() => LanguageRepo());
   sl.registerLazySingleton(() => CommentRepo(dioClient: sl()));
   sl.registerLazySingleton(() => AuthRepo(sharedPreferences: sl(), dioClient: sl()));
   sl.registerLazySingleton(() => NewsfeedRepo(dioClient: sl()));

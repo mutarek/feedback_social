@@ -40,7 +40,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
               children: [
                 InkWell(
                   onTap: () {
-                    Helper.toScreen(context, const ProfileScreen());
+                    Helper.toScreen(const ProfileScreen());
                   },
                   child: Container(
                     padding: const EdgeInsets.all(2),

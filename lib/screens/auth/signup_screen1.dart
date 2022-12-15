@@ -183,7 +183,7 @@ class SignUpScreen1 extends StatelessWidget {
                                           !auth.isSelectEmail, (bool status, String message) {
                                         if (status) {
                                           Fluttertoast.showToast(msg: message);
-                                          Helper.toScreen(context, OTPScreen(
+                                          Helper.toScreen(OTPScreen(
                                             isFromForgetPassword: isFromForgetPassword,
                                             emailOrNumber: emailPhoneController.text.toString(),
                                           ));
@@ -197,7 +197,7 @@ class SignUpScreen1 extends StatelessWidget {
                                       auth.otpSend(emailPhoneController.text, false, (bool status, String message) {
                                         if (status) {
                                           Fluttertoast.showToast(msg: message);
-                                          Helper.toScreen(context,OTPScreen(
+                                          Helper.toScreen(OTPScreen(
                                             isFromForgetPassword: isFromForgetPassword,
                                             emailOrNumber: emailPhoneController.text.toString(),
                                           ));

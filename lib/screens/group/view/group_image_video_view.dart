@@ -45,7 +45,7 @@ class _GroupImageVideoViewState extends State<GroupImageVideoView> {
                   return InkWell(
                       onTap: () {
                         if (widget.isForImage) {
-                          Helper.toScreen(context,  SingleImageView(imageURL: groupProvider.groupImagesLists[index].image));
+                          Helper.toScreen(SingleImageView(imageURL: groupProvider.groupImagesLists[index].image));
 
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
