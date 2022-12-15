@@ -9,13 +9,13 @@ import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
 import 'package:als_frontend/screens/profile/widget/update_cover_photo.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Navigator.of(context).pop();
                                 },
                                 viewCoverPhoto: (() {
-                                  Get.to(() => SingleImageView(imageURL: profileProvider.userprofileData.coverImage!));
+                                  Helper.toScreen(SingleImageView(imageURL: profileProvider.userprofileData.coverImage!));
                                 }),
                                 coverphoto: (profileProvider.isProfileLoading == false)
                                     ? profileProvider.userprofileData.coverImage!
@@ -95,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ? profileProvider.userprofileData.profileImage!
                                       : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                                   viewProfilePhoto: () {
-                                    Get.to(() => SingleImageView(imageURL: profileProvider.userprofileData.profileImage!));
+                                    Helper.toScreen(SingleImageView(imageURL: profileProvider.userprofileData.profileImage!));
                                   }),
                             )
                           ],
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   flex: 1,
                                   child: GestureDetector(
                                     onTap: (){
-                                      Get.to(()=> const FollowersPage());
+                                      Helper.toScreen(const FollowersPage());
                                     },
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,

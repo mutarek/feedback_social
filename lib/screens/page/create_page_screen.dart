@@ -4,6 +4,7 @@ import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
@@ -12,7 +13,6 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/route_manager.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -130,14 +130,14 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                                     .then((value) {
                                   if (value) {
                                     pageNameController.clear();
-                                    Get.back();
+                                    Helper.back();
                                   }
                                 });
                               } else {
                                 pageProvider.createPage(pageNameController.text, otherProvider.selectedFile, (bool status) {
                                   if (status) {
                                     pageNameController.clear();
-                                    Get.back();
+                                    Helper.back();
                                   }
                                 });
                               }

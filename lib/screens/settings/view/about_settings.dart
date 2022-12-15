@@ -5,11 +5,11 @@ import 'package:als_frontend/screens/settings/view/block_list.dart';
 import 'package:als_frontend/screens/settings/view/email_update.dart';
 import 'package:als_frontend/screens/settings/view/password_update.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +37,7 @@ class _AboutSettingsState extends State<AboutSettings> {
         backgroundColor: const Color(0xffFFFFFF),
         leading: InkWell(
             onTap: () {
-              Get.back();
+              Helper.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
         title: Text(LocaleKeys.about.tr(),style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
@@ -88,7 +88,7 @@ class _AboutSettingsState extends State<AboutSettings> {
                               padding: const EdgeInsets.only(top: 10),
                               child: InkWell(
                                 onTap: () {
-                                  Get.to(EditProfile(userprofileData: profileProvider.userprofileData));
+                                  Helper.toScreen(EditProfile(userprofileData: profileProvider.userprofileData));
                                 },
                                 child: Container(
                                   height: 35,
@@ -122,7 +122,7 @@ class _AboutSettingsState extends State<AboutSettings> {
                               padding: const EdgeInsets.only(top: 10),
                               child: InkWell(
                                 onTap: () {
-                                  Get.to(const PasswordUpdateSettings());
+                                  Helper.toScreen(const PasswordUpdateSettings());
                                 },
                                 child: Container(
                                   height: 35,
@@ -156,7 +156,7 @@ class _AboutSettingsState extends State<AboutSettings> {
                               padding: const EdgeInsets.only(top: 10),
                               child: InkWell(
                                 onTap: () {
-                                  Get.to( EmailUpdateSettings());
+                                  Helper.toScreen(EmailUpdateSettings());
                                 },
                                 child: Container(
                                   height: 35,
@@ -190,7 +190,7 @@ class _AboutSettingsState extends State<AboutSettings> {
                               padding: const EdgeInsets.only(top: 10),
                               child: InkWell(
                                 onTap: () {
-                                  Get.to(const BlockListUpdateSettings());
+                                 Helper.toScreen(const BlockListUpdateSettings());
                                 },
                                 child: Container(
                                   height: 35,

@@ -17,6 +17,7 @@ import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -26,7 +27,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -87,7 +87,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
 
   void route(BuildContext context, int code, NewsFeedModel newsFeedData) {
     if (newsFeedData.sharePost!.shareFrom == 'group' && code == 0) {
-      Get.to(PublicGroupScreen(newsFeedData.sharePost!.post!.groupModel!.id.toString(), index: 0));
+      Helper.toScreen(PublicGroupScreen(newsFeedData.sharePost!.post!.groupModel!.id.toString(), index: 0));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == newsFeedData.sharePost!.post!.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
@@ -106,7 +106,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
       onWillPop: () {
         Provider.of<CommentProvider>(context, listen: false).channelDismiss();
         Provider.of<CommentProvider>(context, listen: false).replyChannelDismiss();
-        Get.back();
+        Helper.back();
         return Future.value(true);
       },
       child: Consumer3<NewsFeedProvider, CommentProvider, AuthProvider>(

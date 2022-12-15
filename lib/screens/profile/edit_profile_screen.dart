@@ -2,13 +2,13 @@ import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -54,7 +54,7 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
-              Get.back();
+              Helper.back();
             },
             icon: const Icon(FontAwesomeIcons.arrowLeft, color: Colors.black)),
         title: CustomText(title: LocaleKeys.update_Profile_Info.tr(), color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
@@ -177,7 +177,7 @@ class _EditProfileState extends State<EditProfile> {
                               fromAddressController.text, (bool status) {
                             if (status) {
                               Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                              Get.back();
+                              Helper.back();
                             }
                           });
                         },

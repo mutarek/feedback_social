@@ -10,13 +10,13 @@ import 'package:als_frontend/screens/profile/view/public_photo_video_screen.dart
 import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -74,10 +74,10 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                           CoverPhotoWidget(
                               isTrue: false,
                               back: () {
-                                Get.back();
+                                Helper.back();
                               },
                               viewCoverPhoto: () {
-                                Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.coverImage!));
+                                Helper.toScreen(SingleImageView(imageURL: publicProvider.publicProfileData.coverImage!));
                               },
                               coverPhoto: (publicProvider.publicProfileData.coverImage != null)
                                   ? publicProvider.publicProfileData.coverImage!
@@ -88,7 +88,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
                             left: 30,
                             child: ProfilePhotoWidget(
                               viewProfilePhoto: () {
-                                Get.to(() => SingleImageView(imageURL: publicProvider.publicProfileData.profileImage!));
+                                Helper.toScreen(SingleImageView(imageURL: publicProvider.publicProfileData.profileImage!));
                               },
                               isTrue: false,
                               profileImage: (publicProvider.publicProfileData.profileImage != null)

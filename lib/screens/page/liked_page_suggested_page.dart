@@ -5,12 +5,12 @@ import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/page/widget/my_page.dart';
 import 'package:als_frontend/screens/page/widget/your_liked_page.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class LikedPageSuggestedPage extends StatefulWidget {
@@ -52,7 +52,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.back();
+                        Helper.back();
                       },
                       icon: const Icon(Icons.arrow_back_ios)),
                   SizedBox(
@@ -153,7 +153,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: InkWell(
                                     onTap: () {
-                                      Get.to(const MyPage());
+                                      Helper.toScreen(const MyPage());
                                     },
                                     child: Text("See all",
                                         style: latoStyle300Light.copyWith(fontSize: 10,color: Colors.black))),
@@ -186,8 +186,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                     itemBuilder: (BuildContext ctx, index) {
                                       return InkWell(
                                         onTap: () {
-                                          Get.to(UserPageScreen(
-                                              pageProvider.authorPageLists[index].id.toString(),
+                                          Helper.toScreen(UserPageScreen(pageProvider.authorPageLists[index].id.toString(),
                                               index));
                                         },
                                         child: Row(
@@ -240,7 +239,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: InkWell(
                                   onTap: () {
-                                    Get.to(const YourLikedPage());
+                                    Helper.toScreen(const YourLikedPage());
                                   },
                                   child: Text(LocaleKeys.see_all.tr(),
                                       style:  latoStyle300Light.copyWith(fontSize: 10,color: Colors.black)),
@@ -268,8 +267,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                   itemBuilder: (BuildContext context, int index) {
                                     return InkWell(
                                       onTap: () {
-                                        Get.to(PublicPageScreen(
-                                            pageProvider.likedPageLists[index].id.toString()));
+                                        Helper.toScreen(PublicPageScreen(pageProvider.likedPageLists[index].id.toString()));
                                       },
                                       child: ListTile(
                                           leading: CircleAvatar(
@@ -315,7 +313,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           padding: const EdgeInsets.only(left: 250, top: 50),
                           child: FloatingActionButton(
                             onPressed: () {
-                              Get.to(const CreatePageScreen());
+                              Helper.toScreen(CreatePageScreen());
                             },
                             child: const Icon(CupertinoIcons.plus),
                           ),
@@ -327,8 +325,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(PublicPageScreen(
-                                  pageProvider.allSuggestPageList[index].id.toString()));
+                              Helper.toScreen(PublicPageScreen(pageProvider.allSuggestPageList[index].id.toString()));
                             },
                             child: ListTile(
                                 leading: CircleAvatar(

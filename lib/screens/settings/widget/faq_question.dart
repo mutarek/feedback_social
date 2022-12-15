@@ -1,10 +1,10 @@
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/screens/settings/widget/faq_all_question.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
@@ -64,7 +64,7 @@ class _FaqSceeenState extends State<FaqSceeen> {
                               child: Center(
                                   child: IconButton(
                                       onPressed: () {
-                                        Get.back();
+                                        Helper.back();
                                       },
                                       icon: const Icon(FontAwesomeIcons.arrowLeft, size: 15)))),
                           Text(

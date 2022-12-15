@@ -1,4 +1,5 @@
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
@@ -10,7 +11,6 @@ import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_w
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
@@ -143,7 +143,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               return InkWell(
                                 onTap: () {
                                   provider.loadingStart();
-                                  Get.to(UserPageScreen(provider.authorPageLists[index2].id.toString(), index2));
+                                  Helper.toScreen(UserPageScreen(provider.authorPageLists[index2].id.toString(), index2));
                                 },
                                 child: Container(
                                   width: 70,
@@ -190,7 +190,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             return CustomPageGroupButton(
                                 onTap: () {
                                   provider.loadingStart();
-                                  Get.to(PublicPageScreen(provider.likedPageLists[index].id.toString(),
+                                  Helper.toScreen(PublicPageScreen(provider.likedPageLists[index].id.toString(),
                                       isFromMyPageScreen: true, index: index));
                                 },
                                 goToGroupOrPage: () {},
@@ -221,7 +221,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 return CustomPageGroupButton(
                     onTap: () {
                       provider.loadingStart();
-                      Get.to(PublicPageScreen(provider.allSuggestPageList[index].id.toString(),
+                      Helper.toScreen(PublicPageScreen(provider.allSuggestPageList[index].id.toString(),
                           isFromMyPageScreen: true, index: index, isFromSuggestedPage: true));
                     },
                     goToGroupOrPage: () {},

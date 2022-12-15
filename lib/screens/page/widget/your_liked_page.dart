@@ -2,9 +2,9 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
@@ -35,8 +35,7 @@ class YourLikedPage extends StatelessWidget {
                   itemBuilder: (context,index){
                     return InkWell(
                       onTap: () {
-                        Get.to(PublicPageScreen(
-                            pageProvider.likedPageLists[index].id.toString()));
+                        Helper.toScreen(PublicPageScreen(pageProvider.likedPageLists[index].id.toString()));
                       },
                       child: ListTile(
                           leading: CircleAvatar(

@@ -7,6 +7,7 @@ import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/network_image.dart';
@@ -14,7 +15,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -142,10 +142,10 @@ class SearchScreen extends StatelessWidget {
                                                   onTap: () {
                                                     if (Provider.of<AuthProvider>(context, listen: false).userID ==
                                                         searchProvider.searchModel.people![index].id!.toString()) {
-                                                      Get.to(() => const ProfileScreen());
+                                                      Helper.toScreen( const ProfileScreen());
                                                     } else {
-                                                      Get.to(() =>
-                                                          PublicProfileScreen(searchProvider.searchModel.people![index].id!.toString()));
+                                                      Helper.toScreen(
+                                                      PublicProfileScreen(searchProvider.searchModel.people![index].id!.toString()));
                                                     }
                                                   },
                                                   child: Row(
@@ -192,11 +192,11 @@ class SearchScreen extends StatelessWidget {
                                                         child: InkWell(
                                                           onTap: () {
                                                             if (searchProvider.searchModel.groups![index].isAuthor == false) {
-                                                              Get.to(PublicGroupScreen(
+                                                              Helper.toScreen( PublicGroupScreen(
                                                                   searchProvider.searchModel.groups![index].id.toString(),
                                                                   index: index));
                                                             } else {
-                                                              Get.to(UserGroupScreen(
+                                                              Helper.toScreen( UserGroupScreen(
                                                                   searchProvider.searchModel.groups![index].id.toString(), index));
                                                             }
                                                           },
@@ -249,10 +249,10 @@ class SearchScreen extends StatelessWidget {
                                                         child: InkWell(
                                                           onTap: () {
                                                             if (searchProvider.searchModel.pages![index].isAuthor == false) {
-                                                              Get.to(PublicPageScreen(
+                                                              Helper.toScreen( PublicPageScreen(
                                                                   searchProvider.searchModel.pages![index].id.toString()));
                                                             } else {
-                                                              Get.to(UserPageScreen(
+                                                              Helper.toScreen( UserPageScreen(
                                                                   searchProvider.searchModel.pages![index].id.toString(), index));
                                                             }
                                                           },

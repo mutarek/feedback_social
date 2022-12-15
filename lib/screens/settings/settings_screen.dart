@@ -14,7 +14,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +87,7 @@ class SettingsScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 10),
                               child: InkWell(
                                 onTap: () {
-                                  Get.to(const AboutSettings());
+                                  Helper.toScreen(const AboutSettings());
                                 },
                                 child: Container(
                                   height: 35,
@@ -110,7 +109,8 @@ class SettingsScreen extends StatelessWidget {
                             name: "Language",
                             subName: AppConstant.languagesList[0].languageName,
                             goingScreen: () {
-                              Get.to(const LanguageScreen());
+                             Helper
+                             .toScreen(const LanguageScreen());
                             }),
                         const SizedBox(height: 20),
                         SettingsWidget(
@@ -118,7 +118,7 @@ class SettingsScreen extends StatelessWidget {
                           name: LocaleKeys.notifications.tr(),
                           subName: "",
                           goingScreen: () {
-                            Get.to(const NotificationSettings());
+                            Helper.toScreen(const NotificationSettings());
                           },
                         ),
                         const SizedBox(height: 20),
@@ -153,7 +153,7 @@ class SettingsScreen extends StatelessWidget {
                           name: LocaleKeys.help.tr(),
                           subName: "",
                           goingScreen: () {
-                            Get.to(const HelpDesk());
+                            Helper.toScreen(const HelpDesk());
                           },
                         ),
                         const SizedBox(height: 20),
@@ -162,7 +162,7 @@ class SettingsScreen extends StatelessWidget {
                           name: LocaleKeys.others.tr(),
                           subName: "",
                           goingScreen: () {
-                            Get.to(const OtherSettings());
+                            Helper.toScreen(OtherSettings());
                           },
                         ),
                         const SizedBox(height: 20),
@@ -171,7 +171,7 @@ class SettingsScreen extends StatelessWidget {
                           name: LocaleKeys.terms_and_Conditions.tr(),
                           subName: "",
                           goingScreen: () {
-                            Get.to(const TermsAndConditionsScreen());
+                            Helper.toScreen(const TermsAndConditionsScreen());
                           },
                         ),
                       ],

@@ -4,10 +4,10 @@ import 'package:als_frontend/screens/settings/help_chat_screen.dart';
 import 'package:als_frontend/screens/settings/widget/faq_question.dart';
 import 'package:als_frontend/screens/settings/widget/help_desk_widget.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +49,7 @@ class HelpDesk extends StatelessWidget {
                                   child: Center(
                                       child: IconButton(
                                           onPressed: () {
-                                            Get.back();
+                                            Helper.back();
                                           },
                                           icon: const Icon(
                                             FontAwesomeIcons.arrowLeft,
@@ -118,7 +118,7 @@ class HelpDesk extends StatelessWidget {
                     discription: LocaleKeys.find_intelligent_answer_instantly.tr(),
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
-                    Get.to(const FaqSceeen());
+                    Helper.toScreen(const FaqSceeen());
                     },
                   ),
                   SizedBox(height: height * 0.01),

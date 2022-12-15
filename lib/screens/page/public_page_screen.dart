@@ -6,11 +6,11 @@ import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/page_image_video_view.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -79,12 +79,12 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                               isTrue: false,
                                               coverPhotoChange: () {},
                                               back: () {
-                                                Get.back();
+                                                Helper.back();
                                               },
                                               coverPhoto:
                                                   pageProvider.pageDetailsModel != null ? pageProvider.pageDetailsModel!.coverPhoto! : "",
                                               viewCoverPhoto: () {
-                                                Get.to(() => SingleImageView(imageURL: pageProvider.pageDetailsModel!.coverPhoto!));
+                                                Helper.toScreen(SingleImageView(imageURL: pageProvider.pageDetailsModel!.coverPhoto!,));
                                               },
                                             ),
                                           ),
@@ -115,10 +115,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                     SizedBox(height: height * 0.01),
                                                     InkWell(
                                                       onTap: () {
-                                                        // groupFriendListProvider.friendsList = [];
-                                                        // groupInviteProvider.groupId = groupProvider.groupDetails!.id as int;
-                                                        // groupFriendListProvider.groupId = groupProvider.groupDetails!.id as int;
-                                                        Get.to(() => InviteGroupScreen(int.parse(widget.pageID)));
+                                                        Helper.toScreen(InviteGroupScreen(int.parse(widget.pageID)));
                                                       },
                                                       child: Row(
                                                         mainAxisAlignment: MainAxisAlignment.start,
