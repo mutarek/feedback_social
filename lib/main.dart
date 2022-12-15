@@ -34,6 +34,7 @@ void main() async {
       path: 'assets/lang',
       supportedLocales: const [Locale('en'), Locale('bn')],
       fallbackLocale: const Locale('en'),
+      useOnlyLangCode: true,
       assetLoader: const CodegenLoader(),
       child: MultiProvider(
         providers: [
