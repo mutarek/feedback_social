@@ -6,8 +6,14 @@ import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class Helper {
+  static final navigatorKey = GlobalKey<NavigatorState>();
+
   static toScreen(context, screen) {
     Navigator.push(context, SlideRightToLeft(page: screen));
+  }
+
+  static back() {
+    Navigator.of(navigatorKey.currentState!.context).pop();
   }
 
   static toReplacementScreenSlideRightToLeft(context, screen) {

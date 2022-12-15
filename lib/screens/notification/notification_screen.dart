@@ -5,8 +5,8 @@ import 'package:als_frontend/screens/post/single_post_screen.dart';
 import 'package:als_frontend/screens/notification/widget/notifications_card.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -58,11 +58,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           List<String> noticeType2 = ['friend'];
                           Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                           if (noticeType.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
-                            Get.to(() => SinglePostScreen("${notificationProvider.notificationLists[index].url!}comment/"));
+                            Helper.toScreen(context, SinglePostScreen("${notificationProvider.notificationLists[index].url!}comment/"));
                           } else if (noticeType2.contains(notificationProvider.notificationLists[index].noticeType!.toLowerCase())) {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => PublicProfileScreen(notificationProvider.notificationLists[index].actor!.id.toString())));
-                          } else {}
+                          }
                         },
                         textColor: Colors.black,
                         likecmnt: "${notificationProvider.notificationLists[index].description}",

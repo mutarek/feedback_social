@@ -6,13 +6,13 @@ import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/app_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class MyGroupScreen extends StatefulWidget {
@@ -67,8 +67,6 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
               )
             : const SizedBox.shrink(),
       ),
-
-
       body: Consumer<GroupProvider>(
           builder: (context, provider, child) => provider.isLoading
               ? const Center(child: FriendReqShimmerWidget())
@@ -142,21 +140,20 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                               return InkWell(
                                 onTap: () {
                                   provider.loadingStart();
-                                  Get.to(UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
+                                  Helper.toScreen(context, UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
                                 },
                                 child: Container(
                                   width: 70,
                                   padding: const EdgeInsets.all(6.0),
                                   child: Column(
                                     children: [
-
                                       CircleAvatar(
                                         radius: 25,
                                         backgroundColor: Palette.notificationColor,
                                         child: CircleAvatar(
                                           radius: 24,
                                           backgroundColor: Palette.primary,
-                                          child: getCircularImage(50,provider.authorGroupList[index2].coverPhoto),
+                                          child: getCircularImage(50, provider.authorGroupList[index2].coverPhoto),
                                         ),
                                       ),
                                       const SizedBox(height: 3),
@@ -191,7 +188,8 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                             return CustomPageGroupButton(
                                 onTap: () {
                                   provider.loadingStart();
-                                  Get.to(PublicGroupScreen(provider.myGroupList[index].id.toString(), index: index, isFromMYGroup: true));
+                                  Helper.toScreen(context,
+                                      PublicGroupScreen(provider.myGroupList[index].id.toString(), index: index, isFromMYGroup: true));
                                 },
                                 goToGroupOrPage: () {},
                                 groupOrPageImage: provider.myGroupList[index].coverPhoto,
@@ -220,7 +218,8 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                 return CustomPageGroupButton(
                     onTap: () {
                       provider.loadingStart();
-                      Get.to(PublicGroupScreen(provider.allSuggestGroupList[index].id.toString(), index: index, isFromMYGroup: true));
+                      Helper.toScreen(
+                          context, PublicGroupScreen(provider.allSuggestGroupList[index].id.toString(), index: index, isFromMYGroup: true));
                     },
                     goToGroupOrPage: () {},
                     groupOrPageImage: provider.allSuggestGroupList[index].coverPhoto,

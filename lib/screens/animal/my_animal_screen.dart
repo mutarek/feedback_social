@@ -1,19 +1,19 @@
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/animal/add_animal_screen.dart';
 import 'package:als_frontend/screens/animal/animal_details_screen.dart';
 import 'package:als_frontend/screens/animal/search_animal_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -47,9 +47,9 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
         elevation: 0,
         title: InkWell(
           onTap: () {
-            Get.back();
+            Navigator.of(context).pop();
           },
-          child:  Text(
+          child: Text(
             LocaleKeys.feedback.tr(),
             style: const TextStyle(color: Palette.primary, fontSize: 28, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
@@ -102,7 +102,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                             splashColor: Colors.green,
                                             onPressed: () {
                                               if (searchController.text.isNotEmpty && searchController.text.length == 6) {
-                                                Get.to(() => SearchAnimalScreen(searchController.text));
+                                                Helper.toScreen(context, SearchAnimalScreen(searchController.text));
                                                 FocusScope.of(context).unfocus();
                                               } else {
                                                 Fluttertoast.showToast(msg: LocaleKeys.write_6_digits_code_to_search.tr());
@@ -147,14 +147,14 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                       ElevatedButton(
                                           onPressed: () {
                                             animalProvider.clearImage();
-                                            Get.to(() => const AddEditAnimalScreen());
+                                            Helper.toScreen(context, AddEditAnimalScreen());
                                           },
-                                          child:  Text(LocaleKeys.add.tr()))
+                                          child: Text(LocaleKeys.add.tr()))
                                     ],
                                   ),
                                   Expanded(
                                     child: (animalProvider.animals.isEmpty)
-                                        ?  Center(
+                                        ? Center(
                                             child: Text(LocaleKeys.you_have_not_added_any_animal_yet.tr()),
                                           )
                                         : ListView.builder(
@@ -163,7 +163,7 @@ class _MyAnimalScreenState extends State<MyAnimalScreen> {
                                             itemBuilder: (context, index) {
                                               return InkWell(
                                                 onTap: () {
-                                                  Get.to(() => AnimalDetailsScreen(animalProvider.animals[index], index));
+                                                  Helper.toScreen(context, AnimalDetailsScreen(animalProvider.animals[index], index));
                                                 },
                                                 child: Card(
                                                   child: ListTile(

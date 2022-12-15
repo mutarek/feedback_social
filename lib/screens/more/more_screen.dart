@@ -9,14 +9,13 @@ import 'package:als_frontend/screens/page/liked_page_suggested_page.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/settings/widget/Settings_widget.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/app_constant.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -66,12 +65,12 @@ class MoreScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             if (Provider.of<SplashProvider>(context, listen: false).value == 1) {
-                              Get.to(() => const ProfileScreen());
+                              Helper.toScreen(context, const ProfileScreen());
                             } else {
                               showMessage(context: context, message: 'Please Update apps first');
                             }
                           },
-                          child: Text(LocaleKeys.view_profile.tr() , style: button)),
+                          child: Text(LocaleKeys.view_profile.tr(), style: button)),
                     ),
                   ),
                   //
@@ -83,7 +82,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Get.to(const LikedGroupSuggestedGroup(),transition:AppConstant.changeRouteAnimation,duration: AppConstant.durationAnimation);
+                      Helper.toScreen(context, const LikedGroupSuggestedGroup());
                     },
                   ),
 
@@ -93,7 +92,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Get.to(const LikedPageSuggestedPage(),transition:AppConstant.changeRouteAnimation,duration: AppConstant.durationAnimation);
+                      Helper.toScreen(context, const LikedPageSuggestedPage());
                     },
                   ),
 
@@ -104,7 +103,7 @@ class MoreScreen extends StatelessWidget {
                     isShowIconsColor: false,
                     goingScreen: () {
                       Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                      Get.to(const MyAnimalScreen(),transition:AppConstant.changeRouteAnimation,duration: AppConstant.durationAnimation);
+                      Helper.toScreen(context, const MyAnimalScreen());
                     },
                   ),
 
@@ -114,7 +113,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Get.to(const SettingsScreen(),transition:AppConstant.changeRouteAnimation,duration: AppConstant.durationAnimation);
+                      Helper.toScreen(context, const SettingsScreen());
                     },
                   ),
 
@@ -128,8 +127,11 @@ class MoreScreen extends StatelessWidget {
                               Provider.of<DashboardProvider>(context, listen: false).changeSelectIndex(0);
                               Provider.of<NotificationProvider>(context, listen: false).channelDismiss();
 
-                              Navigator.of(context)
-                                  .pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const LoginScreen(),), (route) => false);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (_) => const LoginScreen(),
+                                  ),
+                                  (route) => false);
                             }
                           });
                         },

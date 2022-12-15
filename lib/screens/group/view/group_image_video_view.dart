@@ -1,10 +1,10 @@
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/home/view/video_details_screen.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class GroupImageVideoView extends StatefulWidget {
@@ -45,7 +45,8 @@ class _GroupImageVideoViewState extends State<GroupImageVideoView> {
                   return InkWell(
                       onTap: () {
                         if (widget.isForImage) {
-                          Get.to(() => SingleImageView(imageURL: groupProvider.groupImagesLists[index].image));
+                          Helper.toScreen(context,  SingleImageView(imageURL: groupProvider.groupImagesLists[index].image));
+
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => VideoDetailsScreen(groupProvider.groupVideoLists[index].thumbnail!,videoURL: groupProvider.groupVideoLists[index].video)));

@@ -1,5 +1,3 @@
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
@@ -10,12 +8,14 @@ import 'package:als_frontend/screens/group/view/group_member_view.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -140,11 +140,11 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                   isTrue: false,
                   coverPhotoChange: () {},
                   back: () {
-                    Get.back();
+                    Helper.back();
                   },
                   coverPhoto: groupProvider.groupDetailsModel.coverPhoto!,
                   viewCoverPhoto: () {
-                    Get.to(() => SingleImageView(imageURL: groupProvider.groupDetailsModel.coverPhoto!));
+                    Helper.toScreen(context, SingleImageView(imageURL: groupProvider.groupDetailsModel.coverPhoto!));
                   },
                 ),
               ),
@@ -169,10 +169,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                         SizedBox(height: height * 0.01),
                         InkWell(
                           onTap: () {
-                            // groupFriendListProvider.friendsList = [];
-                            // groupInviteProvider.groupId = groupProvider.groupDetails!.id as int;
-                            // groupFriendListProvider.groupId = groupProvider.groupDetails!.id as int;
-                            Get.to(() => InviteGroupScreen(int.parse(widget.groupID)));
+                            Helper.toScreen(context, InviteGroupScreen(int.parse(widget.groupID)));
                           },
                           child: CircleAvatar(
                             backgroundColor: Palette.notificationColor,

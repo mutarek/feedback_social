@@ -5,12 +5,12 @@ import 'package:als_frontend/screens/group/user_group_screen_copy.dart';
 import 'package:als_frontend/screens/group/widget/joined_group.dart';
 import 'package:als_frontend/screens/group/widget/my_group.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class LikedGroupSuggestedGroup extends StatefulWidget {
@@ -53,7 +53,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.back();
+                        Helper.back();
                       },
                       icon: const Icon(Icons.arrow_back_ios)),
                   SizedBox(
@@ -147,7 +147,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: InkWell(
                                     onTap: () {
-                                      Get.to(const MyGroup());
+                                      Helper.toScreen(context, const MyGroup());
                                     },
                                     child: Text(LocaleKeys.see_all.tr(),
                                         style: latoStyle300Light.copyWith(fontSize: 10, color: Colors.black))),
@@ -175,7 +175,8 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                     itemBuilder: (BuildContext ctx, index) {
                                       return InkWell(
                                         onTap: () {
-                                          Get.to(UserGroupScreen(groupProvider.authorGroupList[index].id.toString(), index));
+                                          Helper.toScreen(
+                                              context, UserGroupScreen(groupProvider.authorGroupList[index].id.toString(), index));
                                         },
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
@@ -224,7 +225,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                 padding: const EdgeInsets.only(top: 5),
                                 child: InkWell(
                                   onTap: () {
-                                    Get.to(const JoinedGroup());
+                                    Helper.toScreen(context, const JoinedGroup());
                                   },
                                   child:
                                       Text(LocaleKeys.see_all.tr(), style: latoStyle300Light.copyWith(fontSize: 10, color: Colors.black)),
@@ -249,7 +250,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                   itemBuilder: (BuildContext context, int index) {
                                     return InkWell(
                                       onTap: () {
-                                        Get.to(PublicGroupScreen(groupProvider.myGroupList[index].id.toString()));
+                                        Helper.toScreen(context, PublicGroupScreen(groupProvider.myGroupList[index].id.toString()));
                                       },
                                       child: ListTile(
                                           leading: CircleAvatar(
@@ -279,8 +280,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                               const SizedBox(
                                                 height: 2,
                                               ),
-                                              Text(
-                                                  "${groupProvider.myGroupList[index].totalMember.toString()} ${LocaleKeys.members.tr()}",
+                                              Text("${groupProvider.myGroupList[index].totalMember.toString()} ${LocaleKeys.members.tr()}",
                                                   style: latoStyle400Regular.copyWith(fontSize: 10, color: Colors.grey)),
                                             ],
                                           )),
@@ -291,7 +291,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           padding: const EdgeInsets.only(left: 250, top: 50),
                           child: FloatingActionButton(
                             onPressed: () {
-                              Get.to(const CreateGroupScreen());
+                              Helper.toScreen(context, const CreateGroupScreen());
                             },
                             child: const Icon(CupertinoIcons.plus),
                           ),
@@ -303,7 +303,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(PublicGroupScreen(groupProvider.allSuggestGroupList[index].id.toString()));
+                              Helper.toScreen(context, PublicGroupScreen(groupProvider.allSuggestGroupList[index].id.toString()));
                             },
                             child: ListTile(
                                 leading: CircleAvatar(
@@ -332,8 +332,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                     const SizedBox(
                                       height: 2,
                                     ),
-                                    Text(
-                                        "${groupProvider.allSuggestGroupList[index].totalMember.toString()} ${LocaleKeys.followers.tr()}",
+                                    Text("${groupProvider.allSuggestGroupList[index].totalMember.toString()} ${LocaleKeys.followers.tr()}",
                                         style: latoStyle100Thin.copyWith(fontSize: 10)),
                                   ],
                                 )),

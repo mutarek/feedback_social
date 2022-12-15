@@ -17,11 +17,11 @@ import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/provider/theme_provider.dart';
 import 'package:als_frontend/screens/splash/splash_screen.dart';
 import 'package:als_frontend/translations/codegen_loader.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 import 'di_container.dart' as di;
@@ -65,18 +65,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       title: 'Feedback',
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
       locale: context.locale,
+      navigatorKey: Helper.navigatorKey,
       theme: Provider.of<ThemeProvider>(context).darkTheme ? AppTheme.getDarkModeTheme() : AppTheme.getLightModeTheme(),
       debugShowCheckedModeBanner: false,
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
       ),
-      defaultTransition: Transition.topLevel,
-      transitionDuration: const Duration(milliseconds: 500),
+      // defaultTransition: Transition.topLevel,
+      // transitionDuration: const Duration(milliseconds: 500),
       // supportedLocales: _locals,
       home: const SplashScreen(),
     );

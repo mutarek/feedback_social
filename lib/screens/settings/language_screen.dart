@@ -37,7 +37,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
             return InkWell(
               onTap: () async {
                 await context.setLocale(Locale(AppConstant.languagesList[index].languageCode));
-                Get.updateLocale(Locale(AppConstant.languagesList[index].languageCode));
+                // Get.updateLocale(Locale(AppConstant.languagesList[index].languageCode));
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),

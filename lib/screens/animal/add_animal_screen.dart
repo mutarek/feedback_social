@@ -4,6 +4,7 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/animal/widget/owner_info_widget.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
@@ -12,7 +13,6 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -100,7 +100,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                 child: CustomButton(
                                     btnTxt: LocaleKeys.your_animals.tr(),
                                     onTap: () {
-                                      Get.to(() => const MyAnimalScreen());
+                                      Helper.toScreen(context, MyAnimalScreen());
                                     },
                                     textWhiteColor: true,
                                     fontSize: 15),
@@ -252,8 +252,8 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                           speciesController.clear();
                                           ageController.clear();
                                           genusController.clear();
-                                          Get.back();
-                                          Get.back();
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
                                         }
                                       }, widget.animalModel!.id! as int, widget.index);
                                     } else {
@@ -265,7 +265,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                           speciesController.clear();
                                           ageController.clear();
                                           genusController.clear();
-                                          Get.back();
+                                          Navigator.of(context).pop();
                                         }
                                       });
                                     }

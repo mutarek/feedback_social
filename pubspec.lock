@@ -456,7 +456,7 @@ packages:
     source: hosted
     version: "2.3.2"
   get:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: get
       url: "https://pub.dartlang.org"

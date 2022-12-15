@@ -13,6 +13,7 @@ import 'package:als_frontend/screens/notification/notification_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/search/search_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -23,7 +24,6 @@ import 'package:als_frontend/widgets/network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -157,14 +157,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     iconSize: 20.0,
                                     onPressed: () {
                                       Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
-                                      Get.to(SearchScreen());
+                                      Helper.toScreen(context, SearchScreen());
+
                                     },
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: InkWell(
                                       onTap: () {
-                                        Get.to(const ProfileScreen());
+                                        Helper.toScreen(context, const ProfileScreen());
+
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.all(2),
@@ -201,7 +203,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           iconSize: 20.0,
                                           onPressed: () {
                                             Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
-                                            Get.to(SearchScreen());
+                                            Helper.toScreen(context, SearchScreen());
                                           },
                                         )
                                       : const SizedBox.shrink(),
