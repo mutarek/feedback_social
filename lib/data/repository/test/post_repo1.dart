@@ -13,7 +13,7 @@ class PostRepo1 {
 
   Future<ApiResponse> submitPost(FormData formData) async {
     try {
-      response = await dioClient.post(AppConstant.postsUri + "user/create/", data: formData);
+      response = await dioClient.post("${AppConstant.postsUri}user/create/", data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -22,7 +22,7 @@ class PostRepo1 {
 
   Future<ApiResponse> updatePost(FormData formData, int id) async {
     try {
-      response = await dioClient.patch(AppConstant.postsUri + "$id/", data: formData);
+      response = await dioClient.patch("${AppConstant.postsUri}$id/", data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -31,7 +31,7 @@ class PostRepo1 {
 
   Future<ApiResponse> submitPostTOGroupBYUSINGGroupID(FormData formData, int groupID) async {
     try {
-      response = await dioClient.post(AppConstant.postsGroupUri + "$groupID/", data: formData);
+      response = await dioClient.post("${AppConstant.postsGroupUri}$groupID/", data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -40,7 +40,7 @@ class PostRepo1 {
 
   Future<ApiResponse> updatePostTOGroupBYUSINGGroupID(FormData formData, int groupID, int id) async {
     try {
-      response = await dioClient.patch(AppConstant.postsGroupUri + "$groupID/$id/", data: formData);
+      response = await dioClient.patch("${AppConstant.postsGroupUri}$groupID/$id/", data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -49,7 +49,7 @@ class PostRepo1 {
 
   Future<ApiResponse> submitPostTOPageBYUSINGPageID(FormData formData, int pageID) async {
     try {
-      response = await dioClient.post(AppConstant.postPageURI + "$pageID/", data: formData);
+      response = await dioClient.post("${AppConstant.postPageURI}$pageID/", data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -58,7 +58,7 @@ class PostRepo1 {
 
   Future<ApiResponse> updatePostTOPageBYUSINGPageID(FormData formData, int pageID, int id) async {
     try {
-      response = await dioClient.patch(AppConstant.postPageURI + "$pageID/$id/", data: formData);
+      response = await dioClient.patch("${AppConstant.postPageURI}$pageID/$id/", data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -67,7 +67,7 @@ class PostRepo1 {
 
   Future<ApiResponse> reportPost(Map<String, String> body, int id) async {
     try {
-      response = await dioClient.post(AppConstant.postsUri + "post-report/$id/", data: body);
+      response = await dioClient.post("${AppConstant.postsUri}post-report/$id/", data: body);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -76,7 +76,7 @@ class PostRepo1 {
 
   Future<ApiResponse> reportPagePost(Map<String, String> body, int id) async {
     try {
-      response = await dioClient.post(AppConstant.postsUri + "page-post-report/$id/", data: body);
+      response = await dioClient.post("${AppConstant.postsUri}page-post-report/$id/", data: body);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -85,7 +85,7 @@ class PostRepo1 {
 
   Future<ApiResponse> reportGroupPost(Map<String, String> body, int id) async {
     try {
-      response = await dioClient.post(AppConstant.postsUri + "group-post-report/$id/", data: body);
+      response = await dioClient.post("${AppConstant.postsUri}group-post-report/$id/", data: body);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

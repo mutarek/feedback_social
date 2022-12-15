@@ -36,7 +36,7 @@ class GroupRepo1{
   Future<ApiResponse> getOwnGroupList() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =  await dioClient.get(AppConstant.groupCreatorAllURI + "${authRepo1.getUserID()}/all");
+      response =  await dioClient.get("${AppConstant.groupCreatorAllURI}${authRepo1.getUserID()}/all");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -64,7 +64,7 @@ class GroupRepo1{
   Future<ApiResponse> updateGroupWithoutImageUpload(Map map,int groupID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =    await dioClient.patch(AppConstant.groupUri+"$groupID/", data: map);
+      response =    await dioClient.patch("${AppConstant.groupUri}$groupID/", data: map);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -73,7 +73,7 @@ class GroupRepo1{
   Future<ApiResponse> updateGroupWithImageUpload(FormData formData,int groupID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =    await dioClient.patch(AppConstant.groupUri+"$groupID/",data: formData);
+      response =    await dioClient.patch("${AppConstant.groupUri}$groupID/",data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -82,7 +82,7 @@ class GroupRepo1{
   Future<ApiResponse> callForGetGroupDetails(String groupID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =   await dioClient.get(AppConstant.groupUri + "$groupID/");
+      response =   await dioClient.get("${AppConstant.groupUri}$groupID/");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -91,7 +91,7 @@ class GroupRepo1{
   Future<ApiResponse> callForGetGroupMembers(String groupID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =    await dioClient.get(AppConstant.groupUri + "$groupID/member/all/");
+      response =    await dioClient.get("${AppConstant.groupUri}$groupID/member/all/");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

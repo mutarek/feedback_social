@@ -57,7 +57,7 @@ class OTPScreen extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                           child: CustomText2(
-                            title: LocaleKeys.oTPVerified.tr,
+                            title: LocaleKeys.oTP_Verified.tr,
                             textStyle: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                         ),
@@ -69,7 +69,7 @@ class OTPScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 35),
                           child: CustomText2(
-                            title: LocaleKeys.pleaseEnterYour4DigitValidOTPNumber.tr,
+                            title: LocaleKeys.please_Enter_your_4_digit_Valid_OTP_Number.tr,
                             textAlign: TextAlign.center,
                             maxLines: 2,
                             textStyle: latoStyle600SemiBold.copyWith(color: colorPrimaryDark, fontSize: 16),

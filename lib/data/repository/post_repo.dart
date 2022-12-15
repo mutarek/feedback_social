@@ -9,41 +9,41 @@ class PostRepo {
   PostRepo({required this.apiClient});
 
   Future<Response> submitPost(Map<String, String> body, List<http.MultipartFile> multipartData) async {
-    return await apiClient.postMultipartData(AppConstant.postsUri+"user/create/", body, multipartData);
+    return await apiClient.postMultipartData("${AppConstant.postsUri}user/create/", body, multipartData);
   }
 
   Future<Response> updatePost(Map<String, String> body, List<http.MultipartFile> multipartData, int id) async {
-    return await apiClient.patchMultipartData(AppConstant.postsUri + "$id/", body, multipartData);
+    return await apiClient.patchMultipartData("${AppConstant.postsUri}$id/", body, multipartData);
   }
 
   Future<Response> submitPostTOGroupBYUSINGGroupID(Map<String, String> body, List<http.MultipartFile> multipartData, int groupID) async {
-    return await apiClient.postMultipartData(AppConstant.postsGroupUri + "$groupID/", body, multipartData);
+    return await apiClient.postMultipartData("${AppConstant.postsGroupUri}$groupID/", body, multipartData);
   }
 
   Future<Response> updatePostTOGroupBYUSINGGroupID(
       Map<String, String> body, List<http.MultipartFile> multipartData, int groupID, int id) async {
-    return await apiClient.patchMultipartData(AppConstant.postsGroupUri + "$groupID/$id/", body, multipartData);
+    return await apiClient.patchMultipartData("${AppConstant.postsGroupUri}$groupID/$id/", body, multipartData);
   }
 
   Future<Response> submitPostTOPageBYUSINGPageID(Map<String, String> body, List<http.MultipartFile> multipartData, int pageID) async {
-    return await apiClient.postMultipartData(AppConstant.postPageURI + "$pageID/", body, multipartData);
+    return await apiClient.postMultipartData("${AppConstant.postPageURI}$pageID/", body, multipartData);
   }
 
   Future<Response> updatePostTOPageBYUSINGPageID(
       Map<String, String> body, List<http.MultipartFile> multipartData, int pageID, int id) async {
-    return await apiClient.patchMultipartData(AppConstant.postPageURI + "$pageID/$id/", body, multipartData);
+    return await apiClient.patchMultipartData("${AppConstant.postPageURI}$pageID/$id/", body, multipartData);
   }
 
   Future<Response> reportPost(Map<String, String> body, int id) async {
-    return await apiClient.postData(AppConstant.postsUri + "post-report/$id/", body);
+    return await apiClient.postData("${AppConstant.postsUri}post-report/$id/", body);
   }
 
   Future<Response> reportPagePost(Map<String, String> body, int id) async {
-    return await apiClient.postData(AppConstant.postsUri + "page-post-report/$id/", body);
+    return await apiClient.postData("${AppConstant.postsUri}page-post-report/$id/", body);
   }
 
   Future<Response> reportGroupPost(Map<String, String> body, int id) async {
-    return await apiClient.postData(AppConstant.postsUri + "group-post-report/$id/", body);
+    return await apiClient.postData("${AppConstant.postsUri}group-post-report/$id/", body);
   }
 
   Future<Response> deletePost(String url) async {

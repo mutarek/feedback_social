@@ -1,4 +1,3 @@
-import 'package:als_frontend/data/datasource/api_client.dart';
 import 'package:als_frontend/data/datasource/remote/dio/dio_client.dart';
 import 'package:als_frontend/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
@@ -113,7 +112,7 @@ class PageRepo1 {
   Future<ApiResponse> callForGetPageDetails(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response = await dioClient.get(AppConstant.pageURI + "$pageID/");
+      response = await dioClient.get("${AppConstant.pageURI}$pageID/");
       return ApiResponse.withSuccess(response);
     }
     catch(e){
@@ -124,7 +123,7 @@ class PageRepo1 {
   Future<ApiResponse> updatePageWithoutImageUpload(Map map, int pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response = await dioClient.patch(AppConstant.pageURI + "$pageID/", data: map);
+      response = await dioClient.patch("${AppConstant.pageURI}$pageID/", data: map);
       return ApiResponse.withSuccess(response);
     }
     catch(e){
@@ -135,7 +134,7 @@ class PageRepo1 {
   Future<ApiResponse> updatePageWithImageUpload(FormData formData, int pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response = await dioClient.patch(AppConstant.pageURI + "$pageID/", data: formData);
+      response = await dioClient.patch("${AppConstant.pageURI}$pageID/", data: formData);
       return ApiResponse.withSuccess(response);
     }
     catch(e){

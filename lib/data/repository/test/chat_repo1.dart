@@ -24,7 +24,7 @@ class ChatRepo1{
   Future<ApiResponse> getUserAllChatLists(int pageNO) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =  await dioClient.get(AppConstant.messageRoomList + "?page=$pageNO&size=10");
+      response =  await dioClient.get("${AppConstant.messageRoomList}?page=$pageNO&size=10");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -61,13 +61,17 @@ class ChatRepo1{
   List<OfflineChat> getChatData() {
     List<String> chatsSave = sharedPreferences.getStringList(AppConstant.chats) ?? [];
     List<OfflineChat> chatData = [];
-    chatsSave.forEach((cart) => chatData.add(OfflineChat.fromJson(jsonDecode(cart))));
+    for (var cart in chatsSave) {
+      chatData.add(OfflineChat.fromJson(jsonDecode(cart)));
+    }
     return chatData;
   }
 
   void addToChatList(List<OfflineChat> chatList) {
     List<String> chats = [];
-    chatList.forEach((chat) => chats.add(jsonEncode(chat)));
+    for (var chat in chatList) {
+      chats.add(jsonEncode(chat));
+    }
     sharedPreferences.setStringList(AppConstant.chats, chats);
   }
 

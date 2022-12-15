@@ -20,7 +20,7 @@ class SettingsRepo {
   }
 
   Future<Response> blockList(int page) async {
-    return await apiClient.getData(AppConstant.blocklist + "?page=$page");
+    return await apiClient.getData("${AppConstant.blocklist}?page=$page");
   }
 
   Future<Response> unBlockUser(int userID) async {

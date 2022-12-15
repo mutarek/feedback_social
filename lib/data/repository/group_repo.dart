@@ -19,7 +19,7 @@ class GroupRepo {
   }
 
   Future<Response> getOwnGroupList() async {
-    return await apiClient.getData(AppConstant.groupCreatorAllURI + "${authRepo.getUserID()}/all");
+    return await apiClient.getData("${AppConstant.groupCreatorAllURI}${authRepo.getUserID()}/all");
   }
 
   Future<Response> createGroupWithoutImageUpload(Map map) async {
@@ -31,19 +31,19 @@ class GroupRepo {
   }
 
   Future<Response> updateGroupWithoutImageUpload(Map map,int groupID) async {
-    return await apiClient.patchData(AppConstant.groupUri+"$groupID/", map);
+    return await apiClient.patchData("${AppConstant.groupUri}$groupID/", map);
   }
 
   Future<Response> updateGroupWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData,int groupID) async {
-    return await apiClient.patchMultipartData(AppConstant.groupUri+"$groupID/", body, multipartData);
+    return await apiClient.patchMultipartData("${AppConstant.groupUri}$groupID/", body, multipartData);
   }
 
   Future<Response> callForGetGroupDetails(String groupID) async {
-    return await apiClient.getData(AppConstant.groupUri + "$groupID/");
+    return await apiClient.getData("${AppConstant.groupUri}$groupID/");
   }
 
   Future<Response> callForGetGroupMembers(String groupID) async {
-    return await apiClient.getData(AppConstant.groupUri + "$groupID/member/all/");
+    return await apiClient.getData("${AppConstant.groupUri}$groupID/member/all/");
   }
 
   Future<Response> callForGetGroupAllPosts(String groupID,int page) async {

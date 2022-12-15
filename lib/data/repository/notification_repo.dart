@@ -7,7 +7,7 @@ class NotificationRepo {
   NotificationRepo({required this.apiClient});
 
   Future<Response> getAllNotification(int pageNo) async {
-    return await apiClient.getData(AppConstant.notificationListURI + "?page=$pageNo&size=10");
+    return await apiClient.getData("${AppConstant.notificationListURI}?page=$pageNo&size=10");
   }
 
   Future<Response> getNotificationUnreadCount() async {

@@ -14,7 +14,7 @@ class CommentRepo1{
   Future<ApiResponse> getAllCommentData(String url) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =   await dioClient.get(url + "?page=1");
+      response =   await dioClient.get("$url?page=1");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

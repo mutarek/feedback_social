@@ -46,15 +46,15 @@ class PageRepo {
   }
 
   Future<Response> callForGetPageDetails(String pageID) async {
-    return await apiClient.getData(AppConstant.pageURI + "$pageID/");
+    return await apiClient.getData("${AppConstant.pageURI}$pageID/");
   }
 
   Future<Response> updatePageWithoutImageUpload(Map map, int pageID) async {
-    return await apiClient.patchData(AppConstant.pageURI + "$pageID/", map);
+    return await apiClient.patchData("${AppConstant.pageURI}$pageID/", map);
   }
 
   Future<Response> updatePageWithImageUpload(Map<String, String> body, List<http.MultipartFile> multipartData, int pageID) async {
-    return await apiClient.patchMultipartData(AppConstant.pageURI + "$pageID/", body, multipartData);
+    return await apiClient.patchMultipartData("${AppConstant.pageURI}$pageID/", body, multipartData);
   }
 
   Future<Response> pageLikeUnlike(String pageId) async {

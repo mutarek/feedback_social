@@ -20,6 +20,7 @@ class CodegenLoader extends AssetLoader{
   "chats": "Chats",
   "forgot_password": "Forgot password?",
   "password": "Password",
+  "phone_number": "Phone Number",
   "login": "Login",
   "forget_Password": "Forget Password",
   "create_account": "Create account",
@@ -274,7 +275,8 @@ class CodegenLoader extends AssetLoader{
   "join": "join",
   "Joined_group": "Joined group",
   "mY_group": "MY group",
-  "faq": "FAQ?"
+  "faq": "FAQ?",
+  "update_available": "Update available."
 };
 static const Map<String,dynamic> en = {
   "welcome": "Welcome",
@@ -308,6 +310,7 @@ static const Map<String,dynamic> en = {
   "home": "Home",
   "friend": "বন্ধু",
   "message": "বার্তা",
+  "phone_number": "Phone Number",
   "more": "More",
   "replying_to": "Replying to",
   "cancel": "Cancel",
@@ -536,7 +539,8 @@ static const Map<String,dynamic> en = {
   "join": "join",
   "Joined_group": "Joined group",
   "mY_group": "MY group",
-  "faq": "FAQ?"
+  "faq": "FAQ?",
+  "update_available": "Update available."
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"bn": bn, "en": en};
 }

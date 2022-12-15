@@ -21,7 +21,7 @@ class AnimalRepo1 {
   Future<ApiResponse> getAnimals(int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =  await dioClient.get(AppConstant.animalOwnerURI + "${authRepo1.getUserID()}/?page=$page");
+      response =  await dioClient.get("${AppConstant.animalOwnerURI}${authRepo1.getUserID()}/?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -39,7 +39,7 @@ class AnimalRepo1 {
   Future<ApiResponse> updateAnimal( FormData formData ,int id) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =  await dioClient.patch(AppConstant.animalUri + "$id/", data: formData);
+      response =  await dioClient.patch("${AppConstant.animalUri}$id/", data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -48,7 +48,7 @@ class AnimalRepo1 {
   Future<ApiResponse> deleteAnimal(int id) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =  await dioClient.delete(AppConstant.animalUri + "$id/");
+      response =  await dioClient.delete("${AppConstant.animalUri}$id/");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -57,7 +57,7 @@ class AnimalRepo1 {
   Future<ApiResponse> searchAnimal(String id) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response =  await dioClient.get(AppConstant.animalUri + "search/$id/");
+      response =  await dioClient.get("${AppConstant.animalUri}search/$id/");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

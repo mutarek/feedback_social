@@ -36,7 +36,7 @@ class SettingRepo1{
   Future<ApiResponse> blockList(int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get(AppConstant.blocklist + "?page=$page");
+      response = await dioClient.get("${AppConstant.blocklist}?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

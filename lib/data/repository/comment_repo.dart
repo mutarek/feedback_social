@@ -7,7 +7,7 @@ class CommentRepo {
   CommentRepo({required this.apiClient});
 
   Future<Response> getAllCommentData(String url) async {
-    return await apiClient.getData(url + "?page=1");
+    return await apiClient.getData("$url?page=1");
   }
 
   Future<Response> getAllGroupCommentData(int postId, int groupID) async {

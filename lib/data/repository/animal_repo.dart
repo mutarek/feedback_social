@@ -11,7 +11,7 @@ class AnimalRepo {
   AnimalRepo({required this.apiClient, required this.authRepo});
 
   Future<Response> getAnimals(int page) async {
-    return await apiClient.getData(AppConstant.animalOwnerURI + "${authRepo.getUserID()}/?page=$page");
+    return await apiClient.getData("${AppConstant.animalOwnerURI}${authRepo.getUserID()}/?page=$page");
   }
 
   Future<Response> addedAnimal(Map<String, String> body, List<http.MultipartFile> multipartData) async{
@@ -19,13 +19,13 @@ class AnimalRepo {
   }
 
   Future<Response> updateAnimal(Map<String, String> body, List<http.MultipartFile> multipartData, int id) async {
-    return await apiClient.patchMultipartData(AppConstant.animalUri + "$id/", body, multipartData);
+    return await apiClient.patchMultipartData("${AppConstant.animalUri}$id/", body, multipartData);
   }
 
   Future<Response> deleteAnimal(int id) async {
-    return await apiClient.deleteData(AppConstant.animalUri + "$id/");
+    return await apiClient.deleteData("${AppConstant.animalUri}$id/");
   }
   Future<Response> searchAnimal(String id) async {
-    return await apiClient.getData(AppConstant.animalUri + "search/$id/");
+    return await apiClient.getData("${AppConstant.animalUri}search/$id/");
   }
 }

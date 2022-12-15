@@ -15,7 +15,7 @@ class ChatRepo {
   ChatRepo({required this.apiClient, required this.authRepo, required this.sharedPreferences});
 
   Future<Response> getUserAllChatLists(int pageNO) async {
-    return await apiClient.getData(AppConstant.messageRoomList + "?page=$pageNO&size=10");
+    return await apiClient.getData("${AppConstant.messageRoomList}?page=$pageNO&size=10");
   }
 
   Future<Response> getUserP2PChatLists(String roomID, int pageNo) async {
@@ -33,13 +33,17 @@ class ChatRepo {
   List<OfflineChat> getChatData() {
     List<String> chatsSave = sharedPreferences.getStringList(AppConstant.chats) ?? [];
     List<OfflineChat> chatData = [];
-    chatsSave.forEach((cart) => chatData.add(OfflineChat.fromJson(jsonDecode(cart))));
+    for (var cart in chatsSave) {
+      chatData.add(OfflineChat.fromJson(jsonDecode(cart)));
+    }
     return chatData;
   }
 
   void addToChatList(List<OfflineChat> chatList) {
     List<String> chats = [];
-    chatList.forEach((chat) => chats.add(jsonEncode(chat)));
+    for (var chat in chatList) {
+      chats.add(jsonEncode(chat));
+    }
     sharedPreferences.setStringList(AppConstant.chats, chats);
   }
 }

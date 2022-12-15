@@ -73,9 +73,6 @@ void main() async {
       ChangeNotifierProvider(create: (context) => di.sl<LanguageProvider1>()),
       ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider1>()),
       ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider1>()),
-
-
-
     ],
     child: EasyLocalization(
         path: 'assets/lang',

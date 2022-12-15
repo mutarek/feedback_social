@@ -4,23 +4,24 @@ abstract class  LocaleKeys {
   static const welcome = 'welcome';
   static const feedback = 'feedback';
   static const chats = 'chats';
-  static const forgotPassword = 'forgot_password';
+  static const forgot_password = 'forgot_password';
   static const password = 'password';
+  static const phone_number = 'phone_number';
   static const login = 'login';
-  static const forgetPassword = 'forget_Password';
-  static const createAccount = 'create_account';
-  static const doNotHaveAnAccount = 'doNot_have_an_account';
+  static const forget_Password = 'forget_Password';
+  static const create_account = 'create_account';
+  static const doNot_have_an_account = 'doNot_have_an_account';
   static const email = 'email';
-  static const enterYourEmailOrPhoneNumber = 'enter_Your_Email_or_Phone_Number';
+  static const enter_Your_Email_or_Phone_Number = 'enter_Your_Email_or_Phone_Number';
   static const registration = 'registration';
   static const resend = 'resend';
-  static const pleaseEnterYour4DigitValidOTPNumber = 'please_Enter_your_4_digit_Valid_OTP_Number';
-  static const oTPVerified = 'oTP_Verified';
-  static const miAgo = 'mi_ago';
-  static const hoAgo = 'ho_ago';
-  static const daAgo = 'da_ago';
-  static const moAgo = 'mo_ago';
-  static const yeAgo = 'ye_ago';
+  static const please_Enter_your_4_digit_Valid_OTP_Number = 'please_Enter_your_4_digit_Valid_OTP_Number';
+  static const oTP_Verified = 'oTP_Verified';
+  static const mi_ago = 'mi_ago';
+  static const ho_ago = 'ho_ago';
+  static const da_ago = 'da_ago';
+  static const mo_ago = 'mo_ago';
+  static const ye_ago = 'ye_ago';
   static const please_fill_all_the_form = 'please_fill_all_the_form';
   static const send_OTP = 'send_OTP';
   static const emailOrPhoneNo = 'emailOrPhoneNo';
@@ -260,5 +261,6 @@ abstract class  LocaleKeys {
   static const Joined_group = 'Joined_group';
   static const mY_group = 'mY_group';
   static const faq = 'faq';
+  static const update_available = 'update_available';
 
 }
