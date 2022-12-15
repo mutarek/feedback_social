@@ -35,7 +35,7 @@ class JoinedGroup extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Helper.toScreen(context,PublicPageScreen(groupProvider.myGroupList[index].id.toString()));
+                    Helper.toScreen(PublicPageScreen(groupProvider.myGroupList[index].id.toString()));
 
                   },
                   child: ListTile(

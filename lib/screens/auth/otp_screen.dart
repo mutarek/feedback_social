@@ -99,7 +99,7 @@ class OTPScreen extends StatelessWidget {
                                     auth.otpVerify(pinController.text, (bool status, String message) {
                                       if (status) {
                                         Fluttertoast.showToast(msg: message);
-                                        Helper.toScreen(context, SetNewPassword(emailOrNumber: emailOrNumber, otpCode: pinController.text));
+                                        Helper.toScreen(SetNewPassword(emailOrNumber: emailOrNumber, otpCode: pinController.text));
                                       } else {
                                         Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                       }
@@ -108,7 +108,7 @@ class OTPScreen extends StatelessWidget {
                                     auth.otpVerify(pinController.text, (bool status, String message) {
                                       if (status) {
                                         Fluttertoast.showToast(msg: message);
-                                        Helper.toScreen(context, SignupScreen2());
+                                        Helper.toScreen(SignupScreen2());
                                       } else {
                                         Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                       }

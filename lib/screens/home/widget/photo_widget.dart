@@ -89,7 +89,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
       return imageVideoLists[0].isImage
           ? InkWell(
               onTap: () {
-                Helper.toScreen(context,  SingleImageView(imageURL: imageVideoLists[0].url));
+                Helper.toScreen(SingleImageView(imageURL: imageVideoLists[0].url));
               },
               child: customNetworkImage(context, imageVideoLists[0].url))
           : InkWell(

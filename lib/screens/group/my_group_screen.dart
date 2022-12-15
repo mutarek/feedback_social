@@ -140,7 +140,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                               return InkWell(
                                 onTap: () {
                                   provider.loadingStart();
-                                  Helper.toScreen(context, UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
+                                  Helper.toScreen(UserGroupScreen(provider.authorGroupList[index2].id.toString(), index2));
                                 },
                                 child: Container(
                                   width: 70,
@@ -188,7 +188,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                             return CustomPageGroupButton(
                                 onTap: () {
                                   provider.loadingStart();
-                                  Helper.toScreen(context,
+                                  Helper.toScreen(
                                       PublicGroupScreen(provider.myGroupList[index].id.toString(), index: index, isFromMYGroup: true));
                                 },
                                 goToGroupOrPage: () {},
@@ -219,7 +219,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                     onTap: () {
                       provider.loadingStart();
                       Helper.toScreen(
-                          context, PublicGroupScreen(provider.allSuggestGroupList[index].id.toString(), index: index, isFromMYGroup: true));
+                          PublicGroupScreen(provider.allSuggestGroupList[index].id.toString(), index: index, isFromMYGroup: true));
                     },
                     goToGroupOrPage: () {},
                     groupOrPageImage: provider.allSuggestGroupList[index].coverPhoto,

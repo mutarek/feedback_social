@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         padding: EdgeInsets.only(left: width * 0.5),
                                         child: TextButton(
                                             onPressed: () {
-                                              Helper.toScreen(context, SignUpScreen1(isFromForgetPassword: true));
+                                              Helper.toScreen(SignUpScreen1(isFromForgetPassword: true));
                                             },
                                             child: Text(
                                               LocaleKeys.forget_Password.tr(),
@@ -227,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 backgroundColor: Colors.white,
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
                                             onPressed: () {
-                                              Helper.toScreen(context, EmailOrPhoneNumber());
+                                              Helper.toScreen(EmailOrPhoneNumber());
                                             },
                                             child: Text(
                                               LocaleKeys.create_account.tr(),

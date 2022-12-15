@@ -39,9 +39,9 @@ class PostHeaderWidget extends StatelessWidget {
 
   void route(BuildContext context, int code) {
     if (post.postType == AppConstant.postTypeGroup && code == 0) {
-      Helper.toScreen(context,  PublicGroupScreen(post.groupModel!.id.toString(), index: index));
+      Helper.toScreen(PublicGroupScreen(post.groupModel!.id.toString(), index: index));
     } else if (post.postType == AppConstant.postTypePage && code == 1) {
-      Helper.toScreen(context,  PublicPageScreen(post.pageModel!.id.toString(), index: index));
+      Helper.toScreen(  PublicPageScreen(post.pageModel!.id.toString(), index: index));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));

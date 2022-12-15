@@ -65,7 +65,7 @@ class MoreScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             if (Provider.of<SplashProvider>(context, listen: false).value == 1) {
-                              Helper.toScreen(context, const ProfileScreen());
+                              Helper.toScreen(const ProfileScreen());
                             } else {
                               showMessage(context: context, message: 'Please Update apps first');
                             }
@@ -82,7 +82,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Helper.toScreen(context, const LikedGroupSuggestedGroup());
+                      Helper.toScreen(const LikedGroupSuggestedGroup());
                     },
                   ),
 
@@ -92,7 +92,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Helper.toScreen(context, const LikedPageSuggestedPage());
+                      Helper.toScreen(const LikedPageSuggestedPage());
                     },
                   ),
 
@@ -103,7 +103,7 @@ class MoreScreen extends StatelessWidget {
                     isShowIconsColor: false,
                     goingScreen: () {
                       Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                      Helper.toScreen(context, const MyAnimalScreen());
+                      Helper.toScreen(const MyAnimalScreen());
                     },
                   ),
 
@@ -113,7 +113,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Helper.toScreen(context, const SettingsScreen());
+                      Helper.toScreen(const SettingsScreen());
                     },
                   ),
 

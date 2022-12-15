@@ -135,7 +135,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                   (bool status, String message) {
                                 if (status) {
                                   Fluttertoast.showToast(msg: message);
-                                  Helper.toScreen(context, const LoginScreen());
+                                  Helper.toScreen(const LoginScreen());
                                 } else {
                                   Fluttertoast.showToast(msg: message, backgroundColor: Colors.red);
                                 }

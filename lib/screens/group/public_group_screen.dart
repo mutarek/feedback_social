@@ -98,7 +98,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                 coverPhoto: groupProvider.groupDetailsModel.coverPhoto!,
                                                 viewCoverPhoto: () {
                                                   Helper.toScreen(
-                                                      context, SingleImageView(imageURL: groupProvider.groupDetailsModel.coverPhoto!));
+                                                      SingleImageView(imageURL: groupProvider.groupDetailsModel.coverPhoto!));
                                                 },
                                               ),
                                             ),
@@ -127,7 +127,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                       SizedBox(height: height * 0.01),
                                                       InkWell(
                                                         onTap: () {
-                                                          Helper.toScreen(context,InviteGroupScreen(int.parse(widget.groupID)));
+                                                          Helper.toScreen(InviteGroupScreen(int.parse(widget.groupID)));
 
                                                         },
                                                         child: CircleAvatar(

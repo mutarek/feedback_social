@@ -117,7 +117,6 @@ class PostStats extends StatelessWidget {
                       onTap: () {
                         Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                         Helper.toScreen(
-                            context,
                             SinglePostScreen(post.commentUrl!,
                                 isHomeScreen: isHomeScreen,
                                 isProfileScreen: isFromProfile,
@@ -216,7 +215,6 @@ class PostStats extends StatelessWidget {
                                 onTap: () {
                                   Provider.of<AuthProvider>(context, listen: false).getUserInfo();
                                   Helper.toScreen(
-                                      context,
                                       SinglePostScreen(post.commentUrl!,
                                           isHomeScreen: isHomeScreen,
                                           isProfileScreen: isFromProfile,

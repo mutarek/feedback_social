@@ -49,7 +49,7 @@ class PhotoViewScreen extends StatelessWidget {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => VideoDetailsScreen(imageVideo[index].url, videoURL: imageVideo[index].url2)));
                         } else {
-                          Helper.toScreen(context, SingleImageView(imageURL: imageVideo[index].url));
+                          Helper.toScreen(SingleImageView(imageURL: imageVideo[index].url));
                         }
                       },
                       child: Column(

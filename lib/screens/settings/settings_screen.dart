@@ -8,6 +8,7 @@ import 'package:als_frontend/screens/settings/view/notifications_settings.dart';
 import 'package:als_frontend/screens/settings/view/other_settings.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/app_constant.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: const Color(0xffFFFFFF),
         leading: InkWell(
             onTap: () {
-              Get.back();
+              Helper.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
         title: Text(

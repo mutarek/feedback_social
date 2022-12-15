@@ -118,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen> {
         }
       });
     } else {
-      Helper.toScreen(context, const NoInternetScreen());
+      Helper.toScreen(const NoInternetScreen());
     }
   }
 }
