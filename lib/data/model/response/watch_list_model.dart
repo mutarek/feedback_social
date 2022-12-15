@@ -14,7 +14,7 @@ class WatchListModel{
     header_text = json["header_text"];
     actor = json["actor"];
     action_time = json["action_time"];
-    thumbnail = json["thumbnail"];
-    video = json["video"];
+    thumbnail = json["thumbnail"]??"";
+    video = json["video"]??"";
   }
 }

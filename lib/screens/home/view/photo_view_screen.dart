@@ -1,9 +1,9 @@
 import 'package:als_frontend/data/model/response/image_video_detect_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
-import 'package:als_frontend/screens/home/view/video_details_screen.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
+import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
@@ -47,7 +47,7 @@ class PhotoViewScreen extends StatelessWidget {
                       onTap: () {
                         if (!imageVideo[index].isImage) {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => VideoDetailsScreen(imageVideo[index].url, videoURL: imageVideo[index].url2)));
+                              builder: (_) => VideoScreen(imageVideo[index].url, imageVideo[index].url2, imageVideo[index].title)));
                         } else {
                           Helper.toScreen(SingleImageView(imageURL: imageVideo[index].url));
                         }
@@ -69,7 +69,11 @@ class PhotoViewScreen extends StatelessWidget {
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
                                         child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.of(context).push(MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      VideoScreen(imageVideo[index].url, imageVideo[index].url2, imageVideo[index].title)));
+                                            },
                                             icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                                       ),
                                     )

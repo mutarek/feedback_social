@@ -1,6 +1,6 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
-import 'package:als_frontend/screens/home/view/video_details_screen.dart';
+import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
@@ -40,12 +40,12 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
       if (widget.newsfeedModel.sharePost!.post!.totalImage! >= 4) {
         for (int i = 0; i <= 3; i++) {
           imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
-              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString()));
+              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString(), widget.newsfeedModel.description!));
         }
       } else {
         for (int i = 0; i < widget.newsfeedModel.sharePost!.post!.totalImage!; i++) {
           imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
-              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString()));
+              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString(), widget.newsfeedModel.description!));
         }
 
         int j = 0;
@@ -53,21 +53,25 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
         for (int i = widget.newsfeedModel.sharePost!.post!.totalImage! as int;
             i < widget.newsfeedModel.sharePost!.post!.totalImage! + widget.newsfeedModel.sharePost!.post!.totalVideo!;
             i++) {
-          imageVideoLists.add(ImageVideoDetectModel(false, widget.newsfeedModel.sharePost!.post!.videos![j].thumbnail!,
-              widget.newsfeedModel.sharePost!.post!.videos![j].video!, widget.newsfeedModel.sharePost!.post!.videos![j].id!.toString()));
+          imageVideoLists.add(ImageVideoDetectModel(
+              false,
+              widget.newsfeedModel.sharePost!.post!.videos![j].thumbnail!,
+              widget.newsfeedModel.sharePost!.post!.videos![j].video!,
+              widget.newsfeedModel.sharePost!.post!.videos![j].id!.toString(),
+              widget.newsfeedModel.description!));
           j++;
         }
       }
     } else {
       if (widget.newsfeedModel.totalImage! >= 4) {
         for (int i = 0; i <= 3; i++) {
-          imageVideoLists
-              .add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '', widget.newsfeedModel.images![i].id!.toString()));
+          imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '',
+              widget.newsfeedModel.images![i].id!.toString(), widget.newsfeedModel.description!));
         }
       } else {
         for (int i = 0; i < widget.newsfeedModel.totalImage!; i++) {
-          imageVideoLists
-              .add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '', widget.newsfeedModel.images![i].id!.toString()));
+          imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '',
+              widget.newsfeedModel.images![i].id!.toString(), widget.newsfeedModel.description!));
         }
 
         int j = 0;
@@ -76,7 +80,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
             i < widget.newsfeedModel.totalImage! + widget.newsfeedModel.totalVideo!;
             i++) {
           imageVideoLists.add(ImageVideoDetectModel(false, widget.newsfeedModel.videos![j].thumbnail!,
-              widget.newsfeedModel.videos![j].video!, widget.newsfeedModel.videos![j].id!.toString()));
+              widget.newsfeedModel.videos![j].video!, widget.newsfeedModel.videos![j].id!.toString(), widget.newsfeedModel.description!));
           j++;
         }
       }
@@ -94,8 +98,8 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
               child: customNetworkImage(context, imageVideoLists[0].url))
           : InkWell(
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => VideoDetailsScreen(imageVideoLists[0].url, videoURL: imageVideoLists[0].url2)));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => VideoScreen(imageVideoLists[0].url2, imageVideoLists[0].url, imageVideoLists[0].title)));
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 8),
@@ -115,12 +119,13 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                              border: Border.all(width: 3,color: Colors.white),
-                              ),
+                            border: Border.all(width: 3, color: Colors.white),
+                          ),
                           child: IconButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) => VideoDetailsScreen(imageVideoLists[0].url, videoURL: imageVideoLists[0].url2)));
+                                    builder: (_) =>
+                                        VideoScreen(imageVideoLists[0].url2, imageVideoLists[0].url, imageVideoLists[0].title)));
                               },
                               icon: const Icon(Icons.play_arrow, color: Colors.white, size: 38)),
                         ),
@@ -163,7 +168,8 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                         child: IconButton(
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => VideoDetailsScreen(imageVideoLists[index].url, videoURL: imageVideoLists[index].url2)));
+                                  builder: (_) =>
+                                      VideoScreen(imageVideoLists[index].url2, imageVideoLists[index].url, imageVideoLists[index].title)));
                             },
                             icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                       ),

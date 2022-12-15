@@ -116,7 +116,6 @@ class MoreScreen extends StatelessWidget {
                       Helper.toScreen(const SettingsScreen());
                     },
                   ),
-
                   Center(
                     child: Padding(
                       padding: EdgeInsets.only(top: h * 0.1),

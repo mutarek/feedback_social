@@ -26,7 +26,7 @@ class NewsFeedModel {
     newsfeedId = json['newsfeed_id'];
     isDelete = json['is_delete'];
     id = json['id'];
-    description = json['description'];
+    description = json['description']??"";
     author = json['author'] != null ? Author.fromJson(json['author']) : null;
     totalImage = json['total_image'];
     if (json['images'] != null) {

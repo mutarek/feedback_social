@@ -30,7 +30,7 @@ class WatchProvider with ChangeNotifier{
       hasNextData = false;
       isBottomLoading = false;
       position = 0;
-      notifyListeners();
+      // notifyListeners();
       ApiResponse response = await watchRepo.getAllVideos(page);
       isLoading = false;
       isBottomLoading = false;

@@ -1,5 +1,5 @@
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/home/view/video_details_screen.dart';
+import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -43,8 +43,7 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
                       Helper.toScreen(SingleImageView(imageURL: pageProvider.pageDetailsModel!.photos![index].image!,));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => VideoDetailsScreen('',
-                              videoURL: pageProvider.pageDetailsModel!.videos![index].video)));
+                          builder: (_) => VideoScreen('', pageProvider.pageDetailsModel!.videos![index].video,"")));
                     }
                   },
                   child: Stack(

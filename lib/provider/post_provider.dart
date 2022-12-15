@@ -171,11 +171,11 @@ class PostProvider with ChangeNotifier {
     deletedVideoIDS = [];
 
     for (var element in newsFeedData.images!) {
-      imageVideoLists.add(ImageVideoDetectModel(true, element.image!, '', element.id!.toString()));
+      imageVideoLists.add(ImageVideoDetectModel(true, element.image!, '', element.id!.toString(),newsFeedData.description!));
     }
 
     for (var element in newsFeedData.videos!) {
-      imageVideoLists.add(ImageVideoDetectModel(false, element.thumbnail!, element.video!, element.id!.toString()));
+      imageVideoLists.add(ImageVideoDetectModel(false, element.thumbnail!, element.video!, element.id!.toString(),newsFeedData.description!));
     }
     notifyListeners();
   }

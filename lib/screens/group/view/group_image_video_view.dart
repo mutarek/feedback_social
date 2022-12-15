@@ -1,5 +1,5 @@
 import 'package:als_frontend/provider/group_provider.dart';
-import 'package:als_frontend/screens/home/view/video_details_screen.dart';
+import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -49,7 +49,7 @@ class _GroupImageVideoViewState extends State<GroupImageVideoView> {
 
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => VideoDetailsScreen(groupProvider.groupVideoLists[index].thumbnail!,videoURL: groupProvider.groupVideoLists[index].video)));
+                              builder: (_) => VideoScreen(groupProvider.groupVideoLists[index].thumbnail!,groupProvider.groupVideoLists[index].video,"")));
                         }
                       },
                       child: Stack(
