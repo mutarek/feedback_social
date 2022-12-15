@@ -1,14 +1,14 @@
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +36,7 @@ class FlagPageView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                    title: LocaleKeys.personal_Page.tr, textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
+                                    title: LocaleKeys.personal_Page.tr(), textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
                                 const Icon(Icons.arrow_forward_ios_rounded, color: Palette.primary)
                               ],
                             ),
@@ -48,7 +48,7 @@ class FlagPageView extends StatelessWidget {
                           ],
                         ),
                         (provider.authorPageLists.isEmpty)
-                            ? CustomText(title: LocaleKeys.you_HaveNot_any_Personal_Page.tr, textStyle: latoStyle400Regular.copyWith(fontSize: 16))
+                            ? CustomText(title: LocaleKeys.you_HaveNot_any_Personal_Page.tr(), textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                             : Container(
                                 height: 90,
                                 alignment: Alignment.centerLeft,
@@ -96,7 +96,7 @@ class FlagPageView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                    title: LocaleKeys.suggested_Page.tr, textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
+                                    title: LocaleKeys.suggested_Page.tr(), textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
                                 const Icon(Icons.arrow_forward_ios_rounded, color: Palette.primary)
                               ],
                             ),

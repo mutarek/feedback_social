@@ -1,6 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
@@ -11,10 +8,12 @@ import 'package:als_frontend/screens/group/view/group_member_view.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -140,7 +139,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                 children: [
                                                                   const Icon(FontAwesomeIcons.plus, size: 8, color: Colors.white),
-                                                                  Text(LocaleKeys.invite.tr, style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
+                                                                  Text(LocaleKeys.invite.tr(), style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
                                                                 ],
                                                               ),
                                                             ),
@@ -154,7 +153,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                           children: [
                                                             Text(groupProvider.groupDetailsModel.totalMember.toString(),
                                                                 style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
-                                                             Text(LocaleKeys.members.tr),
+                                                             Text(LocaleKeys.members.tr()),
                                                             SizedBox(height: height * 0.014),
                                                             InkWell(
                                                               onTap: () {
@@ -179,7 +178,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                                   children: [
                                                                     const Icon(FontAwesomeIcons.penToSquare, size: 14, color: Colors.white),
                                                                     SizedBox(width: width * 0.007),
-                                                                    Text(LocaleKeys.edit_Group.tr,
+                                                                    Text(LocaleKeys.edit_Group.tr(),
                                                                         style: TextStyle(fontSize: height * 0.012, color: Colors.white))
                                                                   ],
                                                                 ),
@@ -198,10 +197,10 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                               height: height * 0.03,
                                               color: Colors.white,
                                               child: TabBar(tabs: [
-                                                Text(LocaleKeys.discussion.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                                Text(LocaleKeys.photos.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                                Text(LocaleKeys.videos.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                                Text(LocaleKeys.members.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                                Text(LocaleKeys.discussion.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                                Text(LocaleKeys.photos.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                                Text(LocaleKeys.videos.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                                Text(LocaleKeys.members.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                               ]),
                                             ),
                                           ],

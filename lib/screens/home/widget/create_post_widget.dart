@@ -6,11 +6,11 @@ import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/custom_text2.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -53,8 +53,8 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
                   ),
                 ),
                 const SizedBox(width: 5),
-                CustomText2(
-                    title: LocaleKeys.write_Something.tr,
+                CustomText(
+                    title: LocaleKeys.write_Something.tr(),
                     textStyle: latoStyle400Regular.copyWith(fontWeight: FontWeight.w300, fontSize: 13, color: Colors.grey.withOpacity(.8))),
                 const SizedBox(width: 5),
                 Icon(Icons.mode_edit_outline_outlined, size: 20, color: Colors.grey.withOpacity(.8)),
@@ -79,7 +79,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
                           children: [
                             const Icon(Icons.photo_camera_back, size: 20, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText2(title: LocaleKeys.photos.tr, textStyle: latoStyle700Bold.copyWith()),
+                            CustomText(title: LocaleKeys.photos.tr(), textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),
@@ -89,7 +89,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
                           children: [
                             const Icon(CupertinoIcons.video_camera, size: 28, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText2(title: LocaleKeys.videos.tr, textStyle: latoStyle700Bold.copyWith()),
+                            CustomText(title: LocaleKeys.videos.tr(), textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),
@@ -99,7 +99,7 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
                           children: [
                             const Icon(Icons.calendar_month, size: 20, color: Colors.grey),
                             const SizedBox(width: 5),
-                            CustomText2(title: LocaleKeys.event.tr, textStyle: latoStyle700Bold.copyWith()),
+                            CustomText(title: LocaleKeys.event.tr(), textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
                       ),

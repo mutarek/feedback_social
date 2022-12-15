@@ -42,45 +42,45 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   await EasyLocalization.ensureInitialized();
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<LanguageProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<DashboardProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<CommentProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<PostProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<PublicProfileProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<AnimalProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<GroupProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<OtherProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<NotificationProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SettingsProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<PageProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>()),
-      ChangeNotifierProvider(create: (context) => di.sl<AuthProvider1>()),
-      //TODO: Dio provider initialized
-      ChangeNotifierProvider(create: (context) => di.sl<AnimalProvider1>()),
-      ChangeNotifierProvider(create: (context) => di.sl<ChatProvider1>()),
-      ChangeNotifierProvider(create: (context) => di.sl<CommentProvider1>()),
-      ChangeNotifierProvider(create: (context) => di.sl<DashboardProvider1>()),
-      ChangeNotifierProvider(create: (context) => di.sl<GroupProvider1>()),
-      ChangeNotifierProvider(create: (context) => di.sl<LanguageProvider1>()),
-      ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider1>()),
-      ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider1>()),
-    ],
-    child: EasyLocalization(
-        path: 'assets/lang',
-        supportedLocales: const [Locale('en'), Locale('bn')],
-        fallbackLocale: const Locale('en'),
-        assetLoader: const CodegenLoader(),
-        child: const MyApp()),
-  ));
+  runApp(EasyLocalization(
+      path: 'assets/lang',
+      supportedLocales: const [Locale('en'), Locale('bn')],
+      fallbackLocale: const Locale('en'),
+      assetLoader: const CodegenLoader(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<LanguageProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<DashboardProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<CommentProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<PostProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<PublicProfileProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<AnimalProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<GroupProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<OtherProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<NotificationProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<SettingsProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<PageProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<AuthProvider1>()),
+          //TODO: Dio provider initialized
+          ChangeNotifierProvider(create: (context) => di.sl<AnimalProvider1>()),
+          ChangeNotifierProvider(create: (context) => di.sl<ChatProvider1>()),
+          ChangeNotifierProvider(create: (context) => di.sl<CommentProvider1>()),
+          ChangeNotifierProvider(create: (context) => di.sl<DashboardProvider1>()),
+          ChangeNotifierProvider(create: (context) => di.sl<GroupProvider1>()),
+          ChangeNotifierProvider(create: (context) => di.sl<LanguageProvider1>()),
+          ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider1>()),
+          ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider1>()),
+        ],
+        child: const MyApp(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
@@ -88,26 +88,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<LanguageProvider>(context, listen: false).initializeAllLanguages();
-    List<Locale> _locals = [];
-    for (var language in AppConstant.languagesList) {
-      _locals.add(Locale(language.languageCode, language.countryCode));
-    }
+    // Provider.of<LanguageProvider>(context, listen: false).initializeAllLanguages();
+    // List<Locale> _locals = [];
+    // for (var language in AppConstant.languagesList) {
+    //   _locals.add(Locale(language.languageCode, language.countryCode));
+    // }
 
     return GetMaterialApp(
       title: 'Feedback',
-      localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
       locale: context.locale,
-      // locale: Provider.of<LocalizationProvider>(context).locale,
       theme: Provider.of<ThemeProvider>(context).darkTheme ? AppTheme.getDarkModeTheme() : AppTheme.getLightModeTheme(),
       debugShowCheckedModeBanner: false,
-      // localizationsDelegates: const [
-      //   AppLocalization.delegate,
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
       ),

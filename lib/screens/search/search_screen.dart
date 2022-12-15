@@ -1,6 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
@@ -9,12 +6,14 @@ import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +44,7 @@ class SearchScreen extends StatelessWidget {
                     SizedBox(width: width * 0.02),
                     Expanded(
                       child: CustomTextField(
-                        hintText: LocaleKeys.search.tr,
+                        hintText: LocaleKeys.search.tr(),
                         controller: searchController,
                         inputType: TextInputType.text,
                         autoFocus: true,
@@ -71,7 +70,7 @@ class SearchScreen extends StatelessWidget {
                                 searchProvider.searchQuery(searchController.text);
                                 FocusScope.of(context).unfocus();
                               } else {
-                                Fluttertoast.showToast(msg: LocaleKeys.please_Write_somethings.tr);
+                                Fluttertoast.showToast(msg: LocaleKeys.please_Write_somethings.tr());
                               }
                             },
                             icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 20)),
@@ -95,7 +94,7 @@ class SearchScreen extends StatelessWidget {
                                       onPressed: () {
                                         searchProvider.changeValue(1);
                                       },
-                                      child: Text(LocaleKeys.people.tr,
+                                      child: Text(LocaleKeys.people.tr(),
                                           style: TextStyle(color: (searchProvider.value == 1) ? Colors.white : Colors.black)),
                                       style: ButtonStyle(
                                           backgroundColor: (searchProvider.value == 1)
@@ -106,7 +105,7 @@ class SearchScreen extends StatelessWidget {
                                       onPressed: () {
                                         searchProvider.changeValue(2);
                                       },
-                                      child: Text(LocaleKeys.group.tr,
+                                      child: Text(LocaleKeys.group.tr(),
                                           style: TextStyle(color: (searchProvider.value == 2) ? Colors.white : Colors.black)),
                                       style: ButtonStyle(
                                           backgroundColor: (searchProvider.value == 2)
@@ -118,7 +117,7 @@ class SearchScreen extends StatelessWidget {
                                         searchProvider.changeValue(3);
                                       },
                                       child:
-                                          Text(LocaleKeys.pages.tr, style: TextStyle(color: (searchProvider.value == 3) ? Colors.white : Colors.black)),
+                                          Text(LocaleKeys.pages.tr(), style: TextStyle(color: (searchProvider.value == 3) ? Colors.white : Colors.black)),
                                       style: ButtonStyle(
                                           backgroundColor: (searchProvider.value == 3)
                                               ? MaterialStateProperty.all<Color>(Palette.primary)
@@ -176,7 +175,7 @@ class SearchScreen extends StatelessWidget {
                                       )
                                     : (searchProvider.value == 2)
                                         ? (searchProvider.searchModel.groups == null)
-                                            ?  Center(child: Text(LocaleKeys.no_search_result_found.tr))
+                                            ?  Center(child: Text(LocaleKeys.no_search_result_found.tr()))
                                             : Expanded(
                                                 child: ListView.builder(
                                                   shrinkWrap: true,
@@ -233,7 +232,7 @@ class SearchScreen extends StatelessWidget {
                                                 ),
                                               )
                                         : (searchProvider.searchModel.pages == null)
-                                            ? Center(child: Text(LocaleKeys.no_search_result_found.tr))
+                                            ? Center(child: Text(LocaleKeys.no_search_result_found.tr()))
                                             : Expanded(
                                                 child: ListView.builder(
                                                   shrinkWrap: true,

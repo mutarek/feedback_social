@@ -1,6 +1,5 @@
 import 'package:als_frontend/data/model/response/liked_by_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
@@ -11,9 +10,9 @@ import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 void likeModalBottomView(BuildContext context, NewsFeedModel post, bool isLike) {
@@ -116,7 +115,7 @@ void likeModalBottomView(BuildContext context, NewsFeedModel post, bool isLike) 
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        Text('${isMe ? LocaleKeys.you.tr : likedBy.fullName}',
+                                                        Text('${isMe ? LocaleKeys.you.tr() : likedBy.fullName}',
                                                             style: latoStyle600SemiBold.copyWith(fontSize: 12)),
                                                       ],
                                                     ),

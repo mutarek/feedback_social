@@ -8,7 +8,8 @@ import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
 class HelpDesk extends StatelessWidget {
@@ -56,7 +57,7 @@ class HelpDesk extends StatelessWidget {
                                             size: 15,
                                           )))),
                               Text(
-                                LocaleKeys.need_help.tr,
+                                LocaleKeys.need_help.tr(),
                                 style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266)),
                               ),
                               Container(
@@ -75,7 +76,7 @@ class HelpDesk extends StatelessWidget {
                         ),
                         Center(
                             child: Text(
-                              LocaleKeys.help_Centre.tr,
+                              LocaleKeys.help_Centre.tr(),
                           style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266), fontSize: 40),
                         )),
                         SizedBox(height: height * 0.26, child: Image.asset("assets/background/help.png", fit: BoxFit.cover))
@@ -89,11 +90,11 @@ class HelpDesk extends StatelessWidget {
                       children: [
                         SizedBox(height: height * 0.02),
                         Text(
-                          LocaleKeys.tell_us_how_we_can_help.tr,
+                          LocaleKeys.tell_us_how_we_can_help.tr(),
                           style: latoStyle600SemiBold.copyWith(color: const Color(0xff2E4266), fontSize: 16),
                         ),
                         Text(
-                          LocaleKeys.our_crew_of_superheroes_are_standing.tr,
+                          LocaleKeys.our_crew_of_superheroes_are_standing.tr(),
                           textAlign: TextAlign.center,
                           style: latoStyle500Medium.copyWith(color: const Color(0xffA4AEC0)),
                         ),
@@ -103,8 +104,8 @@ class HelpDesk extends StatelessWidget {
                   ),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.commentSms,
-                    textname: LocaleKeys.write_Problems.tr,
-                    discription: LocaleKeys.write_your_problems_now.tr,
+                    textname: LocaleKeys.write_Problems.tr(),
+                    discription: LocaleKeys.write_your_problems_now.tr(),
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
                       otherProvider.clearImage();
@@ -114,8 +115,8 @@ class HelpDesk extends StatelessWidget {
                   SizedBox(height: height * 0.01),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.question,
-                    textname: LocaleKeys.fAQs.tr,
-                    discription: LocaleKeys.find_intelligent_answer_instantly.tr,
+                    textname: LocaleKeys.fAQs.tr(),
+                    discription: LocaleKeys.find_intelligent_answer_instantly.tr(),
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
                     Get.to(const FaqSceeen());
@@ -124,8 +125,8 @@ class HelpDesk extends StatelessWidget {
                   SizedBox(height: height * 0.01),
                   HelpDeskWidget(
                     icon: FontAwesomeIcons.solidPaperPlane,
-                    textname: LocaleKeys.email.tr,
-                    discription:LocaleKeys.get_solution_beamed_to_your_inbox.tr,
+                    textname: LocaleKeys.email.tr(),
+                    discription:LocaleKeys.get_solution_beamed_to_your_inbox.tr(),
                     color: const Color(0xffF1B8BC),
                     goingScreen: () {
                       openNewEmail("meektecit@gmail.com");

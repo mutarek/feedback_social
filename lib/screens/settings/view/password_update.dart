@@ -6,7 +6,8 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,7 +31,7 @@ class PasswordUpdateSettings extends StatelessWidget {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text(LocaleKeys.password_security.tr, style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(LocaleKeys.password_security.tr(), style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -41,30 +42,30 @@ class PasswordUpdateSettings extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-                Text(LocaleKeys.enter_your_current_password.tr, style: latoStyle500Medium),
+                Text(LocaleKeys.enter_your_current_password.tr(), style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(
                   controller: currentPasswordContorller,
                   fillColor: const Color(0xfff1d3f2),
-                  hintText: LocaleKeys.input_your_old_password.tr,
+                  hintText: LocaleKeys.input_your_old_password.tr(),
                 ),
                 const SizedBox(height: 20),
-                Text(LocaleKeys.new_Password.tr, style: latoStyle500Medium),
+                Text(LocaleKeys.new_Password.tr(), style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(controller: newPasswordContorller, fillColor: const Color(0xffd7f2d3), hintText: "input your new password"),
                 const SizedBox(height: 20),
-                Text(LocaleKeys.repeat_new_password.tr, style: latoStyle500Medium),
+                Text(LocaleKeys.repeat_new_password.tr(), style: latoStyle500Medium),
                 const SizedBox(height: 10),
                 CustomTextField(
                   validation: (value) {
                     if (value == null || value.isEmpty) {
-                      return LocaleKeys.please_enter_some_text.tr;
+                      return LocaleKeys.please_enter_some_text.tr();
                     }
                     return null;
                   },
                   controller: repeatPasswordContorller,
                   fillColor: const Color(0xffd7f2d3),
-                  hintText: LocaleKeys.input_your_new_password_again.tr,
+                  hintText: LocaleKeys.input_your_new_password_again.tr(),
                 ),
                 const SizedBox(height: 20),
                 Center(
@@ -80,7 +81,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                                   currentPasswordContorller.text, newPasswordContorller.text, repeatPasswordContorller.text);
                               if (provider.success) {
                                 Fluttertoast.showToast(
-                                    msg: LocaleKeys.successfully_update.tr,
+                                    msg: LocaleKeys.successfully_update.tr(),
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
                                     timeInSecForIosWeb: 1,
@@ -92,7 +93,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                               }
                             } else {
                               Fluttertoast.showToast(
-                                  msg: LocaleKeys.please_enter_correct_old_password.tr,
+                                  msg: LocaleKeys.please_enter_correct_old_password.tr(),
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.CENTER,
                                   timeInSecForIosWeb: 1,
@@ -102,7 +103,7 @@ class PasswordUpdateSettings extends StatelessWidget {
                               );
                             }
                           },
-                          child:  Text(LocaleKeys.update.tr));
+                          child:  Text(LocaleKeys.update.tr()));
                     }),
                   ),
                 )

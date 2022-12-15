@@ -1,8 +1,8 @@
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomSuggestedFriendsWidget extends StatelessWidget {
   final String userName;
@@ -43,7 +43,7 @@ class CustomSuggestedFriendsWidget extends StatelessWidget {
               child: InkWell(
                 onTap: gotoProfileScreen,
                 child: Padding(
-                  padding: EdgeInsets.all(3),
+                  padding: const EdgeInsets.all(3),
                   child: CircleAvatar(
                       radius: width * 0.07,
                       backgroundColor: AppColors.scaffold,
@@ -67,8 +67,8 @@ class CustomSuggestedFriendsWidget extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        LocaleKeys.add_friend.tr,
-                        style: TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
+                        LocaleKeys.add_friend.tr(),
+                        style: const TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

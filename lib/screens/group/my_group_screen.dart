@@ -1,6 +1,4 @@
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
@@ -8,12 +6,14 @@ import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/app_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
-import 'package:als_frontend/widgets/custom_text2.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +51,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
         backgroundColor: Colors.white,
         elevation: 0,
         title: Consumer<GroupProvider>(
-          builder: (context, groupProvider, child) => CustomText2(
+          builder: (context, groupProvider, child) => CustomText(
             title: groupProvider.menuValue == 0 ? "Group" : "Suggested Groups",
             textStyle: latoStyle700Bold.copyWith(color: Palette.primary, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
@@ -131,7 +131,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                     ],
                   ),
                   (provider.authorGroupList.isEmpty)
-                      ? CustomText2(title: "You Haven't any Personal Group", textStyle: latoStyle400Regular.copyWith(fontSize: 16))
+                      ? CustomText(title: "You Haven't any Personal Group", textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                       : Container(
                           height: 100,
                           alignment: Alignment.centerLeft,
@@ -179,7 +179,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget(LocaleKeys.joined_Group.tr),
+                      titleMenuWidget(LocaleKeys.joined_Group.tr()),
                       const SizedBox(height: 15),
                     ],
                   ),
@@ -200,7 +200,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                                 groupOrPageName: provider.myGroupList[index].name,
                                 groupOrPageLikes: "${provider.myGroupList[index].totalMember} Members");
                           })
-                      : CustomText2(title: LocaleKeys.no_Data_Found.tr, textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
+                      : CustomText(title: LocaleKeys.no_Data_Found.tr(), textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
                 ],
               ),
             )),

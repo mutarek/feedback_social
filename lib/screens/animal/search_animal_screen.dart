@@ -10,7 +10,8 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
                         children: [
                           Expanded(
                             child: CustomTextField(
-                              hintText: LocaleKeys.search_with_code.tr,
+                              hintText: LocaleKeys.search_with_code.tr(),
                               controller: searchController,
                               inputType: TextInputType.number,
                               inputAction: TextInputAction.done,
@@ -74,7 +75,7 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
                                       animalProvider.searchAnimal(searchController.text);
                                       searchController.clear();
                                     } else {
-                                      Fluttertoast.showToast(msg: LocaleKeys.write_6_digits_code_to_search.tr);
+                                      Fluttertoast.showToast(msg: LocaleKeys.write_6_digits_code_to_search.tr());
                                     }
                                   },
                                   icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 20)),
@@ -141,7 +142,7 @@ class _SearchAnimalScreenState extends State<SearchAnimalScreen> {
                                           ),
                                         );
                                       })
-                                  : Center(child: CustomText(title: LocaleKeys.no_Data_Found.tr,color: Colors.black,fontSize: 18)),
+                                  : Center(child: CustomText(title: LocaleKeys.no_Data_Found.tr(),color: Colors.black,fontSize: 18)),
                             )
                     ],
                   ),

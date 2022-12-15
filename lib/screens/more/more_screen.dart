@@ -16,7 +16,8 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -72,7 +73,7 @@ class MoreScreen extends StatelessWidget {
                               showMessage(context: context, message: 'Please Update apps first');
                             }
                           },
-                          child: Text(LocaleKeys.view_profile.tr , style: button)),
+                          child: Text(LocaleKeys.view_profile.tr() , style: button)),
                     ),
                   ),
                   //
@@ -138,7 +139,7 @@ class MoreScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(FontAwesomeIcons.arrowRightFromBracket),
-                            Text(LocaleKeys.logout.tr, style: GoogleFonts.lato(fontSize: h * 0.03)),
+                            Text(LocaleKeys.logout.tr(), style: GoogleFonts.lato(fontSize: h * 0.03)),
                           ],
                         ),
                       ),

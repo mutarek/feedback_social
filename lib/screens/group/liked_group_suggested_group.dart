@@ -1,4 +1,3 @@
-
 import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
@@ -9,11 +8,12 @@ import 'package:als_frontend/screens/group/widget/my_group.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class LikedGroupSuggestedGroup extends StatefulWidget {
@@ -63,7 +63,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                     width: width * 0.26,
                   ),
                   Text(
-                   LocaleKeys.groups.tr,
+                    LocaleKeys.groups.tr(),
                     style: latoStyle500Medium,
                   )
                 ],
@@ -77,28 +77,24 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                 children: [
                   InkWell(
                     onTap: () {
-                      _pageController.animateToPage(0,
-                          duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+                      _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                       groupProvider.changeMenuValue(0);
                     },
                     child: Container(
                       height: height * 0.035,
                       width: width * 0.24,
                       decoration: groupProvider.menuValue == 0
-                          ? BoxDecoration(
-                          color: const Color(0xff090D2A),
-                          borderRadius: BorderRadius.circular(4))
+                          ? BoxDecoration(color: const Color(0xff090D2A), borderRadius: BorderRadius.circular(4))
                           : BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black, width: 1)),
+                              borderRadius: BorderRadius.circular(4),
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black, width: 1)),
                       child: Center(
                           child: Text(
-                            LocaleKeys.my_Group.tr,
-                            style: latoStyle200ExtraLight.copyWith(
-                                color: groupProvider.menuValue == 0 ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold),
-                          )),
+                        LocaleKeys.my_Group.tr(),
+                        style: latoStyle200ExtraLight.copyWith(
+                            color: groupProvider.menuValue == 0 ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
+                      )),
                     ),
                   ),
                   SizedBox(
@@ -106,28 +102,24 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                   ),
                   InkWell(
                     onTap: () {
-                      _pageController.animateToPage(1,
-                          duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+                      _pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                       groupProvider.changeMenuValue(1);
                     },
                     child: Container(
                       height: height * 0.035,
                       width: width * 0.24,
                       decoration: groupProvider.menuValue == 1
-                          ? BoxDecoration(
-                          color: const Color(0xff090D2A),
-                          borderRadius: BorderRadius.circular(4))
+                          ? BoxDecoration(color: const Color(0xff090D2A), borderRadius: BorderRadius.circular(4))
                           : BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Colors.white,
-                          border: Border.all(color: Colors.black, width: 1)),
+                              borderRadius: BorderRadius.circular(4),
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black, width: 1)),
                       child: Center(
                           child: Text(
-                            LocaleKeys.suggestion.tr,
-                            style: latoStyle200ExtraLight.copyWith(
-                                color: groupProvider.menuValue == 0 ? Colors.black : Colors.white,
-                                fontWeight: FontWeight.bold),
-                          )),
+                        LocaleKeys.suggestion.tr(),
+                        style: latoStyle200ExtraLight.copyWith(
+                            color: groupProvider.menuValue == 0 ? Colors.black : Colors.white, fontWeight: FontWeight.bold),
+                      )),
                     ),
                   )
                 ],
@@ -152,7 +144,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             children: [
-                              Text(LocaleKeys.my_Group.tr, style: latoStyle700Bold),
+                              Text(LocaleKeys.my_Group.tr(), style: latoStyle700Bold),
                               const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
@@ -160,8 +152,8 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                     onTap: () {
                                       Get.to(const MyGroup());
                                     },
-                                    child: Text(LocaleKeys.see_all.tr,
-                                        style: latoStyle300Light.copyWith(fontSize: 10,color: Colors.black))),
+                                    child: Text(LocaleKeys.see_all.tr(),
+                                        style: latoStyle300Light.copyWith(fontSize: 10, color: Colors.black))),
                               ),
                             ],
                           ),
@@ -172,60 +164,54 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                             height: height * 0.26,
                             child: groupProvider.authorGroupList.isEmpty
                                 ? Center(
-                                child: Text(
-                                 LocaleKeys.sorry_you_doNot_have_any_page.tr,
-                                  style: latoStyle700Bold,
-                                ))
+                                    child: Text(
+                                    LocaleKeys.sorry_you_doNot_have_any_page.tr(),
+                                    style: latoStyle700Bold,
+                                  ))
                                 : GridView.builder(
-                                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 150,
-                                  childAspectRatio: 2.7,
-                                  crossAxisSpacing: 10,
-                                ),
-                                itemCount: 5 > groupProvider.authorGroupList.length
-                                    ? groupProvider.authorGroupList.length
-                                    : 5,
-                                itemBuilder: (BuildContext ctx, index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      Get.to(UserGroupScreen(
-                                          groupProvider.authorGroupList[index].id.toString(),
-                                          index));
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 24,
-                                          backgroundColor: Colors.black12,
-                                          backgroundImage: CachedNetworkImageProvider(
-                                              groupProvider.authorGroupList[index].coverPhoto),
-                                        ),
-                                        SizedBox(
-                                          width: width * 0.03,
-                                        ),
-                                        Column(
+                                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 150,
+                                      childAspectRatio: 2.7,
+                                      crossAxisSpacing: 10,
+                                    ),
+                                    itemCount: 5 > groupProvider.authorGroupList.length ? groupProvider.authorGroupList.length : 5,
+                                    itemBuilder: (BuildContext ctx, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          Get.to(UserGroupScreen(groupProvider.authorGroupList[index].id.toString(), index));
+                                        },
+                                        child: Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
+                                            CircleAvatar(
+                                              radius: 24,
+                                              backgroundColor: Colors.black12,
+                                              backgroundImage: CachedNetworkImageProvider(groupProvider.authorGroupList[index].coverPhoto),
+                                            ),
                                             SizedBox(
-                                              height: height * 0.01,
+                                              width: width * 0.03,
                                             ),
-                                            Text(groupProvider.authorGroupList[index].name,
-                                                style: latoStyle700Bold),
-                                            const SizedBox(
-                                              height: 2,
-                                            ),
-                                            Text(
-                                                "${groupProvider.authorGroupList[index].totalMember.toString()} ${getTranslated(" Members", context)}",
-                                                style: latoStyle400Regular.copyWith(fontSize: 10,color: Colors.grey)),
+                                            Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(
+                                                  height: height * 0.01,
+                                                ),
+                                                Text(groupProvider.authorGroupList[index].name, style: latoStyle700Bold),
+                                                const SizedBox(
+                                                  height: 2,
+                                                ),
+                                                Text(
+                                                    "${groupProvider.authorGroupList[index].totalMember.toString()} ${getTranslated(" Members", context)}",
+                                                    style: latoStyle400Regular.copyWith(fontSize: 10, color: Colors.grey)),
+                                              ],
+                                            )
                                           ],
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }),
+                                        ),
+                                      );
+                                    }),
                           ),
                         ),
                         SizedBox(
@@ -235,8 +221,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           padding: const EdgeInsets.only(left: 10, right: 10),
                           child: Row(
                             children: [
-                              Text(LocaleKeys.group_you_liked.tr,
-                                  style: latoStyle700Bold),
+                              Text(LocaleKeys.group_you_liked.tr(), style: latoStyle700Bold),
                               const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
@@ -244,8 +229,8 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                   onTap: () {
                                     Get.to(const JoinedGroup());
                                   },
-                                  child: Text(LocaleKeys.see_all.tr,
-                                      style:  latoStyle300Light.copyWith(fontSize: 10,color: Colors.black)),
+                                  child:
+                                      Text(LocaleKeys.see_all.tr(), style: latoStyle300Light.copyWith(fontSize: 10, color: Colors.black)),
                                 ),
                               ),
                             ],
@@ -255,63 +240,55 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           height: height * 0.26,
                           child: groupProvider.myGroupList.isEmpty
                               ? Center(
-                              child:  Text(
-                                LocaleKeys.you_donNot_like_any_group.tr,
-
-                                style: latoStyle500Medium,
-                              ))
+                                  child: Text(
+                                  LocaleKeys.you_donNot_like_any_group.tr(),
+                                  style: latoStyle500Medium,
+                                ))
                               : ListView.builder(
-                              itemCount: 2 > groupProvider.myGroupList.length
-                                  ? groupProvider.myGroupList.length
-                                  : 2,
-                              // > 2
-                              // ? pageProvider.allSuggestPageList.length
-                              // : 2,
-                              itemBuilder: (BuildContext context, int index) {
-                                return InkWell(
-                                  onTap: () {
-                                    Get.to(PublicGroupScreen(
-                                        groupProvider.myGroupList[index].id.toString()));
-                                  },
-                                  child: ListTile(
-                                      leading: CircleAvatar(
-                                        radius: 24,
-                                        backgroundColor: Colors.black12,
-                                        backgroundImage: NetworkImage(
-                                            groupProvider.myGroupList[index].coverPhoto),
-                                      ),
-                                      trailing: Container(
-                                        height: height * 0.027,
-                                        width: width * 0.15,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xff090D2A),
-                                            borderRadius: BorderRadius.circular(4)),
-                                        child: Center(
-                                            child: Text(
-                                              LocaleKeys.joined.tr,
-                                              style: latoStyle600SemiBold.copyWith(
-                                                  color: Colors.white, fontSize: 10),
+                                  itemCount: 2 > groupProvider.myGroupList.length ? groupProvider.myGroupList.length : 2,
+                                  // > 2
+                                  // ? pageProvider.allSuggestPageList.length
+                                  // : 2,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Get.to(PublicGroupScreen(groupProvider.myGroupList[index].id.toString()));
+                                      },
+                                      child: ListTile(
+                                          leading: CircleAvatar(
+                                            radius: 24,
+                                            backgroundColor: Colors.black12,
+                                            backgroundImage: NetworkImage(groupProvider.myGroupList[index].coverPhoto),
+                                          ),
+                                          trailing: Container(
+                                            height: height * 0.027,
+                                            width: width * 0.15,
+                                            decoration:
+                                                BoxDecoration(color: const Color(0xff090D2A), borderRadius: BorderRadius.circular(4)),
+                                            child: Center(
+                                                child: Text(
+                                              LocaleKeys.joined.tr(),
+                                              style: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 10),
                                             )),
-                                      ),
-                                      title: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            height: height * 0.01,
                                           ),
-                                          Text(groupProvider.myGroupList[index].name,
-                                              style: latoStyle700Bold),
-                                          const SizedBox(
-                                            height: 2,
-                                          ),
-                                          Text(
-                                              "${groupProvider.myGroupList[index].totalMember.toString()} ${getTranslated("Members", context)}",
-                                              style: latoStyle400Regular.copyWith(fontSize: 10,color: Colors.grey)),
-                                        ],
-                                      )),
-                                );
-                              }),
+                                          title: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                height: height * 0.01,
+                                              ),
+                                              Text(groupProvider.myGroupList[index].name, style: latoStyle700Bold),
+                                              const SizedBox(
+                                                height: 2,
+                                              ),
+                                              Text(
+                                                  "${groupProvider.myGroupList[index].totalMember.toString()} ${getTranslated("Members", context)}",
+                                                  style: latoStyle400Regular.copyWith(fontSize: 10, color: Colors.grey)),
+                                            ],
+                                          )),
+                                    );
+                                  }),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 250, top: 50),
@@ -329,28 +306,23 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(PublicGroupScreen(
-                                  groupProvider.allSuggestGroupList[index].id.toString()));
+                              Get.to(PublicGroupScreen(groupProvider.allSuggestGroupList[index].id.toString()));
                             },
                             child: ListTile(
                                 leading: CircleAvatar(
                                   radius: 24,
                                   backgroundColor: Colors.black12,
-                                  backgroundImage:
-                                  CachedNetworkImageProvider(groupProvider.allSuggestGroupList[index].coverPhoto),
+                                  backgroundImage: CachedNetworkImageProvider(groupProvider.allSuggestGroupList[index].coverPhoto),
                                 ),
                                 trailing: Container(
                                   height: height * 0.027,
                                   width: width * 0.15,
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xff090D2A),
-                                      borderRadius: BorderRadius.circular(4)),
+                                  decoration: BoxDecoration(color: const Color(0xff090D2A), borderRadius: BorderRadius.circular(4)),
                                   child: Center(
                                       child: Text(
-                                        LocaleKeys.join.tr,
-                                        style: latoStyle600SemiBold.copyWith(
-                                            color: Colors.white, fontSize: 10),
-                                      )),
+                                    LocaleKeys.join.tr(),
+                                    style: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 10),
+                                  )),
                                 ),
                                 title: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -359,8 +331,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                     SizedBox(
                                       height: height * 0.01,
                                     ),
-                                    Text(groupProvider.allSuggestGroupList[index].name,
-                                        style: latoStyle700Bold),
+                                    Text(groupProvider.allSuggestGroupList[index].name, style: latoStyle700Bold),
                                     const SizedBox(
                                       height: 2,
                                     ),

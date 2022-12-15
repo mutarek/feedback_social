@@ -1,6 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
@@ -11,11 +8,13 @@ import 'package:als_frontend/screens/profile/widget/profile_cover_photo_widget.d
 import 'package:als_frontend/screens/profile/widget/profile_details_card.dart';
 import 'package:als_frontend/screens/profile/widget/profile_photo_widget.dart';
 import 'package:als_frontend/screens/profile/widget/update_cover_photo.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -130,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           style: GoogleFonts.lato(
                                               fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                                         ),
-                                        Text(LocaleKeys.friends.tr, style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
+                                        Text(LocaleKeys.friends.tr(), style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
                                       ],
                                     ),
                                   ),
@@ -149,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           style:
                                               GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                                         ),
-                                        Text(LocaleKeys.followers.tr, style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
+                                        Text(LocaleKeys.followers.tr(), style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500))
                                       ],
                                     ),
                                   ),

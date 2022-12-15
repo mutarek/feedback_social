@@ -9,10 +9,11 @@ import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
-import 'package:als_frontend/widgets/custom_text2.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -56,8 +57,8 @@ class OTPScreen extends StatelessWidget {
                         color: Colors.white,
                         child: Padding(
                           padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
-                          child: CustomText2(
-                            title: LocaleKeys.oTP_Verified.tr,
+                          child: CustomText(
+                            title: LocaleKeys.oTP_Verified.tr(),
                             textStyle: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                         ),
@@ -68,8 +69,8 @@ class OTPScreen extends StatelessWidget {
                         SizedBox(height: height * 0.02),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 35),
-                          child: CustomText2(
-                            title: LocaleKeys.please_Enter_your_4_digit_Valid_OTP_Number.tr,
+                          child: CustomText(
+                            title: LocaleKeys.please_Enter_your_4_digit_Valid_OTP_Number.tr(),
                             textAlign: TextAlign.center,
                             maxLines: 2,
                             textStyle: latoStyle600SemiBold.copyWith(color: colorPrimaryDark, fontSize: 16),
@@ -135,7 +136,7 @@ class OTPScreen extends StatelessWidget {
                                   onTap: () {
                                     authProvider.resetTime();
                                   },
-                                  btnTxt: LocaleKeys.resend.tr,
+                                  btnTxt: LocaleKeys.resend.tr(),
                                   backgroundColor: Colors.transparent,
                                   textWhiteColor: true,
                                   radius: 10)

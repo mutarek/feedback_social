@@ -1,18 +1,17 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -85,10 +84,10 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(title: LocaleKeys.enter_Page_name.tr, textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText(title: LocaleKeys.enter_Page_name.tr(), textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         CustomTextField(
-                          hintText: LocaleKeys.write_here.tr,
+                          hintText: LocaleKeys.write_here.tr(),
                           fillColor: Colors.white,
                           borderRadius: 10,
                           controller: pageNameController,
@@ -96,7 +95,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                           inputAction: TextInputAction.done,
                         ),
                         const SizedBox(height: 13),
-                        CustomText(title: LocaleKeys.select_Page_Category_Type.tr, textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
+                        CustomText(title: LocaleKeys.select_Page_Category_Type.tr(), textStyle: latoStyle500Medium.copyWith(fontSize: 17)),
                         const SizedBox(height: 13),
                         Container(
                           width: width,
@@ -122,7 +121,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                         ),
                         const SizedBox(height: 20),
                         CustomButton(
-                          btnTxt: widget.isUpdatePage ? LocaleKeys.update.tr : LocaleKeys.add.tr,
+                          btnTxt: widget.isUpdatePage ? LocaleKeys.update.tr() : LocaleKeys.add.tr(),
                           onTap: () {
                             if (pageNameController.text.isNotEmpty) {
                               if (widget.isUpdatePage) {

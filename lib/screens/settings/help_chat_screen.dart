@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
@@ -7,8 +6,8 @@ import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +35,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         }),
-                    title: CustomText(title: LocaleKeys.type_your_problem.tr, color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 16),
+                    title: CustomText(title: LocaleKeys.type_your_problem.tr(), color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 16),
                     backgroundColor: Colors.white,
                     elevation: 0),
                 bottomNavigationBar: SizedBox(
@@ -45,7 +44,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                     children: [
                       Expanded(
                         child: CustomButton(
-                          btnTxt: LocaleKeys.cancel.tr,
+                          btnTxt: LocaleKeys.cancel.tr(),
                           onTap: () {
                             Navigator.of(context).pop();
                           },
@@ -56,25 +55,25 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                       ),
                       Expanded(
                         child: CustomButton(
-                          btnTxt: LocaleKeys.send.tr,
+                          btnTxt: LocaleKeys.send.tr(),
                           onTap: () {
                             if (problemsController.text.isEmpty) {
-                              showMessage(message: LocaleKeys.please_Write_your_problems_here.tr, context: context);
+                              showMessage(message: LocaleKeys.please_Write_your_problems_here.tr(), context: context);
                             } else if (problemsController.text.length < 10) {
-                              showMessage(message: LocaleKeys.please_write_your_problems_at_least_10_characters.tr, context: context);
+                              showMessage(message: LocaleKeys.please_write_your_problems_at_least_10_characters.tr(), context: context);
                             } else if (otherProvider.selectedFile == null) {
-                              showMessage(message: LocaleKeys.please_Insert_problems_screenshots.tr, context: context);
+                              showMessage(message: LocaleKeys.please_Insert_problems_screenshots.tr(), context: context);
                             } else {
                               settingsProvider.addMessageOnHelpDesk(problemsController.text, otherProvider.selectedFile!).then((value) {
                                 if (value) {
                                   showMessage(
-                                      message: LocaleKeys.we_received_your_request.tr,
+                                      message: LocaleKeys.we_received_your_request.tr(),
                                       isError: false,
                                       context: context);
                                   problemsController.clear();
                                   Navigator.of(context).pop();
                                 } else {
-                                  showMessage(message: LocaleKeys.failed.tr, context: context);
+                                  showMessage(message: LocaleKeys.failed.tr(), context: context);
                                 }
                               });
                             }
@@ -96,7 +95,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                           child: Padding(
                             padding: const EdgeInsets.only(left: 15, right: 10),
                             child: CustomButton(
-                              btnTxt: LocaleKeys.add_screenshot.tr,
+                              btnTxt: LocaleKeys.add_screenshot.tr(),
                               onTap: () {
                                 otherProvider.getImageWithOutCroup(ImageSource.gallery)!;
                               },
@@ -129,7 +128,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                                       )
                                     ],
                                   )
-                                : CustomText(title: LocaleKeys.no_Image_Selected.tr, color: AppColors.feedback),
+                                : CustomText(title: LocaleKeys.no_Image_Selected.tr(), color: AppColors.feedback),
                           ),
                         ),
                       ],
@@ -140,7 +139,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                       fillColor: Colors.white,
                       borderRadius: 0,
                       isCancelShadow: true,
-                      hintText: LocaleKeys.please_write_your_problems_here.tr,
+                      hintText: LocaleKeys.please_write_your_problems_here.tr(),
                       controller: problemsController,
                       inputAction: TextInputAction.done,
                     ),

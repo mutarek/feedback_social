@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/otp_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
@@ -6,13 +5,13 @@ import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
-import 'package:als_frontend/widgets/custom_text2.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -64,7 +63,7 @@ class SignUpScreen1 extends StatelessWidget {
                               color: Colors.white,
                               child: Padding(
                                 padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
-                                child: CustomText2(
+                                child: CustomText(
                                   title: isFromForgetPassword ? "Forget Password" : "Registration",
                                   textStyle: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                                 ),
@@ -90,7 +89,7 @@ class SignUpScreen1 extends StatelessWidget {
                                               SizedBox(
                                                   width: 80,
                                                   child: CustomButton(
-                                                    btnTxt: LocaleKeys.email.tr,
+                                                    btnTxt: LocaleKeys.email.tr(),
                                                     onTap: () {
                                                       auth.changeSelectStatus(false);
                                                     },
@@ -101,7 +100,7 @@ class SignUpScreen1 extends StatelessWidget {
                                               SizedBox(
                                                   width: 80,
                                                   child: CustomButton(
-                                                    btnTxt: LocaleKeys.phone.tr,
+                                                    btnTxt: LocaleKeys.phone.tr(),
                                                     onTap: () {
                                                       auth.changeSelectStatus(true);
                                                     },
@@ -137,7 +136,7 @@ class SignUpScreen1 extends StatelessWidget {
                                                 padding: const EdgeInsets.symmetric(horizontal: 15),
                                                 child: CustomTextField(
                                                   fillColor: Colors.white,
-                                                  hintText: LocaleKeys.enter_Your_Email.tr,
+                                                  hintText: LocaleKeys.enter_Your_Email.tr(),
                                                   borderRadius: 9,
                                                   controller: emailPhoneController,
                                                   verticalSize: 15,
@@ -170,12 +169,12 @@ class SignUpScreen1 extends StatelessWidget {
                                 ontap: () {
                                   if (!auth.isSelectEmail && emailPhoneController.text.isEmpty) {
                                     showMessage(
-                                      message: LocaleKeys.please_fill_all_the_form.tr,
+                                      message: LocaleKeys.please_fill_all_the_form.tr(),
                                       context: context,
                                     );
                                   } else if (auth.isSelectEmail && phoneController.text.isEmpty) {
                                     showMessage(
-                                      message: LocaleKeys.please_fill_all_the_form.tr,
+                                      message: LocaleKeys.please_fill_all_the_form.tr(),
                                       context: context,
                                     );
                                   } else {
@@ -218,7 +217,7 @@ class SignUpScreen1 extends StatelessWidget {
                           height: height * 0.4,
                           width: width * 0.4,
                           child:
-                              CustomText2(title: LocaleKeys.send_OTP.tr, textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
+                              CustomText(title: LocaleKeys.send_OTP.tr(), textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
                         ),
                       ),
                     ],

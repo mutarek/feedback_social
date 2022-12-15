@@ -1,16 +1,16 @@
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +33,7 @@ class SendFriendRequestScreen extends StatelessWidget {
               Get.back();
             }),
         title: CustomText(
-            title: LocaleKeys.all_Friends_Request.tr,
+            title: LocaleKeys.all_Friends_Request.tr(),
             color: Colors.black,
             fontWeight: FontWeight.w500,
             fontSize: 16),
@@ -52,7 +52,7 @@ class SendFriendRequestScreen extends StatelessWidget {
                     Center(
                         child: CustomText(
                       title:
-                          '${LocaleKeys.you_Have.tr} (${profileProvider.sendFriendRequestLists.length}) ${getTranslated("Friend Request", context)}',
+                          '${LocaleKeys.you_Have.tr()} (${profileProvider.sendFriendRequestLists.length}) ${getTranslated("Friend Request", context)}',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )), //this text is added for test commit
                     const SizedBox(height: 10),
@@ -131,7 +131,7 @@ class SendFriendRequestScreen extends StatelessWidget {
                                         width: 95,
                                         height: 35,
                                         child: CustomButton(
-                                          btnTxt: LocaleKeys.accept.tr,
+                                          btnTxt: LocaleKeys.accept.tr(),
                                           textWhiteColor: true,
                                           backgroundColor: Colors.green,
                                           height: 30,
@@ -147,7 +147,7 @@ class SendFriendRequestScreen extends StatelessWidget {
                                         width: 95,
                                         height: 35,
                                         child: CustomButton(
-                                          btnTxt: LocaleKeys.cancel.tr,
+                                          btnTxt: LocaleKeys.cancel.tr(),
                                           textWhiteColor: true,
                                           backgroundColor: Colors.red,
                                           height: 30,

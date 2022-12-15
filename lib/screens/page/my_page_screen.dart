@@ -11,7 +11,8 @@ import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_w
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +50,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         elevation: 0,
         title: Consumer<PageProvider>(
           builder: (context, pageProvider, child) => CustomText(
-            title: pageProvider.menuValue == 0 ? LocaleKeys.pages.tr : LocaleKeys.suggested_Page.tr,
+            title: pageProvider.menuValue == 0 ? LocaleKeys.pages.tr() : LocaleKeys.suggested_Page.tr(),
             textStyle: latoStyle700Bold.copyWith(color: Palette.primary, fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: -1.2),
           ),
         ),
@@ -83,8 +84,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            expanded(context, provider, LocaleKeys.my_Page.tr, 0),
-                            expanded(context, provider, LocaleKeys.other_Page.tr, 1),
+                            expanded(context, provider, LocaleKeys.my_Page.tr(), 0),
+                            expanded(context, provider, LocaleKeys.other_Page.tr(), 1),
                           ],
                         ),
                       ),
@@ -124,13 +125,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget(LocaleKeys.personal_Page.tr),
+                      titleMenuWidget(LocaleKeys.personal_Page.tr()),
                       Container(margin: const EdgeInsets.only(bottom: 10)),
                     ],
                   ),
                   (provider.authorPageLists.isEmpty)
                       ? CustomText(
-                          title: LocaleKeys.you_HaveNot_any_Personal_Page.tr,
+                          title: LocaleKeys.you_HaveNot_any_Personal_Page.tr(),
                           textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                       : Container(
                           height: 100,
@@ -178,7 +179,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   Column(
                     children: [
                       const SizedBox(height: 10),
-                      titleMenuWidget(LocaleKeys.liked_page.tr),
+                      titleMenuWidget(LocaleKeys.liked_page.tr()),
                       const SizedBox(height: 15),
                     ],
                   ),
@@ -197,10 +198,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 goToGroupOrPage: () {},
                                 groupOrPageImage: provider.likedPageLists[index].avatar,
                                 groupOrPageName: provider.likedPageLists[index].name,
-                                groupOrPageLikes: "${provider.likedPageLists[index].followers} ${LocaleKeys.likes.tr} ");
+                                groupOrPageLikes: "${provider.likedPageLists[index].followers} ${LocaleKeys.likes.tr()} ");
                           })
                       : CustomText(
-                          title: LocaleKeys.no_History_found.tr, textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
+                          title: LocaleKeys.no_History_found.tr(), textStyle: latoStyle400Regular.copyWith(fontSize: 16)),
                 ],
               ),
             )),
@@ -228,7 +229,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     goToGroupOrPage: () {},
                     groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,
                     groupOrPageName: provider.allSuggestPageList[index].name,
-                    groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${LocaleKeys.likes.tr}");
+                    groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${LocaleKeys.likes.tr()}");
               }),
     );
   }

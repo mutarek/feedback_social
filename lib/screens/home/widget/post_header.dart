@@ -1,7 +1,6 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/dialog_bottom_sheet/more_menu_bottom_sheet.dart';
 import 'package:als_frontend/helper/number_helper.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
@@ -13,8 +12,8 @@ import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -106,8 +105,8 @@ class PostHeaderWidget extends StatelessWidget {
                           },
                           child: CustomText(
                               title: Provider.of<AuthProvider>(context, listen: false).userID.toString() == post.author!.id.toString()
-                                  ? LocaleKeys.you_Posted_Here.tr
-                                  : post.author!.fullName.toString() + LocaleKeys.posted_Here.tr,
+                                  ? LocaleKeys.you_Posted_Here.tr()
+                                  : post.author!.fullName.toString() + LocaleKeys.posted_Here.tr(),
                               fontSize: 12),
                         ),
                         Row(children: [

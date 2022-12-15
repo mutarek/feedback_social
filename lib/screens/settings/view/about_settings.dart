@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/profile/edit_profile_screen.dart';
@@ -6,12 +5,13 @@ import 'package:als_frontend/screens/settings/view/block_list.dart';
 import 'package:als_frontend/screens/settings/view/email_update.dart';
 import 'package:als_frontend/screens/settings/view/password_update.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +42,7 @@ class _AboutSettingsState extends State<AboutSettings> {
               Get.back();
             },
             child: const Icon(FontAwesomeIcons.angleLeft, size: 20, color: Colors.black)),
-        title: Text(LocaleKeys.about.tr,style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
+        title: Text(LocaleKeys.about.tr(),style: GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black)),
       ),
       body: Consumer2<ProfileProvider, AuthProvider>(
         builder: (context, profileProvider, authProvider, child) => SafeArea(
@@ -80,9 +80,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(LocaleKeys.personal_Information.tr, style: GoogleFonts.lato(fontSize: 16)),
+                                Text(LocaleKeys.personal_Information.tr(), style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text(LocaleKeys.name_gender_profile_details.tr, style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(LocaleKeys.name_gender_profile_details.tr(), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),
@@ -114,9 +114,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(LocaleKeys.password_security.tr, style: GoogleFonts.lato(fontSize: 16)),
+                                Text(LocaleKeys.password_security.tr(), style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text(LocaleKeys.change_password.tr, style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(LocaleKeys.change_password.tr(), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),
@@ -148,9 +148,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(LocaleKeys.email_Security.tr, style: GoogleFonts.lato(fontSize: 16)),
+                                Text(LocaleKeys.email_Security.tr(), style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text(LocaleKeys.change_Email.tr, style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(LocaleKeys.change_Email.tr(), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),
@@ -182,9 +182,9 @@ class _AboutSettingsState extends State<AboutSettings> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(LocaleKeys.block_list.tr, style: GoogleFonts.lato(fontSize: 16)),
+                                Text(LocaleKeys.block_list.tr(), style: GoogleFonts.lato(fontSize: 16)),
                                 const SizedBox(height: 3),
-                                Text(LocaleKeys.see_your_block_list.tr, style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
+                                Text(LocaleKeys.see_your_block_list.tr(), style: GoogleFonts.lato(color: const Color(0xff9C9EA2))),
                               ],
                             ),
                             const Spacer(),

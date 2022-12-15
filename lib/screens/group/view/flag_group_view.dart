@@ -4,7 +4,7 @@ import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/custom_text2.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,7 +32,7 @@ class FlagGroupView extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CustomText2(
+                                CustomText(
                                     title: 'Personal Group', textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
                                 const Icon(Icons.arrow_forward_ios_rounded, color: Palette.primary)
                               ],
@@ -45,7 +45,7 @@ class FlagGroupView extends StatelessWidget {
                           ],
                         ),
                         (provider.authorGroupList.isEmpty)
-                            ? CustomText2(title: "You Haven't any Personal Group", textStyle: latoStyle400Regular.copyWith(fontSize: 16))
+                            ? CustomText(title: "You Haven't any Personal Group", textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                             : Container(
                                 height: 90,
                                 alignment: Alignment.centerLeft,
@@ -93,7 +93,7 @@ class FlagGroupView extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CustomText2(
+                                CustomText(
                                     title: 'Suggested Groups', textStyle: latoStyle700Bold.copyWith(fontSize: 16, color: Palette.primary)),
                                 const Icon(Icons.arrow_forward_ios_rounded, color: Palette.primary)
                               ],

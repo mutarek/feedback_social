@@ -2,7 +2,6 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/helper/url_checkig_helper.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
@@ -14,9 +13,9 @@ import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/any_link_preview_global_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -200,7 +199,7 @@ class TimeLineWidget extends StatelessWidget {
                                               child: Text(
                                                   newsFeedData.sharePost!.post!
                                                           .author!.fullName! +
-                                                      LocaleKeys.posted_Here.tr,
+                                                      LocaleKeys.posted_Here.tr(),
                                                   style: latoStyle500Medium
                                                       .copyWith(
                                                           fontWeight:

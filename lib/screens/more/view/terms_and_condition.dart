@@ -1,6 +1,6 @@
 import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
-import 'package:als_frontend/widgets/custom_text2.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const CustomText2(title: 'Terms and Conditions'), backgroundColor: AppColors.feedback),
+        appBar: AppBar(title: const CustomText(title: 'Terms and Conditions'), backgroundColor: AppColors.feedback),
         body: Consumer<SettingsProvider>(builder: (context, provider, child) {
           return provider.isLoading == true
               ? const Center(child: CircularProgressIndicator())

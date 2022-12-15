@@ -1,19 +1,17 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/auth/otp_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
-import 'package:als_frontend/widgets/custom_text2.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 class EmailOrPhoneNumber extends StatelessWidget {
@@ -55,8 +53,8 @@ class EmailOrPhoneNumber extends StatelessWidget {
                       color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
-                        child: CustomText2(
-                          title: LocaleKeys.register.tr,
+                        child: CustomText(
+                          title: LocaleKeys.register.tr(),
                           textStyle: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                         ),
                       ),
@@ -77,11 +75,11 @@ class EmailOrPhoneNumber extends StatelessWidget {
                                         insets: EdgeInsets.symmetric(horizontal: 16.0)),
                                     tabs: [
                                       Text(
-                                        LocaleKeys.phone.tr,
+                                        LocaleKeys.phone.tr(),
                                         style: latoStyle500Medium.copyWith(color: Colors.white),
                                       ),
                                       Text(
-                                        LocaleKeys.email.tr,
+                                        LocaleKeys.email.tr(),
                                         style: latoStyle500Medium.copyWith(color: Colors.white),
                                       ),
                                     ]),
@@ -96,8 +94,8 @@ class EmailOrPhoneNumber extends StatelessWidget {
                                             children: [
                                               Padding(
                                                 padding: const EdgeInsets.symmetric(horizontal: 35),
-                                                child: CustomText2(
-                                                  title: LocaleKeys.please_Enter_your_phone_number.tr,
+                                                child: CustomText(
+                                                  title: LocaleKeys.please_Enter_your_phone_number.tr(),
                                                   textAlign: TextAlign.center,
                                                   maxLines: 2,
                                                   textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16),
@@ -137,8 +135,8 @@ class EmailOrPhoneNumber extends StatelessWidget {
                                               children: [
                                                 Padding(
                                                   padding: const EdgeInsets.symmetric(horizontal: 35),
-                                                  child: CustomText2(
-                                                    title: LocaleKeys.please_Enter_Your_Email.tr,
+                                                  child: CustomText(
+                                                    title: LocaleKeys.please_Enter_Your_Email.tr(),
                                                     textAlign: TextAlign.center,
                                                     maxLines: 2,
                                                     textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16),
@@ -149,7 +147,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                                                 ),
                                                 CustomTextField(
                                                   fillColor: Colors.white,
-                                                  hintText: LocaleKeys.enter_your_email.tr,
+                                                  hintText: LocaleKeys.enter_your_email.tr(),
                                                   borderRadius: 4,
                                                   controller: emailController,
                                                   verticalSize: 15,
@@ -187,7 +185,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                         ontap: () {
                           if (emailController.text.isEmpty && phoneController.text.isEmpty) {
                             showMessage(
-                              message: LocaleKeys.please_fill_all_the_form.tr,
+                              message: LocaleKeys.please_fill_all_the_form.tr(),
                               context: context,
                             );
                           }
@@ -228,7 +226,7 @@ class EmailOrPhoneNumber extends StatelessWidget {
                   alignment: Alignment.center,
                   height: height * 0.4,
                   width: width * 0.4,
-                  child: CustomText2(title: LocaleKeys.send_OTP.tr, textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
+                  child: CustomText(title: LocaleKeys.send_OTP.tr(), textStyle: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 16)),
                 ),
               ),
             ],

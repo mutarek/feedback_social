@@ -1,4 +1,3 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/screens/auth/email_phone_auth.dart';
@@ -11,10 +10,12 @@ import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Padding(
                               padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                               child: Text(
-                                LocaleKeys.welcome.tr,
+                                LocaleKeys.welcome.tr(),
                                 style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                               ),
                             ),
@@ -95,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             SizedBox(
                                                 width: 80,
                                                 child: CustomButton(
-                                                  btnTxt: LocaleKeys.email.tr,
+                                                  btnTxt: LocaleKeys.email.tr(),
                                                   onTap: () {
                                                     auth.changeSelectStatus(false);
                                                   },
@@ -106,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             SizedBox(
                                                 width: 80,
                                                 child: CustomButton(
-                                                  btnTxt: LocaleKeys.phone.tr,
+                                                  btnTxt: LocaleKeys.phone.tr(),
                                                   onTap: () {
                                                     auth.changeSelectStatus(true);
                                                   },
@@ -143,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               padding: const EdgeInsets.symmetric(horizontal: 15),
                                               child: CustomTextField(
                                                 fillColor: Colors.white,
-                                                hintText: LocaleKeys.enter_Your_Email.tr,
+                                                hintText: LocaleKeys.enter_Your_Email.tr(),
                                                 borderRadius: 9,
                                                 controller: emailController,
                                                 verticalSize: 15,
@@ -158,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         padding: const EdgeInsets.symmetric(horizontal: 15),
                                         child: CustomTextField(
                                           fillColor: Colors.white,
-                                          hintText: LocaleKeys.password.tr,
+                                          hintText: LocaleKeys.password.tr(),
                                           borderRadius: 9,
                                           isPassword: true,
                                           controller: passwordController,
@@ -185,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               Get.to(SignUpScreen1(isFromForgetPassword: true));
                                             },
                                             child: Text(
-                                              LocaleKeys.forget_Password.tr,
+                                              LocaleKeys.forget_Password.tr(),
                                               style: latoStyle400Regular.copyWith(color: Colors.white, fontSize: 16),
                                             )),
                                       ),
@@ -196,12 +197,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: CustomConatinerButton(
                                             child: (auth.isLoading == false)
                                                 ? Center(
-                                                    child: Text(LocaleKeys.login.tr,
+                                                    child: Text(LocaleKeys.login.tr(),
                                                         style: latoStyle800ExtraBold.copyWith(color: Colors.white)))
                                                 : const CupertinoActivityIndicator(),
                                             ontap: () {
                                               if (passwordController.text.isEmpty) {
-                                                showMessage(message: LocaleKeys.please_fill_all_the_form.tr, context: context);
+                                                showMessage(message: LocaleKeys.please_fill_all_the_form.tr(), context: context);
                                               } else {
                                                 auth
                                                     .signIn(!auth.isSelectEmail ? emailController.text : auth.code + phoneController.text,
@@ -230,7 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               Get.to(EmailOrPhoneNumber());
                                             },
                                             child: Text(
-                                              LocaleKeys.create_account.tr,
+                                              LocaleKeys.create_account.tr(),
                                               style: latoStyle400Regular.copyWith(fontSize: 15, color: Colors.black),
                                             )),
                                       ),

@@ -6,13 +6,14 @@ import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_container_button.dart';
-import 'package:als_frontend/widgets/custom_text2.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
 class SetNewPassword extends StatefulWidget {
@@ -61,7 +62,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                         child: Padding(
                           padding: EdgeInsets.only(top: height * 0.06, left: width * 0.1),
                           child: Text(
-                            LocaleKeys.set_New_Password.tr,
+                            LocaleKeys.set_New_Password.tr(),
                             // getTranslated('Registration', context)!,
                             style: latoStyle400Regular.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
@@ -80,8 +81,8 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                   SizedBox(height: height * 0.02),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 35),
-                                    child: CustomText2(
-                                      title: LocaleKeys.enter_new_password.tr,
+                                    child: CustomText(
+                                      title: LocaleKeys.enter_new_password.tr(),
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
                                       textStyle: latoStyle600SemiBold.copyWith(color: colorPrimaryDark, fontSize: 16),
@@ -92,7 +93,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                                     padding: const EdgeInsets.symmetric(horizontal: 15),
                                     child: CustomTextField(
                                       fillColor: Colors.white,
-                                      hintText: LocaleKeys.new_Password.tr,
+                                      hintText: LocaleKeys.new_Password.tr(),
                                       borderRadius: 4,
                                       controller: passwordController,
                                       verticalSize: 15,
@@ -127,7 +128,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                           ontap: () {
                             if (passwordController.text.isEmpty) {
                               showMessage(
-                                message: LocaleKeys.please_fill_all_the_form.tr,
+                                message: LocaleKeys.please_fill_all_the_form.tr(),
                                 context: context,
                               );
                             } else {

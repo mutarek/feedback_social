@@ -13,7 +13,8 @@ import 'package:als_frontend/screens/page/widget/cover_photo_widget.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -140,7 +141,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                             children: [
                                                               const Icon(FontAwesomeIcons.plus, size: 8, color: Colors.white),
-                                                              Text(LocaleKeys.invite.tr, style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
+                                                              Text(LocaleKeys.invite.tr(), style: GoogleFonts.lato(fontSize: 10, color: Colors.white))
                                                             ],
                                                           ),
                                                         ),
@@ -154,7 +155,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                       children: [
                                                         Text(groupProvider.groupDetailsModel.totalMember.toString(),
                                                             style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
-                                                         Text(LocaleKeys.members.tr),
+                                                         Text(LocaleKeys.members.tr()),
                                                         SizedBox(height: height * 0.014),
                                                         InkWell(
                                                           onTap: () {
@@ -189,8 +190,8 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                                 ),
                                                                 Text(
                                                                   (groupProvider.groupDetailsModel.isMember == false)
-                                                                      ? LocaleKeys.joined_Group.tr
-                                                                      : LocaleKeys.leave.tr,
+                                                                      ? LocaleKeys.joined_Group.tr()
+                                                                      : LocaleKeys.leave.tr(),
                                                                   style: TextStyle(fontSize: height * 0.012, color: Colors.white),
                                                                 )
                                                               ],
@@ -210,10 +211,10 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                           height: height * 0.03,
                                           color: Colors.white,
                                           child: TabBar(tabs: [
-                                            Text(LocaleKeys.discussion.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                            Text(LocaleKeys.photos.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                            Text(LocaleKeys.videos.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
-                                            Text(LocaleKeys.members.tr, style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                            Text(LocaleKeys.discussion.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                            Text(LocaleKeys.photos.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                            Text(LocaleKeys.videos.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
+                                            Text(LocaleKeys.members.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                           ]),
                                         ),
                                       ],

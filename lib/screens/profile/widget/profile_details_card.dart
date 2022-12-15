@@ -1,12 +1,11 @@
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
-import 'package:als_frontend/localization/language_constrants.dart';
-import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/profile/edit_profile_screen.dart';
+import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/palette.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +35,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.briefcase, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text(LocaleKeys.company_Name.tr, style: GoogleFonts.lato(fontSize: 12)),
+                      Text(LocaleKeys.company_Name.tr(), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.presentCompany.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700)),
                     ],
                   ),
@@ -52,7 +51,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.graduationCap, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text(LocaleKeys.education.tr, style: GoogleFonts.lato(fontSize: 12)),
+                      Text(LocaleKeys.education.tr(), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.presentEducation.toString(),
                           style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700))
                     ],
@@ -69,7 +68,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.user, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text(LocaleKeys.gender.tr, style: GoogleFonts.lato(fontSize: 12)),
+                      Text(LocaleKeys.gender.tr(), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.gender.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700))
                     ],
                   ),
@@ -86,7 +85,7 @@ class ProfileDetailsCard extends StatelessWidget {
                       Icon(FontAwesomeIcons.personPraying, size: height * 0.019),
                       SizedBox(width: width * 0.03),
                       Text(
-                        LocaleKeys.religion.tr,
+                        LocaleKeys.religion.tr(),
                         style: GoogleFonts.lato(fontSize: 12),
                       ),
                       Text(userProfileModel!.religion.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700))
@@ -104,7 +103,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.locationDot, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text(LocaleKeys.lives_in.tr, style: GoogleFonts.lato(fontSize: 12)),
+                      Text(LocaleKeys.lives_in.tr(), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.livesInAddress.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700)),
                     ],
                   ),
@@ -120,7 +119,7 @@ class ProfileDetailsCard extends StatelessWidget {
                     children: [
                       Icon(FontAwesomeIcons.house, size: height * 0.019),
                       SizedBox(width: width * 0.03),
-                      Text(LocaleKeys.home_town.tr, style: GoogleFonts.lato(fontSize: 12)),
+                      Text(LocaleKeys.home_town.tr(), style: GoogleFonts.lato(fontSize: 12)),
                       Text(userProfileModel!.fromAddress.toString(), style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.w700))
                     ],
                   ),
@@ -142,7 +141,7 @@ class ProfileDetailsCard extends StatelessWidget {
                       decoration: BoxDecoration(color: Palette.scaffold, borderRadius: BorderRadius.circular(4)),
                       child: Center(
                         child:
-                            Text(LocaleKeys.edit_Profile.tr, style: GoogleFonts.lato(color: Colors.black, fontSize: 10, fontWeight: FontWeight.w500)),
+                            Text(LocaleKeys.edit_Profile.tr(), style: GoogleFonts.lato(color: Colors.black, fontSize: 10, fontWeight: FontWeight.w500)),
                       ),
                     ),
                   )

@@ -8,8 +8,8 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +28,7 @@ class AnimalDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Palette.primary),
-        title: CustomText(title: LocaleKeys.animal_details.tr, textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
+        title: CustomText(title: LocaleKeys.animal_details.tr(), textStyle: latoStyle700Bold.copyWith(fontSize: 18)),
         elevation: 0,
       ),
       body: Consumer<AnimalProvider>(
@@ -65,7 +65,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                         animalProvider.changeGenderStatus(animalModel.gender!);
                                         Get.to(() => AddEditAnimalScreen(isEdit: true, animalModel: animalModel, index: index));
                                       },
-                                      child:  Text(LocaleKeys.edit.tr)),
+                                      child:  Text(LocaleKeys.edit.tr())),
                                   ElevatedButton(
                                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
                                       onPressed: () {
@@ -75,7 +75,7 @@ class AnimalDetailsScreen extends StatelessWidget {
                                           }
                                         });
                                       },
-                                      child:  Text(LocaleKeys.delete.tr)),
+                                      child:  Text(LocaleKeys.delete.tr())),
                                 ],
                               )
                             : const SizedBox.shrink(),

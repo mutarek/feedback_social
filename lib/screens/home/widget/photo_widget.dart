@@ -9,7 +9,8 @@ import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:get/get.dart';
+import 'package:get/route_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../data/model/response/image_video_detect_model.dart';
@@ -177,7 +178,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                       left: 50,
                       child: CustomButton(
                         onTap: () {},
-                        btnTxt: LocaleKeys.view_More.tr,
+                        btnTxt: LocaleKeys.view_More.tr(),
                         fontSize: 12,
                         backgroundColor: Colors.green.withOpacity(.8),
                         textWhiteColor: true,

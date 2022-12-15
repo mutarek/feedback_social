@@ -7,8 +7,8 @@ import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_w
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +46,7 @@ class _FriendScreenState extends State<FriendScreen> {
             onPressed: () {
               Get.back();
             }),
-        title: CustomText(title: LocaleKeys.all_Friends.tr, color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+        title: CustomText(title: LocaleKeys.all_Friends.tr(), color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -61,7 +61,7 @@ class _FriendScreenState extends State<FriendScreen> {
                   children: [
                     Center(
                         child: CustomText(
-                      title: '${LocaleKeys.you_Have.tr}(${profileProvider.paginationFriendLists.length}) ${getTranslated("Friend", context)}',
+                      title: '${LocaleKeys.you_Have.tr()}(${profileProvider.paginationFriendLists.length}) ${getTranslated("Friend", context)}',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
                     const SizedBox(height: 10),

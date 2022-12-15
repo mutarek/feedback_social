@@ -1,12 +1,11 @@
-import 'package:als_frontend/localization/language_constrants.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +21,7 @@ class UpdateCoverPhoto extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: Text("${LocaleKeys.upload_a.tr} ${isCoverPhotoUpload ? LocaleKeys.cover.tr: LocaleKeys.profile.tr} ${LocaleKeys.picture.tr}", style: latoStyle800ExtraBold.copyWith(fontSize: 16)),
+        title: Text("${LocaleKeys.upload_a.tr()} ${isCoverPhotoUpload ? LocaleKeys.cover.tr(): LocaleKeys.profile.tr()} ${LocaleKeys.picture.tr()}", style: latoStyle800ExtraBold.copyWith(fontSize: 16)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 68, 51, 51)),
           onPressed: () {
@@ -52,7 +51,7 @@ class UpdateCoverPhoto extends StatelessWidget {
                               ? const ChooseImageAndCropImageView(16, 9, 640, 260)
                               : const ChooseImageAndCropImageView(1, 1, 128, 128)));
                     },
-                    child:  Text(LocaleKeys.pick_image.tr)),
+                    child:  Text(LocaleKeys.pick_image.tr())),
                 ElevatedButton(
                     onPressed: () => profileProvider.uploadPhoto(
                           (bool status) {
@@ -64,7 +63,7 @@ class UpdateCoverPhoto extends StatelessWidget {
                           otherProvider.selectedFile!,
                           isCover: isCoverPhotoUpload,
                         ),
-                    child:  Text(LocaleKeys.update.tr))
+                    child:  Text(LocaleKeys.update.tr()))
               ],
             ),
           ),
