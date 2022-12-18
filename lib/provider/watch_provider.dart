@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/data/repository/watch_repo.dart';
@@ -45,4 +48,24 @@ class WatchProvider with ChangeNotifier{
       notifyListeners();
     }
   }
+
+  late Timer _timer;
+  late Random _random;
+  String annotationValue = '80 %';
+  double pointerValue = 50;
+
+
+  void customProgress() {
+    _random = Random();
+    _timer = Timer.periodic(const Duration(milliseconds: 1200), (timer) {
+        int value = _random.nextInt(100);
+        if (value > 4 && value < 100) {
+          pointerValue = value.toDouble();
+          annotationValue = '$value %';
+          notifyListeners();
+        }
+     notifyListeners();
+    });
+  }
+
 }

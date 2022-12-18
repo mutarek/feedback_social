@@ -73,6 +73,7 @@ dependencies:
   lottie:
   animate_do: ^3.0.2
   easy_localization: ^3.0.1
+  syncfusion_flutter_gauges: ^20.3.61
 
   
 dev_dependencies: 
