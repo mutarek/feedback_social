@@ -67,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (index == newsFeedProvider.newsFeedLists.length) {
                           return const CupertinoActivityIndicator();
                         }
-
                         return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
                             isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
                       }),

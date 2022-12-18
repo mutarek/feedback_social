@@ -1,7 +1,6 @@
 import 'package:als_frontend/screens/video/widget/custom_progress_bar.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
-import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pod_player/pod_player.dart';
 

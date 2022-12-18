@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/watch_provider.dart';
 import 'package:als_frontend/screens/video/widget/custom_video_widgets.dart';
+import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -45,10 +46,12 @@ class _VideoScreenState extends State<VideoScreen> {
           itemCount: watchProvider.watchLists.length + 1,
           itemBuilder: (context, index) {
             if (index == 0) {
-              return CustomVideoWidgets(widget.videoUrl, widget.thumbnailURL, widget.title);
+              //return CustomVideoWidgets(widget.videoUrl, widget.thumbnailURL, widget.title);
+              return NewVideoPlayer(widget.videoUrl,widget.title);
             }
             var data = watchProvider.watchLists[index - 1];
-            return CustomVideoWidgets(data.video!, data.thumbnail!, data.header_text!);
+            //return CustomVideoWidgets(data.video!, data.thumbnail!, data.header_text!);
+            return NewVideoPlayer(data.video!,data.header_text!);
           },
         );
       }),
