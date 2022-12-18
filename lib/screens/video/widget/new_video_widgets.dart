@@ -12,9 +12,8 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-
 class NewVideoPlayer extends StatefulWidget {
-  const NewVideoPlayer(this.url,this.title,{Key? key}) : super(key: key);
+  const NewVideoPlayer(this.url, this.title, {Key? key}) : super(key: key);
   final String url;
   final String title;
 
@@ -23,7 +22,6 @@ class NewVideoPlayer extends StatefulWidget {
 }
 
 class _NewVideoPlayerState extends State<NewVideoPlayer> {
-
   late Future<void> initializeVideoPlayerFuture;
   VideoPlayerController? videoPlayerController;
 
@@ -43,13 +41,14 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
     videoPlayerController!.dispose();
     // videoPlayerController!.removeListener(checkVideoProgress);
   }
+
   prepareVideo({required String url}) {
-    if (videoPlayerController != null) {
-    }
+    if (videoPlayerController != null) {}
     videoPlayerController = VideoPlayerController.network(url);
     initializeVideoPlayerFuture = videoPlayerController!.initialize();
-    }
-    //videoPlayerController!.addListener(checkVideoProgress);
+  }
+
+  //videoPlayerController!.addListener(checkVideoProgress);
 
   @override
   Widget build(BuildContext context) {
@@ -111,68 +110,38 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: CustomText(
-              title: widget.title,
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 16),
+          child: CustomText(title: widget.title, color: Colors.red, fontWeight: FontWeight.w600, fontSize: 16),
         ),
         const SizedBox(height: 10),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: FutureBuilder(
-                        future: initializeVideoPlayerFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return Stack(
-                              children: [
-                                Container(
-                                  key: PageStorageKey(widget.url),
-                                  child: Chewie(
-                                    key: PageStorageKey(widget.url),
-                                    controller: ChewieController(
-                                      allowFullScreen: false,
-                                      videoPlayerController: videoPlayerController!,
-                                      aspectRatio: videoPlayerController!.value.aspectRatio,
-                                      showControls: true,
-                                      showOptions: false,
-                                      // Prepare the video to be played and display the first frame
-                                      autoInitialize: true,
-                                      looping: false,
-                                      autoPlay: true,
-                                      allowMuting: true,
-                                      // Errors can occur for example when trying to play a video
-                                      // from a non-existent URL
-                                      errorBuilder: (context, errorMessage) {
-                                        return Center(
-                                          child: Text(
-                                            errorMessage,
-                                            style: const TextStyle(color: Colors.white),
-                                          ),
-                                        );
-                                      },
-
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          } else {
-                            return Center(
-                              child: CustomProgressBar(),
-                            );
-                          }
-                        },
-                      ),
+          child: FutureBuilder(
+            future: initializeVideoPlayerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Container(
+                  key: PageStorageKey(widget.url),
+                  child: Chewie(
+                    key: PageStorageKey(widget.url),
+                    controller: ChewieController(
+                      allowFullScreen: false,
+                      videoPlayerController: videoPlayerController!,
+                      aspectRatio: videoPlayerController!.value.aspectRatio,
+                      showControls: true,
+                      showOptions: false,
+                      autoInitialize: true,
+                      looping: false,
+                      autoPlay: true,
+                      allowMuting: true,
+                      errorBuilder: (context, errorMessage) {
+                        return Center(child: Text(errorMessage, style: const TextStyle(color: Colors.white)));
+                      },
                     ),
-              ),
-            ],
+                  ),
+                );
+              } else {
+                return Center(child: CustomProgressBar());
+              }
+            },
           ),
         ),
       ],
