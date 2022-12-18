@@ -164,8 +164,10 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                               ],
                             );
                           } else {
-                            return Center(
-                              child: CustomProgressBar(),
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.black,
+                              ),
                             );
                           }
                         },
