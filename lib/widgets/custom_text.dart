@@ -37,13 +37,7 @@ class CustomText extends StatelessWidget {
       overflow: overflow,
       style: textStyle ??
           latoStyle400Regular.copyWith(
-            fontSize: fontSize,
-            color: color,
-            fontWeight: fontWeight,
-            decoration: decoration,
-            fontStyle: fontStyle,
-            height: height,
-          ),
+              fontSize: fontSize, color: color, fontWeight: fontWeight, decoration: decoration, fontStyle: fontStyle, height: height),
     );
   }
 }

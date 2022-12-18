@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+
 class PostResponse {
   NewsFeedModel? newsFeedData;
   bool? status;
@@ -36,17 +37,14 @@ class PostProvider with ChangeNotifier {
       for (int i = 0; i < afterConvertImageLists.length; i++) {
         formData.files.add(MapEntry(
             'image',
-            MultipartFile(afterConvertImageLists[i].readAsBytes().asStream(),
-                afterConvertImageLists[i].lengthSync(),
+            MultipartFile(afterConvertImageLists[i].readAsBytes().asStream(), afterConvertImageLists[i].lengthSync(),
                 filename: afterConvertImageLists[i].path.split("/").last)));
       }
     }
     if (video.isNotEmpty) {
       for (int i = 0; i < video.length; i++) {
         formData.files.add(MapEntry(
-            'video',
-            MultipartFile(video[i].readAsBytes().asStream(), video[i].lengthSync(),
-                filename: video[i].path.split("/").last)));
+            'video', MultipartFile(video[i].readAsBytes().asStream(), video[i].lengthSync(), filename: video[i].path.split("/").last)));
       }
     }
     notifyListeners();
@@ -59,47 +57,52 @@ class PostProvider with ChangeNotifier {
   }
 
   int status = 0;
-  double UplodPercent = 0;
+  double uploadPercent = 0.0;
+
   Future<PostResponse> addPost(String postText, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
     body = postText;
     isLoading = true;
-    UplodPercent = 0;
+    uploadPercent = 0.0;
     notifyListeners();
     calculateMultipartFile();
 
     ApiResponse apiResponse;
     formData.fields.add(MapEntry('description', postText));
     if (isFromGroup) {
-
-      apiResponse = await postRepo.submitPostTOGroupBYUSINGGroupID(formData, groupPageID,onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse = await postRepo.submitPostTOGroupBYUSINGGroupID(formData, groupPageID, onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
-        UplodPercent = progressPercent/100;
-        notifyListeners();
+        uploadPercent = (progressPercent / 100);
+
         print("Progress: $progressPercent %");
         if (progressPercent == 100) {
-          // dispose();
+          uploadPercent = 1.0;
           print('finished');
         }
+        notifyListeners();
       });
     } else if (isFromPage) {
-      apiResponse = await postRepo.submitPostTOPageBYUSINGPageID(formData, groupPageID,onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse = await postRepo.submitPostTOPageBYUSINGPageID(formData, groupPageID, onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
+        uploadPercent = (progressPercent / 100);
+
         print("Progress: $progressPercent %");
-        notifyListeners();
         if (progressPercent == 100) {
-          // dispose();
+          uploadPercent = 1.0;
           print('finished');
         }
+        notifyListeners();
       });
     } else {
       apiResponse = await postRepo.submitPost(formData, onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
-        notifyListeners();
+        uploadPercent = (progressPercent / 100);
+
         print("Progress: $progressPercent %");
         if (progressPercent == 100) {
-          // dispose();
+          uploadPercent = 1.0;
           print('finished');
         }
+        notifyListeners();
       });
     }
     if (apiResponse.response.statusCode == 201 || apiResponse.response.statusCode == 200) {
@@ -118,8 +121,7 @@ class PostProvider with ChangeNotifier {
     }
   }
 
-  Future<PostResponse> updatePost(String postText, int id,
-      {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
+  Future<PostResponse> updatePost(String postText, int id, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
     isLoading = true;
     calculateMultipartFile();
     ApiResponse apiResponse;
@@ -128,7 +130,8 @@ class PostProvider with ChangeNotifier {
     formData.fields.add(MapEntry('deleted_video', jsonEncode(deletedVideoIDS)));
 
     if (isFromGroup) {
-      apiResponse = await postRepo.updatePostTOGroupBYUSINGGroupID(formData, groupPageID, id,onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse =
+          await postRepo.updatePostTOGroupBYUSINGGroupID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         print("Progress: $progressPercent %");
         if (progressPercent == 100) {
@@ -137,7 +140,8 @@ class PostProvider with ChangeNotifier {
         }
       });
     } else if (isFromPage) {
-      apiResponse = await postRepo.updatePostTOPageBYUSINGPageID(formData, groupPageID, id,onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse =
+          await postRepo.updatePostTOPageBYUSINGPageID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         print("Progress: $progressPercent %");
         if (progressPercent == 100) {
@@ -146,7 +150,7 @@ class PostProvider with ChangeNotifier {
         }
       });
     } else {
-      apiResponse = await postRepo.updatePost(formData, id,onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse = await postRepo.updatePost(formData, id, onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         print("Progress: $progressPercent %");
         if (progressPercent == 100) {
@@ -224,13 +228,12 @@ class PostProvider with ChangeNotifier {
     deletedVideoIDS = [];
 
     for (var element in newsFeedData.images!) {
-      imageVideoLists.add(ImageVideoDetectModel(
-          true, element.image!, '', element.id!.toString(), newsFeedData.description!));
+      imageVideoLists.add(ImageVideoDetectModel(true, element.image!, '', element.id!.toString(), newsFeedData.description!));
     }
 
     for (var element in newsFeedData.videos!) {
-      imageVideoLists.add(ImageVideoDetectModel(false, element.thumbnail!, element.video!,
-          element.id!.toString(), newsFeedData.description!));
+      imageVideoLists
+          .add(ImageVideoDetectModel(false, element.thumbnail!, element.video!, element.id!.toString(), newsFeedData.description!));
     }
     notifyListeners();
   }
@@ -249,8 +252,7 @@ class PostProvider with ChangeNotifier {
   }
 
   //// for report post
-  Future<bool> reportPost(String report, int id,
-      {bool isFromGroup = false, bool isFromPage = false}) async {
+  Future<bool> reportPost(String report, int id, {bool isFromGroup = false, bool isFromPage = false}) async {
     isLoading = true;
     ApiResponse response;
     if (isFromGroup) {
@@ -303,10 +305,8 @@ class PostProvider with ChangeNotifier {
       newsFeedData.sharePost = n;
       newsFeedData.description = description;
       newsFeedData.timestamp = DateTime.now().toString();
-      newsFeedData.author = Author(
-          id: int.parse(authRepo.getUserID()),
-          fullName: authRepo.getUserName(),
-          profileImage: authRepo.getUserProfile());
+      newsFeedData.author =
+          Author(id: int.parse(authRepo.getUserID()), fullName: authRepo.getUserName(), profileImage: authRepo.getUserProfile());
       newsFeedData.images = [];
       newsFeedData.videos = [];
       notifyListeners();

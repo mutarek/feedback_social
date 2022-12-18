@@ -12,18 +12,13 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostPro
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: CachedNetworkImage(imageUrl: authProvider.profileImage),
-          ),
+              borderRadius: const BorderRadius.all(Radius.circular(5)), child: CachedNetworkImage(imageUrl: authProvider.profileImage)),
           const SizedBox(width: 10),
           const SizedBox(width: 10),
-          Container(
+          SizedBox(
             height: 10,
             width: 250,
-            child: LinearProgressIndicator(
-              value: postProvider.UplodPercent,
-              semanticsValue: postProvider.UplodPercent.toString(),
-            ),
+            child: LinearProgressIndicator(value: postProvider.uploadPercent, semanticsValue: postProvider.uploadPercent.toString()),
           ),
           Expanded(
             child: status == 1
