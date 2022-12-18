@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 Widget postStatusWidget(BuildContext context, AuthProvider authProvider,
     PostProvider postProvider, bool isLoading, int status) {
@@ -23,8 +24,15 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider,
           const SizedBox(
             width: 10,
           ),
-          Text(status==1?"Opps! Failed":isLoading?"Posting....":"Posted",style: latoStyle700Bold,),
+  Container(
+    height: 10,
+    width: 250,
+    child: LinearProgressIndicator(
+      value:postProvider.UplodPercent,
 
+      semanticsValue: postProvider.UplodPercent.toString(),
+    ),
+  ),
           Expanded(
             child: status == 1
                 ? Row(

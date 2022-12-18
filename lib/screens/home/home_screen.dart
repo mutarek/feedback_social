@@ -38,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<NewsFeedProvider, AuthProvider,PostProvider>(
-        builder: (context, newsFeedProvider, authProvider,postProvider, child) {
+    return Consumer3<NewsFeedProvider, AuthProvider, PostProvider>(
+        builder: (context, newsFeedProvider, authProvider, postProvider, child) {
       return RefreshIndicator(
         onRefresh: () {
           return _refresh(context);
@@ -51,14 +51,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      child: createPostWidget(context, authProvider, newsFeedProvider: newsFeedProvider, isForGroup: false)),
-                  postProvider.isLoading?Visibility(
-                    visible: true,
-                    child: postProvider.isLoading?postStatusWidget(context, authProvider, postProvider,true,postProvider.status):postStatusWidget(context, authProvider, postProvider,false,postProvider.status),
-                  ):Visibility(
-                    visible: false,
-                    child: postProvider.isLoading?postStatusWidget(context, authProvider, postProvider,true,postProvider.status):postStatusWidget(context, authProvider, postProvider,false,postProvider.status),
-                  ),
+                      child: createPostWidget(context, authProvider,
+                          newsFeedProvider: newsFeedProvider, isForGroup: false)),
+                  postProvider.isLoading
+                      ? Visibility(
+                          visible: true,
+                          child: postProvider.isLoading
+                              ? postStatusWidget(
+                                  context, authProvider, postProvider, true, postProvider.status)
+                              : postStatusWidget(
+                                  context, authProvider, postProvider, false, postProvider.status),
+                        )
+                      : Visibility(
+                          visible: false,
+                          child: postProvider.isLoading
+                              ? postStatusWidget(
+                                  context, authProvider, postProvider, true, postProvider.status)
+                              : postStatusWidget(
+                                  context, authProvider, postProvider, false, postProvider.status),
+                        ),
                   ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -68,8 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const CupertinoActivityIndicator();
                         }
 
-                        return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
-                            isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
+                        return TimeLineWidget(
+                            newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
+                            isHomeScreen: true,
+                            groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
                       }),
                   newsFeedProvider.isBottomLoading
                       ? Container(
