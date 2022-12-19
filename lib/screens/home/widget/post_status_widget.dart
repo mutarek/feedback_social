@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostPro
             width: 250,
             child: LinearProgressIndicator(value: postProvider.uploadPercent, semanticsValue: postProvider.uploadPercent.toString()),
           ),
+          CustomText(title: (postProvider.uploadPercent * 100).toStringAsPrecision(2)),
           Expanded(
             child: status == 1
                 ? Row(

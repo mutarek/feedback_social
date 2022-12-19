@@ -97,7 +97,17 @@ class PostProvider with ChangeNotifier {
         progressPercent = sentBytes / totalBytes * 100;
         uploadPercent = (progressPercent / 100);
 
-        print("Progress: $progressPercent %");
+        print("Send Progress: $progressPercent %");
+        if (progressPercent == 100) {
+          uploadPercent = 1.0;
+          print('finished');
+        }
+        notifyListeners();
+      }, onReceiveProgress: (int sentBytes, int totalBytes) {
+        double progressPercent = sentBytes / totalBytes * 100;
+        double uploadPercent = (progressPercent / 100);
+
+        print("Receive Progress: $progressPercent %");
         if (progressPercent == 100) {
           uploadPercent = 1.0;
           print('finished');

@@ -3,6 +3,7 @@ import 'package:als_frontend/data/datasource/remote/exception/api_error_handler.
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:dio/dio.dart';
+
 class PostRepo {
   final DioClient dioClient;
 
@@ -10,56 +11,55 @@ class PostRepo {
 
   Response response = Response(requestOptions: RequestOptions(path: '22222'));
 
-  Future<ApiResponse> submitPost(FormData formData, {onSendProgress}) async {
+  Future<ApiResponse> submitPost(FormData formData, {ProgressCallback? onSendProgress, ProgressCallback? onReceiveProgress}) async {
     try {
-      response = await dioClient.post(
-          "${AppConstant.postsUri}user/create/", data: formData, onSendProgress: onSendProgress);
+      response = await dioClient.post("${AppConstant.postsUri}user/create/",
+          data: formData, onSendProgress: onSendProgress, onReceiveProgress: onReceiveProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<ApiResponse> updatePost(FormData formData, int id,{onSendProgress}) async {
+  Future<ApiResponse> updatePost(FormData formData, int id, {onSendProgress}) async {
     try {
-      response = await dioClient.patch("${AppConstant.postsUri}$id/", data: formData,onSendProgress: onSendProgress);
+      response = await dioClient.patch("${AppConstant.postsUri}$id/", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<ApiResponse> submitPostTOGroupBYUSINGGroupID(FormData formData, int groupID,{onSendProgress}) async {
+  Future<ApiResponse> submitPostTOGroupBYUSINGGroupID(FormData formData, int groupID, {onSendProgress}) async {
     try {
-      response = await dioClient.post("${AppConstant.postsGroupUri}$groupID/", data: formData,onSendProgress:onSendProgress );
+      response = await dioClient.post("${AppConstant.postsGroupUri}$groupID/", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<ApiResponse> updatePostTOGroupBYUSINGGroupID(FormData formData, int groupID,
-      int id,{onSendProgress}) async {
+  Future<ApiResponse> updatePostTOGroupBYUSINGGroupID(FormData formData, int groupID, int id, {onSendProgress}) async {
     try {
-      response = await dioClient.patch("${AppConstant.postsGroupUri}$groupID/$id/", data: formData,onSendProgress: onSendProgress);
+      response = await dioClient.patch("${AppConstant.postsGroupUri}$groupID/$id/", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<ApiResponse> submitPostTOPageBYUSINGPageID(FormData formData, int pageID,{onSendProgress}) async {
+  Future<ApiResponse> submitPostTOPageBYUSINGPageID(FormData formData, int pageID, {onSendProgress}) async {
     try {
-      response = await dioClient.post("${AppConstant.postPageURI}$pageID/", data: formData,onSendProgress: onSendProgress);
+      response = await dioClient.post("${AppConstant.postPageURI}$pageID/", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<ApiResponse> updatePostTOPageBYUSINGPageID(FormData formData, int pageID, int id,{onSendProgress}) async {
+  Future<ApiResponse> updatePostTOPageBYUSINGPageID(FormData formData, int pageID, int id, {onSendProgress}) async {
     try {
-      response = await dioClient.patch("${AppConstant.postPageURI}$pageID/$id/", data: formData,onSendProgress: onSendProgress);
+      response = await dioClient.patch("${AppConstant.postPageURI}$pageID/$id/", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -102,10 +102,10 @@ class PostRepo {
     }
   }
 
-  Future<ApiResponse> sharePost(String url, String description,{onSendProgress}) async {
+  Future<ApiResponse> sharePost(String url, String description, {onSendProgress}) async {
     try {
-      response = await dioClient.post(
-          "${url.replaceAll("comment/", "")}share/", data: {"description": description},onSendProgress: onSendProgress);
+      response = await dioClient.post("${url.replaceAll("comment/", "")}share/",
+          data: {"description": description}, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
