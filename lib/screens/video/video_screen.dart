@@ -47,11 +47,11 @@ class _VideoScreenState extends State<VideoScreen> {
           itemBuilder: (context, index) {
             if (index == 0) {
               //return CustomVideoWidgets(widget.videoUrl, widget.thumbnailURL, widget.title);
-              return NewVideoPlayer(widget.videoUrl,widget.title);
+              return NewVideoPlayer(widget.videoUrl,widget.title,widget.thumbnailURL);
             }
             var data = watchProvider.watchLists[index - 1];
             //return CustomVideoWidgets(data.video!, data.thumbnail!, data.header_text!);
-            return NewVideoPlayer(data.video!,data.header_text!);
+            return NewVideoPlayer(data.video!,data.header_text!,data.thumbnail!);
           },
         );
       }),

@@ -14,9 +14,10 @@ import 'package:video_player/video_player.dart';
 
 
 class NewVideoPlayer extends StatefulWidget {
-  const NewVideoPlayer(this.url,this.title,{Key? key}) : super(key: key);
+  const NewVideoPlayer(this.url,this.title,this.thumbnail,{Key? key}) : super(key: key);
   final String url;
   final String title;
+  final String thumbnail;
 
   @override
   State<NewVideoPlayer> createState() => _NewVideoPlayerState();
@@ -133,6 +134,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                             return Stack(
                               children: [
                                 Container(
+                                  padding: const EdgeInsets.all(5),
                                   key: PageStorageKey(widget.url),
                                   child: Chewie(
                                     key: PageStorageKey(widget.url),
@@ -142,6 +144,12 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                                       aspectRatio: videoPlayerController!.value.aspectRatio,
                                       showControls: true,
                                       showOptions: false,
+                                      showControlsOnInitialize: false,
+                                      zoomAndPan: true,
+                                      allowedScreenSleep: false,
+                                      useRootNavigator: false,
+                                      controlsSafeAreaMinimum: EdgeInsets.all(10),
+
                                       // Prepare the video to be played and display the first frame
                                       autoInitialize: true,
                                       looping: false,
