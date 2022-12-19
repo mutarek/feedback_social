@@ -16,7 +16,9 @@ class PhotoViewScreen extends StatelessWidget {
   final List<ImageVideoDetectModel> imageVideo;
   final int index;
 
-  const PhotoViewScreen(this.newsFeedData, this.imageVideo, this.index, {Key? key}) : super(key: key);
+  const PhotoViewScreen(this.newsFeedData, this.imageVideo, this.index,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,12 @@ class PhotoViewScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              PostStats(post: newsFeedData, index: index, feedProvider: newsFeedProvider, paddingHorizontal: 0, paddingVertical: 3),
+              PostStats(
+                  post: newsFeedData,
+                  index: index,
+                  feedProvider: newsFeedProvider,
+                  paddingHorizontal: 0,
+                  paddingVertical: 3),
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -47,9 +54,14 @@ class PhotoViewScreen extends StatelessWidget {
                       onTap: () {
                         if (!imageVideo[index].isImage) {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => VideoScreen(imageVideo[index].url, imageVideo[index].url2, imageVideo[index].title)));
+                              builder: (_) => VideoScreen(
+                                    imageVideo[index].url,
+                                    imageVideo[index].url2,
+                                    imageVideo[index].title,
+                                  )));
                         } else {
-                          Helper.toScreen(SingleImageView(imageURL: imageVideo[index].url));
+                          Helper.toScreen(
+                              SingleImageView(imageURL: imageVideo[index].url));
                         }
                       },
                       child: Column(
@@ -57,7 +69,9 @@ class PhotoViewScreen extends StatelessWidget {
                           Stack(
                             children: [
                               CachedNetworkImage(
-                                  imageUrl: imageVideo[index].url, width: MediaQuery.of(context).size.width, fit: BoxFit.fill),
+                                  imageUrl: imageVideo[index].url,
+                                  width: MediaQuery.of(context).size.width,
+                                  fit: BoxFit.fill),
                               !imageVideo[index].isImage
                                   ? Positioned(
                                       left: 0,
@@ -67,14 +81,28 @@ class PhotoViewScreen extends StatelessWidget {
                                       child: Container(
                                         width: double.infinity,
                                         alignment: Alignment.center,
-                                        decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                                        decoration: BoxDecoration(
+                                            color:
+                                                Colors.white.withOpacity(.3)),
                                         child: IconButton(
                                             onPressed: () {
-                                              Navigator.of(context).push(MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      VideoScreen(imageVideo[index].url, imageVideo[index].url2, imageVideo[index].title)));
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (_) =>
+                                                          VideoScreen(
+                                                            imageVideo[index]
+                                                                .url,
+                                                            imageVideo[index]
+                                                                .url2,
+                                                            imageVideo[index]
+                                                                .title,
+                                                          )));
                                             },
-                                            icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                                            icon: Icon(
+                                                Icons.video_collection_rounded,
+                                                color:
+                                                    Colors.grey.withOpacity(.7),
+                                                size: 38)),
                                       ),
                                     )
                                   : const SizedBox.shrink()
@@ -87,7 +115,10 @@ class PhotoViewScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               boxShadow: [
-                                BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 9, spreadRadius: 10),
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(.2),
+                                    blurRadius: 9,
+                                    spreadRadius: 10),
                               ],
                             ),
                           )

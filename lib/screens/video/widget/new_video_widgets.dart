@@ -6,25 +6,33 @@ export 'package:flutter/material.dart';
 export 'package:image_picker/image_picker.dart';
 export 'dart:async';
 export 'package:flutter/services.dart';
-import 'package:als_frontend/screens/video/widget/custom_progress_bar.dart';
+import 'package:als_frontend/data/model/response/watch_list_model.dart';
+import 'package:als_frontend/dialog_bottom_sheet/share_modal_bottom_sheet.dart';
+import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:chewie/chewie.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:video_player/video_player.dart';
 
-
 class NewVideoPlayer extends StatefulWidget {
-  const NewVideoPlayer(this.url,this.title,this.thumbnail,{Key? key}) : super(key: key);
+  const NewVideoPlayer(this.url, this.title, this.thumbnail, this.model,
+      {Key? key})
+      : super(key: key);
   final String url;
   final String title;
   final String thumbnail;
+  final WatchListModel model;
 
   @override
   State<NewVideoPlayer> createState() => _NewVideoPlayerState();
 }
 
 class _NewVideoPlayerState extends State<NewVideoPlayer> {
-
   late Future<void> initializeVideoPlayerFuture;
   VideoPlayerController? videoPlayerController;
 
@@ -44,72 +52,58 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
     videoPlayerController!.dispose();
     // videoPlayerController!.removeListener(checkVideoProgress);
   }
+
   prepareVideo({required String url}) {
-    if (videoPlayerController != null) {
-    }
+    if (videoPlayerController != null) {}
     videoPlayerController = VideoPlayerController.network(url);
     initializeVideoPlayerFuture = videoPlayerController!.initialize();
-    }
-    //videoPlayerController!.addListener(checkVideoProgress);
+  }
+
+  //videoPlayerController!.addListener(checkVideoProgress);
 
   @override
   Widget build(BuildContext context) {
-    // return Stack(
-    //   children: [
-    //     SizedBox(
-    //       height: MediaQuery.of(context).size.height,
-    //       child: FutureBuilder(
-    //         future: initializeVideoPlayerFuture,
-    //         builder: (context, snapshot) {
-    //           if (snapshot.connectionState == ConnectionState.done) {
-    //             return Stack(
-    //               children: [
-    //                 Container(
-    //                   key: PageStorageKey(widget.url),
-    //                   child: Chewie(
-    //                     key: PageStorageKey(widget.url),
-    //                     controller: ChewieController(
-    //                       allowFullScreen: false,
-    //                       videoPlayerController: videoPlayerController!,
-    //                       aspectRatio: videoPlayerController!.value.aspectRatio,
-    //                       showControls: true,
-    //                       showOptions: false,
-    //                       // Prepare the video to be played and display the first frame
-    //                       autoInitialize: true,
-    //                       looping: false,
-    //                       autoPlay: true,
-    //                       allowMuting: true,
-    //                       // Errors can occur for example when trying to play a video
-    //                       // from a non-existent URL
-    //                       errorBuilder: (context, errorMessage) {
-    //                         return Center(
-    //                           child: Text(
-    //                             errorMessage,
-    //                             style: const TextStyle(color: Colors.white),
-    //                           ),
-    //                         );
-    //                       },
-    //
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ],
-    //             );
-    //           } else {
-    //             return Center(
-    //               child: CustomProgressBar(),
-    //             );
-    //           }
-    //         },
-    //       ),
-    //     ),
-    //     const Spacer(),
-    //   ],
-    // );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                child: ProfileAvatar(
+                    profileImageUrl: widget.model.user!.profile.toString()),
+              ),
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 5),
+                          Text(widget.model.user!.name.toString(),
+                              style: latoStyle500Medium.copyWith(
+                                  fontWeight: FontWeight.w600)),
+                          const SizedBox(width: 5),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: CustomText(
@@ -126,61 +120,290 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
             children: [
               Expanded(
                 child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: FutureBuilder(
-                        future: initializeVideoPlayerFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return Stack(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(5),
-                                  key: PageStorageKey(widget.url),
-                                  child: Chewie(
-                                    key: PageStorageKey(widget.url),
-                                    controller: ChewieController(
-                                      allowFullScreen: false,
-                                      videoPlayerController: videoPlayerController!,
-                                      aspectRatio: videoPlayerController!.value.aspectRatio,
-                                      showControls: true,
-                                      showOptions: false,
-                                      showControlsOnInitialize: false,
-                                      zoomAndPan: true,
-                                      allowedScreenSleep: false,
-                                      useRootNavigator: false,
-                                      controlsSafeAreaMinimum: EdgeInsets.all(10),
+                  height: MediaQuery.of(context).size.height / 2,
+                  child: FutureBuilder(
+                    future: initializeVideoPlayerFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return Stack(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              key: PageStorageKey(widget.url),
+                              child: Chewie(
+                                key: PageStorageKey(widget.url),
+                                controller: ChewieController(
+                                  allowFullScreen: false,
+                                  videoPlayerController: videoPlayerController!,
+                                  aspectRatio:
+                                      videoPlayerController!.value.aspectRatio,
+                                  showControls: true,
+                                  showOptions: false,
+                                  showControlsOnInitialize: false,
+                                  zoomAndPan: true,
+                                  allowedScreenSleep: false,
+                                  useRootNavigator: false,
+                                  controlsSafeAreaMinimum: EdgeInsets.all(10),
 
-                                      // Prepare the video to be played and display the first frame
-                                      autoInitialize: true,
-                                      looping: false,
-                                      autoPlay: true,
-                                      allowMuting: true,
-                                      // Errors can occur for example when trying to play a video
-                                      // from a non-existent URL
-                                      errorBuilder: (context, errorMessage) {
-                                        return Center(
-                                          child: Text(
-                                            errorMessage,
-                                            style: const TextStyle(color: Colors.white),
-                                          ),
-                                        );
-                                      },
-
-                                    ),
-                                  ),
+                                  // Prepare the video to be played and display the first frame
+                                  autoInitialize: true,
+                                  looping: false,
+                                  autoPlay: true,
+                                  allowMuting: true,
+                                  // Errors can occur for example when trying to play a video
+                                  // from a non-existent URL
+                                  errorBuilder: (context, errorMessage) {
+                                    return Center(
+                                      child: Text(
+                                        errorMessage,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ],
-                            );
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.black,
                               ),
-                            );
-                          }
-                        },
+                            ),
+                          ],
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                      color: AppColors.scaffold,
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey.withOpacity(.2),
+                            blurRadius: 10.0,
+                            spreadRadius: 3.0,
+                            offset: const Offset(0.0, 0.0))
+                      ]),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                // if (isHomeScreen) {
+                                //   if (isGroup || isPage) {
+                                //     feedProvider.addLike(post.id!.toInt(), index, isGroup: isGroup, isFromPage: isPage, groupPageID: groupPageID);
+                                //   } else {
+                                //     feedProvider.addLike(post.id!.toInt(), index);
+                                //   }
+                                // } else {
+                                //   if (isGroup || isPage) {
+                                //     feedProvider.addLike(groupPageID, post.id!.toInt(), index);
+                                //   } else {
+                                //     feedProvider.addLike(post.id!.toInt(), index);
+                                //   }
+                                // }
+                              },
+                              child: SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Icon(
+                                        (widget.model.isLiked == true)
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        size: 30,
+                                        color: (widget.model.isLiked == true)
+                                            ? Colors.red
+                                            : Colors.black),
+                                    // Positioned(
+                                    //     top: -13,
+                                    //     left: 20,
+                                    //     child: post.totalLike == 0
+                                    //         ? const SizedBox.shrink()
+                                    //         : Container(
+                                    //             padding: const EdgeInsets.all(7),
+                                    //             decoration: BoxDecoration(
+                                    //                 shape: BoxShape.circle,
+                                    //                 color: AppColors.feedback,
+                                    //                 border: Border.all(color: Colors.white),
+                                    //                 boxShadow: [
+                                    //                   BoxShadow(
+                                    //                       color: Colors.grey.withOpacity(.2),
+                                    //                       blurRadius: 10.0,
+                                    //                       spreadRadius: 3.0,
+                                    //                       offset: const Offset(0.0, 0.0))
+                                    //                 ]),
+                                    //             child: CustomText(title: post.totalLike.toString(), fontSize: 10, color: Colors.white),
+                                    //           ))
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 30.0),
+                            InkWell(
+                              onTap: () {
+                                /* Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+                                Helper.toScreen(
+                                    SinglePostScreen(post.commentUrl!,
+                                        isHomeScreen: isHomeScreen,
+                                        isProfileScreen: isFromProfile,
+                                        index: index,
+                                        postID: postID,
+                                        groupID: groupPageID,
+                                        isFromPage: isPage,
+                                        isFromGroup: isGroup));*/
+                              },
+                              child: SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: const [
+                                    Icon(CupertinoIcons.chat_bubble,
+                                        size: 30, color: Colors.black),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 1.0),
+                            InkWell(
+                              onTap: () {
+                                //shareBottomSheet(context, post.isShare! ? post.sharePost!.postUrl! : post.commentUrl!, post);
+                              },
+                              child: SizedBox(
+                                width: 35,
+                                height: 35,
+                                child: SvgPicture.asset("assets/svg/share.svg",
+                                    height: 30, color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                      widget.model.totalLiked == 0 &&
+                              widget.model.totalShared == 0 &&
+                              widget.model.totalComment == 0
+                          ? const SizedBox.shrink()
+                          : Container(
+                              color: Colors.grey.withOpacity(.3),
+                              height: 1,
+                              margin: const EdgeInsets.only(top: 5, bottom: 10),
+                            ),
+                      widget.model.totalLiked == 0 &&
+                              widget.model.totalShared == 0 &&
+                              widget.model.totalComment == 0
+                          ? const SizedBox.shrink()
+                          : Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 15, bottom: 12),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      //if (post.totalLiked != 0) likeModalBottomView(context, post, true);
+                                    },
+                                    child: widget.model.totalLiked == 0
+                                        ? const SizedBox.shrink()
+                                        : Row(
+                                            children: [
+                                              Stack(
+                                                clipBehavior: Clip.none,
+                                                children: const [
+                                                  SizedBox(width: 45),
+                                                  Icon(
+                                                      FontAwesomeIcons
+                                                          .solidHeart,
+                                                      size: 20,
+                                                      color: kPrimaryColor),
+                                                  Positioned(
+                                                      left: 21,
+                                                      top: -2,
+                                                      child: Icon(
+                                                          FontAwesomeIcons
+                                                              .thumbsUp,
+                                                          size: 20,
+                                                          color:
+                                                              kPrimaryColor)),
+                                                ],
+                                              ),
+                                              CustomText(
+                                                  title:
+                                                      ' ${widget.model.totalLiked.toString()} ${widget.model.totalLiked == 1 ? "Like" : "Likes"}',
+                                                  fontSize: 14,
+                                                  color: kPrimaryColor
+                                                      .withOpacity(.8)),
+                                            ],
+                                          ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          // Provider.of<AuthProvider>(context, listen: false).getUserInfo();
+                                          // Helper.toScreen(
+                                          //     SinglePostScreen(post.commentUrl!,
+                                          //         isHomeScreen: isHomeScreen,
+                                          //         isProfileScreen: isFromProfile,
+                                          //         index: index,
+                                          //         postID: postID,
+                                          //         groupID: groupPageID,
+                                          //         isFromPage: isPage,
+                                          //         isFromGroup: isGroup));
+                                        },
+                                        child: CustomText(
+                                            title: widget.model.totalComment ==
+                                                    0
+                                                ? ""
+                                                : '${widget.model.totalComment.toString()} ${widget.model.totalComment == 1 ? "comment" : "comments"}',
+                                            fontSize: 14,
+                                            color:
+                                                kPrimaryColor.withOpacity(.8)),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          // if (post.totalShared != 0) likeModalBottomView(context, post, false);
+                                        },
+                                        child: CustomText(
+                                            title: widget.model.totalShared == 0
+                                                ? ""
+                                                : '  ${widget.model.totalShared.toString()} ${widget.model.totalShared == 1 ? "share" : "shares"}',
+                                            fontSize: 14,
+                                            color:
+                                                kPrimaryColor.withOpacity(.8)),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 40,
               ),
             ],
           ),
