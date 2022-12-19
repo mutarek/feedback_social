@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
+import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -17,31 +18,34 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostPro
           const SizedBox(width: 10),
           SizedBox(
             height: 10,
-            width: 250,
-            child: LinearProgressIndicator(value: postProvider.uploadPercent, semanticsValue: postProvider.uploadPercent.toString()),
+            width: 230,
+            child: LinearProgressIndicator(
+              value: postProvider.uploadPercent,
+            ),
           ),
+          CustomText(title: "${(postProvider.uploadPercent * 100).toStringAsFixed(0)}%"),
           Expanded(
             child: status == 1
                 ? Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                          onPressed: () {},
-                          child: InkWell(
-                              onTap: () {
-                                postProvider.disCardPost();
-                              },
-                              child: const Text('Discard'))),
-                      TextButton(
-                          onPressed: () {},
-                          child: InkWell(
-                              onTap: () {
-                                postProvider.addPost(postProvider.body);
-                              },
-                              child: const Text('Retry')))
-                    ],
-                  )
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    onPressed: () {},
+                    child: InkWell(
+                        onTap: () {
+                          postProvider.disCardPost();
+                        },
+                        child: const Text('Discard'))),
+                TextButton(
+                    onPressed: () {},
+                    child: InkWell(
+                        onTap: () {
+                          postProvider.addPost(postProvider.body);
+                        },
+                        child: const Text('Retry')))
+              ],
+            )
                 : const Text(''),
           )
         ],

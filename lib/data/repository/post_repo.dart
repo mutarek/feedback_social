@@ -13,7 +13,7 @@ class PostRepo {
   Future<ApiResponse> submitPost(FormData formData, {onSendProgress}) async {
     try {
       response = await dioClient.post(
-          "${AppConstant.postsUri}user/create/", data: formData, onSendProgress: onSendProgress);
+          "${AppConstant.baseUrl}${AppConstant.postsUri}user/create/", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
