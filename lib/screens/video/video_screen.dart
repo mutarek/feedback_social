@@ -1,3 +1,5 @@
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/watch_provider.dart';
 import 'package:als_frontend/screens/video/widget/custom_video_widgets.dart';
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
@@ -9,11 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VideoScreen extends StatefulWidget {
-  final String videoUrl;
-  final String thumbnailURL;
-  final String title;
+  // final String videoUrl;
+  // final String thumbnailURL;
+  // final String title;
+  final WatchListModel watchListModel;
 
-  const VideoScreen(this.videoUrl, this.thumbnailURL, this.title, {Key? key}) : super(key: key);
+  const VideoScreen(this.watchListModel, {Key? key})
+      : super(key: key);
 
   @override
   State<VideoScreen> createState() => _VideoScreenState();
@@ -35,7 +39,11 @@ class _VideoScreenState extends State<VideoScreen> {
               onPressed: () {
                 Helper.back();
               }),
-          title: CustomText(title: LocaleKeys.feedback_Watch.tr(), color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          title: CustomText(
+              title: LocaleKeys.feedback_Watch.tr(),
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 16),
           backgroundColor: Colors.white,
           elevation: 0),
       body: Consumer<WatchProvider>(builder: (context, watchProvider, child) {
@@ -46,12 +54,12 @@ class _VideoScreenState extends State<VideoScreen> {
           itemCount: watchProvider.watchLists.length + 1,
           itemBuilder: (context, index) {
             if (index == 0) {
-              //return CustomVideoWidgets(widget.videoUrl, widget.thumbnailURL, widget.title);
-              return NewVideoPlayer(widget.videoUrl,widget.title);
+              return NewVideoPlayer(widget.videoUrl, widget.title,
+                  widget.thumbnailURL, watchProvider.watchLists[index + 1]);
             }
             var data = watchProvider.watchLists[index - 1];
-            //return CustomVideoWidgets(data.video!, data.thumbnail!, data.header_text!);
-            return NewVideoPlayer(data.video!,data.header_text!);
+            return NewVideoPlayer(
+                data.video!, data.header_text!, data.thumbnail!, data);
           },
         );
       }),
