@@ -20,12 +20,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:video_player/video_player.dart';
 
 class NewVideoPlayer extends StatefulWidget {
-  const NewVideoPlayer(this.url, this.title, this.thumbnail, this.model,
-      {Key? key})
-      : super(key: key);
-  final String url;
-  final String title;
-  final String thumbnail;
+  const NewVideoPlayer(this.model, {Key? key}) : super(key: key);
   final WatchListModel model;
 
   @override
@@ -39,7 +34,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
   @override
   void initState() {
     super.initState();
-    prepareVideo(url: widget.url);
+    prepareVideo(url: widget.model.video.toString());
   }
 
   @override
@@ -107,7 +102,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: CustomText(
-              title: widget.title,
+              title: widget.model.header_text,
               color: Colors.black,
               fontWeight: FontWeight.w600,
               fontSize: 16),
@@ -129,9 +124,9 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                           children: [
                             Container(
                               padding: const EdgeInsets.all(5),
-                              key: PageStorageKey(widget.url),
+                              key: PageStorageKey(widget.model.video),
                               child: Chewie(
-                                key: PageStorageKey(widget.url),
+                                key: PageStorageKey(widget.model.video),
                                 controller: ChewieController(
                                   allowFullScreen: false,
                                   videoPlayerController: videoPlayerController!,

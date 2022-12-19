@@ -16,8 +16,7 @@ class VideoScreen extends StatefulWidget {
   // final String title;
   final WatchListModel watchListModel;
 
-  const VideoScreen(this.watchListModel, {Key? key})
-      : super(key: key);
+  const VideoScreen(this.watchListModel, {Key? key}) : super(key: key);
 
   @override
   State<VideoScreen> createState() => _VideoScreenState();
@@ -54,12 +53,10 @@ class _VideoScreenState extends State<VideoScreen> {
           itemCount: watchProvider.watchLists.length + 1,
           itemBuilder: (context, index) {
             if (index == 0) {
-              return NewVideoPlayer(widget.videoUrl, widget.title,
-                  widget.thumbnailURL, watchProvider.watchLists[index + 1]);
+              return NewVideoPlayer(widget.watchListModel);
             }
             var data = watchProvider.watchLists[index - 1];
-            return NewVideoPlayer(
-                data.video!, data.header_text!, data.thumbnail!, data);
+            return NewVideoPlayer(data);
           },
         );
       }),
