@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/util/helper.dart';
@@ -11,7 +12,8 @@ class GroupImageVideoView extends StatefulWidget {
   final int groupID;
   final bool isForImage;
 
-  const GroupImageVideoView(this.groupID, {this.isForImage = true, Key? key}) : super(key: key);
+  const GroupImageVideoView(this.groupID, {this.isForImage = true, Key? key})
+      : super(key: key);
 
   @override
   State<GroupImageVideoView> createState() => _GroupImageVideoViewState();
@@ -23,33 +25,57 @@ class _GroupImageVideoViewState extends State<GroupImageVideoView> {
     // TODO: implement initState
     super.initState();
     if (widget.isForImage) {
-      Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupImage(widget.groupID);
+      Provider.of<GroupProvider>(context, listen: false)
+          .callForGetAllGroupImage(widget.groupID);
     } else {
-      Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupVideo(widget.groupID);
+      Provider.of<GroupProvider>(context, listen: false)
+          .callForGetAllGroupVideo(widget.groupID);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<GroupProvider>(
-        builder: (context, groupProvider, child) => groupProvider.isLoadingForGroupImageVideo
+        builder: (context, groupProvider, child) => groupProvider
+                .isLoadingForGroupImageVideo
             ? const Center(child: CupertinoActivityIndicator())
             : GridView.builder(
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 5.0, mainAxisSpacing: 5.0),
-                itemCount: widget.isForImage ? groupProvider.groupImagesLists.length : groupProvider.groupVideoLists.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 5.0,
+                    mainAxisSpacing: 5.0),
+                itemCount: widget.isForImage
+                    ? groupProvider.groupImagesLists.length
+                    : groupProvider.groupVideoLists.length,
                 itemBuilder: (context, index) {
                   return InkWell(
                       onTap: () {
                         if (widget.isForImage) {
-                          Helper.toScreen(SingleImageView(imageURL: groupProvider.groupImagesLists[index].image));
-
+                          Helper.toScreen(SingleImageView(
+                              imageURL:
+                                  groupProvider.groupImagesLists[index].image));
                         } else {
+                          User user = new User(id: 1, name: "", profile: "");
+                          WatchListModel watchListModel = WatchListModel(
+                            watch_id: 1,
+                            header_text: "",
+                            created_at: "2022-12-19T13:45:20.855137",
+                            video: groupProvider.groupVideoLists[index].video,
+                            thumbnail:
+                                groupProvider.groupVideoLists[index].thumbnail!,
+                            user: user,
+                            totalComment: 0,
+                            commentUrl: "",
+                            totalLiked: 0,
+                            likedByUrl: "",
+                            isLiked: false,
+                            sharedByUrl: "",
+                          );
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => VideoScreen(groupProvider.groupVideoLists[index].thumbnail!,groupProvider.groupVideoLists[index].video,"")));
+                              builder: (_) => VideoScreen(watchListModel)));
                         }
                       },
                       child: Stack(
@@ -70,14 +96,18 @@ class _GroupImageVideoViewState extends State<GroupImageVideoView> {
                               borderRadius: BorderRadius.circular(5),
                               child: CachedNetworkImage(
                                   imageUrl: widget.isForImage
-                                      ? groupProvider.groupImagesLists[index].image
-                                      : groupProvider.groupVideoLists[index].thumbnail!,
+                                      ? groupProvider
+                                          .groupImagesLists[index].image
+                                      : groupProvider
+                                          .groupVideoLists[index].thumbnail!,
                                   fit: BoxFit.cover,
                                   height: 200,
                                   width: MediaQuery.of(context).size.width,
                                   placeholder: ((context, url) => Container(
                                         alignment: Alignment.center,
-                                        child: Image.asset("assets/background/loading.gif", height: 200),
+                                        child: Image.asset(
+                                            "assets/background/loading.gif",
+                                            height: 200),
                                       ))),
                             ),
                           ),
@@ -89,8 +119,11 @@ class _GroupImageVideoViewState extends State<GroupImageVideoView> {
                                   bottom: 0,
                                   child: Container(
                                     alignment: Alignment.center,
-                                    decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
-                                    child: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(.3)),
+                                    child: Icon(Icons.video_collection_rounded,
+                                        color: Colors.grey.withOpacity(.7),
+                                        size: 38),
                                   ),
                                 )
                               : const SizedBox.shrink()

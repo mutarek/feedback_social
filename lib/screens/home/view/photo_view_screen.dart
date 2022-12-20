@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/image_video_detect_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
@@ -53,12 +54,26 @@ class PhotoViewScreen extends StatelessWidget {
                     return InkWell(
                       onTap: () {
                         if (!imageVideo[index].isImage) {
+                          User user = new User(
+                              id: newsFeedData.author!.id,
+                              name: newsFeedData.author!.fullName,
+                              profile: newsFeedData.author!.profileImage);
+                          WatchListModel watchListModel = WatchListModel(
+                            watch_id: 1,
+                            header_text: imageVideo[index].title,
+                            created_at: "2022-12-19T13:45:20.855137",
+                            video: imageVideo[index].url,
+                            thumbnail: imageVideo[index].url2,
+                            user: user,
+                            totalComment: newsFeedData.totalComment,
+                            commentUrl: newsFeedData.commentUrl,
+                            totalLiked: newsFeedData.totalLiked,
+                            likedByUrl: newsFeedData.likedByUrl,
+                            isLiked: newsFeedData.isLiked,
+                            sharedByUrl: newsFeedData.sharedByUrl,
+                          );
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => VideoScreen(
-                                    imageVideo[index].url,
-                                    imageVideo[index].url2,
-                                    imageVideo[index].title,
-                                  )));
+                              builder: (_) => VideoScreen(watchListModel)));
                         } else {
                           Helper.toScreen(
                               SingleImageView(imageURL: imageVideo[index].url));
@@ -86,17 +101,40 @@ class PhotoViewScreen extends StatelessWidget {
                                                 Colors.white.withOpacity(.3)),
                                         child: IconButton(
                                             onPressed: () {
+                                              User user = new User(
+                                                  id: newsFeedData.author!.id,
+                                                  name: newsFeedData
+                                                      .author!.fullName,
+                                                  profile: newsFeedData
+                                                      .author!.profileImage);
+                                              WatchListModel watchListModel =
+                                                  WatchListModel(
+                                                watch_id: 1,
+                                                header_text:
+                                                    imageVideo[index].title,
+                                                created_at:
+                                                    "2022-12-19T13:45:20.855137",
+                                                video: imageVideo[index].url,
+                                                thumbnail:
+                                                    imageVideo[index].url2,
+                                                user: user,
+                                                totalComment:
+                                                    newsFeedData.totalComment,
+                                                commentUrl:
+                                                    newsFeedData.commentUrl,
+                                                totalLiked:
+                                                    newsFeedData.totalLiked,
+                                                likedByUrl:
+                                                    newsFeedData.likedByUrl,
+                                                isLiked: newsFeedData.isLiked,
+                                                sharedByUrl:
+                                                    newsFeedData.sharedByUrl,
+                                              );
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                       builder: (_) =>
                                                           VideoScreen(
-                                                            imageVideo[index]
-                                                                .url,
-                                                            imageVideo[index]
-                                                                .url2,
-                                                            imageVideo[index]
-                                                                .title,
-                                                          )));
+                                                              watchListModel)));
                                             },
                                             icon: Icon(
                                                 Icons.video_collection_rounded,

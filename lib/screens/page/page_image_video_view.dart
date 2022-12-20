@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/util/helper.dart';
@@ -9,7 +10,8 @@ import 'package:provider/provider.dart';
 class PageImageVideoView extends StatefulWidget {
   final bool isForImage;
 
-  const PageImageVideoView({this.isForImage = true, Key? key}) : super(key: key);
+  const PageImageVideoView({this.isForImage = true, Key? key})
+      : super(key: key);
 
   @override
   State<PageImageVideoView> createState() => _PageImageVideoViewState();
@@ -34,16 +36,43 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 5.0, mainAxisSpacing: 5.0),
-            itemCount: widget.isForImage ? pageProvider.pageDetailsModel!.photos!.length : pageProvider.pageDetailsModel!.videos!.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, crossAxisSpacing: 5.0, mainAxisSpacing: 5.0),
+            itemCount: widget.isForImage
+                ? pageProvider.pageDetailsModel!.photos!.length
+                : pageProvider.pageDetailsModel!.videos!.length,
             itemBuilder: (context, index) {
               return InkWell(
                   onTap: () {
                     if (widget.isForImage) {
-                      Helper.toScreen(SingleImageView(imageURL: pageProvider.pageDetailsModel!.photos![index].image!,));
+                      Helper.toScreen(SingleImageView(
+                        imageURL: pageProvider
+                            .pageDetailsModel!.photos![index].image!,
+                      ));
                     } else {
+                      User user = new User(
+                          id: pageProvider.pageDetailsModel!.author!.id,
+                          name: pageProvider.pageDetailsModel!.author!.fullName,
+                          profile: pageProvider
+                              .pageDetailsModel!.author!.profileImage);
+                      WatchListModel watchListModel = WatchListModel(
+                        watch_id:
+                            pageProvider.pageDetailsModel!.videos![index].id,
+                        header_text: '',
+                        created_at: "2022-12-19T13:45:20.855137",
+                        video:
+                            pageProvider.pageDetailsModel!.videos![index].video,
+                        thumbnail: '',
+                        user: user,
+                        totalComment: 0,
+                        commentUrl: "",
+                        totalLiked: 0,
+                        likedByUrl: "",
+                        isLiked: false,
+                        sharedByUrl: "",
+                      );
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => VideoScreen('', pageProvider.pageDetailsModel!.videos![index].video,"")));
+                          builder: (_) => VideoScreen(watchListModel)));
                     }
                   },
                   child: Stack(
@@ -54,21 +83,28 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
                             border: Border.all(color: Colors.white),
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+                                  color: Colors.grey.withOpacity(.2),
+                                  blurRadius: 10.0,
+                                  spreadRadius: 3.0,
+                                  offset: const Offset(0.0, 0.0))
                             ],
                             borderRadius: BorderRadius.circular(5)),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: CachedNetworkImage(
                               imageUrl: widget.isForImage
-                                  ? pageProvider.pageDetailsModel!.photos![index].image!
-                                  : pageProvider.pageDetailsModel!.videos![index].video,
+                                  ? pageProvider
+                                      .pageDetailsModel!.photos![index].image!
+                                  : pageProvider
+                                      .pageDetailsModel!.videos![index].video,
                               fit: BoxFit.cover,
                               height: 200,
                               width: MediaQuery.of(context).size.width,
                               placeholder: ((context, url) => Container(
                                     alignment: Alignment.center,
-                                    child: Image.asset("assets/background/loading.gif", height: 200),
+                                    child: Image.asset(
+                                        "assets/background/loading.gif",
+                                        height: 200),
                                   ))),
                         ),
                       ),
@@ -80,8 +116,11 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
                               bottom: 0,
                               child: Container(
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
-                                child: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38),
+                                decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(.3)),
+                                child: Icon(Icons.video_collection_rounded,
+                                    color: Colors.grey.withOpacity(.7),
+                                    size: 38),
                               ),
                             )
                           : const SizedBox.shrink()

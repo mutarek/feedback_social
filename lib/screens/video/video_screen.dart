@@ -11,9 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VideoScreen extends StatefulWidget {
-  // final String videoUrl;
-  // final String thumbnailURL;
-  // final String title;
   final WatchListModel watchListModel;
 
   const VideoScreen(this.watchListModel, {Key? key}) : super(key: key);

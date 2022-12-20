@@ -1,8 +1,7 @@
 class WatchListModel {
   num? watch_id;
   String? header_text;
-  num? actor;
-  String? action_time;
+  String? created_at;
   String? thumbnail;
   String? video;
   User? user;
@@ -17,8 +16,7 @@ class WatchListModel {
   WatchListModel(
       {this.watch_id,
       this.header_text,
-      this.actor,
-      this.action_time,
+      this.created_at,
       this.thumbnail,
       this.video,
       this.user,
@@ -33,11 +31,10 @@ class WatchListModel {
   WatchListModel.fromJson(dynamic json) {
     watch_id = json["watch_id"];
     header_text = json["header_text"];
-    actor = json["actor"];
-    action_time = json["action_time"];
+    created_at = json["created_at"];
     thumbnail = json["thumbnail"] ?? "";
     video = json["video"] ?? "";
-    user = User.fromJson(json["user"]?? "");
+    user = User.fromJson(json["user"] ?? "");
     totalComment = json["total_comment"] ?? "";
     commentUrl = json["comment_url"] ?? "";
     isLiked = json["is_liked"] ?? "";

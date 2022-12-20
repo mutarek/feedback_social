@@ -7,7 +7,6 @@ export 'package:image_picker/image_picker.dart';
 export 'dart:async';
 export 'package:flutter/services.dart';
 import 'package:als_frontend/data/model/response/watch_list_model.dart';
-import 'package:als_frontend/dialog_bottom_sheet/share_modal_bottom_sheet.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
