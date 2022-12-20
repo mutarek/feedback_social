@@ -6,8 +6,8 @@ class WatchListModel {
   String? thumbnail;
   String? video;
   User? user;
-  // Page? page;
-  // Group? group;
+  Page? page;
+  Group? group;
   num? totalComment;
   String? commentUrl;
   num? totalLiked;
@@ -17,22 +17,22 @@ class WatchListModel {
   num? totalShared;
 
   WatchListModel(
-      this.watch_id,
+      {this.watch_id,
       this.post_id,
       this.header_text,
       this.created_at,
       this.thumbnail,
       this.video,
       this.user,
-      // this.page,
-      // this.group,
+      this.page,
+      this.group,
       this.totalComment,
       this.commentUrl,
       this.isLiked,
       this.likedByUrl,
       this.sharedByUrl,
       this.totalLiked,
-      this.totalShared);
+      this.totalShared});
 
   WatchListModel.fromJson(dynamic json) {
     watch_id = json["watch_id"];
@@ -42,8 +42,8 @@ class WatchListModel {
     thumbnail = json["thumbnail"] ?? "";
     video = json["video"] ?? "";
     user = User.fromJson(json["user"] ?? "");
-    // group = Group.fromJson(json["group"] ?? "");
-    // page = Page.fromJson(json["page"] ?? "");
+    group = json['group'] != null ? Group.fromJson(json['group']) : Group();
+    page = json['page'] != null ? Page.fromJson(json['page']) : Page();
     totalComment = json["total_comment"] ?? "";
     commentUrl = json["comment_url"] ?? "";
     isLiked = json["is_liked"] ?? "";

@@ -96,30 +96,30 @@ class PublicPhotoViewScreen extends StatelessWidget {
                                       .author!
                                       .profileImage);
                               WatchListModel watchListModel = WatchListModel(
-                                  publicProfileProvider
+                                  watch_id: publicProfileProvider
                                       .publicAllVideo[index].id,
-                                  publicProfileProvider
+                                  post_id: publicProfileProvider
                                       .publicNewsFeedLists[index].id,
-                                  "",
-                                  "2022-12-19T13:45:20.855137",
-                                  publicProfileProvider
+                                  header_text: "",
+                                  created_at: "2022-12-19T13:45:20.855137",
+                                  thumbnail: publicProfileProvider
                                       .publicAllVideo[index].thumbnail,
-                                  publicProfileProvider
+                                  video: publicProfileProvider
                                       .publicAllVideo[index].video,
-                                  user,
-                                  publicProfileProvider
+                                  user: user,
+                                  totalComment: publicProfileProvider
                                       .publicNewsFeedLists[index].totalComment,
-                                  publicProfileProvider
+                                  commentUrl: publicProfileProvider
                                       .publicNewsFeedLists[index].commentUrl,
-                                  publicProfileProvider
+                                  isLiked: publicProfileProvider
                                       .publicNewsFeedLists[index].isLiked,
-                                  publicProfileProvider
+                                  likedByUrl: publicProfileProvider
                                       .publicNewsFeedLists[index].likedByUrl,
-                                  publicProfileProvider
+                                  sharedByUrl: publicProfileProvider
                                       .publicNewsFeedLists[index].sharedByUrl,
-                                  publicProfileProvider
+                                  totalLiked: publicProfileProvider
                                       .publicNewsFeedLists[index].totalLiked,
-                                  publicProfileProvider
+                                  totalShared: publicProfileProvider
                                       .publicNewsFeedLists[index].totalShared);
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => VideoScreen(watchListModel)));

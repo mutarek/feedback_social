@@ -132,20 +132,20 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                     name: widget.newsfeedModel.author!.fullName,
                     profile: widget.newsfeedModel.author!.profileImage);
                 WatchListModel watchListModel = WatchListModel(
-                    1,
-                    widget.newsfeedModel.id,
-                    imageVideoLists[0].title,
-                    "2022-12-19T13:45:20.855137",
-                    imageVideoLists[0].url,
-                    imageVideoLists[0].url2,
-                    user,
-                    widget.newsfeedModel.totalComment,
-                    widget.newsfeedModel.commentUrl,
-                    widget.newsfeedModel.isLiked,
-                    widget.newsfeedModel.likedByUrl,
-                    widget.newsfeedModel.sharedByUrl,
-                    widget.newsfeedModel.totalLiked,
-                    widget.newsfeedModel.totalShared);
+                    watch_id: 1,
+                    post_id: widget.newsfeedModel.id,
+                    header_text: imageVideoLists[0].title,
+                    created_at: "2022-12-19T13:45:20.855137",
+                    thumbnail: imageVideoLists[0].url,
+                    video: imageVideoLists[0].url2,
+                    user: user,
+                    totalComment: widget.newsfeedModel.totalComment,
+                    commentUrl: widget.newsfeedModel.commentUrl,
+                    isLiked: widget.newsfeedModel.isLiked,
+                    likedByUrl: widget.newsfeedModel.likedByUrl,
+                    sharedByUrl: widget.newsfeedModel.sharedByUrl,
+                    totalLiked: widget.newsfeedModel.totalLiked,
+                    totalShared: widget.newsfeedModel.totalShared);
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => VideoScreen(watchListModel)));
               },
@@ -178,20 +178,23 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                                     profile: widget
                                         .newsfeedModel.author!.profileImage);
                                 WatchListModel watchListModel = WatchListModel(
-                                    1,
-                                    widget.newsfeedModel.id,
-                                    imageVideoLists[0].title,
-                                    "2022-12-19T13:45:20.855137",
-                                    imageVideoLists[0].url,
-                                    imageVideoLists[0].url2,
-                                    user,
-                                    widget.newsfeedModel.totalComment,
-                                    widget.newsfeedModel.commentUrl,
-                                    widget.newsfeedModel.isLiked,
-                                    widget.newsfeedModel.likedByUrl,
-                                    widget.newsfeedModel.sharedByUrl,
-                                    widget.newsfeedModel.totalLiked,
-                                    widget.newsfeedModel.totalShared);
+                                    watch_id: 1,
+                                    post_id: widget.newsfeedModel.id,
+                                    header_text: imageVideoLists[0].title,
+                                    created_at: "2022-12-19T13:45:20.855137",
+                                    thumbnail: imageVideoLists[0].url,
+                                    video: imageVideoLists[0].url2,
+                                    user: user,
+                                    totalComment:
+                                        widget.newsfeedModel.totalComment,
+                                    commentUrl: widget.newsfeedModel.commentUrl,
+                                    isLiked: widget.newsfeedModel.isLiked,
+                                    likedByUrl: widget.newsfeedModel.likedByUrl,
+                                    sharedByUrl:
+                                        widget.newsfeedModel.sharedByUrl,
+                                    totalLiked: widget.newsfeedModel.totalLiked,
+                                    totalShared:
+                                        widget.newsfeedModel.totalShared);
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (_) =>
                                         VideoScreen(watchListModel)));
@@ -248,20 +251,22 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                                   profile: widget
                                       .newsfeedModel.author!.profileImage);
                               WatchListModel watchListModel = WatchListModel(
-                                  1,
-                                  widget.newsfeedModel.id,
-                                  imageVideoLists[0].title,
-                                  "2022-12-19T13:45:20.855137",
-                                  imageVideoLists[0].url,
-                                  imageVideoLists[0].url2,
-                                  user,
-                                  widget.newsfeedModel.totalComment,
-                                  widget.newsfeedModel.commentUrl,
-                                  widget.newsfeedModel.isLiked,
-                                  widget.newsfeedModel.likedByUrl,
-                                  widget.newsfeedModel.sharedByUrl,
-                                  widget.newsfeedModel.totalLiked,
-                                  widget.newsfeedModel.totalShared);
+                                  watch_id: 1,
+                                  post_id: widget.newsfeedModel.id,
+                                  header_text: imageVideoLists[0].title,
+                                  created_at: "2022-12-19T13:45:20.855137",
+                                  thumbnail: imageVideoLists[0].url,
+                                  video: imageVideoLists[0].url2,
+                                  user: user,
+                                  totalComment:
+                                      widget.newsfeedModel.totalComment,
+                                  commentUrl: widget.newsfeedModel.commentUrl,
+                                  isLiked: widget.newsfeedModel.isLiked,
+                                  likedByUrl: widget.newsfeedModel.likedByUrl,
+                                  sharedByUrl: widget.newsfeedModel.sharedByUrl,
+                                  totalLiked: widget.newsfeedModel.totalLiked,
+                                  totalShared:
+                                      widget.newsfeedModel.totalShared);
 
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => VideoScreen(watchListModel)));

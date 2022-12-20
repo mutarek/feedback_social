@@ -69,39 +69,68 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  child: ProfileAvatar(
-                      profileImageUrl: widget.model.user!.profile.toString()),
-                ),
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        child: Row(
-                          children: [
-                            const SizedBox(width: 5),
-                            Text(widget.model.user!.name.toString(),
-                                style: latoStyle500Medium.copyWith(
-                                    fontWeight: FontWeight.w600)),
-                            const SizedBox(width: 5),
-                          ],
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: widget.model.page != null
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                            child: ProfileAvatar(
+                                profileImageUrl: widget.model.user!.profile!)),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                child: Row(
+                                  children: [
+                                    const SizedBox(width: 5),
+                                    Text("",
+                                        style: latoStyle500Medium.copyWith(
+                                            fontWeight: FontWeight.w600)),
+                                    const SizedBox(width: 5),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                            child: ProfileAvatar(
+                                profileImageUrl: widget.model.user!.profile!)),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                child: Row(
+                                  children: [
+                                    const SizedBox(width: 5),
+                                    Text(widget.model.user!.name.toString(),
+                                        style: latoStyle500Medium.copyWith(
+                                            fontWeight: FontWeight.w600)),
+                                    const SizedBox(width: 5),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
           SizedBox(
             height: 10,
           ),

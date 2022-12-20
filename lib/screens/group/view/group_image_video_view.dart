@@ -60,20 +60,21 @@ class _GroupImageVideoViewState extends State<GroupImageVideoView> {
                         } else {
                           User user = new User(id: 1, name: "", profile: "");
                           WatchListModel watchListModel = WatchListModel(
-                              1,
-                              groupProvider.groupAllPosts[index].id,
-                              "",
-                              "2022-12-19T13:45:20.855137",
-                              groupProvider.groupVideoLists[index].video,
-                              groupProvider.groupVideoLists[index].video,
-                              user,
-                              1,
-                              "",
-                              true,
-                              "",
-                              "",
-                              1,
-                              1);
+                              watch_id: 1,
+                              post_id: groupProvider.groupAllPosts[index].id,
+                              header_text: "",
+                              created_at: "2022-12-19T13:45:20.855137",
+                              video: groupProvider.groupVideoLists[index].video,
+                              thumbnail:
+                                  groupProvider.groupVideoLists[index].video,
+                              user: user,
+                              totalComment: 1,
+                              commentUrl: "",
+                              isLiked: true,
+                              likedByUrl: "",
+                              sharedByUrl: "",
+                              totalLiked: 1,
+                              totalShared: 1);
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => VideoScreen(watchListModel)));
                         }
