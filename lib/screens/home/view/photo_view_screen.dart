@@ -59,20 +59,20 @@ class PhotoViewScreen extends StatelessWidget {
                               name: newsFeedData.author!.fullName,
                               profile: newsFeedData.author!.profileImage);
                           WatchListModel watchListModel = WatchListModel(
-                              1,
-                              1,
-                              "",
-                              "2022-12-19T13:45:20.855137",
-                              imageVideo[index].url,
-                              imageVideo[index].url2,
-                              user,
-                              1,
-                              "",
-                              true,
-                              "",
-                              "",
-                              1,
-                              1);
+                              watch_id: 1,
+                              post_id: 1,
+                              header_text: "",
+                              created_at: "2022-12-19T13:45:20.855137",
+                              thumbnail: imageVideo[index].url,
+                              video: imageVideo[index].url2,
+                              user: user,
+                              totalComment: 1,
+                              commentUrl: "",
+                              isLiked: true,
+                              likedByUrl: "",
+                              sharedByUrl: "",
+                              totalLiked: 1,
+                              totalShared: 1);
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => VideoScreen(watchListModel)));
                         } else {
@@ -110,20 +110,23 @@ class PhotoViewScreen extends StatelessWidget {
                                                       .author!.profileImage);
                                               WatchListModel watchListModel =
                                                   WatchListModel(
-                                                      1,
-                                                      1,
-                                                      "",
-                                                      "2022-12-19T13:45:20.855137",
-                                                      imageVideo[index].url,
-                                                      imageVideo[index].url2,
-                                                      user,
-                                                      1,
-                                                      "",
-                                                      true,
-                                                      "",
-                                                      "",
-                                                      1,
-                                                      1);
+                                                      watch_id: 1,
+                                                      post_id: 1,
+                                                      header_text: "",
+                                                      created_at:
+                                                          "2022-12-19T13:45:20.855137",
+                                                      thumbnail:
+                                                          imageVideo[index].url,
+                                                      video: imageVideo[index]
+                                                          .url2,
+                                                      user: user,
+                                                      totalComment: 1,
+                                                      commentUrl: "",
+                                                      isLiked: true,
+                                                      likedByUrl: "",
+                                                      sharedByUrl: "",
+                                                      totalLiked: 1,
+                                                      totalShared: 1);
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                       builder: (_) =>
