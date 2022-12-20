@@ -56,21 +56,20 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
                           profile: pageProvider
                               .pageDetailsModel!.author!.profileImage);
                       WatchListModel watchListModel = WatchListModel(
-                        watch_id:
-                            pageProvider.pageDetailsModel!.videos![index].id,
-                        header_text: '',
-                        created_at: "2022-12-19T13:45:20.855137",
-                        video:
-                            pageProvider.pageDetailsModel!.videos![index].video,
-                        thumbnail: '',
-                        user: user,
-                        totalComment: 0,
-                        commentUrl: "",
-                        totalLiked: 0,
-                        likedByUrl: "",
-                        isLiked: false,
-                        sharedByUrl: "",
-                      );
+                          1,
+                          pageProvider.pageDetailsModel!.id,
+                          "",
+                          "2022-12-19T13:45:20.855137",
+                          "",
+                          pageProvider.pageDetailsModel!.videos![index].video,
+                          user,
+                          0,
+                          "",
+                          false,
+                          "",
+                          "",
+                          0,
+                          0);
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => VideoScreen(watchListModel)));
                     }

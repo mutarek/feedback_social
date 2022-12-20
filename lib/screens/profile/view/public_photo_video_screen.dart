@@ -96,22 +96,31 @@ class PublicPhotoViewScreen extends StatelessWidget {
                                       .author!
                                       .profileImage);
                               WatchListModel watchListModel = WatchListModel(
-                                watch_id: publicProfileProvider
-                                    .publicAllVideo[index].id,
-                                header_text: '',
-                                created_at: "2022-12-19T13:45:20.855137",
-                                video: publicProfileProvider
-                                    .publicAllVideo[index].video,
-                                thumbnail: publicProfileProvider
-                                    .publicAllVideo[index].thumbnail,
-                                user: user,
-                                totalComment: 0,
-                                commentUrl: "",
-                                totalLiked: 0,
-                                likedByUrl: "",
-                                isLiked: false,
-                                sharedByUrl: "",
-                              );
+                                  publicProfileProvider
+                                      .publicAllVideo[index].id,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].id,
+                                  "",
+                                  "2022-12-19T13:45:20.855137",
+                                  publicProfileProvider
+                                      .publicAllVideo[index].thumbnail,
+                                  publicProfileProvider
+                                      .publicAllVideo[index].video,
+                                  user,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].totalComment,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].commentUrl,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].isLiked,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].likedByUrl,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].sharedByUrl,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].totalLiked,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].totalShared);
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => VideoScreen(watchListModel)));
                             }

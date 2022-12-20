@@ -7,7 +7,7 @@ import 'package:als_frontend/data/repository/watch_repo.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class WatchProvider with ChangeNotifier{
+class WatchProvider with ChangeNotifier {
   final WatchRepo watchRepo;
   WatchProvider({required this.watchRepo});
 
@@ -54,18 +54,31 @@ class WatchProvider with ChangeNotifier{
   String annotationValue = '80 %';
   double pointerValue = 50;
 
-
   void customProgress() {
     _random = Random();
     _timer = Timer.periodic(const Duration(milliseconds: 1200), (timer) {
-        int value = _random.nextInt(100);
-        if (value > 4 && value < 100) {
-          pointerValue = value.toDouble();
-          annotationValue = '$value %';
-          notifyListeners();
-        }
-     notifyListeners();
+      int value = _random.nextInt(100);
+      if (value > 4 && value < 100) {
+        pointerValue = value.toDouble();
+        annotationValue = '$value %';
+        notifyListeners();
+      }
+      notifyListeners();
     });
   }
 
+  addLike(int postID, int index) async {
+    if (watchLists[index].isLiked == false) {
+      watchLists[index].totalLiked = watchLists[index].totalLiked! + 1;
+      watchLists[index].isLiked = true;
+      notifyListeners();
+    } else {
+      watchLists[index].totalLiked = watchLists[index].totalLiked! - 1;
+      watchLists[index].isLiked = false;
+      notifyListeners();
+    }
+    notifyListeners();
+    // await newsFeedRepo1.addLike(postID,
+    //     isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
+  }
 }

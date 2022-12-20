@@ -59,19 +59,20 @@ class PhotoViewScreen extends StatelessWidget {
                               name: newsFeedData.author!.fullName,
                               profile: newsFeedData.author!.profileImage);
                           WatchListModel watchListModel = WatchListModel(
-                            watch_id: 1,
-                            header_text: imageVideo[index].title,
-                            created_at: "2022-12-19T13:45:20.855137",
-                            video: imageVideo[index].url,
-                            thumbnail: imageVideo[index].url2,
-                            user: user,
-                            totalComment: newsFeedData.totalComment,
-                            commentUrl: newsFeedData.commentUrl,
-                            totalLiked: newsFeedData.totalLiked,
-                            likedByUrl: newsFeedData.likedByUrl,
-                            isLiked: newsFeedData.isLiked,
-                            sharedByUrl: newsFeedData.sharedByUrl,
-                          );
+                              1,
+                              1,
+                              "",
+                              "2022-12-19T13:45:20.855137",
+                              imageVideo[index].url,
+                              imageVideo[index].url2,
+                              user,
+                              1,
+                              "",
+                              true,
+                              "",
+                              "",
+                              1,
+                              1);
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => VideoScreen(watchListModel)));
                         } else {
@@ -109,27 +110,20 @@ class PhotoViewScreen extends StatelessWidget {
                                                       .author!.profileImage);
                                               WatchListModel watchListModel =
                                                   WatchListModel(
-                                                watch_id: 1,
-                                                header_text:
-                                                    imageVideo[index].title,
-                                                created_at:
-                                                    "2022-12-19T13:45:20.855137",
-                                                video: imageVideo[index].url,
-                                                thumbnail:
-                                                    imageVideo[index].url2,
-                                                user: user,
-                                                totalComment:
-                                                    newsFeedData.totalComment,
-                                                commentUrl:
-                                                    newsFeedData.commentUrl,
-                                                totalLiked:
-                                                    newsFeedData.totalLiked,
-                                                likedByUrl:
-                                                    newsFeedData.likedByUrl,
-                                                isLiked: newsFeedData.isLiked,
-                                                sharedByUrl:
-                                                    newsFeedData.sharedByUrl,
-                                              );
+                                                      1,
+                                                      1,
+                                                      "",
+                                                      "2022-12-19T13:45:20.855137",
+                                                      imageVideo[index].url,
+                                                      imageVideo[index].url2,
+                                                      user,
+                                                      1,
+                                                      "",
+                                                      true,
+                                                      "",
+                                                      "",
+                                                      1,
+                                                      1);
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                       builder: (_) =>

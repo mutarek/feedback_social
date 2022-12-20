@@ -50,10 +50,10 @@ class _VideoScreenState extends State<VideoScreen> {
           itemCount: watchProvider.watchLists.length + 1,
           itemBuilder: (context, index) {
             if (index == 0) {
-              return NewVideoPlayer(widget.watchListModel);
+              return NewVideoPlayer(widget.watchListModel, 0);
             }
             var data = watchProvider.watchLists[index - 1];
-            return NewVideoPlayer(data);
+            return NewVideoPlayer(data, index);
           },
         );
       }),
