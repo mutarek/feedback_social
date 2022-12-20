@@ -58,6 +58,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => di.sl<GroupProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<NotificationService>()),
+          ChangeNotifierProvider(create: (context) => di.sl<WatchProvider>()),
         ],
         child: const MyApp(),
       )));
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<NotificationProvider>(context, listen: false).initializeNotificationSettings();
     return MaterialApp(
       title: 'Feedback',
       supportedLocales: context.supportedLocales,
@@ -79,9 +81,6 @@ class MyApp extends StatelessWidget {
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
       ),
-      // defaultTransition: Transition.topLevel,
-      // transitionDuration: const Duration(milliseconds: 500),
-      // supportedLocales: _locals,
       home: const SplashScreen(),
     );
   }

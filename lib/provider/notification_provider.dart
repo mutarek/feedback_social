@@ -57,13 +57,13 @@ class NotificationService extends ChangeNotifier {
     var android = AndroidNotificationDetails("id", "channel",
         color: Colors.deepOrange,
         enableLights: true,
-        showProgress: true,
+        // showProgress: true,
         enableVibration: true,
-         playSound: true,
+         // playSound: true,
          subText:  "uploding",
-         sound: const RawResourceAndroidNotificationSound('notifiaction'),
-         progress: progress,
-        largeIcon: const DrawableResourceAndroidBitmap("ic_launcher"),
+         // sound: const RawResourceAndroidNotificationSound('notifiaction'),
+         // progress: progress,
+        //largeIcon: const DrawableResourceAndroidBitmap("ic_launcher"),
         styleInformation: const MediaStyleInformation(
             htmlFormatContent: true, htmlFormatTitle: true));
 

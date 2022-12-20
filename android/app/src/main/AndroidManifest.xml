@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
@@ -14,12 +13,7 @@
         android:allowBackup="false"
         android:fullBackupOnly="false"
         android:usesCleartextTraffic="true">
-        <receiver android:name= "com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+
         <activity
             android:showWhenLocked="true"
             android:turnScreenOn="true"

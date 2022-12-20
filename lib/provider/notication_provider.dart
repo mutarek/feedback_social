@@ -4,15 +4,16 @@ import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/notification_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-class NotificationProvider with ChangeNotifier{
+class NotificationProvider with ChangeNotifier {
   final NotificationRepo notificationRepo;
   final AuthRepo authRepo;
 
-  NotificationProvider({required this.notificationRepo,required this.authRepo});
+  NotificationProvider({required this.notificationRepo, required this.authRepo});
 
   bool isLoading = false;
   late WebSocketChannel webSocketChannel;
@@ -37,6 +38,7 @@ class NotificationProvider with ChangeNotifier{
     }
     notifyListeners();
   }
+
   check() {
     webSocketChannel = WebSocketChannel.connect(Uri.parse("${AppConstant.socketBaseUrl}ws/notifications/${authRepo.getUserToken()}/"));
     webSocketChannel.stream.listen((event) {
@@ -109,5 +111,40 @@ class NotificationProvider with ChangeNotifier{
       webSocketChannel.sink.close();
       notifyListeners();
     }
+  }
+
+  ////// TODO: for local Notification
+  FlutterLocalNotificationsPlugin? fLutterLocalNotificationsPlugin;
+
+  initializeNotificationSettings() {
+    var androidInitialize = const AndroidInitializationSettings('ic_launcher');
+    var iosInitialize = const DarwinInitializationSettings();
+    var initializesSettings = InitializationSettings(android: androidInitialize, iOS: iosInitialize);
+    fLutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    fLutterLocalNotificationsPlugin!.initialize(initializesSettings);
+    showScheduledTimeNotification();
+  }
+
+  Future notificationSelected(String payload) async {
+    print('Selected $payload');
+  }
+
+  AndroidNotificationDetails? androidDetails;
+  DarwinNotificationDetails? iosDetails;
+  NotificationDetails? generalNotificationDetails;
+
+  Future showScheduledTimeNotification() async {
+    androidDetails = const AndroidNotificationDetails('channelId', 'Feedback',
+        channelDescription: 'This is My channel', importance: Importance.max, autoCancel: false);
+    iosDetails = const DarwinNotificationDetails();
+    generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
+  }
+
+  Future showOneTimeNotification() async {
+    androidDetails = const AndroidNotificationDetails('channelId', 'Search Islam',
+        channelDescription: 'This is My channel', importance: Importance.low, autoCancel: false, colorized: true, ongoing: true);
+    iosDetails = const DarwinNotificationDetails();
+    var generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
+    fLutterLocalNotificationsPlugin!.show(0, 'Task', 'You Create a Task', generalNotificationDetails, payload: 'Task');
   }
 }
