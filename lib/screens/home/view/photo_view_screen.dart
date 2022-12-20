@@ -17,9 +17,7 @@ class PhotoViewScreen extends StatelessWidget {
   final List<ImageVideoDetectModel> imageVideo;
   final int index;
 
-  const PhotoViewScreen(this.newsFeedData, this.imageVideo, this.index,
-      {Key? key})
-      : super(key: key);
+  const PhotoViewScreen(this.newsFeedData, this.imageVideo, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +38,7 @@ class PhotoViewScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              PostStats(
-                  post: newsFeedData,
-                  index: index,
-                  feedProvider: newsFeedProvider,
-                  paddingHorizontal: 0,
-                  paddingVertical: 3),
+              PostStats(post: newsFeedData, index: index, feedProvider: newsFeedProvider, paddingHorizontal: 0, paddingVertical: 3),
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -56,13 +49,13 @@ class PhotoViewScreen extends StatelessWidget {
                         if (!imageVideo[index].isImage) {
                           User user = new User(
                               id: newsFeedData.author!.id,
-                              name: newsFeedData.author!.fullName,
-                              profile: newsFeedData.author!.profileImage);
+                              fullName: newsFeedData.author!.fullName,
+                              profileImage: newsFeedData.author!.profileImage);
                           WatchListModel watchListModel = WatchListModel(
-                              watch_id: 1,
-                              post_id: 1,
-                              header_text: "",
-                              created_at: "2022-12-19T13:45:20.855137",
+                              watchId: 1,
+                              postId: 1,
+                              headerText: "",
+                              createdAt: "2022-12-19T13:45:20.855137",
                               thumbnail: imageVideo[index].url,
                               video: imageVideo[index].url2,
                               user: user,
@@ -73,11 +66,9 @@ class PhotoViewScreen extends StatelessWidget {
                               sharedByUrl: "",
                               totalLiked: 1,
                               totalShared: 1);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => VideoScreen(watchListModel)));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoScreen(watchListModel)));
                         } else {
-                          Helper.toScreen(
-                              SingleImageView(imageURL: imageVideo[index].url));
+                          Helper.toScreen(SingleImageView(imageURL: imageVideo[index].url));
                         }
                       },
                       child: Column(
@@ -85,9 +76,7 @@ class PhotoViewScreen extends StatelessWidget {
                           Stack(
                             children: [
                               CachedNetworkImage(
-                                  imageUrl: imageVideo[index].url,
-                                  width: MediaQuery.of(context).size.width,
-                                  fit: BoxFit.fill),
+                                  imageUrl: imageVideo[index].url, width: MediaQuery.of(context).size.width, fit: BoxFit.fill),
                               !imageVideo[index].isImage
                                   ? Positioned(
                                       left: 0,
@@ -97,47 +86,31 @@ class PhotoViewScreen extends StatelessWidget {
                                       child: Container(
                                         width: double.infinity,
                                         alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(.3)),
+                                        decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
                                         child: IconButton(
                                             onPressed: () {
                                               User user = new User(
                                                   id: newsFeedData.author!.id,
-                                                  name: newsFeedData
-                                                      .author!.fullName,
-                                                  profile: newsFeedData
-                                                      .author!.profileImage);
-                                              WatchListModel watchListModel =
-                                                  WatchListModel(
-                                                      watch_id: 1,
-                                                      post_id: 1,
-                                                      header_text: "",
-                                                      created_at:
-                                                          "2022-12-19T13:45:20.855137",
-                                                      thumbnail:
-                                                          imageVideo[index].url,
-                                                      video: imageVideo[index]
-                                                          .url2,
-                                                      user: user,
-                                                      totalComment: 1,
-                                                      commentUrl: "",
-                                                      isLiked: true,
-                                                      likedByUrl: "",
-                                                      sharedByUrl: "",
-                                                      totalLiked: 1,
-                                                      totalShared: 1);
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (_) =>
-                                                          VideoScreen(
-                                                              watchListModel)));
+                                                  fullName: newsFeedData.author!.fullName,
+                                                  profileImage: newsFeedData.author!.profileImage);
+                                              WatchListModel watchListModel = WatchListModel(
+                                                  watchId: 1,
+                                                  postId: 1,
+                                                  headerText: "",
+                                                  createdAt: "2022-12-19T13:45:20.855137",
+                                                  thumbnail: imageVideo[index].url,
+                                                  video: imageVideo[index].url2,
+                                                  user: user,
+                                                  totalComment: 1,
+                                                  commentUrl: "",
+                                                  isLiked: true,
+                                                  likedByUrl: "",
+                                                  sharedByUrl: "",
+                                                  totalLiked: 1,
+                                                  totalShared: 1);
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoScreen(watchListModel)));
                                             },
-                                            icon: Icon(
-                                                Icons.video_collection_rounded,
-                                                color:
-                                                    Colors.grey.withOpacity(.7),
-                                                size: 38)),
+                                            icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
                                       ),
                                     )
                                   : const SizedBox.shrink()
@@ -150,10 +123,7 @@ class PhotoViewScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               boxShadow: [
-                                BoxShadow(
-                                    color: Colors.grey.withOpacity(.2),
-                                    blurRadius: 9,
-                                    spreadRadius: 10),
+                                BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 9, spreadRadius: 10),
                               ],
                             ),
                           )

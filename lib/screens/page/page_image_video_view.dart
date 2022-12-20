@@ -52,14 +52,14 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
                     } else {
                       User user = new User(
                           id: pageProvider.pageDetailsModel!.author!.id,
-                          name: pageProvider.pageDetailsModel!.author!.fullName,
-                          profile: pageProvider
+                          fullName: pageProvider.pageDetailsModel!.author!.fullName,
+                          profileImage: pageProvider
                               .pageDetailsModel!.author!.profileImage);
                       WatchListModel watchListModel = WatchListModel(
-                          watch_id: 1,
-                          post_id: pageProvider.pageDetailsModel!.id,
-                          header_text: "",
-                          created_at: "2022-12-19T13:45:20.855137",
+                          watchId: 1,
+                          postId: pageProvider.pageDetailsModel!.id,
+                          headerText: "",
+                          createdAt: "2022-12-19T13:45:20.855137",
                           thumbnail: "",
                           video: pageProvider
                               .pageDetailsModel!.videos![index].video,

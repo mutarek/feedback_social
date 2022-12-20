@@ -87,21 +87,21 @@ class PublicPhotoViewScreen extends StatelessWidget {
                               User user = new User(
                                   id: publicProfileProvider
                                       .publicNewsFeedLists[index].author!.id,
-                                  name: publicProfileProvider
+                                  fullName: publicProfileProvider
                                       .publicNewsFeedLists[index]
                                       .author!
                                       .fullName,
-                                  profile: publicProfileProvider
+                                  profileImage: publicProfileProvider
                                       .publicNewsFeedLists[index]
                                       .author!
                                       .profileImage);
                               WatchListModel watchListModel = WatchListModel(
-                                  watch_id: publicProfileProvider
+                                  watchId: publicProfileProvider
                                       .publicAllVideo[index].id,
-                                  post_id: publicProfileProvider
+                                  postId: publicProfileProvider
                                       .publicNewsFeedLists[index].id,
-                                  header_text: "",
-                                  created_at: "2022-12-19T13:45:20.855137",
+                                  headerText: "",
+                                  createdAt: "2022-12-19T13:45:20.855137",
                                   thumbnail: publicProfileProvider
                                       .publicAllVideo[index].thumbnail,
                                   video: publicProfileProvider
