@@ -1,7 +1,5 @@
-import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/watch_provider.dart';
-import 'package:als_frontend/screens/video/widget/custom_video_widgets.dart';
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
@@ -11,12 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VideoScreen extends StatefulWidget {
-  // final String videoUrl;
-  // final String thumbnailURL;
-  // final String title;
-  final WatchListModel watchListModel;
+  final String videoUrl;
+  final String thumbnailURL;
+  final String title;
+  // final WatchListModel watchListModel;
 
-  const VideoScreen(this.watchListModel, {Key? key}) : super(key: key);
+  const VideoScreen(this.videoUrl, this.thumbnailURL, this.title, {Key? key}) : super(key: key);
 
   @override
   State<VideoScreen> createState() => _VideoScreenState();
@@ -53,7 +51,7 @@ class _VideoScreenState extends State<VideoScreen> {
           itemCount: watchProvider.watchLists.length + 1,
           itemBuilder: (context, index) {
             if (index == 0) {
-              return NewVideoPlayer(widget.watchListModel);
+              return NewVideoPlayer(WatchListModel());
             }
             var data = watchProvider.watchLists[index - 1];
             return NewVideoPlayer(data);

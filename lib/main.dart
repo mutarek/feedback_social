@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'di_container.dart' as di;
+import 'provider/notification_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +57,7 @@ void main() async {
           ChangeNotifierProvider(create: (context) => di.sl<CommentProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<GroupProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider>()),
-          ChangeNotifierProvider(create: (context) => di.sl<WatchProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<NotificationService>()),
         ],
         child: const MyApp(),
       )));
