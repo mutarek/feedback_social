@@ -12,7 +12,7 @@ class NotificationService extends ChangeNotifier {
     FlutterLocalNotificationsPlugin();
 
     AndroidInitializationSettings androidInitializationSettings =
-    AndroidInitializationSettings("ic_launcher");
+    const AndroidInitializationSettings("ic_launcher");
 
     final InitializationSettings initializationSettings =
     InitializationSettings(
@@ -23,9 +23,9 @@ class NotificationService extends ChangeNotifier {
   // TODO: Instant Notifications
 
   Future instantNofitication() async {
-    var android = AndroidNotificationDetails("id", "chanel name");
+    var android = const AndroidNotificationDetails("id", "chanel name");
 
-    var platform = new NotificationDetails(android: android,);
+    var platform = NotificationDetails(android: android,);
 
     await _flutterLocalNotificationsPlugin.show(
         0, "Demo instant notification", "Tap to do something", platform,
@@ -34,7 +34,7 @@ class NotificationService extends ChangeNotifier {
 
   //Image notification
   Future imageNotification() async {
-    var bigPicture = BigPictureStyleInformation(
+    var bigPicture = const BigPictureStyleInformation(
         DrawableResourceAndroidBitmap("ic_launcher"),
         largeIcon: DrawableResourceAndroidBitmap("ic_launcher"),
         contentTitle: "Demo image notification",
@@ -45,7 +45,7 @@ class NotificationService extends ChangeNotifier {
     var android = AndroidNotificationDetails("id", "channel",
         styleInformation: bigPicture);
 
-    var platform = new NotificationDetails(android: android);
+    var platform = NotificationDetails(android: android);
 
     await _flutterLocalNotificationsPlugin.show(
         0, "Demo Image notification", "Tap to do something", platform,
@@ -61,13 +61,13 @@ class NotificationService extends ChangeNotifier {
         enableVibration: true,
          playSound: true,
          subText:  "uploding",
-         sound: RawResourceAndroidNotificationSound('notifiaction'),
+         sound: const RawResourceAndroidNotificationSound('notifiaction'),
          progress: progress,
-        largeIcon: DrawableResourceAndroidBitmap("ic_launcher"),
-        styleInformation: MediaStyleInformation(
+        largeIcon: const DrawableResourceAndroidBitmap("ic_launcher"),
+        styleInformation: const MediaStyleInformation(
             htmlFormatContent: true, htmlFormatTitle: true));
 
-    var platform = new NotificationDetails(android: android);
+    var platform = NotificationDetails(android: android);
 
     await _flutterLocalNotificationsPlugin.show(
         0, "Demo Stylish notification", "Tap to do something", platform);
@@ -78,7 +78,7 @@ class NotificationService extends ChangeNotifier {
 
   Future sheduledNotification() async {
     var interval = RepeatInterval.everyMinute;
-    var bigPicture = BigPictureStyleInformation(
+    var bigPicture = const BigPictureStyleInformation(
         DrawableResourceAndroidBitmap("ic_launcher"),
         largeIcon: DrawableResourceAndroidBitmap("ic_launcher"),
         contentTitle: "Demo image notification",
@@ -89,7 +89,7 @@ class NotificationService extends ChangeNotifier {
     var android = AndroidNotificationDetails("id", "channel",
         styleInformation: bigPicture);
 
-    var platform = new NotificationDetails(android: android);
+    var platform = NotificationDetails(android: android);
 
     await _flutterLocalNotificationsPlugin.periodicallyShow(
         0,

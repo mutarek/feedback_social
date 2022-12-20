@@ -103,10 +103,6 @@ class PostProvider with ChangeNotifier {
           print('finished');
         }
         notifyListeners();
-       onReceiveProgress: (int sentBytes, int totalBytes) {
-        double progressPercent = sentBytes / totalBytes * 100;
-        double uploadPercent = (progressPercent / 100);
-      };
 
         print("Receive Progress: $progressPercent %");
         if (progressPercent == 100) {
@@ -142,7 +138,7 @@ class PostProvider with ChangeNotifier {
 
     if (isFromGroup) {
       apiResponse =
-      await postRepo.updatePostTOGroupBYUSINGGroupID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
+          await postRepo.updatePostTOGroupBYUSINGGroupID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         print("Progress: $progressPercent %");
         if (progressPercent == 100) {
@@ -152,7 +148,7 @@ class PostProvider with ChangeNotifier {
       });
     } else if (isFromPage) {
       apiResponse =
-      await postRepo.updatePostTOPageBYUSINGPageID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
+          await postRepo.updatePostTOPageBYUSINGPageID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         print("Progress: $progressPercent %");
         if (progressPercent == 100) {

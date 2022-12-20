@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/image_video_detect_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/screens/home/widget/post_header.dart';
 import 'package:als_frontend/screens/home/widget/post_stats.dart';
@@ -53,12 +54,27 @@ class PhotoViewScreen extends StatelessWidget {
                     return InkWell(
                       onTap: () {
                         if (!imageVideo[index].isImage) {
+                          User user = new User(
+                              id: newsFeedData.author!.id,
+                              name: newsFeedData.author!.fullName,
+                              profile: newsFeedData.author!.profileImage);
+                          WatchListModel watchListModel = WatchListModel(
+                              1,
+                              1,
+                              "",
+                              "2022-12-19T13:45:20.855137",
+                              imageVideo[index].url,
+                              imageVideo[index].url2,
+                              user,
+                              1,
+                              "",
+                              true,
+                              "",
+                              "",
+                              1,
+                              1);
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => VideoScreen(
-                                    imageVideo[index].url,
-                                    imageVideo[index].url2,
-                                    imageVideo[index].title,
-                                  )));
+                              builder: (_) => VideoScreen(watchListModel)));
                         } else {
                           Helper.toScreen(
                               SingleImageView(imageURL: imageVideo[index].url));
@@ -86,17 +102,33 @@ class PhotoViewScreen extends StatelessWidget {
                                                 Colors.white.withOpacity(.3)),
                                         child: IconButton(
                                             onPressed: () {
+                                              User user = new User(
+                                                  id: newsFeedData.author!.id,
+                                                  name: newsFeedData
+                                                      .author!.fullName,
+                                                  profile: newsFeedData
+                                                      .author!.profileImage);
+                                              WatchListModel watchListModel =
+                                                  WatchListModel(
+                                                      1,
+                                                      1,
+                                                      "",
+                                                      "2022-12-19T13:45:20.855137",
+                                                      imageVideo[index].url,
+                                                      imageVideo[index].url2,
+                                                      user,
+                                                      1,
+                                                      "",
+                                                      true,
+                                                      "",
+                                                      "",
+                                                      1,
+                                                      1);
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                       builder: (_) =>
                                                           VideoScreen(
-                                                            imageVideo[index]
-                                                                .url,
-                                                            imageVideo[index]
-                                                                .url2,
-                                                            imageVideo[index]
-                                                                .title,
-                                                          )));
+                                                              watchListModel)));
                                             },
                                             icon: Icon(
                                                 Icons.video_collection_rounded,

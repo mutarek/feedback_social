@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
 import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
@@ -17,7 +18,8 @@ class PostPhotoContainer extends StatefulWidget {
   final NewsFeedModel newsfeedModel;
   final int index;
 
-  const PostPhotoContainer(this.index, {Key? key, required this.newsfeedModel}) : super(key: key);
+  const PostPhotoContainer(this.index, {Key? key, required this.newsfeedModel})
+      : super(key: key);
 
   @override
   State<PostPhotoContainer> createState() => _PostPhotoContainerState();
@@ -39,19 +41,31 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
     if (widget.newsfeedModel.isShare != null && widget.newsfeedModel.isShare!) {
       if (widget.newsfeedModel.sharePost!.post!.totalImage! >= 4) {
         for (int i = 0; i <= 3; i++) {
-          imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
-              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString(), widget.newsfeedModel.description!));
+          imageVideoLists.add(ImageVideoDetectModel(
+              true,
+              widget.newsfeedModel.sharePost!.post!.images![i].image!,
+              '',
+              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString(),
+              widget.newsfeedModel.description!));
         }
       } else {
-        for (int i = 0; i < widget.newsfeedModel.sharePost!.post!.totalImage!; i++) {
-          imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.sharePost!.post!.images![i].image!, '',
-              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString(), widget.newsfeedModel.description!));
+        for (int i = 0;
+            i < widget.newsfeedModel.sharePost!.post!.totalImage!;
+            i++) {
+          imageVideoLists.add(ImageVideoDetectModel(
+              true,
+              widget.newsfeedModel.sharePost!.post!.images![i].image!,
+              '',
+              widget.newsfeedModel.sharePost!.post!.images![i].id!.toString(),
+              widget.newsfeedModel.description!));
         }
 
         int j = 0;
 
         for (int i = widget.newsfeedModel.sharePost!.post!.totalImage! as int;
-            i < widget.newsfeedModel.sharePost!.post!.totalImage! + widget.newsfeedModel.sharePost!.post!.totalVideo!;
+            i <
+                widget.newsfeedModel.sharePost!.post!.totalImage! +
+                    widget.newsfeedModel.sharePost!.post!.totalVideo!;
             i++) {
           imageVideoLists.add(ImageVideoDetectModel(
               false,
@@ -65,22 +79,36 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
     } else {
       if (widget.newsfeedModel.totalImage! >= 4) {
         for (int i = 0; i <= 3; i++) {
-          imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '',
-              widget.newsfeedModel.images![i].id!.toString(), widget.newsfeedModel.description!));
+          imageVideoLists.add(ImageVideoDetectModel(
+              true,
+              widget.newsfeedModel.images![i].image!,
+              '',
+              widget.newsfeedModel.images![i].id!.toString(),
+              widget.newsfeedModel.description!));
         }
       } else {
         for (int i = 0; i < widget.newsfeedModel.totalImage!; i++) {
-          imageVideoLists.add(ImageVideoDetectModel(true, widget.newsfeedModel.images![i].image!, '',
-              widget.newsfeedModel.images![i].id!.toString(), widget.newsfeedModel.description!));
+          imageVideoLists.add(ImageVideoDetectModel(
+              true,
+              widget.newsfeedModel.images![i].image!,
+              '',
+              widget.newsfeedModel.images![i].id!.toString(),
+              widget.newsfeedModel.description!));
         }
 
         int j = 0;
 
         for (int i = widget.newsfeedModel.totalImage! as int;
-            i < widget.newsfeedModel.totalImage! + widget.newsfeedModel.totalVideo!;
+            i <
+                widget.newsfeedModel.totalImage! +
+                    widget.newsfeedModel.totalVideo!;
             i++) {
-          imageVideoLists.add(ImageVideoDetectModel(false, widget.newsfeedModel.videos![j].thumbnail!,
-              widget.newsfeedModel.videos![j].video!, widget.newsfeedModel.videos![j].id!.toString(), widget.newsfeedModel.description!));
+          imageVideoLists.add(ImageVideoDetectModel(
+              false,
+              widget.newsfeedModel.videos![j].thumbnail!,
+              widget.newsfeedModel.videos![j].video!,
+              widget.newsfeedModel.videos![j].id!.toString(),
+              widget.newsfeedModel.description!));
           j++;
         }
       }
@@ -93,20 +121,41 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
       return imageVideoLists[0].isImage
           ? InkWell(
               onTap: () {
-                Helper.toScreen(SingleImageView(imageURL: imageVideoLists[0].url));
+                Helper.toScreen(
+                    SingleImageView(imageURL: imageVideoLists[0].url));
               },
               child: customNetworkImage(context, imageVideoLists[0].url))
           : InkWell(
               onTap: () {
+                User user = new User(
+                    id: widget.newsfeedModel.author!.id,
+                    name: widget.newsfeedModel.author!.fullName,
+                    profile: widget.newsfeedModel.author!.profileImage);
+                WatchListModel watchListModel = WatchListModel(
+                    1,
+                    widget.newsfeedModel.id,
+                    imageVideoLists[0].title,
+                    "2022-12-19T13:45:20.855137",
+                    imageVideoLists[0].url,
+                    imageVideoLists[0].url2,
+                    user,
+                    widget.newsfeedModel.totalComment,
+                    widget.newsfeedModel.commentUrl,
+                    widget.newsfeedModel.isLiked,
+                    widget.newsfeedModel.likedByUrl,
+                    widget.newsfeedModel.sharedByUrl,
+                    widget.newsfeedModel.totalLiked,
+                    widget.newsfeedModel.totalShared);
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => VideoScreen(imageVideoLists[0].url2, imageVideoLists[0].url, imageVideoLists[0].title)));
+                    builder: (_) => VideoScreen(watchListModel)));
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 8),
                 child: Stack(
                   children: [
                     CachedNetworkImage(imageUrl: imageVideoLists[0].url),
-                    SizedBox(height: 150, width: MediaQuery.of(context).size.width),
+                    SizedBox(
+                        height: 150, width: MediaQuery.of(context).size.width),
                     Positioned(
                       left: 0,
                       right: 0,
@@ -123,11 +172,32 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                           ),
                           child: IconButton(
                               onPressed: () {
+                                User user = new User(
+                                    id: widget.newsfeedModel.author!.id,
+                                    name: widget.newsfeedModel.author!.fullName,
+                                    profile: widget
+                                        .newsfeedModel.author!.profileImage);
+                                WatchListModel watchListModel = WatchListModel(
+                                    1,
+                                    widget.newsfeedModel.id,
+                                    imageVideoLists[0].title,
+                                    "2022-12-19T13:45:20.855137",
+                                    imageVideoLists[0].url,
+                                    imageVideoLists[0].url2,
+                                    user,
+                                    widget.newsfeedModel.totalComment,
+                                    widget.newsfeedModel.commentUrl,
+                                    widget.newsfeedModel.isLiked,
+                                    widget.newsfeedModel.likedByUrl,
+                                    widget.newsfeedModel.sharedByUrl,
+                                    widget.newsfeedModel.totalLiked,
+                                    widget.newsfeedModel.totalShared);
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (_) =>
-                                        VideoScreen(imageVideoLists[0].url2, imageVideoLists[0].url, imageVideoLists[0].title)));
+                                        VideoScreen(watchListModel)));
                               },
-                              icon: const Icon(Icons.play_arrow, color: Colors.white, size: 38)),
+                              icon: const Icon(Icons.play_arrow,
+                                  color: Colors.white, size: 38)),
                         ),
                       ),
                     ),
@@ -147,14 +217,18 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
       itemBuilder: (context, index) {
         return InkWell(
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => PhotoViewScreen(widget.newsfeedModel, imageVideoLists, widget.index)));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => PhotoViewScreen(
+                    widget.newsfeedModel, imageVideoLists, widget.index)));
           },
           child: Stack(
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity)),
+                  child: CachedNetworkImage(
+                      imageUrl: imageVideoLists[index].url,
+                      fit: BoxFit.cover,
+                      width: double.infinity)),
               imageVideoLists[index].isImage == false
                   ? Positioned(
                       left: 0,
@@ -164,14 +238,36 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                       child: Container(
                         width: double.infinity,
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                        decoration:
+                            BoxDecoration(color: Colors.white.withOpacity(.3)),
                         child: IconButton(
                             onPressed: () {
+                              User user = new User(
+                                  id: widget.newsfeedModel.author!.id,
+                                  name: widget.newsfeedModel.author!.fullName,
+                                  profile: widget
+                                      .newsfeedModel.author!.profileImage);
+                              WatchListModel watchListModel = WatchListModel(
+                                  1,
+                                  widget.newsfeedModel.id,
+                                  imageVideoLists[0].title,
+                                  "2022-12-19T13:45:20.855137",
+                                  imageVideoLists[0].url,
+                                  imageVideoLists[0].url2,
+                                  user,
+                                  widget.newsfeedModel.totalComment,
+                                  widget.newsfeedModel.commentUrl,
+                                  widget.newsfeedModel.isLiked,
+                                  widget.newsfeedModel.likedByUrl,
+                                  widget.newsfeedModel.sharedByUrl,
+                                  widget.newsfeedModel.totalLiked,
+                                  widget.newsfeedModel.totalShared);
+
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) =>
-                                      VideoScreen(imageVideoLists[index].url2, imageVideoLists[index].url, imageVideoLists[index].title)));
+                                  builder: (_) => VideoScreen(watchListModel)));
                             },
-                            icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),
+                            icon: Icon(Icons.video_collection_rounded,
+                                color: Colors.grey.withOpacity(.7), size: 38)),
                       ),
                     )
                   : const SizedBox.shrink(),

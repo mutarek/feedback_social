@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
@@ -83,14 +84,45 @@ class PublicPhotoViewScreen extends StatelessWidget {
                                   imageURL: publicProfileProvider
                                       .publicAllImages[index].image));
                             } else {
+                              User user = new User(
+                                  id: publicProfileProvider
+                                      .publicNewsFeedLists[index].author!.id,
+                                  name: publicProfileProvider
+                                      .publicNewsFeedLists[index]
+                                      .author!
+                                      .fullName,
+                                  profile: publicProfileProvider
+                                      .publicNewsFeedLists[index]
+                                      .author!
+                                      .profileImage);
+                              WatchListModel watchListModel = WatchListModel(
+                                  publicProfileProvider
+                                      .publicAllVideo[index].id,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].id,
+                                  "",
+                                  "2022-12-19T13:45:20.855137",
+                                  publicProfileProvider
+                                      .publicAllVideo[index].thumbnail,
+                                  publicProfileProvider
+                                      .publicAllVideo[index].video,
+                                  user,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].totalComment,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].commentUrl,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].isLiked,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].likedByUrl,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].sharedByUrl,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].totalLiked,
+                                  publicProfileProvider
+                                      .publicNewsFeedLists[index].totalShared);
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => VideoScreen(
-                                        publicProfileProvider
-                                            .publicAllVideo[index].thumbnail!,
-                                        publicProfileProvider
-                                            .publicAllVideo[index].video,
-                                        "",
-                                      )));
+                                  builder: (_) => VideoScreen(watchListModel)));
                             }
                           },
                           child: Stack(
