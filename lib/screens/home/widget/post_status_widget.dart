@@ -1,5 +1,4 @@
 import 'package:als_frontend/provider/auth_provider.dart';
-import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -8,8 +7,8 @@ import 'package:provider/provider.dart';
 
 Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostProvider postProvider, bool isLoading, int status) {
 
-  Provider.of<NotificationProvider>(context, listen: false).initializeNotificationSettings();
-  Provider.of<NotificationProvider>(context, listen: false).showOneTimeNotification();
+  Provider.of<PostProvider>(context, listen: false).initializeNotificationSettings();
+  Provider.of<PostProvider>(context, listen: false).showOneTimeNotification();
   return Container(
     padding: const EdgeInsets.only(left: 10, right: 10),
     height: 50,

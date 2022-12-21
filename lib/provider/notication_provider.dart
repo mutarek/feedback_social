@@ -13,9 +13,9 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class NotificationProvider with ChangeNotifier {
   final NotificationRepo notificationRepo;
   final AuthRepo authRepo;
-  final PostProvider postProvider;
 
-  NotificationProvider({required this.notificationRepo,required this.postProvider, required this.authRepo});
+
+  NotificationProvider({required this.notificationRepo, required this.authRepo});
 
   bool isLoading = false;
   late WebSocketChannel webSocketChannel;
@@ -120,48 +120,5 @@ class NotificationProvider with ChangeNotifier {
     }
   }
 
-  ////// TODO: for local Notification
-  FlutterLocalNotificationsPlugin? fLutterLocalNotificationsPlugin;
 
-  initializeNotificationSettings() {
-    var androidInitialize = const AndroidInitializationSettings('ic_launcher');
-    var iosInitialize = const DarwinInitializationSettings();
-    var initializesSettings =
-        InitializationSettings(android: androidInitialize, iOS: iosInitialize);
-    fLutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    fLutterLocalNotificationsPlugin!.initialize(initializesSettings);
-    showScheduledTimeNotification();
-  }
-
-  Future notificationSelected(String payload) async {
-    print('Selected $payload');
-  }
-
-  AndroidNotificationDetails? androidDetails;
-  DarwinNotificationDetails? iosDetails;
-  NotificationDetails? generalNotificationDetails;
-
-  Future showScheduledTimeNotification() async {
-    androidDetails = const AndroidNotificationDetails('channelId', 'Feedback',
-        channelDescription: 'This is My channel', importance: Importance.max, autoCancel: false);
-    iosDetails = const DarwinNotificationDetails();
-    generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
-  }
-
-  Future showOneTimeNotification() async {
-    androidDetails = const AndroidNotificationDetails('channelId', 'Search Islam',
-        channelDescription: 'This is My channel',
-        importance: Importance.low,
-        autoCancel: true,
-        colorized: true,
-        ongoing: true);
-    iosDetails = const DarwinNotificationDetails();
-    var generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
-    fLutterLocalNotificationsPlugin!
-        .show(postProvider.uploadPercent.toInt(), postProvider.uploadPercent==1.0?"finished":"uploding ${postProvider.uploadPercent.toString()}%", '' ,generalNotificationDetails, payload: 'Task');
-    print("notification progress: =>  ${postProvider.uploadPercent.toString()}");
-    await fLutterLocalNotificationsPlugin!.cancel(1);
-
-
-  }
 }
