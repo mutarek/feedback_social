@@ -57,7 +57,6 @@ void main() async {
           ChangeNotifierProvider(create: (context) => di.sl<CommentProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<GroupProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider>()),
-          ChangeNotifierProvider(create: (context) => di.sl<NotificationService>()),
           ChangeNotifierProvider(create: (context) => di.sl<WatchProvider>()),
         ],
         child: const MyApp(),
@@ -69,7 +68,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<NotificationProvider>(context, listen: false).initializeNotificationSettings();
     return MaterialApp(
       title: 'Feedback',
       supportedLocales: context.supportedLocales,

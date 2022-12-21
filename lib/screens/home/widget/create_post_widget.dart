@@ -18,17 +18,13 @@ import 'package:provider/provider.dart';
 
 Widget createPostWidget(BuildContext context, AuthProvider authProvider,
     {NewsFeedProvider? newsFeedProvider, bool isForGroup = false, bool isForPage = false, int groupPageID = 0}) {
-  return Consumer2<NotificationService,PostProvider>(
-
-    builder: (context,notificationPro,postPro, child) {
-      return InkWell(
+  return InkWell(
         onTap: () async {
-          postPro.clearImageVideo();
-          // Provider.of<PostProvider>(context, listen: false).clearImageVideo();
+           Provider.of<PostProvider>(context, listen: false).clearImageVideo();
           Navigator.of(context).push(MaterialPageRoute(
               builder: (_) =>
                   AddPostScreen(authProvider.profileImage, isFromGroupScreen: isForGroup, groupPageID: groupPageID, isForPage: isForPage)));
-              notificationPro.stylishNotification(postPro.uploadPercent.toInt());
+
 
         },
         child: Container(
@@ -129,6 +125,5 @@ Widget createPostWidget(BuildContext context, AuthProvider authProvider,
           ),
         ),
       );
-    }
-  );
+
 }
