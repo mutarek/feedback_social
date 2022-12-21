@@ -2,6 +2,7 @@ import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/notification_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/notification_repo.dart';
+import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -12,8 +13,9 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class NotificationProvider with ChangeNotifier {
   final NotificationRepo notificationRepo;
   final AuthRepo authRepo;
+  final PostProvider postProvider;
 
-  NotificationProvider({required this.notificationRepo, required this.authRepo});
+  NotificationProvider({required this.notificationRepo,required this.postProvider, required this.authRepo});
 
   bool isLoading = false;
   late WebSocketChannel webSocketChannel;
@@ -40,7 +42,8 @@ class NotificationProvider with ChangeNotifier {
   }
 
   check() {
-    webSocketChannel = WebSocketChannel.connect(Uri.parse("${AppConstant.socketBaseUrl}ws/notifications/${authRepo.getUserToken()}/"));
+    webSocketChannel = WebSocketChannel.connect(
+        Uri.parse("${AppConstant.socketBaseUrl}ws/notifications/${authRepo.getUserToken()}/"));
     webSocketChannel.stream.listen((event) {
       notificationUnread();
       initializeNotification(isFirstTime: false, isDataAddLast: false);
@@ -68,7 +71,11 @@ class NotificationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  initializeNotification({int page = 1, bool isFirstTime = true, bool isFirstTimeLoading = true, bool isDataAddLast = true}) async {
+  initializeNotification(
+      {int page = 1,
+      bool isFirstTime = true,
+      bool isFirstTimeLoading = true,
+      bool isDataAddLast = true}) async {
     if (page == 1 && isFirstTime) {
       selectPage = 1;
       notificationLists.clear();
@@ -119,7 +126,8 @@ class NotificationProvider with ChangeNotifier {
   initializeNotificationSettings() {
     var androidInitialize = const AndroidInitializationSettings('ic_launcher');
     var iosInitialize = const DarwinInitializationSettings();
-    var initializesSettings = InitializationSettings(android: androidInitialize, iOS: iosInitialize);
+    var initializesSettings =
+        InitializationSettings(android: androidInitialize, iOS: iosInitialize);
     fLutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     fLutterLocalNotificationsPlugin!.initialize(initializesSettings);
     showScheduledTimeNotification();
@@ -142,9 +150,18 @@ class NotificationProvider with ChangeNotifier {
 
   Future showOneTimeNotification() async {
     androidDetails = const AndroidNotificationDetails('channelId', 'Search Islam',
-        channelDescription: 'This is My channel', importance: Importance.low, autoCancel: false, colorized: true, ongoing: true);
+        channelDescription: 'This is My channel',
+        importance: Importance.low,
+        autoCancel: true,
+        colorized: true,
+        ongoing: true);
     iosDetails = const DarwinNotificationDetails();
     var generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
-    fLutterLocalNotificationsPlugin!.show(0, 'Task', 'You Create a Task', generalNotificationDetails, payload: 'Task');
+    fLutterLocalNotificationsPlugin!
+        .show(postProvider.uploadPercent.toInt(), postProvider.uploadPercent==1.0?"finished":"uploding ${postProvider.uploadPercent.toString()}%", '' ,generalNotificationDetails, payload: 'Task');
+    print("notification progress: =>  ${postProvider.uploadPercent.toString()}");
+    await fLutterLocalNotificationsPlugin!.cancel(1);
+
+
   }
 }

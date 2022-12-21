@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    Provider.of<NotificationService>(context,listen: false).initialize();
     super.initState();
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
@@ -39,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

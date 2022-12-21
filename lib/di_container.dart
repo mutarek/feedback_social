@@ -68,10 +68,9 @@ Future<void> init() async {
   sl.registerFactory(() => CommentProvider(commentRepo: sl()));
   sl.registerFactory(() => DashboardProvider());
   sl.registerFactory(() => OtherProvider());
-  sl.registerFactory(() => NotificationService());
   sl.registerFactory(() => GroupProvider(groupRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
   sl.registerFactory(() => AnimalProvider(animalRepo: sl()));
-  sl.registerFactory(() => NotificationProvider(notificationRepo: sl(), authRepo: sl()));
+  sl.registerFactory(() => NotificationProvider(notificationRepo: sl(), authRepo: sl(),postProvider: sl()));
   sl.registerFactory(() => PageProvider(pageRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
   sl.registerFactory(() => PostProvider(postRepo: sl(), authRepo: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
