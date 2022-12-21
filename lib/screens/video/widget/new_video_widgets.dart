@@ -102,7 +102,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                               ),
                               const SizedBox(height: 4),
                               Padding(
-                                padding: EdgeInsets.only(left: 5),
+                                padding: const EdgeInsets.only(left: 5),
                                 child: Text(
                                     "Posted By ${widget.model.user!.fullName}",
                                     style: latoStyle500Medium.copyWith(
@@ -153,7 +153,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                                   ),
                                   const SizedBox(height: 4),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 5),
+                                    padding: const EdgeInsets.only(left: 5),
                                     child: Text(
                                         "Posted By ${widget.model.user!.fullName}",
                                         style: latoStyle500Medium.copyWith(

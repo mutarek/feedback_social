@@ -313,7 +313,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           padding: const EdgeInsets.only(left: 250, top: 50),
                           child: FloatingActionButton(
                             onPressed: () {
-                              Helper.toScreen(CreatePageScreen());
+                              Helper.toScreen(const CreatePageScreen());
                             },
                             child: const Icon(CupertinoIcons.plus),
                           ),

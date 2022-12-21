@@ -36,7 +36,6 @@ class CommentRepo {
       response = await dioClient.post('${url}create/', data: comment);
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      print(response);
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }

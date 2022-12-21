@@ -87,8 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
                             isHomeScreen: true,
                             groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
-                        return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
-                            isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
+                        // return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
+                        //     isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
                       }),
                   newsFeedProvider.isBottomLoading
                       ? Container(

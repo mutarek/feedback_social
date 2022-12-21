@@ -15,6 +15,7 @@ class ChooseImageAndCropImageView extends StatefulWidget {
   const ChooseImageAndCropImageView(this.ratioX, this.ratioY, this.width, this.height, {Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _ChooseImageAndCropImageViewState createState() => _ChooseImageAndCropImageViewState();
 }
 

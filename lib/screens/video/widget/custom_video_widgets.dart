@@ -23,7 +23,6 @@ class _CustomVideoWidgetsState extends State<CustomVideoWidgets> {
 
   @override
   void initState() {
-    print('akakkak ${widget.videoUrl}');
     thumbnailURLFinal = '';
     thumbnailURLFinal =
         widget.thumbnailURL.isNotEmpty ? widget.thumbnailURL : ImagesModel.logo;

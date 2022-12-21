@@ -3,12 +3,12 @@ import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +60,7 @@ class FlagPageView extends StatelessWidget {
                                     return InkWell(
                                       onTap: () {
                                         provider.loadingStart();
-                                        Get.to(UserPageScreen(provider.authorPageLists[index2].id.toString(), index2));
+                                        Helper.toScreen(UserPageScreen(provider.authorPageLists[index2].id.toString(), index2));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(6.0),
@@ -111,7 +111,7 @@ class FlagPageView extends StatelessWidget {
                               return CustomPageGroupButton(
                                   onTap: () {
                                     provider.loadingStart();
-                                    Get.to(PublicPageScreen(provider.authorPageLists[index].id.toString()));
+                                    Helper.toScreen(PublicPageScreen(provider.authorPageLists[index].id.toString()));
                                   },
                                   goToGroupOrPage: () {},
                                   groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,

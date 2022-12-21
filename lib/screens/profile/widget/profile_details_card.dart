@@ -2,11 +2,11 @@ import 'package:als_frontend/data/model/response/user_profile_model.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/profile/edit_profile_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -133,7 +133,7 @@ class ProfileDetailsCard extends StatelessWidget {
                 : InkWell(
                     onTap: () {
                       Provider.of<ProfileProvider>(context, listen: false).initializeGender(userProfileModel!.gender!);
-                      Get.to(() => EditProfile(userprofileData: userProfileModel));
+                      Helper.toScreen(EditProfile(userprofileData: userProfileModel));
                     },
                     child: Container(
                       height: height * 0.035,
