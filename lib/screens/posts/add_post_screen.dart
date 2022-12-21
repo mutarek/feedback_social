@@ -152,6 +152,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         });
                       }
                       Navigator.of(context).pop();
+
                     },
                     child: Container(
                       width: 50,
