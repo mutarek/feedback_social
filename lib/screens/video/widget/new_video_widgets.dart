@@ -421,7 +421,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                                           widget.model.commentUrl!,
                                           isHomeScreen: false,
                                           isProfileScreen: false,
-                                          index: widget.index,
+                                          index: 0,
                                           postID: widget.model.postId!.toInt(),
                                           groupID:
                                               widget.model.page!.id!.toInt(),
@@ -441,8 +441,8 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                                               isFromGroup: true))
                                           : Helper.toScreen(SinglePostScreen(
                                               widget.model.commentUrl!,
-                                              isHomeScreen: false,
-                                              isProfileScreen: false,
+                                              isHomeScreen: true,
+                                              isProfileScreen: true,
                                               index: widget.index,
                                               postID:
                                                   widget.model.postId!.toInt(),
