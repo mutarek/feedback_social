@@ -53,7 +53,7 @@ class _VideoScreenState extends State<VideoScreen> {
               return NewVideoPlayer(widget.watchListModel, 0);
             }
             var data = watchProvider.watchLists[index - 1];
-            return NewVideoPlayer(data, index);
+            return NewVideoPlayer(data, index - 1);
           },
         );
       }),

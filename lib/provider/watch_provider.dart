@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class WatchProvider with ChangeNotifier {
   final WatchRepo watchRepo;
+
   WatchProvider({required this.watchRepo});
 
   int position = 0;
@@ -67,7 +68,11 @@ class WatchProvider with ChangeNotifier {
     });
   }
 
-  addLike(int postID, int index) async {
+  addLike(int postID, int index,
+      {bool isFromPerson = true,
+      bool isFromGroup = false,
+      bool isFromPage = false,
+      int groupPageId = 0}) async {
     if (watchLists[index].isLiked == false) {
       watchLists[index].totalLiked = watchLists[index].totalLiked! + 1;
       watchLists[index].isLiked = true;
@@ -78,7 +83,7 @@ class WatchProvider with ChangeNotifier {
       notifyListeners();
     }
     notifyListeners();
-    // await newsFeedRepo1.addLike(postID,
-    //     isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
+    await watchRepo.addLike(postID,
+        isGroup: isFromGroup, isFromLike: isFromPage, groupPageID: groupPageId);
   }
 }
