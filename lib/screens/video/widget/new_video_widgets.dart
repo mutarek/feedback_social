@@ -12,6 +12,8 @@ import 'package:als_frontend/provider/watch_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/post/single_post_screen.dart';
+import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -45,13 +47,14 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
 
   @override
   void dispose() {
-    clear();
+    videoPlayerController!.dispose();
     super.dispose();
   }
 
-  clear() {
+  @override
+  void deactivate() {
     videoPlayerController!.dispose();
-    // videoPlayerController!.removeListener(checkVideoProgress);
+    super.deactivate();
   }
 
   prepareVideo({required String url}) {
@@ -166,6 +169,23 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             InkWell(
+                                onTap: () {
+                                  if (Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .userID ==
+                                      widget.model.user!.id.toString()) {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const ProfileScreen()));
+                                  } else {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) => PublicProfileScreen(
+                                                widget.model.user!.id
+                                                    .toString())));
+                                  }
+                                },
                                 child: ProfileAvatar(
                                     profileImageUrl:
                                         widget.model.user!.profileImage!)),
@@ -176,6 +196,24 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   InkWell(
+                                    onTap: () {
+                                      if (Provider.of<AuthProvider>(context,
+                                                  listen: false)
+                                              .userID ==
+                                          widget.model.user!.id.toString()) {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    const ProfileScreen()));
+                                      } else {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    PublicProfileScreen(widget
+                                                        .model.user!.id
+                                                        .toString())));
+                                      }
+                                    },
                                     child: Row(
                                       children: [
                                         const SizedBox(width: 5),
@@ -271,7 +309,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 30,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -300,9 +338,28 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  watchProvide.addLike(
-                                      widget.model.postId as int, widget.index);
-                                  print('like tap');
+                                  widget.model.isPage == true
+                                      ? watchProvide.addLike(
+                                          widget.model.postId!.toInt(),
+                                          widget.index,
+                                          isFromPage: true,
+                                          isFromGroup: false,
+                                          groupPageId:
+                                              widget.model.page!.id as int)
+                                      : widget.model.isGroup == true
+                                          ? watchProvide.addLike(
+                                              widget.model.postId!.toInt(),
+                                              widget.index,
+                                              isFromPage: false,
+                                              isFromGroup: true,
+                                              groupPageId:
+                                                  widget.model.group!.id as int)
+                                          : watchProvide.addLike(
+                                              widget.model.postId!.toInt(),
+                                              widget.index,
+                                              isFromPage: false,
+                                              isFromGroup: false,
+                                              groupPageId: 0);
                                 },
                                 child: SizedBox(
                                   width: 40,
@@ -359,15 +416,39 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                                   Provider.of<AuthProvider>(context,
                                           listen: false)
                                       .getUserInfo();
-                                  Helper.toScreen(SinglePostScreen(
-                                      widget.model.commentUrl!,
-                                      isHomeScreen: false,
-                                      isProfileScreen: false,
-                                      index: widget.index,
-                                      postID: widget.model.postId as int,
-                                      groupID: 1,
-                                      isFromPage: false,
-                                      isFromGroup: false));
+                                  widget.model.isPage == true
+                                      ? Helper.toScreen(SinglePostScreen(
+                                          widget.model.commentUrl!,
+                                          isHomeScreen: false,
+                                          isProfileScreen: false,
+                                          index: widget.index,
+                                          postID: widget.model.postId!.toInt(),
+                                          groupID:
+                                              widget.model.page!.id!.toInt(),
+                                          isFromPage: true,
+                                          isFromGroup: false))
+                                      : widget.model.isGroup == true
+                                          ? Helper.toScreen(SinglePostScreen(
+                                              widget.model.commentUrl!,
+                                              isHomeScreen: false,
+                                              isProfileScreen: false,
+                                              index: widget.index,
+                                              postID:
+                                                  widget.model.postId!.toInt(),
+                                              groupID: widget.model.group!.id!
+                                                  .toInt(),
+                                              isFromPage: false,
+                                              isFromGroup: true))
+                                          : Helper.toScreen(SinglePostScreen(
+                                              widget.model.commentUrl!,
+                                              isHomeScreen: false,
+                                              isProfileScreen: false,
+                                              index: widget.index,
+                                              postID:
+                                                  widget.model.postId!.toInt(),
+                                              groupID: 0,
+                                              isFromPage: false,
+                                              isFromGroup: false));
                                 },
                                 child: SizedBox(
                                   width: 40,
