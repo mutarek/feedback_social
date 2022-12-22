@@ -162,7 +162,7 @@ class SettingsScreen extends StatelessWidget {
                           name: LocaleKeys.others.tr(),
                           subName: "",
                           goingScreen: () {
-                            Helper.toScreen(OtherSettings());
+                            Helper.toScreen(const OtherSettings());
                           },
                         ),
                         const SizedBox(height: 20),

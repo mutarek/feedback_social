@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/base/error_response.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,10 +96,10 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     ApiResponse apiResponse = await authRepo.login(email, password, isSelectEmail, onSendProgress: (int sentBytes, int totalBytes) {
       progressPercent = sentBytes / totalBytes * 100;
-      print("Progress: $progressPercent %");
+      showLog("Progress: $progressPercent %");
       if (progressPercent == 100) {
         // dispose();
-        print('finished');
+        showLog('finished');
       }
     });
     _isLoading = false;

@@ -10,6 +10,7 @@ class RoundedWithCustomCursor extends StatefulWidget {
   const RoundedWithCustomCursor(this.pinController, this.authProvider, {Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _RoundedWithCustomCursorState createState() => _RoundedWithCustomCursorState();
 
   @override

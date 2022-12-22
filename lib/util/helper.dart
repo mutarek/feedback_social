@@ -5,6 +5,10 @@ import 'package:als_frontend/helper/animation/slideright_toleft.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
+showLog(message) {
+  log("APP SAYS: $message");
+}
+
 class Helper {
   static final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -39,10 +43,6 @@ class Helper {
 
   static circularProgress(context) {
     const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(colorPrimaryLight)));
-  }
-
-  static showLog(message) {
-    log("APP SAYS: $message");
   }
 
   static boxDecoration(Color color, double radius) {

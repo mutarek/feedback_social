@@ -27,7 +27,7 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostPro
   width: 270,
   child: LiquidLinearProgressIndicator(
   value: postProvider.uploadPercent*100, // Defaults to 0.5.
-  valueColor: AlwaysStoppedAnimation(AppColors.unreadColorLight), // Defaults to the current Theme's accentColor.
+  valueColor: const AlwaysStoppedAnimation(AppColors.unreadColorLight), // Defaults to the current Theme's accentColor.
   backgroundColor: AppColors.scaffold,
   borderRadius: 40.0,
   direction: Axis.vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.horizontal.
