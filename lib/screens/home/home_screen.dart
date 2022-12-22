@@ -1,6 +1,5 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
-import 'package:als_frontend/provider/notification_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/home/shimmer_effect/timeline_post_shimmer_widget.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
@@ -8,7 +7,6 @@ import 'package:als_frontend/screens/home/widget/post_status_widget.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
