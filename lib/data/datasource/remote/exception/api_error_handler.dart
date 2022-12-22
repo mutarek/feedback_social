@@ -22,6 +22,11 @@ class ApiErrorHandler {
               break;
             case DioErrorType.response:
               switch (error.response!.statusCode) {
+                case 400:
+                  errorDescription =
+                      'the server cannot or will not process the request due to something that is perceived to be a client error';
+
+                  break;
                 case 404:
                 case 401:
                 case 500:

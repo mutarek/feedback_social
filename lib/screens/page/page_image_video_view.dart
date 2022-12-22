@@ -50,7 +50,7 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
                             .pageDetailsModel!.photos![index].image!,
                       ));
                     } else {
-                      User user = new User(
+                      User user =  User(
                           id: pageProvider.pageDetailsModel!.author!.id,
                           fullName: pageProvider.pageDetailsModel!.author!.fullName,
                           profileImage: pageProvider

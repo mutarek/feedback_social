@@ -16,6 +16,7 @@ class WatchRepo {
           await dioClient.get(AppConstant.watchListUri + page.toString());
       return ApiResponse.withSuccess(response);
     } catch (e) {
+      print('aakak ${e.toString()}');
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }

@@ -47,25 +47,28 @@ class PhotoViewScreen extends StatelessWidget {
                     return InkWell(
                       onTap: () {
                         if (!imageVideo[index].isImage) {
-                          User user = new User(
+                          User user =  User(
                               id: newsFeedData.author!.id,
                               fullName: newsFeedData.author!.fullName,
                               profileImage: newsFeedData.author!.profileImage);
+
                           WatchListModel watchListModel = WatchListModel(
-                              watchId: 1,
-                              postId: 1,
-                              headerText: "",
-                              createdAt: "2022-12-19T13:45:20.855137",
                               thumbnail: imageVideo[index].url,
                               video: imageVideo[index].url2,
                               user: user,
-                              totalComment: 1,
-                              commentUrl: "",
-                              isLiked: true,
-                              likedByUrl: "",
-                              sharedByUrl: "",
-                              totalLiked: 1,
-                              totalShared: 1);
+                              watchId: DateTime.now().microsecondsSinceEpoch,
+                              postId: newsFeedData.id,
+                              headerText: newsFeedData.description,
+                              createdAt: newsFeedData.timestamp,
+                              totalComment: newsFeedData.totalComment,
+                              commentUrl: newsFeedData.commentUrl,
+                              isLiked: newsFeedData.isLiked,
+                              likedByUrl: newsFeedData.likedByUrl,
+                              sharedByUrl: newsFeedData.sharedByUrl,
+                              totalLiked: newsFeedData.totalLiked,
+                              totalShared: newsFeedData.totalShared);
+
+
                           Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoScreen(watchListModel)));
                         } else {
                           Helper.toScreen(SingleImageView(imageURL: imageVideo[index].url));
@@ -89,25 +92,25 @@ class PhotoViewScreen extends StatelessWidget {
                                         decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
                                         child: IconButton(
                                             onPressed: () {
-                                              User user = new User(
+                                              User user = User(
                                                   id: newsFeedData.author!.id,
                                                   fullName: newsFeedData.author!.fullName,
                                                   profileImage: newsFeedData.author!.profileImage);
                                               WatchListModel watchListModel = WatchListModel(
-                                                  watchId: 1,
-                                                  postId: 1,
-                                                  headerText: "",
-                                                  createdAt: "2022-12-19T13:45:20.855137",
                                                   thumbnail: imageVideo[index].url,
                                                   video: imageVideo[index].url2,
                                                   user: user,
-                                                  totalComment: 1,
-                                                  commentUrl: "",
-                                                  isLiked: true,
-                                                  likedByUrl: "",
-                                                  sharedByUrl: "",
-                                                  totalLiked: 1,
-                                                  totalShared: 1);
+                                                  watchId: DateTime.now().microsecondsSinceEpoch,
+                                                  postId: newsFeedData.id,
+                                                  headerText: newsFeedData.description,
+                                                  createdAt: newsFeedData.timestamp,
+                                                  totalComment: newsFeedData.totalComment,
+                                                  commentUrl: newsFeedData.commentUrl,
+                                                  isLiked: newsFeedData.isLiked,
+                                                  likedByUrl: newsFeedData.likedByUrl,
+                                                  sharedByUrl: newsFeedData.sharedByUrl,
+                                                  totalLiked: newsFeedData.totalLiked,
+                                                  totalShared: newsFeedData.totalShared);
                                               Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoScreen(watchListModel)));
                                             },
                                             icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38)),

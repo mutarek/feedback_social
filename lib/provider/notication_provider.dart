@@ -12,7 +12,6 @@ class NotificationProvider with ChangeNotifier {
   final NotificationRepo notificationRepo;
   final AuthRepo authRepo;
 
-
   NotificationProvider({required this.notificationRepo, required this.authRepo});
 
   bool isLoading = false;
@@ -30,6 +29,7 @@ class NotificationProvider with ChangeNotifier {
   }
 
   void notificationRead() async {
+    notificationCount = 0;
     ApiResponse response = await notificationRepo.getNotificationReadCount();
     if (response.response.statusCode == 200) {
       notificationCount = 0;
@@ -40,8 +40,7 @@ class NotificationProvider with ChangeNotifier {
   }
 
   check() {
-    webSocketChannel = WebSocketChannel.connect(
-        Uri.parse("${AppConstant.socketBaseUrl}ws/notifications/${authRepo.getUserToken()}/"));
+    webSocketChannel = WebSocketChannel.connect(Uri.parse("${AppConstant.socketBaseUrl}ws/notifications/${authRepo.getUserToken()}/"));
     webSocketChannel.stream.listen((event) {
       notificationUnread();
       initializeNotification(isFirstTime: false, isDataAddLast: false);
@@ -69,11 +68,7 @@ class NotificationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  initializeNotification(
-      {int page = 1,
-      bool isFirstTime = true,
-      bool isFirstTimeLoading = true,
-      bool isDataAddLast = true}) async {
+  initializeNotification({int page = 1, bool isFirstTime = true, bool isFirstTimeLoading = true, bool isDataAddLast = true}) async {
     if (page == 1 && isFirstTime) {
       selectPage = 1;
       notificationLists.clear();
@@ -117,6 +112,4 @@ class NotificationProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
-
 }
