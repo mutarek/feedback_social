@@ -60,7 +60,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         itemBuilder: (context, index) => ChatCard(
                             chat: chatProvider.allChatsLists[index],
                             press: () {
-
                               AllMessageChatListModel allMessageChatListModel = chatProvider.allChatsLists[index];
                               chatProvider.changeChantModel(allMessageChatListModel);
                               chatProvider.initializeSocket(index);

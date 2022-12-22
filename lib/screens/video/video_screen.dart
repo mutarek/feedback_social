@@ -18,10 +18,18 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
+  PageController controller = PageController();
   @override
   void initState() {
     super.initState();
     Provider.of<WatchProvider>(context, listen: false).getWatchList(page: 1, watchListModel: widget.watchListModel);
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange &&
+          Provider.of<WatchProvider>(context, listen: false).hasNextData) {
+        Provider.of<WatchProvider>(context, listen: false).updatePageNo();
+      }
+    });
   }
 
   @override
@@ -40,6 +48,7 @@ class _VideoScreenState extends State<VideoScreen> {
           elevation: 0),
       body: Consumer<WatchProvider>(builder: (context, watchProvider, child) {
         return PageView.builder(
+          controller: controller,
           scrollDirection: Axis.vertical,
           pageSnapping: true,
           physics: const BouncingScrollPhysics(),
