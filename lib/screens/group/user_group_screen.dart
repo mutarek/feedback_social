@@ -127,7 +127,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
 
   Widget menuRow(double width, GroupProvider groupProvider, double height, BuildContext context) {
     return Container(
-      height: 270,
+      height: 290,
       width: width,
       color: Palette.scaffold,
       child: Column(
@@ -225,10 +225,11 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: height * 0.02),
+              SizedBox(height: 5),
             ],
           ),
           Container(
+            height: 25,
             color: Colors.white,
             child: Row(children: [
               MenuButtonWidget(LocaleKeys.discussion.tr(), 0, groupProvider, pageController),
