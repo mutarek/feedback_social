@@ -25,7 +25,7 @@ class WatchProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getWatchList({int page = 1, bool isFirstTime = true}) async {
+  getWatchList({int page = 1, bool isFirstTime = true, WatchListModel? watchListModel}) async {
     if (page == 1) {
       selectPage = 1;
       watchLists.clear();
@@ -35,19 +35,20 @@ class WatchProvider with ChangeNotifier {
       isBottomLoading = false;
       position = 0;
       // notifyListeners();
-      ApiResponse response = await watchRepo.getAllVideos(page);
-      isLoading = false;
-      isBottomLoading = false;
-      if (response.response.statusCode == 200) {
-        hasNextData = response.response.data['next'] != null ? true : false;
-        response.response.data['results'].forEach((element) {
-          watchLists.add(WatchListModel.fromJson(element));
-        });
-      } else {
-        Fluttertoast.showToast(msg: response.response.statusMessage!);
-      }
-      notifyListeners();
+      if (watchListModel != null) watchLists.add(watchListModel);
     }
+    ApiResponse response = await watchRepo.getAllVideos(page);
+    isLoading = false;
+    isBottomLoading = false;
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        watchLists.add(WatchListModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
   }
 
   late Timer _timer;
@@ -68,11 +69,7 @@ class WatchProvider with ChangeNotifier {
     });
   }
 
-  addLike(int postID, int index,
-      {bool isFromPerson = true,
-      bool isFromGroup = false,
-      bool isFromPage = false,
-      int groupPageId = 0}) async {
+  addLike(int postID, int index, {bool isFromPerson = true, bool isFromGroup = false, bool isFromPage = false, int groupPageId = 0}) async {
     if (watchLists[index].isLiked == false) {
       watchLists[index].totalLiked = watchLists[index].totalLiked! + 1;
       watchLists[index].isLiked = true;
@@ -83,7 +80,6 @@ class WatchProvider with ChangeNotifier {
       notifyListeners();
     }
     notifyListeners();
-    await watchRepo.addLike(postID,
-        isGroup: isFromGroup, isFromLike: isFromPage, groupPageID: groupPageId);
+    await watchRepo.addLike(postID, isGroup: isFromGroup, isFromLike: isFromPage, groupPageID: groupPageId);
   }
 }

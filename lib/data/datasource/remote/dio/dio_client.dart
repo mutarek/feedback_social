@@ -14,14 +14,11 @@ class DioClient {
   Dio? dio;
   String? token;
 
-  DioClient(this.baseUrl, Dio? dioC,
-      {this.loggingInterceptor, this.sharedPreferences}) {
+  DioClient(this.baseUrl, Dio? dioC, {this.loggingInterceptor, this.sharedPreferences}) {
     token = sharedPreferences!.getString(AppConstant.token) ?? "";
     debugPrint('Token: $token');
     dio = dioC ?? Dio();
-    Map<String, String> headerMap = {
-      'Content-Type': 'application/json; charset=UTF-8'
-    };
+    Map<String, String> headerMap = {'Content-Type': 'application/json; charset=UTF-8'};
     if (token!.isNotEmpty) {
       headerMap.addAll({'Authorization': 'Bearer $token'});
     }
@@ -36,12 +33,12 @@ class DioClient {
   }
 
   Future<Response> get(
-      String uri, {
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-        CancelToken? cancelToken,
-        ProgressCallback? onReceiveProgress,
-      }) async {
+    String uri, {
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onReceiveProgress,
+  }) async {
     try {
       var response = await dio!.get(
         uri,
@@ -61,14 +58,14 @@ class DioClient {
   }
 
   Future<Response> post(
-      String uri, {
-        data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-        CancelToken? cancelToken,
-        ProgressCallback? onSendProgress,
-        ProgressCallback? onReceiveProgress,
-      }) async {
+    String uri, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
     try {
       var response = await dio!.post(
         uri,
@@ -87,16 +84,15 @@ class DioClient {
     }
   }
 
-
   Future<Response> patch(
-      String uri, {
-        data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-        CancelToken? cancelToken,
-        ProgressCallback? onSendProgress,
-        ProgressCallback? onReceiveProgress,
-      }) async {
+    String uri, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
     try {
       var response = await dio!.patch(
         uri,
@@ -115,16 +111,15 @@ class DioClient {
     }
   }
 
-
   Future<Response> put(
-      String uri, {
-        data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-        CancelToken? cancelToken,
-        ProgressCallback? onSendProgress,
-        ProgressCallback? onReceiveProgress,
-      }) async {
+    String uri, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
     try {
       var response = await dio!.put(
         uri,
@@ -144,12 +139,12 @@ class DioClient {
   }
 
   Future<Response> delete(
-      String uri, {
-        data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-        CancelToken? cancelToken,
-      }) async {
+    String uri, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
     try {
       var response = await dio!.delete(
         uri,
