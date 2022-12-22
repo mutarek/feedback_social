@@ -47,7 +47,6 @@ class CommentProvider with ChangeNotifier {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
         CommentModels comment = CommentModels.fromJson(element);
-
         comments.insert(0, comment);
         isOpenComment.insert(0, false);
       });
@@ -61,7 +60,8 @@ class CommentProvider with ChangeNotifier {
     comments.clear();
     comments = [];
     isLoading = true;
-    ApiResponse response = await commentRepo.getAllGroupCommentData(postID, groupID);
+    ApiResponse response =
+        await commentRepo.getAllGroupCommentData(postID, groupID);
     isLoading = false;
     if (response.response.statusCode == 200) {
       response.response.data.forEach((element) {
@@ -77,7 +77,8 @@ class CommentProvider with ChangeNotifier {
 
   bool isCommentLoading = false;
 
-  Future<bool> addComment(String comment, String fullName, String profileImage, int postID, int userID, String url) async {
+  Future<bool> addComment(String comment, String fullName, String profileImage,
+      int postID, int userID, String url) async {
     isCommentLoading = true;
     ApiResponse response = await commentRepo.addComment(url, comment);
     isCommentLoading = false;
@@ -96,12 +97,15 @@ class CommentProvider with ChangeNotifier {
   }
 
   /////  ********    comment Web Socket
-  WebSocketChannel channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/post/191/comment/timeline_post/');
-  WebSocketChannel replyChannel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/post/191/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect(
+      '${AppConstant.socketBaseUrl}ws/post/191/comment/timeline_post/');
+  WebSocketChannel replyChannel = IOWebSocketChannel.connect(
+      '${AppConstant.socketBaseUrl}ws/post/191/comment/timeline_post/');
 
   userPostComments() {
     channel.stream.listen((data) {
-      CommentModels commentData = CommentModels.fromJson(jsonDecode(data)['comment_data']);
+      CommentModels commentData =
+          CommentModels.fromJson(jsonDecode(data)['comment_data']);
       comments.insert(0, commentData);
       isOpenComment.insert(0, false);
       debugPrint("Connect: ${commentData.comment}");
@@ -132,17 +136,20 @@ class CommentProvider with ChangeNotifier {
   }
 
   initializeSocket(int postID) {
-    channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/post/$postID/comment/timeline_post/');
+    channel = IOWebSocketChannel.connect(
+        '${AppConstant.socketBaseUrl}ws/post/$postID/comment/timeline_post/');
     userPostComments();
   }
 
   initializeSinglePostSocket(String url) {
-    channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws${url.replaceAll('posts', 'post')}timeline_post/');
+    channel = IOWebSocketChannel.connect(
+        '${AppConstant.socketBaseUrl}ws${url.replaceAll('posts', 'post')}timeline_post/');
     userPostComments();
   }
 
   initializeReplySocket(int postID, int index) {
-    replyChannel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/post/$postID/comment/timeline_post/');
+    replyChannel = IOWebSocketChannel.connect(
+        '${AppConstant.socketBaseUrl}ws/post/$postID/comment/timeline_post/');
     userReplyComments(index);
   }
 
@@ -166,7 +173,8 @@ class CommentProvider with ChangeNotifier {
   Future<bool> addReply(String comment, String url) async {
     isCommentLoading = true;
     notifyListeners();
-    ApiResponse response = await commentRepo.addReply(url, comments[replyIndex].id.toString(), comment);
+    ApiResponse response = await commentRepo.addReply(
+        url, comments[replyIndex].id.toString(), comment);
     isCommentLoading = false;
     if (response.response.statusCode == 201) {
       Replies c = Replies(

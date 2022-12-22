@@ -178,7 +178,9 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                                             .bold),
                                                               ),
                                                               Text(
-                                                                  LocaleKeys.followers.tr(),
+                                                                  LocaleKeys
+                                                                      .followers
+                                                                      .tr(),
                                                                   style: GoogleFonts.lato(
                                                                       fontSize:
                                                                           10,
@@ -186,7 +188,7 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                                           .black))
                                                             ],
                                                           ),
-                                                        )
+                                                        ),
                                                       ],
                                                     ),
                                                     const Spacer(),
@@ -273,7 +275,9 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                                       width: width *
                                                                           0.007),
                                                                   Text(
-                                                                      LocaleKeys.edit_Page.tr(),
+                                                                      LocaleKeys
+                                                                          .edit_Page
+                                                                          .tr(),
                                                                       style: TextStyle(
                                                                           fontSize: height *
                                                                               0.012,
@@ -297,18 +301,15 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                             margin:
                                                 const EdgeInsets.only(top: 2),
                                             child: TabBar(tabs: [
-                                              Text(
-                                                  LocaleKeys.post.tr(),
+                                              Text(LocaleKeys.post.tr(),
                                                   style: TextStyle(
                                                       fontSize: height * 0.013,
                                                       color: Colors.black)),
-                                              Text(
-                                                  LocaleKeys.photos.tr(),
+                                              Text(LocaleKeys.photos.tr(),
                                                   style: TextStyle(
                                                       fontSize: height * 0.013,
                                                       color: Colors.black)),
-                                              Text(
-                                                  LocaleKeys.videos.tr(),
+                                              Text(LocaleKeys.videos.tr(),
                                                   style: TextStyle(
                                                       fontSize: height * 0.013,
                                                       color: Colors.black)),
