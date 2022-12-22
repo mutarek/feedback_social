@@ -79,11 +79,10 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                   SliverList(
                                       delegate: SliverChildListDelegate([
                                     Container(
-                                      height: 270,
+                                      height: 290,
                                       width: width,
                                       color: Palette.scaffold,
                                       child: SingleChildScrollView(
-
                                         child: Column(
                                           children: [
                                             Stack(
@@ -192,7 +191,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                               ],
                                             ),
                                             Container(
-                                              height: height * 0.03,
+                                              height: 25,
                                               color: Colors.white,
                                               child: TabBar(tabs: [
                                                 Text(LocaleKeys.discussion.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
@@ -200,7 +199,9 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                                 Text(LocaleKeys.videos.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                                 Text(LocaleKeys.members.tr(), style: TextStyle(fontSize: height * 0.013, color: Colors.black)),
                                               ]),
+
                                             ),
+
                                           ],
                                         ),
                                       ),
@@ -214,6 +215,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                     physics: const NeverScrollableScrollPhysics(),
                                     child: Column(
                                       children: [
+
                                         createPostWidget(context, authProvider, isForGroup: true, groupPageID: int.parse(widget.groupID)),
 
                                         /*----------------------------------------Newsfeed---------------------------------*/

@@ -26,7 +26,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'di_container.dart' as di;
-import 'provider/notification_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

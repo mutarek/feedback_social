@@ -79,7 +79,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                               SliverList(
                                   delegate: SliverChildListDelegate([
                                 Container(
-                                  height: 270,
+                                  height: 290,
                                   width: width,
                                   color: Palette.scaffold,
                                   child: SingleChildScrollView(
@@ -205,7 +205,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                           ],
                                         ),
                                         Container(
-                                          height: height * 0.03,
+                                          height: 25,
                                           color: Colors.white,
                                           child: TabBar(tabs: [
                                             Text(LocaleKeys.discussion.tr(),

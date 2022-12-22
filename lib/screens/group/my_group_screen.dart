@@ -36,7 +36,9 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
 
   @override
   void dispose() {
-    _pageController.dispose();
+    if(mounted){
+      _pageController.dispose();
+    }
     super.dispose();
   }
 
