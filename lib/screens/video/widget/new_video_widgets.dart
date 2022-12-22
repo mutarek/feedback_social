@@ -11,6 +11,7 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/watch_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
+import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/post/single_post_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
@@ -27,7 +28,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-class NewVideoPlayer extends StatefulWidget {
+class NewVideoPlayer extends StatefulWidget with WidgetsBindingObserver {
   const NewVideoPlayer(this.model, this.index, {Key? key}) : super(key: key);
   final WatchListModel model;
   final int index;
@@ -50,6 +51,39 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
   void dispose() {
     videoPlayerController!.dispose();
     super.dispose();
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        videoPlayerController!.dispose();
+        break;
+      case AppLifecycleState.inactive:
+        onPaused();
+        break;
+      case AppLifecycleState.paused:
+        videoPlayerController!.dispose();
+        break;
+      case AppLifecycleState.detached:
+        onDetached();
+        break;
+    }
+  }
+
+  void onResumed() {
+    print("On Resumed Called");
+  }
+
+  void onPaused() {
+    print("On paused Called");
+  }
+
+  void onInactive() {
+    print("On insactive Called");
+  }
+
+  void onDetached() {
+    print("On detached Called");
   }
 
   @override
@@ -91,12 +125,25 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               InkWell(
+                                onTap: () {
+                                  Helper.toScreen(PublicPageScreen(
+                                      widget.model.page!.id.toString(),
+                                      index: 1));
+                                },
                                 child: Row(
                                   children: [
                                     const SizedBox(width: 5),
-                                    Text(widget.model.page!.name.toString(),
-                                        style: latoStyle500Medium.copyWith(
-                                            fontWeight: FontWeight.w600)),
+                                    InkWell(
+                                      onTap: () {
+                                        Helper.toScreen(PublicPageScreen(
+                                            widget.model.page!.id.toString(),
+                                            index: 1));
+                                      },
+                                      child: Text(
+                                          widget.model.page!.name.toString(),
+                                          style: latoStyle500Medium.copyWith(
+                                              fontWeight: FontWeight.w600)),
+                                    ),
                                     const SizedBox(width: 5),
                                   ],
                                 ),

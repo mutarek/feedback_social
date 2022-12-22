@@ -1,13 +1,10 @@
-import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/watch_provider.dart';
-import 'package:als_frontend/screens/video/widget/custom_video_widgets.dart';
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VideoScreen extends StatefulWidget {
