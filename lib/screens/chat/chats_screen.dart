@@ -17,7 +17,8 @@ class ChatsScreen extends StatefulWidget {
 
 class _ChatsScreenState extends State<ChatsScreen> {
   Future<void> _refresh(BuildContext context) async {
-    Provider.of<ChatProvider>(context, listen: false).initializeAllChats(isFirstTime: false);
+    Provider.of<ChatProvider>(context, listen: false)
+        .initializeAllChats(isFirstTime: false);
   }
 
   ScrollController controller = ScrollController();
@@ -32,13 +33,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
           Provider.of<ChatProvider>(context, listen: false).hasNextData) {
-        Provider.of<ChatProvider>(context, listen: false).updatePageNoAllChats();
+        Provider.of<ChatProvider>(context, listen: false)
+            .updatePageNoAllChats();
       }
     });
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: RefreshIndicator(
@@ -60,19 +62,27 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         itemBuilder: (context, index) => ChatCard(
                             chat: chatProvider.allChatsLists[index],
                             press: () {
-
-                              AllMessageChatListModel allMessageChatListModel = chatProvider.allChatsLists[index];
-                              chatProvider.changeChantModel(allMessageChatListModel);
+                              AllMessageChatListModel allMessageChatListModel =
+                                  chatProvider.allChatsLists[index];
+                              chatProvider
+                                  .changeChantModel(allMessageChatListModel);
                               chatProvider.initializeSocket(index);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => MessagesScreen(
                                             index: index,
-                                            isForGroup: allMessageChatListModel.roomType == "G" ? true : false,
-                                            customerID: allMessageChatListModel.users![0].id as int,
-                                            imageURL: allMessageChatListModel.users![0].profileImage!,
-                                            name: allMessageChatListModel.users![0].fullName!,
+                                            isForGroup: allMessageChatListModel
+                                                        .roomType ==
+                                                    "G"
+                                                ? true
+                                                : false,
+                                            customerID: allMessageChatListModel
+                                                .users![0].id as int,
+                                            imageURL: allMessageChatListModel
+                                                .users![0].profileImage!,
+                                            name: allMessageChatListModel
+                                                .users![0].fullName!,
                                           )));
                             }),
                       ),

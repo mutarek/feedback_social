@@ -8,7 +8,8 @@ class DateConverter {
 
   static String estimatedDate(String dateTime) {
     // return DateFormat('yyyy-MM-dd').format(dateTime);
-    return DateFormat('yyyy-MM-dd').format(DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(dateTime));
+    return DateFormat('yyyy-MM-dd')
+        .format(DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(dateTime));
   }
 
   static DateTime convertStringToDatetime(String dateTime) {
@@ -16,11 +17,13 @@ class DateConverter {
   }
 
   static DateTime isoStringToLocalDate(String dateTime) {
-    return DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').parse(dateTime, true).toLocal();
+    return DateFormat('yyyy-MM-ddTHH:mm:ss.SSS')
+        .parse(dateTime, true)
+        .toLocal();
   }
 
   static String isoStringToLocalTimeOnly(String dateTime) {
-    return DateFormat('hh:mm aa').format(isoStringToLocalDate(dateTime));
+    return DateFormat(' hh:mm aa').format(isoStringToLocalDate(dateTime));
   }
 
   static String isoStringToLocalAMPM(String dateTime) {
@@ -36,7 +39,8 @@ class DateConverter {
   }
 
   static String localDateToString(String dateTime) {
-    return DateFormat('dd/MM/yyyy HH:mm a').format(DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(dateTime));
+    return DateFormat('dd/MM/yyyy HH:mm a')
+        .format(DateFormat("yyyy-MM-ddTHH:mm:ss.SSS").parse(dateTime));
   }
 
   static String convertTimeToTime(String time) {
