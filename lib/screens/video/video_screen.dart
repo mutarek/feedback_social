@@ -20,7 +20,8 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<WatchProvider>(context, listen: false).getWatchList(page: 1, watchListModel: widget.watchListModel);
+    Provider.of<WatchProvider>(context, listen: false)
+        .getWatchList(page: 1, watchListModel: widget.watchListModel);
   }
 
   @override
@@ -33,7 +34,11 @@ class _VideoScreenState extends State<VideoScreen> {
               onPressed: () {
                 Helper.back();
               }),
-          title: CustomText(title: LocaleKeys.feedback_Watch.tr(), color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          title: CustomText(
+              title: LocaleKeys.feedback_Watch.tr(),
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 16),
           backgroundColor: Colors.white,
           toolbarHeight: 48,
           elevation: 0),
