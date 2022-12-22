@@ -110,62 +110,59 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   ],
                 ),
               ),
-              Consumer<NotificationProvider>(
-                  builder: (context, notificationPro,child) {
-                  return InkWell(
-                    onTap: () {
-                      if (widget.isEditPost) {
-                        postProvider
-                            .updatePost(descriptionController.text, widget.post!.id! as int,
-                                isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isForPage)
-                            .then((value) {
-                          descriptionController.clear();
-                          postProvider.clearImageVideo();
-                          if (value.status!) {
-                            if (widget.isFromGroupScreen) {
-                              groupProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
-                            } else if (widget.isForPage) {
-                              pageProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
-                            } else if (widget.isFromProfileScreen) {
-                              profileProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
-                            } else {
-                              newsfeedProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
-                            }
+              Consumer<NotificationProvider>(builder: (context, notificationPro, child) {
+                return InkWell(
+                  onTap: () {
+                    if (widget.isEditPost) {
+                      postProvider
+                          .updatePost(descriptionController.text, widget.post!.id! as int,
+                              isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isForPage)
+                          .then((value) {
+                        descriptionController.clear();
+                        postProvider.clearImageVideo();
+                        if (value.status!) {
+                          if (widget.isFromGroupScreen) {
+                            groupProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
+                          } else if (widget.isForPage) {
+                            pageProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
+                          } else if (widget.isFromProfileScreen) {
+                            profileProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
+                          } else {
+                            newsfeedProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
                           }
-                        });
-                      } else {
-                        postProvider
-                            .addPost(descriptionController.text,
-                                isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isForPage)
-                            .then((value) {
-                          descriptionController.clear();
-                          postProvider.clearImageVideo();
-                          if (value.status!) {
-                            if (widget.isFromGroupScreen) {
-                              groupProvider.addGroupPostTimeLine(value.newsFeedData!);
-                            } else if (widget.isForPage) {
-                              pageProvider.addPagePostToTimeLine(value.newsFeedData!);
-                            } else {
-                              newsfeedProvider.addPostOnTimeLine(value.newsFeedData!);
-                            }
+                        }
+                      });
+                    } else {
+                      postProvider
+                          .addPost(descriptionController.text,
+                              isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isForPage)
+                          .then((value) {
+                        descriptionController.clear();
+                        postProvider.clearImageVideo();
+                        if (value.status!) {
+                          if (widget.isFromGroupScreen) {
+                            groupProvider.addGroupPostTimeLine(value.newsFeedData!);
+                          } else if (widget.isForPage) {
+                            pageProvider.addPagePostToTimeLine(value.newsFeedData!);
+                          } else {
+                            newsfeedProvider.addPostOnTimeLine(value.newsFeedData!);
                           }
-                        });
-                      }
-                      Navigator.of(context).pop();
-
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(.3),
-                          borderRadius: const BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                      child: const Icon(Icons.send, color: Color(0xff031765)),
-                    ),
-                  );
-                }
-              )
+                        }
+                      });
+                    }
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(.3),
+                        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
+                    child: const Icon(Icons.send, color: Color(0xff031765)),
+                  ),
+                );
+              })
             ],
           ),
         ),

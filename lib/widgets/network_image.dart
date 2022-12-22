@@ -1,7 +1,8 @@
+import 'package:als_frontend/util/image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 Widget customNetworkImage(BuildContext context, String imageUrl, {double? height, BoxFit boxFit = BoxFit.fill}) {
   return CachedNetworkImage(
@@ -10,7 +11,21 @@ Widget customNetworkImage(BuildContext context, String imageUrl, {double? height
     width: MediaQuery.of(context).size.width,
     height: height == 0 ? MediaQuery.of(context).size.height : height,
     errorWidget: (context, url, error) => const Icon(Icons.error),
-    placeholder: ((context, url) => Container(alignment: Alignment.center, child: const CupertinoActivityIndicator())),
+    placeholder: ((context, url) => Center(
+          child: Stack(
+            children: [
+              Shimmer.fromColors(
+                  baseColor: Colors.black.withOpacity(.1),
+                  highlightColor: Colors.grey.withOpacity(.1),
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  )),
+              Opacity(opacity: 0.2, child: Image.asset(ImagesModel.logo, height: 100, width: 100))
+            ],
+          ),
+        )),
   );
 }
 
@@ -74,7 +89,15 @@ Widget customNetworkImage2(BuildContext context, String imageUrl, {double? heigh
     loadStateChanged: (ExtendedImageState state) {
       switch (state.extendedImageLoadState) {
         case LoadState.loading:
-          const CupertinoActivityIndicator();
+          Shimmer.fromColors(
+              baseColor: Colors.black.withOpacity(.1),
+              highlightColor: Colors.grey.withOpacity(.1),
+              child: Container(
+                height: 100,
+                width: 100,
+                color: Colors.red,
+              ));
+          // const CupertinoActivityIndicator();
           break;
         case LoadState.completed:
           ExtendedRawImage(image: state.extendedImageInfo?.image);

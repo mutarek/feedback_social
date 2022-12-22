@@ -28,8 +28,8 @@ class DioClient {
 
     dio!
       ..options.baseUrl = baseUrl!
-      ..options.connectTimeout = 30000
-      ..options.receiveTimeout = 30000
+      // ..options.connectTimeout = 30000
+      // ..options.receiveTimeout = 30000
       ..httpClientAdapter
       ..options.headers = headerMap;
     dio!.interceptors.add(loggingInterceptor!);

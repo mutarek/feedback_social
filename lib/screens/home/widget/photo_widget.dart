@@ -7,10 +7,9 @@ import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import '../../../data/model/response/image_video_detect_model.dart';
 
@@ -99,7 +98,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
               child: customNetworkImage(context, imageVideoLists[0].url))
           : InkWell(
               onTap: () {
-                User user = new User(
+                User user = User(
                     id: widget.newsfeedModel.author!.id,
                     fullName: widget.newsfeedModel.author!.fullName,
                     profileImage: widget.newsfeedModel.author!.profileImage);
@@ -124,7 +123,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                 margin: const EdgeInsets.only(top: 8),
                 child: Stack(
                   children: [
-                    CachedNetworkImage(imageUrl: imageVideoLists[0].url),
+                    customNetworkImage(context, imageVideoLists[0].url),
                     SizedBox(height: 150, width: MediaQuery.of(context).size.width),
                     Positioned(
                       left: 0,
@@ -142,7 +141,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                           ),
                           child: IconButton(
                               onPressed: () {
-                                User user = new User(
+                                User user = User(
                                     id: widget.newsfeedModel.author!.id,
                                     fullName: widget.newsfeedModel.author!.fullName,
                                     profileImage: widget.newsfeedModel.author!.profileImage);
@@ -188,9 +187,10 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
           },
           child: Stack(
             children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity)),
+              // ClipRRect(
+              //     borderRadius: BorderRadius.circular(4),
+              //     child: CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity)),
+              ClipRRect(borderRadius: BorderRadius.circular(4), child: customNetworkImage(context, imageVideoLists[index].url)),
               imageVideoLists[index].isImage == false
                   ? Positioned(
                       left: 0,
@@ -203,7 +203,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                         decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
                         child: IconButton(
                             onPressed: () {
-                              User user = new User(
+                              User user = User(
                                   id: widget.newsfeedModel.author!.id,
                                   fullName: widget.newsfeedModel.author!.fullName,
                                   profileImage: widget.newsfeedModel.author!.profileImage);

@@ -81,6 +81,7 @@ class PostProvider with ChangeNotifier {
           showLog('finished');
         }
         notifyListeners();
+        showOneTimeNotification();
       });
     } else if (isFromPage) {
       apiResponse = await postRepo.submitPostTOPageBYUSINGPageID(formData, groupPageID, onSendProgress: (int sentBytes, int totalBytes) {
@@ -93,6 +94,7 @@ class PostProvider with ChangeNotifier {
           showLog('finished');
         }
         notifyListeners();
+        showOneTimeNotification();
       });
     } else {
       apiResponse = await postRepo.submitPost(formData, onSendProgress: (int sentBytes, int totalBytes) {
@@ -105,6 +107,7 @@ class PostProvider with ChangeNotifier {
           showLog('finished');
         }
         notifyListeners();
+        showOneTimeNotification();
       });
     }
     if (apiResponse.response.statusCode == 201 || apiResponse.response.statusCode == 200) {
@@ -341,12 +344,12 @@ class PostProvider with ChangeNotifier {
   }
 
   Future showOneTimeNotification() async {
-    androidDetails = const AndroidNotificationDetails('channelId', 'Search Islam',
+    androidDetails = const AndroidNotificationDetails('channelId', 'Feedback',
         channelDescription: 'This is My channel', importance: Importance.low, autoCancel: true, colorized: true, ongoing: true);
     iosDetails = const DarwinNotificationDetails();
     var generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
     fLutterLocalNotificationsPlugin!.show(0, progressPercent == 100 ? "Post uploading finished" : "Post uploading",
-        progressPercent == 100 ? "100 %" : "${(uploadPercent * 100).toStringAsFixed(1)}%", generalNotificationDetails,
+        progressPercent == 100 ? "100 %" : "Completed ${(uploadPercent * 100).toStringAsFixed(1)}%", generalNotificationDetails,
         payload: 'Task');
     showLog("notification progress: =>  ${uploadPercent.toString()}");
     if (progressPercent == 100) {
