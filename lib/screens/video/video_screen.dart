@@ -52,13 +52,13 @@ class _VideoScreenState extends State<VideoScreen> {
           scrollDirection: Axis.vertical,
           pageSnapping: true,
           physics: const BouncingScrollPhysics(),
-          itemCount: watchProvider.watchLists.length + 1,
+          itemCount: watchProvider.watchLists.length+1,
           itemBuilder: (context, index) {
             // if (index == 0) {
             //   return NewVideoPlayer(widget.watchListModel, index);
             // }
-            var data = watchProvider.watchLists[index];
-            return NewVideoPlayer(data, index);
+            var model = watchProvider.watchLists[index];
+            return NewVideoPlayer(model, index);
           },
         );
       }),

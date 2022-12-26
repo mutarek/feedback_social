@@ -48,4 +48,5 @@ class Helper {
   static boxDecoration(Color color, double radius) {
     BoxDecoration(color: color, borderRadius: BorderRadius.all(Radius.circular(radius)));
   }
+
 }
