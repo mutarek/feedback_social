@@ -17,11 +17,19 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
+  PageController? pageController;
   @override
   void initState() {
     super.initState();
     Provider.of<WatchProvider>(context, listen: false)
         .getWatchList(page: 1, watchListModel: widget.watchListModel);
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    pageController!.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,10 +52,16 @@ class _VideoScreenState extends State<VideoScreen> {
           elevation: 0),
       body: Consumer<WatchProvider>(builder: (context, watchProvider, child) {
         return PageView.builder(
+          controller: pageController,
           scrollDirection: Axis.vertical,
           pageSnapping: true,
           physics: const BouncingScrollPhysics(),
           itemCount: watchProvider.watchLists.length + 1,
+          onPageChanged: (i) {
+            if (i == watchProvider.watchLists.length - 2) {
+              watchProvider.updatePageNo();
+            }
+          },
           itemBuilder: (context, index) {
             // if (index == 0) {
             //   return NewVideoPlayer(widget.watchListModel, index);

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/data/repository/watch_repo.dart';
@@ -25,7 +24,10 @@ class WatchProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getWatchList({int page = 1, bool isFirstTime = true, WatchListModel? watchListModel}) async {
+  getWatchList(
+      {int page = 1,
+      bool isFirstTime = true,
+      WatchListModel? watchListModel}) async {
     if (page == 1) {
       selectPage = 1;
       watchLists.clear();
@@ -69,7 +71,11 @@ class WatchProvider with ChangeNotifier {
     });
   }
 
-  addLike(int postID, int index, {bool isFromPerson = true, bool isFromGroup = false, bool isFromPage = false, int groupPageId = 0}) async {
+  addLike(int postID, int index,
+      {bool isFromPerson = true,
+      bool isFromGroup = false,
+      bool isFromPage = false,
+      int groupPageId = 0}) async {
     if (watchLists[index].isLiked == false) {
       watchLists[index].totalLiked = watchLists[index].totalLiked! + 1;
       watchLists[index].isLiked = true;
@@ -80,6 +86,7 @@ class WatchProvider with ChangeNotifier {
       notifyListeners();
     }
     notifyListeners();
-    await watchRepo.addLike(postID, isGroup: isFromGroup, isFromLike: isFromPage, groupPageID: groupPageId);
+    await watchRepo.addLike(postID,
+        isGroup: isFromGroup, isFromLike: isFromPage, groupPageID: groupPageId);
   }
 }
