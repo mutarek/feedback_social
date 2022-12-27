@@ -3,6 +3,7 @@ import 'package:als_frontend/data/model/response/language_model.dart';
 
 class AppConstant {
   // API BASE URL
+  static const agoraApiKey = "52aa6d82f3f14aa3bd36b7a0fb6648f4";
   static const String baseUrl = 'https://testing.feedback-social.com';
   static const String baseUrlTesting = 'https://testing.feedback-social.com';
   static const String baseUrlLive = 'https://feedback-social.com';
