@@ -79,7 +79,8 @@ dependencies:
   liquid_progress_indicator: ^0.4.0
   flutter_local_notifications: ^13.0.0
   agora_rtc_engine: ^5.0.0
-  just_audio: ^0.9.29
+  just_audio: ^0.9.30
+  timeago: ^3.3.0
 
   
 dev_dependencies: 

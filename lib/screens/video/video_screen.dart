@@ -5,7 +5,6 @@ import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -18,18 +17,19 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
-  PageController controller = PageController();
+  PageController? pageController;
   @override
   void initState() {
     super.initState();
-    Provider.of<WatchProvider>(context, listen: false).getWatchList(page: 1, watchListModel: widget.watchListModel);
-    controller.addListener(() {
-      if (controller.offset >= controller.position.maxScrollExtent &&
-          !controller.position.outOfRange &&
-          Provider.of<WatchProvider>(context, listen: false).hasNextData) {
-        Provider.of<WatchProvider>(context, listen: false).updatePageNo();
-      }
-    });
+    Provider.of<WatchProvider>(context, listen: false)
+        .getWatchList(page: 1, watchListModel: widget.watchListModel);
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    pageController!.dispose();
+    super.dispose();
   }
 
   @override
@@ -42,23 +42,32 @@ class _VideoScreenState extends State<VideoScreen> {
               onPressed: () {
                 Helper.back();
               }),
-          title: CustomText(title: LocaleKeys.feedback_Watch.tr(), color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          title: CustomText(
+              title: LocaleKeys.feedback_Watch.tr(),
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 16),
           backgroundColor: Colors.white,
           toolbarHeight: 48,
           elevation: 0),
       body: Consumer<WatchProvider>(builder: (context, watchProvider, child) {
         return PageView.builder(
-          controller: controller,
+          controller: pageController,
           scrollDirection: Axis.vertical,
           pageSnapping: true,
           physics: const BouncingScrollPhysics(),
-          itemCount: watchProvider.watchLists.length+1,
+          itemCount: watchProvider.watchLists.length + 1,
+          onPageChanged: (i) {
+            if (i == watchProvider.watchLists.length - 2) {
+              watchProvider.updatePageNo();
+            }
+          },
           itemBuilder: (context, index) {
             // if (index == 0) {
             //   return NewVideoPlayer(widget.watchListModel, index);
             // }
-            var model = watchProvider.watchLists[index];
-            return NewVideoPlayer(model, index);
+            var data = watchProvider.watchLists[index];
+            return NewVideoPlayer(data, index);
           },
         );
       }),
