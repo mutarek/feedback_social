@@ -44,9 +44,6 @@ class _VideoScreenState extends State<VideoScreen> {
           physics: const BouncingScrollPhysics(),
           itemCount: watchProvider.watchLists.length + 1,
           itemBuilder: (context, index) {
-            // if (index == 0) {
-            //   return NewVideoPlayer(widget.watchListModel, index);
-            // }
             var data = watchProvider.watchLists[index];
             return NewVideoPlayer(data, index);
           },
