@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:als_frontend/data/model/response/calling/call_model.dart';
 import 'package:als_frontend/data/model/response/calling/user_calling_model.dart';
@@ -266,13 +265,13 @@ class AgoraCallProvider with ChangeNotifier{
   }
 
   // void acceptCall({required Call call}) async {
-  //   getIt<SocketManager>().emit(SocketConstants.onAcceptCall, {
-  //     'uuid': call.uuid,
-  //     'userId': getIt<UserProfileManager>().user!.id,
-  //     'status': 4,
-  //     // 'channelName': call.channelName
+  //   // getIt<SocketManager>().emit(SocketConstants.onAcceptCall, {
+  //   //   'uuid': call.uuid,
+  //   //   'userId': getIt<UserProfileManager>().user!.id,
+  //   //   'status': 4,
+  //   //   'channelName': call.channelName
   //   });
-  //
+
   //   //Todo: this need to be checked
   //   remoteUserId.value = call.opponent.id;
   //   remoteJoined.value = true;
