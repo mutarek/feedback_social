@@ -1,6 +1,5 @@
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
-import 'package:als_frontend/provider/call_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
@@ -63,7 +62,6 @@ void main() async {
           ChangeNotifierProvider(
               create: (context) => di.sl<NewsFeedProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<WatchProvider>()),
-          ChangeNotifierProvider(create: (context) => di.sl<CallProvider>()),
         ],
         child: const MyApp(),
       )));

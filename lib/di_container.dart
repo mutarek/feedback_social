@@ -35,8 +35,6 @@ import 'package:als_frontend/util/app_constant.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'provider/call_provider.dart';
 import 'provider/notication_provider.dart';
 
 final sl = GetIt.instance;
@@ -90,7 +88,6 @@ Future<void> init() async {
   sl.registerFactory(() => SettingsProvider(settingsRepo: sl()));
   sl.registerFactory(() => SplashProvider(splashRepo: sl()));
   sl.registerFactory(() => WatchProvider(watchRepo: sl()));
-  sl.registerFactory(() => CallProvider());
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
