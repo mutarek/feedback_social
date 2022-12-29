@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/call_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
+import 'package:als_frontend/screens/calling/video_call.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -47,19 +50,25 @@ class _MessagesScreenState extends State<MessagesScreen> {
     // TODO: implement initState
     super.initState();
     controller = AutoScrollController(
-        viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom), axis: scrollDirection);
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: scrollDirection);
     if (widget.isFromProfile) {
-      Provider.of<ChatProvider>(context, listen: false)
-          .initializeP2PChats((bool status) {}, isFromChatTwoUser: true, userID: widget.customerID);
+      Provider.of<ChatProvider>(context, listen: false).initializeP2PChats(
+          (bool status) {},
+          isFromChatTwoUser: true,
+          userID: widget.customerID);
     } else {
-      Provider.of<ChatProvider>(context, listen: false).initializeP2PChats((bool status) {});
+      Provider.of<ChatProvider>(context, listen: false)
+          .initializeP2PChats((bool status) {});
     }
 
     controller = AutoScrollController()
       ..addListener(() {
         if (controller.position.minScrollExtent == controller.position.pixels &&
             Provider.of<ChatProvider>(context, listen: false).hasNextData) {
-          Provider.of<ChatProvider>(context, listen: false).updatePageNo((bool status) {
+          Provider.of<ChatProvider>(context, listen: false).updatePageNo(
+              (bool status) {
             if (status) {
               Timer(const Duration(seconds: 1), () {
                 _scrollToIndex(0);
@@ -106,36 +115,53 @@ class _MessagesScreenState extends State<MessagesScreen> {
           CircleAvatar(
               radius: 20,
               backgroundColor: AppColors.scaffold,
-              child: CircleAvatar(radius: 18, backgroundImage: CachedNetworkImageProvider(widget.imageURL))),
+              child: CircleAvatar(
+                  radius: 18,
+                  backgroundImage:
+                      CachedNetworkImageProvider(widget.imageURL))),
           const SizedBox(width: 7),
           Expanded(
             child: InkWell(
               onTap: () {
                 if (!widget.isForGroup) {
-                  if (Provider.of<AuthProvider>(context, listen: false).userID == widget.customerID.toString()) {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
+                  if (Provider.of<AuthProvider>(context, listen: false)
+                          .userID ==
+                      widget.customerID.toString()) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => const ProfileScreen()));
                   } else {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => PublicProfileScreen(widget.customerID.toString())));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) =>
+                            PublicProfileScreen(widget.customerID.toString())));
                   }
                 }
               },
-              child: CustomText(title: widget.name, textStyle: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
+              child: CustomText(
+                  title: widget.name,
+                  textStyle:
+                      latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
             ),
           )
         ],
       ),
       leadingWidth: 40,
       leading: IconButton(
-        icon: const Icon(FontAwesomeIcons.arrowLeft, color: kPrimaryColor, size: 20),
+        icon: const Icon(FontAwesomeIcons.arrowLeft,
+            color: kPrimaryColor, size: 20),
         onPressed: () {
           Provider.of<ChatProvider>(context, listen: false).channelDismiss();
           Navigator.of(context).pop();
         },
       ),
-      actions: const [
+      actions: [
         Icon(FontAwesomeIcons.phone, color: kPrimaryColor, size: 20),
         SizedBox(width: 15),
-        Icon(FontAwesomeIcons.video, color: kPrimaryColor, size: 20),
+        InkWell(
+            onTap: () {
+              Helper.toScreen(const VideoCall());
+            },
+            child:
+                Icon(FontAwesomeIcons.video, color: kPrimaryColor, size: 20)),
         SizedBox(width: 15),
       ],
     );

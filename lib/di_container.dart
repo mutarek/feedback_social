@@ -36,20 +36,25 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'provider/call_provider.dart';
 import 'provider/notication_provider.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   // Core
-  sl.registerLazySingleton(() => DioClient(AppConstant.baseUrl, sl(), sharedPreferences: sl(), loggingInterceptor: sl()));
+  sl.registerLazySingleton(() => DioClient(AppConstant.baseUrl, sl(),
+      sharedPreferences: sl(), loggingInterceptor: sl()));
   // Repository
   sl.registerLazySingleton(() => CommentRepo(dioClient: sl()));
-  sl.registerLazySingleton(() => AuthRepo(sharedPreferences: sl(), dioClient: sl()));
+  sl.registerLazySingleton(
+      () => AuthRepo(sharedPreferences: sl(), dioClient: sl()));
   sl.registerLazySingleton(() => NewsfeedRepo(dioClient: sl()));
   sl.registerLazySingleton(() => GroupRepo(dioClient: sl(), authRepo1: sl()));
-  sl.registerLazySingleton(() => AnimalRepo(dioClient: sl(), authRepo1: sl(), sharedPreferences: sl()));
-  sl.registerLazySingleton(() => ChatRepo(dioClient: sl(), authRepo1: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(() =>
+      AnimalRepo(dioClient: sl(), authRepo1: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(() =>
+      ChatRepo(dioClient: sl(), authRepo1: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(() => NotificationRepo(dioClient: sl()));
   sl.registerLazySingleton(() => PageRepo(dioClient: sl(), authRepo: sl()));
   sl.registerLazySingleton(() => PostRepo(dioClient: sl()));
@@ -60,24 +65,32 @@ Future<void> init() async {
   sl.registerLazySingleton(() => WatchRepo(dioClient: sl()));
 
   // Provider
-  sl.registerFactory(() => ThemeProvider(sharedPreferences: sl(), splashRepo: sl()));
+  sl.registerFactory(
+      () => ThemeProvider(sharedPreferences: sl(), splashRepo: sl()));
   sl.registerFactory(() => AuthProvider(authRepo: sl()));
-  sl.registerFactory(() => NewsFeedProvider(newsFeedRepo1: sl(), authRepo1: sl()));
+  sl.registerFactory(
+      () => NewsFeedProvider(newsFeedRepo1: sl(), authRepo1: sl()));
   sl.registerFactory(() => ChatProvider(chatRepo: sl(), authRepo: sl()));
   sl.registerFactory(() => CommentProvider(commentRepo: sl()));
   sl.registerFactory(() => DashboardProvider());
   sl.registerFactory(() => OtherProvider());
-  sl.registerFactory(() => GroupProvider(groupRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
+  sl.registerFactory(
+      () => GroupProvider(groupRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
   sl.registerFactory(() => AnimalProvider(animalRepo: sl()));
-  sl.registerFactory(() => NotificationProvider(notificationRepo: sl(), authRepo: sl()));
-  sl.registerFactory(() => PageProvider(pageRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
+  sl.registerFactory(
+      () => NotificationProvider(notificationRepo: sl(), authRepo: sl()));
+  sl.registerFactory(
+      () => PageProvider(pageRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
   sl.registerFactory(() => PostProvider(postRepo: sl(), authRepo: sl()));
-  sl.registerFactory(() => ProfileProvider(profileRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
-  sl.registerFactory(() => PublicProfileProvider(profileRepo: sl(), newsfeedRepo: sl()));
+  sl.registerFactory(() =>
+      ProfileProvider(profileRepo: sl(), newsfeedRepo: sl(), authRepo: sl()));
+  sl.registerFactory(
+      () => PublicProfileProvider(profileRepo: sl(), newsfeedRepo: sl()));
   sl.registerFactory(() => SearchProvider(searchRepo: sl()));
   sl.registerFactory(() => SettingsProvider(settingsRepo: sl()));
   sl.registerFactory(() => SplashProvider(splashRepo: sl()));
   sl.registerFactory(() => WatchProvider(watchRepo: sl()));
+  sl.registerFactory(() => CallProvider());
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
