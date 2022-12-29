@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:als_frontend/provider/auth_provider.dart';
-import 'package:als_frontend/provider/call_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
-import 'package:als_frontend/screens/calling/video_call.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/helper.dart';
@@ -156,12 +154,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
       actions: [
         Icon(FontAwesomeIcons.phone, color: kPrimaryColor, size: 20),
         SizedBox(width: 15),
-        InkWell(
-            onTap: () {
-              Helper.toScreen(const VideoCall());
-            },
-            child:
-                Icon(FontAwesomeIcons.video, color: kPrimaryColor, size: 20)),
+        Icon(FontAwesomeIcons.video, color: kPrimaryColor, size: 20),
         SizedBox(width: 15),
       ],
     );
