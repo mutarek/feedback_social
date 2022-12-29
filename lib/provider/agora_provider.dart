@@ -59,7 +59,6 @@ class AgoraCallProvider with ChangeNotifier{
     required Call call,
   }) async {
     if (AppConstant.agoraApiKey.isEmpty) {
-
     notifyListeners();
       return;
     }
@@ -126,18 +125,18 @@ class AgoraCallProvider with ChangeNotifier{
   void _addAgoraEventHandlers() {
     _engine!.setEventHandler(RtcEngineEventHandler(
       error: (code) {
-        // final info = 'onError:$code ${code.index}';
-        // print(info);
+        final info = 'onError:$code ${code.index}';
+        print(info);
       },
       joinChannelSuccess: (channel, uid, elapsed) {
-        // final info = 'onJoinChannel: $channel, uid: $uid';
-        // print(info);
+        final info = 'onJoinChannel: $channel, uid: $uid';
+        print(info);
       },
       leaveChannel: (stats) {
-        // print('onLeaveChannel');
+        print('onLeaveChannel');
       },
       userJoined: (uid, elapsed) {
-        // final info = 'userJoined: $uid';
+        final info = 'userJoined: $uid';
         remoteJoined = true;
         remoteUserId = uid;
         notifyListeners();
