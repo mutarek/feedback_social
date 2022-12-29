@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/animal_provider.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/call_provider.dart';
 import 'package:als_frontend/provider/chat_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
@@ -42,12 +43,16 @@ void main() async {
           ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
-          ChangeNotifierProvider(create: (context) => di.sl<DashboardProvider>()),
+          ChangeNotifierProvider(
+              create: (context) => di.sl<DashboardProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<PostProvider>()),
-          ChangeNotifierProvider(create: (context) => di.sl<PublicProfileProvider>()),
+          ChangeNotifierProvider(
+              create: (context) => di.sl<PublicProfileProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<OtherProvider>()),
-          ChangeNotifierProvider(create: (context) => di.sl<NotificationProvider>()),
-          ChangeNotifierProvider(create: (context) => di.sl<SettingsProvider>()),
+          ChangeNotifierProvider(
+              create: (context) => di.sl<NotificationProvider>()),
+          ChangeNotifierProvider(
+              create: (context) => di.sl<SettingsProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<PageProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
@@ -55,8 +60,10 @@ void main() async {
           ChangeNotifierProvider(create: (context) => di.sl<ChatProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<CommentProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<GroupProvider>()),
-          ChangeNotifierProvider(create: (context) => di.sl<NewsFeedProvider>()),
+          ChangeNotifierProvider(
+              create: (context) => di.sl<NewsFeedProvider>()),
           ChangeNotifierProvider(create: (context) => di.sl<WatchProvider>()),
+          ChangeNotifierProvider(create: (context) => di.sl<CallProvider>()),
         ],
         child: const MyApp(),
       )));
@@ -73,7 +80,9 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       locale: context.locale,
       navigatorKey: Helper.navigatorKey,
-      theme: Provider.of<ThemeProvider>(context).darkTheme ? AppTheme.getDarkModeTheme() : AppTheme.getLightModeTheme(),
+      theme: Provider.of<ThemeProvider>(context).darkTheme
+          ? AppTheme.getDarkModeTheme()
+          : AppTheme.getLightModeTheme(),
       debugShowCheckedModeBanner: false,
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
