@@ -51,11 +51,12 @@ class PostStats extends StatelessWidget {
         return Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-              color: AppColors.scaffold,
+              color: Colors.white,
               borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-              ]),
+              // boxShadow: [
+              //   BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+              // ]
+          ),
           child: Column(
             children: [
               Padding(
@@ -100,8 +101,8 @@ class PostStats extends StatelessWidget {
                           },
                             likeBuilder: (bool isLiked) {
                               return Icon(
-                                isLiked? Icons.favorite : Icons.favorite_border,
-                                color: isLiked ? Colors.red : Colors.black,
+                               Icons.favorite ,
+                                color: isLiked ? Colors.red : Colors.grey,
                                 size:30,
                               );
                             },

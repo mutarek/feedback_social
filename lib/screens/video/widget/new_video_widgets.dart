@@ -19,6 +19,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -475,81 +476,100 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    widget.model.isPage == true
-                                        ? watchProvide.addLike(
-                                            widget.model.postId!.toInt(),
-                                            widget.index,
-                                            isFromPage: true,
-                                            isFromGroup: false,
-                                            groupPageId:
-                                                widget.model.page!.id as int)
-                                        : widget.model.isGroup == true
-                                            ? watchProvide.addLike(
-                                                widget.model.postId!.toInt(),
-                                                widget.index,
-                                                isFromPage: false,
-                                                isFromGroup: true,
-                                                groupPageId: widget
-                                                    .model.group!.id as int)
-                                            : watchProvide.addLike(
-                                                widget.model.postId!.toInt(),
-                                                widget.index,
-                                                isFromPage: false,
-                                                isFromGroup: false,
-                                                groupPageId: 0);
-                                  },
-                                  child: SizedBox(
-                                    width: 40,
-                                    height: 40,
-                                    child: Stack(
-                                      clipBehavior: Clip.none,
-                                      children: [
-                                        Icon(
-                                            (widget.model.isLiked == true)
-                                                ? Icons.favorite
-                                                : Icons.favorite_border,
-                                            size: 30,
-                                            color:
-                                                (widget.model.isLiked == true)
-                                                    ? Colors.red
-                                                    : Colors.black),
-                                        Positioned(
-                                            top: -13,
-                                            left: 20,
-                                            child: widget.model.totalLiked == 0
-                                                ? const SizedBox.shrink()
-                                                : Container(
-                                                    padding:
-                                                        const EdgeInsets.all(7),
-                                                    decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color:
-                                                            AppColors.feedback,
-                                                        border: Border.all(
-                                                            color:
-                                                                Colors.white),
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                              color: Colors.grey
-                                                                  .withOpacity(
-                                                                      .2),
-                                                              blurRadius: 10.0,
-                                                              spreadRadius: 3.0,
-                                                              offset:
-                                                                  const Offset(
-                                                                      0.0, 0.0))
-                                                        ]),
-                                                    child: CustomText(
-                                                        title: widget
-                                                            .model.totalLiked
-                                                            .toString(),
-                                                        fontSize: 10,
-                                                        color: Colors.white),
-                                                  ))
-                                      ],
-                                    ),
+                                SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      LikeButton(
+                                        size: 30,
+                                        isLiked:  widget.model.isLiked,
+                                        bubblesSize: 50,
+                                        // circleColor:
+                                        // CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                                        // bubblesColor: BubblesColor(
+                                        //   dotPrimaryColor: Color(0xff33b5e5),
+                                        //   dotSecondaryColor: Color(0xff0099cc),
+                                        // ),
+                                        onTap: (bool isLiked) async{
+                                          widget.model.isPage == true
+                                              ? watchProvide.addLike(
+                                              widget.model.postId!.toInt(),
+                                              widget.index,
+                                              isFromPage: true,
+                                              isFromGroup: false,
+                                              groupPageId:
+                                              widget.model.page!.id as int)
+                                              : widget.model.isGroup == true
+                                              ? watchProvide.addLike(
+                                              widget.model.postId!.toInt(),
+                                              widget.index,
+                                              isFromPage: false,
+                                              isFromGroup: true,
+                                              groupPageId: widget
+                                                  .model.group!.id as int)
+                                              : watchProvide.addLike(
+                                              widget.model.postId!.toInt(),
+                                              widget.index,
+                                              isFromPage: false,
+                                              isFromGroup: false,
+                                              groupPageId: 0);
+
+                                          return !isLiked;
+                                        },
+                                        likeBuilder: (bool isLiked) {
+                                          return Icon(
+                                            Icons.favorite ,
+                                            color: isLiked ? Colors.red : Colors.grey,
+                                            size:30,
+                                          );
+                                        },
+
+                                      ),
+                                      // Icon(
+                                      //     (widget.model.isLiked == true)
+                                      //         ? Icons.favorite
+                                      //         : Icons.favorite_border,
+                                      //     size: 30,
+                                      //     color:
+                                      //         (widget.model.isLiked == true)
+                                      //             ? Colors.red
+                                      //             : Colors.black),
+                                      // Positioned(
+                                      //     top: -13,
+                                      //     left: 20,
+                                      //     child: widget.model.totalLiked == 0
+                                      //         ? const SizedBox.shrink()
+                                      //         : Container(
+                                      //             padding:
+                                      //                 const EdgeInsets.all(7),
+                                      //             decoration: BoxDecoration(
+                                      //                 shape: BoxShape.circle,
+                                      //                 color:
+                                      //                     AppColors.feedback,
+                                      //                 border: Border.all(
+                                      //                     color:
+                                      //                         Colors.white),
+                                      //                 boxShadow: [
+                                      //                   BoxShadow(
+                                      //                       color: Colors.grey
+                                      //                           .withOpacity(
+                                      //                               .2),
+                                      //                       blurRadius: 10.0,
+                                      //                       spreadRadius: 3.0,
+                                      //                       offset:
+                                      //                           const Offset(
+                                      //                               0.0, 0.0))
+                                      //                 ]),
+                                      //             child: CustomText(
+                                      //                 title: widget
+                                      //                     .model.totalLiked
+                                      //                     .toString(),
+                                      //                 fontSize: 10,
+                                      //                 color: Colors.white),
+                                      //           ))
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(width: 30.0),
