@@ -35,7 +35,7 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(.98),
+      backgroundColor: Colors.white.withOpacity(.95),
       appBar: AppBar(
           leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),

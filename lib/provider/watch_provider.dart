@@ -43,7 +43,7 @@ class WatchProvider with ChangeNotifier {
     isLoading = false;
     isBottomLoading = false;
     if (response.response.statusCode == 200) {
-      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
         watchLists.add(WatchListModel.fromJson(element));
       });

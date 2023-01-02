@@ -24,7 +24,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'di_container.dart' as di;
 
 void main() async {
