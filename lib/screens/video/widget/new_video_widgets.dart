@@ -20,6 +20,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -82,7 +83,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
           videoPlayerController!.play();
         });
       });
-      cachedForUrl(url);
+      //cachedForUrl(url);
     } else {
       final file = fileinfo.file;
       videoPlayerController = VideoPlayerController.file(file);
@@ -102,6 +103,16 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
 
   void cachedForUrl(String url) async {
     await DefaultCacheManager().getSingleFile(url).then((value) {});
+    final key = url;
+    CacheManager instance = CacheManager(
+      Config(
+        key,
+        stalePeriod: const Duration(hours: 5),
+        maxNrOfCacheObjects: 20,
+        repo: JsonCacheInfoRepository(databaseName: key),
+        fileService: HttpFileService(),
+      ),
+    );
   } //videoPlayerController!.addListener(checkVideoProgress);
 
   @override
@@ -114,7 +125,10 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
       child: Consumer<WatchProvider>(builder: (context, watchProvide, child) {
         return (videoPlayerController == null)
             ? Center(
-                child: Image.network(widget.model.thumbnail.toString()),
+                child: CupertinoActivityIndicator(),
+                // child: checkInternetConnect()
+                //     ? Image.network(widget.model.thumbnail.toString())
+                //     : SizedBox(),
               )
             : ((videoPlayerController!.value.isInitialized)
                 ? Column(
@@ -896,5 +910,10 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                   ));
       }),
     );
+  }
+
+  checkInternetConnect() async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    return result;
   }
 }
