@@ -58,7 +58,7 @@ class _VideoScreenState extends State<VideoScreen> {
           physics: const BouncingScrollPhysics(),
           itemCount: watchProvider.watchLists.length + 1,
           onPageChanged: (i) {
-            if (i == watchProvider.watchLists.length - 2) {
+            if (i == watchProvider.watchLists.length - 3) {
               watchProvider.updatePageNo();
             }
           },
