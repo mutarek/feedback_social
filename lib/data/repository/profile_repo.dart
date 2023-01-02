@@ -37,7 +37,7 @@ class ProfileRepo {
       {bool isCover = false}) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.post(
+      response = await dioClient.put(
           isCover
               ? AppConstant.uploadCoverImageURI
               : AppConstant.uploadProfileImageURI,
