@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
 import 'package:als_frontend/data/model/response/liked_by_model.dart';
@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -53,19 +54,35 @@ class NewsFeedProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-
-    ApiResponse response = await newsFeedRepo1.getNewsFeedData(page);
-    isLoading = false;
-    isBottomLoading = false;
-    if (response.response.statusCode == 200) {
-      hasNextData = response.response.data['next'] != null ? true : false;
-      response.response.data['results'].forEach((element) {
+    String filename = "newsfeeddatass.json";
+    var dir = await getTemporaryDirectory();
+    File file = File("${dir.path}/$filename");
+    if (file.existsSync()) {
+      print('Loading from cache');
+      var jsonData = file.readAsStringSync();
+      final String response = jsonDecode(jsonData);
+      final data = await json.decode(response);
+      data['results'].forEach((element) {
         newsFeedLists.add(NewsFeedModel.fromJson(element));
       });
     } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
+      print('Loading from api');
+      ApiResponse response = await newsFeedRepo1.getNewsFeedData(page);
+      isLoading = false;
+      isBottomLoading = false;
+      if (response.response.statusCode == 200) {
+        var dataa = response.response.data;
+        file.writeAsStringSync(dataa.toString(),
+            flush: true, mode: FileMode.write);
+        hasNextData = response.response.data['next'] != null ? true : false;
+        response.response.data['results'].forEach((element) {
+          newsFeedLists.add(NewsFeedModel.fromJson(element));
+        });
+      } else {
+        Fluttertoast.showToast(msg: response.response.statusMessage!);
+      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   addLike(int postID, int index,
