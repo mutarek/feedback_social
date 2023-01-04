@@ -123,13 +123,13 @@ Widget customNetworkImage2(BuildContext context, String imageUrl, {double? heigh
   );
 }
 
-Widget circularImage(String imageUrl) {
+Widget circularImage(String imageUrl,double height,double width) {
   return CachedNetworkImage(
       placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-      errorWidget: (context, url, error) => const Icon(Icons.error),
+      errorWidget: (context, url, error) =>  Image.asset("assets/background/profile.png",fit: BoxFit.cover,),
       imageBuilder: (context, imageProvider) => Container(
-          width: 60.0,
-          height: 60.0,
+          width: height,
+          height: width,
           decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: imageProvider, fit: BoxFit.contain))),
       fit: BoxFit.contain,
       imageUrl: imageUrl);

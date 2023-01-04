@@ -137,8 +137,10 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
               SizedBox(
                 width: width,
                 child: CoverPhotoWidget(
-                  isTrue: false,
-                  coverPhotoChange: () {},
+                  isTrue: true,
+                  coverPhotoChange: () {
+
+                  },
                   back: () {
                     Helper.back();
                   },

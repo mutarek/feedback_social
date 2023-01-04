@@ -1,5 +1,6 @@
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/screens/profile/widget/update_cover_photo.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -14,13 +15,16 @@ class ProfilePhotoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
+
       radius: 43,
-      backgroundColor: Colors.brown,
+      backgroundColor: Palette.scaffold,
       child: InkWell(
         onTap: viewProfilePhoto,
         child: Stack(
           children: [
-            CircleAvatar(backgroundColor: Palette.scaffold, radius: 41, backgroundImage: NetworkImage(profileImage)),
+            circularImage("",80,80),
+
+            // CircleAvatar(backgroundColor: Palette.scaffold, radius: 41, backgroundImage: NetworkImage(profileImage)),
             isTrue
                 ? Positioned(
                     bottom: 0,

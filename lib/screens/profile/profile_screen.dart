@@ -91,9 +91,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               bottom: 0,
                               left: 30,
                               child: ProfilePhotoWidget(
-                                  profileImage: (profileProvider.isProfileLoading == false)
-                                      ? profileProvider.userprofileData.profileImage!
-                                      : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
+                                  profileImage: profileProvider.userprofileData.profileImage!,
+                                  // (profileProvider.isProfileLoading == false)
+                                  //     ? profileProvider.userprofileData.profileImage!
+                                  //     : "https://meektecbacekend.s3.amazonaws.com/media/profile/default.jpeg",
                                   viewProfilePhoto: () {
                                     Helper.toScreen(SingleImageView(imageURL: profileProvider.userprofileData.profileImage!));
                                   }),

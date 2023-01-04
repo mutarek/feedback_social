@@ -86,7 +86,9 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                 width: width,
                                                 child: CoverPhotoWidget(
                                                   isTrue: false,
-                                                  coverPhotoChange: () {},
+                                                  coverPhotoChange: () {
+
+                                                  },
                                                   back: () {
                                                     Helper.back();
                                                   },

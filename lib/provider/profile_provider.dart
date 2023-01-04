@@ -201,7 +201,7 @@ class ProfileProvider with ChangeNotifier{
     if (isCover) {
       formData.files.add(MapEntry('cover_image',MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
     } else {
-      formData.files.add(MapEntry('cover_image',MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+      formData.files.add(MapEntry('profile_image',MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
     }
     notifyListeners();
     ApiResponse response = await profileRepo.uploadPhoto(formData, isCover: isCover);
