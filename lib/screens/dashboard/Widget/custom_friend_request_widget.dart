@@ -40,6 +40,7 @@ class CustomFriendRequestWidget extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
+              // TODO: change it
               child: InkWell(
                 onTap: gotoProfileScreen,
                 child: Padding(
