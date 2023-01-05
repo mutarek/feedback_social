@@ -54,35 +54,56 @@ class NewsFeedProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    String filename = "newsfeeddatass.json";
-    var dir = await getTemporaryDirectory();
-    File file = File("${dir.path}/$filename");
-    if (file.existsSync()) {
-      print('Loading from cache');
-      var jsonData = file.readAsStringSync();
-      final String response = jsonDecode(jsonData);
-      final data = await json.decode(response);
-      data['results'].forEach((element) {
+    print('Loading from api');
+    ApiResponse response = await newsFeedRepo1.getNewsFeedData(page);
+    isLoading = false;
+    isBottomLoading = false;
+    if (response.response.statusCode == 200) {
+      // var dataa = response.response.data;
+      // file.writeAsStringSync(dataa.toString(),
+      //     flush: true, mode: FileMode.write);
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
         newsFeedLists.add(NewsFeedModel.fromJson(element));
       });
     } else {
-      print('Loading from api');
-      ApiResponse response = await newsFeedRepo1.getNewsFeedData(page);
-      isLoading = false;
-      isBottomLoading = false;
-      if (response.response.statusCode == 200) {
-        var dataa = response.response.data;
-        file.writeAsStringSync(dataa.toString(),
-            flush: true, mode: FileMode.write);
-        hasNextData = response.response.data['next'] != null ? true : false;
-        response.response.data['results'].forEach((element) {
-          newsFeedLists.add(NewsFeedModel.fromJson(element));
-        });
-      } else {
-        Fluttertoast.showToast(msg: response.response.statusMessage!);
-      }
-      notifyListeners();
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
+    notifyListeners();
+    // String filename =
+    //     AppConstant.baseUrl + AppConstant.newsFeedURI + page.toString();
+    // var dir = await getTemporaryDirectory();
+    // File file = File("${dir.path}/$filename");
+    // if (file.existsSync()) {
+    //   print('Loading from cache');
+    //   var jsonData = file.readAsStringSync();
+    //   final String response = jsonDecode(jsonData);
+    //   final data = await json.decode(response);
+    //   data['results'].forEach((element) {
+    //     newsFeedLists.add(NewsFeedModel.fromJson(element));
+    //   });
+    // } else {
+    //
+    // }
+  }
+
+  saveLastTenData(List<NewsFeedModel> newsFeedLists) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<NewsFeedModel> savedList = [];
+    savedList.sublist(newsFeedLists.length - 9, newsFeedLists.length);
+    for (var singleItem in savedList) {
+      String data = jsonEncode(singleItem);
+      //TODO: save to shared storage
+      prefs.setStringList('offlineNewsfeed', [data]);
+    }
+  }
+
+  getSavedList() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final mydataList = prefs.getStringList('offlineNewsfeed') ?? [];
+    mydataList.forEach((element) {
+      newsFeedLists.add(NewsFeedModel.fromJson(element));
+    });
   }
 
   addLike(int postID, int index,

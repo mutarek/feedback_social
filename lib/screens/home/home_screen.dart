@@ -20,8 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController controller = ScrollController();
 
   Future<void> _refresh(BuildContext context) async {
-    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(isFirstTime: false);
-
+    Provider.of<NewsFeedProvider>(context, listen: false)
+        .initializeAllFeedData(isFirstTime: false);
   }
 
   @override
@@ -37,11 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    //Provider.of<NewsFeedProvider>(context, listen: false).saveLastTenData();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<NewsFeedProvider, AuthProvider, PostProvider>(
-        builder: (context, newsFeedProvider, authProvider, postProvider, child) {
+    return Consumer3<NewsFeedProvider, AuthProvider, PostProvider>(builder:
+        (context, newsFeedProvider, authProvider, postProvider, child) {
       return RefreshIndicator(
         onRefresh: () {
           return _refresh(context);
@@ -52,25 +57,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: controller,
                 children: [
                   Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
                       child: createPostWidget(context, authProvider,
-                          newsFeedProvider: newsFeedProvider, isForGroup: false)),
+                          newsFeedProvider: newsFeedProvider,
+                          isForGroup: false)),
                   postProvider.isLoading
                       ? Visibility(
                           visible: true,
                           child: postProvider.isLoading
-                              ? postStatusWidget(
-                                  context, authProvider, postProvider, true, postProvider.status)
-                              : postStatusWidget(
-                                  context, authProvider, postProvider, false, postProvider.status),
+                              ? postStatusWidget(context, authProvider,
+                                  postProvider, true, postProvider.status)
+                              : postStatusWidget(context, authProvider,
+                                  postProvider, false, postProvider.status),
                         )
                       : Visibility(
                           visible: false,
                           child: postProvider.isLoading
-                              ? postStatusWidget(
-                                  context, authProvider, postProvider, true, postProvider.status)
-                              : postStatusWidget(
-                                  context, authProvider, postProvider, false, postProvider.status),
+                              ? postStatusWidget(context, authProvider,
+                                  postProvider, true, postProvider.status)
+                              : postStatusWidget(context, authProvider,
+                                  postProvider, false, postProvider.status),
                         ),
                   ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -82,9 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
 
                         return TimeLineWidget(
-                            newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
+                            newsFeedProvider.newsFeedLists[index],
+                            index,
+                            newsFeedProvider,
                             isHomeScreen: true,
-                            groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
+                            groupPageID: newsFeedProvider
+                                .newsFeedLists[index].id! as int);
                         // return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
                         //     isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
                       }),
