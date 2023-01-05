@@ -9,7 +9,6 @@ import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/app_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -71,7 +70,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
             : const SizedBox.shrink(),
       ),
       body: Consumer<GroupProvider>(
-          builder: (context, provider, child) => provider.isLoading
+          builder: (context, provider, child) => provider.isLoading || provider.isBottomLoading
               ? const Center(child: FriendReqShimmerWidget())
               : Column(
                   children: [
