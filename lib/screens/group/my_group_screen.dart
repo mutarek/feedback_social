@@ -128,7 +128,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                       Container(margin: const EdgeInsets.only(bottom: 10)),
                     ],
                   ),
-                  (provider.authorGroupList.isEmpty)
+                  (provider.isLoading)
                       ? CustomText(title: "You Haven't any Personal Group", textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                       : Container(
                           height: 100,
