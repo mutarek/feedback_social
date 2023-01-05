@@ -40,9 +40,7 @@ class MoreScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: h * 0.01),
-                  Center(
-                    child: circularImage(authProvider.profileImage,150,150),
-                  ),
+                  Center(child: circularImage(authProvider.profileImage, 130, 130)),
                   const SizedBox(height: 10),
                   Center(child: Text(authProvider.name, style: latoStyle800ExtraBold.copyWith(fontSize: 20))),
                   const SizedBox(height: 10),

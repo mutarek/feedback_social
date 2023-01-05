@@ -1,4 +1,5 @@
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,8 @@ class ProfileAvatar extends StatelessWidget {
   final double scale;
   final double isActivescale;
 
-  const ProfileAvatar({Key? key,
+  const ProfileAvatar({
+    Key? key,
     required this.profileImageUrl,
     this.isActive = false,
     this.hasBorder = false,
@@ -22,15 +24,16 @@ class ProfileAvatar extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
-        CircleAvatar(
-          backgroundColor: colorPrimaryDark,
-          radius: 20.0 * scale,
-          child: CircleAvatar(
-            radius: hasBorder ? 17.0 * scale : 20.0 * scale,
-            backgroundColor: Colors.grey[200],
-            backgroundImage: CachedNetworkImageProvider(profileImageUrl),
-          ),
-        ),
+        circularImage(profileImageUrl, 33, 33),
+        // CircleAvatar(
+        //   backgroundColor: colorPrimaryDark,
+        //   radius: 20.0 * scale,
+        //   child: CircleAvatar(
+        //     radius: hasBorder ? 17.0 * scale : 20.0 * scale,
+        //     backgroundColor: Colors.grey[200],
+        //     backgroundImage: CachedNetworkImageProvider(profileImageUrl),
+        //   ),
+        // ),
         if (isActive)
           CircleAvatar(
             backgroundColor: Colors.white,

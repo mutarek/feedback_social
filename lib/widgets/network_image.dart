@@ -62,9 +62,9 @@ Widget zoomableCustomNetworkImage(BuildContext context, String imageUrl, {double
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                Image.asset("assets/failed.jpg", fit: BoxFit.fill),
-                const Positioned(
-                    bottom: 0.0, left: 0.0, right: 0.0, child: Text("load image failed, click to reload", textAlign: TextAlign.center))
+                Image.asset("assets/background/profile.png", fit: BoxFit.fill),
+                // const Positioned(
+                //     bottom: 0.0, left: 0.0, right: 0.0, child: Text("load image failed, click to reload", textAlign: TextAlign.center))
               ],
             ),
             onTap: () {
@@ -108,9 +108,9 @@ Widget customNetworkImage2(BuildContext context, String imageUrl, {double? heigh
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                Image.asset("assets/failed.jpg", fit: BoxFit.fill),
-                const Positioned(
-                    bottom: 0.0, left: 0.0, right: 0.0, child: Text("load image failed, click to reload", textAlign: TextAlign.center))
+                Image.asset("assets/background/profile.png", fit: BoxFit.fill),
+                // const Positioned(
+                //     bottom: 0.0, left: 0.0, right: 0.0, child: Text("load image failed, click to reload", textAlign: TextAlign.center))
               ],
             ),
             onTap: () {
@@ -124,10 +124,10 @@ Widget customNetworkImage2(BuildContext context, String imageUrl, {double? heigh
   );
 }
 
-Widget circularImage(String imageUrl,double height,double width) {
+Widget circularImage(String imageUrl, double height, double width) {
   return CachedNetworkImage(
       placeholder: (context, url) => const Center(child: CupertinoActivityIndicator()),
-      errorWidget: (context, url, error) =>  Image.asset("assets/background/profile.png",fit: BoxFit.cover,),
+      errorWidget: (context, url, error) => Image.asset("assets/background/profile.png", fit: BoxFit.cover, width: height, height: width),
       imageBuilder: (context, imageProvider) => Container(
           width: height,
           height: width,

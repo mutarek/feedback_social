@@ -67,7 +67,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
             : const SizedBox.shrink(),
       ),
       body: Consumer<PageProvider>(
-          builder: (context, provider, child) => provider.isLoading || provider.isBottomLoading
+          builder: (context, provider, child) => provider.isLoading
               ? const Center(child: FriendReqShimmerWidget())
               : Column(
                   children: [

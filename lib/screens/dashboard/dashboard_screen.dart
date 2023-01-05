@@ -41,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
 
-    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1,isFirstTime: false);
+    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(page: 1, isFirstTime: false);
     Provider.of<NotificationProvider>(context, listen: false).initializeNotification();
     Provider.of<NotificationProvider>(context, listen: false).notificationUnread();
   }
@@ -158,27 +158,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     onPressed: () {
                                       Provider.of<SearchProvider>(context, listen: false).resetFirstTime();
                                       Helper.toScreen(SearchScreen());
-
                                     },
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Helper.toScreen(const ProfileScreen());
-
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(2),
-                                        width: 40,
-                                        height: 30,
-                                        decoration: const BoxDecoration(color: AppColors.scaffold, shape: BoxShape.circle),
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(30),
-                                            child: customNetworkImage2(context, authProvider.profileImage, height: 30)),
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Helper.toScreen(const ProfileScreen());
+                                          },
+                                          child: circularImage(authProvider.profileImage, 35, 35),
+                                        ),
                                       ),
-                                    ),
-                                  )
+                                    ],
+                                  ),
                                 ],
                               )
                             : AppBar(

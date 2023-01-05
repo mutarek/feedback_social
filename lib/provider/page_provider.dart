@@ -12,12 +12,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class PageProvider with ChangeNotifier{
+class PageProvider with ChangeNotifier {
   final PageRepo pageRepo;
   final NewsfeedRepo newsfeedRepo;
   final AuthRepo authRepo;
 
-  PageProvider({required this.pageRepo,required this.newsfeedRepo,required this.authRepo});
+  PageProvider({required this.pageRepo, required this.newsfeedRepo, required this.authRepo});
 
   bool isLoading = false;
 
@@ -65,6 +65,7 @@ class PageProvider with ChangeNotifier{
     allSuggestPageList.clear();
     allSuggestPageList = [];
     ApiResponse response = await pageRepo.getAuthorPage();
+
     initializeLikedPageLists();
     initializeSuggestPage();
     isLoading = false;
@@ -114,12 +115,10 @@ class PageProvider with ChangeNotifier{
     ApiResponse response;
     if (file != null) {
       FormData formData = FormData();
-      formData.files.add(MapEntry(
-          'cover_photo',
-          MultipartFile(file.readAsBytes().asStream(), file.lengthSync(),
-              filename: file.path.split("/").last)));
-      formData.fields.add(MapEntry('name',groupName));
-      formData.fields.add(MapEntry('category',categoryValue.id.toString()));
+      formData.files.add(
+          MapEntry('cover_photo', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+      formData.fields.add(MapEntry('name', groupName));
+      formData.fields.add(MapEntry('category', categoryValue.id.toString()));
       response = await pageRepo.createPageWithImageUpload(formData);
     } else {
       response = await pageRepo.createPageWithoutImageUpload({"name": groupName, "category": categoryValue.id});
@@ -227,11 +226,11 @@ class PageProvider with ChangeNotifier{
     ApiResponse response;
     FormData formData = FormData();
     if (file != null) {
-      formData.files.add(MapEntry('cover_photo',MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
-      formData.fields.add(MapEntry('name',groupName));
-      formData.fields.add(MapEntry('category',categoryValue.id.toString()));
-      response =
-      await pageRepo.updatePageWithImageUpload(formData, pageID);
+      formData.files.add(
+          MapEntry('cover_photo', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+      formData.fields.add(MapEntry('name', groupName));
+      formData.fields.add(MapEntry('category', categoryValue.id.toString()));
+      response = await pageRepo.updatePageWithImageUpload(formData, pageID);
     } else {
       response = await pageRepo.updatePageWithoutImageUpload({"name": groupName, "category": categoryValue.id}, pageID);
     }
@@ -242,7 +241,7 @@ class PageProvider with ChangeNotifier{
           0,
           AuthorPageModel(
               id: response.response.data['id'],
-              coverPhoto:response.response.data['cover_photo'],
+              coverPhoto: response.response.data['cover_photo'],
               category: response.response.data['category'],
               avatar: response.response.data['avatar'],
               name: response.response.data['name'],
@@ -324,5 +323,4 @@ class PageProvider with ChangeNotifier{
     menuValue = value;
     notifyListeners();
   }
-
 }

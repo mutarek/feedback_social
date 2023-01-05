@@ -9,8 +9,7 @@ class AppConstant {
   static const String baseUrlLive = 'https://feedback-social.com';
 
   static const String socketBaseUrl = 'wss://feedback-social.com/';
-  static const String socketBaseUrlTesting =
-      'wss://testing.feedback-social.com/';
+  static const String socketBaseUrlTesting = 'wss://testing.feedback-social.com/';
   static const String socketBaseUrlLive = 'wss://feedback-social.com/';
 
   static const String oldBaseUrl = 'https://als-social.com';
@@ -21,26 +20,18 @@ class AppConstant {
   static const String resetOtpSendURI = '/accounts/password/reset/';
   static const String setNewPasswordURI = '/accounts/password/reset/confirm/';
   static const String otpVerifyURI = '/accounts/otp/verify/';
-  static const String sendFriendRequestURI =
-      '/accounts/friends/send-friend-request/';
-  static const String cancelFriendRequestURI =
-      '/accounts/friends/cancel-friend-request/';
-  static const String acceptFriendRequestURI =
-      '/accounts/friends/accept-friend-request/';
+  static const String sendFriendRequestURI = '/accounts/friends/send-friend-request/';
+  static const String cancelFriendRequestURI = '/accounts/friends/cancel-friend-request/';
+  static const String acceptFriendRequestURI = '/accounts/friends/accept-friend-request/';
   static const String unfriendURI = '/accounts/friends/unfriend/';
 
-  static const String sendFriendRequestListURI =
-      '/accounts/friends/friend-request/list/?size=10&page=';
-  static const String sendSuggestFriendListURI =
-      '/accounts/friends/suggestions/?size=10&page=';
+  static const String sendFriendRequestListURI = '/accounts/friends/friend-request/list/?size=10&page=';
+  static const String sendSuggestFriendListURI = '/accounts/friends/suggestions/?size=10&page=';
   static const String friendListsURI = '/accounts/friends/list/?size=10&page=';
-  static const String follwersListsURI =
-      '/accounts/followers/list/?size=10&page=';
+  static const String follwersListsURI = '/accounts/followers/list/?size=10&page=';
   static const String profileURI = '/accounts/profile/';
-  static const String uploadCoverImageURI =
-      '/accounts/profile/update/cover-image/';
-  static const String uploadProfileImageURI =
-      '/accounts/profile/update/profile-image/';
+  static const String uploadCoverImageURI = '/accounts/profile/update/cover-image/';
+  static const String uploadProfileImageURI = '/accounts/profile/update/profile-image/';
   static const String editProfile = '/accounts/profile/update/';
   static const String newsFeedURI = '/posts/newsfeeds?page=';
   static const String watchListUri = '/watch/list/?size=10&page=';
@@ -54,8 +45,7 @@ class AppConstant {
   static const String groupSuggestAllURI = '/group/suggest/all/';
   static const String groupCreatorAllURI = '/group/creator/';
   static const String notificationListURI = '/notification/list/';
-  static const String notificationUnreadCountURI =
-      '/notification/count/unread/';
+  static const String notificationUnreadCountURI = '/notification/count/unread/';
   static const String notificationReadCountURI = '/notification/counter/read/';
   static const String passwordUpdate = '/accounts/password/change/';
   static const String pageAuthorURI = '/page/author-page/';
@@ -68,12 +58,10 @@ class AppConstant {
   static const String blocklist = '/settings/block/';
   static const String messageRoomList = '/message-room-list/';
   static const String chatRoomListUri = '/chat-message-list/';
-  static const String chatMessageBetweenTwoUserURI =
-      '/chat-message-between-two-user/';
+  static const String chatMessageBetweenTwoUserURI = '/chat-message-between-two-user/';
   static const String messageRoomCreateList = '/message-room-create/';
   static const String getOtherSettingsValue = '/settings/other-settings/';
-  static const String getNotificationSettingsValueUri =
-      '/settings/notification/';
+  static const String getNotificationSettingsValueUri = '/settings/notification/';
   static const String termsAndConditionUri = '/terms-condition/list/';
   static const String faqQuestionUri = '/settings/faq/';
   static const String latestVersionUri = '/latest-version/';
@@ -100,15 +88,7 @@ class AppConstant {
   static const Duration durationAnimation = Duration(seconds: 1);
 
   static List<LanguageModel> languagesList = [
-    LanguageModel(
-        imageUrl: '',
-        languageName: 'English',
-        countryCode: 'US',
-        languageCode: 'en'),
-    LanguageModel(
-        imageUrl: '',
-        languageName: 'Bangla',
-        countryCode: 'BD',
-        languageCode: 'bn'),
+    LanguageModel(imageUrl: '', languageName: 'English', countryCode: 'US', languageCode: 'en'),
+    LanguageModel(imageUrl: '', languageName: 'Bangla', countryCode: 'BD', languageCode: 'bn'),
   ];
 }

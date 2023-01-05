@@ -17,8 +17,8 @@ class CustomSuggestedFriendsWidget extends StatelessWidget {
     required this.addFriendButtonTap,
     required this.gotoProfileScreen,
     required this.imgUrl,
-
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
@@ -27,31 +27,23 @@ class CustomSuggestedFriendsWidget extends StatelessWidget {
       child: Container(
         width: width,
         decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(.2),
-                  blurRadius: 10.0,
-                  spreadRadius: 3.0,
-                  offset: const Offset(0.0, 0.0))
-            ],
+            boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))],
             borderRadius: BorderRadius.circular(8),
             color: AppColors.whiteColorLight),
         child: Row(
           children: [
-            Expanded(
-              flex: 1,
-              child: InkWell(
-                onTap: gotoProfileScreen,
-                child: Padding(
-                  padding: const EdgeInsets.all(3),
-                  child:    circularImage(imgUrl,40,40),
-                  // CircleAvatar(
-                  //     radius: width * 0.07,
-                  //     backgroundColor: AppColors.scaffold,
-                  //     backgroundImage: CachedNetworkImageProvider(imgUrl)),
-                ),
+            InkWell(
+              onTap: gotoProfileScreen,
+              child: Padding(
+                padding: const EdgeInsets.all(3),
+                child: circularImage(imgUrl, 40, 40),
+                // CircleAvatar(
+                //     radius: width * 0.07,
+                //     backgroundColor: AppColors.scaffold,
+                //     backgroundImage: CachedNetworkImageProvider(imgUrl)),
               ),
             ),
+            SizedBox(width: 5),
             Expanded(
               flex: 2,
               child: Text(userName, style: const TextStyle(fontSize: 12)),
@@ -62,14 +54,11 @@ class CustomSuggestedFriendsWidget extends StatelessWidget {
                   onTap: addFriendButtonTap,
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 1,color: Colors.blueGrey),
-                      borderRadius: BorderRadius.circular(5)
-                    ),
+                    decoration: BoxDecoration(border: Border.all(width: 1, color: Colors.blueGrey), borderRadius: BorderRadius.circular(5)),
                     child: Center(
                       child: Text(
                         LocaleKeys.add_friend.tr(),
-                        style: const TextStyle(color: Colors.blue,fontSize: 15,fontWeight: FontWeight.bold),
+                        style: const TextStyle(color: Colors.blue, fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
