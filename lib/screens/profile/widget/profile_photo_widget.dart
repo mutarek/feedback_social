@@ -22,7 +22,7 @@ class ProfilePhotoWidget extends StatelessWidget {
         onTap: viewProfilePhoto,
         child: Stack(
           children: [
-            circularImage("",80,80),
+            circularImage(profileImage,80,80),
 
             // CircleAvatar(backgroundColor: Palette.scaffold, radius: 41, backgroundImage: NetworkImage(profileImage)),
             isTrue

@@ -10,6 +10,7 @@ import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +67,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
             : const SizedBox.shrink(),
       ),
       body: Consumer<PageProvider>(
-          builder: (context, provider, child) => provider.isLoading
+          builder: (context, provider, child) => provider.isLoading || provider.isBottomLoading
               ? const Center(child: FriendReqShimmerWidget())
               : Column(
                   children: [
@@ -153,11 +154,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       CircleAvatar(
                                         radius: 25,
                                         backgroundColor: Palette.notificationColor,
-                                        child: CircleAvatar(
-                                          radius: 22,
-                                          backgroundColor: Palette.primary,
-                                          backgroundImage: NetworkImage(provider.authorPageLists[index2].coverPhoto),
-                                        ),
+                                        child: circularImage(provider.authorPageLists[index2].coverPhoto,40,40),
                                       ),
                                       const SizedBox(height: 3),
                                       CustomText(

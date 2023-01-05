@@ -75,7 +75,7 @@ class AuthRepo {
       } else {
         map = {"phone": emailOrPhone};
       }
-      response = await dioClient.post(AppConstant.setNewPasswordURI, data: map, onSendProgress: onSendProgress);
+      response = await dioClient.post(AppConstant.otpSendURI, data: map, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -91,7 +91,7 @@ class AuthRepo {
       } else {
         map = {"phone": emailOrPhone};
       }
-      response = await dioClient.post(AppConstant.setNewPasswordURI, data: map, onSendProgress: onSendProgress);
+      response = await dioClient.post(AppConstant.otpSendURI, data: map, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -107,7 +107,7 @@ class AuthRepo {
       } else {
         map = {"phone": emailOrPhone, "code": code};
       }
-      response = await dioClient.post(AppConstant.setNewPasswordURI, data: map, onSendProgress: onSendProgress);
+      response = await dioClient.post(AppConstant.otpVerifyURI, data: map, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

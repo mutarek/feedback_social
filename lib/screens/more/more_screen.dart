@@ -12,6 +12,7 @@ import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class MoreScreen extends StatelessWidget {
     final double h = MediaQuery.of(context).size.height;
     final double w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Palette.scaffold,
       body: Consumer<AuthProvider>(
         builder: (context, authProvider, child) {
           return SingleChildScrollView(
@@ -40,14 +41,7 @@ class MoreScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: h * 0.01),
                   Center(
-                    child: Material(
-                      color: Colors.white,
-                      shadowColor: Colors.white,
-                      borderRadius: BorderRadius.circular(65),
-                      elevation: 6,
-                      child: CircleAvatar(
-                          radius: h * 0.086, backgroundColor: Palette.scaffold, backgroundImage: NetworkImage(authProvider.profileImage)),
-                    ),
+                    child: circularImage(authProvider.profileImage,150,150),
                   ),
                   const SizedBox(height: 10),
                   Center(child: Text(authProvider.name, style: latoStyle800ExtraBold.copyWith(fontSize: 20))),

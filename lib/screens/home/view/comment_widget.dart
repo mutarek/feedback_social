@@ -11,6 +11,7 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/any_link_preview_global_widget.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -73,9 +74,11 @@ class CommentWidget extends StatelessWidget {
                                     commentModels.author!.id.toString())));
                           }
                         },
-                        child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                commentModels.author!.profileImage!))),
+                        child:  circularImage(commentModels.author!.profileImage!,40,40),
+                        // CircleAvatar(
+                        //     backgroundImage: NetworkImage(
+                        //         commentModels.author!.profileImage!))
+                               ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Column(

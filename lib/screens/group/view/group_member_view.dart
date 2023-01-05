@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -49,8 +50,10 @@ class GroupMemberView extends StatelessWidget {
                                   CircleAvatar(
                                     radius: 24,
                                     backgroundColor: Palette.notificationColor,
-                                    child: CircleAvatar(
-                                        radius: 22, backgroundImage: NetworkImage(provider.groupMembersLists[index].member.profileImage)),
+                                    child:  circularImage(provider.groupMembersLists[index].member.profileImage,45,45),
+
+                                    // CircleAvatar(
+                                    //     radius: 22, backgroundImage: NetworkImage(provider.groupMembersLists[index].member.profileImage)),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(top: height * 0.007, left: width * 0.03),

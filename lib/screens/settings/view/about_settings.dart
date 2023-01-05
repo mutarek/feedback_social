@@ -6,6 +6,7 @@ import 'package:als_frontend/screens/settings/view/email_update.dart';
 import 'package:als_frontend/screens/settings/view/password_update.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -60,7 +61,7 @@ class _AboutSettingsState extends State<AboutSettings> {
                             backgroundColor: Colors.green,
                             child: CircleAvatar(
                               radius: 60,
-                              backgroundImage: NetworkImage(authProvider.profileImage),
+                              backgroundImage: CachedNetworkImageProvider(authProvider.profileImage)
                             ),
                           ),
                         ),

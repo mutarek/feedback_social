@@ -1,5 +1,6 @@
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -45,10 +46,11 @@ class CustomFriendRequestWidget extends StatelessWidget {
                 onTap: gotoProfileScreen,
                 child: Padding(
                   padding: const EdgeInsets.all(3),
-                  child: CircleAvatar(
-                      radius: width * 0.07,
-                      backgroundColor: AppColors.scaffold,
-                      backgroundImage: NetworkImage(imgUrl)),
+                  child:    circularImage(imgUrl,40,40),
+                  // CircleAvatar(
+                  //     radius: width * 0.07,
+                  //     backgroundColor: AppColors.scaffold,
+                  //     backgroundImage: NetworkImage(imgUrl)),
                 ),
               ),
             ),

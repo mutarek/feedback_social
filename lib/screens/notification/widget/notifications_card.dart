@@ -1,3 +1,4 @@
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -31,7 +32,9 @@ class NotificationCard extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(backgroundColor: Colors.white, radius: height * 0.029, backgroundImage: NetworkImage(image)),
+                child:  circularImage(image,40,40),
+                // CircleAvatar(backgroundColor: Colors.white, radius: height * 0.029, backgroundImage: NetworkImage(image)
+                // ),
               ),
               Expanded(
                 child: Column(

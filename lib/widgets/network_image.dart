@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter/cupertino.dart';
 
 Widget customNetworkImage(BuildContext context, String imageUrl, {double? height, BoxFit boxFit = BoxFit.fill}) {
   return CachedNetworkImage(
@@ -125,7 +126,7 @@ Widget customNetworkImage2(BuildContext context, String imageUrl, {double? heigh
 
 Widget circularImage(String imageUrl,double height,double width) {
   return CachedNetworkImage(
-      placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+      placeholder: (context, url) => const Center(child: CupertinoActivityIndicator()),
       errorWidget: (context, url, error) =>  Image.asset("assets/background/profile.png",fit: BoxFit.cover,),
       imageBuilder: (context, imageProvider) => Container(
           width: height,

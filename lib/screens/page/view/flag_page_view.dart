@@ -69,7 +69,8 @@ class FlagPageView extends StatelessWidget {
                                             CircleAvatar(
                                               radius: 25,
                                               backgroundColor: Palette.notificationColor,
-                                              child: CircleAvatar(
+                                              child:
+                                              CircleAvatar(
                                                 radius: 22,
                                                 backgroundColor: Palette.primary,
                                                 backgroundImage: NetworkImage(provider.authorPageLists[index2].coverPhoto),

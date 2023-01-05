@@ -9,8 +9,8 @@ import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/app_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +70,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
             : const SizedBox.shrink(),
       ),
       body: Consumer<GroupProvider>(
-          builder: (context, provider, child) => provider.isLoading
+          builder: (context, provider, child) => provider.isLoading || provider.isBottomLoading
               ? const Center(child: FriendReqShimmerWidget())
               : Column(
                   children: [
@@ -128,7 +128,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                       Container(margin: const EdgeInsets.only(bottom: 10)),
                     ],
                   ),
-                  (provider.authorGroupList.isEmpty)
+                  (provider.isLoading)
                       ? CustomText(title: "You Haven't any Personal Group", textStyle: latoStyle400Regular.copyWith(fontSize: 16))
                       : Container(
                           height: 100,
@@ -155,7 +155,8 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                                         child: CircleAvatar(
                                           radius: 24,
                                           backgroundColor: Palette.primary,
-                                          child: getCircularImage(50, provider.authorGroupList[index2].coverPhoto),
+                                          child: circularImage(provider.authorGroupList[index2].coverPhoto,40,40),
+
                                         ),
                                       ),
                                       const SizedBox(height: 3),
