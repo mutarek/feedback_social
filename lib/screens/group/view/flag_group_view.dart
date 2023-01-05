@@ -69,7 +69,9 @@ class FlagGroupView extends StatelessWidget {
                                             CircleAvatar(
                                               radius: 25,
                                               backgroundColor: Palette.notificationColor,
-                                              child: CircleAvatar(
+                                              child:
+                                              //Todo: this page is not used
+                                              CircleAvatar(
                                                 radius: 22,
                                                 backgroundColor: Palette.primary,
                                                 backgroundImage: NetworkImage(provider.authorGroupList[index2].coverPhoto),

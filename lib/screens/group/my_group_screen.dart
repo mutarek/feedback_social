@@ -11,6 +11,7 @@ import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/app_widget.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -155,7 +156,8 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
                                         child: CircleAvatar(
                                           radius: 24,
                                           backgroundColor: Palette.primary,
-                                          child: getCircularImage(50, provider.authorGroupList[index2].coverPhoto),
+                                          child: circularImage(provider.authorGroupList[index2].coverPhoto,40,40),
+
                                         ),
                                       ),
                                       const SizedBox(height: 3),

@@ -256,7 +256,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                                           leading: CircleAvatar(
                                             radius: 24,
                                             backgroundColor: Colors.black12,
-                                            backgroundImage: NetworkImage(groupProvider.myGroupList[index].coverPhoto),
+                                            backgroundImage: CachedNetworkImageProvider(groupProvider.myGroupList[index].coverPhoto),
                                           ),
                                           trailing: Container(
                                             height: height * 0.027,

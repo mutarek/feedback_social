@@ -196,8 +196,8 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                             CircleAvatar(
                                               radius: 24,
                                               backgroundColor: Colors.black12,
-                                              backgroundImage: NetworkImage(
-                                                  pageProvider.authorPageLists[index].avatar),
+                                              backgroundImage:  CachedNetworkImageProvider(pageProvider.authorPageLists[index].avatar),
+
                                             ),
                                             SizedBox(
                                               width: width * 0.03,
@@ -273,8 +273,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                           leading: CircleAvatar(
                                             radius: 24,
                                             backgroundColor: Colors.black12,
-                                            backgroundImage: NetworkImage(
-                                                pageProvider.likedPageLists[index].avatar),
+                                            backgroundImage: CachedNetworkImageProvider(pageProvider.likedPageLists[index].avatar),
                                           ),
                                           trailing: Container(
                                             height: height * 0.027,

@@ -2,6 +2,7 @@ import 'package:als_frontend/provider/settings_provider.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -90,7 +91,8 @@ class _BlockListUpdateSettingsState extends State<BlockListUpdateSettings> {
                                         child: CircleAvatar(
                                           radius: 23,
                                           backgroundColor: Colors.grey,
-                                          backgroundImage: NetworkImage("${settingsProvider.blocklist[index].profileImage}"),
+                                          backgroundImage:CachedNetworkImageProvider(settingsProvider.blocklist[index].profileImage.toString())
+                                          // NetworkImage("${settingsProvider.blocklist[index].profileImage}"),
                                         ),
                                       ),
                                       const SizedBox(width: 10),

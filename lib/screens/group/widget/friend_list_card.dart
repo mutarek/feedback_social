@@ -1,4 +1,5 @@
 import 'package:als_frontend/util/palette.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -35,9 +36,10 @@ class FriendListCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: width * 0.015),
                 child: CircleAvatar(
-                  backgroundColor: Palette.primary,
+                  backgroundColor: Palette.scaffold,
                   radius: 28,
-                  child: CircleAvatar(radius: 26, backgroundImage: NetworkImage(image)),
+                  child:  circularImage(image,40,40),
+                  // CircleAvatar(radius: 26, backgroundImage: NetworkImage(image)),
                 ),
               ),
               Padding(

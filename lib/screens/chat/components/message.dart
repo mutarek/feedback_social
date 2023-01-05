@@ -3,6 +3,7 @@ import 'package:als_frontend/screens/chat/components/text_message.dart';
 import 'package:als_frontend/screens/chat/enum/enum.dart';
 import 'package:als_frontend/util/size.util.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -40,11 +41,12 @@ class Message extends StatelessWidget {
         mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!isSender) ...[
-            CircleAvatar(
-              radius: 15,
-              backgroundColor: kPrimaryColor,
-              backgroundImage: NetworkImage(imageURL),
-            ),
+            circularImage(imageURL,40,40),
+            // CircleAvatar(
+            //   radius: 15,
+            //   backgroundColor: kPrimaryColor,
+            //   backgroundImage: NetworkImage(imageURL),
+            // ),
             const SizedBox(width: kDefaultPadding / 2),
           ],
           messageContaint(message),

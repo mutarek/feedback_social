@@ -1,4 +1,5 @@
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 
 class FriendRequestWidget extends StatelessWidget {
@@ -49,10 +50,12 @@ class FriendRequestWidget extends StatelessWidget {
                 onTap: gotoProfileScreen,
                 child: Padding(
                   padding: const EdgeInsets.all(3),
-                  child: CircleAvatar(
-                      radius: width * 0.07,
-                      backgroundColor: AppColors.scaffold,
-                      backgroundImage: NetworkImage(imgUrl)),
+                  child:
+                  circularImage(imgUrl,40,40),
+                  // CircleAvatar(
+                  //     radius: width * 0.07,
+                  //     backgroundColor: AppColors.scaffold,
+                  //     backgroundImage: NetworkImage(imgUrl)),
                 ),
               ),
             ),
