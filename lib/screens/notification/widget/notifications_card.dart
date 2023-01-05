@@ -27,12 +27,13 @@ class NotificationCard extends StatelessWidget {
       onTap: ontap,
       child: Container(
           margin: const EdgeInsets.only(bottom: 8),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: containerColor),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10), color: containerColor),
           child: Row(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child:  circularImage(image,40,40),
+                child: circularImage(image, 15, 15),
                 // CircleAvatar(backgroundColor: Colors.white, radius: height * 0.029, backgroundImage: NetworkImage(image)
                 // ),
               ),
@@ -42,7 +43,10 @@ class NotificationCard extends StatelessWidget {
                   children: [
                     const SizedBox(height: 5),
                     Text(likecmnt, style: TextStyle(color: textColor)),
-                    Padding(padding: EdgeInsets.only(top: height * 0.01), child: Text(time, style: TextStyle(color: textColor, fontSize: 10)))
+                    Padding(
+                        padding: EdgeInsets.only(top: height * 0.01),
+                        child: Text(time,
+                            style: TextStyle(color: textColor, fontSize: 10)))
                   ],
                 ),
               )
