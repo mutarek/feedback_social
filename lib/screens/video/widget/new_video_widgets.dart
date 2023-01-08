@@ -5,7 +5,6 @@ import 'package:als_frontend/provider/watch_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
-import 'package:als_frontend/screens/page/my_page_screen.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/post/single_post_screen.dart';
@@ -15,7 +14,6 @@ import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
-import 'package:als_frontend/widgets/network_image.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +22,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-
+import 'package:wakelock/wakelock.dart';
 export 'dart:async';
 export 'dart:typed_data';
-
 export 'package:flutter/material.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter/services.dart';
@@ -51,6 +48,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
   @override
   void initState() {
     super.initState();
+    Wakelock.enabled;
     if (videoPlayerController != null) {
       videoPlayerController!.dispose();
     }
@@ -60,6 +58,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
 
   @override
   void dispose() {
+    Wakelock.disable();
     videoPlayerController!.dispose();
     videoPlayerController = null;
     super.dispose();
@@ -72,8 +71,6 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
   // }
 
   prepareVideo({required String url}) async {
-    // videoPlayerController = VideoPlayerController.network(url);
-    // initializeVideoPlayerFuture = videoPlayerController!.initialize();
     final fileinfo = await checkCacheforUrl(url);
     if (fileinfo == null) {
       videoPlayerController = VideoPlayerController.network(url);
@@ -126,8 +123,7 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
       child: Consumer<WatchProvider>(builder: (context, watchProvide, child) {
         return (videoPlayerController == null)
             ? Center(
-                child: customNetworkImage(
-                    context, widget.model.thumbnail.toString()),
+                child: Image.asset("assets/background/custom_loading.gif"),
               )
             //child: Image.network(widget.model.thumbnail.toString()))
             : ((videoPlayerController!.value.isInitialized)
@@ -905,8 +901,8 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                       ),
                     ],
                   )
-                : const Center(
-                    child: CupertinoActivityIndicator(),
+                : Center(
+                    child: Image.asset("assets/background/custom_loading.gif"),
                   ));
       }),
     );

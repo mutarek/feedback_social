@@ -4,6 +4,7 @@ import 'package:als_frontend/provider/public_profile_provider.dart';
 import 'package:als_frontend/screens/dashboard/Widget/castom_friend_req.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/friend_req_shimmer_widget.dart';
+import 'package:als_frontend/screens/profile/widget/custom_followe_list.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -25,12 +26,14 @@ class _FollowersPageState extends State<FollowersPage> {
 
   @override
   void initState() {
-    Provider.of<ProfileProvider>(context, listen: false).callForGetAllFollowersPagination();
+    Provider.of<ProfileProvider>(context, listen: false)
+        .callForGetAllFollowersPagination();
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
           Provider.of<ProfileProvider>(context, listen: false).hasNextData) {
-        Provider.of<ProfileProvider>(context, listen: false).updateAllFollowersPage();
+        Provider.of<ProfileProvider>(context, listen: false)
+            .updateAllFollowersPage();
       }
     });
     super.initState();
@@ -47,7 +50,11 @@ class _FollowersPageState extends State<FollowersPage> {
               onPressed: () {
                 Helper.back();
               }),
-          title: CustomText(title: LocaleKeys.all_Followers.tr(), color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16),
+          title: CustomText(
+              title: LocaleKeys.all_Followers.tr(),
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 16),
           backgroundColor: Colors.white,
           elevation: 0),
       body: Consumer2<ProfileProvider, PublicProfileProvider>(
@@ -61,7 +68,8 @@ class _FollowersPageState extends State<FollowersPage> {
                   children: [
                     Center(
                         child: CustomText(
-                      title: '${LocaleKeys.you_Have.tr()}(${profileProvider.followersModelList.length})${LocaleKeys.followers.tr()} ',
+                      title:
+                          '${LocaleKeys.you_Have.tr()}(${profileProvider.followersModelList.length})${LocaleKeys.followers.tr()} ',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
                     const SizedBox(height: 10),
@@ -70,40 +78,9 @@ class _FollowersPageState extends State<FollowersPage> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          FollowersModel followersModel = profileProvider.followersModelList[index];
-                          return FriendRequestWidget(
-                            width: width,
-                            userName: followersModel.fullName.toString(),
-                            firstButtonName: followersModel.isFriend! ? LocaleKeys.friend.tr() :LocaleKeys.confirm.tr(),
-                            secondButtonName: followersModel.isFriend! ?LocaleKeys.unfriend.tr() :LocaleKeys.remove.tr(),
-                            firstButtonOnTab: () {
-                              // called for accept friend request
-                              if (!followersModel.isFriend!) {
-                                profileProvider.acceptFriendRequest(followersModel.id.toString(), index, isFromFollowers: true);
-                              } else {
-                                //Called for public profile view
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) =>
-                                        PublicProfileScreen(followersModel.id.toString(), index: index, isFromFriendRequestScreen: true)));
-                              }
-                            },
-                            secondButtonOnTab: () {
-                              if (!followersModel.isFriend!) {
-                                //Call when your clicked on Unfriend Button
-
-                              } else {
-                                //call when you clicked on remove button
-                                Provider.of<PublicProfileProvider>(context, listen: false).unFriend((bool status) {
-                                  if (status) {
-                                    profileProvider.removeFollowers(index);
-                                  }
-                                });
-                              }
-                            },
-                            gotoProfileScreen: () {},
-                            firstButtonColor: Colors.blue,
-                            imgUrl: followersModel.profileImage!,
-                          );
+                          FollowersModel followersModel =
+                              profileProvider.followersModelList[index];
+                          return CustomFollowerList(followersModel, index);
 
                           //   Container(
                           //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
