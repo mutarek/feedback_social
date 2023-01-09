@@ -17,6 +17,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _isLoading = true;
+  bool _hasMore = true;
+
   ScrollController controller = ScrollController();
 
   Future<void> _refresh(BuildContext context) async {
