@@ -20,7 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController controller = ScrollController();
 
   Future<void> _refresh(BuildContext context) async {
-    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(isFirstTime: false);
+    Provider.of<NewsFeedProvider>(context, listen: false)
+        .initializeAllFeedData(isFirstTime: false);
   }
 
   @override
@@ -44,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<NewsFeedProvider, AuthProvider, PostProvider>(builder: (context, newsFeedProvider, authProvider, postProvider, child) {
+    return Consumer3<NewsFeedProvider, AuthProvider, PostProvider>(builder:
+        (context, newsFeedProvider, authProvider, postProvider, child) {
       return RefreshIndicator(
           onRefresh: () {
             return _refresh(context);
@@ -54,43 +56,61 @@ class _HomeScreenState extends State<HomeScreen> {
               : CustomScrollView(
                   controller: controller,
                   slivers: [
-
                     SliverPersistentHeader(
                       pinned: false,
                       delegate: _SliverAppBarDelegate(
                           child: PreferredSize(
-                            preferredSize: Size.fromHeight(160),
-                            child: Container(
-                              color: Theme.of(context).primaryColor,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Container(
-                                        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                        child: createPostWidget(context, authProvider, newsFeedProvider: newsFeedProvider, isForGroup: false)),
-                                    postProvider.isLoading
-                                        ? Visibility(
+                        preferredSize: const Size.fromHeight(120),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0.0, horizontal: 8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 0),
+                                  child: createPostWidget(context, authProvider,
+                                      newsFeedProvider: newsFeedProvider,
+                                      isForGroup: false)),
+                              postProvider.isLoading
+                                  ? Visibility(
                                       visible: true,
                                       child: postProvider.isLoading
-                                          ? postStatusWidget(context, authProvider, postProvider, true, postProvider.status)
-                                          : postStatusWidget(context, authProvider, postProvider, false, postProvider.status),
+                                          ? postStatusWidget(
+                                              context,
+                                              authProvider,
+                                              postProvider,
+                                              true,
+                                              postProvider.status)
+                                          : postStatusWidget(
+                                              context,
+                                              authProvider,
+                                              postProvider,
+                                              false,
+                                              postProvider.status),
                                     )
-                                        : Visibility(
+                                  : Visibility(
                                       visible: false,
                                       child: postProvider.isLoading
-                                          ? postStatusWidget(context, authProvider, postProvider, true, postProvider.status)
-                                          : postStatusWidget(context, authProvider, postProvider, false, postProvider.status),
+                                          ? postStatusWidget(
+                                              context,
+                                              authProvider,
+                                              postProvider,
+                                              true,
+                                              postProvider.status)
+                                          : postStatusWidget(
+                                              context,
+                                              authProvider,
+                                              postProvider,
+                                              false,
+                                              postProvider.status),
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                      ),
+                            ],
+                          ),
+                        ),
+                      )),
                     ),
-
                     SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
                         print("Item printed: $index");
@@ -98,8 +118,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const CupertinoActivityIndicator();
                         }
 
-                        return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
-                            isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
+                        return TimeLineWidget(
+                            newsFeedProvider.newsFeedLists[index],
+                            index,
+                            newsFeedProvider,
+                            isHomeScreen: true,
+                            groupPageID: newsFeedProvider
+                                .newsFeedLists[index].id! as int);
                       }, childCount: newsFeedProvider.newsFeedLists.length),
                     )
                   ],
@@ -183,14 +208,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final PreferredSize child;
 
-  _SliverAppBarDelegate({required  this.child });
+  _SliverAppBarDelegate({required this.child});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     // TODO: implement build
     return child;
   }
@@ -208,5 +233,4 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     // TODO: implement shouldRebuild
     return false;
   }
-
 }
