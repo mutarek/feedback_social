@@ -27,6 +27,8 @@ class NewsFeedProvider with ChangeNotifier {
   int selectPage = 1;
   bool hasNextData = false;
   late SharedPreferences? sharedPreferences;
+  final _itemsPerPage = 5;
+  int _currentPage = 0;
 
   updatePageNo() {
     selectPage++;

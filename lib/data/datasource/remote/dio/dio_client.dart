@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:als_frontend/data/datasource/remote/dio/logging_interceptor.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:dio/dio.dart';
@@ -14,11 +13,14 @@ class DioClient {
   Dio? dio;
   String? token;
 
-  DioClient(this.baseUrl, Dio? dioC, {this.loggingInterceptor, this.sharedPreferences}) {
+  DioClient(this.baseUrl, Dio? dioC,
+      {this.loggingInterceptor, this.sharedPreferences}) {
     token = sharedPreferences!.getString(AppConstant.token) ?? "";
     debugPrint('Token: $token');
     dio = dioC ?? Dio();
-    Map<String, String> headerMap = {'Content-Type': 'application/json; charset=UTF-8'};
+    Map<String, String> headerMap = {
+      'Content-Type': 'application/json; charset=UTF-8'
+    };
     if (token!.isNotEmpty) {
       headerMap.addAll({'Authorization': 'Bearer $token'});
     }
