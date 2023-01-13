@@ -189,8 +189,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      CircleAvatar(backgroundImage:CachedNetworkImageProvider(widget.profileImage),
-                          backgroundColor: Colors.grey.withOpacity(.4)),
+                      circularImage(widget.profileImage, 30, 30),
+                      // CircleAvatar(backgroundImage:CachedNetworkImageProvider(widget.profileImage),
+                      //     backgroundColor: Colors.grey.withOpacity(.4)),
                       Expanded(
                           child: CustomTextField(
                         hintText: LocaleKeys.write_Something.tr(),

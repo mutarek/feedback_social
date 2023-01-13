@@ -20,8 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController controller = ScrollController();
 
   Future<void> _refresh(BuildContext context) async {
-    Provider.of<NewsFeedProvider>(context, listen: false)
-        .initializeAllFeedData(isFirstTime: false);
+    Provider.of<NewsFeedProvider>(context, listen: false).initializeAllFeedData(isFirstTime: false);
   }
 
   @override
@@ -45,8 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<NewsFeedProvider, AuthProvider, PostProvider>(builder:
-        (context, newsFeedProvider, authProvider, postProvider, child) {
+    return Consumer3<NewsFeedProvider, AuthProvider, PostProvider>(builder: (context, newsFeedProvider, authProvider, postProvider, child) {
       return RefreshIndicator(
           onRefresh: () {
             return _refresh(context);
@@ -60,54 +58,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       pinned: false,
                       delegate: _SliverAppBarDelegate(
                           child: PreferredSize(
-                        preferredSize: const Size.fromHeight(120),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 0.0, horizontal: 8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 0, vertical: 0),
-                                  child: createPostWidget(context, authProvider,
-                                      newsFeedProvider: newsFeedProvider,
-                                      isForGroup: false)),
-                              postProvider.isLoading
-                                  ? Visibility(
-                                      visible: true,
-                                      child: postProvider.isLoading
-                                          ? postStatusWidget(
-                                              context,
-                                              authProvider,
-                                              postProvider,
-                                              true,
-                                              postProvider.status)
-                                          : postStatusWidget(
-                                              context,
-                                              authProvider,
-                                              postProvider,
-                                              false,
-                                              postProvider.status),
-                                    )
-                                  : Visibility(
-                                      visible: false,
-                                      child: postProvider.isLoading
-                                          ? postStatusWidget(
-                                              context,
-                                              authProvider,
-                                              postProvider,
-                                              true,
-                                              postProvider.status)
-                                          : postStatusWidget(
-                                              context,
-                                              authProvider,
-                                              postProvider,
-                                              false,
-                                              postProvider.status),
-                                    ),
-                            ],
-                          ),
+                        preferredSize: Size.fromHeight(postProvider.isLoading ? 200 : 120),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                child: createPostWidget(context, authProvider, newsFeedProvider: newsFeedProvider, isForGroup: false)),
+                            postProvider.isLoading
+                                ? Visibility(
+                                    visible: true,
+                                    child: postProvider.isLoading
+                                        ? postStatusWidget(context, authProvider, postProvider, true, postProvider.status)
+                                        : postStatusWidget(context, authProvider, postProvider, false, postProvider.status),
+                                  )
+                                : Visibility(
+                                    visible: false,
+                                    child: postProvider.isLoading
+                                        ? postStatusWidget(context, authProvider, postProvider, true, postProvider.status)
+                                        : postStatusWidget(context, authProvider, postProvider, false, postProvider.status),
+                                  ),
+                          ],
                         ),
                       )),
                     ),
@@ -118,13 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const CupertinoActivityIndicator();
                         }
 
-                        return TimeLineWidget(
-                            newsFeedProvider.newsFeedLists[index],
-                            index,
-                            newsFeedProvider,
-                            isHomeScreen: true,
-                            groupPageID: newsFeedProvider
-                                .newsFeedLists[index].id! as int);
+                        return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
+                            isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
                       }, childCount: newsFeedProvider.newsFeedLists.length),
                     )
                   ],
@@ -214,8 +180,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate({required this.child});
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     // TODO: implement build
     return child;
   }
