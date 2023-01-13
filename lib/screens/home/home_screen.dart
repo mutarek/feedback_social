@@ -82,32 +82,51 @@ class _HomeScreenState extends State<HomeScreen> {
                               : postStatusWidget(context, authProvider,
                                   postProvider, false, postProvider.status),
                         ),
-                  ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: newsFeedProvider.newsFeedLists.length,
-                      itemBuilder: (context, index) {
-                        if (index == newsFeedProvider.newsFeedLists.length) {
-                          return const CupertinoActivityIndicator();
-                        }
-
-                        return TimeLineWidget(
+                  CustomScrollView(
+                    slivers: [
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          print("Item printed: $index");
+                          return TimeLineWidget(
                             newsFeedProvider.newsFeedLists[index],
                             index,
                             newsFeedProvider,
                             isHomeScreen: true,
                             groupPageID: newsFeedProvider
-                                .newsFeedLists[index].id! as int);
-                        // return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
-                        //     isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
-                      }),
-                  newsFeedProvider.isBottomLoading
-                      ? Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 100,
-                          alignment: Alignment.center,
-                          child: const CupertinoActivityIndicator())
-                      : const SizedBox.shrink()
+                                .newsFeedLists[index].id! as int,
+                          );
+                        }, childCount: newsFeedProvider.newsFeedLists.length),
+                      )
+                    ],
+                  ),
+                  // ListView.builder(
+                  //     physics: const NeverScrollableScrollPhysics(),
+                  //     shrinkWrap: true,
+                  //     itemCount: newsFeedProvider.newsFeedLists.length,
+                  //     itemBuilder: (context, index) {
+                  //       print(newsFeedProvider.newsFeedLists.length);
+                  //       print(index);
+                  //       if (index == newsFeedProvider.newsFeedLists.length) {
+                  //         return const CupertinoActivityIndicator();
+                  //       }
+                  //
+                  //       return TimeLineWidget(
+                  //           newsFeedProvider.newsFeedLists[index],
+                  //           index,
+                  //           newsFeedProvider,
+                  //           isHomeScreen: true,
+                  //           groupPageID: newsFeedProvider
+                  //               .newsFeedLists[index].id! as int);
+                  //       // return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
+                  //       //     isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
+                  //     }),
+                  // newsFeedProvider.isBottomLoading
+                  //     ? Container(
+                  //         width: MediaQuery.of(context).size.width,
+                  //         height: 100,
+                  //         alignment: Alignment.center,
+                  //         child: const CupertinoActivityIndicator())
+                  //     : const SizedBox.shrink()
                 ],
               ),
       );
