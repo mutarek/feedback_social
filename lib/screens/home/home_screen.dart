@@ -56,17 +56,19 @@ class _HomeScreenState extends State<HomeScreen> {
               : CustomScrollView(
                   controller: controller,
                   slivers: [
+                    //TODO: FOR GIT
                     SliverPersistentHeader(
                       pinned: false,
                       delegate: _SliverAppBarDelegate(
                           child: PreferredSize(
-                        preferredSize: const Size.fromHeight(120),
+                        preferredSize:
+                            Size.fromHeight(postProvider.isLoading ? 170 : 120),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 0.0, horizontal: 8.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
+                            children: [
                               Container(
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 0, vertical: 0),
