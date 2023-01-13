@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:als_frontend/data/datasource/remote/dio/logging_interceptor.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:dio/dio.dart';
