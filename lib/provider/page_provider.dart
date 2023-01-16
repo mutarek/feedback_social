@@ -323,4 +323,9 @@ class PageProvider with ChangeNotifier {
     menuValue = value;
     notifyListeners();
   }
+   bool pageExpended = false;
+  changeExpended(){
+    pageExpended  = !pageExpended;
+    notifyListeners();
+  }
 }
