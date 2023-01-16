@@ -39,14 +39,18 @@ class PostProvider with ChangeNotifier {
       for (int i = 0; i < afterConvertImageLists.length; i++) {
         formData.files.add(MapEntry(
             'image',
-            MultipartFile(afterConvertImageLists[i].readAsBytes().asStream(), afterConvertImageLists[i].lengthSync(),
+            MultipartFile(afterConvertImageLists[i].readAsBytes().asStream(),
+                afterConvertImageLists[i].lengthSync(),
                 filename: afterConvertImageLists[i].path.split("/").last)));
       }
     }
     if (video.isNotEmpty) {
       for (int i = 0; i < video.length; i++) {
         formData.files.add(MapEntry(
-            'video', MultipartFile(video[i].readAsBytes().asStream(), video[i].lengthSync(), filename: video[i].path.split("/").last)));
+            'video',
+            MultipartFile(
+                video[i].readAsBytes().asStream(), video[i].lengthSync(),
+                filename: video[i].path.split("/").last)));
       }
     }
     notifyListeners();
@@ -61,20 +65,23 @@ class PostProvider with ChangeNotifier {
   int status = 0;
   double uploadPercent = 0.0;
 
-  Future<PostResponse> addPost(String postText, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
+  Future<PostResponse> addPost(String postText,
+      {bool isFromGroup = false,
+      bool isFromPage = false,
+      int groupPageID = 0}) async {
     body = postText;
     isLoading = true;
     uploadPercent = 0.0;
     notifyListeners();
     calculateMultipartFile();
-
     ApiResponse apiResponse;
     formData.fields.add(MapEntry('description', postText));
     if (isFromGroup) {
-      apiResponse = await postRepo.submitPostTOGroupBYUSINGGroupID(formData, groupPageID, onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse = await postRepo
+          .submitPostTOGroupBYUSINGGroupID(formData, groupPageID,
+              onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         uploadPercent = (progressPercent / 100);
-
         showLog("Progress: $progressPercent %");
         if (progressPercent == 100) {
           uploadPercent = 1.0;
@@ -84,10 +91,11 @@ class PostProvider with ChangeNotifier {
         showOneTimeNotification();
       });
     } else if (isFromPage) {
-      apiResponse = await postRepo.submitPostTOPageBYUSINGPageID(formData, groupPageID, onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse = await postRepo
+          .submitPostTOPageBYUSINGPageID(formData, groupPageID,
+              onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         uploadPercent = (progressPercent / 100);
-
         showLog("Progress: $progressPercent %");
         if (progressPercent == 100) {
           uploadPercent = 1.0;
@@ -97,7 +105,8 @@ class PostProvider with ChangeNotifier {
         showOneTimeNotification();
       });
     } else {
-      apiResponse = await postRepo.submitPost(formData, onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse = await postRepo.submitPost(formData,
+          onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         uploadPercent = (progressPercent / 100);
 
@@ -110,7 +119,8 @@ class PostProvider with ChangeNotifier {
         showOneTimeNotification();
       });
     }
-    if (apiResponse.response.statusCode == 201 || apiResponse.response.statusCode == 200) {
+    if (apiResponse.response.statusCode == 201 ||
+        apiResponse.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Posted");
       NewsFeedModel n = NewsFeedModel.fromJson(apiResponse.response.data);
       isLoading = false;
@@ -126,32 +136,39 @@ class PostProvider with ChangeNotifier {
     }
   }
 
-  Future<PostResponse> updatePost(String postText, int id, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
+  Future<PostResponse> updatePost(String postText, int id,
+      {bool isFromGroup = false,
+      bool isFromPage = false,
+      int groupPageID = 0}) async {
     isLoading = true;
     calculateMultipartFile();
     ApiResponse apiResponse;
     formData.fields.add(MapEntry('description', postText));
-    formData.fields.add(MapEntry('deleted_image', jsonEncode(deletedImagesIDS)));
+    formData.fields
+        .add(MapEntry('deleted_image', jsonEncode(deletedImagesIDS)));
     formData.fields.add(MapEntry('deleted_video', jsonEncode(deletedVideoIDS)));
 
     if (isFromGroup) {
-      apiResponse =
-          await postRepo.updatePostTOGroupBYUSINGGroupID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse = await postRepo
+          .updatePostTOGroupBYUSINGGroupID(formData, groupPageID, id,
+              onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         if (progressPercent == 100) {
           // dispose();
         }
       });
     } else if (isFromPage) {
-      apiResponse =
-          await postRepo.updatePostTOPageBYUSINGPageID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse = await postRepo
+          .updatePostTOPageBYUSINGPageID(formData, groupPageID, id,
+              onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         if (progressPercent == 100) {
           // dispose();
         }
       });
     } else {
-      apiResponse = await postRepo.updatePost(formData, id, onSendProgress: (int sentBytes, int totalBytes) {
+      apiResponse = await postRepo.updatePost(formData, id,
+          onSendProgress: (int sentBytes, int totalBytes) {
         progressPercent = sentBytes / totalBytes * 100;
         if (progressPercent == 100) {
           // dispose();
@@ -159,7 +176,8 @@ class PostProvider with ChangeNotifier {
       });
     }
     isLoading = false;
-    if (apiResponse.response.statusCode == 201 || apiResponse.response.statusCode == 200) {
+    if (apiResponse.response.statusCode == 201 ||
+        apiResponse.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Updated Successfully");
       NewsFeedModel n = NewsFeedModel.fromJson(apiResponse.response.data);
       notifyListeners();
@@ -183,7 +201,8 @@ class PostProvider with ChangeNotifier {
       imageFile.addAll(pickedFile);
       for (var element in imageFile) {
         singleImage = File(element.path);
-        afterConvertImageLists.add(await imageCompressed(imagePathToCompress: singleImage!));
+        afterConvertImageLists
+            .add(await imageCompressed(imagePathToCompress: singleImage!));
         await imageCompressed(imagePathToCompress: singleImage!);
         notifyListeners();
       }
@@ -227,12 +246,13 @@ class PostProvider with ChangeNotifier {
     deletedVideoIDS = [];
 
     for (var element in newsFeedData.images!) {
-      imageVideoLists.add(ImageVideoDetectModel(true, element.image!, '', element.id!.toString(), newsFeedData.description!));
+      imageVideoLists.add(ImageVideoDetectModel(true, element.image!, '',
+          element.id!.toString(), newsFeedData.description!));
     }
 
     for (var element in newsFeedData.videos!) {
-      imageVideoLists
-          .add(ImageVideoDetectModel(false, element.thumbnail!, element.video!, element.id!.toString(), newsFeedData.description!));
+      imageVideoLists.add(ImageVideoDetectModel(false, element.thumbnail!,
+          element.video!, element.id!.toString(), newsFeedData.description!));
     }
     notifyListeners();
   }
@@ -251,18 +271,22 @@ class PostProvider with ChangeNotifier {
   }
 
   //// for report post
-  Future<bool> reportPost(String report, int id, {bool isFromGroup = false, bool isFromPage = false}) async {
+  Future<bool> reportPost(String report, int id,
+      {bool isFromGroup = false, bool isFromPage = false}) async {
     isLoading = true;
     ApiResponse response;
     if (isFromGroup) {
-      response = await postRepo.reportGroupPost({"report_note": report, "report_type": "1"}, id);
+      response = await postRepo
+          .reportGroupPost({"report_note": report, "report_type": "1"}, id);
     } else if (isFromPage) {
-      response = await postRepo.reportPagePost({"report_note": report, "report_type": "1"}, id);
+      response = await postRepo
+          .reportPagePost({"report_note": report, "report_type": "1"}, id);
     } else {
       response = await postRepo.reportPost({"report_note": report}, id);
     }
     isLoading = false;
-    if (response.response.statusCode == 201 || response.response.statusCode == 200) {
+    if (response.response.statusCode == 201 ||
+        response.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Report Added Successfully On this post");
       notifyListeners();
       return true;
@@ -279,7 +303,8 @@ class PostProvider with ChangeNotifier {
     ApiResponse response = await postRepo.deletePost(url);
 
     isLoading = false;
-    if (response.response.statusCode == 204 || response.response.statusCode == 301) {
+    if (response.response.statusCode == 204 ||
+        response.response.statusCode == 301) {
       Fluttertoast.showToast(msg: 'Post Deleted Successfully');
       notifyListeners();
       return true;
@@ -290,7 +315,8 @@ class PostProvider with ChangeNotifier {
   }
 
   //// for Share post
-  Future<PostResponse> sharePost(String url, String description, NewsFeedModel newsfeedData) async {
+  Future<PostResponse> sharePost(
+      String url, String description, NewsFeedModel newsfeedData) async {
     isLoading = true;
     notifyListeners();
     ApiResponse response = await postRepo.sharePost(url, description);
@@ -304,8 +330,10 @@ class PostProvider with ChangeNotifier {
       newsFeedData.sharePost = n;
       newsFeedData.description = description;
       newsFeedData.timestamp = DateTime.now().toString();
-      newsFeedData.author =
-          Author(id: int.parse(authRepo.getUserID()), fullName: authRepo.getUserName(), profileImage: authRepo.getUserProfile());
+      newsFeedData.author = Author(
+          id: int.parse(authRepo.getUserID()),
+          fullName: authRepo.getUserName(),
+          profileImage: authRepo.getUserProfile());
       newsFeedData.images = [];
       newsFeedData.videos = [];
       notifyListeners();
@@ -322,7 +350,8 @@ class PostProvider with ChangeNotifier {
   initializeNotificationSettings() {
     var androidInitialize = const AndroidInitializationSettings('ic_launcher');
     var iosInitialize = const DarwinInitializationSettings();
-    var initializesSettings = InitializationSettings(android: androidInitialize, iOS: iosInitialize);
+    var initializesSettings =
+        InitializationSettings(android: androidInitialize, iOS: iosInitialize);
     fLutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     fLutterLocalNotificationsPlugin!.initialize(initializesSettings);
     showScheduledTimeNotification();
@@ -338,18 +367,31 @@ class PostProvider with ChangeNotifier {
 
   Future showScheduledTimeNotification() async {
     androidDetails = const AndroidNotificationDetails('channelId', 'Feedback',
-        channelDescription: 'This is My channel', importance: Importance.max, autoCancel: false);
+        channelDescription: 'This is My channel',
+        importance: Importance.max,
+        autoCancel: false);
     iosDetails = const DarwinNotificationDetails();
-    generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
+    generalNotificationDetails =
+        NotificationDetails(android: androidDetails, iOS: iosDetails);
   }
 
   Future showOneTimeNotification() async {
     androidDetails = const AndroidNotificationDetails('channelId', 'Feedback',
-        channelDescription: 'This is My channel', importance: Importance.low, autoCancel: true, colorized: true, ongoing: true);
+        channelDescription: 'This is My channel',
+        importance: Importance.low,
+        autoCancel: true,
+        colorized: true,
+        ongoing: true);
     iosDetails = const DarwinNotificationDetails();
-    var generalNotificationDetails = NotificationDetails(android: androidDetails, iOS: iosDetails);
-    fLutterLocalNotificationsPlugin!.show(0, progressPercent == 100 ? "Post uploading finished" : "Post uploading",
-        progressPercent == 100 ? "100 %" : "Completed ${(uploadPercent * 100).toStringAsFixed(1)}%", generalNotificationDetails,
+    var generalNotificationDetails =
+        NotificationDetails(android: androidDetails, iOS: iosDetails);
+    fLutterLocalNotificationsPlugin!.show(
+        0,
+        progressPercent == 100 ? "Post uploading finished" : "Post uploading",
+        progressPercent == 100
+            ? "100 %"
+            : "Completed ${(uploadPercent * 100).toStringAsFixed(1)}%",
+        generalNotificationDetails,
         payload: 'Task');
     showLog("notification progress: =>  ${uploadPercent.toString()}");
     if (progressPercent == 100) {
