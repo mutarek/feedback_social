@@ -4,13 +4,13 @@ const Color colorPrimaryLight = Color(0xFF06113E);
 const Color colorPrimaryDark = Color(0xFFF9C45A);
 const Color online = Color(0xFF4BCB1F);
 const kPrimaryColor = Color(0xFF06113E);
-const kSecondaryColor = Color(0xFFFE9901);
+const kSecondaryColor = Color(0xFFE7F3FF);
 const kContentColorLightTheme = Color(0xFF1D1D35);
 const kContentColorDarkTheme = Color(0xFFF5FCF9);
 const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 const colorIcons = Color(0xFF959595);
-const colorText = Color(0xFF333D41);
+const colorText = Color(0xFF080C2F);
 const colorShadow = Color.fromRGBO(210, 210, 210, 0.23);
 const colorShadow2 = Color.fromRGBO(213, 213, 213, 0.25);
 class AppColors {

@@ -27,6 +27,16 @@ TextStyle latoStyle700Bold = GoogleFonts.lato(fontWeight: FontWeight.w700, fontS
 TextStyle latoStyle800ExtraBold = GoogleFonts.lato(fontWeight: FontWeight.w800, fontSize: 14, color: AppColors.black);
 TextStyle latoStyle900Black = GoogleFonts.lato(fontWeight: FontWeight.w900, fontSize: 14, color: AppColors.black);
 
+TextStyle robotoStyle100Thin = GoogleFonts.roboto(fontWeight: FontWeight.w100, fontSize: 14, color: colorText);
+TextStyle robotoStyle200ExtraLight = GoogleFonts.roboto(fontWeight: FontWeight.w200, fontSize: 14, color: colorText);
+TextStyle robotoStyle300Light = GoogleFonts.roboto(fontWeight: FontWeight.w300, fontSize: 14, color: colorText);
+TextStyle robotoStyle400Regular = GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 14, color: colorText);
+TextStyle robotoStyle500Medium = GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 14, color: colorText);
+TextStyle robotoStyle600SemiBold = GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 14, color: colorText);
+TextStyle robotoStyle700Bold = GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 14, color: colorText);
+TextStyle robotoStyle800ExtraBold = GoogleFonts.roboto(fontWeight: FontWeight.w800, fontSize: 14, color: colorText);
+TextStyle robotoStyle900Black = GoogleFonts.roboto(fontWeight: FontWeight.w900, fontSize: 14, color: colorText);
+
 
 //
 // {

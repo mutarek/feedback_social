@@ -17,7 +17,6 @@ class NewsfeedRepo {
       response = await dioClient.get(AppConstant.newsFeedURI + page.toString());
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      print('ssksk ${e.toString()}');
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }

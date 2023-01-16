@@ -15,4 +15,14 @@ class ImagesModel {
   static const String placeholderImageOne = 'assets/image/placeholder_image_one.png';
   static const String logo = 'assets/logo/logo.jpeg';
 
+
+  // Icons
+  static const String findPageIcons = 'assets/icons/find_page.svg';
+  static const String inviteFriendIcons = 'assets/icons/invite_friend.svg';
+  static const String likeIcons = 'assets/icons/like.svg';
+  static const String messageIcons = 'assets/icons/message.svg';
+  static const String notificationIcons = 'assets/icons/notification.svg';
+  static const String pageIcons = 'assets/icons/page_icons.svg';
+  static const String pageIconsPng = 'assets/icons/page_icons.png';
+
 }

@@ -227,7 +227,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
             ],
           ),
           Container(

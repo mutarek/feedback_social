@@ -1,11 +1,12 @@
-
-
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
+import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PageviewCard extends StatelessWidget {
-  const PageviewCard({Key? key,
+  const PageviewCard({
+    Key? key,
     required this.ontap,
     required this.name,
     required this.icon,
@@ -18,64 +19,43 @@ class PageviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Color(0xffEDEFF2),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.white,
-              child: Icon(
-                icon,
-                color: AppColors.primaryColorLight,
-              ),
-            ),
-            SizedBox(width: 15,),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: latoStyle600SemiBold.copyWith(color: AppColors.primaryColorLight),
-                ),
-                SizedBox(height: 5,),
-                Row(
-                  children: [
-                    Icon(Icons.message,size: 13,),
-                    SizedBox(width: 2,),
-                    Text(
-                      message,
-                      style: latoStyle300Light.copyWith(
-                          color: AppColors.primaryColorLight, fontSize: 9),
-                    ),
-                    SizedBox(width: 20,),
-                    Icon(Icons.notifications_active,size: 13,),
-                    SizedBox(width: 2,),
-                    Text(
-                      "Notification",
-                      style: latoStyle300Light.copyWith(
-                          color: AppColors.primaryColorLight, fontSize: 9),
-                    ),
-                  ],
-                )
-              ],
-            ),
-   Spacer(),
-            InkWell(
-              onTap: ontap,
-              child: CircleAvatar(
-                radius: 15,
-                backgroundColor: Color(0xffDEE0E6),
-                child: Icon(Icons.more_horiz,color: Colors.black45,),
-              ),
-            )
-          ],
-        ),
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.only(top: 6, bottom: 6),
+      decoration: BoxDecoration(
+          color: const Color(0xffFAFAFA),
+          boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))],
+          borderRadius: BorderRadius.circular(15)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CircleAvatar(radius: 20, backgroundColor: Colors.white, child: Icon(icon, color: AppColors.primaryColorLight)),
+          const SizedBox(width: 15),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(name, style: robotoStyle700Bold.copyWith(fontSize: 16)),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  SvgPicture.asset(ImagesModel.messageIcons, width: 14, height: 14),
+                  const SizedBox(width: 2),
+                  Text(message, style: robotoStyle500Medium.copyWith(fontSize: 9)),
+                  const SizedBox(width: 20),
+                  SvgPicture.asset(ImagesModel.notificationIcons, width: 14, height: 14),
+                  const SizedBox(width: 2),
+                  Text("Notification", style: robotoStyle500Medium.copyWith(fontSize: 9)),
+                ],
+              )
+            ],
+          ),
+          const Spacer(),
+          InkWell(
+            onTap: ontap,
+            child: const CircleAvatar(radius: 15, backgroundColor: Color(0xffE4E6EB), child: Icon(Icons.more_horiz, color: colorText)),
+          )
+        ],
       ),
     );
   }

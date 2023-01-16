@@ -101,9 +101,9 @@ class NewsFeedProvider with ChangeNotifier {
   getSavedList() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final mydataList = prefs.getStringList('offlineNewsfeed') ?? [];
-    mydataList.forEach((element) {
+    for (var element in mydataList) {
       newsFeedLists.add(NewsFeedModel.fromJson(element));
-    });
+    }
   }
 
   addLike(int postID, int index,
