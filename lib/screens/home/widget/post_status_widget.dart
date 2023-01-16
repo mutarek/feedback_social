@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:provider/provider.dart';
 
+import '../../../widgets/network_image.dart';
+
 Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostProvider postProvider, bool isLoading, int status) {
   Provider.of<PostProvider>(context, listen: false).initializeNotificationSettings();
 
@@ -17,14 +19,17 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostPro
     child: Card(
       child: Row(
         children: [
-          ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5)), child: CachedNetworkImage(imageUrl: authProvider.profileImage)),
+          Container(
+            width: 60,
+            child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(5)), child: customNetworkImage(context, authProvider.profileImage)),
+          ),
           const SizedBox(width: 10),
           status == 1
               ? const SizedBox()
-              : SizedBox(
+              : Expanded(
+                child: SizedBox(
                   height: 25,
-                  width: 270,
                   child: LiquidLinearProgressIndicator(
                     value: postProvider.uploadPercent,
                     valueColor: const AlwaysStoppedAnimation(AppColors.unreadColorLight),
@@ -46,9 +51,10 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostPro
                     ),
                   ),
                 ),
-          Expanded(
-            child: status == 1
-                ? Row(
+              ),
+          status == 1
+              ? Expanded(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -67,9 +73,9 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostPro
                               },
                               child: const Text('Retry')))
                     ],
-                  )
-                : const Text(''),
-          ),
+                  ),
+                )
+              : SizedBox.shrink(),
         ],
       ),
     ),

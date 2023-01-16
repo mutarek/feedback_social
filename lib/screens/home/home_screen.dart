@@ -56,60 +56,55 @@ class _HomeScreenState extends State<HomeScreen> {
               : CustomScrollView(
                   controller: controller,
                   slivers: [
-                    //TODO: FOR GIT
                     SliverPersistentHeader(
                       pinned: false,
                       delegate: _SliverAppBarDelegate(
                           child: PreferredSize(
                         preferredSize:
-                            Size.fromHeight(postProvider.isLoading ? 170 : 120),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 0.0, horizontal: 8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 0, vertical: 0),
-                                  child: createPostWidget(context, authProvider,
-                                      newsFeedProvider: newsFeedProvider,
-                                      isForGroup: false)),
-                              postProvider.isLoading
-                                  ? Visibility(
-                                      visible: true,
-                                      child: postProvider.isLoading
-                                          ? postStatusWidget(
-                                              context,
-                                              authProvider,
-                                              postProvider,
-                                              true,
-                                              postProvider.status)
-                                          : postStatusWidget(
-                                              context,
-                                              authProvider,
-                                              postProvider,
-                                              false,
-                                              postProvider.status),
-                                    )
-                                  : Visibility(
-                                      visible: false,
-                                      child: postProvider.isLoading
-                                          ? postStatusWidget(
-                                              context,
-                                              authProvider,
-                                              postProvider,
-                                              true,
-                                              postProvider.status)
-                                          : postStatusWidget(
-                                              context,
-                                              authProvider,
-                                              postProvider,
-                                              false,
-                                              postProvider.status),
-                                    ),
-                            ],
-                          ),
+                            Size.fromHeight(postProvider.isLoading ? 200 : 120),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 0, vertical: 0),
+                                child: createPostWidget(context, authProvider,
+                                    newsFeedProvider: newsFeedProvider,
+                                    isForGroup: false)),
+                            postProvider.isLoading
+                                ? Visibility(
+                                    visible: true,
+                                    child: postProvider.isLoading
+                                        ? postStatusWidget(
+                                            context,
+                                            authProvider,
+                                            postProvider,
+                                            true,
+                                            postProvider.status)
+                                        : postStatusWidget(
+                                            context,
+                                            authProvider,
+                                            postProvider,
+                                            false,
+                                            postProvider.status),
+                                  )
+                                : Visibility(
+                                    visible: false,
+                                    child: postProvider.isLoading
+                                        ? postStatusWidget(
+                                            context,
+                                            authProvider,
+                                            postProvider,
+                                            true,
+                                            postProvider.status)
+                                        : postStatusWidget(
+                                            context,
+                                            authProvider,
+                                            postProvider,
+                                            false,
+                                            postProvider.status),
+                                  ),
+                          ],
                         ),
                       )),
                     ),
@@ -131,7 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                   ],
                 )
-
           // ListView(
           //         controller: controller,
           //         children: [
