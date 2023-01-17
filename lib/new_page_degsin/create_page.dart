@@ -1,6 +1,7 @@
 import 'package:als_frontend/new_page_degsin/widget/Page_view_card.dart';
 import 'package:als_frontend/new_page_degsin/widget/like_invite_find.dart';
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/page/public_page_screen_2.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/palette.dart';
@@ -129,7 +130,9 @@ class CreatePage extends StatelessWidget {
                         child: ListView.builder(
                             itemCount: 4,
                             itemBuilder: (context, index) {
-                              return PageviewCard(ontap: () {}, name: 'Your Pages', icon: Icons.favorite, message: '20 message');
+                              return PageviewCard(ontap: () {
+                                Helper.toScreen(PublicPageScreen2());
+                              }, name: 'Your Pages', icon: Icons.favorite, message: '20 message');
                             }))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
