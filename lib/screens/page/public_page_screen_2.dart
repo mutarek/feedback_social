@@ -163,12 +163,43 @@ class PublicPageScreen2 extends StatelessWidget {
                     itemBuilder: (context) => [
                       // PopupMenuItem 1
                       PopupMenuItem(
-                        value: 1,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
+ mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           SvgPicture.asset("assets/svg/add.svg",height: 10,width:20,),
+                           SizedBox(width: 3,),
+                           Text("Invites Friends",style: GoogleFonts.roboto(
+                           fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),)
+                         ],
+                        ),
+                            SizedBox(height: 20,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // SvgPicture.asset("assets/svg/add.svg",height: 10,width:20,),
+                                Icon(Icons.copy,size: 12,color: AppColors.primaryColorLight,),
+                                SizedBox(width: 3,),
+                                Text("Copy Link",style: GoogleFonts.roboto(
+                                    fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),)
+                              ],
+                            ),
+                            SizedBox(height: 20,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset("assets/svg/block.svg",height: 10,width:20,),
+                                SizedBox(width: 3,),
+                                Text("Block",style: GoogleFonts.roboto(
+                                    fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),)
+                              ],
+                            )
 
                           ],
                         ),
