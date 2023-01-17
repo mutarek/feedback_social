@@ -4,12 +4,12 @@ import 'package:als_frontend/data/model/response/language_model.dart';
 class AppConstant {
   // API BASE URL
   static const agoraApiKey = "52aa6d82f3f14aa3bd36b7a0fb6648f4";
-  static const String baseUrl = 'https://feedbackhelpteam.com';
-  static const String baseUrlTesting = 'https://feedbackhelpteam.com';
+  static const String baseUrl = 'https://als-social.com';
+  static const String baseUrlTesting = 'https://als-social.com';
   static const String baseUrlLive = 'https://feedbackhelpteam.com';
 
-  static const String socketBaseUrl = 'wss://feedbackhelpteam.com/';
-  static const String socketBaseUrlTesting = 'wss://feedbackhelpteam.com/';
+  static const String socketBaseUrl = 'wss://als-social.com/';
+  static const String socketBaseUrlTesting = 'wss://als-social.com/';
   static const String socketBaseUrlLive = 'wss://feedbackhelpteam.com/';
 
   static const String oldBaseUrl = 'https://als-social.com';
