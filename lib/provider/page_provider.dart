@@ -328,4 +328,9 @@ class PageProvider with ChangeNotifier {
     pageExpended  = !pageExpended;
     notifyListeners();
   }
+  bool showMoreText = true;
+  changeTextValue(){
+    showMoreText  = !showMoreText;
+    notifyListeners();
+  }
 }
