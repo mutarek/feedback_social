@@ -1,6 +1,5 @@
 import 'package:als_frontend/new_page_degsin/create_page.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/create_page_screen.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/page/widget/my_page.dart';
@@ -130,7 +129,6 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                   physics: const ClampingScrollPhysics(),
                   onPageChanged: (int i) {
                     FocusScope.of(context).requestFocus(FocusNode());
-
                     pageProvider.changeMenuValue(i);
                   },
                   children: <Widget>[

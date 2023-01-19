@@ -356,4 +356,9 @@ class PageProvider with ChangeNotifier {
           notifyListeners();
         });
   }
+  bool showMoreText = true;
+  changeTextValue(){
+    showMoreText  = !showMoreText;
+    notifyListeners();
+  }
 }
