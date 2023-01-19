@@ -27,8 +27,6 @@ class NewsFeedProvider with ChangeNotifier {
   int selectPage = 1;
   bool hasNextData = false;
   late SharedPreferences? sharedPreferences;
-  final _itemsPerPage = 5;
-  int _currentPage = 0;
 
   updatePageNo() {
     selectPage++;
@@ -59,9 +57,6 @@ class NewsFeedProvider with ChangeNotifier {
     isLoading = false;
     isBottomLoading = false;
     if (response.response.statusCode == 200) {
-      // var dataa = response.response.data;
-      // file.writeAsStringSync(dataa.toString(),
-      //     flush: true, mode: FileMode.write);
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
         newsFeedLists.add(NewsFeedModel.fromJson(element));
@@ -70,21 +65,6 @@ class NewsFeedProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
-    // String filename =
-    //     AppConstant.baseUrl + AppConstant.newsFeedURI + page.toString();
-    // var dir = await getTemporaryDirectory();
-    // File file = File("${dir.path}/$filename");
-    // if (file.existsSync()) {
-    //   print('Loading from cache');
-    //   var jsonData = file.readAsStringSync();
-    //   final String response = jsonDecode(jsonData);
-    //   final data = await json.decode(response);
-    //   data['results'].forEach((element) {
-    //     newsFeedLists.add(NewsFeedModel.fromJson(element));
-    //   });
-    // } else {
-    //
-    // }
   }
 
   saveLastTenData(List<NewsFeedModel> newsFeedLists) async {

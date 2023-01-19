@@ -84,7 +84,9 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                               coverPhoto:
                                                   pageProvider.pageDetailsModel != null ? pageProvider.pageDetailsModel!.coverPhoto! : "",
                                               viewCoverPhoto: () {
-                                                Helper.toScreen(SingleImageView(imageURL: pageProvider.pageDetailsModel!.coverPhoto!,));
+                                                Helper.toScreen(SingleImageView(
+                                                  imageURL: pageProvider.pageDetailsModel!.coverPhoto!,
+                                                ));
                                               },
                                             ),
                                           ),
@@ -124,7 +126,8 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                             "${pageProvider.pageDetailsModel!.totalLike}",
                                                             style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold),
                                                           ),
-                                                          Text(LocaleKeys.followers.tr(), style: GoogleFonts.lato(fontSize: 10, color: Colors.black))
+                                                          Text(LocaleKeys.followers.tr(),
+                                                              style: GoogleFonts.lato(fontSize: 10, color: Colors.black))
                                                         ],
                                                       ),
                                                     )
@@ -158,7 +161,9 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                             children: [
                                                               const Icon(Icons.thumb_up_sharp, size: 16, color: Colors.white),
                                                               Text(
-                                                                (pageProvider.pageDetailsModel!.like == false) ? LocaleKeys.likes.tr() : LocaleKeys.liked.tr(),
+                                                                (pageProvider.pageDetailsModel!.like == false)
+                                                                    ? LocaleKeys.likes.tr()
+                                                                    : LocaleKeys.liked.tr(),
                                                                 style: TextStyle(fontSize: height * 0.015, color: Colors.white),
                                                               )
                                                             ],

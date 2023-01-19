@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -78,21 +79,34 @@ class _PageProfileCoverState extends State<PageProfileCover> {
                           ),
                           child: Stack(
                             children: [
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Padding(
-                                  padding: EdgeInsets.all(5),
-                                  child: Container(
+                              Container(
+                                child: otherProvider.selectedFile != null
+                                    ? Image.file(otherProvider.selectedFile!,
+                                    width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
+                                    : Image.asset("assets/background/profile_placeholder.jpg",
+                                    width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.fitWidth),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .push(MaterialPageRoute(builder: (_) => const ChooseImageAndCropImageView(16, 9, 640, 260)));
+                                },
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Padding(
                                     padding: EdgeInsets.all(5),
-                                    height: 35,
-                                    width: 35,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: AppColors.primaryColorLight,
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      height: 35,
+                                      width: 35,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: AppColors.primaryColorLight,
+                                      ),
+                                      child: const Icon(Icons.camera_alt,color: Colors.white,),
                                     ),
-                                    child: const Icon(Icons.camera_alt,color: Colors.white,),
-                                  ),
-                                )
+                                  )
+                                ),
                               ),
                             ],
                           ),
@@ -142,25 +156,37 @@ class _PageProfileCoverState extends State<PageProfileCover> {
                               topLeft: Radius.circular(15),
                               topRight: Radius.circular(15),
                             ),
-
                         ),
                         child:  Stack(
                           children: [
-                            Align(
-                                alignment: Alignment.bottomRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(1),
-                                    height: 25,
-                                    width: 25,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: AppColors.primaryColorLight,
+                            Container(
+                              child: otherProvider.pageProfileFile != null
+                                  ? Image.file(otherProvider.pageProfileFile!,
+                                  width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
+                                  : Image.asset("assets/background/profile_placeholder.jpg",
+                                  width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.fitWidth),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (_) => const ChooseImageAndCropImageView(16, 9, 640, 260)));
+                              },
+                              child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(1),
+                                      height: 25,
+                                      width: 25,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: AppColors.primaryColorLight,
+                                      ),
+                                      child: const Icon(Icons.camera_alt,color: Colors.white,size: 15,),
                                     ),
-                                    child: const Icon(Icons.camera_alt,color: Colors.white,size: 15,),
-                                  ),
-                                )
+                                  )
+                              ),
                             ),
                           ],
                         ),
