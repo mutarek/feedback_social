@@ -153,6 +153,7 @@ SizedBox(height: 10,),
         Expanded(
           child: ListView.builder(
             padding: EdgeInsets.only(top: 0),
+            shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount: 1,
               itemBuilder: (context, index) {

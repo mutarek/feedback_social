@@ -1,9 +1,6 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/widget/post_widget.dart';
-import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
-import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,6 +35,8 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
       backgroundColor: Colors.white,
       body: Consumer<PageProvider>(builder: (context, pageProvider, child) {
         return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: const ScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -461,7 +460,8 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                       showDescription: () {
                         pageProvider.changeTextValue();
                       },
-                    )
+                    ),
+
                   ],
                 ),
               ),
