@@ -8,6 +8,7 @@ import 'package:als_frontend/data/model/response/page/author_page_details_model.
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/page_repo.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -327,6 +328,33 @@ class PageProvider with ChangeNotifier {
   changeExpended(){
     pageExpended  = !pageExpended;
     notifyListeners();
+  }
+
+  //TODO: FOR SELECTING COUNTRY FOR PAGE
+  String countryName = "Country / City";
+
+  void pickupCountry(BuildContext context) {
+    showCountryPicker(
+        context: context,
+        showPhoneCode: false,
+        countryListTheme: CountryListThemeData(
+          flagSize: 25,
+          backgroundColor: Colors.white,
+          textStyle: const TextStyle(fontSize: 16, color: Colors.blueGrey),
+          bottomSheetHeight: 500,
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+          //Optional. Styles the search field.
+          inputDecoration: InputDecoration(
+            labelText: 'Search',
+            hintText: 'Start typing to search',
+            prefixIcon: const Icon(Icons.search),
+            border: OutlineInputBorder(borderSide: BorderSide(color: const Color(0xFF8C98A8).withOpacity(0.2))),
+          ),
+        ),
+        onSelect: (Country country) {
+          countryName = country.name;
+          notifyListeners();
+        });
   }
   bool showMoreText = true;
   changeTextValue(){

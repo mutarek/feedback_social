@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PagePostView extends StatelessWidget {
-  const PagePostView({Key? key,required this.dicription,required this.value,required this.showDescription}) : super(key: key);
+  const PagePostView({Key? key, required this.dicription, required this.value, required this.showDescription}) : super(key: key);
   final String dicription;
   final bool value;
   final VoidCallback showDescription;
+
   @override
   Widget build(BuildContext context) {
     String firstHalf;
@@ -34,8 +35,7 @@ class PagePostView extends StatelessWidget {
           padding: const EdgeInsets.only(left: 18),
           child: Text(
             "Details",
-            style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.primaryColorLight),
+            style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.primaryColorLight),
           ),
         ),
         SizedBox(
@@ -65,17 +65,11 @@ class PagePostView extends StatelessWidget {
               RichText(
                 text: TextSpan(
                     text: "Cateory -",
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 12,
-                        color: AppColors.primaryColorLight),
+                    style: GoogleFonts.roboto(fontWeight: FontWeight.w800, fontSize: 12, color: AppColors.primaryColorLight),
                     children: [
                       TextSpan(
                         text: "ews & media website",
-                        style: GoogleFonts.roboto(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: AppColors.primaryColorLight),
+                        style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
                       )
                     ]),
               )
@@ -102,8 +96,7 @@ class PagePostView extends StatelessWidget {
               ),
               Text(
                 "abs@google.com",
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
               )
             ],
           ),
@@ -128,8 +121,7 @@ class PagePostView extends StatelessWidget {
               ),
               Text(
                 "abs.com.bd",
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
               ),
             ],
           ),
@@ -142,103 +134,109 @@ class PagePostView extends StatelessWidget {
           color: Color(0xffE4E6EB),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 18,),
+          padding: const EdgeInsets.only(
+            left: 18,
+          ),
           child: Text(
             "Posts",
-            style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.primaryColorLight),
+            style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.primaryColorLight),
           ),
         ),
-SizedBox(height: 10,),
-        Expanded(
-          child: ListView.builder(
+        SizedBox(
+          height: 10,
+        ),
+        ListView.builder(
             padding: EdgeInsets.only(top: 0),
             physics: NeverScrollableScrollPhysics(),
-            itemCount: 1,
-              itemBuilder: (context, index) {
+            shrinkWrap: true,
+            itemCount: 2,
+            itemBuilder: (context, index) {
               return Column(
                 children: [
-
                   Padding(
-                    padding: const EdgeInsets.only(left: 18,right: 18),
+                    padding: const EdgeInsets.only(left: 18, right: 18),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      Container(
-                        height: 36,
-                        width:36,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.primaryColorLight),
-                          shape: BoxShape.circle,
-                          image: DecorationImage(image: AssetImage("assets/background/help.png"),fit: BoxFit.cover)
+                        Container(
+                          height: 36,
+                          width: 36,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.primaryColorLight),
+                              shape: BoxShape.circle,
+                              image: DecorationImage(image: AssetImage("assets/background/help.png"), fit: BoxFit.cover)),
                         ),
-                      ),
-                      SizedBox(width: 8,),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Abstract Graphics Studio",
-                            style: GoogleFonts.roboto(
-                                fontWeight: FontWeight.w700, fontSize: 13.5, color: AppColors.primaryColorLight),),
-                          Row(
-                            children: [
-                              Icon(Icons.fact_check_outlined,color: AppColors.primaryColorLight,size: 12,),
-                              SizedBox(width: 2,),
-                              Text("2 Hours  -",
-                                style: GoogleFonts.roboto(
-                                    fontWeight: FontWeight.w500, fontSize: 7, color: AppColors.primaryColorLight),),
-                              SizedBox(width: 2,),
-                              Icon(Icons.circle,color: AppColors.primaryColorLight,size: 12,)
-                            ],
-                          )
-                        ],
-                      ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Abstract Graphics Studio",
+                              style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 13.5, color: AppColors.primaryColorLight),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.fact_check_outlined,
+                                  color: AppColors.primaryColorLight,
+                                  size: 12,
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                  "2 Hours  -",
+                                  style: GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 7, color: AppColors.primaryColorLight),
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Icon(
+                                  Icons.circle,
+                                  color: AppColors.primaryColorLight,
+                                  size: 12,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                         Spacer(),
                         Container(
                           height: 24,
                           width: 30,
-                          decoration: BoxDecoration(
-                            color: Color(0xffE4E6EB),
-                            borderRadius: BorderRadius.circular(10)
-                          ),
+                          decoration: BoxDecoration(color: Color(0xffE4E6EB), borderRadius: BorderRadius.circular(10)),
                           child: Center(child: Icon(Icons.more_horiz)),
                         ),
-
                       ],
                     ),
                   ),
-                 SizedBox(height: 10,),
-                 Padding(
-                   padding: const EdgeInsets.only(left: 18,right: 18),
-                   child: RichText(
-                       textAlign: TextAlign.start,
-                       text: TextSpan(
-                     text: value ? (firstHalf + "...") : (firstHalf + secondHalf),
-                       style: GoogleFonts.roboto(
-                           fontWeight: FontWeight.w400, fontSize: 10, color: AppColors.primaryColorLight),
-                     children: [
-
-                       TextSpan(
-                         text: value ? "show more" : "show less",
-                         style: GoogleFonts.roboto(
-                             fontWeight: FontWeight.w600, fontSize: 13, color: AppColors.primaryColorLight),
-                       recognizer: TapGestureRecognizer()
-                         ..onTap = showDescription,
-                       )
-                     ]
-
-                   )),
-                 ),
- Container(
-   height:229 ,
-   color: AppColors.imageBGColorLight,
-
- )
-
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18, right: 18),
+                    child: RichText(
+                        textAlign: TextAlign.start,
+                        text: TextSpan(
+                            text: value ? (firstHalf + "...") : (firstHalf + secondHalf),
+                            style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 10, color: AppColors.primaryColorLight),
+                            children: [
+                              TextSpan(
+                                text: value ? "show more" : "show less",
+                                style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 13, color: AppColors.primaryColorLight),
+                                recognizer: TapGestureRecognizer()..onTap = showDescription,
+                              )
+                            ])),
+                  ),
+                  Container(
+                    height: 229,
+                    color: AppColors.imageBGColorLight,
+                  )
                 ],
               );
-              }),
-        )
+            })
       ],
     );
   }
