@@ -1,4 +1,5 @@
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/page/widget/admin_post_view.dart';
 import 'package:als_frontend/screens/page/widget/post_widget.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +7,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class PublicPageScreen2 extends StatefulWidget {
-  const PublicPageScreen2({Key? key,required this.isAdmin}) : super(key: key);
-  final bool isAdmin;
+class AdminPageScreen extends StatefulWidget {
+  const AdminPageScreen({Key? key}) : super(key: key);
+
   @override
-  State<PublicPageScreen2> createState() => _PublicPageScreen2State();
+  State<AdminPageScreen> createState() => _AdminPageScreenState();
 }
 
-class _PublicPageScreen2State extends State<PublicPageScreen2> {
+class _AdminPageScreenState extends State<AdminPageScreen> {
   @override
   void initState() {
     _pageController = PageController();
@@ -373,19 +374,13 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                           : const BoxDecoration(),
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
-                        child: widget.isAdmin?Text(
+                        child: Text(
                           "Manage",
                           style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w700,
                               fontSize: 12,
                               color: pageProvider.menuValue == 4 ? Colors.white : AppColors.primaryColorLight),
-                        ):Text(
-                          "Community",
-                          style: GoogleFonts.roboto(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              color: pageProvider.menuValue == 4 ? Colors.white : AppColors.primaryColorLight),
-                        ),
+                        )
                       ),
                     ),
                   ),
@@ -404,7 +399,7 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                 },
 
                 itemBuilder: (context, index) {
-                  return  PagePostView(
+                  return  AdminPostView(
 
                     dicription:
                     'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',

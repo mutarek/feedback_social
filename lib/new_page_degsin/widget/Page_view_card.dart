@@ -1,4 +1,6 @@
+import 'package:als_frontend/screens/page/admin_page_screen.dart';
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -54,7 +56,10 @@ class PageviewCard extends StatelessWidget {
           InkWell(
             onTap: ontap,
             child: const CircleAvatar(radius: 15, backgroundColor: Color(0xffE4E6EB), child: Icon(Icons.more_horiz, color: colorText)),
-          )
+          ),
+          ElevatedButton(onPressed: (){
+            Helper.toScreen(AdminPageScreen());
+          }, child: Text("admin"))
         ],
       ),
     );

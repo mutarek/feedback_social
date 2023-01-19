@@ -1,3 +1,4 @@
+
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/gestures.dart';
@@ -5,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PagePostView extends StatelessWidget {
-  const PagePostView(
+class AdminPostView extends StatelessWidget {
+  const AdminPostView(
       {Key? key, required this.dicription, required this.value, required this.showDescription})
       : super(key: key);
   final String dicription;
@@ -35,125 +36,49 @@ class PagePostView extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 18),
-          child: Text(
-            "Details",
-            style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.primaryColorLight),
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 18),
-          child: Row(
-            children: [
-              Container(
-                height: 15,
-                width: 15,
-                decoration: const BoxDecoration(
-                  color: AppColors.primaryColorLight,
-                  shape: BoxShape.circle,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Image.asset(
-                    "assets/background/category.png",
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 2,
-              ),
-              RichText(
-                text: TextSpan(
-                    text: "Cateory -",
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 12,
-                        color: AppColors.primaryColorLight),
-                    children: [
-                      TextSpan(
-                        text: "ews & media website",
-                        style: GoogleFonts.roboto(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: AppColors.primaryColorLight),
-                      )
-                    ]),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 18),
-          child: Row(
-            children: [
-              Container(
-                height: 15,
-                width: 15,
-                decoration: const BoxDecoration(
-                  color: AppColors.primaryColorLight,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(
-                width: 2,
-              ),
-              Text(
-                "abs@google.com",
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 18),
-          child: Row(
-            children: [
-              Container(
-                height: 15,
-                width: 15,
-                decoration: const BoxDecoration(
-                  color: AppColors.primaryColorLight,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(
-                width: 2,
-              ),
-              Text(
-                "abs.com.bd",
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        const Divider(
-          thickness: 1.8,
-          color: Color(0xffE4E6EB),
-        ),
+       Padding(
+         padding: const EdgeInsets.only(left: 18,right: 16),
+         child: Container(
+           height: 130,
+           decoration: BoxDecoration(
+             color: AppColors.imageBGColorLight,
+             borderRadius: BorderRadius.circular(10),
+             border: Border.all(color: AppColors.primaryColorLight,width:0.4)
+           ),
+           child: Column(
+           
+             children: [
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.end,
+
+                 children: [
+                   Icon(Icons.add)
+                 ],
+               )
+             ],
+           ),
+         ),
+       ),
         Padding(
           padding: const EdgeInsets.only(
             left: 18,
+            top: 5
           ),
-          child: Text(
-            "Posts",
-            style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.primaryColorLight),
+          child: Container(
+            height: 22,
+            width: 43,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColorLight,
+              borderRadius: BorderRadius.circular(20)
+            ),
+
+            child: Center(
+              child: Text(
+                "Posts",
+                style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.w700, fontSize: 12, color: Colors.white),
+              ),
+            ),
           ),
         ),
         const SizedBox(
@@ -243,7 +168,7 @@ class PagePostView extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                    SvgPicture.asset("assets/svg/save.svg",height: 14,width: 14,),
+                                      SvgPicture.asset("assets/svg/save.svg",height: 14,width: 14,),
                                       const SizedBox(
                                         width: 4,
                                       ),
@@ -259,7 +184,7 @@ class PagePostView extends StatelessWidget {
                                   const SizedBox(
                                     height: 18,
                                   ),
-                                 
+
                                   Row(
                                     children: [
                                       SvgPicture.asset(
@@ -284,7 +209,7 @@ class PagePostView extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                     Icon(Icons.copy,size: 12,),
+                                      Icon(Icons.copy,size: 12,),
                                       const SizedBox(
                                         width: 4,
                                       ),
@@ -303,7 +228,7 @@ class PagePostView extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                     SvgPicture.asset("assets/svg/report.svg",height: 14,width:10 ,),
+                                      SvgPicture.asset("assets/svg/report.svg",height: 14,width:10 ,),
                                       const SizedBox(
                                         width: 4,
                                       ),
@@ -376,11 +301,11 @@ class PagePostView extends StatelessWidget {
                                   shape: BoxShape.circle, color: AppColors.primaryColorLight),
                               child: Center(
                                   child: SvgPicture.asset(
-                                "assets/svg/like.svg",
-                                fit: BoxFit.cover,
-                                height: 9,
-                                width: 8,
-                              )),
+                                    "assets/svg/like.svg",
+                                    fit: BoxFit.cover,
+                                    height: 9,
+                                    width: 8,
+                                  )),
                             ),
                             Positioned(
                               left: 14,
@@ -388,14 +313,14 @@ class PagePostView extends StatelessWidget {
                                 height: 17,
                                 width: 17,
                                 decoration:
-                                    const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                                const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
                                 child: Center(
                                     child: SvgPicture.asset(
-                                  "assets/svg/love.svg",
-                                  fit: BoxFit.cover,
-                                  height: 9,
-                                  width: 8,
-                                )),
+                                      "assets/svg/love.svg",
+                                      fit: BoxFit.cover,
+                                      height: 9,
+                                      width: 8,
+                                    )),
                               ),
                             ),
                             Positioned(
@@ -407,11 +332,11 @@ class PagePostView extends StatelessWidget {
                                     shape: BoxShape.circle, color: Colors.yellow),
                                 child: Center(
                                     child: SvgPicture.asset(
-                                  "assets/svg/haha.svg",
-                                  fit: BoxFit.cover,
-                                  height: 9,
-                                  width: 8,
-                                )),
+                                      "assets/svg/haha.svg",
+                                      fit: BoxFit.cover,
+                                      height: 9,
+                                      width: 8,
+                                    )),
                               ),
                             ),
                           ],
@@ -422,30 +347,30 @@ class PagePostView extends StatelessWidget {
                                 style: GoogleFonts.roboto(
                                     fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
                                 children: [
-                              TextSpan(
-                                  text: " and",
-                                  style: GoogleFonts.roboto(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: AppColors.primaryColorLight),
-                                  children: [
-                                    TextSpan(
-                                        text: " 5,500",
-                                        style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
-                                            color: Colors.black),
-                                        children: [
-                                          TextSpan(
-                                            text: " others",
+                                  TextSpan(
+                                      text: " and",
+                                      style: GoogleFonts.roboto(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
+                                          color: AppColors.primaryColorLight),
+                                      children: [
+                                        TextSpan(
+                                            text: " 5,500",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w400,
+                                                fontWeight: FontWeight.w600,
                                                 fontSize: 12,
-                                                color: AppColors.primaryColorLight),
-                                          ),
-                                        ])
-                                  ])
-                            ])),
+                                                color: Colors.black),
+                                            children: [
+                                              TextSpan(
+                                                text: " others",
+                                                style: GoogleFonts.roboto(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 12,
+                                                    color: AppColors.primaryColorLight),
+                                              ),
+                                            ])
+                                      ])
+                                ])),
                         const Spacer(),
                         Row(
                           children: [
@@ -456,11 +381,11 @@ class PagePostView extends StatelessWidget {
                                     shape: BoxShape.circle, color: AppColors.primaryColorLight),
                                 child: Center(
                                     child: SvgPicture.asset(
-                                  "assets/svg/comment.svg",
-                                  fit: BoxFit.cover,
-                                  height: 9,
-                                  width: 8,
-                                ))),
+                                      "assets/svg/comment.svg",
+                                      fit: BoxFit.cover,
+                                      height: 9,
+                                      width: 8,
+                                    ))),
                             const SizedBox(
                               width: 3,
                             ),
@@ -483,11 +408,11 @@ class PagePostView extends StatelessWidget {
                                     shape: BoxShape.circle, color: AppColors.primaryColorLight),
                                 child: Center(
                                     child: SvgPicture.asset(
-                                  "assets/svg/share2.svg",
-                                  fit: BoxFit.cover,
-                                  height: 9,
-                                  width: 8,
-                                ))),
+                                      "assets/svg/share2.svg",
+                                      fit: BoxFit.cover,
+                                      height: 9,
+                                      width: 8,
+                                    ))),
                             const SizedBox(
                               width: 3,
                             ),
@@ -567,7 +492,7 @@ class PagePostView extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                     Icon(Icons.pending_actions),
+                                      Icon(Icons.pending_actions),
                                       const SizedBox(
                                         width: 4,
                                       ),
@@ -586,7 +511,7 @@ class PagePostView extends StatelessWidget {
                                   Row(
                                     children: [
                                       // SvgPicture.asset("assets/svg/add.svg",height: 10,width:20,),
-                                    SvgPicture.asset("assets/svg/plane2.svg",height: 18,width: 18,),
+                                      SvgPicture.asset("assets/svg/plane2.svg",height: 18,width: 18,),
                                       const SizedBox(
                                         width: 4,
                                       ),

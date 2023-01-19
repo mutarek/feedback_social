@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/page/new_design/create_page.dart';
+
 class CreatePage extends StatelessWidget {
   const CreatePage({Key? key}) : super(key: key);
 
@@ -131,22 +133,27 @@ class CreatePage extends StatelessWidget {
                             itemCount: 4,
                             itemBuilder: (context, index) {
                               return PageviewCard(ontap: () {
-                                Helper.toScreen(PublicPageScreen2());
+                                Helper.toScreen(const PublicPageScreen2(isAdmin: true,));
                               }, name: 'Your Pages', icon: Icons.favorite, message: '20 message');
                             }))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(color: kSecondaryColor, borderRadius: BorderRadius.circular(30)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.add_circle_outline, size: 22, color: AppColors.primaryColorLight),
-                      const SizedBox(width: 5),
-                      Text("Create a new Pages", style: robotoStyle500Medium.copyWith(fontSize: 18))
-                    ],
+                InkWell(
+                  onTap: (){
+                    Helper.toScreen(const CreatePageScreen());
+                  },
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(color: kSecondaryColor, borderRadius: BorderRadius.circular(30)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.add_circle_outline, size: 22, color: AppColors.primaryColorLight),
+                        const SizedBox(width: 5),
+                        Text("Create a new Pages", style: robotoStyle500Medium.copyWith(fontSize: 18))
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 5),
