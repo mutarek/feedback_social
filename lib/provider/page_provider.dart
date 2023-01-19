@@ -325,6 +325,16 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
    bool pageExpended = false;
+   bool adminAccessPage = false;
+   bool adminSectionAccess = false;
+   changeAdminSectionAccessExpanded(){
+     adminSectionAccess = !adminSectionAccess;
+     notifyListeners();
+   }
+   changeAdminAccessExpanded(){
+     adminAccessPage =!adminAccessPage;
+     notifyListeners();
+   }
   changeExpended(){
     pageExpended  = !pageExpended;
     notifyListeners();
