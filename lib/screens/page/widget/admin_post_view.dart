@@ -1,6 +1,7 @@
 
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -48,12 +49,23 @@ class AdminPostView extends StatelessWidget {
            child: Column(
            
              children: [
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.end,
-
-                 children: [
-                   Icon(Icons.add)
-                 ],
+             TextFormField(
+            decoration: InputDecoration(
+              border: InputBorder.none
+            ),
+             ),
+               Spacer(),
+               Padding(
+                 padding: const EdgeInsets.only(right: 10,bottom: 10),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.end,
+                   crossAxisAlignment: CrossAxisAlignment.end,
+                   children: [
+                     SvgPicture.asset("assets/svg/haha.svg",height: 12,width: 12,color: AppColors.primaryColorLight,),
+                     SizedBox(width: 5,),
+                     SvgPicture.asset("assets/svg/photoAdd.svg",height: 12,width: 12,),
+                   ],
+                 ),
                )
              ],
            ),
@@ -168,12 +180,12 @@ class AdminPostView extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      SvgPicture.asset("assets/svg/save.svg",height: 14,width: 14,),
+                                      SvgPicture.asset("assets/svg/edit.svg",height: 14,width: 14,),
                                       const SizedBox(
                                         width: 4,
                                       ),
                                       Text(
-                                        "Save",
+                                        "Edit post",
                                         style: GoogleFonts.roboto(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 12,
@@ -228,12 +240,12 @@ class AdminPostView extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                      SvgPicture.asset("assets/svg/report.svg",height: 14,width:10 ,),
+                                      SvgPicture.asset("assets/svg/delete.svg",height: 14,width:10 ,),
                                       const SizedBox(
                                         width: 4,
                                       ),
                                       Text(
-                                        "Share to a page",
+                                        "Delete post",
                                         style: GoogleFonts.roboto(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 12,
