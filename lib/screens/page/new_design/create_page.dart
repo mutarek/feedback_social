@@ -29,7 +29,6 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: const CustomText(title: "Feedback Pages", color: AppColors.primaryColorLight, fontWeight: FontWeight.bold, fontSize: 27),
         backgroundColor: Colors.white,
         elevation: 0,

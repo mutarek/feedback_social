@@ -6,11 +6,11 @@ import 'package:image_picker/image_picker.dart';
 
 class OtherProvider with ChangeNotifier {
   File? selectedFile;
+  File? pageProfileFile;
   bool inProcess = false;
 
   clearImage() {
     selectedFile = null;
-
     notifyListeners();
   }
 

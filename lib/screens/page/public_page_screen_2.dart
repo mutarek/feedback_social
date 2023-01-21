@@ -1,4 +1,7 @@
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/page/widget/about_widget.dart';
+import 'package:als_frontend/screens/page/widget/page_comment_view.dart';
+import 'package:als_frontend/screens/page/widget/page_photo_view.dart';
 import 'package:als_frontend/screens/page/widget/post_widget.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class PublicPageScreen2 extends StatefulWidget {
-  const PublicPageScreen2({Key? key,required this.isAdmin}) : super(key: key);
-  final bool isAdmin;
+  const PublicPageScreen2({Key? key}) : super(key: key);
+
   @override
   State<PublicPageScreen2> createState() => _PublicPageScreen2State();
 }
@@ -193,7 +196,7 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                                   Text(
                                     "Invites Friends",
                                     style:
-                                    GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                        GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                   )
                                 ],
                               ),
@@ -216,7 +219,7 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                                   Text(
                                     "Copy Link",
                                     style:
-                                    GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                        GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                   )
                                 ],
                               ),
@@ -238,7 +241,7 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                                   Text(
                                     "Block",
                                     style:
-                                    GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                        GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                   )
                                 ],
                               )
@@ -373,13 +376,7 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                           : const BoxDecoration(),
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
-                        child: widget.isAdmin?Text(
-                          "Manage",
-                          style: GoogleFonts.roboto(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              color: pageProvider.menuValue == 4 ? Colors.white : AppColors.primaryColorLight),
-                        ):Text(
+                        child: Text(
                           "Community",
                           style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w700,
@@ -395,19 +392,28 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
             SizedBox(
               height: 1000,
               child: PageView.builder(
-                itemCount: 1,
+                itemCount: 5,
                 controller: _pageController,
                 physics: const NeverScrollableScrollPhysics(),
                 onPageChanged: (int i) {
                   FocusScope.of(context).requestFocus(FocusNode());
                   pageProvider.changeMenuValue(i);
                 },
-
                 itemBuilder: (context, index) {
-                  return  PagePostView(
-
+                  if (index == 1) {
+                    return PageAboutView();
+                  } else if (index == 2) {
+                    return PagePhotoView();
+                  } else if (index == 3) {
+                    return ListTile(
+                      title: Text('Live Comming Soon'),
+                    );
+                  } else if (index == 4) {
+                    return PageCommentView();
+                  }
+                  return PagePostView(
                     dicription:
-                    'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',
+                        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',
                     value: pageProvider.showMoreText,
                     showDescription: () {
                       pageProvider.changeTextValue();
