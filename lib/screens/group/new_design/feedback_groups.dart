@@ -1,10 +1,9 @@
 
-import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
-import 'package:als_frontend/screens/page/widget/page_view_widget.dart';
-import 'package:als_frontend/screens/page/widget/like_invite_find.dart';
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/widget/group_view_card.dart';
 import 'package:als_frontend/screens/page/find_page.dart';
 import 'package:als_frontend/screens/page/page_dashboard.dart';
+import 'package:als_frontend/screens/page/widget/like_invite_find.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/palette.dart';
@@ -13,6 +12,7 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class FeedBackGroups extends StatelessWidget {
@@ -157,7 +157,9 @@ class FeedBackGroups extends StatelessWidget {
                     child: ListView.builder(
                         itemCount: 4,
                         itemBuilder: (context, index) {
-                          return PageViewWidget(authorPageModel: AuthorPageModel(),);
+                          return GroupViewCard(ontap: () {
+                            //Helper.toScreen(const PublicPageScreen2());
+                          }, name: 'City Travels', icon: Icons.favorite, message: 'Last active 50 minutes ago');
                         }))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 5),
@@ -189,9 +191,9 @@ class FeedBackGroups extends StatelessWidget {
                           backgroundColor: AppColors.primaryColorLight,
                           child: InkWell(
                               onTap: () {
-                                groupProvider.changeYourGroupStatus();
+                                groupProvider.changeJoinedGroupStatus();
                               },
-                              child: groupProvider.yourGroup != true
+                              child: groupProvider.joinedGroup != true
                                   ? const Icon(Icons.arrow_drop_down, color: Colors.white)
                                   : const Icon(Icons.arrow_drop_up, color: Colors.white)),
                         )
@@ -199,6 +201,252 @@ class FeedBackGroups extends StatelessWidget {
                     ),
                   ),
                 ),
+                groupProvider.joinedGroup
+              ? SizedBox(
+              height: 250,
+              child: ListView.builder(
+                  itemCount:3,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          margin: const EdgeInsets.only(top: 6, bottom: 6),
+                          decoration: BoxDecoration(
+                              color: const Color(0xffFAFAFA),
+                              boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))],
+                              borderRadius: BorderRadius.circular(15)),
+                          child:  Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(width: 10,),
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Center(child: Image.asset("assets/background/profile_placeholder.jpg",height: 36,width: 36,))),
+                              const SizedBox(width: 15),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Desh Travels', style: robotoStyle700Bold.copyWith(fontSize: 16)),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset("assets/svg/last_minute_icon.svg", width: 14, height: 14),
+                                      const SizedBox(width: 2),
+                                      Text("My Message", style: robotoStyle500Medium.copyWith(fontSize: 9)),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const Spacer(),
+                              InkWell(
+                                  onTap: (){
+                                    groupProvider.changeEachJoinedGroupStatus();
+                                  },
+                                  child: groupProvider.eachJoinedGroup?
+                                  SvgPicture.asset("assets/svg/play_up_vector.svg",height: 15,width: 15,)
+                                      :SvgPicture.asset("assets/svg/play_down_vector.svg",height: 15,width: 15,)
+                              ),
+                              SizedBox(width: 10,)
+                            ],
+                          ),
+                        ),
+                        groupProvider.eachJoinedGroup?
+                            Row(
+                              children: [
+                                Container(
+                                  height: 47,
+                                  width: 293,
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)
+                                    ),
+                                    child : PopupMenuButton(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset("assets/svg/joined_svgs.svg",height: 12,width: 12,),
+                                          SizedBox(width: 2,),
+                                          Text('Joined',style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.primaryColorLight),),
+                                          SizedBox(width: 2,),
+                                          SvgPicture.asset("assets/svg/up_arrow.svg",height: 5,width: 10,),
+                                        ],
+                                      ),
+                                      itemBuilder: (context) => [
+                                        // PopupMenuItem 1
+                                        PopupMenuItem(
+                                          child: Container(
+                                            width: 150,
+                                            height: 120,
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    const SizedBox(height: 10,),
+                                                    SvgPicture.asset("assets/svg/notification_icon_svg.svg",height: 20,width: 20,),
+                                                    const SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                      "Manage Notifications",
+                                                      style:
+                                                      GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    const SizedBox(height: 10,),
+                                                    SvgPicture.asset("assets/svg/unfollow_svg.svg",height: 20,width: 15,),
+                                                    const SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                      "Unfollow Group",
+                                                      style:
+                                                      GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    const SizedBox(height: 10,),
+                                                    SvgPicture.asset("assets/svg/leave_group_svg.svg",height: 20,width: 20,),
+                                                    const SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                      "Leave From Group",
+                                                      style:
+                                                      GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        // PopupMenuItem 2
+                                      ],
+                                      offset: const Offset(0, 58),
+                                      color: Colors.white,
+                                      elevation: 4,
+                                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 47,
+                                  width: 93,
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)
+                                    ),
+                                    child:
+                                    PopupMenuButton(
+                                      child: Container(
+                                        height: 24,
+                                        width: 30,
+                                        color: const Color(0x00e4e6eb),
+                                        child: const Icon(Icons.more_horiz),
+                                      ),
+                                      itemBuilder: (context) => [
+                                        // PopupMenuItem 1
+                                        PopupMenuItem(
+                                          child: Container(
+                                            width: 130,
+                                            height: 110,
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    const SizedBox(height: 10,),
+                                                    SvgPicture.asset("assets/svg/pins_group_icon.svg",height: 20,width: 20,),
+                                                    const SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                      "Pin Group",
+                                                      style:
+                                                      GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 10,),
+                                                Row(
+                                                  children: [
+                                                    SvgPicture.asset("assets/svg/share.svg",height: 15,width: 15,),
+                                                    const SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                      "Share",
+                                                      style:
+                                                      GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 10,),
+                                                Row(
+                                                  children: [
+                                                    const SizedBox(height: 10,),
+                                                    const Icon(Icons.copy,size: 15,),
+                                                    const SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                      "Copy Link",
+                                                      style:
+                                                      GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 10,),
+                                                Row(
+                                                  children: [
+                                                    SvgPicture.asset("assets/svg/leave_group_svg.svg",height: 15,width: 15,),
+                                                    const SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                      "Leave",
+                                                      style:
+                                                      GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 10,),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        // PopupMenuItem 2
+                                      ],
+                                      offset: const Offset(0, 58),
+                                      color: Colors.white,
+                                      elevation: 4,
+                                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ): const SizedBox.shrink(),
+                      ],
+                    );
+                  }))
+              : const SizedBox.shrink(),
                 const SizedBox(height: 5),
                 Container(
                   decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
@@ -228,9 +476,9 @@ class FeedBackGroups extends StatelessWidget {
                           backgroundColor: AppColors.primaryColorLight,
                           child: InkWell(
                               onTap: () {
-                                groupProvider.changeYourGroupStatus();
+                                groupProvider.changeSuggestedGroupStatus();
                               },
-                              child: groupProvider.yourGroup != true
+                              child: groupProvider.suggestedGroup != true
                                   ? const Icon(Icons.arrow_drop_down, color: Colors.white)
                                   : const Icon(Icons.arrow_drop_up, color: Colors.white)),
                         )
@@ -238,6 +486,88 @@ class FeedBackGroups extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
+                groupProvider.suggestedGroup?
+                    SizedBox(
+                      height: 500,
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2
+                        ),
+                        itemCount: 6,
+                        itemBuilder: (_,index){
+                          return Card(
+                            elevation: 1,
+                            child: Container(
+                              height: 130,
+                              width: 194,
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(8),
+                                      topRight: Radius.circular(8),
+                                    ),
+                                    child: Image.network('https://wander-lush.org/wp-content/uploads/2022/03/Beautiful-places-in-Bangladesh-WMC-hero.jpg',
+                                    height: 84,
+                                    fit: BoxFit.fitWidth,width: double.infinity,),
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Row(
+                                    children: [
+                                     const SizedBox(width: 5,),
+                                      Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text('City Travels',style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 18, color: AppColors.primaryColorLight),)),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const SizedBox(width: 5,),
+                                      Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text('570K Members - 10+ Post a Day',style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 10, color: AppColors.primaryColorLight),)),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10,right: 10,bottom: 10),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 19,
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                              color: Color(0xffE7F3FF)
+                                          ),
+                                          child: Center(
+                                            child: Text('Join Group',style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 10, color: AppColors.primaryColorLight)),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          height: 19,
+                                          width: 30,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(8),
+                                            color: Color(0xffE7F3FF)
+                                          ),
+                                          child: Center(
+                                            child: Icon(Icons.more_horiz,size: 15,),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ):
+                    SizedBox.shrink(),
                 const SizedBox(height: 10),
                 InkWell(
                   onTap: (){
@@ -260,9 +590,9 @@ class FeedBackGroups extends StatelessWidget {
                 const SizedBox(height: 5),
                 const Divider(height: 1, color: Colors.black45),
                 const SizedBox(height: 5),
-                const LikeInviteFindWidget(icon: ImagesModel.pinsIcon, name: "Pins Group",),
+                const LikeInviteFindWidget(icon: ImagesModel.pins_the_group, name: "Pins Group",),
                 const SizedBox(height: 10),
-                LikeInviteFindWidget(icon: ImagesModel.suggestPageIcons, name: "Invite Group", extraArguments: " 25 new invites",
+                LikeInviteFindWidget(icon: ImagesModel.inviteFriendIcons, name: "Invite Group", extraArguments: " 25 new invites",
                   onTap: (){
                     Helper.toScreen(const PageDashboard());
                   },),
