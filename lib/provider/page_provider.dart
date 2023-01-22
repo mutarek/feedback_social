@@ -326,7 +326,20 @@ class PageProvider with ChangeNotifier {
   }
    bool pageExpended = false;
    bool adminAccessPage = false;
+   bool allFollower = false;
    bool adminSectionAccess = false;
+   bool moderatorSectionAccess = false;
+
+  changeModeratorSectionAccessExpanded(){
+    moderatorSectionAccess = !moderatorSectionAccess;
+    notifyListeners();
+  }
+
+  changeAllFollowerExpanded(){
+    allFollower = !allFollower;
+    notifyListeners();
+  }
+
    changeAdminSectionAccessExpanded(){
      adminSectionAccess = !adminSectionAccess;
      notifyListeners();
