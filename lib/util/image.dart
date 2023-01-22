@@ -2,6 +2,7 @@ class ImagesModel {
 // for Icon
   static String get splashAnimationGIF => 'assets/images/splash_animation.gif';
   static String get backIcon => 'assets/icons/ic_back.png';
+  static const String pinsIcon = 'assets/icons/pins_group_icon.svg';
   static const String homeURI = 'assets/svg/home.svg';
   static const String messageURI = 'assets/svg/messege.svg';
   static const String chatingURI = 'assets/svg/chating.svg';

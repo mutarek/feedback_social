@@ -27,6 +27,14 @@ class GroupProvider with ChangeNotifier {
   bool isLoading = false;
   bool isLoadingSuggestedGroup = false;
 
+  //TODO: FOR EXPANDED PAGES
+  bool yourGroup = false;
+
+  changeYourGroupStatus(){
+    yourGroup = !yourGroup;
+    notifyListeners();
+  }
+
   //TODO: for get ALl Suggest Group
   List<AllGroupModel> allSuggestGroupList = [];
 

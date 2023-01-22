@@ -1,3 +1,4 @@
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -33,6 +34,15 @@ class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
           backgroundColor: Colors.white,
           elevation: 1,
           centerTitle: true,
+          leadingWidth: isBackButtonExist! ? 50 : 0,
+          leading: isBackButtonExist!
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back, color: colorText),
+                  onPressed: () {
+                    Helper.back();
+                  },
+                )
+              : const SizedBox.shrink(),
           title: Text(title!, style: robotoStyle700Bold.copyWith(fontSize: 22)),
           actions: [
             isOpenPageSettings!
@@ -87,7 +97,7 @@ class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
                     elevation: 4,
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ],
         ),
       ),
