@@ -4,6 +4,7 @@ import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/find_page.dart';
 import 'package:als_frontend/screens/page/page_dashboard.dart';
 import 'package:als_frontend/screens/page/public_page_screen_2.dart';
+import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/palette.dart';
@@ -23,62 +24,7 @@ class CreatePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 1,
-        title: Text("Feedback Pages", style: robotoStyle700Bold.copyWith(fontSize: 24)),
-        actions: [
-          PopupMenuButton(
-            icon: const CircleAvatar(
-                backgroundColor: AppColors.primaryColorLight, radius: 20, child: Icon(Icons.settings, color: Colors.white)),
-            itemBuilder: (context) => [
-              // PopupMenuItem 1
-              PopupMenuItem(
-                value: 1,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Notifications Setting", style: latoStyle600SemiBold.copyWith(color: Palette.primary)),
-                    Row(
-                      children: [
-                        SvgPicture.asset(ImagesModel.notificationIcons, width: 18, height: 18),
-                        const SizedBox(width: 6),
-                        Expanded(child: Text("Notifications", style: robotoStyle500Medium.copyWith(color: Palette.primary, fontSize: 12))),
-                        SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: FittedBox(
-                                fit: BoxFit.contain,
-                                child: CupertinoSwitch(value: true, onChanged: (value) {}, activeColor: Palette.primary)))
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(ImagesModel.messageIcons, width: 18, height: 18),
-                        const SizedBox(width: 6),
-                        Expanded(child: Text("Message", style: robotoStyle500Medium.copyWith(color: Palette.primary, fontSize: 12))),
-                        SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: FittedBox(
-                                fit: BoxFit.contain,
-                                child: CupertinoSwitch(value: true, onChanged: (value) {}, activeColor: Palette.primary)))
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              // PopupMenuItem 2
-            ],
-            offset: const Offset(0, 58),
-            color: Colors.white,
-            elevation: 4,
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-          ),
-        ],
-      ),
+      appBar: const PageAppBar(title: 'Feedback Pages', isOpenPageSettings: true),
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Consumer<PageProvider>(builder: (context, pageProvider, child) {
@@ -125,23 +71,25 @@ class CreatePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
                 pageProvider.pageExpended == true
                     ? SizedBox(
                         height: 250,
                         child: ListView.builder(
                             itemCount: 4,
                             itemBuilder: (context, index) {
-                              return PageviewCard(ontap: () {
-                                Helper.toScreen(const PublicPageScreen2());
-                              }, name: 'Your Pages', icon: Icons.favorite, message: '20 message');
+                              return PageviewCard(
+                                  ontap: () {
+                                    Helper.toScreen(const PublicPageScreen2());
+                                  },
+                                  name: 'Your Pages',
+                                  icon: Icons.favorite,
+                                  message: '20 message');
                             }))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     Helper.toScreen(const CreatePageScreen());
                   },
                   child: Container(
@@ -163,14 +111,22 @@ class CreatePage extends StatelessWidget {
                 const SizedBox(height: 5),
                 const LikeInviteFindWidget(icon: ImagesModel.likeIcons, name: "Your liked pages", extraArguments: " 30 pages"),
                 const SizedBox(height: 10),
-                LikeInviteFindWidget(icon: ImagesModel.inviteFriendIcons, name: "Invite Pages", extraArguments: " 25 new invites",
-                onTap: (){
-                  Helper.toScreen(const PageDashboard());
-                },),
+                LikeInviteFindWidget(
+                  icon: ImagesModel.inviteFriendIcons,
+                  name: "Invite Pages",
+                  extraArguments: " 25 new invites",
+                  onTap: () {
+                    Helper.toScreen(const PageDashboard());
+                  },
+                ),
                 const SizedBox(height: 10),
-                LikeInviteFindWidget(icon: ImagesModel.findPageIcons, name: "Find pages",onTap: (){
-                  Helper.toScreen(const FindPage());
-                },),
+                LikeInviteFindWidget(
+                  icon: ImagesModel.findPageIcons,
+                  name: "Find pages",
+                  onTap: () {
+                    Helper.toScreen(const FindPage());
+                  },
+                ),
               ],
             ),
           );

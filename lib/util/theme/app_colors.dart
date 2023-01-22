@@ -11,6 +11,7 @@ const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 const colorIcons = Color(0xFF959595);
 const colorText = Color(0xFF080C2F);
+const textFieldFillColor = Color(0xFFE7F3FF);
 const colorShadow = Color.fromRGBO(210, 210, 210, 0.23);
 const colorShadow2 = Color.fromRGBO(213, 213, 213, 0.25);
 class AppColors {
