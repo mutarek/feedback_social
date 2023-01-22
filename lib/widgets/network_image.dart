@@ -16,7 +16,7 @@ Widget customNetworkImage(BuildContext context, String imageUrl,
     cacheKey: imageUrl,
     cacheManager:
         CacheManager(Config(imageUrl, stalePeriod: const Duration(hours: 5))),
-    errorWidget: (context, url, error) => const Icon(Icons.error),
+    errorWidget: (context, url, error) => Image.asset("assets/logo/logo.jpeg", fit: BoxFit.fill),
     placeholder: ((context, url) => Center(
           child: Stack(
             children: [

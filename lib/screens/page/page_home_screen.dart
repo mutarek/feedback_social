@@ -1,6 +1,7 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/find_page.dart';
 import 'package:als_frontend/screens/page/new_design/new_my_liked_page_screen.dart';
+import 'package:als_frontend/screens/page/new_design/new_suggested_page_screen.dart';
 import 'package:als_frontend/screens/page/page_dashboard.dart';
 import 'package:als_frontend/screens/page/widget/like_invite_find.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
@@ -131,7 +132,7 @@ class PageHomeScreen extends StatelessWidget {
                       icon: ImagesModel.suggestPageIcons,
                       name: "Suggest Page",
                       onTap: () {
-                        Helper.toScreen(const PageDashboard());
+                        Helper.toScreen(const NewSuggestedPageScreen());
                       },
                     ),
                     const SizedBox(height: 10),
