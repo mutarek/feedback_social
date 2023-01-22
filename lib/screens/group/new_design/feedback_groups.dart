@@ -1,6 +1,7 @@
 
-import 'package:als_frontend/new_page_degsin/widget/Page_view_card.dart';
-import 'package:als_frontend/new_page_degsin/widget/like_invite_find.dart';
+import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
+import 'package:als_frontend/screens/page/widget/page_view_widget.dart';
+import 'package:als_frontend/screens/page/widget/like_invite_find.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/page/find_page.dart';
 import 'package:als_frontend/screens/page/page_dashboard.dart';
@@ -156,9 +157,7 @@ class FeedBackGroups extends StatelessWidget {
                     child: ListView.builder(
                         itemCount: 4,
                         itemBuilder: (context, index) {
-                          return PageviewCard(ontap: () {
-                            //Helper.toScreen(const PublicPageScreen2());
-                          }, name: 'Your Pages', icon: Icons.favorite, message: '20 message');
+                          return PageViewWidget(authorPageModel: AuthorPageModel(),);
                         }))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 5),
@@ -263,7 +262,7 @@ class FeedBackGroups extends StatelessWidget {
                 const SizedBox(height: 5),
                 const LikeInviteFindWidget(icon: ImagesModel.pinsIcon, name: "Pins Group",),
                 const SizedBox(height: 10),
-                LikeInviteFindWidget(icon: ImagesModel.inviteFriendIcons, name: "Invite Group", extraArguments: " 25 new invites",
+                LikeInviteFindWidget(icon: ImagesModel.suggestPageIcons, name: "Invite Group", extraArguments: " 25 new invites",
                   onTap: (){
                     Helper.toScreen(const PageDashboard());
                   },),

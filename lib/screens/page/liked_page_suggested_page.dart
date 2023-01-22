@@ -1,4 +1,4 @@
-import 'package:als_frontend/new_page_degsin/create_page.dart';
+import 'package:als_frontend/screens/page/page_home_screen.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/user_page_screen.dart';
@@ -293,7 +293,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                           padding: const EdgeInsets.only(left: 250, top: 50),
                           child: FloatingActionButton(
                             onPressed: () {
-                              Helper.toScreen(const CreatePage());
+                              Helper.toScreen(const PageHomeScreen());
                             },
                             child: const Icon(CupertinoIcons.plus),
                           ),

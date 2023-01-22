@@ -33,6 +33,7 @@ class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           elevation: 1,
+          shadowColor: Colors.black.withOpacity(.3),
           centerTitle: true,
           leadingWidth: isBackButtonExist! ? 50 : 0,
           leading: isBackButtonExist!
@@ -43,7 +44,7 @@ class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
                   },
                 )
               : const SizedBox.shrink(),
-          title: Text(title!, style: robotoStyle700Bold.copyWith(fontSize: 22)),
+          title: Text(title!, style: robotoStyle700Bold.copyWith(fontSize: 20)),
           actions: [
             isOpenPageSettings!
                 ? PopupMenuButton(
