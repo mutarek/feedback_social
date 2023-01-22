@@ -88,7 +88,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 const Align(
@@ -104,7 +104,7 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                   height: 10,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
                       decoration:

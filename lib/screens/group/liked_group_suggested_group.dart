@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/create_group_screen.dart';
+import 'package:als_frontend/screens/group/new_design/feedback_groups.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen_copy.dart';
 import 'package:als_frontend/screens/group/widget/joined_group.dart';
@@ -291,7 +292,8 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                           padding: const EdgeInsets.only(left: 250, top: 50),
                           child: FloatingActionButton(
                             onPressed: () {
-                              Helper.toScreen(const CreateGroupScreen());
+                              Helper.toScreen(const FeedBackGroups());
+                              //Helper.toScreen(const CreateGroupScreen());
                             },
                             child: const Icon(CupertinoIcons.plus),
                           ),
