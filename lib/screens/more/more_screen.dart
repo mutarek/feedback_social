@@ -59,7 +59,7 @@ class MoreScreen extends StatelessWidget {
                             if (Provider.of<SplashProvider>(context, listen: false).value == 1) {
                               Helper.toScreen(const ProfileScreen());
                             } else {
-                              showMessage(context: context, message: 'Please Update apps first');
+                              showMessage( message: 'Please Update apps first');
                             }
                           },
                           child: Text(LocaleKeys.view_profile.tr(), style: button)),

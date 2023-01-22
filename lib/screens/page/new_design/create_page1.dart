@@ -9,18 +9,26 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
+import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:provider/provider.dart';
 
-import 'contact_selection_page.dart';
+import 'create_page2.dart';
 
-class CreatePageScreen extends StatefulWidget {
-  const CreatePageScreen({Key? key}) : super(key: key);
+class CreatePageScreen1 extends StatefulWidget {
+  const CreatePageScreen1({Key? key}) : super(key: key);
 
   @override
-  State<CreatePageScreen> createState() => _CreatePageScreenState();
+  State<CreatePageScreen1> createState() => _CreatePageScreen1State();
 }
 
-class _CreatePageScreenState extends State<CreatePageScreen> {
+class _CreatePageScreen1State extends State<CreatePageScreen1> {
+  final TextEditingController pageNameController = TextEditingController();
+  final TextEditingController pageBioController = TextEditingController();
+  final TextEditingController pageDetailsController = TextEditingController();
+  final FocusNode nameFocus = FocusNode();
+  final FocusNode bioFocus = FocusNode();
+  final FocusNode detailsFocus = FocusNode();
+
   @override
   void initState() {
     Provider.of<PageProvider>(context, listen: false).initializeCategory();
@@ -45,7 +53,15 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                 Text("Choose a unique name for your business, organization,shop or name that helps to explore your business .",
                     style: robotoStyle400Regular.copyWith(fontSize: 10)),
                 const SizedBox(height: 10),
-                const CustomTextField(hintText: 'Your Page Name', isShowBorder: true, borderRadius: 11, verticalSize: 14),
+                CustomTextField(
+                  hintText: 'Your Page Name',
+                  isShowBorder: true,
+                  borderRadius: 11,
+                  verticalSize: 14,
+                  controller: pageNameController,
+                  focusNode: nameFocus,
+                  nextFocus: bioFocus,
+                ),
                 const SizedBox(height: 19),
                 CustomText(
                     title: "Select A Best Page Category that describe your page.",
@@ -81,16 +97,43 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                 CustomText(
                     title: "Tell a little bit about your page .", textStyle: robotoStyle500Medium.copyWith(fontSize: 17), maxLines: 2),
                 const SizedBox(height: 10),
-                const CustomTextField(hintText: 'Enter Bio', isShowBorder: true, borderRadius: 11, verticalSize: 14),
+                CustomTextField(
+                  hintText: 'Enter Bio',
+                  isShowBorder: true,
+                  borderRadius: 11,
+                  verticalSize: 14,
+                  controller: pageBioController,
+                  focusNode: bioFocus,
+                  nextFocus: detailsFocus,
+                ),
                 const SizedBox(height: 10),
                 CustomText(title: "Describe Your Page.", textStyle: robotoStyle500Medium.copyWith(fontSize: 17), maxLines: 1),
                 const SizedBox(height: 10),
-                const CustomTextField(hintText: 'Enter Description', isShowBorder: true, borderRadius: 11, verticalSize: 14, maxLines: 4),
+                CustomTextField(
+                  hintText: 'Enter Description',
+                  isShowBorder: true,
+                  borderRadius: 11,
+                  verticalSize: 14,
+                  maxLines: 4,
+                  controller: pageDetailsController,
+                  focusNode: detailsFocus,
+                  inputAction: TextInputAction.done,
+                ),
                 const SizedBox(height: 30),
                 CustomButton(
                     btnTxt: 'Next Page',
                     onTap: () {
-                      Helper.toScreen(const ContactSelectionPage());
+                      if (pageNameController.text.isEmpty || pageBioController.text.isEmpty || pageDetailsController.text.isEmpty) {
+                        showMessage(message: 'Please write all the information');
+                      } else if (pageBioController.text.length > 90) {
+                        showMessage(message: 'please insert BIO at Most 90 characters');
+                      } else {
+                        pageProvider.updateInsertPageInfo(0,
+                            aPageName: pageNameController.text,
+                            aPageBio: pageBioController.text,
+                            aPageDescription: pageDetailsController.text);
+                        Helper.toScreen(const CreatePageScreen2());
+                      }
                     },
                     radius: 100,
                     height: 48),

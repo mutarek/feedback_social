@@ -58,22 +58,21 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                           btnTxt: LocaleKeys.send.tr(),
                           onTap: () {
                             if (problemsController.text.isEmpty) {
-                              showMessage(message: LocaleKeys.please_Write_your_problems_here.tr(), context: context);
+                              showMessage(message: LocaleKeys.please_Write_your_problems_here.tr());
                             } else if (problemsController.text.length < 10) {
-                              showMessage(message: LocaleKeys.please_write_your_problems_at_least_10_characters.tr(), context: context);
+                              showMessage(message: LocaleKeys.please_write_your_problems_at_least_10_characters.tr());
                             } else if (otherProvider.selectedFile == null) {
-                              showMessage(message: LocaleKeys.please_Insert_problems_screenshots.tr(), context: context);
+                              showMessage(message: LocaleKeys.please_Insert_problems_screenshots.tr());
                             } else {
                               settingsProvider.addMessageOnHelpDesk(problemsController.text, otherProvider.selectedFile!).then((value) {
                                 if (value) {
                                   showMessage(
                                       message: LocaleKeys.we_received_your_request.tr(),
-                                      isError: false,
-                                      context: context);
+                                      isError: false);
                                   problemsController.clear();
                                   Navigator.of(context).pop();
                                 } else {
-                                  showMessage(message: LocaleKeys.failed.tr(), context: context);
+                                  showMessage(message: LocaleKeys.failed.tr());
                                 }
                               });
                             }

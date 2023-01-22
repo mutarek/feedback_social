@@ -7,15 +7,13 @@ import 'package:als_frontend/screens/page/public_page_screen_2.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
-import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/page/new_design/create_page.dart';
+import '../screens/page/new_design/create_page1.dart';
 
 class CreatePage extends StatelessWidget {
   const CreatePage({Key? key}) : super(key: key);
@@ -90,7 +88,7 @@ class CreatePage extends StatelessWidget {
                 const SizedBox(height: 10),
                 InkWell(
                   onTap: () {
-                    Helper.toScreen(const CreatePageScreen());
+                    Helper.toScreen(const CreatePageScreen1());
                   },
                   child: Container(
                     height: 50,

@@ -1,5 +1,5 @@
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/new_design/page_profile_cover.dart';
+import 'package:als_frontend/screens/page/new_design/create_page3.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -12,14 +12,23 @@ import 'package:provider/provider.dart';
 import '../../../provider/other_provider.dart';
 import '../../../util/theme/app_colors.dart';
 
-class ContactSelectionPage extends StatefulWidget {
-  const ContactSelectionPage({Key? key}) : super(key: key);
+class CreatePageScreen2 extends StatefulWidget {
+  const CreatePageScreen2({Key? key}) : super(key: key);
 
   @override
-  State<ContactSelectionPage> createState() => _ContactSelectionPageState();
+  State<CreatePageScreen2> createState() => _CreatePageScreen2State();
 }
 
-class _ContactSelectionPageState extends State<ContactSelectionPage> {
+class _CreatePageScreen2State extends State<CreatePageScreen2> {
+  final TextEditingController contactNumberController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController websiteController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final FocusNode contactFocus = FocusNode();
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode websiteFocus = FocusNode();
+  final FocusNode addressFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,11 +46,35 @@ class _ContactSelectionPageState extends State<ContactSelectionPage> {
                 Text("Please enter your valid contact information so people can reach with you easily.",
                     style: robotoStyle400Regular.copyWith(fontSize: 10)),
                 const SizedBox(height: 20),
-                const CustomTextField(hintText: 'Enter Contact Number', isShowBorder: true, borderRadius: 11, verticalSize: 14),
+                CustomTextField(
+                  hintText: 'Enter Contact Number',
+                  isShowBorder: true,
+                  borderRadius: 11,
+                  verticalSize: 14,
+                  controller: contactNumberController,
+                  focusNode: contactFocus,
+                  nextFocus: emailFocus,
+                ),
                 const SizedBox(height: 15),
-                const CustomTextField(hintText: 'Enter Email', isShowBorder: true, borderRadius: 11, verticalSize: 14),
+                CustomTextField(
+                  hintText: 'Enter Email',
+                  isShowBorder: true,
+                  borderRadius: 11,
+                  verticalSize: 14,
+                  controller: emailController,
+                  focusNode: emailFocus,
+                  nextFocus: websiteFocus,
+                ),
                 const SizedBox(height: 15),
-                const CustomTextField(hintText: 'Enter Your Website Link', isShowBorder: true, borderRadius: 11, verticalSize: 14),
+                CustomTextField(
+                  hintText: 'Enter Your Website Link',
+                  isShowBorder: true,
+                  borderRadius: 11,
+                  verticalSize: 14,
+                  controller: websiteController,
+                  focusNode: websiteFocus,
+                  nextFocus: addressFocus,
+                ),
                 const SizedBox(height: 15),
                 CustomText(title: "Location Selection", maxLines: 2, textStyle: robotoStyle500Medium.copyWith(fontSize: 17)),
                 const SizedBox(height: 4),
@@ -69,18 +102,29 @@ class _ContactSelectionPageState extends State<ContactSelectionPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const CustomTextField(hintText: 'Enter Your Address', isShowBorder: true, borderRadius: 11, verticalSize: 14, maxLines: 3),
+                CustomTextField(
+                    hintText: 'Enter Your Address',
+                    isShowBorder: true,
+                    borderRadius: 11,
+                    verticalSize: 14,
+                    maxLines: 3,
+                    controller: addressController,
+                    focusNode: addressFocus,
+                    inputAction: TextInputAction.done),
                 const SizedBox(height: 30),
-
                 CustomButton(
                     btnTxt: 'Next Page',
                     onTap: () {
+                      pageProvider.updateInsertPageInfo(1,
+                          aContactNumber: contactNumberController.text,
+                          aEmail: emailController.text,
+                          aWebsiteLink: websiteController.text,
+                          aPageDescription: addressController.text);
                       otherProvider.clearCoverProfile();
-                      Helper.toScreen(const PageProfileCover());
+                      Helper.toScreen(const CreatePageScreen3());
                     },
                     radius: 100,
                     height: 48),
-
               ],
             ),
           ),

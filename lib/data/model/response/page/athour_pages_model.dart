@@ -1,46 +1,60 @@
-// To parse this JSON data, do
-//
-//     final authorPageModel = authorPageModelFromJson(jsonString);
-
-import 'dart:convert';
-
-List<AuthorPageModel> authorPageModelFromJson(String str) =>
-    List<AuthorPageModel>.from(json.decode(str).map((x) => AuthorPageModel.fromJson(x)));
-
-String authorPageModelToJson(List<AuthorPageModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 class AuthorPageModel {
   AuthorPageModel({
-    required this.id,
-    required this.name,
-    required this.category,
-    required this.coverPhoto,
-    required this.avatar,
-    required this.followers,
-  });
+    this.id,
+    this.name,
+    this.bio,
+    this.category,
+    this.contact,
+    this.email,
+    this.website,
+    this.city,
+    this.address,
+    this.coverPhoto,
+    this.avatar,
+    this.followers,});
 
-  int id;
-  String name;
-  String category;
-  String coverPhoto;
-  String avatar;
-  int followers;
+  AuthorPageModel.fromJson(dynamic json) {
+    id = json['id'];
+    name = json['name'];
+    bio = json['bio'];
+    category = json['category'];
+    contact = json['contact'];
+    email = json['email'];
+    website = json['website'];
+    city = json['city'];
+    address = json['address'];
+    coverPhoto = json['cover_photo'];
+    avatar = json['avatar'];
+    followers = json['followers'];
+  }
+  num? id;
+  String? name;
+  String? bio;
+  String? category;
+  String? contact;
+  String? email;
+  String? website;
+  String? city;
+  String? address;
+  String? coverPhoto;
+  String? avatar;
+  num? followers;
 
-  factory AuthorPageModel.fromJson(Map<String, dynamic> json) => AuthorPageModel(
-        id: json["id"],
-        name: json["name"],
-        category: json["category"].toString(),
-        coverPhoto: json["cover_photo"] ?? "",
-        avatar: json["avatar"],
-        followers: json["followers"] ?? json["total_like"],
-      );
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['name'] = name;
+    map['bio'] = bio;
+    map['category'] = category;
+    map['contact'] = contact;
+    map['email'] = email;
+    map['website'] = website;
+    map['city'] = city;
+    map['address'] = address;
+    map['cover_photo'] = coverPhoto;
+    map['avatar'] = avatar;
+    map['followers'] = followers;
+    return map;
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "category": category,
-        "cover_photo": coverPhoto,
-        "avatar": avatar,
-        "followers": followers,
-      };
 }

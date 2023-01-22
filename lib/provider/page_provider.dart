@@ -298,7 +298,7 @@ class PageProvider with ChangeNotifier {
         pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
         pageDetailsModel!.like = true;
         if (isFromMyPageScreen) {
-          authorPageLists[index].followers = authorPageLists[index].followers + 1;
+          authorPageLists[index].followers = authorPageLists[index].followers! + 1;
           likedPageLists.insert(0, authorPageLists[index]);
           if (isFromSuggestedPage) {
             allSuggestPageList.removeAt(index);
@@ -308,7 +308,7 @@ class PageProvider with ChangeNotifier {
         pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! - 1;
         pageDetailsModel!.like = false;
         if (isFromMyPageScreen) {
-          authorPageLists[index].followers = authorPageLists[index].followers - 1;
+          authorPageLists[index].followers = authorPageLists[index].followers! - 1;
           allSuggestPageList.insert(index, authorPageLists[index]);
           likedPageLists.removeAt(index);
         }
@@ -317,6 +317,8 @@ class PageProvider with ChangeNotifier {
     }
   }
 
+  ////////////////////////// ********************************* NEW Design Page Code Write Here ********************************
+
   //TODO for menu value
   int menuValue = 0;
 
@@ -324,37 +326,40 @@ class PageProvider with ChangeNotifier {
     menuValue = value;
     notifyListeners();
   }
-   bool pageExpended = false;
-   bool adminAccessPage = false;
-   bool allFollower = false;
-   bool adminSectionAccess = false;
-   bool moderatorSectionAccess = false;
 
-  changeModeratorSectionAccessExpanded(){
+  bool pageExpended = false;
+  bool adminAccessPage = false;
+  bool allFollower = false;
+  bool adminSectionAccess = false;
+  bool moderatorSectionAccess = false;
+
+  changeModeratorSectionAccessExpanded() {
     moderatorSectionAccess = !moderatorSectionAccess;
     notifyListeners();
   }
 
-  changeAllFollowerExpanded(){
+  changeAllFollowerExpanded() {
     allFollower = !allFollower;
     notifyListeners();
   }
 
-   changeAdminSectionAccessExpanded(){
-     adminSectionAccess = !adminSectionAccess;
-     notifyListeners();
-   }
-   changeAdminAccessExpanded(){
-     adminAccessPage =!adminAccessPage;
-     notifyListeners();
-   }
-  changeExpended(){
-    pageExpended  = !pageExpended;
+  changeAdminSectionAccessExpanded() {
+    adminSectionAccess = !adminSectionAccess;
+    notifyListeners();
+  }
+
+  changeAdminAccessExpanded() {
+    adminAccessPage = !adminAccessPage;
+    notifyListeners();
+  }
+
+  changeExpended() {
+    pageExpended = !pageExpended;
     notifyListeners();
   }
 
   //TODO: FOR SELECTING COUNTRY FOR PAGE
-  String countryName = "Country / City";
+  String countryName = "Bangladesh";
 
   void pickupCountry(BuildContext context) {
     showCountryPicker(
@@ -379,9 +384,114 @@ class PageProvider with ChangeNotifier {
           notifyListeners();
         });
   }
+
   bool showMoreText = true;
-  changeTextValue(){
-    showMoreText  = !showMoreText;
+
+  changeTextValue() {
+    showMoreText = !showMoreText;
     notifyListeners();
+  }
+
+  ///TODO: for create Page
+  String pageName = '';
+  String pageBio = '';
+  String pageDescription = '';
+  String pageContactNumber = '';
+  String pageEmail = '';
+  String pageWebsiteLink = '';
+  String pageAddress = '';
+  File? pageCoverPhoto;
+  File? pageProfilePhoto;
+
+  updateInsertPageInfo(int status,
+      {String aPageName = '',
+      String aPageBio = '',
+      String aPageDescription = '',
+      String aContactNumber = '',
+      String aEmail = '',
+      String aWebsiteLink = '',
+      String aAddress = '',
+      File? aCoverPhoto,
+      File? aProfilePhoto}) {
+    if (status == 0) {
+      pageName = aPageName;
+      pageBio = aPageBio;
+      pageDescription = aPageDescription;
+    } else if (status == 1) {
+      pageContactNumber = aContactNumber;
+      pageEmail = aEmail;
+      pageWebsiteLink = aWebsiteLink;
+      pageAddress = aAddress;
+    } else {
+      pageCoverPhoto = aCoverPhoto;
+      pageProfilePhoto = aProfilePhoto;
+    }
+    notifyListeners();
+  }
+
+  // TODO: for create and update Group
+  Future<bool> createPage1() async {
+    isLoading = true;
+    notifyListeners();
+    ApiResponse response;
+    if (pageCoverPhoto != null || pageProfilePhoto != null) {
+      FormData formData = FormData();
+      if (pageCoverPhoto != null && pageProfilePhoto == null) {
+        formData.files.add(MapEntry(
+            'cover_photo',
+            MultipartFile(pageCoverPhoto!.readAsBytes().asStream(), pageCoverPhoto!.lengthSync(),
+                filename: pageCoverPhoto!.path.split("/").last)));
+      } else if (pageProfilePhoto != null && pageCoverPhoto == null) {
+        formData.files.add(MapEntry(
+            'avatar',
+            MultipartFile(pageProfilePhoto!.readAsBytes().asStream(), pageProfilePhoto!.lengthSync(),
+                filename: pageProfilePhoto!.path.split("/").last)));
+      } else {
+        formData.files.add(MapEntry(
+            'cover_photo',
+            MultipartFile(pageCoverPhoto!.readAsBytes().asStream(), pageCoverPhoto!.lengthSync(),
+                filename: pageCoverPhoto!.path.split("/").last)));
+        formData.files.add(MapEntry(
+            'avatar',
+            MultipartFile(pageProfilePhoto!.readAsBytes().asStream(), pageProfilePhoto!.lengthSync(),
+                filename: pageProfilePhoto!.path.split("/").last)));
+      }
+
+      formData.fields.add(MapEntry('name', pageName));
+      formData.fields.add(MapEntry('bio', pageBio));
+      formData.fields.add(MapEntry('contact', pageContactNumber));
+      formData.fields.add(MapEntry('email', pageEmail));
+      formData.fields.add(MapEntry('website', pageWebsiteLink));
+      formData.fields.add(MapEntry('city', countryName));
+      formData.fields.add(MapEntry('address', pageAddress));
+      formData.fields.add(MapEntry('category', categoryValue.id.toString()));
+      response = await pageRepo.createPageWithImageUpload(formData);
+    } else {
+      response = await pageRepo.createPageWithoutImageUpload({"name": pageName, "category": categoryValue.id});
+    }
+    isLoading = false;
+    if (response.response.statusCode == 201) {
+      authorPageLists.insert(
+          0,
+          AuthorPageModel(
+              id: response.response.data['id'],
+              name: response.response.data['name'],
+              category: response.response.data['category'],
+              contact: response.response.data['contact'],
+              email: response.response.data['email'],
+              city: response.response.data['city'],
+              address: response.response.data['address'],
+              coverPhoto: response.response.data['cover_photo'],
+              avatar: response.response.data['avatar'],
+              followers: 0));
+
+      Fluttertoast.showToast(msg: "Page Created successfully");
+      notifyListeners();
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+      notifyListeners();
+      return false;
+    }
   }
 }

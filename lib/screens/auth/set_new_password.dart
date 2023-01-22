@@ -128,7 +128,6 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                             if (passwordController.text.isEmpty) {
                               showMessage(
                                 message: LocaleKeys.please_fill_all_the_form.tr(),
-                                context: context,
                               );
                             } else {
                               auth.resetPasswordConfirm(widget.emailOrNumber, passwordController.text.toString(), widget.otpCode,

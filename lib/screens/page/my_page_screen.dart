@@ -154,7 +154,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       CircleAvatar(
                                         radius: 25,
                                         backgroundColor: Palette.notificationColor,
-                                        child: circularImage(provider.authorPageLists[index2].coverPhoto,40,40),
+                                        child: circularImage(provider.authorPageLists[index2].coverPhoto!,40,40),
                                       ),
                                       const SizedBox(height: 3),
                                       CustomText(
@@ -191,8 +191,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       isFromMyPageScreen: true, index: index));
                                 },
                                 goToGroupOrPage: () {},
-                                groupOrPageImage: provider.likedPageLists[index].avatar,
-                                groupOrPageName: provider.likedPageLists[index].name,
+                                groupOrPageImage: provider.likedPageLists[index].avatar!,
+                                groupOrPageName: provider.likedPageLists[index].name!,
                                 groupOrPageLikes: "${provider.likedPageLists[index].followers} ${LocaleKeys.likes.tr()} ");
                           })
                       : CustomText(
@@ -222,8 +222,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           isFromMyPageScreen: true, index: index, isFromSuggestedPage: true));
                     },
                     goToGroupOrPage: () {},
-                    groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,
-                    groupOrPageName: provider.allSuggestPageList[index].name,
+                    groupOrPageImage: provider.allSuggestPageList[index].coverPhoto!,
+                    groupOrPageName: provider.allSuggestPageList[index].name!,
                     groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${LocaleKeys.likes.tr()}");
               }),
     );

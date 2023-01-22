@@ -13,7 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'new_design/create_page.dart';
+import 'new_design/create_page1.dart';
 
 class LikedPageSuggestedPage extends StatefulWidget {
   const LikedPageSuggestedPage({Key? key}) : super(key: key);
@@ -186,7 +186,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                             CircleAvatar(
                                               radius: 24,
                                               backgroundColor: Colors.black12,
-                                              backgroundImage: CachedNetworkImageProvider(pageProvider.authorPageLists[index].avatar),
+                                              backgroundImage: CachedNetworkImageProvider(pageProvider.authorPageLists[index].avatar!),
                                             ),
                                             SizedBox(
                                               width: width * 0.03,
@@ -198,7 +198,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                                 SizedBox(
                                                   height: height * 0.01,
                                                 ),
-                                                Text(pageProvider.authorPageLists[index].name, style: latoStyle700Bold),
+                                                Text(pageProvider.authorPageLists[index].name!, style: latoStyle700Bold),
                                                 const SizedBox(
                                                   height: 2,
                                                 ),
@@ -257,7 +257,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                           leading: CircleAvatar(
                                             radius: 24,
                                             backgroundColor: Colors.black12,
-                                            backgroundImage: CachedNetworkImageProvider(pageProvider.likedPageLists[index].avatar),
+                                            backgroundImage: CachedNetworkImageProvider(pageProvider.likedPageLists[index].avatar!),
                                           ),
                                           trailing: Container(
                                             height: height * 0.027,
@@ -277,7 +277,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                               SizedBox(
                                                 height: height * 0.01,
                                               ),
-                                              Text(pageProvider.likedPageLists[index].name, style: latoStyle700Bold),
+                                              Text(pageProvider.likedPageLists[index].name!, style: latoStyle700Bold),
                                               const SizedBox(
                                                 height: 2,
                                               ),
@@ -311,7 +311,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                 leading: CircleAvatar(
                                   radius: 24,
                                   backgroundColor: Colors.black12,
-                                  backgroundImage: CachedNetworkImageProvider(pageProvider.allSuggestPageList[index].avatar),
+                                  backgroundImage: CachedNetworkImageProvider(pageProvider.allSuggestPageList[index].avatar!),
                                 ),
                                 trailing: Container(
                                   height: height * 0.027,
@@ -330,7 +330,7 @@ class _LikedPageSuggestedPageState extends State<LikedPageSuggestedPage> {
                                     SizedBox(
                                       height: height * 0.01,
                                     ),
-                                    Text(pageProvider.allSuggestPageList[index].name, style: latoStyle700Bold),
+                                    Text(pageProvider.allSuggestPageList[index].name!, style: latoStyle700Bold),
                                     const SizedBox(
                                       height: 2,
                                     ),
