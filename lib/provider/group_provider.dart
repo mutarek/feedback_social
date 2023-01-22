@@ -29,6 +29,24 @@ class GroupProvider with ChangeNotifier {
 
   //TODO: FOR EXPANDED PAGES
   bool yourGroup = false;
+  bool joinedGroup = false;
+  bool suggestedGroup = false;
+  bool eachJoinedGroup = false;
+
+  changeEachJoinedGroupStatus(){
+    eachJoinedGroup = !eachJoinedGroup;
+    notifyListeners();
+  }
+
+  changeSuggestedGroupStatus(){
+    suggestedGroup = !suggestedGroup;
+    notifyListeners();
+  }
+
+  changeJoinedGroupStatus(){
+    joinedGroup = !joinedGroup;
+    notifyListeners();
+  }
 
   changeYourGroupStatus(){
     yourGroup = !yourGroup;

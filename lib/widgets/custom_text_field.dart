@@ -52,7 +52,7 @@ class CustomTextField extends StatefulWidget {
       this.inputType = TextInputType.text,
       this.inputAction = TextInputAction.next,
       this.maxLines = 1,
-      this.hintFontSize = 13,
+      this.hintFontSize = 15,
       this.onSuffixTap,
       this.fillColor,
       this.textColor,
@@ -77,7 +77,7 @@ class CustomTextField extends StatefulWidget {
       this.autoFocus = false,
       this.isSaveAutoFillData = false,
       this.horizontalSize = 22,
-      this.verticalSize = 10,
+      this.verticalSize = 14,
       this.borderRadius = 20,
       this.onSubmited,
       this.validation,
@@ -96,7 +96,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: widget.fillColor ?? AppColors.primaryColorLight,
+        color: widget.fillColor ?? textFieldFillColor,
         boxShadow: [
           BoxShadow(
               color: !widget.isCancelShadow! ? AppColors.primaryColorLight.withOpacity(.1) : Colors.transparent,
@@ -130,22 +130,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
               borderSide: BorderSide(
-                  color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
+                  color: widget.isShowBorder! ? colorText : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
               borderSide: BorderSide(
-                  color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
+                  color: widget.isShowBorder! ? colorText : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
               borderSide: BorderSide(
-                  color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
+                  color: widget.isShowBorder! ? colorText : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
               borderSide: BorderSide(
-                  color: widget.isShowBorder! ? CupertinoColors.systemGrey : Colors.transparent, width: widget.isShowBorder! ? 1 : 1)),
+                  color: widget.isShowBorder! ? colorPrimaryLight : Colors.transparent, width: widget.isShowBorder! ? 1 : 1)),
           isDense: true,
           hintText: widget.hintText,
-          fillColor: widget.fillColor ?? AppColors.primaryColorDark,
+          fillColor: widget.fillColor ?? textFieldFillColor,
           hintStyle: input.copyWith(fontSize: widget.hintFontSize, color: widget.textColor ?? AppColors.hintTextColorLight),
           filled: true,
           prefixIcon: widget.isShowPrefixIcon!
