@@ -494,4 +494,36 @@ class PageProvider with ChangeNotifier {
       return false;
     }
   }
+
+
+  pageLikeUnlike1(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
+    ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString());
+    if (response.response.statusCode == 200) {
+      if (response.response.data['liked'] == true) {
+        if (isFromSuggestedPage) {
+          allSuggestPageList.removeAt(index);
+        }else{
+
+        }
+        // pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
+        // pageDetailsModel!.like = true;
+        // if (isFromMyPageScreen) {
+        //   authorPageLists[index].followers = authorPageLists[index].followers! + 1;
+        //   likedPageLists.insert(0, authorPageLists[index]);
+        //
+        // }
+      } else {
+        // pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! - 1;
+        // pageDetailsModel!.like = false;
+        // if (isFromMyPageScreen) {
+        //   authorPageLists[index].followers = authorPageLists[index].followers! - 1;
+        //   allSuggestPageList.insert(index, authorPageLists[index]);
+        //   likedPageLists.removeAt(index);
+        // }
+      }
+      notifyListeners();
+    }
+  }
+
+
 }
