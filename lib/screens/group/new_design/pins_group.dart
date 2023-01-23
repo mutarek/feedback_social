@@ -25,10 +25,7 @@ class PinsGroup extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: Text('Your pinned groups.',style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
-                      color: AppColors.primaryColorLight),),
+                  child: Text('Your pinned groups.',style: robotoStyle700Bold.copyWith(fontSize: 12,color: AppColors.primaryColorLight)),
                 ),
               ),
               const SizedBox(height: 10,),
@@ -93,20 +90,14 @@ class PinsGroup extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: Text('Pins',style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                      color: AppColors.primaryColorLight),),
+                  child: Text('Pins',style: robotoStyle700Bold.copyWith(fontSize: 15,color: AppColors.primaryColorLight),),
                 ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5),
-                  child: Text('Pin your favorite group to access quick.',style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
-                      color: AppColors.primaryColorLight),),
+                  child: Text('Pin your favorite group to access quick.',style: robotoStyle700Bold.copyWith(fontSize: 12,color: AppColors.primaryColorLight),),
                 ),
               ),
               const SizedBox(height: 5,),
@@ -153,7 +144,7 @@ class PinsGroup extends StatelessWidget {
                               },
                               child:  SvgPicture.asset("assets/svg/pins_group_icon.svg"),
                             ),
-                            SizedBox(width: 10,)
+                            const SizedBox(width: 10,)
                           ],
                         ),
                       );

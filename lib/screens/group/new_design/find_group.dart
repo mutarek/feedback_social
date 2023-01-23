@@ -1,6 +1,7 @@
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,7 +45,7 @@ class FindGroup extends StatelessWidget {
                           height: 38,
                           width: 71,
                           child: Center(
-                            child: Text('Search', style: GoogleFonts.roboto(fontWeight: FontWeight.w300, fontSize: 12, color: Colors.white)),
+                            child: Text('Search', style: robotoStyle300Light.copyWith(fontSize: 12,color: Colors.white)),
                           ),
                         ),
                       )
@@ -77,9 +78,10 @@ class FindGroup extends StatelessWidget {
                                   ),
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
-                                    child: Image.network("https://res.cloudinary.com/dhakacity/images/f_auto,q_auto/v1670167422/Travel-logo-transparency/Travel-logo-transparency.png",
-                                    height: 36,
-                                    width: 36)
+                                    child: SizedBox(
+                                      height: 36,
+                                        width: 36,
+                                        child: customNetworkImage(context,"https://res.cloudinary.com/dhakacity/images/f_auto,q_auto/v1670167422/Travel-logo-transparency/Travel-logo-transparency.png",height: 36,boxFit: BoxFit.fitWidth))
                                   ),
                                   SizedBox(width: 10,),
 
@@ -115,12 +117,12 @@ class FindGroup extends StatelessWidget {
                             Expanded(
                               flex: 1,
                               child: Padding(
-                                padding: EdgeInsets.only(left: 20,right: 20),
+                                padding: const EdgeInsets.only(left: 20,right: 20),
                                 child: Row(
                                   children: [
                                     Card(
                                       elevation: 1,
-                                      color: index%2==0?Color(0xffFAFAFA):Color(0xff080C2F),
+                                      color: index%2==0?const Color(0xffFAFAFA):const Color(0xff080C2F),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(8)
                                       ),
