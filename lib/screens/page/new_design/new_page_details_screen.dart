@@ -108,7 +108,7 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
               ),
             ),
             const SizedBox(
-              height: 9,
+              height: 9
             ),
             Padding(
               padding: const EdgeInsets.only(left: 18, right: 18),
