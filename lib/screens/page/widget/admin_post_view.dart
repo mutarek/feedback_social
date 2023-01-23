@@ -1,4 +1,3 @@
-
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
@@ -8,9 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AdminPostView extends StatelessWidget {
-  const AdminPostView(
-      {Key? key, required this.dicription, required this.value, required this.showDescription})
-      : super(key: key);
+  const AdminPostView({Key? key, required this.dicription, required this.value, required this.showDescription}) : super(key: key);
   final String dicription;
   final bool value;
   final VoidCallback showDescription;
@@ -37,58 +34,57 @@ class AdminPostView extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-       Padding(
-         padding: const EdgeInsets.only(left: 18,right: 16),
-         child: Container(
-           height: 130,
-           decoration: BoxDecoration(
-             color: AppColors.imageBGColorLight,
-             borderRadius: BorderRadius.circular(10),
-             border: Border.all(color: AppColors.primaryColorLight,width:0.4)
-           ),
-           child: Column(
-           
-             children: [
-             TextFormField(
-            decoration: InputDecoration(
-              border: InputBorder.none
-            ),
-             ),
-               Spacer(),
-               Padding(
-                 padding: const EdgeInsets.only(right: 10,bottom: 10),
-                 child: Row(
-                   mainAxisAlignment: MainAxisAlignment.end,
-                   crossAxisAlignment: CrossAxisAlignment.end,
-                   children: [
-                     SvgPicture.asset("assets/svg/haha.svg",height: 12,width: 12,color: AppColors.primaryColorLight,),
-                     SizedBox(width: 5,),
-                     SvgPicture.asset("assets/svg/photoAdd.svg",height: 12,width: 12,),
-                   ],
-                 ),
-               )
-             ],
-           ),
-         ),
-       ),
         Padding(
-          padding: const EdgeInsets.only(
-            left: 18,
-            top: 5
+          padding: const EdgeInsets.only(left: 18, right: 16),
+          child: Container(
+            height: 130,
+            decoration: BoxDecoration(
+                color: AppColors.imageBGColorLight,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.primaryColorLight, width: 0.4)),
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10, bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/svg/haha.svg",
+                        height: 12,
+                        width: 12,
+                        color: AppColors.primaryColorLight,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      SvgPicture.asset(
+                        "assets/svg/photoAdd.svg",
+                        height: 12,
+                        width: 12,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 18, top: 5),
           child: Container(
             height: 22,
             width: 43,
-            decoration: BoxDecoration(
-              color: AppColors.primaryColorLight,
-              borderRadius: BorderRadius.circular(20)
-            ),
-
+            decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: Text(
                 "Posts",
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w700, fontSize: 12, color: Colors.white),
+                style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 12, color: Colors.white),
               ),
             ),
           ),
@@ -115,9 +111,7 @@ class AdminPostView extends StatelessWidget {
                           decoration: BoxDecoration(
                               border: Border.all(color: AppColors.primaryColorLight),
                               shape: BoxShape.circle,
-                              image: const DecorationImage(
-                                  image: AssetImage("assets/background/help.png"),
-                                  fit: BoxFit.cover)),
+                              image: const DecorationImage(image: AssetImage("assets/background/help.png"), fit: BoxFit.cover)),
                         ),
                         const SizedBox(
                           width: 8,
@@ -127,10 +121,7 @@ class AdminPostView extends StatelessWidget {
                           children: [
                             Text(
                               "Abstract Graphics Studio",
-                              style: GoogleFonts.roboto(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 13.5,
-                                  color: AppColors.primaryColorLight),
+                              style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 13.5, color: AppColors.primaryColorLight),
                             ),
                             Row(
                               children: [
@@ -144,10 +135,7 @@ class AdminPostView extends StatelessWidget {
                                 ),
                                 Text(
                                   "2 Hours  -",
-                                  style: GoogleFonts.roboto(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 7,
-                                      color: AppColors.primaryColorLight),
+                                  style: GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 7, color: AppColors.primaryColorLight),
                                 ),
                                 const SizedBox(
                                   width: 2,
@@ -163,12 +151,10 @@ class AdminPostView extends StatelessWidget {
                         ),
                         const Spacer(),
                         PopupMenuButton(
-                          child:  Container(
+                          child: Container(
                             height: 24,
                             width: 30,
-                            decoration: BoxDecoration(
-                                color: const Color(0xffE4E6EB),
-                                borderRadius: BorderRadius.circular(10)),
+                            decoration: BoxDecoration(color: const Color(0xffE4E6EB), borderRadius: BorderRadius.circular(10)),
                             child: const Center(child: Icon(Icons.more_horiz)),
                           ),
                           itemBuilder: (context) => [
@@ -180,28 +166,30 @@ class AdminPostView extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      SvgPicture.asset("assets/svg/edit.svg",height: 14,width: 14,),
+                                      SvgPicture.asset(
+                                        "assets/svg/edit.svg",
+                                        height: 14,
+                                        width: 14,
+                                      ),
                                       const SizedBox(
                                         width: 4,
                                       ),
                                       Text(
                                         "Edit post",
                                         style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColors.primaryColorLight),
+                                            fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                       )
                                     ],
                                   ),
                                   const SizedBox(
                                     height: 18,
                                   ),
-
                                   Row(
                                     children: [
                                       SvgPicture.asset(
                                         "assets/svg/hide.svg",
-                                        height: 12,width: 16,
+                                        height: 12,
+                                        width: 16,
                                       ),
                                       const SizedBox(
                                         width: 3,
@@ -209,47 +197,46 @@ class AdminPostView extends StatelessWidget {
                                       Text(
                                         "Hide this post",
                                         style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColors.primaryColorLight),
+                                            fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                       )
                                     ],
                                   ),
-
                                   const SizedBox(
                                     height: 18,
                                   ),
                                   Row(
                                     children: [
-                                      Icon(Icons.copy,size: 12,),
+                                      Icon(
+                                        Icons.copy,
+                                        size: 12,
+                                      ),
                                       const SizedBox(
                                         width: 4,
                                       ),
                                       Text(
                                         "Copy Link",
                                         style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColors.primaryColorLight),
+                                            fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                       )
                                     ],
                                   ),
-
                                   const SizedBox(
                                     height: 18,
                                   ),
                                   Row(
                                     children: [
-                                      SvgPicture.asset("assets/svg/delete.svg",height: 14,width:10 ,),
+                                      SvgPicture.asset(
+                                        "assets/svg/delete.svg",
+                                        height: 14,
+                                        width: 10,
+                                      ),
                                       const SizedBox(
                                         width: 4,
                                       ),
                                       Text(
                                         "Delete post",
                                         style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColors.primaryColorLight),
+                                            fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                       )
                                     ],
                                   )
@@ -261,10 +248,8 @@ class AdminPostView extends StatelessWidget {
                           offset: const Offset(0, 58),
                           color: Colors.white,
                           elevation: 4,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
                         ),
-
                       ],
                     ),
                   ),
@@ -277,17 +262,11 @@ class AdminPostView extends StatelessWidget {
                         textAlign: TextAlign.start,
                         text: TextSpan(
                             text: value ? (firstHalf + "...") : (firstHalf + secondHalf),
-                            style: GoogleFonts.roboto(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10,
-                                color: AppColors.primaryColorLight),
+                            style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 10, color: AppColors.primaryColorLight),
                             children: [
                               TextSpan(
                                 text: value ? "show more" : "show less",
-                                style: GoogleFonts.roboto(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
-                                    color: AppColors.primaryColorLight),
+                                style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 13, color: AppColors.primaryColorLight),
                                 recognizer: TapGestureRecognizer()..onTap = showDescription,
                               )
                             ])),
@@ -309,30 +288,28 @@ class AdminPostView extends StatelessWidget {
                             Container(
                               height: 17,
                               width: 17,
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                              decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
                               child: Center(
                                   child: SvgPicture.asset(
-                                    "assets/svg/like.svg",
-                                    fit: BoxFit.cover,
-                                    height: 9,
-                                    width: 8,
-                                  )),
+                                "assets/svg/like.svg",
+                                fit: BoxFit.cover,
+                                height: 9,
+                                width: 8,
+                              )),
                             ),
                             Positioned(
                               left: 14,
                               child: Container(
                                 height: 17,
                                 width: 17,
-                                decoration:
-                                const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                                decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
                                 child: Center(
                                     child: SvgPicture.asset(
-                                      "assets/svg/love.svg",
-                                      fit: BoxFit.cover,
-                                      height: 9,
-                                      width: 8,
-                                    )),
+                                  "assets/svg/love.svg",
+                                  fit: BoxFit.cover,
+                                  height: 9,
+                                  width: 8,
+                                )),
                               ),
                             ),
                             Positioned(
@@ -340,15 +317,14 @@ class AdminPostView extends StatelessWidget {
                               child: Container(
                                 height: 17,
                                 width: 17,
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle, color: Colors.yellow),
+                                decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.yellow),
                                 child: Center(
                                     child: SvgPicture.asset(
-                                      "assets/svg/haha.svg",
-                                      fit: BoxFit.cover,
-                                      height: 9,
-                                      width: 8,
-                                    )),
+                                  "assets/svg/haha.svg",
+                                  fit: BoxFit.cover,
+                                  height: 9,
+                                  width: 8,
+                                )),
                               ),
                             ),
                           ],
@@ -356,55 +332,44 @@ class AdminPostView extends StatelessWidget {
                         RichText(
                             text: TextSpan(
                                 text: "Rafatul ",
-                                style: GoogleFonts.roboto(
-                                    fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
+                                style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
                                 children: [
-                                  TextSpan(
-                                      text: " and",
-                                      style: GoogleFonts.roboto(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                          color: AppColors.primaryColorLight),
-                                      children: [
-                                        TextSpan(
-                                            text: " 5,500",
+                              TextSpan(
+                                  text: " and",
+                                  style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                                  children: [
+                                    TextSpan(
+                                        text: " 5,500",
+                                        style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
+                                        children: [
+                                          TextSpan(
+                                            text: " others",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 12,
-                                                color: Colors.black),
-                                            children: [
-                                              TextSpan(
-                                                text: " others",
-                                                style: GoogleFonts.roboto(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 12,
-                                                    color: AppColors.primaryColorLight),
-                                              ),
-                                            ])
-                                      ])
-                                ])),
+                                                fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                                          ),
+                                        ])
+                                  ])
+                            ])),
                         const Spacer(),
                         Row(
                           children: [
                             Container(
                                 height: 17,
                                 width: 17,
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                                decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
                                 child: Center(
                                     child: SvgPicture.asset(
-                                      "assets/svg/comment.svg",
-                                      fit: BoxFit.cover,
-                                      height: 9,
-                                      width: 8,
-                                    ))),
+                                  "assets/svg/comment.svg",
+                                  fit: BoxFit.cover,
+                                  height: 9,
+                                  width: 8,
+                                ))),
                             const SizedBox(
                               width: 3,
                             ),
                             Text(
                               "120",
-                              style: GoogleFonts.roboto(
-                                  fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
+                              style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
                             )
                           ],
                         ),
@@ -416,22 +381,20 @@ class AdminPostView extends StatelessWidget {
                             Container(
                                 height: 17,
                                 width: 17,
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                                decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
                                 child: Center(
                                     child: SvgPicture.asset(
-                                      "assets/svg/share2.svg",
-                                      fit: BoxFit.cover,
-                                      height: 9,
-                                      width: 8,
-                                    ))),
+                                  "assets/svg/share2.svg",
+                                  fit: BoxFit.cover,
+                                  height: 9,
+                                  width: 8,
+                                ))),
                             const SizedBox(
                               width: 3,
                             ),
                             Text(
                               "90",
-                              style: GoogleFonts.roboto(
-                                  fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
+                              style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
                             )
                           ],
                         ),
@@ -449,9 +412,7 @@ class AdminPostView extends StatelessWidget {
                         Container(
                           height: 23,
                           width: 37,
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryColorLight,
-                              borderRadius: BorderRadius.circular(18)),
+                          decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: SvgPicture.asset(
@@ -465,9 +426,7 @@ class AdminPostView extends StatelessWidget {
                         Container(
                           height: 23,
                           width: 37,
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryColorLight,
-                              borderRadius: BorderRadius.circular(18)),
+                          decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: SvgPicture.asset(
@@ -482,9 +441,7 @@ class AdminPostView extends StatelessWidget {
                           child: Container(
                             height: 23,
                             width: 37,
-                            decoration: BoxDecoration(
-                                color: AppColors.primaryColorLight,
-                                borderRadius: BorderRadius.circular(18)),
+                            decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: SvgPicture.asset(
@@ -511,9 +468,7 @@ class AdminPostView extends StatelessWidget {
                                       Text(
                                         "Share on your timeline",
                                         style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColors.primaryColorLight),
+                                            fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                       )
                                     ],
                                   ),
@@ -523,16 +478,18 @@ class AdminPostView extends StatelessWidget {
                                   Row(
                                     children: [
                                       // SvgPicture.asset("assets/svg/add.svg",height: 10,width:20,),
-                                      SvgPicture.asset("assets/svg/plane2.svg",height: 18,width: 18,),
+                                      SvgPicture.asset(
+                                        "assets/svg/plane2.svg",
+                                        height: 18,
+                                        width: 18,
+                                      ),
                                       const SizedBox(
                                         width: 4,
                                       ),
                                       Text(
                                         "Share via message",
                                         style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColors.primaryColorLight),
+                                            fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                       )
                                     ],
                                   ),
@@ -543,7 +500,8 @@ class AdminPostView extends StatelessWidget {
                                     children: [
                                       SvgPicture.asset(
                                         "assets/svg/twoPeople.svg",
-                                        height: 13,width: 13,
+                                        height: 13,
+                                        width: 13,
                                       ),
                                       const SizedBox(
                                         width: 3,
@@ -551,13 +509,10 @@ class AdminPostView extends StatelessWidget {
                                       Text(
                                         "Share to friends timeline",
                                         style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColors.primaryColorLight),
+                                            fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                       )
                                     ],
                                   ),
-
                                   const SizedBox(
                                     height: 18,
                                   ),
@@ -565,7 +520,8 @@ class AdminPostView extends StatelessWidget {
                                     children: [
                                       SvgPicture.asset(
                                         "assets/svg/threePeople.svg",
-                                        height: 13,width: 13,
+                                        height: 13,
+                                        width: 13,
                                       ),
                                       const SizedBox(
                                         width: 4,
@@ -573,13 +529,10 @@ class AdminPostView extends StatelessWidget {
                                       Text(
                                         "Share to a group",
                                         style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColors.primaryColorLight),
+                                            fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                       )
                                     ],
                                   ),
-
                                   const SizedBox(
                                     height: 18,
                                   ),
@@ -592,9 +545,7 @@ class AdminPostView extends StatelessWidget {
                                       Text(
                                         "Share to a page",
                                         style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColors.primaryColorLight),
+                                            fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                       )
                                     ],
                                   )
@@ -606,8 +557,7 @@ class AdminPostView extends StatelessWidget {
                           offset: const Offset(0, 58),
                           color: Colors.white,
                           elevation: 4,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
                         ),
                       ],
                     ),

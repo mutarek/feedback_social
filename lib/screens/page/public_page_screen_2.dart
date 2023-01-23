@@ -412,7 +412,7 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                     return PageCommentView();
                   }
                   return PagePostView(
-                    dicription:
+                    description:
                         'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',
                     value: pageProvider.showMoreText,
                     showDescription: () {
