@@ -395,11 +395,6 @@ class FeedBackGroups extends StatelessWidget {
                                                       width: 4,
                                                     ),
                                                     PopupMenuButton(
-                                                        child: Text(
-                                                          "Share",
-                                                          style:
-                                                          GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
-                                                        ),
                                                         itemBuilder: (context) => [
                                                           // PopupMenuItem 1
                                                           PopupMenuItem(
@@ -512,7 +507,12 @@ class FeedBackGroups extends StatelessWidget {
                                                         color: Colors.white,
                                                         elevation: 4,
                                                         shape: const RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.all(Radius.circular(10.0))),),
+                                                            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                                        child: Text(
+                                                          "Share",
+                                                          style:
+                                                          GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                                        ),),
                                                   ],
                                                 ),
                                                 const SizedBox(height: 10,),

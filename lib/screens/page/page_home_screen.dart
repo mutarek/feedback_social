@@ -1,6 +1,7 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/find_page.dart';
 import 'package:als_frontend/screens/page/new_design/new_my_liked_page_screen.dart';
+import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
 import 'package:als_frontend/screens/page/new_design/new_suggested_page_screen.dart';
 import 'package:als_frontend/screens/page/widget/like_invite_find.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
@@ -83,7 +84,9 @@ class PageHomeScreen extends StatelessWidget {
                                     itemCount: pageProvider.authorPageLists.length,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      return PageViewWidget(authorPageModel: pageProvider.authorPageLists[index]);
+                                      return PageViewWidget(authorPageModel: pageProvider.authorPageLists[index],onTap: (){
+                                        Helper.toScreen(const NewPageDetailsScreen());
+                                      });
                                     })
                                 : const Center(child: CustomText(title: "You haven't any personal Page")))
                         : const SizedBox.shrink(),

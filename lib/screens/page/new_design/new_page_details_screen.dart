@@ -7,19 +7,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class AdminPageScreen extends StatefulWidget {
-  const AdminPageScreen({Key? key}) : super(key: key);
+class NewPageDetailsScreen extends StatefulWidget {
+  const NewPageDetailsScreen({Key? key}) : super(key: key);
 
   @override
-  State<AdminPageScreen> createState() => _AdminPageScreenState();
+  State<NewPageDetailsScreen> createState() => _NewPageDetailsScreenState();
 }
 
-class _AdminPageScreenState extends State<AdminPageScreen> {
+class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
   @override
   void initState() {
     _pageController = PageController();
     super.initState();
-    Provider.of<PageProvider>(context, listen: false).initializeAuthorPageLists();
+
   }
 
   PageController _pageController = PageController();
