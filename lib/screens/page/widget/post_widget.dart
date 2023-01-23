@@ -142,7 +142,7 @@ class PagePostView extends StatelessWidget {
                       children: [
                         Stack(
                           children: [
-                            SizedBox(height: 17, width: 50),
+                            const SizedBox(height: 17, width: 50),
                             Container(
                               height: 17,
                               width: 17,

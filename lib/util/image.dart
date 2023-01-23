@@ -40,8 +40,13 @@ class ImagesModel {
   static const String emailIcons = 'assets/icons/email.svg';
   static const String websiteIcons = 'assets/icons/website.svg';
   static const String categoryIcons = 'assets/icons/category.svg';
+  static const String callIcons = 'assets/icons/call.svg';
+  static const String locationIcons = 'assets/icons/location.svg';
+  static const String directionIcons = 'assets/icons/direction.svg';
   static const String timeIcons = 'assets/icons/time.svg';
   static const String globalIcons = 'assets/icons/global.svg';
+  static const String adminIcons = 'assets/icons/admin.svg';
+  static const String dateIcons = 'assets/icons/date.svg';
   static const String shareTimelinesIcons = 'assets/icons/share_timeline.svg';
   static const String shareMessageIcons = 'assets/icons/share_message.svg';
   static const String shareFriendIcons = 'assets/icons/share_friend.svg';

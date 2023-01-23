@@ -401,7 +401,7 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                 },
                 itemBuilder: (context, index) {
                   if (index == 1) {
-                    return PageAboutView();
+                    return PageAboutViewWidget();
                   } else if (index == 2) {
                     return PagePhotoView();
                   } else if (index == 3) {
