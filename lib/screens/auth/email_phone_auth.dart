@@ -186,7 +186,6 @@ class EmailOrPhoneNumber extends StatelessWidget {
                           if (emailController.text.isEmpty && phoneController.text.isEmpty) {
                             showMessage(
                               message: LocaleKeys.please_fill_all_the_form.tr(),
-                              context: context,
                             );
                           }
                           if (emailController.text.isNotEmpty) {

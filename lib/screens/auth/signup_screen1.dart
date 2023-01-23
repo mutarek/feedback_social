@@ -170,12 +170,10 @@ class SignUpScreen1 extends StatelessWidget {
                                   if (!auth.isSelectEmail && emailPhoneController.text.isEmpty) {
                                     showMessage(
                                       message: LocaleKeys.please_fill_all_the_form.tr(),
-                                      context: context,
                                     );
                                   } else if (auth.isSelectEmail && phoneController.text.isEmpty) {
                                     showMessage(
                                       message: LocaleKeys.please_fill_all_the_form.tr(),
-                                      context: context,
                                     );
                                   } else {
                                     if (isFromForgetPassword) {

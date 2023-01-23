@@ -42,7 +42,7 @@ class YourLikedPage extends StatelessWidget {
                             radius: 24,
                             backgroundColor: Colors.black12,
                             backgroundImage:
-                            NetworkImage(pageProvider.likedPageLists[index].avatar),
+                            NetworkImage(pageProvider.likedPageLists[index].avatar!),
                           ),
                           trailing: Container(
                             height: height * 0.027,
@@ -63,7 +63,7 @@ class YourLikedPage extends StatelessWidget {
                               SizedBox(
                                 height: height * 0.01,
                               ),
-                              Text(pageProvider.likedPageLists[index].name,
+                              Text(pageProvider.likedPageLists[index].name!,
                                   style: latoStyle700Bold),
                               const SizedBox(
                                 height: 2,

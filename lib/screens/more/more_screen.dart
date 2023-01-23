@@ -1,11 +1,13 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/group/liked_group_suggested_group.dart';
 import 'package:als_frontend/screens/page/liked_page_suggested_page.dart';
+import 'package:als_frontend/screens/page/page_home_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/settings/widget/Settings_widget.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
@@ -59,7 +61,7 @@ class MoreScreen extends StatelessWidget {
                             if (Provider.of<SplashProvider>(context, listen: false).value == 1) {
                               Helper.toScreen(const ProfileScreen());
                             } else {
-                              showMessage(context: context, message: 'Please Update apps first');
+                              showMessage(message: 'Please Update apps first');
                             }
                           },
                           child: Text(LocaleKeys.view_profile.tr(), style: button)),
@@ -84,7 +86,9 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Helper.toScreen(const LikedPageSuggestedPage());
+                      Provider.of<PageProvider>(context, listen: false).initializeAuthorPageLists();
+                      Helper.toScreen(const PageHomeScreen());
+                      // Helper.toScreen(const LikedPageSuggestedPage());
                     },
                   ),
 

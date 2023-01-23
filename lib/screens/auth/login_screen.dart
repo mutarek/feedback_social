@@ -201,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 : const CupertinoActivityIndicator(),
                                             ontap: () {
                                               if (passwordController.text.isEmpty) {
-                                                showMessage(message: LocaleKeys.please_fill_all_the_form.tr(), context: context);
+                                                showMessage(message: LocaleKeys.please_fill_all_the_form.tr());
                                               } else {
                                                 auth
                                                     .signIn(!auth.isSelectEmail ? emailController.text : auth.code + phoneController.text,

@@ -7,11 +7,27 @@ import 'package:image_picker/image_picker.dart';
 class OtherProvider with ChangeNotifier {
   File? selectedFile;
   File? pageProfileFile;
+  File? pageCoverFile;
   bool inProcess = false;
 
   clearImage() {
     selectedFile = null;
     notifyListeners();
+  }
+
+  setCover() {
+    pageCoverFile = selectedFile;
+    notifyListeners();
+  }
+
+  setProfile() {
+    pageProfileFile = selectedFile;
+    notifyListeners();
+  }
+
+  clearCoverProfile() {
+    pageProfileFile = null;
+    pageCoverFile = null;
   }
 
   getImage(ImageSource source, double ratioX, double ratioY, int widget, int height) async {

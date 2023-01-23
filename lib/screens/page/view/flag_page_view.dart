@@ -73,12 +73,12 @@ class FlagPageView extends StatelessWidget {
                                               CircleAvatar(
                                                 radius: 22,
                                                 backgroundColor: Palette.primary,
-                                                backgroundImage: NetworkImage(provider.authorPageLists[index2].coverPhoto),
+                                                backgroundImage: NetworkImage(provider.authorPageLists[index2].coverPhoto!),
                                               ),
                                             ),
                                             const SizedBox(height: 3),
                                             Text(
-                                              provider.authorPageLists[index2].name,
+                                              provider.authorPageLists[index2].name!,
                                               style: GoogleFonts.lato(fontSize: height * 0.02, fontWeight: FontWeight.w600),
                                             )
                                           ],
@@ -115,8 +115,8 @@ class FlagPageView extends StatelessWidget {
                                     Helper.toScreen(PublicPageScreen(provider.authorPageLists[index].id.toString()));
                                   },
                                   goToGroupOrPage: () {},
-                                  groupOrPageImage: provider.allSuggestPageList[index].coverPhoto,
-                                  groupOrPageName: provider.allSuggestPageList[index].name,
+                                  groupOrPageImage: provider.allSuggestPageList[index].coverPhoto!,
+                                  groupOrPageName: provider.allSuggestPageList[index].name!,
                                   groupOrPageLikes: "${provider.allSuggestPageList[index].followers} ${LocaleKeys.likes.tr()} ");
                             }),
                       ],

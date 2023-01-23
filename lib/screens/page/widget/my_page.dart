@@ -43,7 +43,7 @@ class MyPage extends StatelessWidget {
                             radius: 24,
                             backgroundColor: Colors.black12,
                             backgroundImage:
-                            NetworkImage(pageProvider.authorPageLists[index].avatar),
+                            NetworkImage(pageProvider.authorPageLists[index].avatar!),
                           ),
                           trailing: Container(
                             height: height * 0.027,
@@ -65,7 +65,7 @@ class MyPage extends StatelessWidget {
                               SizedBox(
                                 height: height * 0.01,
                               ),
-                              Text(pageProvider.authorPageLists[index].name,
+                              Text(pageProvider.authorPageLists[index].name!,
                                   style: latoStyle700Bold),
                               const SizedBox(
                                 height: 2,
