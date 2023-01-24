@@ -8,9 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class YourFeedGroupScreen extends StatelessWidget {
   const YourFeedGroupScreen(
-      {Key? key, required this.dicription, required this.showDescription, required this.value})
+      {Key? key, required this.description, required this.showDescription, required this.value})
       : super(key: key);
-  final String dicription;
+  final String description;
   final bool value;
   final VoidCallback showDescription;
 
@@ -19,11 +19,11 @@ class YourFeedGroupScreen extends StatelessWidget {
     String firstHalf;
     String secondHalf;
 
-    if (dicription.length > 190) {
-      firstHalf = dicription.substring(0, 190);
-      secondHalf = dicription.substring(190, dicription.length);
+    if (description.length > 190) {
+      firstHalf = description.substring(0, 190);
+      secondHalf = description.substring(190, description.length);
     } else {
-      firstHalf = dicription;
+      firstHalf = description;
       secondHalf = "";
     }
     return Scaffold(
@@ -258,7 +258,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                    dicription.isNotEmpty?  Padding(
+                    description.isNotEmpty?  Padding(
                       padding: const EdgeInsets.only(left: 18, right: 18),
                       child: RichText(
                           textAlign: TextAlign.start,

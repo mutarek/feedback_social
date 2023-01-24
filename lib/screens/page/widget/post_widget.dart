@@ -1,4 +1,6 @@
+import 'package:als_frontend/screens/page/widget/page_comment_view.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -227,7 +229,7 @@ class PagePostView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         likeCommentShareButtonWidget(ImagesModel.likeIcons, "Like", () {}),
-                        likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {}),
+                        likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {Helper.toScreen(PageCommentView(value: true, showDescription: () {  }, description: '',));}),
                         PopupMenuButton(
                           itemBuilder: (context) => [
                             // PopupMenuItem 1

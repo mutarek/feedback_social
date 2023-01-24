@@ -409,7 +409,8 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                       title: Text('Live Comming Soon'),
                     );
                   } else if (index == 4) {
-                    return PageCommentView();
+                    //TODO: have to change this
+                    return PageCommentView(value: false, showDescription: () {  }, description: '',);
                   }
                   return PagePostView(
                     description:
