@@ -3,8 +3,8 @@ import 'package:als_frontend/screens/page/view/page_about_view.dart';
 import 'package:als_frontend/screens/page/view/page_home_view.dart';
 import 'package:als_frontend/screens/page/widget/admin_post_view.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class NewPageDetailsScreen extends StatefulWidget {
@@ -52,122 +52,44 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
 
   Widget tabMenuWidget(PageProvider pageProvider) {
     return Padding(
-      padding: const EdgeInsets.only(left: 18, right: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // TODO: Post Container
-          InkWell(
-            onTap: () {
-              _pageController.animateToPage(0, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-              pageProvider.changeMenuValue(0);
-            },
-            child: Container(
-              decoration: pageProvider.menuValue == 0
-                  ? BoxDecoration(borderRadius: BorderRadius.circular(20), color: AppColors.primaryColorLight)
-                  : const BoxDecoration(),
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Text(
-                  "Posts",
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                      color: pageProvider.menuValue == 0 ? Colors.white : AppColors.primaryColorLight),
-                ),
-              ),
-            ),
-          ),
+          tabButtonWidget(0,"Posts",pageProvider),
+          tabButtonWidget(1,"About",pageProvider),
+          tabButtonWidget(2,"Photos",pageProvider),
+          tabButtonWidget(3,"Live",pageProvider),
+          tabButtonWidget(4,"Community",pageProvider,ratio: 3), // 1.5
 
-          // TODO: about Container
-          InkWell(
-            onTap: () {
-              _pageController.animateToPage(1, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-              pageProvider.changeMenuValue(1);
-            },
-            child: Container(
-              decoration: pageProvider.menuValue == 1
-                  ? BoxDecoration(borderRadius: BorderRadius.circular(20), color: AppColors.primaryColorLight)
-                  : const BoxDecoration(),
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Text(
-                  "About",
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                      color: pageProvider.menuValue == 1 ? Colors.white : AppColors.primaryColorLight),
-                ),
-              ),
-            ),
-          ),
-          // TODO: Photos Container
-          InkWell(
-            onTap: () {
-              _pageController.animateToPage(2, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-              pageProvider.changeMenuValue(2);
-            },
-            child: Container(
-              decoration: pageProvider.menuValue == 2
-                  ? BoxDecoration(borderRadius: BorderRadius.circular(20), color: AppColors.primaryColorLight)
-                  : const BoxDecoration(),
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Text(
-                  "Photos",
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                      color: pageProvider.menuValue == 2 ? Colors.white : AppColors.primaryColorLight),
-                ),
-              ),
-            ),
-          ),
-          // TODO: Live Container
-          InkWell(
-            onTap: () {
-              _pageController.animateToPage(3, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-              pageProvider.changeMenuValue(3);
-            },
-            child: Container(
-              decoration: pageProvider.menuValue == 3
-                  ? BoxDecoration(borderRadius: BorderRadius.circular(20), color: AppColors.primaryColorLight)
-                  : const BoxDecoration(),
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Text(
-                  "Live",
-                  style: GoogleFonts.roboto(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                      color: pageProvider.menuValue == 3 ? Colors.white : AppColors.primaryColorLight),
-                ),
-              ),
-            ),
-          ),
-          // TODO: Community Container
-          InkWell(
-            onTap: () {
-              _pageController.animateToPage(4, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
-              pageProvider.changeMenuValue(4);
-            },
-            child: Container(
-              decoration: pageProvider.menuValue == 4
-                  ? BoxDecoration(borderRadius: BorderRadius.circular(20), color: AppColors.primaryColorLight)
-                  : const BoxDecoration(),
-              child: Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Text(
-                    "Manage",
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                        color: pageProvider.menuValue == 4 ? Colors.white : AppColors.primaryColorLight),
-                  )),
-            ),
-          ),
         ],
+      ),
+    );
+  }
+
+  Widget tabButtonWidget(int status, String title, PageProvider pageProvider,{int ratio=2}) {
+    return Expanded(
+      flex: ratio,
+      child: InkWell(
+        onTap: () {
+          _pageController.animateToPage(status, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
+          pageProvider.changeMenuValue(status);
+        },
+        child: Container(
+          decoration: pageProvider.menuValue == status
+              ? BoxDecoration(borderRadius: BorderRadius.circular(20), color: AppColors.primaryColorLight)
+              : const BoxDecoration(),
+          child: Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Text(
+              title,
+              style:
+                  robotoStyle700Bold.copyWith(fontSize: 12, color: pageProvider.menuValue == 0 ? Colors.white : AppColors.primaryColorLight),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -175,7 +97,6 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
   ListView buildListView(PageProvider pageProvider, BuildContext context) {
     return ListView(
       children: [
-
         tabMenuWidget(pageProvider),
         SizedBox(
           height: 1000,

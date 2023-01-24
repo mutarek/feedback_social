@@ -92,6 +92,4 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
       ],
     );
   }
-
-
 }
