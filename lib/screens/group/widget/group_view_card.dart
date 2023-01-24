@@ -1,4 +1,4 @@
-import 'package:als_frontend/screens/page/admin_page_screen.dart';
+import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';

@@ -1,3 +1,4 @@
+import 'package:als_frontend/screens/page/widget/view_like.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/gestures.dart';
@@ -339,38 +340,8 @@ class YourFeedGroupScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            RichText(
-                                text: TextSpan(
-                                    text: "Rafatul ",
-                                    style: GoogleFonts.roboto(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: Colors.black),
-                                    children: [
-                                      TextSpan(
-                                          text: " and",
-                                          style: GoogleFonts.roboto(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
-                                              color: AppColors.primaryColorLight),
-                                          children: [
-                                            TextSpan(
-                                                text: " 5,500",
-                                                style: GoogleFonts.roboto(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 12,
-                                                    color: Colors.black),
-                                                children: [
-                                                  TextSpan(
-                                                    text: " others",
-                                                    style: GoogleFonts.roboto(
-                                                        fontWeight: FontWeight.w400,
-                                                        fontSize: 12,
-                                                        color: AppColors.primaryColorLight),
-                                                  ),
-                                                ])
-                                          ])
-                                    ])),
+                            ViewLike(),
+
                             const Spacer(),
                             Row(
                               children: [
