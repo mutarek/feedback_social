@@ -70,8 +70,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 48,
                     child: StylishBottomBar(
                       items: [
-                        buildAnimatedBarItems(dashboardProvider, 0, LocaleKeys.home.tr(), ImagesModel.homeURI),
-                        buildAnimatedBarItems(dashboardProvider, 1, LocaleKeys.friend.tr(), ImagesModel.friendRequestURI),
+                        buildAnimatedBarItems(dashboardProvider, 0, LocaleKeys.home.tr(), ImagesModel.homeIcons),
+                        buildAnimatedBarItems(dashboardProvider, 1, LocaleKeys.friend.tr(), ImagesModel.friendRequestIcons),
 
 
                         // AnimatedBarItems(
@@ -85,7 +85,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             icon: Stack(
                               clipBehavior: Clip.none,
                               children: [
-                                SvgPicture.asset(ImagesModel.notificationURI,
+                                SvgPicture.asset(ImagesModel.notificationIcons2,
                                     color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, width: 22, height: 22),
                                 Positioned(
                                     right: -15,
@@ -108,7 +108,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             title: Text(LocaleKeys.notifications.tr(),
                                 style: latoStyle600SemiBold.copyWith(
                                     color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, fontSize: 12))),
-                        buildAnimatedBarItems(dashboardProvider, 3, LocaleKeys.message.tr(), ImagesModel.chatingURI),
+                        buildAnimatedBarItems(dashboardProvider, 3, LocaleKeys.message.tr(), ImagesModel.chattingIcons),
                         buildAnimatedBarItems(dashboardProvider, 4, LocaleKeys.more.tr(), ImagesModel.menuURI),
 
                       ],
