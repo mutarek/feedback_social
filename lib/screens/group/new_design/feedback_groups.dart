@@ -1,4 +1,5 @@
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/new_design/create_group1.dart';
 import 'package:als_frontend/screens/group/new_design/find_group.dart';
 import 'package:als_frontend/screens/group/new_design/invite_group.dart';
 import 'package:als_frontend/screens/group/new_design/pins_group.dart';
@@ -620,7 +621,7 @@ class FeedBackGroups extends StatelessWidget {
                 const SizedBox(height: 10),
                 InkWell(
                   onTap: () {
-                    //Helper.toScreen(const CreatePageScreen());
+                    Helper.toScreen(const CreateGroup1());
                   },
                   child: Container(
                     height: 50,

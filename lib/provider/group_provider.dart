@@ -9,6 +9,7 @@ import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/profile_video_model.dart';
+import 'package:als_frontend/data/model/response/settings/privacy_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/group_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
@@ -129,6 +130,22 @@ class GroupProvider with ChangeNotifier {
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
+    notifyListeners();
+  }
+
+  //TODO: Adding Value to Privacy Model
+  List<PrivacyModel> privacyModels = [];
+
+  addTypeToModel(){
+    privacyModels.add(PrivacyModel(id: 1,name: "Public"));
+    privacyModels.add(PrivacyModel(id: 2,name: "Private"));
+  }
+
+  //TODO: For Group Privacy
+  PrivacyModel privacyModel = PrivacyModel();
+
+  changePrivacyType(PrivacyModel value){
+    privacyModel = value;
     notifyListeners();
   }
 
