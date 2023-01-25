@@ -459,12 +459,13 @@ class PageProvider with ChangeNotifier {
 
       formData.fields.add(MapEntry('name', pageName));
       formData.fields.add(MapEntry('bio', pageBio));
+      formData.fields.add(MapEntry('description', pageDescription));
+      formData.fields.add(MapEntry('category', categoryValue.id.toString()));
       formData.fields.add(MapEntry('contact', pageContactNumber));
       formData.fields.add(MapEntry('email', pageEmail));
       formData.fields.add(MapEntry('website', pageWebsiteLink));
       formData.fields.add(MapEntry('city', countryName));
       formData.fields.add(MapEntry('address', pageAddress));
-      formData.fields.add(MapEntry('category', categoryValue.id.toString()));
       response = await pageRepo.createPageWithImageUpload(formData);
     } else {
       response = await pageRepo.createPageWithoutImageUpload({"name": pageName, "category": categoryValue.id});
