@@ -31,6 +31,8 @@ class ImagesModel {
   static const String suggestedGroupIcon = 'assets/svg/suggested_group_icon.svg';
   static const String yourGroupIcon = 'assets/svg/your_group_icon.svg';
   static const String joinedGroupIcon = 'assets/svg/joined_groups_icon.svg';
+  static const String groupMemberIcon = 'assets/svg/group_member_vector.svg';
+  static const String publicGroupIcon = 'assets/svg/public_group_svg.svg';
   static const String followersIcons = 'assets/icons/followers.svg';
   static const String followingIcons = 'assets/icons/following.svg';
   static const String copyIcons = 'assets/icons/copy.svg';

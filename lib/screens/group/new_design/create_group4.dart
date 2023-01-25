@@ -10,6 +10,8 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'individual_group_page.dart';
+
 class CreateGroup4 extends StatefulWidget {
   const CreateGroup4({Key? key}) : super(key: key);
 
@@ -105,7 +107,7 @@ class _CreateGroup4State extends State<CreateGroup4> {
                       // } else {
                       //   //Helper.toScreen(const CreatePageScreen2());
                       // }
-                      Helper.toScreen(const CreateGroup4());
+                      Helper.toScreen(const InvidivualGroupPage());
                     },
                     radius: 100,
                     height: 48),
