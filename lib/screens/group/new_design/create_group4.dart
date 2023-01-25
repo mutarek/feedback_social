@@ -107,7 +107,7 @@ class _CreateGroup4State extends State<CreateGroup4> {
                       // } else {
                       //   //Helper.toScreen(const CreatePageScreen2());
                       // }
-                      Helper.toScreen(const InvidivualGroupPage());
+                      Helper.toScreen(const IndividualGroupPage());
                     },
                     radius: 100,
                     height: 48),
