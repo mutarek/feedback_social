@@ -70,20 +70,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 48,
                     child: StylishBottomBar(
                       items: [
-                        AnimatedBarItems(
-                            icon: SvgPicture.asset(ImagesModel.homeURI,
-                                color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                            selectedColor: Colors.blue,
-                            title: Text(LocaleKeys.home.tr(),
-                                style: latoStyle600SemiBold.copyWith(
-                                    color: dashboardProvider.selectIndex == 0 ? Colors.blue : Colors.grey, fontSize: 12))),
-                        AnimatedBarItems(
-                            icon: SvgPicture.asset(ImagesModel.friendRequestURI,
-                                color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                            selectedColor: Colors.blue,
-                            title: Text(LocaleKeys.friend.tr(),
-                                style: latoStyle600SemiBold.copyWith(
-                                    color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, fontSize: 12))),
+                        buildAnimatedBarItems(dashboardProvider, 0, LocaleKeys.home.tr(), ImagesModel.homeURI),
+                        buildAnimatedBarItems(dashboardProvider, 1, LocaleKeys.friend.tr(), ImagesModel.friendRequestURI),
+
+
+                        // AnimatedBarItems(
+                        //     icon: SvgPicture.asset(ImagesModel.friendRequestURI,
+                        //         color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, width: 22, height: 22),
+                        //     selectedColor: Colors.blue,
+                        //     title: Text(LocaleKeys.friend.tr(),
+                        //         style: latoStyle600SemiBold.copyWith(
+                        //             color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, fontSize: 12))),
                         AnimatedBarItems(
                             icon: Stack(
                               clipBehavior: Clip.none,
@@ -111,22 +108,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             title: Text(LocaleKeys.notifications.tr(),
                                 style: latoStyle600SemiBold.copyWith(
                                     color: dashboardProvider.selectIndex == 2 ? Colors.blue : Colors.grey, fontSize: 12))),
-                        AnimatedBarItems(
-                            icon: SvgPicture.asset(ImagesModel.chatingURI,
-                                color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                            selectedColor: Colors.blue,
-                            title: Text(LocaleKeys.message.tr(),
-                                style: latoStyle600SemiBold.copyWith(
-                                    color: dashboardProvider.selectIndex == 3 ? Colors.blue : Colors.grey, fontSize: 12))),
-                        AnimatedBarItems(
-                            icon: SvgPicture.asset(ImagesModel.menuURI,
-                                color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                            backgroundColor: Colors.blue,
-                            title: CustomText(
-                              title: LocaleKeys.more.tr(),
-                              textStyle: latoStyle600SemiBold.copyWith(
-                                  color: dashboardProvider.selectIndex == 4 ? Colors.blue : Colors.grey, fontSize: 12),
-                            )),
+                        buildAnimatedBarItems(dashboardProvider, 3, LocaleKeys.message.tr(), ImagesModel.chatingURI),
+                        buildAnimatedBarItems(dashboardProvider, 4, LocaleKeys.more.tr(), ImagesModel.menuURI),
+
                       ],
                       iconSize: 25,
                       barAnimation: BarAnimation.fade,
@@ -246,6 +230,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   )),
             ));
+  }
+
+  AnimatedBarItems buildAnimatedBarItems(DashboardProvider dashboardProvider, int index, String title, String imagePath) {
+    return AnimatedBarItems(
+        icon: SvgPicture.asset(imagePath, color: dashboardProvider.selectIndex == index ? colorText : colorIcons, width: 22, height: 22),
+        selectedColor: Colors.blue,
+        title: Text(title,
+            style: robotoStyle600SemiBold.copyWith(color: dashboardProvider.selectIndex == 0 ? colorText: colorIcons, fontSize: 12)));
   }
 
   Widget tabItem(IconData iconData, int position, DashboardProvider dashboardProvider, {bool isCircle = false}) {

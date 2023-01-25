@@ -122,13 +122,13 @@ class ProfileProvider with ChangeNotifier{
   }
 
   addLike(int postID, int index) async {
-    if (newsFeedLists[index].isLiked == false) {
-      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
-      newsFeedLists[index].isLiked = true;
-    } else {
-      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
-      newsFeedLists[index].isLiked = false;
-    }
+    // if (newsFeedLists[index].isLiked == false) {
+    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
+    //   newsFeedLists[index].isLiked = true;
+    // } else {
+    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+    //   newsFeedLists[index].isLiked = false;
+    // }
 
     notifyListeners();
 
@@ -136,13 +136,13 @@ class ProfileProvider with ChangeNotifier{
   }
 
   changeLikeStatus(int value, int index) async {
-    if (value == 1) {
-      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
-      newsFeedLists[index].isLiked = true;
-    } else {
-      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
-      newsFeedLists[index].isLiked = false;
-    }
+    // if (value == 1) {
+    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
+    //   newsFeedLists[index].isLiked = true;
+    // } else {
+    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+    //   newsFeedLists[index].isLiked = false;
+    // }
     notifyListeners();
   }
 

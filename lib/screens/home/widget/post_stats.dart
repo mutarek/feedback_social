@@ -74,7 +74,7 @@ class PostStats extends StatelessWidget {
                         children: [
                           LikeButton(
                             size: 30,
-                            isLiked:  post.isLiked,
+                            isLiked:  post.isReacted,
                             bubblesSize: 50,
                             // circleColor:
                             // CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),

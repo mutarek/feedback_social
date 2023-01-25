@@ -4,7 +4,7 @@ import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/home/shimmer_effect/timeline_post_shimmer_widget.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
 import 'package:als_frontend/screens/home/widget/post_status_widget.dart';
-import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
+import 'package:als_frontend/screens/post/widget/post_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -89,8 +89,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const CupertinoActivityIndicator();
                         }
 
-                        return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
-                            isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
+                        return PostWidget(newsFeedProvider.newsFeedLists[index],
+                            index: index, isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
+                        //
+                        // return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
+                        //     isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
                       }, childCount: newsFeedProvider.newsFeedLists.length),
                     )
                   ],

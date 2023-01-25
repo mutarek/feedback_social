@@ -1,5 +1,4 @@
 import 'package:als_frontend/provider/group_provider.dart';
-import 'package:als_frontend/screens/group/create_group_screen.dart';
 import 'package:als_frontend/screens/group/new_design/feedback_groups.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen_copy.dart';

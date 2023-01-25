@@ -6,8 +6,6 @@ import 'package:als_frontend/screens/group/new_design/pins_group.dart';
 import 'package:als_frontend/screens/group/widget/custom_expanded_widget.dart';
 import 'package:als_frontend/screens/group/widget/group_view_card.dart';
 import 'package:als_frontend/screens/group/widget/suggested_group_view_card.dart';
-import 'package:als_frontend/screens/page/find_page.dart';
-import 'package:als_frontend/screens/page/page_dashboard.dart';
 import 'package:als_frontend/screens/page/widget/like_invite_find.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
@@ -17,7 +15,6 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class FeedBackGroups extends StatelessWidget {

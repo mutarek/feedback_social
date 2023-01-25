@@ -424,11 +424,11 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                           clipBehavior: Clip.none,
                                           children: [
                                             Icon(
-                                                (newsFeedProvider.singleNewsFeedModel.isLiked == true)
+                                                (newsFeedProvider.singleNewsFeedModel.isReacted == true)
                                                     ? Icons.favorite
                                                     : Icons.favorite_border,
                                                 size: 30,
-                                                color: (newsFeedProvider.singleNewsFeedModel.isLiked == true) ? Colors.red : Colors.black),
+                                                color: (newsFeedProvider.singleNewsFeedModel.isReacted == true) ? Colors.red : Colors.black),
                                           ],
                                         ),
                                       ),

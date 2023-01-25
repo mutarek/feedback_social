@@ -258,26 +258,26 @@ class PageProvider with ChangeNotifier {
   }
 
   addLike(int pageID, int postID, int index) async {
-    if (pageAllPosts[index].isLiked == false) {
-      pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! + 1;
-      pageAllPosts[index].isLiked = true;
-    } else {
-      pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
-      pageAllPosts[index].isLiked = false;
-    }
+    // if (pageAllPosts[index].isLiked == false) {
+    //   pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! + 1;
+    //   pageAllPosts[index].isLiked = true;
+    // } else {
+    //   pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
+    //   pageAllPosts[index].isLiked = false;
+    // }
 
     notifyListeners();
     await newsfeedRepo.addLikeONPage(postID, pageID);
   }
 
   changeLikeStatus(int value, int index) async {
-    if (value == 1) {
-      pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! + 1;
-      pageAllPosts[index].isLiked = true;
-    } else {
-      pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
-      pageAllPosts[index].isLiked = false;
-    }
+    // if (value == 1) {
+    //   pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! + 1;
+    //   pageAllPosts[index].isLiked = true;
+    // } else {
+    //   pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
+    //   pageAllPosts[index].isLiked = false;
+    // }
     notifyListeners();
   }
 

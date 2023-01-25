@@ -36,7 +36,7 @@ class _CreateGroup4State extends State<CreateGroup4> {
                     title: "Want to make your page more attractive?", maxLines: 2, textStyle: robotoStyle500Medium.copyWith(fontSize: 17)),
                 Text("You must select a cover photo that describe your page perfectly.",
                     style: robotoStyle400Regular.copyWith(fontSize: 10)),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Stack(
                   children: [
                     Column(

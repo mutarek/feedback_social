@@ -66,8 +66,8 @@ class _FriendRequestSuggestionScreenState extends State<FriendRequestSuggestionS
                       decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(25)),
                       child:
                           TabBar(indicator: BoxDecoration(color: AppColors.feedback, borderRadius: BorderRadius.circular(25)), tabs: const [
-                        CustomText(title: "Friend request"),
-                        CustomText(title: "Suggested friend"),
+                        CustomText(title: "Friend request", color: Colors.white),
+                        CustomText(title: "Suggested friend", color: Colors.white),
                       ]),
                     ),
                   ),

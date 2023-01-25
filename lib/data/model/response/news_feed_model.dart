@@ -11,23 +11,26 @@ class NewsFeedModel {
     this.videos,
     this.totalComment,
     this.commentUrl,
+    this.totalReaction,
     this.totalLiked,
+    this.totalLoved,
+    this.totalSad,
     this.likedByUrl,
-    this.isLiked,
+    this.lovedByUrl,
+    this.sadByUrl,
+    this.isReacted,
     this.sharedByUrl,
     this.totalShared,
     this.isShare,
     this.postType,
-    this.timestamp,
-    this.sharePost,
-  });
+    this.timestamp,});
 
   NewsFeedModel.fromJson(dynamic json) {
     newsfeedId = json['newsfeed_id'];
     isDelete = json['is_delete'];
     id = json['id'];
-    description = json['description']??"";
-    author = json['author'] != null ? Author.fromJson(json['author']) : null;
+    description = json['description'];
+    author = json['author'] != null ? Author.fromJson(json['author']) : Author();
     totalImage = json['total_image'];
     if (json['images'] != null) {
       images = [];
@@ -44,9 +47,14 @@ class NewsFeedModel {
     }
     totalComment = json['total_comment'];
     commentUrl = json['comment_url'];
+    totalReaction = json['total_reaction'];
     totalLiked = json['total_liked'];
+    totalLoved = json['total_loved'];
+    totalSad = json['total_sad'];
     likedByUrl = json['liked_by_url'];
-    isLiked = json['is_liked'];
+    lovedByUrl = json['loved_by_url'];
+    sadByUrl = json['sad_by_url'];
+    isReacted = json['is_reacted'];
     sharedByUrl = json['shared_by_url'];
     totalShared = json['total_shared'];
     isShare = json['is_share'];
@@ -56,7 +64,6 @@ class NewsFeedModel {
     groupModel = json['group'] != null ? GroupModel.fromJson(json['group']) : GroupModel();
     pageModel = json['page'] != null ? PageModel.fromJson(json['page']) : PageModel();
   }
-
   num? newsfeedId;
   bool? isDelete;
   num? id;
@@ -68,9 +75,14 @@ class NewsFeedModel {
   List<Videos>? videos;
   num? totalComment;
   String? commentUrl;
+  num? totalReaction;
   num? totalLiked;
+  num? totalLoved;
+  num? totalSad;
   String? likedByUrl;
-  bool? isLiked;
+  String? lovedByUrl;
+  String? sadByUrl;
+  bool? isReacted;
   String? sharedByUrl;
   num? totalShared;
   bool? isShare;
@@ -99,19 +111,93 @@ class NewsFeedModel {
     }
     map['total_comment'] = totalComment;
     map['comment_url'] = commentUrl;
+    map['total_reaction'] = totalReaction;
     map['total_liked'] = totalLiked;
+    map['total_loved'] = totalLoved;
+    map['total_sad'] = totalSad;
     map['liked_by_url'] = likedByUrl;
-    map['is_liked'] = isLiked;
+    map['loved_by_url'] = lovedByUrl;
+    map['sad_by_url'] = sadByUrl;
+    map['is_reacted'] = isReacted;
     map['shared_by_url'] = sharedByUrl;
     map['total_shared'] = totalShared;
     map['is_share'] = isShare;
     map['post_type'] = postType;
     map['timestamp'] = timestamp;
-    if (sharePost != null) {
-      map['share_post'] = sharePost?.toJson();
-    }
     return map;
   }
+
+}
+
+class Videos {
+  Videos({
+    this.id,
+    this.thumbnail,
+    this.video,});
+
+  Videos.fromJson(dynamic json) {
+    id = json['id'];
+    thumbnail = json['thumbnail'];
+    video = json['video'];
+  }
+  num? id;
+  String? thumbnail;
+  String? video;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['thumbnail'] = thumbnail;
+    map['video'] = video;
+    return map;
+  }
+
+}
+
+class ImagesData {
+  ImagesData({
+    this.id,
+    this.image,});
+
+  ImagesData.fromJson(dynamic json) {
+    id = json['id'];
+    image = json['image'];
+  }
+  num? id;
+  String? image;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['image'] = image;
+    return map;
+  }
+
+}
+
+class Author {
+  Author({
+    this.id,
+    this.fullName,
+    this.profileImage,});
+
+  Author.fromJson(dynamic json) {
+    id = json['id'];
+    fullName = json['full_name'];
+    profileImage = json['profile_image'];
+  }
+  num? id;
+  String? fullName;
+  String? profileImage;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['full_name'] = fullName;
+    map['profile_image'] = profileImage;
+    return map;
+  }
+
 }
 
 class SharePost {
@@ -149,14 +235,14 @@ class SharePost {
 class Post {
   Post(
       {this.id,
-      this.description,
-      this.author,
-      this.totalImage,
-      this.images,
-      this.totalVideo,
-      this.videos,
-      this.pageModel,
-      this.groupModel});
+        this.description,
+        this.author,
+        this.totalImage,
+        this.images,
+        this.totalVideo,
+        this.videos,
+        this.pageModel,
+        this.groupModel});
 
   Post.fromJson(dynamic json) {
     id = json['id'];
@@ -209,80 +295,6 @@ class Post {
     if (videos != null) {
       map['videos'] = videos?.map((v) => v.toJson()).toList();
     }
-    return map;
-  }
-}
-
-class ImagesData {
-  ImagesData({
-    this.id,
-    this.image,
-  });
-
-  ImagesData.fromJson(dynamic json) {
-    id = json['id'];
-    image = json['image'];
-  }
-
-  num? id;
-  String? image;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['image'] = image;
-    return map;
-  }
-}
-
-class Author {
-  Author({
-    this.id,
-    this.fullName,
-    this.profileImage,
-  });
-
-  Author.fromJson(dynamic json) {
-    id = json['id'];
-    fullName = json['full_name'];
-    profileImage = json['profile_image'];
-  }
-
-  num? id;
-  String? fullName;
-  String? profileImage;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['full_name'] = fullName;
-    map['profile_image'] = profileImage;
-    return map;
-  }
-}
-
-class Videos {
-  Videos({
-    this.id,
-    this.thumbnail,
-    this.video,
-  });
-
-  Videos.fromJson(dynamic json) {
-    id = json['id'];
-    thumbnail = json['thumbnail'];
-    video = json['video'];
-  }
-
-  num? id;
-  String? thumbnail;
-  String? video;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['thumbnail'] = thumbnail;
-    map['video'] = video;
     return map;
   }
 }

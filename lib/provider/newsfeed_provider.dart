@@ -52,7 +52,6 @@ class NewsFeedProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    print('Loading from api');
     ApiResponse response = await newsFeedRepo1.getNewsFeedData(page);
     isLoading = false;
     isBottomLoading = false;
@@ -90,26 +89,26 @@ class NewsFeedProvider with ChangeNotifier {
       {bool isGroup = false,
       bool isFromPage = false,
       int groupPageID = 0}) async {
-    if (newsFeedLists[index].isLiked == false) {
-      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
-      newsFeedLists[index].isLiked = true;
-    } else {
-      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
-      newsFeedLists[index].isLiked = false;
-    }
+    // if (newsFeedLists[index].isLiked == false) {
+    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
+    //   newsFeedLists[index].isLiked = true;
+    // } else {
+    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+    //   newsFeedLists[index].isLiked = false;
+    // }
     notifyListeners();
     await newsFeedRepo1.addLike(postID,
         isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
   }
 
   changeLikeStatus(int value, int index) async {
-    if (value == 1) {
-      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
-      newsFeedLists[index].isLiked = true;
-    } else {
-      newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
-      newsFeedLists[index].isLiked = false;
-    }
+    // if (value == 1) {
+    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
+    //   newsFeedLists[index].isLiked = true;
+    // } else {
+    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+    //   newsFeedLists[index].isLiked = false;
+    // }
     notifyListeners();
   }
 
@@ -166,15 +165,15 @@ class NewsFeedProvider with ChangeNotifier {
 
   singlePostLike(int postID, Function callBackFunction,
       {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
-    if (singleNewsFeedModel.isLiked == false) {
-      callBackFunction(true);
-      singleNewsFeedModel.totalLiked = singleNewsFeedModel.totalLiked! + 1;
-      singleNewsFeedModel.isLiked = true;
-    } else {
-      callBackFunction(false);
-      singleNewsFeedModel.totalLiked = singleNewsFeedModel.totalLiked! - 1;
-      singleNewsFeedModel.isLiked = false;
-    }
+    // if (singleNewsFeedModel.isLiked == false) {
+    //   callBackFunction(true);
+    //   singleNewsFeedModel.totalLiked = singleNewsFeedModel.totalLiked! + 1;
+    //   singleNewsFeedModel.isLiked = true;
+    // } else {
+    //   callBackFunction(false);
+    //   singleNewsFeedModel.totalLiked = singleNewsFeedModel.totalLiked! - 1;
+    //   singleNewsFeedModel.isLiked = false;
+    // }
     notifyListeners();
 
     await newsFeedRepo1.addLike(postID,

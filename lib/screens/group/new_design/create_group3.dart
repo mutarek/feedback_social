@@ -2,7 +2,6 @@ import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/new_design/create_group4.dart';
-import 'package:als_frontend/screens/page/page_dashboard.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -59,7 +58,7 @@ class _CreateGroup3State extends State<CreateGroup3> {
                                       ),
                                       child: Row(
                                         children: [
-                                          Expanded(
+                                          const Expanded(
                                             child: TextField(
                                               decoration: InputDecoration(
                                                   border: InputBorder.none,
@@ -68,7 +67,7 @@ class _CreateGroup3State extends State<CreateGroup3> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.all(2),
+                                            padding: const EdgeInsets.all(2),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),

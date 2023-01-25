@@ -2,7 +2,6 @@ import 'package:als_frontend/data/model/response/chat/chat_message_model.dart';
 import 'package:als_frontend/screens/chat/components/text_message.dart';
 import 'package:als_frontend/screens/chat/enum/enum.dart';
 import 'package:als_frontend/util/size.util.dart';
-import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

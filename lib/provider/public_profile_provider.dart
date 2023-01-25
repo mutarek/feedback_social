@@ -78,13 +78,13 @@ class PublicProfileProvider with ChangeNotifier{
   // for LIKE comment
 
   addLike(int postID, int index) async {
-    if (publicNewsFeedLists[index].isLiked == false) {
-      publicNewsFeedLists[index].totalLiked = publicNewsFeedLists[index].totalLiked! + 1;
-      publicNewsFeedLists[index].isLiked = true;
-    } else {
-      publicNewsFeedLists[index].totalLiked = publicNewsFeedLists[index].totalLiked! - 1;
-      publicNewsFeedLists[index].isLiked = false;
-    }
+    // if (publicNewsFeedLists[index].isLiked == false) {
+    //   publicNewsFeedLists[index].totalLiked = publicNewsFeedLists[index].totalLiked! + 1;
+    //   publicNewsFeedLists[index].isLiked = true;
+    // } else {
+    //   publicNewsFeedLists[index].totalLiked = publicNewsFeedLists[index].totalLiked! - 1;
+    //   publicNewsFeedLists[index].isLiked = false;
+    // }
 
     notifyListeners();
     await newsfeedRepo.addLike(postID);
