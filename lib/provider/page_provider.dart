@@ -203,7 +203,6 @@ class PageProvider with ChangeNotifier {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
         pageAllPosts.add(NewsFeedModel.fromJson(element));
-        print('shuvo ${NewsFeedModel.fromJson(element).id}');
       });
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
@@ -285,7 +284,6 @@ class PageProvider with ChangeNotifier {
   }
 
   changeLikeStatus(int index) async {
-    print(pageAllPosts[index].reaction);
     if (pageAllPosts[index].reaction != -1) {
       pageAllPosts[index].totalReaction = pageAllPosts[index].totalReaction! - 1;
       if (pageAllPosts[index].reaction == 1) {

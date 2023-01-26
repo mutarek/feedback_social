@@ -33,6 +33,24 @@ class GroupProvider with ChangeNotifier {
   bool joinedGroup = false;
   bool suggestedGroup = false;
   bool eachJoinedGroup = false;
+  bool adminList = false;
+  bool moderatorList = false;
+  bool memberList = false;
+
+  changeMemberListGroupStatus(){
+    memberList = !memberList;
+    notifyListeners();
+  }
+
+  changeModeratorListGroupStatus(){
+    moderatorList = !moderatorList;
+    notifyListeners();
+  }
+
+  changeAdminListGroupStatus(){
+    adminList = !adminList;
+    notifyListeners();
+  }
 
   changeEachJoinedGroupStatus(){
     eachJoinedGroup = !eachJoinedGroup;

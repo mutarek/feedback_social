@@ -16,14 +16,14 @@ class FindGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PageAppBar(title: 'Find Groups'),
+      appBar: const PageAppBar(title: 'Find Groups'),
       body: Padding(
-        padding: EdgeInsets.only(left: 10,right: 10,top: 20),
+        padding: const EdgeInsets.only(left: 10,right: 10,top: 20),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Container(
                   height: 48.0,
                   width: double.infinity,

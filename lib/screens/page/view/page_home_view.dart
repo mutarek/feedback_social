@@ -82,7 +82,6 @@ class _PageHomeViewState extends State<PageHomeView> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      print(pageProvider.pageAllPosts[index].id);
                       return PostWidget(pageProvider.pageAllPosts[index], index: index, isPage: true);
                     })
               ],

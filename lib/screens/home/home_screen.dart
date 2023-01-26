@@ -84,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
-                        print("Item printed: $index");
                         if (index == newsFeedProvider.newsFeedLists.length) {
                           return const CupertinoActivityIndicator();
                         }

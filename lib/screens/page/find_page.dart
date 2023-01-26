@@ -25,11 +25,11 @@ class _FindPageState extends State<FindPage> {
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Container(
               height: 48.0,
               width: double.infinity,
@@ -39,14 +39,14 @@ class _FindPageState extends State<FindPage> {
               ),
               child: Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: TextField(
                       decoration:
                           InputDecoration(border: InputBorder.none, hintText: "Search..", hintStyle: TextStyle(color: Colors.black)),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     child: Container(
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
                       height: 38,
@@ -62,24 +62,18 @@ class _FindPageState extends State<FindPage> {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
               child: ListView.builder(
                 itemCount: 4,
                 itemBuilder: (_, index) {
                   return Card(
-                    color: Color(0xFAFAFA),
+                    color: const Color(0xffFAFAFA),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
                       leading: Container(
-                          height: 36,
-                          width: 36,
-                          color: Color(0xFFFFFF),
-                          child: Icon(
-                            Icons.share_location_rounded,
-                            size: 29,
-                          )),
+                          height: 36, width: 36, color: const Color(0xffFFFFFF), child: const Icon(Icons.share_location_rounded, size: 29)),
                       title: Text('News 74', style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: Colors.black)),
                       trailing: PopupMenuButton(
                         child: Container(
@@ -97,8 +91,10 @@ class _FindPageState extends State<FindPage> {
                               children: [
                                 Row(
                                   children: [
-                                    SizedBox(height: 10,),
-                                    Icon(
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    const Icon(
                                       Icons.thumb_up,
                                       size: 15,
                                     ),
@@ -118,7 +114,7 @@ class _FindPageState extends State<FindPage> {
                                 Row(
                                   children: [
                                     // SvgPicture.asset("assets/svg/add.svg",height: 10,width:20,),
-                                    Icon(
+                                    const Icon(
                                       Icons.copy,
                                       size: 15,
                                     ),

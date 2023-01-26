@@ -15,9 +15,9 @@ class PinsGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PageAppBar(title: 'Pins Group'),
+      appBar: const PageAppBar(title: 'Pins Group'),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -72,7 +72,7 @@ class PinsGroup extends StatelessWidget {
                           },
                           child:  SvgPicture.asset("assets/svg/pins_group_icon.svg"),
                         ),
-                        SizedBox(width: 10,)
+                        const SizedBox(width: 10,)
                       ],
                     ),
                   );
@@ -81,7 +81,7 @@ class PinsGroup extends StatelessWidget {
             ),
           ),
               const SizedBox(height: 10,),
-              Divider(
+              const Divider(
                 height: 2,
                 color: Color(0xffE4E6EB),
               ),

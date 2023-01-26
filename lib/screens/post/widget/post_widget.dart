@@ -188,11 +188,11 @@ class PostWidget extends StatelessWidget {
                       ),
                       RichText(
                           text: TextSpan(
-                              text: newsFeedData.reaction == true ? "You " : "",
+                              text: newsFeedData.reaction != -1 ? "You " : "",
                               style: robotoStyle600SemiBold.copyWith(fontSize: 12),
                               children: [
                             TextSpan(
-                                text: newsFeedData.reaction == true ? " and" : "",
+                                text: newsFeedData.reaction != -1 ? " and" : "",
                                 style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
                                 children: [
                                   TextSpan(

@@ -2,7 +2,6 @@ import 'package:als_frontend/screens/group/widget/invite_group_card.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../page/widget/page_app_bar.dart';
 
@@ -13,9 +12,9 @@ class InvitesGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PageAppBar(title: 'Invites Group'),
+      appBar: const PageAppBar(title: 'Invites Group'),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             Align(
