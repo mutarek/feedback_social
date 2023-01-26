@@ -15,6 +15,9 @@ class ImagesModel {
   static const String notificationIcons2 = 'assets/svg/notification.svg';
   static const String searchIcons = 'assets/svg/search.svg';
   static const String addIcons = 'assets/svg/add.svg';
+  static const String groupAdminIcon = 'assets/svg/group_admin_svg.svg';
+  static const String groupModeratrIcon = 'assets/svg/group_moderator_svg.svg';
+  static const String groupPublicIcon = 'assets/svg/group_public_svg.svg';
   static const String blocksIcons = 'assets/svg/block.svg';
   static const String saveIcons = 'assets/svg/save.svg';
   static const String visitGroupIcons = 'assets/svg/visit_group_svg.svg';
@@ -34,7 +37,9 @@ class ImagesModel {
   static const String suggestedGroupIcon = 'assets/svg/suggested_group_icon.svg';
   static const String yourGroupIcon = 'assets/svg/your_group_icon.svg';
   static const String joinedGroupIcon = 'assets/svg/joined_groups_icon.svg';
+  static const String createDateIcon = 'assets/svg/created_date_svg.svg';
   static const String groupMemberIcon = 'assets/svg/group_member_vector.svg';
+  static const String groupLocationIcon = 'assets/svg/group_location_svg.svg';
   static const String publicGroupIcon = 'assets/svg/public_group_svg.svg';
   static const String followersIcons = 'assets/icons/followers.svg';
   static const String followingIcons = 'assets/icons/following.svg';

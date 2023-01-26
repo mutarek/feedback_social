@@ -1,4 +1,7 @@
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/group/new_design/group_about_view.dart';
+import 'package:als_frontend/screens/group/new_design/group_comunity_view.dart';
+import 'package:als_frontend/screens/group/new_design/group_people_view.dart';
 import 'package:als_frontend/screens/group/new_design/joined_group_page.dart';
 import 'package:als_frontend/screens/page/view/page_about_view.dart';
 import 'package:als_frontend/screens/page/widget/admin_post_view.dart';
@@ -6,6 +9,8 @@ import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'group_media_view.dart';
 
 class IndividualGroupPage extends StatefulWidget {
   const IndividualGroupPage({Key? key}) : super(key: key);
@@ -43,7 +48,10 @@ class _NewPageDetailsScreenState extends State<IndividualGroupPage> {
           physics: const BouncingScrollPhysics(),
           children: [
             JoinedGroupPage(tabMenuWidget(pageProvider)),
-            PageAboutView(tabMenuWidget(pageProvider)),
+            GroupAboutView(tabMenuWidget(pageProvider)),
+            GroupMediaView(tabMenuWidget(pageProvider)),
+            GroupPeopleView(tabMenuWidget(pageProvider)),
+            GroupComunityView(tabMenuWidget(pageProvider)),
           ],
         );
       }),
