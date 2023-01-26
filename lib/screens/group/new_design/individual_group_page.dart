@@ -1,7 +1,6 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/new_design/joined_group_page.dart';
 import 'package:als_frontend/screens/page/view/page_about_view.dart';
-import 'package:als_frontend/screens/page/view/page_home_view.dart';
 import 'package:als_frontend/screens/page/widget/admin_post_view.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
