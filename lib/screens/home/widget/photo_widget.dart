@@ -95,7 +95,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
               onTap: () {
                 Helper.toScreen(SingleImageView(imageURL: imageVideoLists[0].url));
               },
-              child: customNetworkImage(context, imageVideoLists[0].url))
+              child: customNetworkImage(imageVideoLists[0].url))
           : InkWell(
               onTap: () {
                 User user = User(
@@ -112,8 +112,8 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                     user: user,
                     totalComment: widget.newsfeedModel.totalComment,
                     commentUrl: widget.newsfeedModel.commentUrl,
-                    isLiked: widget.newsfeedModel.isReacted,
-                    likedByUrl: widget.newsfeedModel.likedByUrl,
+                    isLiked: widget.newsfeedModel.reaction!=-1,
+                    likedByUrl: widget.newsfeedModel.likeReactUrl,
                     sharedByUrl: widget.newsfeedModel.sharedByUrl,
                     totalLiked: widget.newsfeedModel.totalLiked,
                     totalShared: widget.newsfeedModel.totalShared);
@@ -123,7 +123,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                 margin: const EdgeInsets.only(top: 8),
                 child: Stack(
                   children: [
-                    customNetworkImage(context, imageVideoLists[0].url),
+                    customNetworkImage(imageVideoLists[0].url),
                     SizedBox(height: 150, width: MediaQuery.of(context).size.width),
                     Positioned(
                       left: 0,
@@ -155,8 +155,8 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                                     user: user,
                                     totalComment: widget.newsfeedModel.totalComment,
                                     commentUrl: widget.newsfeedModel.commentUrl,
-                                    isLiked: widget.newsfeedModel.isReacted,
-                                    likedByUrl: widget.newsfeedModel.likedByUrl,
+                                    isLiked: widget.newsfeedModel.reaction!=-1,
+                                    likedByUrl: widget.newsfeedModel.likeReactUrl,
                                     sharedByUrl: widget.newsfeedModel.sharedByUrl,
                                     totalLiked: widget.newsfeedModel.totalLiked,
                                     totalShared: widget.newsfeedModel.totalShared);
@@ -190,7 +190,7 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
               // ClipRRect(
               //     borderRadius: BorderRadius.circular(4),
               //     child: CachedNetworkImage(imageUrl: imageVideoLists[index].url, fit: BoxFit.cover, width: double.infinity)),
-              ClipRRect(borderRadius: BorderRadius.circular(4), child: customNetworkImage(context, imageVideoLists[index].url)),
+              ClipRRect(borderRadius: BorderRadius.circular(4), child: customNetworkImage(imageVideoLists[index].url)),
               imageVideoLists[index].isImage == false
                   ? Positioned(
                       left: 0,
@@ -217,8 +217,8 @@ class _PostPhotoContainerState extends State<PostPhotoContainer> {
                                   user: user,
                                   totalComment: widget.newsfeedModel.totalComment,
                                   commentUrl: widget.newsfeedModel.commentUrl,
-                                  isLiked: widget.newsfeedModel.isReacted,
-                                  likedByUrl: widget.newsfeedModel.likedByUrl,
+                                  isLiked: widget.newsfeedModel.reaction!=-1,
+                                  likedByUrl: widget.newsfeedModel.likeReactUrl,
                                   sharedByUrl: widget.newsfeedModel.sharedByUrl,
                                   totalLiked: widget.newsfeedModel.totalLiked,
                                   totalShared: widget.newsfeedModel.totalShared);

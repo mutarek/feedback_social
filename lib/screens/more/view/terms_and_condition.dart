@@ -23,7 +23,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const CustomText(title: 'Terms and Conditions'), backgroundColor: AppColors.feedback),
+        appBar: AppBar(title: const CustomText(title: 'Terms and Conditions'), backgroundColor:feedback),
         body: Consumer<SettingsProvider>(builder: (context, provider, child) {
           return provider.isLoading == true
               ? const Center(child: CircularProgressIndicator())

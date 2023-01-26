@@ -16,7 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 void likeModalBottomView(BuildContext context, NewsFeedModel post, bool isLike) {
-  Provider.of<NewsFeedProvider>(context, listen: false).initializeLikedShareByAllUser(isLike ? post.likedByUrl! : post.sharedByUrl!);
+  Provider.of<NewsFeedProvider>(context, listen: false).initializeLikedShareByAllUser(isLike ? post.likeReactUrl! : post.sharedByUrl!);
   showModalBottomSheet(
       context: context,
       isDismissible: true,

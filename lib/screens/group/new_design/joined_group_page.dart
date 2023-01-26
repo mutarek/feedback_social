@@ -48,14 +48,14 @@ class JoinedGroupPage extends StatelessWidget {
           ),
         ),
         const Divider(thickness: 1,color: Color(0xffE4E6EB)),
-        PagePostView(
-          description:
-          'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',
-          value: true,
-          showDescription: () {
-            // pageProvider.changeTextValue();
-          },
-        ),
+        // PagePostView(
+        //   description:
+        //   'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',
+        //   value: true,
+        //   showDescription: () {
+        //     // pageProvider.changeTextValue();
+        //   },
+        // ),
       ],
     );
   }

@@ -91,7 +91,7 @@ class PostHeaderWidget extends StatelessWidget {
                                   style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                               const SizedBox(width: 5),
                               CircleAvatar(
-                                  backgroundColor: AppColors.feedback,
+                                  backgroundColor:feedback,
                                   radius: 10,
                                   child: CustomText(
                                       title: post.postType == AppConstant.postTypePage ? "P" : "G", color: Colors.white, fontSize: 12))

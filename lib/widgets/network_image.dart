@@ -1,3 +1,4 @@
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extended_image/extended_image.dart';
@@ -6,16 +7,14 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/cupertino.dart';
 
-Widget customNetworkImage(BuildContext context, String imageUrl,
-    {double? height, BoxFit boxFit = BoxFit.fill}) {
+Widget customNetworkImage(String imageUrl, {double? height, BoxFit boxFit = BoxFit.fill}) {
   return CachedNetworkImage(
     imageUrl: imageUrl,
     fit: boxFit,
-    width: MediaQuery.of(context).size.width,
-    height: height == 0 ? MediaQuery.of(context).size.height : height,
+    width: MediaQuery.of(Helper.navigatorKey.currentState!.context).size.width,
+    height: height == 0 ? MediaQuery.of(Helper.navigatorKey.currentState!.context).size.height : height,
     cacheKey: imageUrl,
-    cacheManager:
-        CacheManager(Config(imageUrl, stalePeriod: const Duration(hours: 5))),
+    cacheManager: CacheManager(Config(imageUrl, stalePeriod: const Duration(hours: 5))),
     errorWidget: (context, url, error) => Image.asset("assets/logo/logo.jpeg", fit: BoxFit.fill),
     placeholder: ((context, url) => Center(
           child: Stack(
@@ -26,21 +25,16 @@ Widget customNetworkImage(BuildContext context, String imageUrl,
                   child: Container(
                     height: 100,
                     width: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                   )),
-              Opacity(
-                  opacity: 0.2,
-                  child: Image.asset(ImagesModel.logo, height: 100, width: 100))
+              Opacity(opacity: 0.2, child: Image.asset(ImagesModel.logo, height: 100, width: 100))
             ],
           ),
         )),
   );
 }
 
-Widget zoomableCustomNetworkImage(BuildContext context, String imageUrl,
-    {double? height}) {
+Widget zoomableCustomNetworkImage(BuildContext context, String imageUrl, {double? height}) {
   return ExtendedImage.network(
     imageUrl,
     cache: true,
@@ -88,8 +82,7 @@ Widget zoomableCustomNetworkImage(BuildContext context, String imageUrl,
   );
 }
 
-Widget customNetworkImage2(BuildContext context, String imageUrl,
-    {double? height, BoxFit boxFit = BoxFit.fill}) {
+Widget customNetworkImage2(BuildContext context, String imageUrl, {double? height, BoxFit boxFit = BoxFit.fill}) {
   return ExtendedImage.network(
     imageUrl,
     cache: true,
@@ -138,22 +131,13 @@ Widget customNetworkImage2(BuildContext context, String imageUrl,
 Widget circularImage(String imageUrl, double height, double width) {
   return CachedNetworkImage(
       cacheKey: imageUrl,
-      cacheManager:
-          CacheManager(Config(imageUrl, stalePeriod: const Duration(hours: 5))),
-      placeholder: (context, url) =>
-          const Center(child: CupertinoActivityIndicator()),
-      errorWidget: (context, url, error) => Image.asset(
-          "assets/background/profile.png",
-          fit: BoxFit.cover,
-          width: height,
-          height: width),
+      cacheManager: CacheManager(Config(imageUrl, stalePeriod: const Duration(hours: 5))),
+      placeholder: (context, url) => const Center(child: CupertinoActivityIndicator()),
+      errorWidget: (context, url, error) => Image.asset("assets/background/profile.png", fit: BoxFit.cover, width: height, height: width),
       imageBuilder: (context, imageProvider) => Container(
           width: height,
           height: width,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image:
-                  DecorationImage(image: imageProvider, fit: BoxFit.contain))),
+          decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: imageProvider, fit: BoxFit.contain))),
       fit: BoxFit.contain,
       imageUrl: imageUrl);
 }

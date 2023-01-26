@@ -233,7 +233,7 @@ class _AddEditAnimalScreenState extends State<AddEditAnimalScreen> {
                                         ? SizedBox(height: 40, width: 40, child: Image.file(animalProvider.image!))
                                         : (widget.isEdit && widget.animalModel!.image != null)
                                             ? SizedBox(
-                                                height: 40, width: 40, child: customNetworkImage(context, widget.animalModel!.image!))
+                                                height: 40, width: 40, child: customNetworkImage(widget.animalModel!.image!))
                                             : Text(LocaleKeys.no_images_elected.tr()),
                                   ],
                                 ),

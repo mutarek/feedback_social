@@ -23,7 +23,7 @@ class SuggestedGroupViewCard extends StatelessWidget {
                 topLeft: Radius.circular(8),
                 topRight: Radius.circular(8),
               ),
-              child: customNetworkImage(context,groupImage,height: 84,boxFit: BoxFit.fitWidth)
+              child: customNetworkImage(groupImage,height: 84,boxFit: BoxFit.fitWidth)
             ),
             const SizedBox(height: 5,),
             Row(

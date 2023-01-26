@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/view/page_about_view.dart';
 import 'package:als_frontend/screens/page/view/page_home_view.dart';
@@ -8,7 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class NewPageDetailsScreen extends StatefulWidget {
-  const NewPageDetailsScreen({Key? key}) : super(key: key);
+  final bool isAdmin;
+  final AuthorPageModel authorPageModel;
+
+  const NewPageDetailsScreen(this.authorPageModel, {this.isAdmin = false, Key? key}) : super(key: key);
 
   @override
   State<NewPageDetailsScreen> createState() => _NewPageDetailsScreenState();
@@ -17,6 +21,7 @@ class NewPageDetailsScreen extends StatefulWidget {
 class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
   @override
   void initState() {
+    Provider.of<PageProvider>(context, listen: false).callForGetAllPagePosts(widget.authorPageModel.id.toString());
     _pageController = PageController();
     super.initState();
   }
@@ -42,8 +47,8 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
           },
           physics: const BouncingScrollPhysics(),
           children: [
-            PageHomeView(tabMenuWidget(pageProvider)),
-            PageAboutView(tabMenuWidget(pageProvider)),
+            PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin),
+            PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, widget.authorPageModel),
           ],
         );
       }),
@@ -58,18 +63,17 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // TODO: Post Container
-          tabButtonWidget(0,"Posts",pageProvider),
-          tabButtonWidget(1,"About",pageProvider),
-          tabButtonWidget(2,"Photos",pageProvider),
-          tabButtonWidget(3,"Live",pageProvider),
-          tabButtonWidget(4,"Community",pageProvider,ratio: 3), // 1.5
-
+          tabButtonWidget(0, "Posts", pageProvider),
+          tabButtonWidget(1, "About", pageProvider),
+          tabButtonWidget(2, "Photos", pageProvider),
+          tabButtonWidget(3, "Live", pageProvider),
+          tabButtonWidget(4, "Community", pageProvider, ratio: 3), // 1.5
         ],
       ),
     );
   }
 
-  Widget tabButtonWidget(int status, String title, PageProvider pageProvider,{int ratio=2}) {
+  Widget tabButtonWidget(int status, String title, PageProvider pageProvider, {int ratio = 2}) {
     return Expanded(
       flex: ratio,
       child: InkWell(
@@ -78,6 +82,7 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
           pageProvider.changeMenuValue(status);
         },
         child: Container(
+          alignment: Alignment.center,
           decoration: pageProvider.menuValue == status
               ? BoxDecoration(borderRadius: BorderRadius.circular(20), color: AppColors.primaryColorLight)
               : const BoxDecoration(),
@@ -85,8 +90,8 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
             padding: const EdgeInsets.all(6.0),
             child: Text(
               title,
-              style:
-                  robotoStyle700Bold.copyWith(fontSize: 12, color: pageProvider.menuValue == 0 ? Colors.white : AppColors.primaryColorLight),
+              style: robotoStyle700Bold.copyWith(
+                  fontSize: 12, color: pageProvider.menuValue == status ? Colors.white : AppColors.primaryColorLight),
             ),
           ),
         ),

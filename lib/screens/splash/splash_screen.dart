@@ -40,16 +40,11 @@ class _SplashScreenState extends State<SplashScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(child: Lottie.asset('assets/animations/splash2.json')),
-          BounceInDown(
-              child: SizedBox(
-                  height: 30,
-                  width: 30,
-                  child: Image.asset('assets/logo/logo.jpeg'))),
+          BounceInDown(child: SizedBox(height: 30, width: 30, child: Image.asset('assets/logo/logo.jpeg'))),
           BounceInDown(
               child: Text(
             "Welcome to",
-            style: latoStyle800ExtraBold.copyWith(
-                color: AppColors.timeColor, fontSize: 22),
+            style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22),
           )),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,77 +52,49 @@ class _SplashScreenState extends State<SplashScreen> {
             children: <Widget>[
               BounceInDown(
                   duration: const Duration(seconds: 2),
-                  child: Text("F",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("F", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInUp(
                   duration: const Duration(seconds: 2),
-                  child: Text("e",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("e", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInDown(
                   duration: const Duration(seconds: 2),
-                  child: Text("e",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("e", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInUp(
                   duration: const Duration(seconds: 2),
-                  child: Text("d",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("d", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInDown(
                   duration: const Duration(seconds: 2),
-                  child: Text("b",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("b", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInUp(
                   duration: const Duration(seconds: 2),
-                  child: Text("a",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("a", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInDown(
                   duration: const Duration(seconds: 2),
-                  child: Text("c",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("c", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInUp(
                   duration: const Duration(seconds: 2),
-                  child: Text("k",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("k", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               const SizedBox(
                 width: 10,
               ),
               BounceInRight(
                   duration: const Duration(seconds: 2),
-                  child: Text("S",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("S", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInLeft(
                   duration: const Duration(seconds: 2),
-                  child: Text("o",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("o", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInRight(
                   duration: const Duration(seconds: 2),
-                  child: Text("c",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("c", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInLeft(
                   duration: const Duration(seconds: 2),
-                  child: Text("i",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("i", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInRight(
                   duration: const Duration(seconds: 2),
-                  child: Text("a",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("a", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
               BounceInLeft(
                   duration: const Duration(seconds: 2),
-                  child: Text("l",
-                      style: latoStyle800ExtraBold.copyWith(
-                          color: AppColors.feedback, fontSize: 22))),
+                  child: Text("l", style: latoStyle800ExtraBold.copyWith(color: feedback, fontSize: 22))),
             ],
           ),
         ],
@@ -141,44 +108,26 @@ class _SplashScreenState extends State<SplashScreen> {
       // ignore: use_build_context_synchronously
       Provider.of<SplashProvider>(context, listen: false).initializeVersion();
       Future.delayed(const Duration(seconds: 5), () {
-        if (Provider.of<AuthProvider>(context, listen: false)
-            .getUserToken()
-            .isEmpty) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => const LoginScreen()),
-              (route) => false);
+        if (Provider.of<AuthProvider>(context, listen: false).getUserToken().isEmpty) {
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
         } else {
           Provider.of<NotificationProvider>(context, listen: false).check();
           Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => const DashboardScreen()),
-              (route) => false);
-          Provider.of<ProfileProvider>(context, listen: false)
-              .initializeUserData();
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
+          Provider.of<ProfileProvider>(context, listen: false).initializeUserData();
         }
       });
     } else {
       //Helper.toScreen(const NoInternetScreen());
       Provider.of<SplashProvider>(context, listen: false).initializeVersion();
       Future.delayed(const Duration(seconds: 5), () {
-        if (Provider.of<AuthProvider>(context, listen: false)
-            .getUserToken()
-            .isEmpty) {
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => const LoginScreen()),
-              (route) => false);
+        if (Provider.of<AuthProvider>(context, listen: false).getUserToken().isEmpty) {
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false);
         } else {
           Provider.of<NotificationProvider>(context, listen: false).check();
           Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => const DashboardScreen()),
-              (route) => false);
-          Provider.of<ProfileProvider>(context, listen: false)
-              .initializeUserData();
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const DashboardScreen()), (route) => false);
+          Provider.of<ProfileProvider>(context, listen: false).initializeUserData();
         }
       });
     }

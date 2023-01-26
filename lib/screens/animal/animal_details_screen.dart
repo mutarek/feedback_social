@@ -92,7 +92,7 @@ class AnimalDetailsScreen extends StatelessWidget {
 
                               },
                               child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10), child: customNetworkImage(context, animalModel.image!)),
+                                  borderRadius: BorderRadius.circular(10), child: customNetworkImage(animalModel.image!)),
                             ))
                       ],
                     ),

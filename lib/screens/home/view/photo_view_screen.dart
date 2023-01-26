@@ -62,8 +62,8 @@ class PhotoViewScreen extends StatelessWidget {
                               createdAt: newsFeedData.timestamp,
                               totalComment: newsFeedData.totalComment,
                               commentUrl: newsFeedData.commentUrl,
-                              isLiked: newsFeedData.isReacted,
-                              likedByUrl: newsFeedData.likedByUrl,
+                              isLiked: newsFeedData.reaction!=-1,
+                              likedByUrl: newsFeedData.likeReactUrl,
                               sharedByUrl: newsFeedData.sharedByUrl,
                               totalLiked: newsFeedData.totalLiked,
                               totalShared: newsFeedData.totalShared);
@@ -106,8 +106,8 @@ class PhotoViewScreen extends StatelessWidget {
                                                   createdAt: newsFeedData.timestamp,
                                                   totalComment: newsFeedData.totalComment,
                                                   commentUrl: newsFeedData.commentUrl,
-                                                  isLiked: newsFeedData.isReacted,
-                                                  likedByUrl: newsFeedData.likedByUrl,
+                                                  isLiked: newsFeedData.reaction!=-1,
+                                                  likedByUrl: newsFeedData.likeReactUrl,
                                                   sharedByUrl: newsFeedData.sharedByUrl,
                                                   totalLiked: newsFeedData.totalLiked,
                                                   totalShared: newsFeedData.totalShared);

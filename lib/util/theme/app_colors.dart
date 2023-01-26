@@ -11,9 +11,13 @@ const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 const colorIcons = Color(0xFF959595);
 const colorText = Color(0xFF080C2F);
+const colorLoveReact = Color(0xFFF03738);
+const colorHahaReact = Color(0xFFF3BB1C);
 const textFieldFillColor = Color(0xFFE7F3FF);
 const colorShadow = Color.fromRGBO(210, 210, 210, 0.23);
 const colorShadow2 = Color.fromRGBO(213, 213, 213, 0.25);
+const Color feedback = Color(0xFF2365A8);
+
 class AppColors {
   //TODO: for Light Theme color
   static const Color primaryColorLight = Color(0xFF06113E);
@@ -28,7 +32,6 @@ class AppColors {
   static const Color imageBGColorDark = Color(0xffE2F0FF);
   static const Color whiteColorDark = Color(0xFFFFFFFF);
   static const Color unreadColorDark = Color(0xFF00ACFF);
-  static const Color feedback = Color(0xFF2365A8);
 
   static const Color scaffold = Color(0xFFF0F2F5);
   static const LinearGradient createRoomGradient = LinearGradient(colors: [Color(0xFF496AE1), Color(0xFFCE48B1)]);
@@ -50,7 +53,6 @@ class AppColors {
   static const Color yellow = Color(0xFFFFAA47);
 
   static const Color bodyTextColorOverride = Color(0xFF020202);
-
 
   static Map<String, Color> lightThemeColors = {
     "backgroundColor": const Color(0xFFf5f5f5),

@@ -50,7 +50,7 @@ class NewSuggestedPageScreen extends StatelessWidget {
                                 const SizedBox(height: 120),
                                 ClipRRect(
                                     borderRadius: const BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15)),
-                                    child: customNetworkImage(context, authorPageModel.coverPhoto!, height: 90)),
+                                    child: customNetworkImage(authorPageModel.coverPhoto!, height: 90)),
                                 Positioned(
                                     bottom: 0,
                                     child: CircleAvatar(

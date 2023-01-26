@@ -44,7 +44,7 @@ class _NewPageDetailsScreenState extends State<IndividualGroupPage> {
           physics: const BouncingScrollPhysics(),
           children: [
             JoinedGroupPage(tabMenuWidget(pageProvider)),
-            PageAboutView(tabMenuWidget(pageProvider)),
+            // PageAboutView(tabMenuWidget(pageProvider)),
           ],
         );
       }),

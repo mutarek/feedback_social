@@ -283,7 +283,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                               borderRadius: BorderRadius.circular(5),
                               child: Stack(
                                 children: [
-                                  customNetworkImage(context, postProvider.imageVideoLists[index].url),
+                                  customNetworkImage(postProvider.imageVideoLists[index].url),
                                   Positioned(
                                       right: 5,
                                       top: 5,

@@ -84,8 +84,8 @@ class PublicPhotoViewScreen extends StatelessWidget {
                               user: user,
                               totalComment: publicProfileProvider.publicNewsFeedLists[index].totalComment,
                               commentUrl: publicProfileProvider.publicNewsFeedLists[index].commentUrl,
-                              isLiked: publicProfileProvider.publicNewsFeedLists[index].isReacted,
-                              likedByUrl: publicProfileProvider.publicNewsFeedLists[index].likedByUrl,
+                              isLiked: publicProfileProvider.publicNewsFeedLists[index].reaction!=-1,
+                              likedByUrl: publicProfileProvider.publicNewsFeedLists[index].likeReactUrl,
                               sharedByUrl: publicProfileProvider.publicNewsFeedLists[index].sharedByUrl,
                               totalLiked: publicProfileProvider.publicNewsFeedLists[index].totalLiked,
                               totalShared: publicProfileProvider.publicNewsFeedLists[index].totalShared);

@@ -203,6 +203,7 @@ class PageProvider with ChangeNotifier {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
         pageAllPosts.add(NewsFeedModel.fromJson(element));
+        print('shuvo ${NewsFeedModel.fromJson(element).id}');
       });
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
@@ -257,27 +258,45 @@ class PageProvider with ChangeNotifier {
     return false;
   }
 
-  addLike(int pageID, int postID, int index) async {
-    // if (pageAllPosts[index].isLiked == false) {
-    //   pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! + 1;
-    //   pageAllPosts[index].isLiked = true;
-    // } else {
-    //   pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
-    //   pageAllPosts[index].isLiked = false;
-    // }
+  addLike(int reactStatusID, int index) async {
+    if (reactStatusID == 1 || reactStatusID == 2 || reactStatusID == 3) {
+      if (pageAllPosts[index].reaction == -1) pageAllPosts[index].totalReaction = pageAllPosts[index].totalReaction! + 1;
 
+      if (reactStatusID == 1) {
+        pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! + 1;
+        if (pageAllPosts[index].reaction! == 2) pageAllPosts[index].totalLoved = pageAllPosts[index].totalLoved! - 1;
+        if (pageAllPosts[index].reaction! == 3) pageAllPosts[index].totalSad = pageAllPosts[index].totalSad! - 1;
+      } else if (reactStatusID == 2) {
+        pageAllPosts[index].totalLoved = pageAllPosts[index].totalLoved! + 1;
+        if (pageAllPosts[index].reaction! == 1) pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
+        if (pageAllPosts[index].reaction! == 3) pageAllPosts[index].totalSad = pageAllPosts[index].totalSad! - 1;
+      } else {
+        pageAllPosts[index].totalSad = pageAllPosts[index].totalSad! + 1;
+        if (pageAllPosts[index].reaction! == 1) pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
+        if (pageAllPosts[index].reaction! == 2) pageAllPosts[index].totalLoved = pageAllPosts[index].totalLoved! - 1;
+      }
+
+      pageAllPosts[index].reaction = reactStatusID;
+    } else {
+      pageAllPosts[index].totalReaction = pageAllPosts[index].totalReaction! - 1;
+      pageAllPosts[index].reaction = reactStatusID;
+    }
     notifyListeners();
-    await newsfeedRepo.addLikeONPage(postID, pageID);
   }
 
-  changeLikeStatus(int value, int index) async {
-    // if (value == 1) {
-    //   pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! + 1;
-    //   pageAllPosts[index].isLiked = true;
-    // } else {
-    //   pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
-    //   pageAllPosts[index].isLiked = false;
-    // }
+  changeLikeStatus(int index) async {
+    print(pageAllPosts[index].reaction);
+    if (pageAllPosts[index].reaction != -1) {
+      pageAllPosts[index].totalReaction = pageAllPosts[index].totalReaction! - 1;
+      if (pageAllPosts[index].reaction == 1) {
+        pageAllPosts[index].totalLiked = pageAllPosts[index].totalLiked! - 1;
+      } else if (pageAllPosts[index].reaction == 2) {
+        pageAllPosts[index].totalLoved = pageAllPosts[index].totalLoved! - 1;
+      } else {
+        pageAllPosts[index].totalSad = pageAllPosts[index].totalSad! - 1;
+      }
+      pageAllPosts[index].reaction = -1;
+    }
     notifyListeners();
   }
 
@@ -471,6 +490,7 @@ class PageProvider with ChangeNotifier {
       response = await pageRepo.createPageWithoutImageUpload({"name": pageName, "category": categoryValue.id});
     }
     isLoading = false;
+
     if (response.response.statusCode == 201) {
       authorPageLists.insert(
           0,
@@ -496,16 +516,13 @@ class PageProvider with ChangeNotifier {
     }
   }
 
-
   pageLikeUnlike1(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
     ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString());
     if (response.response.statusCode == 200) {
       if (response.response.data['liked'] == true) {
         if (isFromSuggestedPage) {
           allSuggestPageList.removeAt(index);
-        }else{
-
-        }
+        } else {}
         // pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
         // pageDetailsModel!.like = true;
         // if (isFromMyPageScreen) {
@@ -525,6 +542,4 @@ class PageProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
-
 }

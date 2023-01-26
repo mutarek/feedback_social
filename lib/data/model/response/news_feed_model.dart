@@ -1,7 +1,5 @@
 class NewsFeedModel {
   NewsFeedModel({
-    this.newsfeedId,
-    this.isDelete,
     this.id,
     this.description,
     this.author,
@@ -11,26 +9,25 @@ class NewsFeedModel {
     this.videos,
     this.totalComment,
     this.commentUrl,
+    this.isShare,
+    this.postType,
+    this.timestamp,
+    this.sharedByUrl,
+    this.totalShared,
     this.totalReaction,
     this.totalLiked,
     this.totalLoved,
     this.totalSad,
-    this.likedByUrl,
-    this.lovedByUrl,
-    this.sadByUrl,
-    this.isReacted,
-    this.sharedByUrl,
-    this.totalShared,
-    this.isShare,
-    this.postType,
-    this.timestamp,});
+    this.loveReactUrl,
+    this.likeReactUrl,
+    this.sadReactUrl,
+    this.reaction,
+  });
 
   NewsFeedModel.fromJson(dynamic json) {
-    newsfeedId = json['newsfeed_id'];
-    isDelete = json['is_delete'];
     id = json['id'];
     description = json['description'];
-    author = json['author'] != null ? Author.fromJson(json['author']) : Author();
+    author = json['author'] != null ? Author.fromJson(json['author']) : null;
     totalImage = json['total_image'];
     if (json['images'] != null) {
       images = [];
@@ -47,25 +44,24 @@ class NewsFeedModel {
     }
     totalComment = json['total_comment'];
     commentUrl = json['comment_url'];
+    isShare = json['is_share'];
+    postType = json['post_type'];
+    timestamp = json['timestamp'];
+    sharedByUrl = json['shared_by_url'];
+    totalShared = json['total_shared'];
     totalReaction = json['total_reaction'];
     totalLiked = json['total_liked'];
     totalLoved = json['total_loved'];
     totalSad = json['total_sad'];
-    likedByUrl = json['liked_by_url'];
-    lovedByUrl = json['loved_by_url'];
-    sadByUrl = json['sad_by_url'];
-    isReacted = json['is_reacted'];
-    sharedByUrl = json['shared_by_url'];
-    totalShared = json['total_shared'];
-    isShare = json['is_share'];
-    postType = json['post_type'];
-    timestamp = json['timestamp'];
+    loveReactUrl = json['love_react_url'];
+    likeReactUrl = json['like_react_url'];
+    sadReactUrl = json['sad_react_url'];
+    reaction = json['reaction'] ?? -1;
     sharePost = json['share_post'] != null ? SharePost.fromJson(json['share_post']) : SharePost();
     groupModel = json['group'] != null ? GroupModel.fromJson(json['group']) : GroupModel();
     pageModel = json['page'] != null ? PageModel.fromJson(json['page']) : PageModel();
   }
-  num? newsfeedId;
-  bool? isDelete;
+
   num? id;
   String? description;
   Author? author;
@@ -75,27 +71,25 @@ class NewsFeedModel {
   List<Videos>? videos;
   num? totalComment;
   String? commentUrl;
+  bool? isShare;
+  String? postType;
+  String? timestamp;
+  String? sharedByUrl;
+  num? totalShared;
   num? totalReaction;
   num? totalLiked;
   num? totalLoved;
   num? totalSad;
-  String? likedByUrl;
-  String? lovedByUrl;
-  String? sadByUrl;
-  bool? isReacted;
-  String? sharedByUrl;
-  num? totalShared;
-  bool? isShare;
-  String? postType;
-  String? timestamp;
+  String? loveReactUrl;
+  String? likeReactUrl;
+  String? sadReactUrl;
+  int? reaction;
   SharePost? sharePost;
   GroupModel? groupModel;
   PageModel? pageModel;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['newsfeed_id'] = newsfeedId;
-    map['is_delete'] = isDelete;
     map['id'] = id;
     map['description'] = description;
     if (author != null) {
@@ -111,35 +105,36 @@ class NewsFeedModel {
     }
     map['total_comment'] = totalComment;
     map['comment_url'] = commentUrl;
+    map['is_share'] = isShare;
+    map['post_type'] = postType;
+    map['timestamp'] = timestamp;
+    map['shared_by_url'] = sharedByUrl;
+    map['total_shared'] = totalShared;
     map['total_reaction'] = totalReaction;
     map['total_liked'] = totalLiked;
     map['total_loved'] = totalLoved;
     map['total_sad'] = totalSad;
-    map['liked_by_url'] = likedByUrl;
-    map['loved_by_url'] = lovedByUrl;
-    map['sad_by_url'] = sadByUrl;
-    map['is_reacted'] = isReacted;
-    map['shared_by_url'] = sharedByUrl;
-    map['total_shared'] = totalShared;
-    map['is_share'] = isShare;
-    map['post_type'] = postType;
-    map['timestamp'] = timestamp;
+    map['love_react_url'] = loveReactUrl;
+    map['like_react_url'] = likeReactUrl;
+    map['sad_react_url'] = sadReactUrl;
+    map['reaction'] = reaction;
     return map;
   }
-
 }
 
 class Videos {
   Videos({
     this.id,
     this.thumbnail,
-    this.video,});
+    this.video,
+  });
 
   Videos.fromJson(dynamic json) {
     id = json['id'];
     thumbnail = json['thumbnail'];
     video = json['video'];
   }
+
   num? id;
   String? thumbnail;
   String? video;
@@ -151,41 +146,91 @@ class Videos {
     map['video'] = video;
     return map;
   }
-
 }
 
 class ImagesData {
   ImagesData({
     this.id,
-    this.image,});
+    this.image,
+    this.totalComment,
+    this.totalShare,
+    this.commentUrl,
+    this.sharedByUrl,
+    this.totalReaction,
+    this.totalLiked,
+    this.totalLoved,
+    this.totalSad,
+    this.loveReactUrl,
+    this.likeReactUrl,
+    this.sadReactUrl,
+    this.reaction,
+  });
 
   ImagesData.fromJson(dynamic json) {
     id = json['id'];
     image = json['image'];
+    totalComment = json['total_comment'];
+    totalShare = json['total_share'];
+    commentUrl = json['comment_url'];
+    sharedByUrl = json['shared_by_url'];
+    totalReaction = json['total_reaction'];
+    totalLiked = json['total_liked'];
+    totalLoved = json['total_loved'];
+    totalSad = json['total_sad'];
+    loveReactUrl = json['love_react_url'];
+    likeReactUrl = json['like_react_url'];
+    sadReactUrl = json['sad_react_url'];
+    reaction = json['reaction'] ?? -1;
   }
+
   num? id;
   String? image;
+  num? totalComment;
+  num? totalShare;
+  String? commentUrl;
+  String? sharedByUrl;
+  num? totalReaction;
+  num? totalLiked;
+  num? totalLoved;
+  num? totalSad;
+  String? loveReactUrl;
+  String? likeReactUrl;
+  String? sadReactUrl;
+  int? reaction;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['image'] = image;
+    map['total_comment'] = totalComment;
+    map['total_share'] = totalShare;
+    map['comment_url'] = commentUrl;
+    map['shared_by_url'] = sharedByUrl;
+    map['total_reaction'] = totalReaction;
+    map['total_liked'] = totalLiked;
+    map['total_loved'] = totalLoved;
+    map['total_sad'] = totalSad;
+    map['love_react_url'] = loveReactUrl;
+    map['like_react_url'] = likeReactUrl;
+    map['sad_react_url'] = sadReactUrl;
+    map['reaction'] = reaction;
     return map;
   }
-
 }
 
 class Author {
   Author({
     this.id,
     this.fullName,
-    this.profileImage,});
+    this.profileImage,
+  });
 
   Author.fromJson(dynamic json) {
     id = json['id'];
     fullName = json['full_name'];
     profileImage = json['profile_image'];
   }
+
   num? id;
   String? fullName;
   String? profileImage;
@@ -197,7 +242,6 @@ class Author {
     map['profile_image'] = profileImage;
     return map;
   }
-
 }
 
 class SharePost {
@@ -248,22 +292,22 @@ class Post {
     id = json['id'];
     description = json['description'];
     author = json['author'] != null ? Author.fromJson(json['author']) : null;
-    totalImage = json['total_image']??0;
+    totalImage = json['total_image'] ?? 0;
     if (json['images'] != null) {
       images = [];
       json['images'].forEach((v) {
         images?.add(ImagesData.fromJson(v));
       });
-    }else{
+    } else {
       images = [];
     }
-    totalVideo = json['total_video']??0;
+    totalVideo = json['total_video'] ?? 0;
     if (json['videos'] != null) {
       videos = [];
       json['videos'].forEach((v) {
         videos?.add(Videos.fromJson(v));
       });
-    }else{
+    } else {
       videos = [];
     }
     pageModel = json['page'] != null ? PageModel.fromJson(json['page']) : PageModel();

@@ -411,14 +411,17 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                   } else if (index == 4) {
                     return PageCommentView();
                   }
-                  return PagePostView(
-                    description:
-                        'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',
-                    value: pageProvider.showMoreText,
-                    showDescription: () {
-                      pageProvider.changeTextValue();
-                    },
+                  return ListTile(
+                    title: Text('Live Comming Soon'),
                   );
+                  // return PagePostView(
+                  //   description:
+                  //       'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',
+                  //   value: pageProvider.showMoreText,
+                  //   showDescription: () {
+                  //     pageProvider.changeTextValue();
+                  //   },
+                  // );
                 },
               ),
             ),

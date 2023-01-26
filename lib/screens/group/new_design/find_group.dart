@@ -82,7 +82,7 @@ class FindGroup extends StatelessWidget {
                                     child: SizedBox(
                                       height: 36,
                                         width: 36,
-                                        child: customNetworkImage(context,"https://res.cloudinary.com/dhakacity/images/f_auto,q_auto/v1670167422/Travel-logo-transparency/Travel-logo-transparency.png",height: 36,boxFit: BoxFit.fitWidth))
+                                        child: customNetworkImage("https://res.cloudinary.com/dhakacity/images/f_auto,q_auto/v1670167422/Travel-logo-transparency/Travel-logo-transparency.png",height: 36,boxFit: BoxFit.fitWidth))
                                   ),
                                   const SizedBox(width: 10,),
 

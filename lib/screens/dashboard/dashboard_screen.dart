@@ -94,7 +94,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ? const SizedBox.shrink()
                                         : CircleAvatar(
                                             radius: 10,
-                                            backgroundColor: AppColors.redColor,
+                                            backgroundColor: feedback,
                                             child: CustomText(
                                               title:
                                                   '${notificationProvider.notificationCount > 9 ? LocaleKeys.nine_plus.tr() : notificationProvider.notificationCount}',
@@ -131,7 +131,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         dashboardProvider.selectIndex == 0
                             ? AppBar(
                                 title: CustomText(
-                                    title: LocaleKeys.feedback.tr(), color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 27),
+                                    title: LocaleKeys.feedback.tr(), color: feedback, fontWeight: FontWeight.bold, fontSize: 27),
                                 backgroundColor: Colors.white,
                                 elevation: 0,
                                 actions: [
@@ -168,7 +168,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             : dashboardProvider.selectIndex == 3
                                                 ? 'Chats'
                                                 : 'Feedback',
-                                    color: AppColors.feedback,
+                                    color: feedback,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 27),
                                 backgroundColor: Colors.white,
@@ -202,7 +202,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   )
                                 : const CustomButton(
                                     btnTxt: 'Server Problems are found, and our maintainer working here please try sometime later. ',
-                                    backgroundColor: AppColors.feedback,
+                                    backgroundColor: feedback,
                                     textWhiteColor: true,
                                     radius: 0,
                                     fontSize: 13,

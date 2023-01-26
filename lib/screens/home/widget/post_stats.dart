@@ -74,7 +74,7 @@ class PostStats extends StatelessWidget {
                         children: [
                           LikeButton(
                             size: 30,
-                            isLiked:  post.isReacted,
+                            isLiked:  post.reaction!=-1,
                             bubblesSize: 50,
                             // circleColor:
                             // CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
@@ -85,15 +85,15 @@ class PostStats extends StatelessWidget {
                             onTap: (bool isLiked) async{
                               if (isHomeScreen) {
                                 if (isGroup || isPage) {
-                                  feedProvider.addLike(post.id!.toInt(), index, isGroup: isGroup, isFromPage: isPage, groupPageID: groupPageID);
+                                  feedProvider.addFakeLike(post.id!.toInt(), index, isGroup: isGroup, isFromPage: isPage, groupPageID: groupPageID);
                                 } else {
-                                  feedProvider.addLike(post.id!.toInt(), index);
+                                  feedProvider.addFakeLike(post.id!.toInt(), index);
                                 }
                               } else {
                                 if (isGroup || isPage) {
-                                  feedProvider.addLike(groupPageID, post.id!.toInt(), index);
+                                  feedProvider.addFakeLike(groupPageID, post.id!.toInt(), index);
                                 } else {
-                                  feedProvider.addLike(post.id!.toInt(), index);
+                                  feedProvider.addFakeLike(post.id!.toInt(), index);
                                 }
                               }
 

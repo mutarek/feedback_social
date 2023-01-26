@@ -25,7 +25,7 @@ class GroupHeaderWidget extends StatelessWidget {
                   topRight: Radius.circular(25),
                 ),
                 child: customNetworkImage(
-                    context, "https://porzoton.com/wp-content/uploads/2020/12/Sajek-Valley-Sun-rises-over-the-clouds.jpg",
+                 "https://porzoton.com/wp-content/uploads/2020/12/Sajek-Valley-Sun-rises-over-the-clouds.jpg",
                     boxFit: BoxFit.fitWidth),
               ),
             ),

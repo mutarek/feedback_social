@@ -47,7 +47,7 @@ void shareBottomSheet(BuildContext context, String url, NewsFeedModel newsfeedDa
                             shareController.text = '';
                           });
                         },
-                        backgroundColor: AppColors.feedback,
+                        backgroundColor: feedback,
                         textWhiteColor: true,
                       ),
               ],

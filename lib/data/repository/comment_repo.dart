@@ -12,6 +12,16 @@ class CommentRepo {
 
   Response response = Response(requestOptions: RequestOptions(path: '22222'));
 
+  Future<ApiResponse> addLike(String url) async {
+    try {
+      response = await dioClient.post("${url.replaceAll("list/", "")}get-or-create/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+
   Future<ApiResponse> getAllCommentData(String url) async {
     try {
       response = await dioClient.get("$url?page=1");

@@ -31,11 +31,11 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                     leading: IconButton(
-                        icon: const Icon(Icons.arrow_back, color: AppColors.feedback),
+                        icon: const Icon(Icons.arrow_back, color: feedback),
                         onPressed: () {
                           Navigator.of(context).pop();
                         }),
-                    title: CustomText(title: LocaleKeys.type_your_problem.tr(), color: AppColors.feedback, fontWeight: FontWeight.bold, fontSize: 16),
+                    title: CustomText(title: LocaleKeys.type_your_problem.tr(), color: feedback, fontWeight: FontWeight.bold, fontSize: 16),
                     backgroundColor: Colors.white,
                     elevation: 0),
                 bottomNavigationBar: SizedBox(
@@ -78,7 +78,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                             }
                           },
                           textWhiteColor: true,
-                          backgroundColor: AppColors.feedback,
+                          backgroundColor: feedback,
                           radius: 0,
                         ),
                       ),
@@ -99,7 +99,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                                 otherProvider.getImageWithOutCroup(ImageSource.gallery)!;
                               },
                               textWhiteColor: true,
-                              backgroundColor: AppColors.feedback,
+                              backgroundColor: feedback,
                             ),
                           ),
                         ),
@@ -119,7 +119,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                                             otherProvider.clearImage();
                                           },
                                           child: const CircleAvatar(
-                                            backgroundColor: AppColors.feedback,
+                                            backgroundColor: feedback,
                                             radius: 13,
                                             child: Icon(Icons.close, color: Colors.white, size: 18),
                                           ),
@@ -127,7 +127,7 @@ class _HelpChatScreenState extends State<HelpChatScreen> {
                                       )
                                     ],
                                   )
-                                : CustomText(title: LocaleKeys.no_Image_Selected.tr(), color: AppColors.feedback),
+                                : CustomText(title: LocaleKeys.no_Image_Selected.tr(), color: feedback),
                           ),
                         ),
                       ],

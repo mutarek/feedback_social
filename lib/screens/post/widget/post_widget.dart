@@ -3,6 +3,8 @@ import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/helper/url_checkig_helper.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
+import 'package:als_frontend/provider/comment_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
@@ -18,6 +20,7 @@ import 'package:als_frontend/widgets/any_link_preview_global_widget.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feed_reaction/flutter_feed_reaction.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,224 +61,277 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 36,
-                    width: 36,
-                    padding: const EdgeInsets.all(2),
-                    decoration: BoxDecoration(border: Border.all(color: AppColors.primaryColorLight), shape: BoxShape.circle),
-                    child: circularImage(newsFeedData.author!.profileImage!, 36, 36),
-                  ),
-                  const SizedBox(width: 8),
-                  Column(
+    return Consumer<CommentProvider>(
+        builder: (context, commentProvider, child) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(newsFeedData.author!.fullName!, style: robotoStyle700Bold),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SvgPicture.asset(ImagesModel.timeIcons, width: 12, height: 13),
-                          const SizedBox(width: 2),
-                          Text("${getDate(newsFeedData.timestamp!, context)}  -", style: robotoStyle500Medium.copyWith(fontSize: 10)),
-                          const SizedBox(width: 3),
-                          SvgPicture.asset(ImagesModel.globalIcons, width: 12, height: 12),
+                          Container(
+                            height: 36,
+                            width: 36,
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(border: Border.all(color: AppColors.primaryColorLight), shape: BoxShape.circle),
+                            child: circularImage(isPage ? newsFeedData.pageModel!.avatar! : newsFeedData.author!.profileImage!, 36, 36),
+                          ),
+                          const SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(isPage ? newsFeedData.pageModel!.name! : newsFeedData.author!.fullName!, style: robotoStyle700Bold),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(ImagesModel.timeIcons, width: 12, height: 13),
+                                  const SizedBox(width: 2),
+                                  Text("${getDate(newsFeedData.timestamp!, context)}  -",
+                                      style: robotoStyle500Medium.copyWith(fontSize: 10)),
+                                  const SizedBox(width: 3),
+                                  SvgPicture.asset(ImagesModel.globalIcons, width: 12, height: 12),
+                                ],
+                              )
+                            ],
+                          ),
                         ],
-                      )
+                      ),
+                      const Spacer(),
+                      PopupMenuButton(
+                        itemBuilder: (context) => [
+                          // PopupMenuItem 1
+                          PopupMenuItem(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                PopUpMenuWidget(ImagesModel.saveIcons, 'Save', () {}),
+                                const SizedBox(height: 15),
+                                PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {}),
+                                const SizedBox(height: 15),
+                                PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
+                                const SizedBox(height: 15),
+                                PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {}),
+                                const SizedBox(height: 8)
+                              ],
+                            ),
+                          ),
+                          // PopupMenuItem 2
+                        ],
+                        offset: const Offset(0, 58),
+                        color: Colors.white,
+                        elevation: 4,
+                        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                        child: Container(
+                          height: 24,
+                          width: 30,
+                          decoration: BoxDecoration(color: const Color(0xffE4E6EB), borderRadius: BorderRadius.circular(10)),
+                          child: const Center(child: Icon(Icons.more_horiz)),
+                        ),
+                      ),
                     ],
                   ),
-                ],
-              ),
-              const Spacer(),
-              PopupMenuButton(
-                itemBuilder: (context) => [
-                  // PopupMenuItem 1
-                  PopupMenuItem(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PopUpMenuWidget(ImagesModel.saveIcons, 'Save', () {}),
-                        const SizedBox(height: 15),
-                        PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {}),
-                        const SizedBox(height: 15),
-                        PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
-                        const SizedBox(height: 15),
-                        PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {}),
-                        const SizedBox(height: 8)
-                      ],
-                    ),
-                  ),
-                  // PopupMenuItem 2
-                ],
-                offset: const Offset(0, 58),
-                color: Colors.white,
-                elevation: 4,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                child: Container(
-                  height: 24,
-                  width: 30,
-                  decoration: BoxDecoration(color: const Color(0xffE4E6EB), borderRadius: BorderRadius.circular(10)),
-                  child: const Center(child: Icon(Icons.more_horiz)),
                 ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-
-        SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 8.0 : 0),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: Column(
-            children: [
-              newsFeedData.description != null && newsFeedData.description!.isNotEmpty && newsFeedData.description!.contains("http")
-                  ? MarkdownBody(
-                      onTapLink: (text, href, title) {
-                        href != null ? openNewLink(href) : null;
-                      },
-                      selectable: true,
-                      data: newsFeedData.description!,
-                      styleSheet: MarkdownStyleSheet(a: const TextStyle(fontSize: 17), p: robotoStyle600SemiBold))
-                  : const SizedBox(),
-              SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 1.0 : 0),
-              newsFeedData.description != null &&
-                      newsFeedData.description!.isNotEmpty &&
-                      newsFeedData.totalImage == 0 &&
-                      newsFeedData.description!.contains("http")
-                  ? AnyLinkPreviewGlobalWidget(extractdescription(newsFeedData.description!), 120.0, double.infinity, 10.0)
-                  : newsFeedData.description!.contains("http")
-                      ? const SizedBox()
-                      : Text(
-                          newsFeedData.description!,
-                          style: robotoStyle600SemiBold,
-                        ),
-            ],
-          ),
-        ),
-
-        SizedBox(height: newsFeedData.totalImage != 0 && newsFeedData.description != null ? 10.0 : 0),
-
-        const SizedBox(height: 7),
-        if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoContainer(index, newsfeedModel: newsFeedData),
-        Padding(
-          padding: const EdgeInsets.only(left: 12, top: 7, right: 12),
-          child: Row(
-            children: [
-              Stack(
-                children: [
-                  SizedBox(height: 17, width: 50 - (newsFeedData.totalLoved! == 0 ? 13 : 0) - (newsFeedData.totalSad! == 0 ? 13 : 0)),
-                  reactWidget(ImagesModel.likeIconsSvg, AppColors.primaryColorLight),
-                  newsFeedData.totalLoved! == 0
-                      ? const SizedBox.shrink()
-                      : Positioned(left: 14, child: reactWidget(ImagesModel.loveIcons, Colors.red)),
-                  newsFeedData.totalSad! == 0
-                      ? const SizedBox.shrink()
-                      : Positioned(left: newsFeedData.totalLoved! == 0 ? 14 : 28, child: reactWidget(ImagesModel.hahaIcons, Colors.yellow)),
-                ],
-              ),
-              RichText(
-                  text: TextSpan(
-                      text: newsFeedData.isReacted == true ? "You " : "",
-                      style: robotoStyle600SemiBold.copyWith(fontSize: 12),
-                      children: [
-                    TextSpan(
-                        text: newsFeedData.isReacted == true ? " and" : "",
-                        style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                const SizedBox(height: 10),
+                SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 8.0 : 0),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  child: Column(
+                    children: [
+                      newsFeedData.description != null && newsFeedData.description!.isNotEmpty && newsFeedData.description!.contains("http")
+                          ? MarkdownBody(
+                              onTapLink: (text, href, title) {
+                                href != null ? openNewLink(href) : null;
+                              },
+                              selectable: true,
+                              data: newsFeedData.description!,
+                              styleSheet: MarkdownStyleSheet(a: const TextStyle(fontSize: 17), p: robotoStyle600SemiBold))
+                          : const SizedBox(),
+                      SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 1.0 : 0),
+                      newsFeedData.description != null &&
+                              newsFeedData.description!.isNotEmpty &&
+                              newsFeedData.totalImage == 0 &&
+                              newsFeedData.description!.contains("http")
+                          ? AnyLinkPreviewGlobalWidget(extractdescription(newsFeedData.description!), 120.0, double.infinity, 10.0)
+                          : newsFeedData.description!.contains("http")
+                              ? const SizedBox()
+                              : Text(
+                                  newsFeedData.description!,
+                                  style: robotoStyle600SemiBold,
+                                ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: newsFeedData.totalImage != 0 && newsFeedData.description != null ? 10.0 : 0),
+                const SizedBox(height: 7),
+                if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoContainer(index, newsfeedModel: newsFeedData),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12, top: 7, right: 12),
+                  child: Row(
+                    children: [
+                      Stack(
                         children: [
-                          TextSpan(
-                              text: newsFeedData.totalLiked.toString(),
+                          SizedBox(
+                              height: 17, width: 50 - (newsFeedData.totalLoved! == 0 ? 13 : 0) - (newsFeedData.totalSad! == 0 ? 13 : 0)),
+                          reactWidget(ImagesModel.likeIconsSvg, AppColors.primaryColorLight),
+                          newsFeedData.totalLoved! == 0
+                              ? const SizedBox.shrink()
+                              : Positioned(left: 14, child: reactWidget(ImagesModel.loveIcons, Colors.red)),
+                          newsFeedData.totalSad! == 0
+                              ? const SizedBox.shrink()
+                              : Positioned(
+                                  left: newsFeedData.totalLoved! == 0 ? 14 : 28, child: reactWidget(ImagesModel.hahaIcons, Colors.yellow)),
+                        ],
+                      ),
+                      RichText(
+                          text: TextSpan(
+                              text: newsFeedData.reaction == true ? "You " : "",
                               style: robotoStyle600SemiBold.copyWith(fontSize: 12),
                               children: [
-                                TextSpan(
-                                    text:
-                                        " ${newsFeedData.totalLiked! <= 1 ? newsFeedData.isReacted == true ? "Other" : "Like" : newsFeedData.isReacted == true ? "Others" : "Likes"}",
-                                    style: robotoStyle400Regular.copyWith(fontSize: 12)),
-                              ])
-                        ])
-                  ])),
-              const Spacer(),
-              Row(
-                children: [
-                  reactWidget(ImagesModel.commentIcons, AppColors.primaryColorLight),
-                  const SizedBox(width: 3),
-                  Text("${newsFeedData.totalComment}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
-                ],
-              ),
-              const SizedBox(width: 18),
-              Row(
-                children: [
-                  reactWidget(ImagesModel.share2Icons, AppColors.primaryColorLight),
-                  const SizedBox(width: 3),
-                  Text("${newsFeedData.totalShared}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
-                ],
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 14),
-        Padding(
-          padding: const EdgeInsets.only(left: 18, right: 18),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              likeCommentShareButtonWidget(ImagesModel.likeIcons, "Like", () {}, status: 1, isLiked: newsFeedData.isReacted!),
-              likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {}),
-              PopupMenuButton(
-                itemBuilder: (context) => [
-                  // PopupMenuItem 1
-                  PopupMenuItem(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {}, size: 18),
-                        const SizedBox(height: 18),
-                        PopUpMenuWidget(ImagesModel.shareMessageIcons, 'Share via message', () {}, size: 18),
-                        const SizedBox(height: 18),
-                        PopUpMenuWidget(ImagesModel.shareFriendIcons, 'Share to friends timeline', () {}, size: 16),
-                        const SizedBox(height: 18),
-                        PopUpMenuWidget(ImagesModel.shareGroupIcons, 'Share to a group', () {}, size: 16),
-                        const SizedBox(height: 18),
-                        PopUpMenuWidget(ImagesModel.pageIconsPng, 'Share to a page', () {}, size: 18, isShowAssetImage: true),
-                        const SizedBox(height: 10),
-                      ],
-                    ),
+                            TextSpan(
+                                text: newsFeedData.reaction == true ? " and" : "",
+                                style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                                children: [
+                                  TextSpan(
+                                      text: newsFeedData.totalReaction.toString(),
+                                      style: robotoStyle600SemiBold.copyWith(fontSize: 12),
+                                      children: [
+                                        TextSpan(
+                                            text:
+                                                " ${newsFeedData.totalLiked! <= 1 ? newsFeedData.reaction == true ? "Other" : "Like" : newsFeedData.reaction == true ? "Others" : "Likes"}",
+                                            style: robotoStyle400Regular.copyWith(fontSize: 12)),
+                                      ])
+                                ])
+                          ])),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          reactWidget(ImagesModel.commentIcons, AppColors.primaryColorLight),
+                          const SizedBox(width: 3),
+                          Text("${newsFeedData.totalComment}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
+                        ],
+                      ),
+                      const SizedBox(width: 18),
+                      Row(
+                        children: [
+                          reactWidget(ImagesModel.share2Icons, AppColors.primaryColorLight),
+                          const SizedBox(width: 3),
+                          Text("${newsFeedData.totalShared}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
+                        ],
+                      ),
+                    ],
                   ),
-                  // PopupMenuItem 2
-                ],
-                offset: const Offset(0, 58),
-                color: Colors.white,
-                elevation: 4,
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 23,
-                      width: 37,
-                      decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
-                      child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: SvgPicture.asset(ImagesModel.share2Icons, height: 13, width: 12, color: Colors.white)),
-                    ),
-                    const SizedBox(width: 5),
-                    Text("Share", style: robotoStyle600SemiBold.copyWith())
-                  ],
                 ),
-              ),
-            ],
-          ),
-        ),
-        const Divider(thickness: 1.8, color: Color(0xffE4E6EB)),
-      ],
+                const SizedBox(height: 14),
+                Padding(
+                  padding: const EdgeInsets.only(left: 18, right: 18),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FlutterFeedReaction(
+                        reactions: [
+                          feedReactionWidget(0, "Like", ImagesModel.likeIconsSvg, colorText),
+                          feedReactionWidget(1, "Love", ImagesModel.loveIcons, colorLoveReact),
+                          feedReactionWidget(2, "Haha", ImagesModel.hahaIcons, colorHahaReact),
+                        ],
+                        dragSpace: 40.0,
+                        onReactionSelected: (val) {
+                          Provider.of<PageProvider>(context, listen: false).addLike(val.id + 1, index);
+                          if (newsFeedData.reaction != val.id) {
+                            commentProvider.addRealLike(newsFeedData.reaction == 1
+                                ? newsFeedData.likeReactUrl!
+                                : newsFeedData.reaction == 2
+                                    ? newsFeedData.loveReactUrl!
+                                    : newsFeedData.sadReactUrl!);
+                          }
+                        },
+                        onPressed: () {},
+                        prefix: likeCommentShareButtonWidget(
+                            newsFeedData.reaction == -1 || newsFeedData.reaction == 1
+                                ? ImagesModel.likeIcons
+                                : newsFeedData.reaction == 2
+                                    ? ImagesModel.loveIcons
+                                    : ImagesModel.hahaIcons,
+                            newsFeedData.reaction == -1 || newsFeedData.reaction == 1
+                                ? "Like"
+                                : newsFeedData.reaction == 2
+                                    ? "Love"
+                                    : "Smail", () {
+                          commentProvider.addRealLike(newsFeedData.reaction == 1
+                              ? newsFeedData.likeReactUrl!
+                              : newsFeedData.reaction == 2
+                                  ? newsFeedData.loveReactUrl!
+                                  : newsFeedData.sadReactUrl!);
+                          Provider.of<PageProvider>(context, listen: false).changeLikeStatus(index);
+                        }, status: newsFeedData.reaction!),
+                        containerWidth: 140.0,
+                        childAnchor: Alignment.centerLeft,
+                      ),
+                      likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {}),
+                      PopupMenuButton(
+                        itemBuilder: (context) => [
+                          // PopupMenuItem 1
+                          PopupMenuItem(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {}, size: 18),
+                                const SizedBox(height: 18),
+                                PopUpMenuWidget(ImagesModel.shareMessageIcons, 'Share via message', () {}, size: 18),
+                                const SizedBox(height: 18),
+                                PopUpMenuWidget(ImagesModel.shareFriendIcons, 'Share to friends timeline', () {}, size: 16),
+                                const SizedBox(height: 18),
+                                PopUpMenuWidget(ImagesModel.shareGroupIcons, 'Share to a group', () {}, size: 16),
+                                const SizedBox(height: 18),
+                                PopUpMenuWidget(ImagesModel.pageIconsPng, 'Share to a page', () {}, size: 18, isShowAssetImage: true),
+                                const SizedBox(height: 10),
+                              ],
+                            ),
+                          ),
+                          // PopupMenuItem 2
+                        ],
+                        offset: const Offset(0, 58),
+                        color: Colors.white,
+                        elevation: 4,
+                        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 23,
+                              width: 37,
+                              decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
+                              child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: SvgPicture.asset(ImagesModel.share2Icons, height: 13, width: 12, color: Colors.white)),
+                            ),
+                            const SizedBox(width: 5),
+                            Text("Share", style: robotoStyle600SemiBold.copyWith())
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(thickness: 1.8, color: Color(0xffE4E6EB)),
+              ],
+            ));
+  }
+
+  FeedReaction feedReactionWidget(int id, String title, String imagePath, Color color) {
+    return FeedReaction(
+      id: id,
+      header: Text(title),
+      reaction: Container(
+        width: 30.0,
+        height: 30.0,
+        padding: EdgeInsets.all(6),
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        child: SvgPicture.asset(imagePath, color: Colors.white),
+      ),
     );
   }
 
@@ -288,7 +344,7 @@ class PostWidget extends StatelessWidget {
     );
   }
 
-  Widget likeCommentShareButtonWidget(String image, String title, GestureTapCallback callback, {bool isLiked = false, int status = 0}) {
+  Widget likeCommentShareButtonWidget(String image, String title, GestureTapCallback callback, {int status = 0}) {
     return InkWell(
       onTap: callback,
       child: Row(
@@ -297,7 +353,14 @@ class PostWidget extends StatelessWidget {
             height: 23,
             width: 37,
             decoration: BoxDecoration(
-                color: status == 0 || isLiked == false ? AppColors.primaryColorLight : Colors.red, borderRadius: BorderRadius.circular(18)),
+                color: status == 0 || status == -1
+                    ? AppColors.primaryColorLight
+                    : status == 1
+                        ? feedback
+                        : status == 2
+                            ? colorLoveReact
+                            : colorHahaReact,
+                borderRadius: BorderRadius.circular(18)),
             child: Padding(padding: const EdgeInsets.all(4.0), child: SvgPicture.asset(image, height: 13, width: 12, color: Colors.white)),
           ),
           const SizedBox(width: 5),

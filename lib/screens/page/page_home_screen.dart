@@ -85,9 +85,11 @@ class PageHomeScreen extends StatelessWidget {
                                     itemCount: pageProvider.authorPageLists.length,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context, index) {
-                                      return PageViewWidget(authorPageModel: pageProvider.authorPageLists[index],onTap: (){
-                                        Helper.toScreen(const NewPageDetailsScreen());
-                                      });
+                                      return PageViewWidget(
+                                          authorPageModel: pageProvider.authorPageLists[index],
+                                          onTap: () {
+                                            Helper.toScreen(NewPageDetailsScreen(pageProvider.authorPageLists[index], isAdmin: true));
+                                          });
                                     })
                                 : const Center(child: CustomText(title: "You haven't any personal Page")))
                         : const SizedBox.shrink(),

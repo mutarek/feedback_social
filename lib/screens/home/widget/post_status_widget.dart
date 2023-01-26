@@ -19,10 +19,10 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostPro
     child: Card(
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 60,
             child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(5)), child: customNetworkImage(context, authProvider.profileImage)),
+                borderRadius: const BorderRadius.all(Radius.circular(5)), child: customNetworkImage(authProvider.profileImage)),
           ),
           const SizedBox(width: 10),
           status == 1
