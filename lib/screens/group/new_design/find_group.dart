@@ -1,4 +1,5 @@
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
+import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/network_image.dart';
@@ -60,11 +61,11 @@ class FindGroup extends StatelessWidget {
                   itemBuilder: (_,index){
                     return Card(
                       elevation: 1,
-                      color: (Color(0xffFAFAFA)),
+                      color: (const Color(0xffFAFAFA)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)
                       ),
-                      child: Container(
+                      child: SizedBox(
                         height: 112,
                         width: double.infinity,
                         child: Column(
@@ -83,23 +84,17 @@ class FindGroup extends StatelessWidget {
                                         width: 36,
                                         child: customNetworkImage(context,"https://res.cloudinary.com/dhakacity/images/f_auto,q_auto/v1670167422/Travel-logo-transparency/Travel-logo-transparency.png",height: 36,boxFit: BoxFit.fitWidth))
                                   ),
-                                  SizedBox(width: 10,),
+                                  const SizedBox(width: 10,),
 
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('Govt Job BD',style: GoogleFonts.roboto(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 15,
-                                          color: AppColors.primaryColorLight),),
+                                      Text('Govt Job BD',style: robotoStyle700Bold.copyWith(fontSize: 15,color: AppColors.primaryColorLight)),
                                       Row(
                                         children: [
-                                          Text('570K Members - 10+ Post a Day',style: GoogleFonts.roboto(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                              color: AppColors.primaryColorLight),),
-                                          SizedBox(width: 10,),
+                                          Text('570K Members - 10+ Post a Day',style: robotoStyle500Medium.copyWith(fontSize: 10,color: AppColors.primaryColorLight),),
+                                          const SizedBox(width: 10,),
                                           Row(
                                             children: [
                                               SvgPicture.asset("assets/svg/last_minute_icon.svg", width: 14, height: 14),
@@ -135,10 +130,7 @@ class FindGroup extends StatelessWidget {
                                           children: [
                                             SvgPicture.asset("assets/svg/join_group_svg.svg",height: 17,width: 20,color: index%2==0?AppColors.primaryColorLight:Colors.white,),
                                             const SizedBox(width: 5,),
-                                            Text(index%2==0?"Join Group":"Joined",style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 15,
-                                                color: index%2==0?AppColors.primaryColorLight:Colors.white),)
+                                            Text(index%2==0?"Join Group":"Joined",style: robotoStyle700Bold.copyWith(fontSize: 15,color: index%2==0?AppColors.primaryColorLight:Colors.white))
                                           ],
                                         ),
                                       ),
@@ -164,40 +156,11 @@ class FindGroup extends StatelessWidget {
                                                       mainAxisAlignment: MainAxisAlignment.start,
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        Row(
-                                                          children: [
-                                                            const Icon(Icons.pending_actions),
-                                                            const SizedBox(
-                                                              width: 4,
-                                                            ),
-                                                            Text(
-                                                              "Visit Group",
-                                                              style: GoogleFonts.roboto(
-                                                                  fontWeight: FontWeight.w500,
-                                                                  fontSize: 12,
-                                                                  color: AppColors.primaryColorLight),
-                                                            )
-                                                          ],
-                                                        ),
+                                                        PopUpMenuWidget(ImagesModel.visitGroupIcons, 'Visit Group', () {},isShowAssetImage: false,),
                                                         const SizedBox(
                                                           height: 18,
                                                         ),
-                                                        Row(
-                                                          children: [
-                                                            // SvgPicture.asset("assets/svg/add.svg",height: 10,width:20,),
-                                                            const Icon(Icons.copy_all_outlined,size: 18,),
-                                                            const SizedBox(
-                                                              width: 4,
-                                                            ),
-                                                            Text(
-                                                              "Copy Link",
-                                                              style: GoogleFonts.roboto(
-                                                                  fontWeight: FontWeight.w500,
-                                                                  fontSize: 12,
-                                                                  color: AppColors.primaryColorLight),
-                                                            )
-                                                          ],
-                                                        ),
+                                                        PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {},isShowAssetImage: false,),
                                                       ],
                                                     ),
                                                   ),

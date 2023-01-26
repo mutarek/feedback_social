@@ -14,6 +14,7 @@ class ImagesModel {
   static const String addIcons = 'assets/svg/add.svg';
   static const String blocksIcons = 'assets/svg/block.svg';
   static const String saveIcons = 'assets/svg/save.svg';
+  static const String visitGroupIcons = 'assets/svg/visit_group_svg.svg';
   static const String hideIcons = 'assets/svg/hide.svg';
   static const String reportIcons = 'assets/svg/report.svg';
   static const String commentIcons = 'assets/svg/comment.svg';
@@ -27,6 +28,11 @@ class ImagesModel {
   // Icons
   static const String findPageIcons = 'assets/icons/find_page.svg';
   static const String inviteFriendIcons = 'assets/icons/invite_friend.svg';
+  static const String suggestedGroupIcon = 'assets/svg/suggested_group_icon.svg';
+  static const String yourGroupIcon = 'assets/svg/your_group_icon.svg';
+  static const String joinedGroupIcon = 'assets/svg/joined_groups_icon.svg';
+  static const String groupMemberIcon = 'assets/svg/group_member_vector.svg';
+  static const String publicGroupIcon = 'assets/svg/public_group_svg.svg';
   static const String followersIcons = 'assets/icons/followers.svg';
   static const String followingIcons = 'assets/icons/following.svg';
   static const String copyIcons = 'assets/icons/copy.svg';

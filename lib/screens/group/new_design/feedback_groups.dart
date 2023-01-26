@@ -1,9 +1,14 @@
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/new_design/create_group1.dart';
 import 'package:als_frontend/screens/group/new_design/find_group.dart';
 import 'package:als_frontend/screens/group/new_design/group_view.dart';
 import 'package:als_frontend/screens/group/new_design/invite_group.dart';
 import 'package:als_frontend/screens/group/new_design/pins_group.dart';
+<<<<<<< HEAD
 import 'package:als_frontend/screens/group/new_design/your_feed_group_screen.dart';
+=======
+import 'package:als_frontend/screens/group/widget/custom_expanded_widget.dart';
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
 import 'package:als_frontend/screens/group/widget/group_view_card.dart';
 import 'package:als_frontend/screens/group/widget/suggested_group_view_card.dart';
 import 'package:als_frontend/screens/page/find_page.dart';
@@ -144,6 +149,7 @@ class FeedBackGroups extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 5),
+<<<<<<< HEAD
                 Container(
                   decoration: BoxDecoration(
                       color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
@@ -186,6 +192,16 @@ class FeedBackGroups extends StatelessWidget {
                       ],
                     ),
                   ),
+=======
+                CustomExpandedWidget(
+                    ImagesModel.yourGroupIcon,
+                    "Your Group",
+                    "View the all group that you manage.",
+                    groupProvider.yourGroup?true:false,
+                        (){
+                      groupProvider.changeYourGroupStatus();
+                    }
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                 ),
                 groupProvider.yourGroup
                     ? SizedBox(
@@ -203,6 +219,7 @@ class FeedBackGroups extends StatelessWidget {
                             }))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 5),
+<<<<<<< HEAD
                 Container(
                   decoration: BoxDecoration(
                       color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
@@ -246,6 +263,16 @@ class FeedBackGroups extends StatelessWidget {
                       ],
                     ),
                   ),
+=======
+                CustomExpandedWidget(
+                    ImagesModel.joinedGroupIcon,
+                    "Joined Groups",
+                    "You have been added to these groups.",
+                    groupProvider.joinedGroup?true:false,
+                        (){
+                      groupProvider.changeJoinedGroupStatus();
+                    }
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                 ),
                 groupProvider.joinedGroup
                     ? SizedBox(
@@ -364,11 +391,16 @@ class FeedBackGroups extends StatelessWidget {
                                                                 ),
                                                                 Text(
                                                                   "Manage Notifications",
+<<<<<<< HEAD
                                                                   style:
                                                                       robotoStyle500Medium.copyWith(
                                                                           fontSize: 12,
                                                                           color: AppColors
                                                                               .primaryColorLight),
+=======
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                 )
                                                               ],
                                                             ),
@@ -390,11 +422,16 @@ class FeedBackGroups extends StatelessWidget {
                                                                 ),
                                                                 Text(
                                                                   "Unfollow Group",
+<<<<<<< HEAD
                                                                   style:
                                                                       robotoStyle500Medium.copyWith(
                                                                           fontSize: 12,
                                                                           color: AppColors
                                                                               .primaryColorLight),
+=======
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                 )
                                                               ],
                                                             ),
@@ -416,11 +453,16 @@ class FeedBackGroups extends StatelessWidget {
                                                                 ),
                                                                 Text(
                                                                   "Leave From Group",
+<<<<<<< HEAD
                                                                   style:
                                                                       robotoStyle500Medium.copyWith(
                                                                           fontSize: 12,
                                                                           color: AppColors
                                                                               .primaryColorLight),
+=======
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                 )
                                                               ],
                                                             ),
@@ -450,9 +492,14 @@ class FeedBackGroups extends StatelessWidget {
                                                       ),
                                                       Text(
                                                         'Joined',
+<<<<<<< HEAD
                                                         style: robotoStyle700Bold.copyWith(
                                                             fontSize: 15,
                                                             color: AppColors.primaryColorLight),
+=======
+                                                        style:
+                                                            robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                       ),
                                                       SizedBox(
                                                         width: 2,
@@ -501,11 +548,16 @@ class FeedBackGroups extends StatelessWidget {
                                                                 ),
                                                                 Text(
                                                                   "Pin Group",
+<<<<<<< HEAD
                                                                   style:
                                                                       robotoStyle500Medium.copyWith(
                                                                           fontSize: 12,
                                                                           color: AppColors
                                                                               .primaryColorLight),
+=======
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                 )
                                                               ],
                                                             ),
@@ -542,12 +594,17 @@ class FeedBackGroups extends StatelessWidget {
                                                                               ),
                                                                               Text(
                                                                                 "Share on your timeline",
+<<<<<<< HEAD
                                                                                 style: robotoStyle500Medium
                                                                                     .copyWith(
                                                                                         fontSize:
                                                                                             12,
                                                                                         color: AppColors
                                                                                             .primaryColorLight),
+=======
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                               )
                                                                             ],
                                                                           ),
@@ -567,12 +624,17 @@ class FeedBackGroups extends StatelessWidget {
                                                                               ),
                                                                               Text(
                                                                                 "Share via message",
+<<<<<<< HEAD
                                                                                 style: robotoStyle500Medium
                                                                                     .copyWith(
                                                                                         fontSize:
                                                                                             12,
                                                                                         color: AppColors
                                                                                             .primaryColorLight),
+=======
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                               )
                                                                             ],
                                                                           ),
@@ -590,8 +652,16 @@ class FeedBackGroups extends StatelessWidget {
                                                                             ),
                                                                             Text(
                                                                                 "Share to friends timeline",
+<<<<<<< HEAD
                                                                                 style: robotoStyle500Medium.copyWith(fontSize: 12, color: AppColors.primaryColorLight))
                                                                           ]),
+=======
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+                                                                              )
+                                                                            ],
+                                                                          ),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                           const SizedBox(
                                                                             height: 18,
                                                                           ),
@@ -607,12 +677,17 @@ class FeedBackGroups extends StatelessWidget {
                                                                               ),
                                                                               Text(
                                                                                 "Share to a group",
+<<<<<<< HEAD
                                                                                 style: robotoStyle500Medium
                                                                                     .copyWith(
                                                                                         fontSize:
                                                                                             12,
                                                                                         color: AppColors
                                                                                             .primaryColorLight),
+=======
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                               )
                                                                             ],
                                                                           ),
@@ -631,12 +706,17 @@ class FeedBackGroups extends StatelessWidget {
                                                                               ),
                                                                               Text(
                                                                                 "Share to a page",
+<<<<<<< HEAD
                                                                                 style: robotoStyle500Medium
                                                                                     .copyWith(
                                                                                         fontSize:
                                                                                             12,
                                                                                         color: AppColors
                                                                                             .primaryColorLight),
+=======
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                               )
                                                                             ],
                                                                           )
@@ -656,11 +736,16 @@ class FeedBackGroups extends StatelessWidget {
                                                                                       10.0))),
                                                                   child: Text(
                                                                     "Share",
+<<<<<<< HEAD
                                                                     style: robotoStyle500Medium
                                                                         .copyWith(
                                                                             fontSize: 12,
                                                                             color: AppColors
                                                                                 .primaryColorLight),
+=======
+                                                                    style: robotoStyle500Medium.copyWith(
+                                                                        fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                   ),
                                                                 ),
                                                               ],
@@ -682,11 +767,16 @@ class FeedBackGroups extends StatelessWidget {
                                                                 ),
                                                                 Text(
                                                                   "Copy Link",
+<<<<<<< HEAD
                                                                   style:
                                                                       robotoStyle500Medium.copyWith(
                                                                           fontSize: 12,
                                                                           color: AppColors
                                                                               .primaryColorLight),
+=======
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                 )
                                                               ],
                                                             ),
@@ -705,11 +795,16 @@ class FeedBackGroups extends StatelessWidget {
                                                                 ),
                                                                 Text(
                                                                   "Leave",
+<<<<<<< HEAD
                                                                   style:
                                                                       robotoStyle500Medium.copyWith(
                                                                           fontSize: 12,
                                                                           color: AppColors
                                                                               .primaryColorLight),
+=======
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                                                                 )
                                                               ],
                                                             ),
@@ -744,6 +839,7 @@ class FeedBackGroups extends StatelessWidget {
                               );
                             }))
                     : const SizedBox.shrink(),
+<<<<<<< HEAD
                 const SizedBox(height: 5),
                 Container(
                   decoration: BoxDecoration(
@@ -788,6 +884,17 @@ class FeedBackGroups extends StatelessWidget {
                       ],
                     ),
                   ),
+=======
+                const SizedBox(height: 10),
+                CustomExpandedWidget(
+                  ImagesModel.suggestedGroupIcon,
+                  "Suggested Group",
+                  "You might be interested in the following groups.",
+                  groupProvider.suggestedGroup?true:false,
+                    (){
+                      groupProvider.changeSuggestedGroupStatus();
+                    }
+>>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                 ),
                 const SizedBox(height: 10),
                 groupProvider.suggestedGroup
@@ -809,7 +916,7 @@ class FeedBackGroups extends StatelessWidget {
                 const SizedBox(height: 10),
                 InkWell(
                   onTap: () {
-                    //Helper.toScreen(const CreatePageScreen());
+                    Helper.toScreen(const CreateGroup1());
                   },
                   child: Container(
                     height: 50,
