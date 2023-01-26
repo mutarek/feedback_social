@@ -27,6 +27,9 @@ class ImagesModel {
 
   // Icons
   static const String findPageIcons = 'assets/icons/find_page.svg';
+  static const String earthIcons = 'assets/icons/earth.svg';
+  static const String photoAdd = 'assets/icons/photos.svg';
+  static const String videoAdd = 'assets/icons/play.svg';
   static const String inviteFriendIcons = 'assets/icons/invite_friend.svg';
   static const String suggestedGroupIcon = 'assets/svg/suggested_group_icon.svg';
   static const String yourGroupIcon = 'assets/svg/your_group_icon.svg';
@@ -39,6 +42,7 @@ class ImagesModel {
   static const String suggestPageIcons = 'assets/icons/suggest_page_icon.svg';
   static const String pins_the_group = 'assets/icons/pins_group_icon.svg';
   static const String likeIcons = 'assets/icons/like.svg';
+  static const String wowReaction = 'assets/icons/wow.svg';
   static const String messageIcons = 'assets/icons/message.svg';
   static const String notificationIcons = 'assets/icons/notification.svg';
   static const String pageIcons = 'assets/icons/page_icons.svg';

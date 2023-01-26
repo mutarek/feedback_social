@@ -1,5 +1,7 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/new_design/joined_group_page.dart';
+import 'package:als_frontend/screens/group/new_design/post_in_group.dart';
+import 'package:als_frontend/screens/group/widget/group_header.dart';
 import 'package:als_frontend/screens/page/view/page_about_view.dart';
 import 'package:als_frontend/screens/page/view/page_home_view.dart';
 import 'package:als_frontend/screens/page/widget/admin_post_view.dart';
@@ -43,7 +45,7 @@ class _NewPageDetailsScreenState extends State<IndividualGroupPage> {
           },
           physics: const BouncingScrollPhysics(),
           children: [
-            JoinedGroupPage(tabMenuWidget(pageProvider)),
+            PostInGroupScreen(tabMenuWidget(pageProvider)),
             PageAboutView(tabMenuWidget(pageProvider)),
           ],
         );
@@ -87,7 +89,7 @@ class _NewPageDetailsScreenState extends State<IndividualGroupPage> {
             child: Text(
               title,
               style:
-              robotoStyle700Bold.copyWith(fontSize: 12, color: pageProvider.menuValue == 0 ? Colors.white : AppColors.primaryColorLight),
+              robotoStyle700Bold.copyWith(fontSize: 12, color: pageProvider.menuValue == status ? Colors.white : AppColors.primaryColorLight),
             ),
           ),
         ),
