@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-import 'package:als_frontend/screens/page/widget/page_comment_view.dart';
-=======
 import 'dart:async';
 
->>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
-import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -509,22 +504,22 @@ class _PagePostViewState extends State<PagePostView> with TickerProviderStateMix
                         ),
                         RichText(
                             text: TextSpan(text: "Rafatul ", style: robotoStyle600SemiBold.copyWith(fontSize: 12), children: [
-                          TextSpan(
-                              text: " and",
-                              style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
-                              children: [
-                                TextSpan(
-                                    text: " 5,500",
-                                    style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
-                                    children: [
-                                      TextSpan(
-                                        text: " others",
-                                        style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
-                                      ),
-                                    ])
-                              ])
-                        ])),
+                              TextSpan(
+                                  text: " and",
+                                  style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                                  children: [
+                                    TextSpan(
+                                        text: " 5,500",
+                                        style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
+                                        children: [
+                                          TextSpan(
+                                            text: " others",
+                                            style: GoogleFonts.roboto(
+                                                fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                                          ),
+                                        ])
+                                  ])
+                            ])),
                         const Spacer(),
                         Row(
                           children: [
@@ -564,14 +559,9 @@ class _PagePostViewState extends State<PagePostView> with TickerProviderStateMix
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-<<<<<<< HEAD
-                        likeCommentShareButtonWidget(ImagesModel.likeIcons, "Like", () {}),
-                        likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {Helper.toScreen(PageCommentView(value: true, showDescription: () {  }, description: '',));}),
-=======
                         likeCommentShareButtonWidget(ImagesModel.likeIcons, "Like", () {
                         }),
                         likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {}),
->>>>>>> 7b61d63cf1cfa3074f99bcf80f061db44b4e18a1
                         PopupMenuButton(
                           itemBuilder: (context) => [
                             // PopupMenuItem 1
