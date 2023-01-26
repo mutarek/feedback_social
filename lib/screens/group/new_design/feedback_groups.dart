@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/new_design/find_group.dart';
+import 'package:als_frontend/screens/group/new_design/group_view.dart';
 import 'package:als_frontend/screens/group/new_design/invite_group.dart';
 import 'package:als_frontend/screens/group/new_design/pins_group.dart';
 import 'package:als_frontend/screens/group/new_design/your_feed_group_screen.dart';
@@ -286,8 +287,11 @@ class FeedBackGroups extends StatelessWidget {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text('Desh Travels',
-                                                style: robotoStyle700Bold.copyWith(fontSize: 16)),
+                                            InkWell(
+                                              onTap: (){Helper.toScreen(GroupViewScreen());},
+                                              child: Text('Desh Travels',
+                                                  style: robotoStyle700Bold.copyWith(fontSize: 16)),
+                                            ),
                                             const SizedBox(height: 5),
                                             Row(
                                               children: [
