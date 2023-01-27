@@ -2,7 +2,6 @@ import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/widget/new_page_details_header_widget.dart';
 import 'package:als_frontend/screens/page/widget/new_page_like_following_widget.dart';
-import 'package:als_frontend/screens/page/widget/post_widget.dart';
 import 'package:als_frontend/screens/post/widget/post_widget.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -80,7 +79,7 @@ class _PageHomeViewState extends State<PageHomeView> {
                 ListView.builder(
                     itemCount: pageProvider.pageAllPosts.length,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return PostWidget(pageProvider.pageAllPosts[index], index: index, isPage: true);
                     })

@@ -52,13 +52,13 @@ class SuggestedGroupViewCard extends StatelessWidget {
                     width: 120,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Color(0xffE7F3FF)
+                        color: const Color(0xffE7F3FF)
                     ),
                     child: Center(
                       child: Text('Join Group',style: robotoStyle700Bold.copyWith(fontSize: 10,color: AppColors.primaryColorLight)),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Container(
                     height: 19,
                     width: 30,

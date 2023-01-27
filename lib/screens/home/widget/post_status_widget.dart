@@ -2,7 +2,6 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:provider/provider.dart';
@@ -75,7 +74,7 @@ Widget postStatusWidget(BuildContext context, AuthProvider authProvider, PostPro
                     ],
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
         ],
       ),
     ),

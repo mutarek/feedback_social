@@ -2,7 +2,6 @@ import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/widget/about_widget.dart';
 import 'package:als_frontend/screens/page/widget/page_comment_view.dart';
 import 'package:als_frontend/screens/page/widget/page_photo_view.dart';
-import 'package:als_frontend/screens/page/widget/post_widget.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -75,38 +74,36 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
             const SizedBox(
               height: 2,
             ),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 18),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 10,
-                      width: 10,
-                      decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
-                      // child:  SvgPicture.asset("assets/svg/bookmark.svg",),
-                    ),
-                    const SizedBox(
-                      width: 1,
-                    ),
-                    Text("Followers: 5M",
-                        style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 9, color: AppColors.primaryColorLight)),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      height: 10,
-                      width: 10,
-                      decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
-                      // child:  SvgPicture.asset("assets/svg/bookmark.svg",),
-                    ),
-                    const SizedBox(
-                      width: 1,
-                    ),
-                    Text("Following: 20",
-                        style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 9, color: AppColors.primaryColorLight))
-                  ],
-                ),
+            Padding(
+              padding: const EdgeInsets.only(left: 18),
+              child: Row(
+                children: [
+                  Container(
+                    height: 10,
+                    width: 10,
+                    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                    // child:  SvgPicture.asset("assets/svg/bookmark.svg",),
+                  ),
+                  const SizedBox(
+                    width: 1,
+                  ),
+                  Text("Followers: 5M",
+                      style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 9, color: AppColors.primaryColorLight)),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    height: 10,
+                    width: 10,
+                    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                    // child:  SvgPicture.asset("assets/svg/bookmark.svg",),
+                  ),
+                  const SizedBox(
+                    width: 1,
+                  ),
+                  Text("Following: 20",
+                      style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 9, color: AppColors.primaryColorLight))
+                ],
               ),
             ),
             const SizedBox(
@@ -401,17 +398,17 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                 },
                 itemBuilder: (context, index) {
                   if (index == 1) {
-                    return PageAboutViewWidget();
+                    return const PageAboutViewWidget();
                   } else if (index == 2) {
-                    return PagePhotoView();
+                    return const PagePhotoView();
                   } else if (index == 3) {
-                    return ListTile(
+                    return const ListTile(
                       title: Text('Live Comming Soon'),
                     );
                   } else if (index == 4) {
-                    return PageCommentView();
+                    return const PageCommentView();
                   }
-                  return ListTile(
+                  return const ListTile(
                     title: Text('Live Comming Soon'),
                   );
                   // return PagePostView(

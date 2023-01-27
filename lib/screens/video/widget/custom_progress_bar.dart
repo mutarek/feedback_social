@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class CustomProgressBar extends StatefulWidget {
+  const CustomProgressBar({Key? key}) : super(key: key);
+
 
   @override
   State<CustomProgressBar> createState() => _CustomProgressBarState();

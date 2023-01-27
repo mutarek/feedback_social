@@ -30,8 +30,8 @@ class GroupPeopleWidget extends StatelessWidget {
             itemCount: 10,
             itemBuilder: (_,index){
               return Container(
-                margin: EdgeInsets.all(1),
-                padding: EdgeInsets.all(2),
+                margin: const EdgeInsets.all(1),
+                padding: const EdgeInsets.all(2),
                 child: Row(
                   children: [
                     const SizedBox(width:10),

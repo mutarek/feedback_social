@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/watch_list_model.dart';
+import 'package:als_frontend/dialog_bottom_sheet/like_modal_bottom_sheet.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/post/widget/post_widget.dart';
@@ -61,219 +62,240 @@ class _PhotoViewScreen1State extends State<PhotoViewScreen1> {
                     imageData = otherProvider.imageVideoLists.imagesData![index];
                   }
 
-                  return InkWell(
-                    onTap: () {
-                      route(isVideo, url, isVideo?videoData.video!:"");
-                    },
-                    child: Column(
-                      children: [
-                        Stack(
-                          children: [
-                            customNetworkImage(url),
-                            isVideo == true
-                                ? Positioned(
-                                    left: 0,
-                                    right: 0,
-                                    top: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      width: double.infinity,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
-                                      child: IconButton(
-                                          onPressed: () {
-                                            route(isVideo, url, videoData.video!);
-                                          },
-                                          icon: SvgPicture.asset(ImagesModel.videoIcons)),
-                                    ),
-                                  )
-                                : const SizedBox.shrink()
-                          ],
-                        ),
-                        isVideo == true
-                            ? Padding(
-                                padding: const EdgeInsets.only(left: 12, top: 7, right: 12),
-                                child: Row(
-                                  children: [
-                                    Stack(
+                  return Column(
+                    children: [
+                      Stack(
+                        children: [
+                          InkWell(
+                              onTap: (){
+                                route(isVideo, url, isVideo ? videoData.video! : "");
+                              },
+                              child: customNetworkImage(url)),
+                          isVideo == true
+                              ? Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  top: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                    width: double.infinity,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          route(isVideo, url, isVideo ? videoData.video! : "");
+                                        },
+                                        icon: SvgPicture.asset(ImagesModel.videoIcons)),
+                                  ),
+                                )
+                              : const SizedBox.shrink()
+                        ],
+                      ),
+                      isVideo == true
+                          ? Padding(
+                              padding: const EdgeInsets.only(left: 12, top: 7, right: 12),
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    onTap: (){
+                                      commentProvider.changeLikeMenu(0);
+                                      commentProvider.clearAuthorData();
+                                      likeModalBottomSheet(widget.newsfeedModel);
+                                    },
+                                    child: Row(
                                       children: [
-                                        SizedBox(
-                                            height: 17,
-                                            width: 50 -
-                                                (widget.newsfeedModel.totalLoved! == 0 ? 13 : 0) -
-                                                (widget.newsfeedModel.totalSad! == 0 ? 13 : 0)),
-                                        reactWidget(ImagesModel.likeIconsSvg, AppColors.primaryColorLight),
-                                        widget.newsfeedModel.totalLoved! == 0
-                                            ? const SizedBox.shrink()
-                                            : Positioned(left: 14, child: reactWidget(ImagesModel.loveIcons, Colors.red)),
-                                        widget.newsfeedModel.totalSad! == 0
-                                            ? const SizedBox.shrink()
-                                            : Positioned(
+                                        Stack(
+                                          children: [
+                                            SizedBox(
+                                                height: 17,
+                                                width: 50 -
+                                                    (widget.newsfeedModel.totalLoved! == 0 ? 13 : 0) -
+                                                    (widget.newsfeedModel.totalSad! == 0 ? 13 : 0)),
+                                            reactWidget(ImagesModel.likeIconsSvg, AppColors.primaryColorLight),
+                                            widget.newsfeedModel.totalLoved! == 0
+                                                ? const SizedBox.shrink()
+                                                : Positioned(left: 14, child: reactWidget(ImagesModel.loveIcons, Colors.red)),
+                                            widget.newsfeedModel.totalSad! == 0
+                                                ? const SizedBox.shrink()
+                                                : Positioned(
                                                 left: widget.newsfeedModel.totalLoved! == 0 ? 14 : 28,
                                                 child: reactWidget(ImagesModel.hahaIcons, Colors.yellow)),
+                                          ],
+                                        ),
+                                        RichText(
+                                            text: TextSpan(
+                                                text: widget.newsfeedModel.reaction != -1 ? "You " : "",
+                                                style: robotoStyle600SemiBold.copyWith(fontSize: 12),
+                                                children: [
+                                                  TextSpan(
+                                                      text: widget.newsfeedModel.reaction != -1 ? " and" : "",
+                                                      style: GoogleFonts.roboto(
+                                                          fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                                                      children: [
+                                                        TextSpan(
+                                                            text: widget.newsfeedModel.totalReaction.toString(),
+                                                            style: robotoStyle600SemiBold.copyWith(fontSize: 12),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text:
+                                                                  " ${widget.newsfeedModel.totalLiked! <= 1 ? widget.newsfeedModel.reaction == true ? "Other" : "Like" : widget.newsfeedModel.reaction == true ? "Others" : "Likes"}",
+                                                                  style: robotoStyle400Regular.copyWith(fontSize: 12)),
+                                                            ])
+                                                      ])
+                                                ])),
                                       ],
                                     ),
-                                    RichText(
-                                        text: TextSpan(
-                                            text: widget.newsfeedModel.reaction != -1 ? "You " : "",
-                                            style: robotoStyle600SemiBold.copyWith(fontSize: 12),
-                                            children: [
-                                          TextSpan(
-                                              text: widget.newsfeedModel.reaction != -1 ? " and" : "",
-                                              style: GoogleFonts.roboto(
-                                                  fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
-                                              children: [
-                                                TextSpan(
-                                                    text: widget.newsfeedModel.totalReaction.toString(),
-                                                    style: robotoStyle600SemiBold.copyWith(fontSize: 12),
-                                                    children: [
-                                                      TextSpan(
-                                                          text:
-                                                              " ${widget.newsfeedModel.totalLiked! <= 1 ? widget.newsfeedModel.reaction == true ? "Other" : "Like" : widget.newsfeedModel.reaction == true ? "Others" : "Likes"}",
-                                                          style: robotoStyle400Regular.copyWith(fontSize: 12)),
-                                                    ])
-                                              ])
-                                        ])),
-                                    const Spacer(),
-                                    Row(
+                                  ),
+                                  const Spacer(),
+                                  Row(
+                                    children: [
+                                      reactWidget(ImagesModel.commentIcons, AppColors.primaryColorLight),
+                                      const SizedBox(width: 3),
+                                      Text("${widget.newsfeedModel.totalComment}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
+                                    ],
+                                  ),
+                                  const SizedBox(width: 18),
+                                  Row(
+                                    children: [
+                                      reactWidget(ImagesModel.share2Icons, AppColors.primaryColorLight),
+                                      const SizedBox(width: 3),
+                                      Text("${widget.newsfeedModel.totalShared}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(left: 12, top: 7, right: 12),
+                              child: Row(
+                                children: [
+                                  InkWell(
+                                    onTap: (){
+                                      commentProvider.changeLikeMenu(0);
+                                      commentProvider.clearAuthorData();
+                                      likeModalBottomSheet(widget.newsfeedModel,index: index,isFromImage: true);
+                                    },
+                                    child: Row(
                                       children: [
-                                        reactWidget(ImagesModel.commentIcons, AppColors.primaryColorLight),
-                                        const SizedBox(width: 3),
-                                        Text("${widget.newsfeedModel.totalComment}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
-                                      ],
-                                    ),
-                                    const SizedBox(width: 18),
-                                    Row(
-                                      children: [
-                                        reactWidget(ImagesModel.share2Icons, AppColors.primaryColorLight),
-                                        const SizedBox(width: 3),
-                                        Text("${widget.newsfeedModel.totalShared}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.only(left: 12, top: 7, right: 12),
-                                child: Row(
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        SizedBox(
-                                            height: 17,
-                                            width: 50 - (imageData.totalLoved! == 0 ? 13 : 0) - (imageData.totalSad! == 0 ? 13 : 0)),
-                                        reactWidget(ImagesModel.likeIconsSvg, AppColors.primaryColorLight),
-                                        imageData.totalLoved! == 0
-                                            ? const SizedBox.shrink()
-                                            : Positioned(left: 14, child: reactWidget(ImagesModel.loveIcons, Colors.red)),
-                                        imageData.totalSad! == 0
-                                            ? const SizedBox.shrink()
-                                            : Positioned(
+                                        Stack(
+                                          children: [
+                                            SizedBox(
+                                                height: 17,
+                                                width: 50 - (imageData.totalLoved! == 0 ? 13 : 0) - (imageData.totalSad! == 0 ? 13 : 0)),
+                                            reactWidget(ImagesModel.likeIconsSvg, AppColors.primaryColorLight),
+                                            imageData.totalLoved! == 0
+                                                ? const SizedBox.shrink()
+                                                : Positioned(left: 14, child: reactWidget(ImagesModel.loveIcons, Colors.red)),
+                                            imageData.totalSad! == 0
+                                                ? const SizedBox.shrink()
+                                                : Positioned(
                                                 left: imageData.totalLoved! == 0 ? 14 : 28,
                                                 child: reactWidget(ImagesModel.hahaIcons, Colors.yellow)),
+                                          ],
+                                        ),
+                                        RichText(
+                                            text: TextSpan(
+                                                text: imageData.reaction != -1 ? "You " : "",
+                                                style: robotoStyle600SemiBold.copyWith(fontSize: 12),
+                                                children: [
+                                                  TextSpan(
+                                                      text: imageData.reaction != -1 ? " and" : "",
+                                                      style: GoogleFonts.roboto(
+                                                          fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                                                      children: [
+                                                        TextSpan(
+                                                            text: imageData.totalReaction.toString(),
+                                                            style: robotoStyle600SemiBold.copyWith(fontSize: 12),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text:
+                                                                  " ${imageData.totalLiked! <= 1 ? imageData.reaction == true ? "Other" : "Like" : imageData.reaction == true ? "Others" : "Likes"}",
+                                                                  style: robotoStyle400Regular.copyWith(fontSize: 12)),
+                                                            ])
+                                                      ])
+                                                ])),
                                       ],
                                     ),
-                                    RichText(
-                                        text: TextSpan(
-                                            text: imageData.reaction != -1 ? "You " : "",
-                                            style: robotoStyle600SemiBold.copyWith(fontSize: 12),
-                                            children: [
-                                          TextSpan(
-                                              text: imageData.reaction != -1 ? " and" : "",
-                                              style: GoogleFonts.roboto(
-                                                  fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
-                                              children: [
-                                                TextSpan(
-                                                    text: imageData.totalReaction.toString(),
-                                                    style: robotoStyle600SemiBold.copyWith(fontSize: 12),
-                                                    children: [
-                                                      TextSpan(
-                                                          text:
-                                                              " ${imageData.totalLiked! <= 1 ? imageData.reaction == true ? "Other" : "Like" : imageData.reaction == true ? "Others" : "Likes"}",
-                                                          style: robotoStyle400Regular.copyWith(fontSize: 12)),
-                                                    ])
-                                              ])
-                                        ])),
-                                    const Spacer(),
-                                    Row(
-                                      children: [
-                                        reactWidget(ImagesModel.commentIcons, AppColors.primaryColorLight),
-                                        const SizedBox(width: 3),
-                                        Text("${imageData.totalComment}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                        const SizedBox(height: 14),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 18, right: 18),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              FlutterFeedReaction(
-                                reactions: [
-                                  feedReactionWidget(0, "Like", ImagesModel.likeIconsSvg, colorText),
-                                  feedReactionWidget(1, "Love", ImagesModel.loveIcons, colorLoveReact),
-                                  feedReactionWidget(2, "Haha", ImagesModel.hahaIcons, colorHahaReact),
+                                  ),
+                                  const Spacer(),
+                                  Row(
+                                    children: [
+                                      reactWidget(ImagesModel.commentIcons, AppColors.primaryColorLight),
+                                      const SizedBox(width: 3),
+                                      Text("${imageData.totalComment}", style: robotoStyle600SemiBold.copyWith(fontSize: 14))
+                                    ],
+                                  ),
                                 ],
-                                dragSpace: 40.0,
-                                onReactionSelected: (val) {
-                                  otherProvider.addLikeImageVideo(val.id + 1, isVideo ? index - totalImage : index, isVideo);
-                                  if (!isVideo) {
-                                    if (imageData.reaction != val.id) {
+                              ),
+                            ),
+                      const SizedBox(height: 14),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18, right: 18),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FlutterFeedReaction(
+                              reactions: [
+                                feedReactionWidget(0, "Like", ImagesModel.likeIconsSvg, colorText),
+                                feedReactionWidget(1, "Love", ImagesModel.loveIcons, colorLoveReact),
+                                feedReactionWidget(2, "Haha", ImagesModel.hahaIcons, colorHahaReact),
+                              ],
+                              dragSpace: 40.0,
+                              onReactionSelected: (val) {
+                                otherProvider.addLikeImageVideo(val.id + 1, isVideo ? index - totalImage : index, isVideo);
+                                if (!isVideo) {
+                                  if (imageData.reaction != val.id) {
+                                    commentProvider.addRealLike(imageData.reaction == 1
+                                        ? imageData.likeReactUrl!
+                                        : imageData.reaction == 2
+                                            ? imageData.loveReactUrl!
+                                            : imageData.sadReactUrl!);
+                                  }
+                                }
+                              },
+                              onPressed: () {},
+                              prefix: !isVideo
+                                  ? likeCommentShareButtonWidget(
+                                      imageData.reaction == -1 || imageData.reaction == 1
+                                          ? ImagesModel.likeIcons
+                                          : imageData.reaction == 2
+                                              ? ImagesModel.loveIcons
+                                              : ImagesModel.hahaIcons,
+                                      imageData.reaction == -1 || imageData.reaction == 1
+                                          ? "Like"
+                                          : imageData.reaction == 2
+                                              ? "Love"
+                                              : "Smail", () {
                                       commentProvider.addRealLike(imageData.reaction == 1
                                           ? imageData.likeReactUrl!
                                           : imageData.reaction == 2
                                               ? imageData.loveReactUrl!
                                               : imageData.sadReactUrl!);
-                                    }
-                                  }
-                                },
-                                onPressed: () {},
-                                prefix: !isVideo
-                                    ? likeCommentShareButtonWidget(
-                                        imageData.reaction == -1 || imageData.reaction == 1
-                                            ? ImagesModel.likeIcons
-                                            : imageData.reaction == 2
-                                                ? ImagesModel.loveIcons
-                                                : ImagesModel.hahaIcons,
-                                        imageData.reaction == -1 || imageData.reaction == 1
-                                            ? "Like"
-                                            : imageData.reaction == 2
-                                                ? "Love"
-                                                : "Smail", () {
-                                        commentProvider.addRealLike(imageData.reaction == 1
-                                            ? imageData.likeReactUrl!
-                                            : imageData.reaction == 2
-                                                ? imageData.loveReactUrl!
-                                                : imageData.sadReactUrl!);
 
-                                        otherProvider.changeImageVideoLikeStatus(widget.postIndex);
-                                      }, status: imageData.reaction!)
-                                    : likeCommentShareButtonWidget(
-                                        widget.newsfeedModel.reaction == -1 || widget.newsfeedModel.reaction == 1
-                                            ? ImagesModel.likeIcons
-                                            : widget.newsfeedModel.reaction == 2
-                                                ? ImagesModel.loveIcons
-                                                : ImagesModel.hahaIcons,
-                                        widget.newsfeedModel.reaction == -1 || widget.newsfeedModel.reaction == 1
-                                            ? "Like"
-                                            : widget.newsfeedModel.reaction == 2
-                                                ? "Love"
-                                                : "Smail",
-                                        () {},
-                                        status: widget.newsfeedModel.reaction!),
-                                containerWidth: 140.0,
-                                childAnchor: Alignment.centerLeft,
-                              ),
-                              likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {}),
-                            ],
-                          ),
+                                      otherProvider.changeImageVideoLikeStatus(widget.postIndex);
+                                    }, status: imageData.reaction!)
+                                  : likeCommentShareButtonWidget(
+                                      widget.newsfeedModel.reaction == -1 || widget.newsfeedModel.reaction == 1
+                                          ? ImagesModel.likeIcons
+                                          : widget.newsfeedModel.reaction == 2
+                                              ? ImagesModel.loveIcons
+                                              : ImagesModel.hahaIcons,
+                                      widget.newsfeedModel.reaction == -1 || widget.newsfeedModel.reaction == 1
+                                          ? "Like"
+                                          : widget.newsfeedModel.reaction == 2
+                                              ? "Love"
+                                              : "Smail",
+                                      () {},
+                                      status: widget.newsfeedModel.reaction!),
+                              containerWidth: 140.0,
+                              childAnchor: Alignment.centerLeft,
+                            ),
+                            likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {}),
+                          ],
                         ),
-                        const Divider(thickness: 1.8, color: Color(0xffE4E6EB)),
-                      ],
-                    ),
+                      ),
+                      const Divider(thickness: 1.8, color: Color(0xffE4E6EB)),
+                    ],
                   );
                 });
           },

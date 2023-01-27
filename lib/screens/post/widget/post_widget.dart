@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/dialog_bottom_sheet/like_modal_bottom_sheet.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/helper/url_checkig_helper.dart';
@@ -6,7 +7,6 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
-import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/screens/post/widget/photo_widget1.dart';
@@ -19,7 +19,6 @@ import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/any_link_preview_global_widget.dart';
 import 'package:als_frontend/widgets/network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feed_reaction/flutter_feed_reaction.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -159,10 +158,7 @@ class PostWidget extends StatelessWidget {
                           ? AnyLinkPreviewGlobalWidget(extractdescription(newsFeedData.description!), 120.0, double.infinity, 10.0)
                           : newsFeedData.description!.contains("http")
                               ? const SizedBox()
-                              : Text(
-                                  newsFeedData.description!,
-                                  style: robotoStyle600SemiBold,
-                                ),
+                              : Text(newsFeedData.description!, style: robotoStyle600SemiBold),
                     ],
                   ),
                 ),
@@ -174,40 +170,51 @@ class PostWidget extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 12, top: 7, right: 12),
                   child: Row(
                     children: [
-                      Stack(
-                        children: [
-                          SizedBox(
-                              height: 17, width: 50 - (newsFeedData.totalLoved! == 0 ? 13 : 0) - (newsFeedData.totalSad! == 0 ? 13 : 0)),
-                          reactWidget(ImagesModel.likeIconsSvg, AppColors.primaryColorLight),
-                          newsFeedData.totalLoved! == 0
-                              ? const SizedBox.shrink()
-                              : Positioned(left: 14, child: reactWidget(ImagesModel.loveIcons, Colors.red)),
-                          newsFeedData.totalSad! == 0
-                              ? const SizedBox.shrink()
-                              : Positioned(
-                                  left: newsFeedData.totalLoved! == 0 ? 14 : 28, child: reactWidget(ImagesModel.hahaIcons, Colors.yellow)),
-                        ],
-                      ),
-                      RichText(
-                          text: TextSpan(
-                              text: newsFeedData.reaction != -1 ? "You " : "",
-                              style: robotoStyle600SemiBold.copyWith(fontSize: 12),
+                      InkWell(
+                        onTap: (){
+                          commentProvider.changeLikeMenu(0);
+                          commentProvider.clearAuthorData();
+                          likeModalBottomSheet(newsFeedData);
+                        },
+                        child: Row(
+                          children: [
+                            Stack(
                               children: [
-                            TextSpan(
-                                text: newsFeedData.reaction != -1 ? " and" : "",
-                                style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
-                                children: [
-                                  TextSpan(
-                                      text: newsFeedData.totalReaction.toString(),
-                                      style: robotoStyle600SemiBold.copyWith(fontSize: 12),
-                                      children: [
-                                        TextSpan(
-                                            text:
-                                                " ${newsFeedData.totalLiked! <= 1 ? newsFeedData.reaction == true ? "Other" : "Like" : newsFeedData.reaction == true ? "Others" : "Likes"}",
-                                            style: robotoStyle400Regular.copyWith(fontSize: 12)),
-                                      ])
-                                ])
-                          ])),
+                                SizedBox(
+                                    height: 17, width: 50 - (newsFeedData.totalLoved! == 0 ? 13 : 0) - (newsFeedData.totalSad! == 0 ? 13 : 0)),
+                                reactWidget(ImagesModel.likeIconsSvg, AppColors.primaryColorLight),
+                                newsFeedData.totalLoved! == 0
+                                    ? const SizedBox.shrink()
+                                    : Positioned(left: 14, child: reactWidget(ImagesModel.loveIcons, Colors.red)),
+                                newsFeedData.totalSad! == 0
+                                    ? const SizedBox.shrink()
+                                    : Positioned(
+                                    left: newsFeedData.totalLoved! == 0 ? 14 : 28, child: reactWidget(ImagesModel.hahaIcons, Colors.yellow)),
+                              ],
+                            ),
+                            RichText(
+                                text: TextSpan(
+                                    text: newsFeedData.reaction != -1 ? "You " : "",
+                                    style: robotoStyle600SemiBold.copyWith(fontSize: 12),
+                                    children: [
+                                      TextSpan(
+                                          text: newsFeedData.reaction != -1 ? " and" : "",
+                                          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                                          children: [
+                                            TextSpan(
+                                                text: newsFeedData.totalReaction.toString(),
+                                                style: robotoStyle600SemiBold.copyWith(fontSize: 12),
+                                                children: [
+                                                  TextSpan(
+                                                      text:
+                                                      " ${newsFeedData.totalReaction! <= 1 ? newsFeedData.reaction == -1 ? "Other" : "Like" : newsFeedData.reaction == -1 ? "Others" : "Likes"}",
+                                                      style: robotoStyle400Regular.copyWith(fontSize: 12)),
+                                                ])
+                                          ])
+                                    ])),
+                          ],
+                        ),
+                      ),
                       const Spacer(),
                       Row(
                         children: [
@@ -331,7 +338,7 @@ FeedReaction feedReactionWidget(int id, String title, String imagePath, Color co
     reaction: Container(
       width: 30.0,
       height: 30.0,
-      padding: EdgeInsets.all(6),
+      padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       child: SvgPicture.asset(imagePath, color: Colors.white),
     ),

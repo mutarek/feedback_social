@@ -16,7 +16,7 @@ class GroupMediaWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Padding(
@@ -26,10 +26,10 @@ class GroupMediaWidget extends StatelessWidget {
               style: robotoStyle700Bold.copyWith(fontSize: 15,color: AppColors.primaryColorLight)
             ),
           ),
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           Padding(
               padding: const EdgeInsets.only(left: 0),
-              child: Container(
+              child: SizedBox(
                 height: 250,
                 width: double.infinity,
                 child: Row(
@@ -37,7 +37,7 @@ class GroupMediaWidget extends StatelessWidget {
                     Expanded(
                       flex: 1,
                       child: Container(
-                        margin: EdgeInsets.only(right: 1),
+                        margin: const EdgeInsets.only(right: 1),
                         height: 250,
                         color: AppColors.imageBGColorLight,
                       ),
@@ -49,7 +49,7 @@ class GroupMediaWidget extends StatelessWidget {
                             Expanded(
                               flex: 1,
                               child: Container(
-                                margin: EdgeInsets.only(bottom: 1),
+                                margin: const EdgeInsets.only(bottom: 1),
                                 color: AppColors.imageBGColorLight,
                               ),
                             ),
@@ -66,7 +66,7 @@ class GroupMediaWidget extends StatelessWidget {
                 ),
               )
           ),
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           Padding(
             padding: const EdgeInsets.only(left: 18),
             child: Text(
@@ -87,7 +87,7 @@ class GroupMediaWidget extends StatelessWidget {
                         child: Stack(
                           children: [
                             Container(
-                              margin: EdgeInsets.only(right: 1),
+                              margin: const EdgeInsets.only(right: 1),
                               height: 250,
                               color: AppColors.imageBGColorLight,
                             ),
@@ -111,7 +111,7 @@ class GroupMediaWidget extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(bottom: 1),
+                                      margin: const EdgeInsets.only(bottom: 1),
                                       height: 250,
                                       color: AppColors.imageBGColorLight,
                                     ),

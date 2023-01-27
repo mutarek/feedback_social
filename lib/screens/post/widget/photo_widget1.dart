@@ -1,15 +1,12 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
-import 'package:als_frontend/screens/home/view/photo_view_screen.dart';
 import 'package:als_frontend/screens/post/view/photo_view_screen1.dart';
 import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/network_image.dart';
-import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -102,7 +99,7 @@ class _PostPhotoWidgetState extends State<PostPhotoWidget> {
   @override
   Widget build(BuildContext context) {
     return totalImageVideo == 0
-        ? SizedBox.shrink()
+        ? const SizedBox.shrink()
         : MasonryGridView.count(
             crossAxisCount: totalImageVideo > 1 ? 2 : 1,
             crossAxisSpacing: 8,

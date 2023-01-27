@@ -1,10 +1,7 @@
-import 'package:als_frontend/screens/group/widget/group_view_card.dart';
-import 'package:als_frontend/screens/group/widget/invite_group_card.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../page/widget/page_app_bar.dart';
 

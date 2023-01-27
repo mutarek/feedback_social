@@ -28,7 +28,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                   },
                   child: Container(
                     height: 40,
-                    margin: EdgeInsets.only(right: 5),
+                    margin: const EdgeInsets.only(right: 5),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.primaryColorLight),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

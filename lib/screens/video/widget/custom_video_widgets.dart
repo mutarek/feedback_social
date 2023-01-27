@@ -71,7 +71,7 @@ class _CustomVideoWidgetsState extends State<CustomVideoWidgets> {
                   matchVideoAspectRatioToFrame: true,
                   // alwaysShowProgressBar: false,
                   onLoading: (context) {
-                    return CustomProgressBar();
+                    return const CustomProgressBar();
                   },
                   videoThumbnail: widget.thumbnailURL.isNotEmpty
                       ? DecorationImage(

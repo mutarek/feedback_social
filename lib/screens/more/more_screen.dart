@@ -6,7 +6,6 @@ import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/group/liked_group_suggested_group.dart';
-import 'package:als_frontend/screens/page/liked_page_suggested_page.dart';
 import 'package:als_frontend/screens/page/page_home_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/settings/widget/Settings_widget.dart';

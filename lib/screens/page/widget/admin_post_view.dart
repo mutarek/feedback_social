@@ -1,6 +1,5 @@
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
-import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,9 +44,9 @@ class AdminPostView extends StatelessWidget {
             child: Column(
               children: [
                 TextFormField(
-                  decoration: InputDecoration(border: InputBorder.none),
+                  decoration: const InputDecoration(border: InputBorder.none),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(right: 10, bottom: 10),
                   child: Row(
@@ -60,7 +59,7 @@ class AdminPostView extends StatelessWidget {
                         width: 12,
                         color: AppColors.primaryColorLight,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       SvgPicture.asset(
@@ -151,12 +150,6 @@ class AdminPostView extends StatelessWidget {
                         ),
                         const Spacer(),
                         PopupMenuButton(
-                          child: Container(
-                            height: 24,
-                            width: 30,
-                            decoration: BoxDecoration(color: const Color(0xffE4E6EB), borderRadius: BorderRadius.circular(10)),
-                            child: const Center(child: Icon(Icons.more_horiz)),
-                          ),
                           itemBuilder: (context) => [
                             // PopupMenuItem 1
                             PopupMenuItem(
@@ -206,7 +199,7 @@ class AdminPostView extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.copy,
                                         size: 12,
                                       ),
@@ -249,6 +242,12 @@ class AdminPostView extends StatelessWidget {
                           color: Colors.white,
                           elevation: 4,
                           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          child: Container(
+                            height: 24,
+                            width: 30,
+                            decoration: BoxDecoration(color: const Color(0xffE4E6EB), borderRadius: BorderRadius.circular(10)),
+                            child: const Center(child: Icon(Icons.more_horiz)),
+                          ),
                         ),
                       ],
                     ),
@@ -261,7 +260,7 @@ class AdminPostView extends StatelessWidget {
                     child: RichText(
                         textAlign: TextAlign.start,
                         text: TextSpan(
-                            text: value ? (firstHalf + "...") : (firstHalf + secondHalf),
+                            text: value ? ("$firstHalf...") : (firstHalf + secondHalf),
                             style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 10, color: AppColors.primaryColorLight),
                             children: [
                               TextSpan(
@@ -281,7 +280,7 @@ class AdminPostView extends StatelessWidget {
                       children: [
                         Stack(
                           children: [
-                            Container(
+                            const SizedBox(
                               height: 17,
                               width: 50,
                             ),
@@ -438,20 +437,6 @@ class AdminPostView extends StatelessWidget {
                           ),
                         ),
                         PopupMenuButton(
-                          child: Container(
-                            height: 23,
-                            width: 37,
-                            decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: SvgPicture.asset(
-                                "assets/svg/share2.svg",
-                                height: 13,
-                                width: 12,
-                                fit: BoxFit.fitHeight,
-                              ),
-                            ),
-                          ),
                           itemBuilder: (context) => [
                             // PopupMenuItem 1
                             PopupMenuItem(
@@ -461,7 +446,7 @@ class AdminPostView extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(Icons.pending_actions),
+                                      const Icon(Icons.pending_actions),
                                       const SizedBox(
                                         width: 4,
                                       ),
@@ -558,6 +543,20 @@ class AdminPostView extends StatelessWidget {
                           color: Colors.white,
                           elevation: 4,
                           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          child: Container(
+                            height: 23,
+                            width: 37,
+                            decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: SvgPicture.asset(
+                                "assets/svg/share2.svg",
+                                height: 13,
+                                width: 12,
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

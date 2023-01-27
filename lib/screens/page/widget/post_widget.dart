@@ -1,14 +1,9 @@
-import 'dart:async';
-
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
-import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PagePostView extends StatefulWidget {
   const PagePostView({Key? key, required this.isAdmin, required this.authorPage}) : super(key: key);

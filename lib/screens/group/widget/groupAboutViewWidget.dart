@@ -2,7 +2,6 @@ import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -88,7 +87,7 @@ class GroupAboutViewWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 3),
+                      const SizedBox(height: 3),
                       Text.rich(
                         TextSpan(
                           children: [
@@ -127,7 +126,7 @@ class GroupAboutViewWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 3),
+                      const SizedBox(height: 3),
                       Text.rich(
                         TextSpan(
                           children: [
@@ -143,7 +142,7 @@ class GroupAboutViewWidget extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
           const Divider(height: 2),
           Padding(
             padding: const EdgeInsets.only(left: 15),
@@ -151,7 +150,7 @@ class GroupAboutViewWidget extends StatelessWidget {
           ),
           const SizedBox(height: 7),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               children: [
                 Text.rich(
@@ -171,16 +170,16 @@ class GroupAboutViewWidget extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 3),
+          const SizedBox(height: 3),
           const Divider(height: 2),
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Text("Members Info  - 70k", style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Container(
-              padding: EdgeInsets.all(2),
+              padding: const EdgeInsets.all(2),
               height: 30,
               width: 200,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColors.primaryColorLight),
@@ -200,12 +199,12 @@ class GroupAboutViewWidget extends StatelessWidget {
                         color: AppColors.primaryColorLight,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text("Admin", style: robotoStyle800ExtraBold.copyWith(fontSize: 17, color: AppColors.whiteColorLight)),
-                    Spacer(),
+                    const Spacer(),
                     SvgPicture.asset(groupProvider.adminList ? "assets/svg/play_up_vector.svg" : "assets/svg/play_down_vector.svg",
                         color: AppColors.whiteColorLight),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                   ],
                 ),
               ),
@@ -214,14 +213,14 @@ class GroupAboutViewWidget extends StatelessWidget {
           const SizedBox(height: 10),
           groupProvider.adminList
               ? Padding(
-                  padding: EdgeInsets.only(left: 30),
+                  padding: const EdgeInsets.only(left: 30),
                   child: SizedBox(
                     height: 100,
                     child: ListView.builder(
                       itemCount: 2,
                       itemBuilder: (_, index) {
                         return Padding(
-                          padding: EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(2),
                           child: Row(
                             children: [
                               const CircleAvatar(
@@ -240,11 +239,11 @@ class GroupAboutViewWidget extends StatelessWidget {
                     ),
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Container(
-              padding: EdgeInsets.all(2),
+              padding: const EdgeInsets.all(2),
               height: 30,
               width: 200,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColors.primaryColorLight),
@@ -278,14 +277,14 @@ class GroupAboutViewWidget extends StatelessWidget {
           const SizedBox(height: 10),
           groupProvider.moderatorList
               ? Padding(
-                  padding: EdgeInsets.only(left: 30),
+                  padding: const EdgeInsets.only(left: 30),
                   child: SizedBox(
                     height: 100,
                     child: ListView.builder(
                       itemCount: 2,
                       itemBuilder: (_, index) {
                         return Padding(
-                          padding: EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(2),
                           child: Row(
                             children: [
                               const CircleAvatar(
@@ -306,9 +305,9 @@ class GroupAboutViewWidget extends StatelessWidget {
                 )
               : const SizedBox.shrink(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Container(
-              padding: EdgeInsets.all(2),
+              padding: const EdgeInsets.all(2),
               height: 30,
               width: 200,
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColors.primaryColorLight),
@@ -342,7 +341,7 @@ class GroupAboutViewWidget extends StatelessWidget {
           const SizedBox(height: 10),
           groupProvider.memberList
               ? Padding(
-                  padding: EdgeInsets.only(left: 30),
+                  padding: const EdgeInsets.only(left: 30),
                   child: SizedBox(
                     height: 400,
                     child: Column(
@@ -352,7 +351,7 @@ class GroupAboutViewWidget extends StatelessWidget {
                             itemCount: 12,
                             itemBuilder: (_, index) {
                               return Padding(
-                                padding: EdgeInsets.all(2),
+                                padding: const EdgeInsets.all(2),
                                 child: Row(
                                   children: [
                                     const CircleAvatar(
@@ -379,7 +378,7 @@ class GroupAboutViewWidget extends StatelessWidget {
                                 style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.whiteColorLight)),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                       ],
                     ),
                   ),

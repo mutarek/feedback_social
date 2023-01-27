@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CustomReaction extends StatefulWidget {
   const CustomReaction({Key? key}) : super(key: key);
@@ -126,7 +124,7 @@ class FbReactionState extends State<CustomReaction> with TickerProviderStateMixi
 
     // General
     moveRightGroupIcon = Tween(begin: 0.0, end: 10.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 1.0)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.0, 1.0)),
     );
     moveRightGroupIcon.addListener(() {
       setState(() {});
@@ -134,7 +132,7 @@ class FbReactionState extends State<CustomReaction> with TickerProviderStateMixi
 
     // Box
     fadeInBox = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.7, 1.0)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.7, 1.0)),
     );
     fadeInBox.addListener(() {
       setState(() {});
@@ -142,45 +140,45 @@ class FbReactionState extends State<CustomReaction> with TickerProviderStateMixi
 
     // Icons
     pushIconLikeUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.0, 0.5)),
     );
     zoomIconLike = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.0, 0.5)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.0, 0.5)),
     );
 
     pushIconLoveUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.1, 0.6)),
     );
     zoomIconLove = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.1, 0.6)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.1, 0.6)),
     );
 
     pushIconHahaUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.2, 0.7)),
     );
     zoomIconHaha = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.2, 0.7)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.2, 0.7)),
     );
 
     pushIconWowUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.3, 0.8)),
     );
     zoomIconWow = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.3, 0.8)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.3, 0.8)),
     );
 
     pushIconSadUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.4, 0.9)),
     );
     zoomIconSad = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.4, 0.9)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.4, 0.9)),
     );
 
     pushIconAngryUp = Tween(begin: 30.0, end: 60.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.5, 1.0)),
     );
     zoomIconAngry = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: animControlBox, curve: Interval(0.5, 1.0)),
+      CurvedAnimation(parent: animControlBox, curve: const Interval(0.5, 1.0)),
     );
 
     pushIconLikeUp.addListener(() {
@@ -603,16 +601,30 @@ class FbReactionState extends State<CustomReaction> with TickerProviderStateMixi
 
   Widget renderBtnLike() {
     return Container(
+      width: 100.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4.0),
+        color: Colors.white,
+        border: Border.all(color: getColorBorderBtn()),
+      ),
+      margin: const EdgeInsets.only(top: 190.0),
       child: GestureDetector(
         onTapDown: onTapDownBtn,
         onTapUp: onTapUpBtn,
         onTap: onTapBtn,
         child: Container(
+          padding: const EdgeInsets.all(10.0),
+          color: Colors.transparent,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               // Icon like
               Transform.scale(
+                scale:
+                !isLongPress ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value) : zoomIconLikeInBtn.value,
                 child: Transform.rotate(
+                  angle:
+                  !isLongPress ? handleOutputRangeTiltIconLike(tiltIconLikeInBtn2.value) : tiltIconLikeInBtn.value,
                   child: Image.asset(
                     getImageIconBtn(),
                     width: 25.0,
@@ -620,15 +632,13 @@ class FbReactionState extends State<CustomReaction> with TickerProviderStateMixi
                     fit: BoxFit.contain,
                     color: getTintColorIconBtn(),
                   ),
-                  angle:
-                  !isLongPress ? handleOutputRangeTiltIconLike(tiltIconLikeInBtn2.value) : tiltIconLikeInBtn.value,
                 ),
-                scale:
-                !isLongPress ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value) : zoomIconLikeInBtn.value,
               ),
 
               // Text like
               Transform.scale(
+                scale:
+                !isLongPress ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value) : zoomTextLikeInBtn.value,
                 child: Text(
                   getTextBtn(),
                   style: TextStyle(
@@ -637,23 +647,11 @@ class FbReactionState extends State<CustomReaction> with TickerProviderStateMixi
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                scale:
-                !isLongPress ? handleOutputRangeZoomInIconLike(zoomIconLikeInBtn2.value) : zoomTextLikeInBtn.value,
               ),
             ],
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           ),
-          padding: EdgeInsets.all(10.0),
-          color: Colors.transparent,
         ),
       ),
-      width: 100.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.0),
-        color: Colors.white,
-        border: Border.all(color: getColorBorderBtn()),
-      ),
-      margin: EdgeInsets.only(top: 190.0),
     );
   }
 

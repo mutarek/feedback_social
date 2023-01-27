@@ -4,8 +4,6 @@ import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
 import 'package:als_frontend/screens/dashboard/dashboard_screen.dart';
-import 'package:als_frontend/screens/splash/no_internet_screen.dart';
-import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:animate_do/animate_do.dart';

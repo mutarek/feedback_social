@@ -76,12 +76,6 @@ class _FindPageState extends State<FindPage> {
                           height: 36, width: 36, color: const Color(0xffFFFFFF), child: const Icon(Icons.share_location_rounded, size: 29)),
                       title: Text('News 74', style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: Colors.black)),
                       trailing: PopupMenuButton(
-                        child: Container(
-                          height: 24,
-                          width: 30,
-                          color: const Color(0x00e4e6eb),
-                          child: const Icon(Icons.more_horiz),
-                        ),
                         itemBuilder: (context) => [
                           // PopupMenuItem 1
                           PopupMenuItem(
@@ -137,6 +131,12 @@ class _FindPageState extends State<FindPage> {
                         color: Colors.white,
                         elevation: 4,
                         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                        child: Container(
+                          height: 24,
+                          width: 30,
+                          color: const Color(0x00e4e6eb),
+                          child: const Icon(Icons.more_horiz),
+                        ),
                       ),
                     ),
                   );

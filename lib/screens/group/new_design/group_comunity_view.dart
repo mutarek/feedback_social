@@ -12,7 +12,7 @@ class GroupComunityView extends StatelessWidget {
       children: [
         const GroupHeaderWidget(),
         widget,
-        GroupComuinityWidget()
+        const GroupComuinityWidget()
       ],
     );
   }

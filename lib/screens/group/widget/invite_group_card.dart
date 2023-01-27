@@ -15,13 +15,13 @@ class InviteGroupCard extends StatelessWidget {
   Widget build(BuildContext context) {
    return Card(
       elevation: 1,
-      child: Container(
+      child: SizedBox(
         height: 130,
         width: 194,
         child: Column(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(8),
                 topRight: Radius.circular(8),
               ),
@@ -49,7 +49,7 @@ class InviteGroupCard extends StatelessWidget {
             Row(
               children: [
                 const SizedBox(width: 5,),
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 9,
                   backgroundColor: Color(0xff8600DE),
                 ),
@@ -59,9 +59,9 @@ class InviteGroupCard extends StatelessWidget {
                     child: Text(inviteBy,style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 10, color: AppColors.primaryColorLight),)),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
-              padding: EdgeInsets.only(left: 10,right: 10,bottom: 10),
+              padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
               child: Row(
                 children: [
                   Container(
@@ -69,21 +69,21 @@ class InviteGroupCard extends StatelessWidget {
                     width: 120,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Color(0xffE7F3FF)
+                        color: const Color(0xffE7F3FF)
                     ),
                     child: Center(
                       child: Text('Join Group',style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 10, color: AppColors.primaryColorLight)),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Container(
                     height: 19,
                     width: 30,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: Color(0xffE7F3FF)
+                        color: const Color(0xffE7F3FF)
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Icon(Icons.more_horiz,size: 15,),
                     ),
                   ),

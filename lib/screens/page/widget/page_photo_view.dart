@@ -17,7 +17,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Padding(
@@ -27,10 +27,10 @@ class _PagePhotoViewState extends State<PagePhotoView> {
             style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.primaryColorLight),
           ),
         ),
-        SizedBox(height: 5,),
+        const SizedBox(height: 5,),
         Padding(
           padding: const EdgeInsets.only(left: 0),
-          child: Container(
+          child: SizedBox(
             height: 250,
             width: double.infinity,
             child: Row(
@@ -38,7 +38,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    margin: EdgeInsets.only(right: 1),
+                    margin: const EdgeInsets.only(right: 1),
                     height: 250,
                     color: AppColors.imageBGColorLight,
                   ),
@@ -50,7 +50,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
                       Expanded(
                         flex: 1,
                         child: Container(
-                          margin: EdgeInsets.only(bottom: 1),
+                          margin: const EdgeInsets.only(bottom: 1),
                           color: AppColors.imageBGColorLight,
                         ),
                       ),
@@ -67,7 +67,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
             ),
           )
         ),
-        SizedBox(height: 5,),
+        const SizedBox(height: 5,),
         Padding(
           padding: const EdgeInsets.only(left: 18),
           child: Text(
@@ -75,10 +75,10 @@ class _PagePhotoViewState extends State<PagePhotoView> {
             style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.primaryColorLight),
           ),
         ),
-        SizedBox(height: 5,),
+        const SizedBox(height: 5,),
         Padding(
             padding: const EdgeInsets.only(left: 0),
-            child: Container(
+            child: SizedBox(
               height: 250,
               width: double.infinity,
               child: Row(
@@ -88,7 +88,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
                     child: Stack(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(right: 1),
+                          margin: const EdgeInsets.only(right: 1),
                           height: 250,
                           color: AppColors.imageBGColorLight,
                         ),
@@ -112,7 +112,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
                             child: Stack(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(bottom: 1),
+                                  margin: const EdgeInsets.only(bottom: 1),
                                   height: 250,
                                   color: AppColors.imageBGColorLight,
                                 ),

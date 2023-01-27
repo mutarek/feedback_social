@@ -1,6 +1,5 @@
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/network_image.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProfileAvatar extends StatelessWidget {

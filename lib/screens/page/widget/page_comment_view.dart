@@ -15,7 +15,7 @@ class _PageCommentViewState extends State<PageCommentView> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
+            child: SizedBox(
               height: 150,
               width: double.infinity,
               child: Row(

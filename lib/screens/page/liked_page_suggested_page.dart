@@ -13,7 +13,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'new_design/create_page1.dart';
 
 class LikedPageSuggestedPage extends StatefulWidget {
   const LikedPageSuggestedPage({Key? key}) : super(key: key);

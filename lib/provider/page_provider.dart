@@ -298,64 +298,6 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  addLikeImageVideo(int reactStatusID, int postIndex, int valueIndex, bool isVideo) async {
-    if (!isVideo) {
-      if (reactStatusID == 1 || reactStatusID == 2 || reactStatusID == 3) {
-        if (pageAllPosts[postIndex].images![valueIndex].reaction == -1) {
-          pageAllPosts[postIndex].images![valueIndex].totalReaction = pageAllPosts[postIndex].images![valueIndex].totalReaction! + 1;
-        }
-
-        if (reactStatusID == 1) {
-          pageAllPosts[postIndex].images![valueIndex].totalLiked = pageAllPosts[postIndex].images![valueIndex].totalLiked! + 1;
-          if (pageAllPosts[postIndex].images![valueIndex].reaction! == 2) {
-            pageAllPosts[postIndex].images![valueIndex].totalLoved = pageAllPosts[postIndex].images![valueIndex].totalLoved! - 1;
-          }
-          if (pageAllPosts[postIndex].images![valueIndex].reaction! == 3) {
-            pageAllPosts[postIndex].images![valueIndex].totalSad = pageAllPosts[postIndex].images![valueIndex].totalSad! - 1;
-          }
-        } else if (reactStatusID == 2) {
-          pageAllPosts[postIndex].images![valueIndex].totalLoved = pageAllPosts[postIndex].images![valueIndex].totalLoved! + 1;
-          if (pageAllPosts[postIndex].images![valueIndex].reaction! == 1) {
-            pageAllPosts[postIndex].images![valueIndex].totalLiked = pageAllPosts[postIndex].images![valueIndex].totalLiked! - 1;
-          }
-          if (pageAllPosts[postIndex].images![valueIndex].reaction! == 3) {
-            pageAllPosts[postIndex].images![valueIndex].totalSad = pageAllPosts[postIndex].images![valueIndex].totalSad! - 1;
-          }
-        } else {
-          pageAllPosts[postIndex].images![valueIndex].totalSad = pageAllPosts[postIndex].images![valueIndex].totalSad! + 1;
-          if (pageAllPosts[postIndex].images![valueIndex].reaction! == 1) {
-            pageAllPosts[postIndex].images![valueIndex].totalLiked = pageAllPosts[postIndex].images![valueIndex].totalLiked! - 1;
-          }
-          if (pageAllPosts[postIndex].images![valueIndex].reaction! == 2) {
-            pageAllPosts[postIndex].images![valueIndex].totalLoved = pageAllPosts[postIndex].images![valueIndex].totalLoved! - 1;
-          }
-        }
-
-        pageAllPosts[postIndex].images![valueIndex].reaction = reactStatusID;
-      } else {
-        pageAllPosts[postIndex].images![valueIndex].totalReaction = pageAllPosts[postIndex].images![valueIndex].totalReaction! - 1;
-        pageAllPosts[postIndex].images![valueIndex].reaction = reactStatusID;
-      }
-    } else {}
-
-    notifyListeners();
-  }
-
-  changeImageVideoLikeStatus(int postIndex, int valueIndex) async {
-    if (pageAllPosts[postIndex].images![valueIndex].reaction != -1) {
-      pageAllPosts[postIndex].images![valueIndex].totalReaction = pageAllPosts[postIndex].images![valueIndex].totalReaction! - 1;
-      if (pageAllPosts[postIndex].images![valueIndex].reaction == 1) {
-        pageAllPosts[postIndex].images![valueIndex].totalLiked = pageAllPosts[postIndex].images![valueIndex].totalLiked! - 1;
-      } else if (pageAllPosts[postIndex].images![valueIndex].reaction == 2) {
-        pageAllPosts[postIndex].images![valueIndex].totalLoved = pageAllPosts[postIndex].images![valueIndex].totalLoved! - 1;
-      } else {
-        pageAllPosts[postIndex].images![valueIndex].totalSad = pageAllPosts[postIndex].images![valueIndex].totalSad! - 1;
-      }
-      pageAllPosts[postIndex].images![valueIndex].reaction = -1;
-    }
-    notifyListeners();
-  }
-
   void updateCommentDataCount(int index) {
     pageAllPosts[index].totalComment = pageAllPosts[index].totalComment! + 1;
     notifyListeners();

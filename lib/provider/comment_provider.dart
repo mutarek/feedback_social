@@ -216,10 +216,57 @@ class CommentProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  ///// TODO: for Like section
-
+  ///// TODO: for Like List section
 
   addRealLike(String reactUrl) async {
     await commentRepo.addLike(reactUrl);
+  }
+
+  int likeMenuCount = 0;
+
+  changeLikeMenu(int value) {
+    likeMenuCount = value;
+    notifyListeners();
+  }
+
+  List<Author> authorList = [];
+
+  clearAuthorData() {
+    authorList = [];
+    notifyListeners();
+  }
+
+  updateLikeNo(String url) {
+    selectPage++;
+    initializeCommentData(url, page: selectPage);
+    notifyListeners();
+  }
+
+  void initializeLikeListsData(String url, {int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      authorList.clear();
+      authorList = [];
+      isLoading = true;
+      isBottomLoading = false;
+      hasNextData = false;
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+
+    ApiResponse response = await commentRepo.getAllLikesData(url);
+    isLoading = false;
+    isBottomLoading = false;
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        Author author = Author.fromJson(element);
+        authorList.add(author);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
   }
 }

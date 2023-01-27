@@ -5,7 +5,7 @@ class VideoTimelineWidget extends StatelessWidget {
   final WatchListModel watch_list_model;
   int index;
 
-  VideoTimelineWidget(this.watch_list_model, this.index);
+  VideoTimelineWidget(this.watch_list_model, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

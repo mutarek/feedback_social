@@ -103,7 +103,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                       ),
                                       child: Row(
                                         children: [
-                                          Expanded(
+                                          const Expanded(
                                             child: TextField(
                                               decoration: InputDecoration(
                                                   border: InputBorder.none,
@@ -112,7 +112,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                             ),
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.all(2),
+                                            padding: const EdgeInsets.all(2),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
@@ -288,7 +288,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 80,
                                           width: 212,
                                           child: Expanded(
@@ -301,7 +301,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                                     child: Card(
                                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                                         child: Container(
-                                                          padding: EdgeInsets.all(2),
+                                                          padding: const EdgeInsets.all(2),
                                                           child: Row(
                                                             children: [
                                                               const CircleAvatar(
@@ -311,7 +311,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                                                   child: Text('Rafayetul Islam',
                                                                       style: GoogleFonts.roboto(
                                                                           fontWeight: FontWeight.w700, fontSize: 11, color: Colors.black))),
-                                                              CircleAvatar(
+                                                              const CircleAvatar(
                                                                 backgroundColor: Colors.white,
                                                                 child: Icon(
                                                                   Icons.more_horiz,
@@ -495,7 +495,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 80,
                                           width: 212,
                                           child: Expanded(
@@ -508,7 +508,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                                     child: Card(
                                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                                         child: Container(
-                                                          padding: EdgeInsets.all(2),
+                                                          padding: const EdgeInsets.all(2),
                                                           child: Row(
                                                             children: [
                                                               const CircleAvatar(
@@ -518,7 +518,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                                                   child: Text('Rafayetul Islam',
                                                                       style: GoogleFonts.roboto(
                                                                           fontWeight: FontWeight.w700, fontSize: 11, color: Colors.black))),
-                                                              CircleAvatar(
+                                                              const CircleAvatar(
                                                                 backgroundColor: Colors.white,
                                                                 child: Icon(
                                                                   Icons.more_horiz,
@@ -694,7 +694,7 @@ class _PageDashboardState extends State<PageDashboard> {
                           child: Card(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             child: Padding(
-                              padding: EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
+                              padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
                               child: Column(
                                 children: [
                                   // Padding(
@@ -734,7 +734,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                   //     ),
                                   //   ),
                                   // ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Expanded(
@@ -752,7 +752,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                           );
                                         }),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
 
