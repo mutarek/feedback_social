@@ -9,6 +9,7 @@ import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/photo_widget.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
+import 'package:als_frontend/screens/post/widget/photo_widget1.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
@@ -167,7 +168,8 @@ class PostWidget extends StatelessWidget {
                 ),
                 SizedBox(height: newsFeedData.totalImage != 0 && newsFeedData.description != null ? 10.0 : 0),
                 const SizedBox(height: 7),
-                if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoContainer(index, newsfeedModel: newsFeedData),
+                // if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoContainer(index, newsfeedModel: newsFeedData),
+                if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoWidget(index, newsfeedModel: newsFeedData),
                 Padding(
                   padding: const EdgeInsets.only(left: 12, top: 7, right: 12),
                   child: Row(
@@ -320,53 +322,53 @@ class PostWidget extends StatelessWidget {
               ],
             ));
   }
+}
 
-  FeedReaction feedReactionWidget(int id, String title, String imagePath, Color color) {
-    return FeedReaction(
-      id: id,
-      header: Text(title),
-      reaction: Container(
-        width: 30.0,
-        height: 30.0,
-        padding: EdgeInsets.all(6),
-        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-        child: SvgPicture.asset(imagePath, color: Colors.white),
-      ),
-    );
-  }
+FeedReaction feedReactionWidget(int id, String title, String imagePath, Color color) {
+  return FeedReaction(
+    id: id,
+    header: Text(title),
+    reaction: Container(
+      width: 30.0,
+      height: 30.0,
+      padding: EdgeInsets.all(6),
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      child: SvgPicture.asset(imagePath, color: Colors.white),
+    ),
+  );
+}
 
-  Widget reactWidget(String imagePath, Color color) {
-    return Container(
-      height: 17,
-      width: 17,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
-      child: Center(child: SvgPicture.asset(imagePath, fit: BoxFit.cover, height: 9, width: 8)),
-    );
-  }
+Widget reactWidget(String imagePath, Color color) {
+  return Container(
+    height: 17,
+    width: 17,
+    decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+    child: Center(child: SvgPicture.asset(imagePath, fit: BoxFit.cover, height: 9, width: 8)),
+  );
+}
 
-  Widget likeCommentShareButtonWidget(String image, String title, GestureTapCallback callback, {int status = 0}) {
-    return InkWell(
-      onTap: callback,
-      child: Row(
-        children: [
-          Container(
-            height: 23,
-            width: 37,
-            decoration: BoxDecoration(
-                color: status == 0 || status == -1
-                    ? AppColors.primaryColorLight
-                    : status == 1
-                        ? feedback
-                        : status == 2
-                            ? colorLoveReact
-                            : colorHahaReact,
-                borderRadius: BorderRadius.circular(18)),
-            child: Padding(padding: const EdgeInsets.all(4.0), child: SvgPicture.asset(image, height: 13, width: 12, color: Colors.white)),
-          ),
-          const SizedBox(width: 5),
-          Text(title, style: robotoStyle600SemiBold.copyWith())
-        ],
-      ),
-    );
-  }
+Widget likeCommentShareButtonWidget(String image, String title, GestureTapCallback callback, {int status = 0}) {
+  return InkWell(
+    onTap: callback,
+    child: Row(
+      children: [
+        Container(
+          height: 23,
+          width: 37,
+          decoration: BoxDecoration(
+              color: status == 0 || status == -1
+                  ? AppColors.primaryColorLight
+                  : status == 1
+                      ? feedback
+                      : status == 2
+                          ? colorLoveReact
+                          : colorHahaReact,
+              borderRadius: BorderRadius.circular(18)),
+          child: Padding(padding: const EdgeInsets.all(4.0), child: SvgPicture.asset(image, height: 13, width: 12, color: Colors.white)),
+        ),
+        const SizedBox(width: 5),
+        Text(title, style: robotoStyle600SemiBold.copyWith())
+      ],
+    ),
+  );
 }

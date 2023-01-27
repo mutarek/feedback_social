@@ -39,7 +39,7 @@ class NewsFeedModel {
     if (json['videos'] != null) {
       videos = [];
       json['videos'].forEach((v) {
-        videos?.add(Videos.fromJson(v));
+        videos?.add(VideosData.fromJson(v));
       });
     }
     totalComment = json['total_comment'];
@@ -68,7 +68,7 @@ class NewsFeedModel {
   num? totalImage;
   List<ImagesData>? images;
   num? totalVideo;
-  List<Videos>? videos;
+  List<VideosData>? videos;
   num? totalComment;
   String? commentUrl;
   bool? isShare;
@@ -122,14 +122,14 @@ class NewsFeedModel {
   }
 }
 
-class Videos {
-  Videos({
+class VideosData {
+  VideosData({
     this.id,
     this.thumbnail,
     this.video,
   });
 
-  Videos.fromJson(dynamic json) {
+  VideosData.fromJson(dynamic json) {
     id = json['id'];
     thumbnail = json['thumbnail'];
     video = json['video'];
@@ -279,14 +279,14 @@ class SharePost {
 class Post {
   Post(
       {this.id,
-        this.description,
-        this.author,
-        this.totalImage,
-        this.images,
-        this.totalVideo,
-        this.videos,
-        this.pageModel,
-        this.groupModel});
+      this.description,
+      this.author,
+      this.totalImage,
+      this.images,
+      this.totalVideo,
+      this.videos,
+      this.pageModel,
+      this.groupModel});
 
   Post.fromJson(dynamic json) {
     id = json['id'];
@@ -305,7 +305,7 @@ class Post {
     if (json['videos'] != null) {
       videos = [];
       json['videos'].forEach((v) {
-        videos?.add(Videos.fromJson(v));
+        videos?.add(VideosData.fromJson(v));
       });
     } else {
       videos = [];
@@ -322,7 +322,7 @@ class Post {
   num? totalImage;
   List<ImagesData>? images;
   num? totalVideo;
-  List<Videos>? videos;
+  List<VideosData>? videos;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -409,4 +409,11 @@ class PageModel {
     map['avatar'] = avatar;
     return map;
   }
+}
+
+class ImagesVideoModel {
+  final List<ImagesData>? imagesData;
+  final List<VideosData>? videosData;
+
+  ImagesVideoModel({this.imagesData, this.videosData});
 }

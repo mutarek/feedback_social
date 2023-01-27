@@ -47,6 +47,7 @@ class ImagesModel {
   static const String suggestPageIcons = 'assets/icons/suggest_page_icon.svg';
   static const String pins_the_group = 'assets/icons/pins_group_icon.svg';
   static const String likeIcons = 'assets/icons/like.svg';
+  static const String videoIcons = 'assets/icons/video.svg';
   static const String messageIcons = 'assets/icons/message.svg';
   static const String notificationIcons = 'assets/icons/notification.svg';
   static const String pageIcons = 'assets/icons/page_icons.svg';
