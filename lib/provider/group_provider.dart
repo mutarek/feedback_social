@@ -4,6 +4,7 @@ import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
+import 'package:als_frontend/data/model/response/group/find_page_model.dart';
 import 'package:als_frontend/data/model/response/group/friends_list_model.dart';
 import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
@@ -539,6 +540,25 @@ class GroupProvider with ChangeNotifier {
 
   changeMenuValue(int value) {
     menuValue = value;
+    notifyListeners();
+  }
+  List<FindPageModel> findPageModel = [];
+  bool isLoadingFindPage = false;
+
+  findPage(String pageName) async {
+    isLoadingForGroupImageVideo = true;
+    findPageModel.clear();
+    findPageModel = [];
+    //notifyListeners();
+    ApiResponse response = await groupRepo.findPage(pageName);
+    isLoadingForGroupImageVideo = false;
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
+        findPageModel.add(FindPageModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
     notifyListeners();
   }
 }
