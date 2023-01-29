@@ -257,7 +257,7 @@ class GroupAboutViewWidget extends StatelessWidget {
                       radius: 15,
                       backgroundColor: const Color(0xffF5F5F5),
                       child: SvgPicture.asset(
-                        ImagesModel.groupModeratrIcon,
+                        ImagesModel.groupModeratorIcon,
                         height: 13,
                         width: 13,
                         color: AppColors.primaryColorLight,

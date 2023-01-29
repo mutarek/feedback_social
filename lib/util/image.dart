@@ -15,9 +15,6 @@ class ImagesModel {
   static const String notificationIcons2 = 'assets/svg/notification.svg';
   static const String searchIcons = 'assets/svg/search.svg';
   static const String addIcons = 'assets/svg/add.svg';
-  static const String groupAdminIcon = 'assets/svg/group_admin_svg.svg';
-  static const String groupModeratrIcon = 'assets/svg/group_moderator_svg.svg';
-  static const String groupPublicIcon = 'assets/svg/group_public_svg.svg';
   static const String blocksIcons = 'assets/svg/block.svg';
   static const String saveIcons = 'assets/svg/save.svg';
   static const String visitGroupIcons = 'assets/svg/visit_group_svg.svg';
@@ -25,6 +22,9 @@ class ImagesModel {
   static const String reportIcons = 'assets/svg/report.svg';
   static const String commentIcons = 'assets/svg/comment.svg';
   static const String share2Icons = 'assets/svg/share2.svg';
+  static const String groupAdminIcon = 'assets/svg/group_admin_svg.svg';
+  static const String groupModeratorIcon = 'assets/svg/group_moderator_svg.svg';
+  static const String groupPublicIcon = 'assets/svg/group_public_svg.svg';
 
   //Image
   static const String placeholderImageOne = 'assets/image/placeholder_image_one.png';
@@ -33,6 +33,9 @@ class ImagesModel {
 
   // Icons
   static const String findPageIcons = 'assets/icons/find_page.svg';
+  static const String earthIcons = 'assets/icons/earth.svg';
+  static const String photoAdd = 'assets/icons/photos.svg';
+  static const String videoAdd = 'assets/icons/play.svg';
   static const String inviteFriendIcons = 'assets/icons/invite_friend.svg';
   static const String suggestedGroupIcon = 'assets/svg/suggested_group_icon.svg';
   static const String yourGroupIcon = 'assets/svg/your_group_icon.svg';
@@ -48,6 +51,7 @@ class ImagesModel {
   static const String pins_the_group = 'assets/icons/pins_group_icon.svg';
   static const String likeIcons = 'assets/icons/like.svg';
   static const String videoIcons = 'assets/icons/video.svg';
+  static const String wowReaction = 'assets/icons/wow.svg';
   static const String messageIcons = 'assets/icons/message.svg';
   static const String notificationIcons = 'assets/icons/notification.svg';
   static const String pageIcons = 'assets/icons/page_icons.svg';
