@@ -72,6 +72,55 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool pageExpended = false;
+  bool adminAccessPage = false;
+  bool allFollower = false;
+  bool adminSectionAccess = false;
+  bool moderatorSectionAccess = false;
+  bool pendingApprovals = false;
+  bool groupPolicy = false;
+  bool reportedContent = false;
+
+  changeRepotedContentExpanded() {
+    reportedContent = !reportedContent;
+    notifyListeners();
+  }
+
+  changeGroupPolicyExpanded() {
+    groupPolicy = !groupPolicy;
+    notifyListeners();
+  }
+
+  changePendingApprovalsExpanded() {
+    pendingApprovals = !pendingApprovals;
+    notifyListeners();
+  }
+
+  changeModeratorSectionAccessExpanded() {
+    moderatorSectionAccess = !moderatorSectionAccess;
+    notifyListeners();
+  }
+
+  changeAllFollowerExpanded() {
+    allFollower = !allFollower;
+    notifyListeners();
+  }
+
+  changeAdminSectionAccessExpanded() {
+    adminSectionAccess = !adminSectionAccess;
+    notifyListeners();
+  }
+
+  changeAdminAccessExpanded() {
+    adminAccessPage = !adminAccessPage;
+    notifyListeners();
+  }
+
+  changeExpended() {
+    pageExpended = !pageExpended;
+    notifyListeners();
+  }
+
   //TODO: for get ALl Suggest Group
   List<AllGroupModel> allSuggestGroupList = [];
 
