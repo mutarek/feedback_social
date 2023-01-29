@@ -542,23 +542,5 @@ class GroupProvider with ChangeNotifier {
     menuValue = value;
     notifyListeners();
   }
-  List<FindPageModel> findPageModel = [];
-  bool isLoadingFindPage = false;
 
-  findPage(String pageName) async {
-    isLoadingForGroupImageVideo = true;
-    findPageModel.clear();
-    findPageModel = [];
-    //notifyListeners();
-    ApiResponse response = await groupRepo.findPage(pageName);
-    isLoadingForGroupImageVideo = false;
-    if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
-        findPageModel.add(FindPageModel.fromJson(element));
-      });
-    } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-    }
-    notifyListeners();
-  }
 }

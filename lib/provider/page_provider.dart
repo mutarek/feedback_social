@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
+import 'package:als_frontend/data/model/response/group/find_page_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
@@ -539,5 +540,26 @@ class PageProvider with ChangeNotifier {
       }
       notifyListeners();
     }
+  }
+  List<FindPageModel> findPageModel = [];
+  bool isLoadingFindPage = false;
+
+  findPage(String pageName) async {
+    isLoadingFindPage = true;
+    findPageModel.clear();
+    findPageModel = [];
+
+    //notifyListeners();
+    ApiResponse response = await pageRepo.findPage(pageName);
+    isLoadingFindPage = false;
+    if (response.response.statusCode == 200) {
+      response.response.data["results"].forEach((element) {
+        findPageModel.add(FindPageModel.fromJson(element));
+        notifyListeners();
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
   }
 }

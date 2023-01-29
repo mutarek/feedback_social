@@ -1,4 +1,6 @@
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +28,9 @@ class _FindPageState extends State<FindPage> {
           color: Colors.black, // <-- SEE HERE
         ),
       ),
-      body: Consumer<GroupProvider>(
+      body: Consumer<PageProvider>(
 
-        builder: (context,groupProvider,child) {
+        builder: (context,pageProvider,child) {
           return Column(
             children: [
               const SizedBox(
@@ -60,7 +62,7 @@ class _FindPageState extends State<FindPage> {
                           width: 71,
                           child: Center(
                             child: InkWell(
-                              onTap: (){groupProvider.findPage(searchController.text);},
+                              onTap: (){pageProvider.findPage(searchController.text);},
                                 child: Text('Search', style: GoogleFonts.roboto(fontWeight: FontWeight.w300, fontSize: 12, color: Colors.white))),
                           ),
                         ),
@@ -73,17 +75,17 @@ class _FindPageState extends State<FindPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
                   child: ListView.builder(
-                    itemCount: groupProvider.findPageModel.length,
+                    itemCount: pageProvider.findPageModel.length,
                     itemBuilder: (_, index) {
-                      return groupProvider.isLoadingFindPage?CircularProgressIndicator():Card(
+                      return Card(
                         color: const Color(0xffFAFAFA),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: ListTile(
                           leading: Container(
-                              height: 36, width: 36, color: const Color(0xffFFFFFF), child: const Icon(Icons.share_location_rounded, size: 29)),
-                          title: Text(groupProvider.findPageModel[index].name, style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: Colors.black)),
+                              height: 36, width: 36,decoration: BoxDecoration( color: const Color(0xffFFFFFF),image: DecorationImage(image: NetworkImage(pageProvider.findPageModel[index].avatar!))),),
+                          title: Text(pageProvider.findPageModel[index].name!, style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: Colors.black)),
                           trailing: PopupMenuButton(
                             itemBuilder: (context) => [
                               // PopupMenuItem 1
@@ -124,10 +126,14 @@ class _FindPageState extends State<FindPage> {
                                         const SizedBox(
                                           width: 4,
                                         ),
-                                        Text(
-                                          "Copy Link",
-                                          style:
-                                          GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                        InkWell(onTap: (){
+                                          Clipboard.setData(ClipboardData(text: pageProvider.findPageModel[index].likedUrl));
+                                        },
+                                          child: Text(
+                                            "Copy Link",
+                                            style:
+                                            GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                          ),
                                         )
                                       ],
                                     ),
