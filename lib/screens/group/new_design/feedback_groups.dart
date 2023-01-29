@@ -661,6 +661,14 @@ class FeedBackGroups extends StatelessWidget {
                     Helper.toScreen(const FindGroup());
                   },
                 ),
+                const SizedBox(height: 10),
+                LikeInviteFindWidget(
+                  icon: ImagesModel.findPageIcons,
+                  name: "DashBoard",
+                  onTap: () {
+                    //Helper.toScreen();
+                  },
+                ),
               ],
             ),
           );
