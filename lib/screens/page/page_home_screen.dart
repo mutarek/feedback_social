@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/custom_reaction.dart';
+import 'package:als_frontend/screens/page/find_page.dart';
 import 'package:als_frontend/screens/page/new_design/new_my_liked_page_screen.dart';
 import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
 import 'package:als_frontend/screens/page/new_design/new_suggested_page_screen.dart';
@@ -143,7 +144,7 @@ class PageHomeScreen extends StatelessWidget {
                       icon: ImagesModel.findPageIcons,
                       name: "Find pages",
                       onTap: () {
-                        Helper.toScreen(const CustomReaction());
+                        Helper.toScreen(const FindPage());
                       },
                     ),
                   ],
