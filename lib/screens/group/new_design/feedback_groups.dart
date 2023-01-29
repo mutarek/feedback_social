@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import 'group_dashboard.dart';
+
 class FeedBackGroups extends StatelessWidget {
   const FeedBackGroups({Key? key}) : super(key: key);
 
@@ -659,6 +661,14 @@ class FeedBackGroups extends StatelessWidget {
                   name: "Find Group",
                   onTap: () {
                     Helper.toScreen(const FindGroup());
+                  },
+                ),
+                const SizedBox(height: 10),
+                LikeInviteFindWidget(
+                  icon: ImagesModel.findPageIcons,
+                  name: "DashBoard",
+                  onTap: () {
+                    Helper.toScreen(const GroupDashboard());
                   },
                 ),
               ],
