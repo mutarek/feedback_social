@@ -84,8 +84,8 @@ class _FindPageState extends State<FindPage> {
                         ),
                         child: ListTile(
                           leading: Container(
-                              height: 36, width: 36,decoration: BoxDecoration( color: const Color(0xffFFFFFF),image: DecorationImage(image: NetworkImage(pageProvider.findPageModel[index].avatar!))),),
-                          title: Text(pageProvider.findPageModel[index].name!, style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: Colors.black)),
+                              height: 36, width: 36,decoration: BoxDecoration( color: const Color(0xffFFFFFF),image: DecorationImage(image: NetworkImage(pageProvider.findPageModel[index].avatar))),),
+                          title: Text(pageProvider.findPageModel[index].name, style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: Colors.black)),
                           trailing: PopupMenuButton(
                             itemBuilder: (context) => [
                               // PopupMenuItem 1
