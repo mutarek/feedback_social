@@ -233,7 +233,7 @@ class FeedBackGroups extends StatelessWidget {
                               groupProvider.eachJoinedGroup
                                   ? Row(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     height: 47,
                                     width: 293,
                                     child: Card(
@@ -242,7 +242,7 @@ class FeedBackGroups extends StatelessWidget {
                                         itemBuilder: (context) => [
                                           // PopupMenuItem 1
                                           PopupMenuItem(
-                                            child: Container(
+                                            child: SizedBox(
                                               width: 150,
                                               height: 120,
                                               child: Column(
@@ -356,7 +356,7 @@ class FeedBackGroups extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Container(
+                                  SizedBox(
                                     height: 47,
                                     width: 93,
                                     child: Card(
@@ -365,7 +365,7 @@ class FeedBackGroups extends StatelessWidget {
                                         itemBuilder: (context) => [
                                           // PopupMenuItem 1
                                           PopupMenuItem(
-                                            child: Container(
+                                            child: SizedBox(
                                               width: 130,
                                               height: 110,
                                               child: Column(

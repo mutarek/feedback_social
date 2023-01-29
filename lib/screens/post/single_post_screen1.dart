@@ -131,7 +131,7 @@ class _SinglePostScreen1State extends State<SinglePostScreen1> {
                               ? Row(
                                   children: [
                                     const SizedBox(width: 15),
-                                    CustomText(title: 'Edit your comments ', color: Colors.black),
+                                    const CustomText(title: 'Edit your comments ', color: Colors.black),
                                     InkWell(
                                         onTap: () {
                                           commentProvider.resetUpdateButton();
@@ -219,7 +219,7 @@ class _SinglePostScreen1State extends State<SinglePostScreen1> {
                     : SafeArea(
                         child: Container(
                           padding: EdgeInsets.zero,
-                          margin: EdgeInsets.only(top: 10),
+                          margin: const EdgeInsets.only(top: 10),
                           decoration: const BoxDecoration(color: Colors.white),
                           child: SingleChildScrollView(
                             controller: controller,

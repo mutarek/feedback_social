@@ -7,9 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class YourFeedGroupScreen extends StatelessWidget {
-  const YourFeedGroupScreen(
-      {Key? key, required this.description, required this.showDescription, required this.value})
-      : super(key: key);
+  const YourFeedGroupScreen({Key? key, required this.description, required this.showDescription, required this.value}) : super(key: key);
   final String description;
   final bool value;
   final VoidCallback showDescription;
@@ -27,27 +25,26 @@ class YourFeedGroupScreen extends StatelessWidget {
       secondHalf = "";
     }
     return Scaffold(
-      appBar: AppBar(backgroundColor: AppColors.scaffold,
-          leading: const BackButton(
-              color: Colors.black
-          ),
-          elevation: 1,
-          centerTitle: true,
-      title: Text("Your Feed",
-          style: GoogleFonts.roboto(
-          fontWeight: FontWeight.w700, fontSize: 25, color: AppColors.primaryColorLight)),),
+      appBar: AppBar(
+        backgroundColor: AppColors.scaffold,
+        leading: const BackButton(color: Colors.black),
+        elevation: 1,
+        centerTitle: true,
+        title: Text("Your Feed", style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 25, color: AppColors.primaryColorLight)),
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 18),
               child: Text(
                 "Take a look at the most recent activity.",
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.primaryColorLight),
+                style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 12, color: AppColors.primaryColorLight),
               ),
             ),
             const SizedBox(
@@ -66,38 +63,31 @@ class YourFeedGroupScreen extends StatelessWidget {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                         Stack(
-                           children: [
-                      Container(
-                        height: 45,
-                        width: 45,
-
-                      ),
-                             Container(
-                               height: 36,
-                               width: 36,
-                               decoration: BoxDecoration(
-                                   border: Border.all(color: AppColors.primaryColorLight),
-                                   borderRadius: BorderRadius.circular(5),
-                                   image: const DecorationImage(
-                                       image: AssetImage("assets/background/help.png"),
-                                       fit: BoxFit.cover)
-                               ),
-                             ),
-                             Positioned(
-                               top: 20,
-                               left: 21,
-                               child: Container(
-                                 height: 20,
-                                 width: 20,
-                                 decoration: const BoxDecoration(
-                                   shape: BoxShape.circle,
-                                   color: Colors.blue
-                                 ),
-                               ),
-                             )
-                           ],
-                         ),
+                            Stack(
+                              children: [
+                                const SizedBox(
+                                  height: 45,
+                                  width: 45,
+                                ),
+                                Container(
+                                  height: 36,
+                                  width: 36,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: AppColors.primaryColorLight),
+                                      borderRadius: BorderRadius.circular(5),
+                                      image: const DecorationImage(image: AssetImage("assets/background/help.png"), fit: BoxFit.cover)),
+                                ),
+                                Positioned(
+                                  top: 20,
+                                  left: 21,
+                                  child: Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+                                  ),
+                                )
+                              ],
+                            ),
                             const SizedBox(
                               width: 8,
                             ),
@@ -106,10 +96,8 @@ class YourFeedGroupScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   "Abstract Graphics Studio",
-                                  style: GoogleFonts.roboto(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 13.5,
-                                      color: AppColors.primaryColorLight),
+                                  style:
+                                      GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 13.5, color: AppColors.primaryColorLight),
                                 ),
                                 Row(
                                   children: [
@@ -123,10 +111,8 @@ class YourFeedGroupScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       "2 Hours  -",
-                                      style: GoogleFonts.roboto(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 7,
-                                          color: AppColors.primaryColorLight),
+                                      style:
+                                          GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: 7, color: AppColors.primaryColorLight),
                                     ),
                                     const SizedBox(
                                       width: 2,
@@ -162,9 +148,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                                           Text(
                                             "Save",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),
+                                                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                           )
                                         ],
                                       ),
@@ -184,9 +168,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                                           Text(
                                             "Hide this post",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),
+                                                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                           )
                                         ],
                                       ),
@@ -205,9 +187,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                                           Text(
                                             "Copy Link",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),
+                                                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                           )
                                         ],
                                       ),
@@ -227,9 +207,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                                           Text(
                                             "Share to a page",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),
+                                                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                           )
                                         ],
                                       )
@@ -241,14 +219,11 @@ class YourFeedGroupScreen extends StatelessWidget {
                               offset: const Offset(0, 58),
                               color: Colors.white,
                               elevation: 4,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
                               child: Container(
                                 height: 24,
                                 width: 30,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xffE4E6EB),
-                                    borderRadius: BorderRadius.circular(10)),
+                                decoration: BoxDecoration(color: const Color(0xffE4E6EB), borderRadius: BorderRadius.circular(10)),
                                 child: const Center(child: Icon(Icons.more_horiz)),
                               ),
                             ),
@@ -258,27 +233,25 @@ class YourFeedGroupScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                    description.isNotEmpty?  Padding(
-                      padding: const EdgeInsets.only(left: 18, right: 18),
-                      child: RichText(
-                          textAlign: TextAlign.start,
-                          text: TextSpan(
-                              text: value ? (firstHalf + "...") : (firstHalf + secondHalf),
-                              style: GoogleFonts.roboto(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 10,
-                                  color: AppColors.primaryColorLight),
-                              children: [
-                                TextSpan(
-                                  text: value ? "show more" : "show less",
-                                  style: GoogleFonts.roboto(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 13,
-                                      color: AppColors.primaryColorLight),
-                                  recognizer: TapGestureRecognizer()..onTap = showDescription,
-                                )
-                              ])),
-                    ):SizedBox.shrink(),
+                      description.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.only(left: 18, right: 18),
+                              child: RichText(
+                                  textAlign: TextAlign.start,
+                                  text: TextSpan(
+                                      text: value ? ("$firstHalf...") : (firstHalf + secondHalf),
+                                      style:
+                                          GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 10, color: AppColors.primaryColorLight),
+                                      children: [
+                                        TextSpan(
+                                          text: value ? "show more" : "show less",
+                                          style: GoogleFonts.roboto(
+                                              fontWeight: FontWeight.w600, fontSize: 13, color: AppColors.primaryColorLight),
+                                          recognizer: TapGestureRecognizer()..onTap = showDescription,
+                                        )
+                                      ])),
+                            )
+                          : const SizedBox.shrink(),
                       Container(
                         height: 229,
                         color: AppColors.imageBGColorLight,
@@ -289,37 +262,35 @@ class YourFeedGroupScreen extends StatelessWidget {
                           children: [
                             Stack(
                               children: [
-                                Container(
+                                const SizedBox(
                                   height: 17,
                                   width: 50,
                                 ),
                                 Container(
                                   height: 17,
                                   width: 17,
-                                  decoration: const BoxDecoration(
-                                      shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                                  decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
                                   child: Center(
                                       child: SvgPicture.asset(
-                                        "assets/svg/like.svg",
-                                        fit: BoxFit.cover,
-                                        height: 9,
-                                        width: 8,
-                                      )),
+                                    "assets/svg/like.svg",
+                                    fit: BoxFit.cover,
+                                    height: 9,
+                                    width: 8,
+                                  )),
                                 ),
                                 Positioned(
                                   left: 14,
                                   child: Container(
                                     height: 17,
                                     width: 17,
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle, color: Colors.red),
+                                    decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
                                     child: Center(
                                         child: SvgPicture.asset(
-                                          "assets/svg/love.svg",
-                                          fit: BoxFit.cover,
-                                          height: 9,
-                                          width: 8,
-                                        )),
+                                      "assets/svg/love.svg",
+                                      fit: BoxFit.cover,
+                                      height: 9,
+                                      width: 8,
+                                    )),
                                   ),
                                 ),
                                 Positioned(
@@ -327,43 +298,39 @@ class YourFeedGroupScreen extends StatelessWidget {
                                   child: Container(
                                     height: 17,
                                     width: 17,
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle, color: Colors.yellow),
+                                    decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.yellow),
                                     child: Center(
                                         child: SvgPicture.asset(
-                                          "assets/svg/haha.svg",
-                                          fit: BoxFit.cover,
-                                          height: 9,
-                                          width: 8,
-                                        )),
+                                      "assets/svg/haha.svg",
+                                      fit: BoxFit.cover,
+                                      height: 9,
+                                      width: 8,
+                                    )),
                                   ),
                                 ),
                               ],
                             ),
-                            ViewLike(),
-
+                            const ViewLike(),
                             const Spacer(),
                             Row(
                               children: [
                                 Container(
                                     height: 17,
                                     width: 17,
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                                    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
                                     child: Center(
                                         child: SvgPicture.asset(
-                                          "assets/svg/comment.svg",
-                                          fit: BoxFit.cover,
-                                          height: 9,
-                                          width: 8,
-                                        ))),
+                                      "assets/svg/comment.svg",
+                                      fit: BoxFit.cover,
+                                      height: 9,
+                                      width: 8,
+                                    ))),
                                 const SizedBox(
                                   width: 3,
                                 ),
                                 Text(
                                   "120",
-                                  style: GoogleFonts.roboto(
-                                      fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
+                                  style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
                                 )
                               ],
                             ),
@@ -375,22 +342,20 @@ class YourFeedGroupScreen extends StatelessWidget {
                                 Container(
                                     height: 17,
                                     width: 17,
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                                    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
                                     child: Center(
                                         child: SvgPicture.asset(
-                                          "assets/svg/share2.svg",
-                                          fit: BoxFit.cover,
-                                          height: 9,
-                                          width: 8,
-                                        ))),
+                                      "assets/svg/share2.svg",
+                                      fit: BoxFit.cover,
+                                      height: 9,
+                                      width: 8,
+                                    ))),
                                 const SizedBox(
                                   width: 3,
                                 ),
                                 Text(
                                   "90",
-                                  style: GoogleFonts.roboto(
-                                      fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
+                                  style: GoogleFonts.roboto(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black),
                                 )
                               ],
                             ),
@@ -408,9 +373,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                             Container(
                               height: 23,
                               width: 37,
-                              decoration: BoxDecoration(
-                                  color: AppColors.primaryColorLight,
-                                  borderRadius: BorderRadius.circular(18)),
+                              decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: SvgPicture.asset(
@@ -424,9 +387,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                             Container(
                               height: 23,
                               width: 37,
-                              decoration: BoxDecoration(
-                                  color: AppColors.primaryColorLight,
-                                  borderRadius: BorderRadius.circular(18)),
+                              decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: SvgPicture.asset(
@@ -454,9 +415,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                                           Text(
                                             "Share on your timeline",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),
+                                                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                           )
                                         ],
                                       ),
@@ -477,9 +436,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                                           Text(
                                             "Share via message",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),
+                                                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                           )
                                         ],
                                       ),
@@ -499,9 +456,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                                           Text(
                                             "Share to friends timeline",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),
+                                                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                           )
                                         ],
                                       ),
@@ -521,9 +476,7 @@ class YourFeedGroupScreen extends StatelessWidget {
                                           Text(
                                             "Share to a group",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),
+                                                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                           )
                                         ],
                                       ),
@@ -532,17 +485,14 @@ class YourFeedGroupScreen extends StatelessWidget {
                                       ),
                                       Row(
                                         children: [
-                                          Image.asset(ImagesModel.pageIconsPng,
-                                              width: 18, height: 18),
+                                          Image.asset(ImagesModel.pageIconsPng, width: 18, height: 18),
                                           const SizedBox(
                                             width: 4,
                                           ),
                                           Text(
                                             "Share to a page",
                                             style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),
+                                                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
                                           )
                                         ],
                                       )
@@ -554,14 +504,11 @@ class YourFeedGroupScreen extends StatelessWidget {
                               offset: const Offset(0, 58),
                               color: Colors.white,
                               elevation: 4,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
                               child: Container(
                                 height: 23,
                                 width: 37,
-                                decoration: BoxDecoration(
-                                    color: AppColors.primaryColorLight,
-                                    borderRadius: BorderRadius.circular(18)),
+                                decoration: BoxDecoration(color: AppColors.primaryColorLight, borderRadius: BorderRadius.circular(18)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: SvgPicture.asset(

@@ -45,7 +45,7 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
             FocusScope.of(context).requestFocus(FocusNode());
             pageProvider.changeMenuValue(i);
           },
-          physics: const BouncingScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin),
             PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, widget.authorPageModel),

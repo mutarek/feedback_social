@@ -1,6 +1,4 @@
-import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +53,7 @@ class _ViewLikeState extends State<ViewLike> {
                                       child: SvgPicture.asset("assets/svg/like.svg",
                                           fit: BoxFit.cover, height: 9, width: 8)),
                                 ),
-                                SizedBox(width: 3),
+                                const SizedBox(width: 3),
                                 Text(
                                   "50",
                                   style: robotoStyle400Regular,
@@ -78,7 +76,7 @@ class _ViewLikeState extends State<ViewLike> {
                                       child: SvgPicture.asset("assets/svg/love.svg",
                                           fit: BoxFit.cover, height: 9, width: 8)),
                                 ),
-                                SizedBox(width: 3),
+                                const SizedBox(width: 3),
                                 Text(
                                   "50",
                                   style: robotoStyle400Regular,
@@ -101,7 +99,7 @@ class _ViewLikeState extends State<ViewLike> {
                                       child: SvgPicture.asset("assets/svg/haha.svg",
                                           fit: BoxFit.cover, height: 9, width: 8)),
                                 ),
-                                SizedBox(width: 3),
+                                const SizedBox(width: 3),
                                 Text(
                                   "50",
                                   style: robotoStyle400Regular,
@@ -129,7 +127,7 @@ class _ViewLikeState extends State<ViewLike> {
                             ? Container(height: 4, width: 4, color: Colors.red)
                             : (pageProvider.menuValue == 3)
                             ? Container(height: 4, width: 4, color: Colors.yellow)
-                            :  SizedBox.shrink();
+                            :  const SizedBox.shrink();
                       },
                     ),
 

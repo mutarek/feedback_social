@@ -1,10 +1,7 @@
-import 'package:als_frontend/screens/group/new_design/individual_group_page.dart';
 import 'package:als_frontend/screens/group/widget/group_header.dart';
-import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
-import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -14,7 +11,6 @@ class PostInGroupScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
@@ -22,9 +18,9 @@ class PostInGroupScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GroupHeaderWidget(),
+            const GroupHeaderWidget(),
             widget,
-            SizedBox(height: 9),
+            const SizedBox(height: 9),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(
@@ -32,9 +28,9 @@ class PostInGroupScreen extends StatelessWidget {
                   Container(
                     height: 36,
                     width: 36,
-                    decoration: BoxDecoration(color: Colors.yellow, shape: BoxShape.circle),
+                    decoration: const BoxDecoration(color: Colors.yellow, shape: BoxShape.circle),
                   ),
-                  SizedBox(width: 7),
+                  const SizedBox(width: 7),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +62,7 @@ class PostInGroupScreen extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             SvgPicture.asset(ImagesModel.earthIcons),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 7,
                                             ),
                                             Column(
@@ -88,7 +84,7 @@ class PostInGroupScreen extends StatelessWidget {
                                             )
                                           ],
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 7,
                                         ),
                                         Row(
@@ -96,7 +92,7 @@ class PostInGroupScreen extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             SvgPicture.asset(ImagesModel.earthIcons),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 7,
                                             ),
                                             Column(
@@ -131,9 +127,9 @@ class PostInGroupScreen extends StatelessWidget {
                                 child: Container(
                                   height: 10,
                                   width: 10,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       shape: BoxShape.circle, color: AppColors.primaryColorLight),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.arrow_drop_down,
                                     size: 10,
                                     color: Colors.white,
@@ -174,9 +170,9 @@ class PostInGroupScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             SvgPicture.asset(ImagesModel.wowReaction),
-                            SizedBox(width:5),
+                            const SizedBox(width:5),
                             SvgPicture.asset(ImagesModel.photoAdd),
-                            SizedBox(width:5),
+                            const SizedBox(width:5),
                             SvgPicture.asset(ImagesModel.videoAdd)
                           ],
                         ),
