@@ -406,7 +406,7 @@ class _PublicPageScreen2State extends State<PublicPageScreen2> {
                       title: Text('Live Comming Soon'),
                     );
                   } else if (index == 4) {
-                    return const PageCommentView();
+                    return  PageCommentView(value: true, showDescription: () {  }, description: '',);
                   }
                   return const ListTile(
                     title: Text('Live Comming Soon'),
