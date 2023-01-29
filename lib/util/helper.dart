@@ -2,11 +2,17 @@ import 'dart:developer';
 
 import 'package:als_frontend/helper/animation/slideleft_toright.dart';
 import 'package:als_frontend/helper/animation/slideright_toleft.dart';
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 showLog(message) {
   log("APP SAYS: $message");
+}
+
+bool isMe(String id) {
+  return id == Provider.of<AuthProvider>(Helper.navigatorKey.currentState!.context, listen: false).userID;
 }
 
 class Helper {
@@ -48,5 +54,4 @@ class Helper {
   static boxDecoration(Color color, double radius) {
     BoxDecoration(color: color, borderRadius: BorderRadius.all(Radius.circular(radius)));
   }
-
 }

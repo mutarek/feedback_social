@@ -94,6 +94,71 @@ class CommentProvider with ChangeNotifier {
     }
   }
 
+  Future<bool> updateComment(String url, String comment) async {
+    isCommentLoading = true;
+
+    ApiResponse response = await commentRepo.updateComment(url, commentID.toString(), comment);
+    isCommentLoading = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: "comment Update successfully");
+
+      if (isFromReply) {
+        comments[index].replies![index2].comment = comment;
+      } else {
+        comments[index].comment = comment;
+        comments[index].timestamp = DateTime.now().toIso8601String();
+      }
+      notifyListeners();
+       return true;
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong");
+      return false;
+    }
+  }
+
+  deleteComment(String url, String commentID, int index, int index2, bool isFromReply) async {
+    isCommentLoading = true;
+    if (isFromReply) {
+      comments[index].replies!.removeAt(index2);
+    } else {
+      comments.removeAt(index);
+    }
+    notifyListeners();
+    ApiResponse response = await commentRepo.deleteComment(url, commentID);
+    isCommentLoading = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: "comment delete successfully");
+    } else {
+      Fluttertoast.showToast(msg: "Something went wrong");
+    }
+  }
+
+  bool isPressUpdateButton = false;
+  bool isFromReply = false;
+  int commentID = 0;
+  int index = -1;
+  int index2 = -1;
+
+  changeUpdateButtonStatus(bool status, int id, int i1, int i2,bool isFromReplyStatus) {
+    isPressUpdateButton = status;
+    commentID = id;
+    index = i1;
+    index2 = i2;
+    isFromReply=isFromReplyStatus;
+    notifyListeners();
+  }
+
+  resetUpdateButton({bool isFirstTime = false}) {
+    commentID = -1;
+    isPressUpdateButton = false;
+    isFromReply = false;
+    index = -1;
+    index2 = -1;
+    if (!isFirstTime) notifyListeners();
+  }
+
   /////  ********    comment Web Socket
   WebSocketChannel channel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/post/191/comment/timeline_post/');
   WebSocketChannel replyChannel = IOWebSocketChannel.connect('${AppConstant.socketBaseUrl}ws/post/191/comment/timeline_post/');
@@ -208,6 +273,7 @@ class CommentProvider with ChangeNotifier {
     replyURL = '';
     replyIndex = -1;
     isShowCancelButton = false;
+    resetUpdateButton(isFirstTime: isFirstTime);
     if (!isFirstTime) notifyListeners();
   }
 

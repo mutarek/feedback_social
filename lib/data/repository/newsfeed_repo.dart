@@ -60,10 +60,10 @@ class NewsfeedRepo {
     }
   }
 
-  Future<ApiResponse> callForSinglePostFromNotification(String url) async {
+  Future<ApiResponse> callForSinglePostFromNotification(String id) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get(url);
+      response = await dioClient.get('/page/post/$id/up-del-retr/');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

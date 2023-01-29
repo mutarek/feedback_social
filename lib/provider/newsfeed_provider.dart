@@ -85,10 +85,7 @@ class NewsFeedProvider with ChangeNotifier {
     }
   }
 
-  addLike(int postID, int index,
-      {bool isGroup = false,
-      bool isFromPage = false,
-      int groupPageID = 0}) async {
+  addLike(int postID, int index, {bool isGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
     // if (newsFeedLists[index].isLiked == false) {
     //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
     //   newsFeedLists[index].isLiked = true;
@@ -97,8 +94,7 @@ class NewsFeedProvider with ChangeNotifier {
     //   newsFeedLists[index].isLiked = false;
     // }
     notifyListeners();
-    await newsFeedRepo1.addLike(postID,
-        isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
+    await newsFeedRepo1.addLike(postID, isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
   }
 
   changeLikeStatus(int value, int index) async {
@@ -148,12 +144,11 @@ class NewsFeedProvider with ChangeNotifier {
   NewsFeedModel singleNewsFeedModel = NewsFeedModel();
   bool isLoadingSinglePost = true;
 
-  callForSinglePosts(String url) async {
+  callForSinglePosts(String id) async {
     isLoadingSinglePost = true;
     singleNewsFeedModel = NewsFeedModel();
     //notifyListeners();
-    ApiResponse response = await newsFeedRepo1
-        .callForSinglePostFromNotification(url.replaceAll('comment/', ''));
+    ApiResponse response = await newsFeedRepo1.callForSinglePostFromNotification(id);
     isLoadingSinglePost = false;
     if (response.response.statusCode == 200) {
       singleNewsFeedModel = NewsFeedModel.fromJson(response.response.data);
@@ -163,8 +158,7 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  singlePostLike(int postID, Function callBackFunction,
-      {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
+  singlePostLike(int postID, Function callBackFunction, {bool isGroup = false, bool isFromLike = false, int groupID = 0}) async {
     // if (singleNewsFeedModel.isLiked == false) {
     //   callBackFunction(true);
     //   singleNewsFeedModel.totalLiked = singleNewsFeedModel.totalLiked! + 1;
@@ -176,8 +170,7 @@ class NewsFeedProvider with ChangeNotifier {
     // }
     notifyListeners();
 
-    await newsFeedRepo1.addLike(postID,
-        isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
+    await newsFeedRepo1.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
   }
 
   void updateSingleCommentDataCount() {
@@ -198,8 +191,7 @@ class NewsFeedProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  initializeLikedShareByAllUser(String url,
-      {int page = 1, bool isFirstTime = true}) async {
+  initializeLikedShareByAllUser(String url, {int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPageLiked = 1;
       likedShareByModels.clear();
@@ -213,8 +205,7 @@ class NewsFeedProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    ApiResponse response =
-        await newsFeedRepo1.callForgetLikedShareUser(url, page);
+    ApiResponse response = await newsFeedRepo1.callForgetLikedShareUser(url, page);
     isLoadingLiked = false;
     isBottomLoadingLiked = false;
     if (response.response.statusCode == 200) {
@@ -231,28 +222,24 @@ class NewsFeedProvider with ChangeNotifier {
 
   void pushLocalMessage() {
     if (sharedPreferences!.containsKey(AppConstant.chats)) {
-      List<String> chatsSave =
-          sharedPreferences!.getStringList(AppConstant.chats) ?? [];
+      List<String> chatsSave = sharedPreferences!.getStringList(AppConstant.chats) ?? [];
       List<OfflineChat> chatData = [];
       for (var cart in chatsSave) {
         chatData.add(OfflineChat.fromJson(jsonDecode(cart)));
       }
       for (var element in chatData) {
         //TODO: push message to socket and clear cache
-        addPost(element.userId.toString(), element.roomID.toString(),
-            element.message.toString(), element.index!);
+        addPost(element.userId.toString(), element.roomID.toString(), element.message.toString(), element.index!);
       }
       //TODO: REMOVE ALL LOCAL MESSAGES FROM SHAredPreferences
     }
   }
 
-  WebSocketChannel channel = IOWebSocketChannel.connect(
-      'wss://testing.feedback-social.com/ws/post/191/comment/timeline_post/');
+  WebSocketChannel channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/post/191/comment/timeline_post/');
 
   addPost(String userID, String roomID, String message, int index) async {
     bool result = await InternetConnectionChecker().hasConnection;
-    channel = IOWebSocketChannel.connect(
-        'wss://testing.feedback-social.com/ws/messaging/thread/$roomID/');
+    channel = IOWebSocketChannel.connect('wss://testing.feedback-social.com/ws/messaging/thread/$roomID/');
     if (result == true) {
       Map map = {
         "data": {"user_id": userID, "room_id": roomID, "text": message},

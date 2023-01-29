@@ -53,6 +53,7 @@ class ImagesModel {
   static const String videoIcons = 'assets/icons/video.svg';
   static const String wowReaction = 'assets/icons/wow.svg';
   static const String messageIcons = 'assets/icons/message.svg';
+  static const String replyIcons = 'assets/icons/reply.svg';
   static const String notificationIcons = 'assets/icons/notification.svg';
   static const String pageIcons = 'assets/icons/page_icons.svg';
   static const String pageIconsPng = 'assets/icons/page_icons.png';

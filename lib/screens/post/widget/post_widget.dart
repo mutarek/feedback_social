@@ -35,11 +35,13 @@ class PostWidget extends StatelessWidget {
   final int groupPageID;
   final bool isGroup;
   final bool isPage;
+  final bool isHideCommentButton;
 
   const PostWidget(this.newsFeedData,
       {required this.index,
       this.isHomeScreen = false,
       this.isProfileScreen = false,
+      this.isHideCommentButton = false,
       this.isGroup = false,
       this.isPage = false,
       this.groupPageID = 0,
@@ -172,7 +174,7 @@ class PostWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           commentProvider.changeLikeMenu(0);
                           commentProvider.clearAuthorData();
                           likeModalBottomSheet(newsFeedData);
@@ -182,7 +184,8 @@ class PostWidget extends StatelessWidget {
                             Stack(
                               children: [
                                 SizedBox(
-                                    height: 17, width: 50 - (newsFeedData.totalLoved! == 0 ? 13 : 0) - (newsFeedData.totalSad! == 0 ? 13 : 0)),
+                                    height: 17,
+                                    width: 50 - (newsFeedData.totalLoved! == 0 ? 13 : 0) - (newsFeedData.totalSad! == 0 ? 13 : 0)),
                                 reactWidget(ImagesModel.likeIconsSvg, AppColors.primaryColorLight),
                                 newsFeedData.totalLoved! == 0
                                     ? const SizedBox.shrink()
@@ -190,7 +193,8 @@ class PostWidget extends StatelessWidget {
                                 newsFeedData.totalSad! == 0
                                     ? const SizedBox.shrink()
                                     : Positioned(
-                                    left: newsFeedData.totalLoved! == 0 ? 14 : 28, child: reactWidget(ImagesModel.hahaIcons, Colors.yellow)),
+                                        left: newsFeedData.totalLoved! == 0 ? 14 : 28,
+                                        child: reactWidget(ImagesModel.hahaIcons, Colors.yellow)),
                               ],
                             ),
                             RichText(
@@ -198,21 +202,22 @@ class PostWidget extends StatelessWidget {
                                     text: newsFeedData.reaction != -1 ? "You " : "",
                                     style: robotoStyle600SemiBold.copyWith(fontSize: 12),
                                     children: [
-                                      TextSpan(
-                                          text: newsFeedData.reaction != -1 ? " and" : "",
-                                          style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
-                                          children: [
-                                            TextSpan(
-                                                text: newsFeedData.totalReaction.toString(),
-                                                style: robotoStyle600SemiBold.copyWith(fontSize: 12),
-                                                children: [
-                                                  TextSpan(
-                                                      text:
+                                  TextSpan(
+                                      text: newsFeedData.reaction != -1 ? " and" : "",
+                                      style:
+                                          GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 12, color: AppColors.primaryColorLight),
+                                      children: [
+                                        TextSpan(
+                                            text: newsFeedData.totalReaction.toString(),
+                                            style: robotoStyle600SemiBold.copyWith(fontSize: 12),
+                                            children: [
+                                              TextSpan(
+                                                  text:
                                                       " ${newsFeedData.totalReaction! <= 1 ? newsFeedData.reaction == -1 ? "Other" : "Like" : newsFeedData.reaction == -1 ? "Others" : "Likes"}",
-                                                      style: robotoStyle400Regular.copyWith(fontSize: 12)),
-                                                ])
-                                          ])
-                                    ])),
+                                                  style: robotoStyle400Regular.copyWith(fontSize: 12)),
+                                            ])
+                                      ])
+                                ])),
                           ],
                         ),
                       ),
@@ -280,9 +285,12 @@ class PostWidget extends StatelessWidget {
                         containerWidth: 140.0,
                         childAnchor: Alignment.centerLeft,
                       ),
-                      likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {
-                        // Helper.toScreen(SinglePostScreen1());
-                      }),
+                      isHideCommentButton
+                          ? SizedBox.shrink()
+                          : likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {
+                              Helper.toScreen(SinglePostScreen1(newsFeedData.id.toString(),
+                                  index: index, isFromPage: isPage, commentUrl: newsFeedData.commentUrl!));
+                            }),
                       PopupMenuButton(
                         itemBuilder: (context) => [
                           // PopupMenuItem 1

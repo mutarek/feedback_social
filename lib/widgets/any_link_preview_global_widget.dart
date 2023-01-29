@@ -1,4 +1,5 @@
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
+import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +68,7 @@ class _AnyListPreviewState extends State<AnyLinkPreviewGlobalWidget> {
           fontWeight: FontWeight.bold,
           fontSize: 15,
         ),
-        bodyStyle: const TextStyle(color: Colors.grey, fontSize: 12),
+        bodyStyle:robotoStyle400Regular.copyWith(color: Colors.red),
       ),
     );
   }

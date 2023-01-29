@@ -20,6 +20,7 @@ class CommentRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+
   Future<ApiResponse> addLike(String url) async {
     try {
       response = await dioClient.post("${url.replaceAll("list/", "")}get-or-create/");
@@ -28,7 +29,6 @@ class CommentRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-
 
   Future<ApiResponse> getAllCommentData(String url) async {
     try {
@@ -50,7 +50,26 @@ class CommentRepo {
 
   Future<ApiResponse> addComment(String url, String comment) async {
     try {
-      response = await dioClient.post('${url}create/', data: {"comment": comment});
+      response = await dioClient.post('${url.replaceAll("list/", "")}create/', data: {"comment": comment});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      showLog(e.toString());
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+  Future<ApiResponse> deleteComment(String url, String commentID) async {
+    try {
+      response = await dioClient.delete('${url.replaceAll("list/", "")}$commentID/up-del-retr/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      showLog(e.toString());
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> updateComment(String url, String commentID,String comment) async {
+    try {
+      response = await dioClient.patch('${url.replaceAll("list/", "")}$commentID/up-del-retr/',data: {"comment":comment});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       showLog(e.toString());
@@ -60,7 +79,9 @@ class CommentRepo {
 
   Future<ApiResponse> addReply(String url, String commentID, String comment) async {
     try {
-      response = await dioClient.post('$url$commentID/reply/', data: {"comment": comment});
+      String url2 = url.replaceAll("/page/post/comment/", "").replaceAll("/list/", "");
+      String url3 = "/page/post/comment/reply/$url2/$commentID/create/";
+      response = await dioClient.post(url3, data: {"comment": comment});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
