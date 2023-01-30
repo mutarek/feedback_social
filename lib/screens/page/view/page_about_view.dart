@@ -11,6 +11,7 @@ class PageAboutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [

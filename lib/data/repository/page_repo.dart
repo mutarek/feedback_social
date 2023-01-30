@@ -172,4 +172,13 @@ class PageRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+  Future<ApiResponse> pageDetails(int pageID,) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("/page/$pageID/",);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
 }
