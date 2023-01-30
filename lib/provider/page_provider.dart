@@ -6,6 +6,7 @@ import 'package:als_frontend/data/model/response/group/find_page_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
+import 'package:als_frontend/data/model/response/page/page_details_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/page_repo.dart';
@@ -557,6 +558,27 @@ class PageProvider with ChangeNotifier {
         findPageModel.add(FindPageModel.fromJson(element));
         notifyListeners();
       });
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  //TODO: page details api instigation
+  PageDetailsModel? pageDetailsList ;
+  bool isLoadingPageDetails = false;
+  pageDetails(int pageID) async {
+    isLoadingPageDetails = true;
+
+
+
+    //notifyListeners();
+    ApiResponse response = await pageRepo.pageDetails(pageID);
+    isLoadingPageDetails = false;
+    if (response.response.statusCode == 200) {
+      pageDetailsList = PageDetailsModel.fromJson(response.response.data);
+        notifyListeners();
+
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
