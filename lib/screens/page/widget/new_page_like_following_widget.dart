@@ -1,10 +1,15 @@
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
+import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/page/new_design/edit_page/edit_page1.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class NewPageLikeFollowingWidget extends StatelessWidget {
   final bool isAdmin;
@@ -21,66 +26,72 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
           height: 40,
           child: Row(
             children: [
-              isAdmin?Expanded(
-                child: InkWell(
-                  onTap: (){
-
-                  },
-                  child: Container(
-                    height: 40,
-                    margin: const EdgeInsets.only(right: 5),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.primaryColorLight),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(ImagesModel.followingIcons, width: 20, height: 20, color: Colors.white),
-                        const SizedBox(width: 5),
-                        Text("Dashboard", style: robotoStyle700Bold.copyWith(fontSize: 13, color: Colors.white)),
-                      ],
-                    ),
-                  ),
-                ),
-              ):
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10), border: Border.all(width: 1.0), color: AppColors.imageBGColorLight),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(ImagesModel.likeIcons, width: 15, height: 15, color: colorText),
-                            const SizedBox(width: 2),
-                            Text("Like", style: robotoStyle700Bold.copyWith(fontSize: 12))
-                          ],
+              isAdmin
+                  ? Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Provider.of<PageProvider>(context, listen: false).callForGetIndividualPageDetails(authorPage.id.toString());
+                          isAdmin?
+                            Helper.toScreen(EditPage1(authorPage.id.toString())):
+                          showMessage(message: "Ops You don't have access");
+                        },
+                        child: Container(
+                          height: 40,
+                          margin: const EdgeInsets.only(right: 5),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.primaryColorLight),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(ImagesModel.followingIcons, width: 20, height: 20, color: Colors.white),
+                              const SizedBox(width: 5),
+                              Text("Dashboard", style: robotoStyle700Bold.copyWith(fontSize: 13, color: Colors.white)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    Expanded(
-                      child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.primaryColorLight),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(ImagesModel.followingIcons, width: 15, height: 15, color: Colors.white),
-                            const SizedBox(width: 2),
-                            Text("Following", style: robotoStyle700Bold.copyWith(fontSize: 12, color: Colors.white)),
-                          ],
-                        ),
+                    )
+                  : Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(width: 1.0),
+                                  color: AppColors.imageBGColorLight),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(ImagesModel.likeIcons, width: 15, height: 15, color: colorText),
+                                  const SizedBox(width: 2),
+                                  Text("Like", style: robotoStyle700Bold.copyWith(fontSize: 12))
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.primaryColorLight),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(ImagesModel.followingIcons, width: 15, height: 15, color: Colors.white),
+                                  const SizedBox(width: 2),
+                                  Text("Following", style: robotoStyle700Bold.copyWith(fontSize: 12, color: Colors.white)),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 5),
-                  ],
-                ),
-              ),
               Container(
                 height: 40,
                 decoration: BoxDecoration(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:als_frontend/data/model/indivulual_page_details_model.dart';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/find_page_model.dart';
@@ -146,6 +147,23 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO: FOR GETTING INDIVIDUAL PAGE DETAILS
+  IndividualPageDetailsModel? individualPageDetailsModel;
+
+  callForGetIndividualPageDetails(String id) async{
+    isLoading = true;
+    individualPageDetailsModel = IndividualPageDetailsModel();
+    ApiResponse response = await pageRepo.callForGetIndividualPageDetails(id);
+    if(response.response.statusCode == 200){
+      individualPageDetailsModel = IndividualPageDetailsModel.fromJson(response.response.data);
+    }else{
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    isLoading = false;
+    notifyListeners();
+  }
+
+
   AuthorPageDetailsModel? pageDetailsModel;
 
   callForGetPageInformation(String id) async {
@@ -222,6 +240,34 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  editPage(String name,String bio,String desc,String category,String number,String email,String website,String address,String pageId,Function callBack)async{
+    isLoading = true;
+    notifyListeners();
+    ApiResponse response;
+    FormData formData = FormData();
+    formData.fields.add(MapEntry('name', name));
+    formData.fields.add(MapEntry('bio', bio));
+    formData.fields.add(MapEntry('description', desc));
+    formData.fields.add(MapEntry('category', category));
+    formData.fields.add(MapEntry('contact', number));
+    formData.fields.add(MapEntry('email', email));
+    formData.fields.add(MapEntry('website', website));
+    formData.fields.add(MapEntry('address', address));
+    response = await pageRepo.updatePageWithImageUpload(formData,pageId);
+    if(response.response.statusCode == 200){
+      isLoading = false;
+      callBack(true);
+      notifyListeners();
+      Fluttertoast.showToast(msg: "Page Update Successfully");
+    }
+    else{
+      isLoading = false;
+      callBack(false);
+      notifyListeners();
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+  }
+
   Future<bool> updatePage(String groupName, File? file, int pageID, int index) async {
     isLoading = true;
     notifyListeners();
@@ -232,7 +278,7 @@ class PageProvider with ChangeNotifier {
           MapEntry('cover_photo', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
       formData.fields.add(MapEntry('name', groupName));
       formData.fields.add(MapEntry('category', categoryValue.id.toString()));
-      response = await pageRepo.updatePageWithImageUpload(formData, pageID);
+      response = await pageRepo.updatePageWithImageUpload(formData, pageID.toString());
     } else {
       response = await pageRepo.updatePageWithoutImageUpload({"name": groupName, "category": categoryValue.id}, pageID);
     }

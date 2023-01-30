@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
+import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/new_design/create_page2.dart';
@@ -13,10 +14,12 @@ import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../data/model/indivulual_page_details_model.dart';
 import 'edit_page2.dart';
 
 class EditPage1 extends StatefulWidget {
-  const EditPage1({Key? key}) : super(key: key);
+  EditPage1(this.pageId, {Key? key}) : super(key: key);
+  final String pageId;
 
   @override
   State<EditPage1> createState() => _EditPage1State();
@@ -33,12 +36,15 @@ class _EditPage1State extends State<EditPage1> {
   @override
   void initState() {
     Provider.of<PageProvider>(context, listen: false).initializeCategory();
+    Future.delayed(const Duration(seconds: 3)).then((value) {
+      setOldValue(Provider.of<PageProvider>(context, listen: false).individualPageDetailsModel);
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       appBar: const PageAppBar(title: 'Update Page'),
       body: Consumer2<OtherProvider, PageProvider>(builder: (context, otherProvider, pageProvider, child) {
@@ -55,7 +61,7 @@ class _EditPage1State extends State<EditPage1> {
                     style: robotoStyle400Regular.copyWith(fontSize: 10)),
                 const SizedBox(height: 10),
                 CustomTextField(
-                  hintText: 'Your Page Name',
+                  hintText: pageProvider.individualPageDetailsModel!.name.toString(),
                   isShowBorder: true,
                   borderRadius: 11,
                   verticalSize: 14,
@@ -68,6 +74,13 @@ class _EditPage1State extends State<EditPage1> {
                     title: "Select A Best Page Category that describe your page.",
                     textStyle: robotoStyle500Medium.copyWith(fontSize: 17),
                     maxLines: 2),
+                const SizedBox(height: 10),
+                Text.rich(
+                  TextSpan(children: [
+                    TextSpan(text: "Old Page Category: ", style: robotoStyle500Medium.copyWith(fontSize: 15)),
+                    TextSpan(text: pageProvider.individualPageDetailsModel!.category, style: robotoStyle700Bold.copyWith(fontSize: 17))
+                  ]),
+                ),
                 const SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -82,12 +95,12 @@ class _EditPage1State extends State<EditPage1> {
                     icon: const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.primaryColorLight),
                     items: pageProvider.items
                         .map((item) => DropdownMenuItem<CategoryModel>(
-                        value: item,
-                        child: Container(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: CustomText(
-                                title: item.name,
-                                textStyle: robotoStyle400Regular.copyWith(fontSize: 18, color: AppColors.primaryColorLight)))))
+                            value: item,
+                            child: Container(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: CustomText(
+                                    title: item.name,
+                                    textStyle: robotoStyle400Regular.copyWith(fontSize: 18, color: AppColors.primaryColorLight)))))
                         .toList(),
                     onChanged: (item) {
                       pageProvider.changeGroupCategory(item!);
@@ -99,7 +112,7 @@ class _EditPage1State extends State<EditPage1> {
                     title: "Tell a little bit about your page .", textStyle: robotoStyle500Medium.copyWith(fontSize: 17), maxLines: 2),
                 const SizedBox(height: 10),
                 CustomTextField(
-                  hintText: 'Enter Bio',
+                  hintText: pageProvider.individualPageDetailsModel!.bio,
                   isShowBorder: true,
                   borderRadius: 11,
                   verticalSize: 14,
@@ -111,7 +124,7 @@ class _EditPage1State extends State<EditPage1> {
                 CustomText(title: "Describe Your Page.", textStyle: robotoStyle500Medium.copyWith(fontSize: 17), maxLines: 1),
                 const SizedBox(height: 10),
                 CustomTextField(
-                  hintText: 'Enter Description',
+                  hintText: pageProvider.individualPageDetailsModel!.description,
                   isShowBorder: true,
                   borderRadius: 11,
                   verticalSize: 14,
@@ -124,16 +137,12 @@ class _EditPage1State extends State<EditPage1> {
                 CustomButton(
                     btnTxt: 'Next Page',
                     onTap: () {
-                      if (pageNameController.text.isEmpty || pageBioController.text.isEmpty || pageDetailsController.text.isEmpty) {
-                        showMessage(message: 'Please write all the information');
-                      } else if (pageBioController.text.length > 90) {
-                        showMessage(message: 'please insert BIO at Most 90 characters');
+                      if (pageProvider.categoryValue.id.toString() != pageProvider.individualPageDetailsModel!.category) {
+                        Helper.toScreen(EditPage2(pageNameController.text, pageBioController.text, pageDetailsController.text,
+                            pageProvider.categoryValue.id.toString(),widget.pageId));
                       } else {
-                        pageProvider.updateInsertPageInfo(0,
-                            aPageName: pageNameController.text,
-                            aPageBio: pageBioController.text,
-                            aPageDescription: pageDetailsController.text);
-                        Helper.toScreen(const EditPage2());
+                        Helper.toScreen(EditPage2(pageNameController.text, pageBioController.text, pageDetailsController.text,
+                            pageProvider.individualPageDetailsModel!.category.toString(),widget.pageId));
                       }
                     },
                     radius: 100,
@@ -144,5 +153,11 @@ class _EditPage1State extends State<EditPage1> {
         );
       }),
     );
+  }
+
+  void setOldValue(IndividualPageDetailsModel? pageDetailsModel) {
+    pageNameController.text = pageDetailsModel!.name.toString();
+    pageBioController.text = pageDetailsModel.bio.toString();
+    pageDetailsController.text = pageDetailsModel.description.toString();
   }
 }

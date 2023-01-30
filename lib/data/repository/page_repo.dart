@@ -120,6 +120,17 @@ class PageRepo {
     }
   }
 
+  Future<ApiResponse> callForGetIndividualPageDetails(String pageID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.get("${AppConstant.pageURI}$pageID/");
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
   Future<ApiResponse> updatePageWithoutImageUpload(Map map, int pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
@@ -131,7 +142,7 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> updatePageWithImageUpload(FormData formData, int pageID) async {
+  Future<ApiResponse> updatePageWithImageUpload(FormData formData, String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
       response = await dioClient.patch("${AppConstant.pageURI}$pageID/", data: formData);

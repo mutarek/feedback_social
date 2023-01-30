@@ -1,5 +1,7 @@
+import 'package:als_frontend/data/model/indivulual_page_details_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/page/page_home_screen.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -7,11 +9,17 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditPage2 extends StatefulWidget {
-  const EditPage2({Key? key}) : super(key: key);
+  EditPage2(this.pageName, this.pageBio, this.pageDesc, this.pageCategory, this.pageId, {Key? key}) : super(key: key);
+  final String pageName;
+  final String pageBio;
+  final String pageDesc;
+  final String pageCategory;
+  final String pageId;
 
   @override
   State<EditPage2> createState() => _EditPage2State();
@@ -26,6 +34,15 @@ class _EditPage2State extends State<EditPage2> {
   final FocusNode emailFocus = FocusNode();
   final FocusNode websiteFocus = FocusNode();
   final FocusNode addressFocus = FocusNode();
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 0)).then((value) {
+      setOldValue(Provider.of<PageProvider>(context, listen: false).individualPageDetailsModel);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,24 +126,40 @@ class _EditPage2State extends State<EditPage2> {
                     focusNode: addressFocus,
                     inputAction: TextInputAction.done),
                 const SizedBox(height: 30),
-                CustomButton(
-                    btnTxt: 'Next Page',
-                    onTap: () {
-                      pageProvider.updateInsertPageInfo(1,
-                          aContactNumber: contactNumberController.text,
-                          aEmail: emailController.text,
-                          aWebsiteLink: websiteController.text,
-                          aPageDescription: addressController.text);
-                      otherProvider.clearCoverProfile();
-                      Helper.toScreen(const EditPage2());
-                    },
-                    radius: 100,
-                    height: 48),
+                pageProvider.isLoading
+                    ? const Align(alignment: Alignment.center, child: CupertinoActivityIndicator())
+                    : CustomButton(
+                        btnTxt: "Update Page",
+                        onTap: () {
+                          pageProvider.editPage(
+                              widget.pageName,
+                              widget.pageBio,
+                              widget.pageDesc,
+                              widget.pageCategory,
+                              contactNumberController.text,
+                              emailController.text,
+                              websiteController.text,
+                              addressController.text,
+                              widget.pageId, (status) {
+                            if (status) {
+                              Helper.toRemoveUntilScreen(const PageHomeScreen());
+                            } else {}
+                          });
+                        },
+                        radius: 100,
+                        height: 48)
               ],
             ),
           ),
         );
       }),
     );
+  }
+
+  void setOldValue(IndividualPageDetailsModel? individualPageDetailsModel) {
+    contactNumberController.text = individualPageDetailsModel!.contact.toString();
+    emailController.text = individualPageDetailsModel.email.toString();
+    websiteController.text = individualPageDetailsModel.website.toString();
+    addressController.text = individualPageDetailsModel.address.toString();
   }
 }
