@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class AdminTools extends StatefulWidget {
-  const AdminTools({Key? key}) : super(key: key);
+class AdminToolsScreen extends StatefulWidget {
+  const AdminToolsScreen({Key? key}) : super(key: key);
 
   @override
-  State<AdminTools> createState() => _AdminToolsState();
+  State<AdminToolsScreen> createState() => _AdminToolsScreenState();
 }
 
-class _AdminToolsState extends State<AdminTools> {
+class _AdminToolsScreenState extends State<AdminToolsScreen> {
   final TextEditingController pageNameController = TextEditingController();
   final TextEditingController pageBioController = TextEditingController();
   final TextEditingController pageDetailsController = TextEditingController();
@@ -102,7 +102,7 @@ class _AdminToolsState extends State<AdminTools> {
                               return SizedBox(
                                 height: 150,
                                 child: Card(
-                                  color: Color(0xffFFFFFF),
+                                  color: const Color(0xffFFFFFF),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10)
                                   ),
@@ -133,12 +133,12 @@ class _AdminToolsState extends State<AdminTools> {
                                             )
                                           ],
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Text(
                                           "In publishing and graphic design, L commonly used tn  o the visual form of a comm dfsdf  only  to the...View More ",
                                           style: robotoStyle600SemiBold.copyWith(fontSize: 12),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           children: [
@@ -151,7 +151,7 @@ class _AdminToolsState extends State<AdminTools> {
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     SvgPicture.asset("assets/svg/approve_svg.svg", height: 13, width: 14),
-                                                    SizedBox(width: 5),
+                                                    const SizedBox(width: 5),
                                                     Text("Approve",
                                                         style:
                                                             robotoStyle600SemiBold.copyWith(fontSize: 15, color: AppColors.whiteColorLight))
@@ -166,7 +166,7 @@ class _AdminToolsState extends State<AdminTools> {
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     SvgPicture.asset("assets/svg/reject_svg.svg", height: 13, width: 14),
-                                                    SizedBox(width: 5),
+                                                    const SizedBox(width: 5),
                                                     Text("Reject",
                                                         style:
                                                             robotoStyle600SemiBold.copyWith(fontSize: 15, color: AppColors.whiteColorLight))
@@ -182,7 +182,7 @@ class _AdminToolsState extends State<AdminTools> {
                             },
                           ),
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                   Card(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                     child: Container(
@@ -290,7 +290,7 @@ class _AdminToolsState extends State<AdminTools> {
                                 height: 5,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left: 15),
+                                padding: const EdgeInsets.only(left: 15),
                                 child: Container(
                                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: AppColors.primaryColorLight),
                                   height: 30,
@@ -305,14 +305,14 @@ class _AdminToolsState extends State<AdminTools> {
                                 height: 5,
                               ),
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
                                 child: Container(
                                   height: 200,
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.primaryColorLight)),
                                   child: Padding(
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
@@ -356,7 +356,7 @@ class _AdminToolsState extends State<AdminTools> {
                             ],
                           ),
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                   Card(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                     child: Container(
@@ -414,7 +414,7 @@ class _AdminToolsState extends State<AdminTools> {
                         return SizedBox(
                           height: 150,
                           child: Card(
-                            color: Color(0xffFFFFFF),
+                            color: const Color(0xffFFFFFF),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)
                             ),
@@ -446,7 +446,7 @@ class _AdminToolsState extends State<AdminTools> {
                                       )
                                     ],
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
@@ -454,7 +454,7 @@ class _AdminToolsState extends State<AdminTools> {
                                       style: robotoStyle600SemiBold.copyWith(fontSize: 12),
                                     ),
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
@@ -467,7 +467,7 @@ class _AdminToolsState extends State<AdminTools> {
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               SvgPicture.asset("assets/svg/reject_svg.svg", height: 13, width: 14),
-                                              SizedBox(width: 5),
+                                              const SizedBox(width: 5),
                                               Text("Take Actions",
                                                   style:
                                                   robotoStyle600SemiBold.copyWith(fontSize: 15, color: AppColors.whiteColorLight))
@@ -483,7 +483,7 @@ class _AdminToolsState extends State<AdminTools> {
                       },
                     ),
                   )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ],
               ),
             ),

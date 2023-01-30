@@ -9,8 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'admin_tools.dart';
-import 'setuo_group.dart';
+import 'admin_tools_screen.dart';
+import 'setup_group.dart';
 
 class GroupDashboard extends StatefulWidget {
   const GroupDashboard({Key? key}) : super(key: key);
@@ -121,7 +121,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                             backgroundColor: AppColors.primaryColorLight,
                             child: InkWell(
                                 onTap: () {
-                                  Helper.toScreen(const AdminTools());
+                                  Helper.toScreen(const AdminToolsScreen());
                                 },
                                 child: const CircleAvatar(
                                   backgroundColor: AppColors.primaryColorLight,

@@ -20,20 +20,14 @@ class GroupHeaderWidget extends StatelessWidget {
               height: 200,
               width: double.infinity,
               child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
                 child: customNetworkImage("https://porzoton.com/wp-content/uploads/2020/12/Sajek-Valley-Sun-rises-over-the-clouds.jpg",
                     boxFit: BoxFit.fitWidth),
               ),
             ),
             const Align(
                 alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Icon(Icons.arrow_back, color: Colors.white),
-                ))
+                child: Padding(padding: EdgeInsets.all(15), child: Icon(Icons.arrow_back, color: Colors.white)))
           ],
         ),
         const SizedBox(height: 20),
@@ -56,10 +50,7 @@ class GroupHeaderWidget extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(text: 'Members: '),
-                        TextSpan(
-                          text: '5M',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
+                        TextSpan(text: '5M', style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),
@@ -83,15 +74,8 @@ class GroupHeaderWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(
-                              "assets/svg/joined_svgs.svg",
-                              height: 12,
-                              width: 12,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 2,
-                            ),
+                            SvgPicture.asset("assets/svg/joined_svgs.svg", height: 12, width: 12, color: Colors.white),
+                            const SizedBox(width: 2),
                             Text(
                               'Joined',
                               style: robotoStyle700Bold.copyWith(fontSize: 15, color: Colors.white),
@@ -114,14 +98,8 @@ class GroupHeaderWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(
-                            "assets/svg/joined_svgs.svg",
-                            height: 12,
-                            width: 12,
-                          ),
-                          const SizedBox(
-                            width: 2,
-                          ),
+                          SvgPicture.asset("assets/svg/joined_svgs.svg", height: 12, width: 12),
+                          const SizedBox(width: 2),
                           Text(
                             'Invite',
                             style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight),
@@ -143,13 +121,7 @@ class GroupHeaderWidget extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.more_horiz,
-                            color: AppColors.primaryColorLight,
-                            size: 12,
-                          )
-                        ],
+                        children: const [Icon(Icons.more_horiz, color: AppColors.primaryColorLight, size: 12)],
                       ),
                     ),
                   ),
