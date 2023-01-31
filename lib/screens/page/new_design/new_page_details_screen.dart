@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/view/page_about_view.dart';
 import 'package:als_frontend/screens/page/view/page_home_view.dart';
 import 'package:als_frontend/screens/page/widget/admin_post_view.dart';
+import 'package:als_frontend/screens/page/widget/page_photo_view.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,7 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
           children: [
             PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin),
             PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, widget.authorPageModel),
+            PagePhotoView(tabMenuWidget(pageProvider), widget.isAdmin,),
           ],
         );
       }),

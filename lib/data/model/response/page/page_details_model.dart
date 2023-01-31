@@ -51,7 +51,7 @@ class PageDetailsModel {
   String posts;
   bool like;
   int totalLike;
-  List<dynamic> likedBy;
+  String likedBy;
 
   factory PageDetailsModel.fromJson(Map<String, dynamic> json) => PageDetailsModel(
     id: json["id"],
@@ -73,7 +73,7 @@ class PageDetailsModel {
     posts: json["posts"],
     like: json["like"],
     totalLike: json["total_like"],
-    likedBy: List<dynamic>.from(json["liked_by"].map((x) => x)),
+    likedBy: json["liked_by"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -96,7 +96,7 @@ class PageDetailsModel {
     "posts": posts,
     "like": like,
     "total_like": totalLike,
-    "liked_by": List<dynamic>.from(likedBy.map((x) => x)),
+    "liked_by": likedBy,
   };
 }
 

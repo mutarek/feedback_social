@@ -164,7 +164,7 @@ class PageRepo {
   Future<ApiResponse> pageDetails(int pageID,) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get("/page/$pageID/",);
+      response = await dioClient.get("/page/$pageID/up-del-retr/",);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
