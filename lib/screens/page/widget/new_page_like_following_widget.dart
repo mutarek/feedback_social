@@ -1,6 +1,6 @@
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/new_design/edit_page/edit_page1.dart';
+import 'package:als_frontend/screens/page/page_dashboard.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
@@ -32,7 +32,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                         onTap: () {
                           Provider.of<PageProvider>(context, listen: false).callForGetIndividualPageDetails(authorPage.id.toString());
                           isAdmin?
-                            Helper.toScreen(EditPage1(authorPage.id.toString())):
+                              Helper.toScreen(PageDashboard(authorPage.id.toString())):
                           showMessage(message: "Ops You don't have access");
                         },
                         child: Container(
@@ -55,20 +55,25 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(width: 1.0),
-                                  color: AppColors.imageBGColorLight),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(ImagesModel.likeIcons, width: 15, height: 15, color: colorText),
-                                  const SizedBox(width: 2),
-                                  Text("Like", style: robotoStyle700Bold.copyWith(fontSize: 12))
-                                ],
+                            child: InkWell(
+                              onTap: (){
+
+                              },
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(width: 1.0),
+                                    color: AppColors.imageBGColorLight),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(ImagesModel.likeIcons, width: 15, height: 15, color: colorText),
+                                    const SizedBox(width: 2),
+                                    Text("Like", style: robotoStyle700Bold.copyWith(fontSize: 12))
+                                  ],
+                                ),
                               ),
                             ),
                           ),

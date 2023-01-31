@@ -11,6 +11,18 @@ class PageRepo {
 
   PageRepo({required this.dioClient, required this.authRepo});
 
+  Future<ApiResponse> deleteSinglePage(String pageID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.delete("${AppConstant.pageURI}$pageID/up-del-retr/");
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+
   Future<ApiResponse> getAuthorPage() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
@@ -123,7 +135,7 @@ class PageRepo {
   Future<ApiResponse> callForGetIndividualPageDetails(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response = await dioClient.get("${AppConstant.pageURI}$pageID/");
+      response = await dioClient.get("${AppConstant.pageURI}$pageID/up-del-retr/");
       return ApiResponse.withSuccess(response);
     }
     catch(e){
@@ -145,7 +157,18 @@ class PageRepo {
   Future<ApiResponse> updatePageWithImageUpload(FormData formData, String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response = await dioClient.patch("${AppConstant.pageURI}$pageID/", data: formData);
+      response = await dioClient.patch("${AppConstant.pageURI}$pageID/up-del-retr/", data: formData);
+      return ApiResponse.withSuccess(response);
+    }
+    catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> pageLikeorUnlike(String pageId) async{
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try{
+      response = await dioClient.post("/page/user/like/$pageId/create/",data: {});
       return ApiResponse.withSuccess(response);
     }
     catch(e){

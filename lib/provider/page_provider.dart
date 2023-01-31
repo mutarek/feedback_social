@@ -25,6 +25,38 @@ class PageProvider with ChangeNotifier {
 
   bool isLoading = false;
 
+  //TODO: FOR DELETE PAGE
+  bool isButtonShow = false;
+
+  changeButtonStatus(String query) {
+    if (query == "MyPage") {
+      isButtonShow = true;
+      notifyListeners();
+    } else {
+      isButtonShow = false;
+      notifyListeners();
+    }
+  }
+
+
+
+  deleteSinglePage(String pageId,Function callback) async {
+    isLoading = true;
+    notifyListeners();
+    ApiResponse apiResponse = await pageRepo.deleteSinglePage(pageId);
+    if (apiResponse.response.statusCode == 200) {
+      isLoading = false;
+      callback(true);
+      Fluttertoast.showToast(msg: "Page Deleted Successfully");
+      notifyListeners();
+    } else {
+      isLoading = false;
+      callback(false);
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+      notifyListeners();
+    }
+  }
+
   //TODO: for get ALl Liked Page
   List<AuthorPageModel> likedPageLists = [];
 

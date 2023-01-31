@@ -8,8 +8,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'new_design/delete_page.dart';
+import 'new_design/edit_page/edit_page1.dart';
+
 class PageDashboard extends StatefulWidget {
-  const PageDashboard({Key? key}) : super(key: key);
+  const PageDashboard(this.pageId,{Key? key}) : super(key: key);
+  final String pageId;
 
   @override
   State<PageDashboard> createState() => _PageDashboardState();
@@ -35,6 +39,49 @@ class _PageDashboardState extends State<PageDashboard> {
             child: Column(
               children: [
                 const SizedBox(height: 10),
+                Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  child: Container(
+                    decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.white,
+                            child: SvgPicture.asset(
+                              "assets/svg/invite_friends.svg",
+                              height: 20,
+                              width: 34,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Edit Page", style: robotoStyle700Bold.copyWith(fontSize: 22)),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          CircleAvatar(
+                            radius: 15,
+                            backgroundColor: AppColors.primaryColorLight,
+                            child: InkWell(
+                                onTap: () {
+                                  Helper.toScreen(EditPage1(widget.pageId));
+                                },
+                                child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white))
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   child: Container(
@@ -761,7 +808,51 @@ class _PageDashboardState extends State<PageDashboard> {
                             ),
                           ),
                         ))
-                    : const SizedBox.shrink()
+                    : const SizedBox.shrink(),
+                Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  child: Container(
+                    decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.white,
+                            child: SvgPicture.asset(
+                              "assets/svg/invite_friends.svg",
+                              height: 20,
+                              width: 34,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Delete Page", style: robotoStyle700Bold.copyWith(fontSize: 20)),
+                                Text("Once you delete a page, there is no going back. Please be certain.", style: robotoStyle700Bold.copyWith(fontSize: 8)),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          CircleAvatar(
+                              radius: 15,
+                              backgroundColor: AppColors.primaryColorLight,
+                              child: InkWell(
+                                  onTap: () {
+                                    Helper.toScreen(DeletePage(widget.pageId));
+                                  },
+                                  child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white))
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           );
