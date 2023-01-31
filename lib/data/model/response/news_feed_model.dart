@@ -19,6 +19,7 @@ class NewsFeedModel {
     this.totalLoved,
     this.totalSad,
     this.loveReactUrl,
+    this.allReactUserUrl,
     this.likeReactUrl,
     this.sadReactUrl,
     this.reaction,
@@ -56,6 +57,7 @@ class NewsFeedModel {
     loveReactUrl = json['love_react_url'];
     likeReactUrl = json['like_react_url'];
     sadReactUrl = json['sad_react_url'];
+    allReactUserUrl = json['all_react_user_url'];
     reaction = json['reaction'] ?? -1;
     sharePost = json['share_post'] != null ? SharePost.fromJson(json['share_post']) : SharePost();
     groupModel = json['group'] != null ? GroupModel.fromJson(json['group']) : GroupModel();
@@ -83,6 +85,7 @@ class NewsFeedModel {
   String? loveReactUrl;
   String? likeReactUrl;
   String? sadReactUrl;
+  String? allReactUserUrl;
   int? reaction;
   SharePost? sharePost;
   GroupModel? groupModel;
@@ -117,6 +120,7 @@ class NewsFeedModel {
     map['love_react_url'] = loveReactUrl;
     map['like_react_url'] = likeReactUrl;
     map['sad_react_url'] = sadReactUrl;
+    map['all_react_user_url'] = allReactUserUrl;
     map['reaction'] = reaction;
     return map;
   }
@@ -163,6 +167,7 @@ class ImagesData {
     this.loveReactUrl,
     this.likeReactUrl,
     this.sadReactUrl,
+    this.allReactUserUrl,
     this.reaction,
   });
 
@@ -180,6 +185,7 @@ class ImagesData {
     loveReactUrl = json['love_react_url'];
     likeReactUrl = json['like_react_url'];
     sadReactUrl = json['sad_react_url'];
+    allReactUserUrl = json['all_react_user_url'];
     reaction = json['reaction'] ?? -1;
   }
 
@@ -196,6 +202,7 @@ class ImagesData {
   String? loveReactUrl;
   String? likeReactUrl;
   String? sadReactUrl;
+  String? allReactUserUrl;
   int? reaction;
 
   Map<String, dynamic> toJson() {
@@ -213,6 +220,7 @@ class ImagesData {
     map['love_react_url'] = loveReactUrl;
     map['like_react_url'] = likeReactUrl;
     map['sad_react_url'] = sadReactUrl;
+    map['all_react_user_url'] = allReactUserUrl;
     map['reaction'] = reaction;
     return map;
   }
@@ -381,31 +389,23 @@ class PageModel {
   PageModel({
     this.id,
     this.name,
-    this.category,
-    this.coverPhoto,
     this.avatar,
   });
 
   PageModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    category = json['category'];
-    coverPhoto = json['cover_photo'];
     avatar = json['avatar'];
   }
 
   num? id;
   String? name;
-  String? category;
-  String? coverPhoto;
   String? avatar;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['name'] = name;
-    map['category'] = category;
-    map['cover_photo'] = coverPhoto;
     map['avatar'] = avatar;
     return map;
   }

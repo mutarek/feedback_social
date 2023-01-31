@@ -112,12 +112,14 @@ class _PostPhotoWidgetState extends State<PostPhotoWidget> {
               String url = '';
               if (index >= totalImage) {
                 isVideo = true;
+                print(
+                    'Shuvo ${index - totalImage}  | ${index}  |${totalImage} |${totalVideo} |${totalImageVideo} |${widget.newsfeedModel.videos!.length}');
                 url = widget.newsfeedModel.videos![index - totalImage].thumbnail!;
               } else {
                 isVideo = false;
                 url = widget.newsfeedModel.images![index].image!;
               }
-
+//Shuvo 0  | 1  |1 |1 |2 |1
               return InkWell(
                 onTap: () {
                   Provider.of<OtherProvider>(context, listen: false)

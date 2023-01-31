@@ -82,7 +82,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                 menuRow(width, groupProvider, height, context),
                                 Column(
                                   children: [
-                                    createPostWidget(context, authProvider, isForGroup: true, groupPageID: int.parse(widget.groupID)),
+                                    createPostWidget( isForGroup: true, groupPageID: int.parse(widget.groupID)),
 
                                     /*----------------------------------------Newsfeed---------------------------------*/
                                     const SizedBox(height: 15),

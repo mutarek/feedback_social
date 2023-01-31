@@ -230,7 +230,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                   children: [
                                     groupProvider.groupDetailsModel.isMember == false
                                         ? const SizedBox.shrink()
-                                        : createPostWidget(context, authProvider, isForGroup: true, groupPageID: int.parse(widget.groupID)),
+                                        : createPostWidget( isForGroup: true, groupPageID: int.parse(widget.groupID)),
 
                                     /*----------------------------------------Newsfeed---------------------------------*/
                                     const SizedBox(height: 15),

@@ -221,7 +221,7 @@ class _UserPageScreenState extends State<UserPageScreen> {
                               physics: const ScrollPhysics(),
                               child: Column(
                                 children: [
-                                  createPostWidget(context, authProvider, isForPage: true, groupPageID: int.parse(widget.pageID)),
+                                  createPostWidget( isForPage: true, groupPageID: int.parse(widget.pageID)),
                                   /*----------------------------------------Newsfeed---------------------------------*/
                                   const SizedBox(height: 15),
                                   ListView.builder(

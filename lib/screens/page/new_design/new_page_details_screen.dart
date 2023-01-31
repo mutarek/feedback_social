@@ -63,7 +63,7 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // TODO: Post Container
-          tabButtonWidget(0, "Posts", pageProvider),
+          tabButtonWidget(0, "Home", pageProvider),
           tabButtonWidget(1, "About", pageProvider),
           tabButtonWidget(2, "Photos", pageProvider),
           tabButtonWidget(3, "Live", pageProvider),

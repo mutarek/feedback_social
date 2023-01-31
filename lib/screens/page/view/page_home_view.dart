@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
 import 'package:als_frontend/screens/page/widget/new_page_details_header_widget.dart';
 import 'package:als_frontend/screens/page/widget/new_page_like_following_widget.dart';
 import 'package:als_frontend/screens/post/widget/post_widget.dart';
@@ -72,10 +73,11 @@ class _PageHomeViewState extends State<PageHomeView> {
                     ? const SizedBox.shrink()
                     : infoWidget(ImagesModel.websiteIcons, widget.authorPage.website!, const SizedBox.shrink()),
                 SizedBox(height: widget.authorPage.website!.isEmpty ? 0 : 20),
-                const Divider(thickness: 1.8, color: Color(0xffE4E6EB)),
-                //Padding(padding: const EdgeInsets.only(left: 18), child: Text("Posts", style: robotoStyle700Bold.copyWith(fontSize: 16))),
-                const SizedBox(height: 10),
-
+                Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color(0xffE4E6EB), width: 2))),
+                    child: createPostWidget(isForPage: true, groupPageID: widget.authorPage.id as int)),
+                const SizedBox(height: 15),
                 ListView.builder(
                     itemCount: pageProvider.pageAllPosts.length,
                     shrinkWrap: true,

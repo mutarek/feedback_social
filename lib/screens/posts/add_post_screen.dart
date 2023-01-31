@@ -7,6 +7,7 @@ import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/posts/view/video_view.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
+import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
@@ -75,7 +76,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.photo_camera_back, size: 20, color: Colors.grey),
+                            const Icon(Icons.add_photo_alternate_rounded, size: 20, color: colorText),
                             const SizedBox(width: 5),
                             CustomText(title: LocaleKeys.photos.tr(), textStyle: latoStyle700Bold.copyWith()),
                           ],
@@ -90,21 +91,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(CupertinoIcons.video_camera, size: 28, color: Colors.grey),
+                            const Icon(CupertinoIcons.videocam_fill, size: 28, color: colorText),
                             const SizedBox(width: 5),
                             CustomText(title: LocaleKeys.video.tr(), textStyle: latoStyle700Bold.copyWith()),
                           ],
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.calendar_month, size: 20, color: Colors.grey),
-                          const SizedBox(width: 5),
-                          CustomText(title: LocaleKeys.event.tr(), textStyle: latoStyle700Bold.copyWith()),
-                        ],
                       ),
                     ),
                   ],
@@ -159,7 +150,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     decoration: BoxDecoration(
                         color: Colors.blue.withOpacity(.3),
                         borderRadius: const BorderRadius.only(bottomRight: Radius.circular(10), topRight: Radius.circular(10))),
-                    child: const Icon(Icons.send, color: Color(0xff031765)),
+                    child: const Icon(Icons.send, color: colorText),
                   ),
                 );
               })
@@ -189,16 +180,15 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       circularImage(widget.profileImage, 30, 30),
-                      // CircleAvatar(backgroundImage:CachedNetworkImageProvider(widget.profileImage),
-                      //     backgroundColor: Colors.grey.withOpacity(.4)),
                       Expanded(
                           child: CustomTextField(
-                        hintText: LocaleKeys.write_Something.tr(),
+                        hintText: 'Write Something .....',
                         fillColor: Colors.transparent,
                         isCancelShadow: true,
                         borderRadius: 0,
                         horizontalSize: 9,
                         maxLines: null,
+                        textColor: colorText,
                         controller: descriptionController,
                         inputAction: TextInputAction.done,
                       )),

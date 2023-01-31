@@ -79,7 +79,7 @@ class PageRepo {
   Future<ApiResponse> callForGetPageAllPosts(String pageID,int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response = await dioClient.get("/page/post/$pageID/list/?page=$page");
+      response = await dioClient.get("/page/post/$pageID/list-create/?page=$page");
       return ApiResponse.withSuccess(response);
     }
     catch(e){
