@@ -165,7 +165,7 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> pageLikeorUnlike(String pageId) async{
+  Future<ApiResponse> pageLikeOrUnlike(String pageId) async{
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
       response = await dioClient.post("/page/user/like/$pageId/create/",data: {});
