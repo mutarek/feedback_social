@@ -393,6 +393,15 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  pageLikeOrUnlike (String pageID) async{
+    ApiResponse response = await pageRepo.pageLikeOrUnlike(pageID.toString());
+    if(response.response.statusCode == 200){
+      Fluttertoast.showToast(msg: "Liked");
+    }else{
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+  }
+
 
   pageLikeUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
     ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString());

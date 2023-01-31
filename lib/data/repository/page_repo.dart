@@ -124,7 +124,7 @@ class PageRepo {
   Future<ApiResponse> callForGetPageDetails(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response = await dioClient.get("${AppConstant.pageURI}$pageID/");
+      response = await dioClient.get("${AppConstant.pageURI}$pageID/up-del-retr/");
       return ApiResponse.withSuccess(response);
     }
     catch(e){
@@ -179,7 +179,7 @@ class PageRepo {
   Future<ApiResponse> pageLikeUnlike(String pageId) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response = await dioClient.post("/page/$pageId/like/",data: {});
+      response = await dioClient.post("/page/user/like/$pageId/create/",data: {});
       return ApiResponse.withSuccess(response);
     }
     catch(e){

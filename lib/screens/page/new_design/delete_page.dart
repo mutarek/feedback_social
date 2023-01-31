@@ -24,7 +24,7 @@ class _DeletePageState extends State<DeletePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PageAppBar(title: 'Delete Page'),
+      appBar: const PageAppBar(title: 'Delete Page'),
       body: Consumer<PageProvider>(builder: (context, pageProvider, child) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
