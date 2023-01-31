@@ -207,11 +207,21 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> invitationCreate(int pageId, List<int> users) async {
+  Future<ApiResponse> invitationCreate(int pageID, List<int> users) async {
     Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
 
-      response = await dioClient.post(AppConstant.invitationCreateURI, data: {"page": pageId, "users": users});
+      response = await dioClient.post(AppConstant.invitationCreateURI, data: {"page": pageID, "users": users});
+      response = await dioClient.get("/page/$pageID/up-del-retr/",);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+  Future<ApiResponse> pageAllPhotos(int pageID,) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("/page/image/$pageID/list/",);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

@@ -8,6 +8,7 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
 import 'package:als_frontend/data/model/response/page/page_details_model.dart';
+import 'package:als_frontend/data/model/response/page/page_photos_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/page_repo.dart';
@@ -738,8 +739,7 @@ class PageProvider with ChangeNotifier {
   }
 
   //TODO: page details api instigation
-  PageDetailsModel? pageDetailsList;
-
+  PageDetailsModel? pageDetailsList ;
   bool isLoadingPageDetails = false;
 
   pageDetails(int pageID) async {
@@ -750,7 +750,23 @@ class PageProvider with ChangeNotifier {
     isLoadingPageDetails = false;
     if (response.response.statusCode == 200) {
       pageDetailsList = PageDetailsModel.fromJson(response.response.data);
-      notifyListeners();
+        notifyListeners();
+
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+//TODO: page Photos api instigation
+  List<PagePhotosModel> pagePhotosModel = [];
+  bool isPhotosLoading = true;
+  pageAllPhotos(int pageID) async {
+    ApiResponse response = await pageRepo.pageAllPhotos(pageID);
+    isPhotosLoading = false;
+    if (response.response.statusCode == 200) {
+      response.response.data.forEach((element) {
+        pagePhotosModel.add(PagePhotosModel.fromJson(element));
+      });
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
