@@ -1,7 +1,9 @@
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -34,75 +36,80 @@ class NewSuggestedPageScreen extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       AuthorPageModel authorPageModel = pageProvider.allSuggestPageList[index];
-                      return Container(
-                        decoration: BoxDecoration(
-                            color: const Color(0xffFAFAFA),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-                            ],
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Stack(
-                              children: [
-                                const SizedBox(height: 120),
-                                ClipRRect(
-                                    borderRadius: const BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15)),
-                                    child: customNetworkImage(authorPageModel.coverPhoto!, height: 90)),
-                                Positioned(
-                                    bottom: 0,
-                                    child: CircleAvatar(
-                                        radius: 22,
-                                        backgroundColor: Colors.white,
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(3.0), child: circularImage(authorPageModel.avatar!, 40, 40)))),
+                      return InkWell(
+                        onTap: (){
+                          Helper.toScreen(NewPageDetailsScreen(authorPageModel, isAdmin: false));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: const Color(0xffFAFAFA),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
                               ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5),
-                              child: Text(authorPageModel.name!,
-                                  textAlign: TextAlign.center,
-                                  style: robotoStyle700Bold.copyWith(fontSize: 15, overflow: TextOverflow.ellipsis),
-                                  maxLines: 2),
-                            ),
-                            const SizedBox(height: 5),
-                            Text(authorPageModel.category!,
-                                textAlign: TextAlign.center, style: robotoStyle500Medium.copyWith(fontSize: 10)),
-                            const SizedBox(height: 5),
-                            Text('${authorPageModel.followers!} People following',
-                                textAlign: TextAlign.center, style: robotoStyle500Medium.copyWith(fontSize: 10)),
-                            const SizedBox(height: 5),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 15),
-                              child: RoundedButton(
-                                padding: 0,
-                                onPress: () {
-                                  pageProvider.pageLikeUnlike1(authorPageModel.id as int,
-                                      isFromMyPageScreen: false, index: index, isFromSuggestedPage: true);
-                                },
-                                backgroundColor: MaterialStateProperty.all(colorText),
-                                boarderRadius: 100,
-                                child: Container(
-                                  height: 30,
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(ImagesModel.likeIcons, width: 15, height: 15, color: Colors.white),
-                                      const SizedBox(width: 6),
-                                      Text(
-                                        'Like',
-                                        style: robotoStyle500Medium.copyWith(color: AppColors.whiteColorLight, fontSize: 14),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Stack(
+                                children: [
+                                  const SizedBox(height: 120),
+                                  ClipRRect(
+                                      borderRadius: const BorderRadius.only(topRight: Radius.circular(15), topLeft: Radius.circular(15)),
+                                      child: customNetworkImage(authorPageModel.coverPhoto!, height: 90)),
+                                  Positioned(
+                                      bottom: 0,
+                                      child: CircleAvatar(
+                                          radius: 22,
+                                          backgroundColor: Colors.white,
+                                          child: Padding(
+                                              padding: const EdgeInsets.all(3.0), child: circularImage(authorPageModel.avatar!, 40, 40)))),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                child: Text(authorPageModel.name!,
+                                    textAlign: TextAlign.center,
+                                    style: robotoStyle700Bold.copyWith(fontSize: 15, overflow: TextOverflow.ellipsis),
+                                    maxLines: 2),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(authorPageModel.category!,
+                                  textAlign: TextAlign.center, style: robotoStyle500Medium.copyWith(fontSize: 10)),
+                              const SizedBox(height: 5),
+                              Text('${authorPageModel.followers!} People following',
+                                  textAlign: TextAlign.center, style: robotoStyle500Medium.copyWith(fontSize: 10)),
+                              const SizedBox(height: 5),
+                              Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 15),
+                                child: RoundedButton(
+                                  padding: 0,
+                                  onPress: () {
+                                    pageProvider.pageLikeUnlike1(authorPageModel.id as int,
+                                        isFromMyPageScreen: false, index: index, isFromSuggestedPage: true);
+                                  },
+                                  backgroundColor: MaterialStateProperty.all(colorText),
+                                  boarderRadius: 100,
+                                  child: Container(
+                                    height: 30,
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(ImagesModel.likeIcons, width: 15, height: 15, color: Colors.white),
+                                        const SizedBox(width: 6),
+                                        Text(
+                                          'Like',
+                                          style: robotoStyle500Medium.copyWith(color: AppColors.whiteColorLight, fontSize: 14),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     })

@@ -46,10 +46,10 @@ class AppConstant {
   static const String notificationUnreadCountURI = '/notification/count/unread/';
   static const String notificationReadCountURI = '/notification/counter/read/';
   static const String passwordUpdate = '/accounts/password/change/';
-  static const String pageAuthorURI = '/page/author-page/';
-  static const String pageSuggestedURI = '/page/suggested-page/';
+  static const String pageAuthorURI = '/page/author-page/list/';
+  static const String pageSuggestedURI = '/page/suggested-page/list/';
   static const String pageLikeAllURI = '/page/like-page-list/';
-  static const String pageCategoryURI = '/page/category/';
+  static const String pageCategoryURI = '/page/category/list/';
   static const String pageURI = '/page/';
   static const String postPageURI = '/posts/page/';
   static const String emailUpdate = '/settings/change-email/';

@@ -24,6 +24,38 @@ class PageProvider with ChangeNotifier {
 
   bool isLoading = false;
 
+  //TODO: FOR DELETE PAGE
+  bool isButtonShow = false;
+
+  changeButtonStatus(String query) {
+    if (query == "MyPage") {
+      isButtonShow = true;
+      notifyListeners();
+    } else {
+      isButtonShow = false;
+      notifyListeners();
+    }
+  }
+
+
+
+  deleteSinglePage(String pageId,Function callback) async {
+    isLoading = true;
+    notifyListeners();
+    ApiResponse apiResponse = await pageRepo.deleteSinglePage(pageId);
+    if (apiResponse.response.statusCode == 200) {
+      isLoading = false;
+      callback(true);
+      Fluttertoast.showToast(msg: "Page Deleted Successfully");
+      notifyListeners();
+    } else {
+      isLoading = false;
+      callback(false);
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+      notifyListeners();
+    }
+  }
+
   //TODO: for get ALl Liked Page
   List<AuthorPageModel> likedPageLists = [];
 
@@ -150,19 +182,18 @@ class PageProvider with ChangeNotifier {
   //TODO: FOR GETTING INDIVIDUAL PAGE DETAILS
   IndividualPageDetailsModel? individualPageDetailsModel;
 
-  callForGetIndividualPageDetails(String id) async{
+  callForGetIndividualPageDetails(String id) async {
     isLoading = true;
     individualPageDetailsModel = IndividualPageDetailsModel();
     ApiResponse response = await pageRepo.callForGetIndividualPageDetails(id);
-    if(response.response.statusCode == 200){
+    if (response.response.statusCode == 200) {
       individualPageDetailsModel = IndividualPageDetailsModel.fromJson(response.response.data);
-    }else{
+    } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     isLoading = false;
     notifyListeners();
   }
-
 
   AuthorPageDetailsModel? pageDetailsModel;
 
@@ -240,7 +271,8 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  editPage(String name,String bio,String desc,String category,String number,String email,String website,String address,String pageId,Function callBack)async{
+  editPage(String name, String bio, String desc, String category, String number, String email, String website, String address,
+      String pageId, Function callBack) async {
     isLoading = true;
     notifyListeners();
     ApiResponse response;
@@ -253,14 +285,13 @@ class PageProvider with ChangeNotifier {
     formData.fields.add(MapEntry('email', email));
     formData.fields.add(MapEntry('website', website));
     formData.fields.add(MapEntry('address', address));
-    response = await pageRepo.updatePageWithImageUpload(formData,pageId);
-    if(response.response.statusCode == 200){
+    response = await pageRepo.updatePageWithImageUpload(formData, pageId);
+    if (response.response.statusCode == 200) {
       isLoading = false;
       callBack(true);
       notifyListeners();
       Fluttertoast.showToast(msg: "Page Update Successfully");
-    }
-    else{
+    } else {
       isLoading = false;
       callBack(false);
       notifyListeners();
@@ -587,6 +618,7 @@ class PageProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
   List<FindPageModel> findPageModel = [];
   bool isLoadingFindPage = false;
 
