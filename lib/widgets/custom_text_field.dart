@@ -55,7 +55,7 @@ class CustomTextField extends StatefulWidget {
       this.hintFontSize = 15,
       this.onSuffixTap,
       this.fillColor,
-      this.textColor,
+      this.textColor = colorText,
       this.onSubmit,
       this.onChanged,
       this.capitalization = TextCapitalization.none,
@@ -129,24 +129,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
           contentPadding: EdgeInsets.symmetric(vertical: widget.verticalSize!, horizontal: widget.horizontalSize!),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
-              borderSide: BorderSide(
-                  color: widget.isShowBorder! ? colorText : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
+              borderSide: BorderSide(color: widget.isShowBorder! ? colorText : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
           disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
-              borderSide: BorderSide(
-                  color: widget.isShowBorder! ? colorText : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
+              borderSide: BorderSide(color: widget.isShowBorder! ? colorText : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
-              borderSide: BorderSide(
-                  color: widget.isShowBorder! ? colorText : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
+              borderSide: BorderSide(color: widget.isShowBorder! ? colorText : Colors.transparent, width: widget.isShowBorder! ? 1 : 0)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius!),
-              borderSide: BorderSide(
-                  color: widget.isShowBorder! ? colorPrimaryLight : Colors.transparent, width: widget.isShowBorder! ? 1 : 1)),
+              borderSide:
+                  BorderSide(color: widget.isShowBorder! ? colorPrimaryLight : Colors.transparent, width: widget.isShowBorder! ? 1 : 1)),
           isDense: true,
           hintText: widget.hintText,
           fillColor: widget.fillColor ?? textFieldFillColor,
-          hintStyle: input.copyWith(fontSize: widget.hintFontSize, color: widget.textColor ?? AppColors.hintTextColorLight),
+          hintStyle: input.copyWith(fontSize: widget.hintFontSize, color: widget.textColor!.withOpacity(.5)),
           filled: true,
           prefixIcon: widget.isShowPrefixIcon!
               ? Padding(
@@ -158,8 +155,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           suffixIcon: widget.isShowSuffixIcon! && !widget.isShowSuffixWidget!
               ? widget.isPassword!
                   ? InkWell(
-                      onTap: _toggle,
-                      child: Icon(!_obscureText ? Icons.visibility_off : Icons.visibility, color: AppColors.grey, size: 23))
+                      onTap: _toggle, child: Icon(!_obscureText ? Icons.visibility_off : Icons.visibility, color: AppColors.grey, size: 23))
                   : widget.isIcon!
                       ? IconButton(
                           onPressed: widget.onSuffixTap,

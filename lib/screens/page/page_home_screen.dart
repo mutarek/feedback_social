@@ -17,8 +17,22 @@ import 'package:provider/provider.dart';
 
 import 'new_design/create_page1.dart';
 
-class PageHomeScreen extends StatelessWidget {
+class PageHomeScreen extends StatefulWidget {
   const PageHomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<PageHomeScreen> createState() => _PageHomeScreenState();
+}
+
+class _PageHomeScreenState extends State<PageHomeScreen> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<PageProvider>(context, listen: false).initializeAuthorPageLists();
+  }
 
   @override
   Widget build(BuildContext context) {

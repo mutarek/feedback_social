@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: <Widget>[
                             Container(
                                 margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                child: createPostWidget(context, authProvider, newsFeedProvider: newsFeedProvider, isForGroup: false)),
+                                child: createPostWidget(  isForGroup: false)),
                             postProvider.isLoading
                                 ? Visibility(
                                     visible: true,

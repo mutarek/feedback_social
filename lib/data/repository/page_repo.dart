@@ -91,7 +91,7 @@ class PageRepo {
   Future<ApiResponse> callForGetPageAllPosts(String pageID,int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try{
-      response = await dioClient.get("/page/post/$pageID/list/?page=$page");
+      response = await dioClient.get("/page/post/$pageID/list-create/?page=$page");
       return ApiResponse.withSuccess(response);
     }
     catch(e){
@@ -190,6 +190,15 @@ class PageRepo {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("/page/search/?q=$findPageName",);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+  Future<ApiResponse> pageDetails(int pageID,) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("/page/$pageID/",);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

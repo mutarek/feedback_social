@@ -50,7 +50,7 @@ class PostRepo {
 
   Future<ApiResponse> submitPostTOPageBYUSINGPageID(FormData formData, int pageID,{onSendProgress}) async {
     try {
-      response = await dioClient.post("${AppConstant.postPageURI}$pageID/", data: formData,onSendProgress: onSendProgress);
+      response = await dioClient.post("${AppConstant.postPageURI}$pageID/list-create/", data: formData,onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

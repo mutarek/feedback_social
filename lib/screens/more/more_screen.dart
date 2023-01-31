@@ -85,7 +85,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Provider.of<PageProvider>(context, listen: false).initializeAuthorPageLists();
+
                       Helper.toScreen(const PageHomeScreen());
                       // Helper.toScreen(const LikedPageSuggestedPage());
                     },

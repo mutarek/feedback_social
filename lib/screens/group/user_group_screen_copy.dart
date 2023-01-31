@@ -216,7 +216,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                                     child: Column(
                                       children: [
 
-                                        createPostWidget(context, authProvider, isForGroup: true, groupPageID: int.parse(widget.groupID)),
+                                        createPostWidget( isForGroup: true, groupPageID: int.parse(widget.groupID)),
 
                                         /*----------------------------------------Newsfeed---------------------------------*/
                                         const SizedBox(height: 15),
