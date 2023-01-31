@@ -82,7 +82,7 @@ class _PageAboutViewWidgetState extends State<PageAboutViewWidget> {
             const SizedBox(height: 2),
             Padding(padding: const EdgeInsets.only(left: 15), child: Text("Page Info", style: robotoStyle700Bold.copyWith(fontSize: 17))),
             const SizedBox(height: 10),
-            pageProvider.pageDetailsList!.author.fullName.isNotEmpty?infoWidget(ImagesModel.adminIcons, pageProvider.pageDetailsList!.author.fullName, Text('Admin - ', style: robotoStyle800ExtraBold.copyWith(fontSize: 15))):const SizedBox.shrink(),
+            pageProvider.pageDetailsList!.author.fullName!.isNotEmpty?infoWidget(ImagesModel.adminIcons, pageProvider.pageDetailsList!.author.fullName!, Text('Admin - ', style: robotoStyle800ExtraBold.copyWith(fontSize: 15))):const SizedBox.shrink(),
             const SizedBox(height: 10),
             infoWidget(ImagesModel.dateIcons, "${pageProvider.pageDetailsList!.createdAt.day} day ago", Text('Created Date - ', style: robotoStyle800ExtraBold.copyWith(fontSize: 15))),
             const SizedBox(height: 10),

@@ -31,9 +31,11 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                       child: InkWell(
                         onTap: () {
                           Provider.of<PageProvider>(context, listen: false).callForGetIndividualPageDetails(authorPage.id.toString());
-                          isAdmin?
-                              Helper.toScreen(PageDashboard(authorPage.id.toString())):
-                          showMessage(message: "Ops You don't have access");
+                          Provider.of<PageProvider>(context, listen: false).resetDashboardButton();
+
+                          isAdmin
+                              ? Helper.toScreen(PageDashboard(authorPage.id.toString()))
+                              : showMessage(message: "Ops You don't have access");
                         },
                         child: Container(
                           height: 40,
@@ -56,9 +58,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                         children: [
                           Expanded(
                             child: InkWell(
-                              onTap: (){
-
-                              },
+                              onTap: () {},
                               child: Container(
                                 height: 40,
                                 decoration: BoxDecoration(

@@ -50,6 +50,7 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? onTap;
   final String? btnTxt;
   final Color? backgroundColor;
+  final Color? borderColor;
   final double? height;
   final bool? isStroked;
   final bool? isShowRightIcon;
@@ -64,8 +65,9 @@ class CustomButton extends StatelessWidget {
 
   const CustomButton(
       {this.onTap,
-      @required this.btnTxt,
+      required this.btnTxt,
       this.backgroundColor = colorText,
+      this.borderColor = Colors.transparent,
       this.height = 45.0,
       this.fontSize = 16.0,
       this.isStroked = false,
@@ -91,6 +93,7 @@ class CustomButton extends StatelessWidget {
         height: height,
         padding: EdgeInsets.fromLTRB(leftPadding!, topPadding!, rightPadding!, bottomPadding!),
         alignment: Alignment.center,
+
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

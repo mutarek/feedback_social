@@ -79,7 +79,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                               CircleAvatar(
                                 radius: 15,
                                 backgroundColor: AppColors.primaryColorLight,
-                                child: pageProvider.pageExpended != true
+                                child: pageProvider.statusInviteFriendButton != true
                                     ? const Icon(Icons.arrow_drop_down, color: Colors.white)
                                     : const Icon(Icons.arrow_drop_up, color: Colors.white),
                               )
@@ -89,7 +89,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    pageProvider.pageExpended == true
+                    pageProvider.statusInviteFriendButton == true
                         ? SizedBox(
                             height: 300,
                             child: pageProvider.authorPageLists.isNotEmpty

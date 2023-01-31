@@ -2,7 +2,10 @@ import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/network_image.dart';
+import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +15,7 @@ import 'new_design/delete_page.dart';
 import 'new_design/edit_page/edit_page1.dart';
 
 class PageDashboard extends StatefulWidget {
-  const PageDashboard(this.pageId,{Key? key}) : super(key: key);
+  const PageDashboard(this.pageId, {Key? key}) : super(key: key);
   final String pageId;
 
   @override
@@ -69,14 +72,13 @@ class _PageDashboardState extends State<PageDashboard> {
                           ),
                           const SizedBox(width: 10),
                           CircleAvatar(
-                            radius: 15,
-                            backgroundColor: AppColors.primaryColorLight,
-                            child: InkWell(
-                                onTap: () {
-                                  Helper.toScreen(EditPage1(widget.pageId));
-                                },
-                                child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white))
-                          )
+                              radius: 15,
+                              backgroundColor: AppColors.primaryColorLight,
+                              child: InkWell(
+                                  onTap: () {
+                                    Helper.toScreen(EditPage1(widget.pageId));
+                                  },
+                                  child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white)))
                         ],
                       ),
                     ),
@@ -94,22 +96,10 @@ class _PageDashboardState extends State<PageDashboard> {
                           CircleAvatar(
                             radius: 20,
                             backgroundColor: Colors.white,
-                            child: SvgPicture.asset(
-                              "assets/svg/invite_friends.svg",
-                              height: 20,
-                              width: 34,
-                            ),
+                            child: SvgPicture.asset("assets/svg/invite_friends.svg", height: 20, width: 34),
                           ),
                           const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Invites Friend", style: robotoStyle700Bold.copyWith(fontSize: 22)),
-                              ],
-                            ),
-                          ),
+                          Expanded(child: Text("Invites Friend", style: robotoStyle700Bold.copyWith(fontSize: 22))),
                           const SizedBox(width: 10),
                           CircleAvatar(
                             radius: 15,
@@ -117,9 +107,8 @@ class _PageDashboardState extends State<PageDashboard> {
                             child: InkWell(
                                 onTap: () {
                                   pageProvider.changeExpended();
-                                  showLog(pageProvider.pageExpended);
                                 },
-                                child: pageProvider.pageExpended != true
+                                child: pageProvider.statusInviteFriendButton != true
                                     ? const Icon(Icons.arrow_drop_down, color: Colors.white)
                                     : const Icon(Icons.arrow_drop_up, color: Colors.white)),
                           )
@@ -128,93 +117,136 @@ class _PageDashboardState extends State<PageDashboard> {
                     ),
                   ),
                 ),
-                pageProvider.pageExpended == true
+                pageProvider.statusInviteFriendButton == true
                     ? SizedBox(
-                        height: 250,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20, right: 20),
-                                    child: Container(
-                                      height: 48.0,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: AppColors.primaryColorLight),
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          const Expanded(
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintText: "Search..",
-                                                  hintStyle: TextStyle(color: Colors.black)),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
-                                              height: 38,
-                                              width: 71,
-                                              child: Center(
-                                                child: Text('Search',
-                                                    style:
-                                                        GoogleFonts.roboto(fontWeight: FontWeight.w300, fontSize: 12, color: Colors.white)),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                        height: 350,
+                        child: pageProvider.isLoadingInviteFriend
+                            ? const Center(child: CircularProgressIndicator())
+                            : Padding(
+                                padding: const EdgeInsets.only(left: 20, right: 20),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
+                                    child: Column(
+                                      children: [
+                                        // Padding(
+                                        //   padding: const EdgeInsets.only(left: 20, right: 20),
+                                        //   child: Container(
+                                        //     height: 48.0,
+                                        //     width: double.infinity,
+                                        //     decoration: BoxDecoration(
+                                        //         border: Border.all(color: AppColors.primaryColorLight),
+                                        //         borderRadius: BorderRadius.circular(25)),
+                                        //     child: Row(
+                                        //       children: [
+                                        //         Expanded(
+                                        //           child: TextField(
+                                        //             decoration: const InputDecoration(
+                                        //                 border: InputBorder.none,
+                                        //                 hintText: "Search..",
+                                        //                 focusedBorder: InputBorder.none,
+                                        //                 hintStyle: TextStyle(color: Colors.black)),
+                                        //             onChanged: (value) {},
+                                        //           ),
+                                        //         ),
+                                        //         Padding(
+                                        //           padding: const EdgeInsets.all(2),
+                                        //           child: Container(
+                                        //             decoration: BoxDecoration(
+                                        //                 borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
+                                        //             height: 38,
+                                        //             width: 71,
+                                        //             child: Center(
+                                        //               child: Text('Search',
+                                        //                   style: robotoStyle300Light.copyWith(fontSize: 12, color: Colors.white)),
+                                        //             ),
+                                        //           ),
+                                        //         )
+                                        //       ],
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                        // const SizedBox(height: 5),
+                                        Expanded(
+                                          child: ListView.builder(
+                                              itemCount: pageProvider.invitePageAllLists.length,
+                                              shrinkWrap: true,
+                                              physics: BouncingScrollPhysics(),
+                                              itemBuilder: (context, index) {
+                                                return Container(
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                          width: 30,
+                                                          height: 30,
+                                                          child:
+                                                              circularImage(pageProvider.invitePageAllLists[index].profileImage!, 30, 30)),
+                                                      SizedBox(width: 10),
+                                                      Expanded(
+                                                        child: Text(pageProvider.invitePageAllLists[index].fullName!,
+                                                            style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                      ),
+                                                      Checkbox(
+                                                        value: pageProvider.invitePageFriendSelect[index],
+                                                        onChanged: (value) {
+                                                          pageProvider.changeInviteFriendSelectFriend(index, value!);
+                                                        },
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              }),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        pageProvider.isBottomLoadingInviteFriend
+                                            ? const CircularProgressIndicator()
+                                            : pageProvider.hasNextDataInviteFriend
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      pageProvider.updateInviteFriendPageNo();
+                                                    },
+                                                    child: Container(
+                                                      height: 30,
+                                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: colorText), borderRadius: BorderRadius.circular(22)),
+                                                      child:
+                                                          Text('Load more Friend', style: robotoStyle500Medium.copyWith(color: colorText)),
+                                                    ),
+                                                  )
+                                                : const SizedBox.shrink(),
+                                        const SizedBox(height: 5),
+                                        Container(
+                                          height: 30,
+                                          width: MediaQuery.of(context).size.width,
+                                          child: pageProvider.isLoadingInviteFriend2
+                                              ? Center(child: CircularProgressIndicator())
+                                              : CustomButton(
+                                                  btnTxt: 'Send invitations',
+                                                  height: 30,
+                                                  onTap: () {
+                                                    bool isSelectAtLeastOne = false;
+                                                    for (int i = 0; i < pageProvider.invitePageFriendSelect.length; i++) {
+                                                      if (pageProvider.invitePageFriendSelect[i] == true) {
+                                                        isSelectAtLeastOne = true;
+                                                        break;
+                                                      }
+                                                    }
+                                                    if(isSelectAtLeastOne==true){
+                                                      pageProvider.sentInviteFriend(int.parse(widget.pageId));
+                                                    }else{
+                                                      showMessage(message: 'Please Select at least one Friend');
+                                                    }
+
+                                                  },
+                                                ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Expanded(
-                                    child: ListView.builder(
-                                        itemCount: 10,
-                                        itemBuilder: (context, index) {
-                                          return ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
-                                            ),
-                                            title: Text('Rafatul Islam',style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),),
-                                            trailing: Checkbox(
-                                              value: index % 2 == 0 ? true : false,
-                                              onChanged: (value) {},
-                                            ),
-                                          );
-                                        }),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    height: 25,
-                                    width: 250,
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(45), color: AppColors.primaryColorLight),
-                                    child: Center(
-                                      child: Text('Send invitations',
-                                          style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 13, color: Colors.white)),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ))
+                                ),
+                              ))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
                 Card(
@@ -722,7 +754,7 @@ class _PageDashboardState extends State<PageDashboard> {
                             child: InkWell(
                                 onTap: () {
                                   pageProvider.changeAllFollowerExpanded();
-                                  showLog(pageProvider.pageExpended);
+                                  showLog(pageProvider.statusInviteFriendButton);
                                 },
                                 child: pageProvider.allFollower != true
                                     ? const Icon(Icons.arrow_drop_down, color: Colors.white)
@@ -792,17 +824,17 @@ class _PageDashboardState extends State<PageDashboard> {
                                             leading: CircleAvatar(
                                               backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
                                             ),
-                                            title: Text('Rafatul Islam',style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: AppColors.primaryColorLight),),
+                                            title: Text(
+                                              'Rafatul Islam',
+                                              style: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.primaryColorLight),
+                                            ),
                                           );
                                         }),
                                   ),
                                   const SizedBox(
                                     height: 5,
                                   ),
-
                                 ],
                               ),
                             ),
@@ -834,7 +866,8 @@ class _PageDashboardState extends State<PageDashboard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Delete Page", style: robotoStyle700Bold.copyWith(fontSize: 20)),
-                                Text("Once you delete a page, there is no going back. Please be certain.", style: robotoStyle700Bold.copyWith(fontSize: 8)),
+                                Text("Once you delete a page, there is no going back. Please be certain.",
+                                    style: robotoStyle700Bold.copyWith(fontSize: 8)),
                               ],
                             ),
                           ),
@@ -846,8 +879,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                   onTap: () {
                                     Helper.toScreen(DeletePage(widget.pageId));
                                   },
-                                  child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white))
-                          )
+                                  child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white)))
                         ],
                       ),
                     ),

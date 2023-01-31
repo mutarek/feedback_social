@@ -13,192 +13,205 @@ class PageRepo {
 
   Future<ApiResponse> deleteSinglePage(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.delete("${AppConstant.pageURI}$pageID/up-del-retr/");
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-
   Future<ApiResponse> getAuthorPage() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.get(AppConstant.pageAuthorURI);
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> getAllSuggestedPage() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.get(AppConstant.pageSuggestedURI);
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+
   Future<ApiResponse> getAllLikedPageLists() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.get(AppConstant.pageLikeAllURI);
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> getCategory() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.get(AppConstant.pageCategoryURI);
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> createPageWithoutImageUpload(Map map) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
-      response = await dioClient.post(AppConstant.pageURI,data: map);
+    try {
+      response = await dioClient.post(AppConstant.pageURI, data: map);
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> createPageWithImageUpload(FormData formData) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
-      response = await dioClient.post(AppConstant.baseUrl+AppConstant.pageURI,data: formData);
+    try {
+      response = await dioClient.post(AppConstant.baseUrl + AppConstant.pageURI, data: formData);
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<ApiResponse> callForGetPageAllPosts(String pageID,int page) async {
+  Future<ApiResponse> callForGetPageAllPosts(String pageID, int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.get("/page/post/$pageID/list-create/?page=$page");
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> callForGetPageAllImages(String pageId) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.get("/page/$pageId/image/list/");
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> callForGetPageAllVideo(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.get("/page/$pageID/video/list/");
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> callForGetPageDetails(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.get("${AppConstant.pageURI}$pageID/");
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> callForGetIndividualPageDetails(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.get("${AppConstant.pageURI}$pageID/up-del-retr/");
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> updatePageWithoutImageUpload(Map map, int pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.patch("${AppConstant.pageURI}$pageID/", data: map);
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> updatePageWithImageUpload(FormData formData, String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
+    try {
       response = await dioClient.patch("${AppConstant.pageURI}$pageID/up-del-retr/", data: formData);
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<ApiResponse> pageLikeorUnlike(String pageId) async{
+  Future<ApiResponse> pageLikeorUnlike(String pageId) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
-      response = await dioClient.post("/page/user/like/$pageId/create/",data: {});
+    try {
+      response = await dioClient.post("/page/user/like/$pageId/create/", data: {});
       return ApiResponse.withSuccess(response);
-    }
-    catch(e){
+    } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
   Future<ApiResponse> pageLikeUnlike(String pageId) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
-      response = await dioClient.post("/page/$pageId/like/",data: {});
-      return ApiResponse.withSuccess(response);
-    }
-    catch(e){
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
-  Future<ApiResponse> findPage(String findPageName,) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get("/page/search/?q=$findPageName",);
+      response = await dioClient.post("/page/$pageId/like/", data: {});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-  Future<ApiResponse> pageDetails(int pageID,) async {
+
+  Future<ApiResponse> findPage(
+    String findPageName,
+  ) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get("/page/$pageID/",);
+      response = await dioClient.get("/page/search/?q=$findPageName");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> pageDetails(
+    int pageID,
+  ) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(
+        "/page/$pageID/",
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> invitationFriend(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
+    try {
+      response = await dioClient.get("${AppConstant.invitationFriendURI}?page=$page");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> invitationCreate(int pageId, List<int> users) async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
+    try {
+
+      response = await dioClient.post(AppConstant.invitationCreateURI, data: {"page": pageId, "users": users});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

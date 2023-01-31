@@ -1,3 +1,5 @@
+import '../news_feed_model.dart';
+
 class AuthorPageDetailsModel {
   AuthorPageDetailsModel({
     this.id,
@@ -271,32 +273,6 @@ class Page {
     map['category'] = category;
     map['cover_photo'] = coverPhoto;
     map['avatar'] = avatar;
-    return map;
-  }
-}
-
-class Author {
-  Author({
-    this.id,
-    this.fullName,
-    this.profileImage,
-  });
-
-  Author.fromJson(dynamic json) {
-    id = json['id'];
-    fullName = json['full_name'];
-    profileImage = json['profile_image'];
-  }
-
-  num? id;
-  String? fullName;
-  String? profileImage;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['full_name'] = fullName;
-    map['profile_image'] = profileImage;
     return map;
   }
 }

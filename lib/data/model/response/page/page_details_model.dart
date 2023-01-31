@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import '../news_feed_model.dart';
+
 PageDetailsModel pageDetailsModelFromJson(String str) => PageDetailsModel.fromJson(json.decode(str));
 
 String pageDetailsModelToJson(PageDetailsModel data) => json.encode(data.toJson());
@@ -97,29 +99,5 @@ class PageDetailsModel {
     "like": like,
     "total_like": totalLike,
     "liked_by": List<dynamic>.from(likedBy.map((x) => x)),
-  };
-}
-
-class Author {
-  Author({
-    required this.id,
-    required this.fullName,
-    required this.profileImage,
-  });
-
-  int id;
-  String fullName;
-  String profileImage;
-
-  factory Author.fromJson(Map<String, dynamic> json) => Author(
-    id: json["id"],
-    fullName: json["full_name"],
-    profileImage: json["profile_image"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "full_name": fullName,
-    "profile_image": profileImage,
   };
 }
