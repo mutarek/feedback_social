@@ -209,6 +209,16 @@ class PageRepo {
     }
   }
 
+  Future<ApiResponse> getAllPageFolloweList(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
+    try {
+      response = await dioClient.get("${AppConstant.invitationFriendURI}?page=$page");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
   Future<ApiResponse> invitationCreate(int pageID, List<int> users) async {
     Response response = Response(requestOptions: RequestOptions(path: ''));
     try {

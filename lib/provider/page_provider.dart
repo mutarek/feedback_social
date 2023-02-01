@@ -461,6 +461,9 @@ class PageProvider with ChangeNotifier {
 
   changeAllFollowerExpanded() {
     allFollower = !allFollower;
+    if(allFollower == true){
+      getAllFollowerList(isFirstTime: true,page: 1);
+    }
     notifyListeners();
   }
 
@@ -557,6 +560,48 @@ class PageProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
+  }
+
+
+  //TODO: GETTING ALL FOLLOWER LIST
+
+  bool isBottomLoadingPageFollowerList = false;
+  bool isPageFollowerList = false;
+  bool hasNextDataPageFollowerList = false;
+  List<String> pageFollowersList = [];
+
+  updateFollowerListPageNo() {
+    selectPage++;
+    getAllFollowerList(page: selectPage);
+    notifyListeners();
+  }
+
+  getAllFollowerList({int page = 1, bool isFirstTime = true}) async{
+    if(page ==1){
+      pageFollowersList.clear();
+      pageFollowersList = [];
+      isPageFollowerList = true;
+      if(!isFirstTime){
+        notifyListeners();
+      }
+    }
+    else{
+      isBottomLoadingPageFollowerList = true;
+      notifyListeners();
+    }
+    ApiResponse apiResponse = await pageRepo.getAllPageFolloweList(1);
+    if(apiResponse.response.statusCode == 200){
+      isPageFollowerList = true;
+      hasNextDataPageFollowerList = apiResponse.response.data['next'] != null ? true : false;
+      apiResponse.response.data['results'].forEach((element){
+        pageFollowersList.add(element);
+      });
+    }
+    else{
+      isPageFollowerList = false;
+      notifyListeners();
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+    }
   }
 
   //TODO: FOR SELECTING COUNTRY FOR PAGE
