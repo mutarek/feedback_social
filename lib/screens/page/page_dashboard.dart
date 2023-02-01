@@ -13,14 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
-import '../../widgets/snackbar_message.dart';
 import 'new_design/edit_page/edit_page1.dart';
 
 class PageDashboard extends StatefulWidget {
-  const PageDashboard(this.pageId, {Key? key}) : super(key: key);
+  const PageDashboard(this.pageId, this.index, {Key? key}) : super(key: key);
   final String pageId;
+  final int index;
 
   @override
   State<PageDashboard> createState() => _PageDashboardState();
@@ -82,7 +81,10 @@ class _PageDashboardState extends State<PageDashboard> {
                               backgroundColor: AppColors.primaryColorLight,
                               child: InkWell(
                                   onTap: () {
-                                    // Helper.toScreen(EditPage1(widget.pageId));
+                                    Helper.toScreen(EditPage1(
+                                      widget.pageId,
+                                      index: widget.index,
+                                    ));
                                   },
                                   child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white)))
                         ],
@@ -188,7 +190,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                                           height: 30,
                                                           child:
                                                               circularImage(pageProvider.invitePageAllLists[index].profileImage!, 30, 30)),
-                                                      SizedBox(width: 10),
+                                                      const SizedBox(width: 10),
                                                       Expanded(
                                                         child: Text(pageProvider.invitePageAllLists[index].fullName!,
                                                             style: robotoStyle500Medium.copyWith(fontSize: 12)),

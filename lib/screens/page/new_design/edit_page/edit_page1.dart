@@ -15,9 +15,8 @@ import 'package:provider/provider.dart';
 import 'edit_page2.dart';
 
 class EditPage1 extends StatefulWidget {
-  const EditPage1(this.pageId, {Key? key, required this.authorPageModel, required this.index}) : super(key: key);
+  const EditPage1(this.pageId, {Key? key,required this.index}) : super(key: key);
   final String pageId;
-  final AuthorPageModel authorPageModel;
   final int index;
 
   @override
@@ -138,7 +137,7 @@ class _EditPage1State extends State<EditPage1> {
                     onTap: () {
                       if (pageProvider.categoryValue.id.toString() != pageProvider.individualPageDetailsModel!.category) {
                         Helper.toScreen(EditPage2(pageNameController.text, pageBioController.text, pageDetailsController.text,
-                            pageProvider.categoryValue.id.toString(), widget.pageId, widget.authorPageModel, widget.index));
+                            pageProvider.categoryValue.id.toString(), widget.pageId,widget.index));
                       } else {
                         Helper.toScreen(EditPage2(
                             pageNameController.text,
@@ -146,7 +145,6 @@ class _EditPage1State extends State<EditPage1> {
                             pageDetailsController.text,
                             pageProvider.individualPageDetailsModel!.category.toString(),
                             widget.pageId,
-                            widget.authorPageModel,
                             widget.index));
                       }
                     },

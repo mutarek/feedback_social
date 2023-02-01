@@ -15,14 +15,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditPage2 extends StatefulWidget {
-  EditPage2(this.pageName, this.pageBio, this.pageDesc, this.pageCategory, this.pageId, this.authorPageModel, this.index, {Key? key})
+  EditPage2(this.pageName, this.pageBio, this.pageDesc, this.pageCategory, this.pageId, this.index, {Key? key})
       : super(key: key);
   final String pageName;
   final String pageBio;
   final String pageDesc;
   final String pageCategory;
   final String pageId;
-  final AuthorPageModel authorPageModel;
   final int index;
 
   @override

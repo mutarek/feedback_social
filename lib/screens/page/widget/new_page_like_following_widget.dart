@@ -33,11 +33,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                         onTap: () {
                           Provider.of<PageProvider>(context, listen: false).callForGetIndividualPageDetails(authorPage.id.toString());
                           isAdmin
-                              ? Helper.toScreen(PageDashboard(
-                                  authorPage.id.toString(),
-                                  // index: index,
-                                  // authorPage: authorPage,
-                                ))
+                              ? Helper.toScreen(PageDashboard(authorPage.id.toString(), index))
                               : showMessage(message: "Ops You don't have access");
                         },
                         child: Container(
