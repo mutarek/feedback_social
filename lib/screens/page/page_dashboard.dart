@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/page_home_screen.dart';
 import 'package:als_frontend/util/helper.dart';
@@ -16,7 +17,10 @@ import '../../widgets/snackbar_message.dart';
 import 'new_design/edit_page/edit_page1.dart';
 
 class PageDashboard extends StatefulWidget {
-  const PageDashboard(this.pageId,{Key? key}) : super(key: key);
+  final AuthorPageModel authorPage;
+  final int index;
+
+  const PageDashboard(this.pageId, {Key? key, required this.authorPage, required this.index}) : super(key: key);
   final String pageId;
 
   @override
@@ -25,6 +29,7 @@ class PageDashboard extends StatefulWidget {
 
 class _PageDashboardState extends State<PageDashboard> {
   final keyController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,14 +79,17 @@ class _PageDashboardState extends State<PageDashboard> {
                           ),
                           const SizedBox(width: 10),
                           CircleAvatar(
-                            radius: 15,
-                            backgroundColor: AppColors.primaryColorLight,
-                            child: InkWell(
-                                onTap: () {
-                                  Helper.toScreen(EditPage1(widget.pageId));
-                                },
-                                child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white))
-                          )
+                              radius: 15,
+                              backgroundColor: AppColors.primaryColorLight,
+                              child: InkWell(
+                                  onTap: () {
+                                    Helper.toScreen(EditPage1(
+                                      widget.pageId,
+                                      index: widget.index,
+                                      authorPageModel:widget.authorPage,
+                                    ));
+                                  },
+                                  child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white)))
                         ],
                       ),
                     ),
@@ -192,10 +200,11 @@ class _PageDashboardState extends State<PageDashboard> {
                                             leading: CircleAvatar(
                                               backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
                                             ),
-                                            title: Text('Rafatul Islam',style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),),
+                                            title: Text(
+                                              'Rafatul Islam',
+                                              style: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                            ),
                                             trailing: Checkbox(
                                               value: index % 2 == 0 ? true : false,
                                               onChanged: (value) {},
@@ -797,17 +806,17 @@ class _PageDashboardState extends State<PageDashboard> {
                                             leading: CircleAvatar(
                                               backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
                                             ),
-                                            title: Text('Rafatul Islam',style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: AppColors.primaryColorLight),),
+                                            title: Text(
+                                              'Rafatul Islam',
+                                              style: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.primaryColorLight),
+                                            ),
                                           );
                                         }),
                                   ),
                                   const SizedBox(
                                     height: 5,
                                   ),
-
                                 ],
                               ),
                             ),
@@ -839,7 +848,8 @@ class _PageDashboardState extends State<PageDashboard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text("Delete Page", style: robotoStyle700Bold.copyWith(fontSize: 20)),
-                                Text("Once you delete a page, there is no going back. Please be certain.", style: robotoStyle700Bold.copyWith(fontSize: 8)),
+                                Text("Once you delete a page, there is no going back. Please be certain.",
+                                    style: robotoStyle700Bold.copyWith(fontSize: 8)),
                               ],
                             ),
                           ),
@@ -852,19 +862,15 @@ class _PageDashboardState extends State<PageDashboard> {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          Random random =Random();
+                                          Random random = Random();
                                           int randomNumber = random.nextInt(90) + 10;
                                           return Dialog(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(20.0)), //this right here
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
                                             child: SizedBox(
                                               height: 300,
                                               width: double.infinity,
                                               child: Card(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                    BorderRadius.circular(20.0)),
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                                                   child: Column(
@@ -872,7 +878,8 @@ class _PageDashboardState extends State<PageDashboard> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                                        Text("Are you absolutely sure?", style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                        Text("Are you absolutely sure?",
+                                                            style: robotoStyle500Medium.copyWith(fontSize: 12)),
                                                         const Icon(Icons.auto_delete, color: Colors.red)
                                                       ]),
                                                       const Divider(thickness: 2, color: Colors.black),
@@ -886,7 +893,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                                         TextSpan(text: "To Confrim", style: robotoStyle300Light.copyWith(fontSize: 12)),
                                                       ])),
                                                       const SizedBox(height: 5),
-                                                       CustomTextField(
+                                                      CustomTextField(
                                                         hintText: 'Your Key Name',
                                                         isShowBorder: true,
                                                         borderRadius: 11,
@@ -895,11 +902,11 @@ class _PageDashboardState extends State<PageDashboard> {
                                                       ),
                                                       const SizedBox(height: 10),
                                                       CustomButton(
-                                                        backgroundColor: Colors.red,
+                                                          backgroundColor: Colors.red,
                                                           btnTxt: 'Delete Page',
                                                           onTap: () {
                                                             if (keyController.text == randomNumber.toString()) {
-                                                              pageProvider.deleteSinglePage(widget.pageId, (status) {
+                                                              pageProvider.deleteSinglePage(widget.pageId,widget.index, (status) {
                                                                 if (status) {
                                                                   Helper.toScreen(const PageHomeScreen());
                                                                 }
@@ -918,8 +925,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                           );
                                         });
                                   },
-                                  child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white))
-                          )
+                                  child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white)))
                         ],
                       ),
                     ),

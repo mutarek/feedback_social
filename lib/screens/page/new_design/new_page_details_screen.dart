@@ -11,8 +11,11 @@ import 'package:provider/provider.dart';
 class NewPageDetailsScreen extends StatefulWidget {
   final bool isAdmin;
   final AuthorPageModel authorPageModel;
+  final int index;
+  final bool isFromYourPage;
 
-  const NewPageDetailsScreen(this.authorPageModel, {this.isAdmin = false, Key? key}) : super(key: key);
+  const NewPageDetailsScreen(this.authorPageModel, {this.isAdmin = false, this.index = 0, this.isFromYourPage = false, Key? key})
+      : super(key: key);
 
   @override
   State<NewPageDetailsScreen> createState() => _NewPageDetailsScreenState();
@@ -47,7 +50,7 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
           },
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin),
+            PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin, index: widget.index),
             PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, widget.authorPageModel),
           ],
         );

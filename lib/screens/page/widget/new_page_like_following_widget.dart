@@ -14,8 +14,9 @@ import 'package:provider/provider.dart';
 class NewPageLikeFollowingWidget extends StatelessWidget {
   final bool isAdmin;
   final AuthorPageModel authorPage;
+  final int index;
 
-  const NewPageLikeFollowingWidget(this.authorPage, this.isAdmin, {Key? key}) : super(key: key);
+  const NewPageLikeFollowingWidget(this.authorPage, this.isAdmin, {this.index = 0, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,11 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                         onTap: () {
                           Provider.of<PageProvider>(context, listen: false).callForGetIndividualPageDetails(authorPage.id.toString());
                           isAdmin
-                              ? Helper.toScreen(PageDashboard(authorPage.id.toString()))
+                              ? Helper.toScreen(PageDashboard(
+                                  authorPage.id.toString(),
+                                  index: index,
+                                  authorPage: authorPage,
+                                ))
                               : showMessage(message: "Ops You don't have access");
                         },
                         child: Container(
@@ -57,9 +62,11 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                           Expanded(
                             child: InkWell(
                               onTap: () {
-                                Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(int.parse(
-                                  authorPage.id.toString(),
-                                ),isFromSuggestedPage: true);
+                                Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
+                                    int.parse(
+                                      authorPage.id.toString(),
+                                    ),
+                                    isFromSuggestedPage: true);
                               },
                               child: Container(
                                 height: 40,
