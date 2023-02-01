@@ -1,5 +1,5 @@
-import 'package:als_frontend/data/model/indivulual_page_details_model.dart';
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
+import 'package:als_frontend/data/model/response/page/page_details_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/page_home_screen.dart';
@@ -164,7 +164,7 @@ class _EditPage2State extends State<EditPage2> {
     );
   }
 
-  void setOldValue(IndividualPageDetailsModel? individualPageDetailsModel) {
+  void setOldValue(PageDetailsModel? individualPageDetailsModel) {
     contactNumberController.text = individualPageDetailsModel!.contact.toString();
     emailController.text = individualPageDetailsModel.email.toString();
     websiteController.text = individualPageDetailsModel.website.toString();

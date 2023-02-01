@@ -1,4 +1,4 @@
-import 'package:als_frontend/data/model/response/liked_by_model.dart';
+
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
@@ -81,7 +81,7 @@ void likeModalBottomView(BuildContext context, NewsFeedModel post, bool isLike) 
                                   itemCount: newsFeedProvider.likedShareByModels.length,
                                   physics: const BouncingScrollPhysics(),
                                   itemBuilder: (context, index) {
-                                    LikedByModel likedBy = newsFeedProvider.likedShareByModels[index];
+                                    Author likedBy = newsFeedProvider.likedShareByModels[index];
                                     bool isMe = Provider.of<AuthProvider>(context, listen: false).userID == likedBy.id.toString();
                                     return Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

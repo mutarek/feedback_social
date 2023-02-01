@@ -1,5 +1,5 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
-import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
+import 'package:als_frontend/data/model/response/page/page_details_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 
 class CreatePageScreen extends StatefulWidget {
   final bool isUpdatePage;
-  final AuthorPageDetailsModel? authorPage;
+  final PageDetailsModel? authorPage;
   final int index;
 
   const CreatePageScreen({this.authorPage, this.isUpdatePage = false, this.index = 0, Key? key}) : super(key: key);

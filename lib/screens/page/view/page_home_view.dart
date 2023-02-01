@@ -49,31 +49,31 @@ class _PageHomeViewState extends State<PageHomeView> {
                 NewPageDetailsHeaderWidget(widget.authorPage),
                 NewPageLikeFollowingWidget(widget.authorPage, widget.isAdmin,index: widget.index),
                 widget.widget,
-                SizedBox(
-                    height: widget.authorPage.category!.isEmpty && widget.authorPage.email!.isEmpty && widget.authorPage.website!.isEmpty
-                        ? 5
-                        : 20),
-                widget.authorPage.category!.isEmpty && widget.authorPage.email!.isEmpty && widget.authorPage.website!.isEmpty
-                    ? const SizedBox.shrink()
-                    : Padding(
-                        padding: const EdgeInsets.only(left: 18), child: Text("Details", style: robotoStyle700Bold.copyWith(fontSize: 16))),
-                SizedBox(
-                    height: widget.authorPage.category!.isEmpty && widget.authorPage.email!.isEmpty && widget.authorPage.website!.isEmpty
-                        ? 0
-                        : 15),
-                widget.authorPage.category!.isEmpty
-                    ? const SizedBox.shrink()
-                    : infoWidget(ImagesModel.categoryIcons, widget.authorPage.category!,
-                        Text('Category - ', style: robotoStyle800ExtraBold.copyWith(fontSize: 15))),
-                SizedBox(height: widget.authorPage.category!.isEmpty ? 0 : 10),
-                widget.authorPage.email!.isEmpty
-                    ? const SizedBox.shrink()
-                    : infoWidget(ImagesModel.emailIcons, widget.authorPage.email!, const SizedBox.shrink()),
-                SizedBox(height: widget.authorPage.email!.isEmpty ? 0 : 10),
-                widget.authorPage.website!.isEmpty
-                    ? const SizedBox.shrink()
-                    : infoWidget(ImagesModel.websiteIcons, widget.authorPage.website!, const SizedBox.shrink()),
-                SizedBox(height: widget.authorPage.website!.isEmpty ? 0 : 20),
+                // SizedBox(
+                //     height: widget.authorPage.category!.isEmpty && widget.authorPage.email!.isEmpty && widget.authorPage.website!.isEmpty
+                //         ? 5
+                //         : 20),
+                // widget.authorPage.category!.isEmpty && widget.authorPage.email!.isEmpty && widget.authorPage.website!.isEmpty
+                //     ? const SizedBox.shrink()
+                //     : Padding(
+                //         padding: const EdgeInsets.only(left: 18), child: Text("Details", style: robotoStyle700Bold.copyWith(fontSize: 16))),
+                // SizedBox(
+                //     height: widget.authorPage.category!.isEmpty && widget.authorPage.email!.isEmpty && widget.authorPage.website!.isEmpty
+                //         ? 0
+                //         : 15),
+                // widget.authorPage.category!.isEmpty
+                //     ? const SizedBox.shrink()
+                //     : infoWidget(ImagesModel.categoryIcons, widget.authorPage.category!,
+                //         Text('Category - ', style: robotoStyle800ExtraBold.copyWith(fontSize: 15))),
+                // SizedBox(height: widget.authorPage.category!.isEmpty ? 0 : 10),
+                // widget.authorPage.email!.isEmpty
+                //     ? const SizedBox.shrink()
+                //     : infoWidget(ImagesModel.emailIcons, widget.authorPage.email!, const SizedBox.shrink()),
+                // SizedBox(height: widget.authorPage.email!.isEmpty ? 0 : 10),
+                // widget.authorPage.website!.isEmpty
+                //     ? const SizedBox.shrink()
+                //     : infoWidget(ImagesModel.websiteIcons, widget.authorPage.website!, const SizedBox.shrink()),
+                // SizedBox(height: widget.authorPage.website!.isEmpty ? 0 : 20),
                 Container(
                     margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                     decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color(0xffE4E6EB), width: 2))),

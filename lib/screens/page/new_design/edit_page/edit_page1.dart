@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
+import 'package:als_frontend/data/model/response/page/page_details_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
@@ -11,7 +12,6 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../data/model/indivulual_page_details_model.dart';
 import 'edit_page2.dart';
 
 class EditPage1 extends StatefulWidget {
@@ -160,7 +160,7 @@ class _EditPage1State extends State<EditPage1> {
     );
   }
 
-  void setOldValue(IndividualPageDetailsModel? pageDetailsModel) {
+  void setOldValue(PageDetailsModel? pageDetailsModel) {
     pageNameController.text = pageDetailsModel!.name.toString();
     pageBioController.text = pageDetailsModel.bio.toString();
     pageDetailsController.text = pageDetailsModel.description.toString();

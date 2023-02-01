@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/chat/offline_chat_model.dart';
-import 'package:als_frontend/data/model/response/liked_by_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
@@ -179,7 +178,7 @@ class NewsFeedProvider with ChangeNotifier {
   }
 
   //TODO: call for get Liked by user list
-  List<LikedByModel> likedShareByModels = [];
+  List<Author> likedShareByModels = [];
   bool isLoadingLiked = false;
   bool isBottomLoadingLiked = false;
   int selectPageLiked = 1;
@@ -211,7 +210,7 @@ class NewsFeedProvider with ChangeNotifier {
     if (response.response.statusCode == 200) {
       hasNextDataLiked = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        likedShareByModels.add(LikedByModel.fromJson(element));
+        likedShareByModels.add(Author.fromJson(element));
       });
       notifyListeners();
     } else {

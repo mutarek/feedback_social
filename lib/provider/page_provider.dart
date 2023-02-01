@@ -1,14 +1,11 @@
 import 'dart:io';
 
-import 'package:als_frontend/data/model/indivulual_page_details_model.dart';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/find_page_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
-import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
 import 'package:als_frontend/data/model/response/page/page_details_model.dart';
-import 'package:als_frontend/data/model/response/page/page_photos_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/newsfeed_repo.dart';
 import 'package:als_frontend/data/repository/page_repo.dart';
@@ -167,7 +164,6 @@ class PageProvider with ChangeNotifier {
           AuthorPageModel(
               id: response.response.data['id'],
               name: response.response.data['name'],
-              category: response.response.data['category'],
               coverPhoto: response.response.data['cover_photo'],
               avatar: response.response.data['avatar'],
               followers: 0));
@@ -182,14 +178,14 @@ class PageProvider with ChangeNotifier {
   }
 
   //TODO: FOR GETTING INDIVIDUAL PAGE DETAILS
-  IndividualPageDetailsModel? individualPageDetailsModel;
+  PageDetailsModel? individualPageDetailsModel;
 
   callForGetIndividualPageDetails(String id) async {
     isLoading = true;
-    individualPageDetailsModel = IndividualPageDetailsModel();
+    individualPageDetailsModel = PageDetailsModel();
     ApiResponse response = await pageRepo.callForGetIndividualPageDetails(id);
     if (response.response.statusCode == 200) {
-      individualPageDetailsModel = IndividualPageDetailsModel.fromJson(response.response.data);
+      individualPageDetailsModel = PageDetailsModel.fromJson(response.response.data);
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
@@ -197,17 +193,17 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  AuthorPageDetailsModel? pageDetailsModel;
+  PageDetailsModel? pageDetailsModel;
 
   callForGetPageInformation(String id) async {
     isLoading = true;
 
-    pageDetailsModel = AuthorPageDetailsModel();
+    pageDetailsModel = PageDetailsModel();
     // notifyListeners();
     ApiResponse response = await pageRepo.callForGetPageDetails(id);
 
     if (response.response.statusCode == 200) {
-      pageDetailsModel = AuthorPageDetailsModel.fromJson(response.response.data);
+      pageDetailsModel = PageDetailsModel.fromJson(response.response.data);
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
@@ -297,13 +293,6 @@ class PageProvider with ChangeNotifier {
     if (response.response.statusCode == 200) {
       AuthorPageModel authorPageModel = authorPageLists[index];
       authorPageModel.name = response.response.data['name'];
-      authorPageModel.bio = response.response.data['bio'];
-      authorPageModel.category = response.response.data['category'];
-      authorPageModel.contact = response.response.data['contact'];
-      authorPageModel.email = response.response.data['email'];
-      authorPageModel.website = response.response.data['website'];
-      authorPageModel.city = response.response.data['city'];
-      authorPageModel.address = response.response.data['address'];
       authorPageLists[index] = authorPageModel;
       isLoading = false;
       callBack(true);
@@ -339,7 +328,6 @@ class PageProvider with ChangeNotifier {
           AuthorPageModel(
               id: response.response.data['id'],
               coverPhoto: response.response.data['cover_photo'],
-              category: response.response.data['category'],
               avatar: response.response.data['avatar'],
               name: response.response.data['name'],
               followers: response.response.data['total_like']));
@@ -419,7 +407,7 @@ class PageProvider with ChangeNotifier {
     if (response.response.statusCode == 200) {
       if (response.response.data['liked'] == true) {
         pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
-        pageDetailsModel!.like = true;
+        pageDetailsModel!.isLiked = true;
         if (isFromMyPageScreen) {
           authorPageLists[index].followers = authorPageLists[index].followers! + 1;
           likedPageLists.insert(0, authorPageLists[index]);
@@ -429,7 +417,7 @@ class PageProvider with ChangeNotifier {
         }
       } else {
         pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! - 1;
-        pageDetailsModel!.like = false;
+        pageDetailsModel!.isLiked = false;
         if (isFromMyPageScreen) {
           authorPageLists[index].followers = authorPageLists[index].followers! - 1;
           allSuggestPageList.insert(index, authorPageLists[index]);
@@ -691,11 +679,6 @@ class PageProvider with ChangeNotifier {
           AuthorPageModel(
               id: response.response.data['id'],
               name: response.response.data['name'],
-              category: response.response.data['category'],
-              contact: response.response.data['contact'],
-              email: response.response.data['email'],
-              city: response.response.data['city'],
-              address: response.response.data['address'],
               coverPhoto: response.response.data['cover_photo'],
               avatar: response.response.data['avatar'],
               followers: 0));
@@ -779,14 +762,14 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 //TODO: page Photos api instigation
-  List<PagePhotosModel> pagePhotosModel = [];
+  List<ImagesData> pagePhotosModel = [];
   bool isPhotosLoading = true;
   pageAllPhotos(int pageID) async {
     ApiResponse response = await pageRepo.pageAllPhotos(pageID);
     isPhotosLoading = false;
     if (response.response.statusCode == 200) {
       response.response.data.forEach((element) {
-        pagePhotosModel.add(PagePhotosModel.fromJson(element));
+        pagePhotosModel.add(ImagesData.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);

@@ -152,7 +152,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                           height: height * 0.036,
                                                           width: width * 0.2,
                                                           decoration: BoxDecoration(
-                                                              color: (pageProvider.pageDetailsModel!.like == false)
+                                                              color: (pageProvider.pageDetailsModel!.isLiked == false)
                                                                   ? Palette.primary
                                                                   : Colors.green,
                                                               borderRadius: BorderRadius.circular(10)),
@@ -161,7 +161,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                             children: [
                                                               const Icon(Icons.thumb_up_sharp, size: 16, color: Colors.white),
                                                               Text(
-                                                                (pageProvider.pageDetailsModel!.like == false)
+                                                                (pageProvider.pageDetailsModel!.isLiked == false)
                                                                     ? LocaleKeys.likes.tr()
                                                                     : LocaleKeys.liked.tr(),
                                                                 style: TextStyle(fontSize: height * 0.015, color: Colors.white),
