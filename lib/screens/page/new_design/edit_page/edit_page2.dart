@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/indivulual_page_details_model.dart';
+import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/page_home_screen.dart';
@@ -14,12 +15,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EditPage2 extends StatefulWidget {
-  EditPage2(this.pageName, this.pageBio, this.pageDesc, this.pageCategory, this.pageId, {Key? key}) : super(key: key);
+  EditPage2(this.pageName, this.pageBio, this.pageDesc, this.pageCategory, this.pageId, this.authorPageModel, this.index, {Key? key})
+      : super(key: key);
   final String pageName;
   final String pageBio;
   final String pageDesc;
   final String pageCategory;
   final String pageId;
+  final AuthorPageModel authorPageModel;
+  final int index;
 
   @override
   State<EditPage2> createState() => _EditPage2State();
@@ -140,9 +144,13 @@ class _EditPage2State extends State<EditPage2> {
                               emailController.text,
                               websiteController.text,
                               addressController.text,
-                              widget.pageId, (status) {
+                              widget.pageId,
+                              widget.index, (status) {
                             if (status) {
-                              Helper.toRemoveUntilScreen(const PageHomeScreen());
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              //Helper.toRemoveUntilScreen(const PageHomeScreen());
                             } else {}
                           });
                         },

@@ -11,8 +11,9 @@ import 'package:provider/provider.dart';
 import '../widget/page_app_bar.dart';
 
 class DeletePage extends StatefulWidget {
-  const DeletePage(this.pageId, {Key? key}) : super(key: key);
+  const DeletePage(this.pageId, this.index,{Key? key}) : super(key: key);
   final String pageId;
+  final int index;
 
   @override
   State<DeletePage> createState() => _DeletePageState();
@@ -67,15 +68,7 @@ class _DeletePageState extends State<DeletePage> {
                         CustomButton(
                             btnTxt: 'Delete Page',
                             onTap: () {
-                              if (keyController.text == "MyPage") {
-                                pageProvider.deleteSinglePage(widget.pageId, (status) {
-                                  if (status) {
-                                    Helper.toScreen(const PageHomeScreen());
-                                  }
-                                });
-                              } else {
-                                showMessage(message: 'Not Matched');
-                              }
+
                             },
                             radius: 100,
                             height: 48)

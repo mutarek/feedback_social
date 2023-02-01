@@ -53,6 +53,7 @@ class AppConstant {
   static const String pageURI = '/page/';
   static const String invitationFriendURI = '/page/invitation/friend/user/list/';
   static const String invitationCreateURI = '/page/invitation/create/';
+  static const String pageCreateURI = '/page/create-or-list/';
   static const String postPageURI = '/page/post/';
   static const String emailUpdate = '/settings/change-email/';
   static const String blocklist = '/settings/block/';

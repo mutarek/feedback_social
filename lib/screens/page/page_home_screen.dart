@@ -25,8 +25,6 @@ class PageHomeScreen extends StatefulWidget {
 }
 
 class _PageHomeScreenState extends State<PageHomeScreen> {
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -100,7 +98,11 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                                       return PageViewWidget(
                                           authorPageModel: pageProvider.authorPageLists[index],
                                           onTap: () {
-                                            Helper.toScreen(NewPageDetailsScreen(pageProvider.authorPageLists[index], isAdmin: true));
+                                            Helper.toScreen(NewPageDetailsScreen(
+                                              pageProvider.authorPageLists[index],
+                                              isAdmin: true,
+                                              index: index,
+                                            ));
                                           });
                                     })
                                 : const Center(child: CustomText(title: "You haven't any personal Page")))

@@ -1,8 +1,7 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
-import 'package:als_frontend/data/model/response/page/author_page_details_model.dart';
+import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/new_design/create_page2.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -10,16 +9,16 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
-import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../data/model/indivulual_page_details_model.dart';
 import 'edit_page2.dart';
 
 class EditPage1 extends StatefulWidget {
-  EditPage1(this.pageId, {Key? key}) : super(key: key);
+  const EditPage1(this.pageId, {Key? key, required this.authorPageModel, required this.index}) : super(key: key);
   final String pageId;
+  final AuthorPageModel authorPageModel;
+  final int index;
 
   @override
   State<EditPage1> createState() => _EditPage1State();
@@ -139,10 +138,16 @@ class _EditPage1State extends State<EditPage1> {
                     onTap: () {
                       if (pageProvider.categoryValue.id.toString() != pageProvider.individualPageDetailsModel!.category) {
                         Helper.toScreen(EditPage2(pageNameController.text, pageBioController.text, pageDetailsController.text,
-                            pageProvider.categoryValue.id.toString(),widget.pageId));
+                            pageProvider.categoryValue.id.toString(), widget.pageId, widget.authorPageModel, widget.index));
                       } else {
-                        Helper.toScreen(EditPage2(pageNameController.text, pageBioController.text, pageDetailsController.text,
-                            pageProvider.individualPageDetailsModel!.category.toString(),widget.pageId));
+                        Helper.toScreen(EditPage2(
+                            pageNameController.text,
+                            pageBioController.text,
+                            pageDetailsController.text,
+                            pageProvider.individualPageDetailsModel!.category.toString(),
+                            widget.pageId,
+                            widget.authorPageModel,
+                            widget.index));
                       }
                     },
                     radius: 100,

@@ -40,11 +40,13 @@ class PageProvider with ChangeNotifier {
     }
   }
 
-  deleteSinglePage(String pageId, Function callback) async {
+
+  deleteSinglePage(String pageId,int index,Function callback) async {
     isLoading = true;
     notifyListeners();
     ApiResponse apiResponse = await pageRepo.deleteSinglePage(pageId);
     if (apiResponse.response.statusCode == 200) {
+      authorPageLists.removeAt(index);
       isLoading = false;
       callback(true);
       Fluttertoast.showToast(msg: "Page Deleted Successfully");
@@ -80,7 +82,7 @@ class PageProvider with ChangeNotifier {
     ApiResponse response = await pageRepo.getAllSuggestedPage();
     isLoading = false;
     if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
+      response.response.data['results'].forEach((element) {
         allSuggestPageList.add(AuthorPageModel.fromJson(element));
       });
     } else {
@@ -101,13 +103,12 @@ class PageProvider with ChangeNotifier {
     allSuggestPageList.clear();
     allSuggestPageList = [];
     ApiResponse response = await pageRepo.getAuthorPage();
-
     initializeLikedPageLists();
     initializeSuggestPage();
     isLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
+      response.response.data['results'].forEach((element) {
         authorPageLists.add(AuthorPageModel.fromJson(element));
       });
     } else {
@@ -279,7 +280,7 @@ class PageProvider with ChangeNotifier {
   }
 
   editPage(String name, String bio, String desc, String category, String number, String email, String website, String address,
-      String pageId, Function callBack) async {
+      String pageId,int index, Function callBack) async {
     isLoading = true;
     notifyListeners();
     ApiResponse response;
@@ -294,6 +295,16 @@ class PageProvider with ChangeNotifier {
     formData.fields.add(MapEntry('address', address));
     response = await pageRepo.updatePageWithImageUpload(formData, pageId);
     if (response.response.statusCode == 200) {
+      AuthorPageModel authorPageModel = authorPageLists[index];
+      authorPageModel.name = response.response.data['name'];
+      authorPageModel.bio = response.response.data['bio'];
+      authorPageModel.category = response.response.data['category'];
+      authorPageModel.contact = response.response.data['contact'];
+      authorPageModel.email = response.response.data['email'];
+      authorPageModel.website = response.response.data['website'];
+      authorPageModel.city = response.response.data['city'];
+      authorPageModel.address = response.response.data['address'];
+      authorPageLists[index] = authorPageModel;
       isLoading = false;
       callBack(true);
       notifyListeners();

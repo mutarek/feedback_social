@@ -38,7 +38,7 @@ class NewSuggestedPageScreen extends StatelessWidget {
                       AuthorPageModel authorPageModel = pageProvider.allSuggestPageList[index];
                       return InkWell(
                         onTap: (){
-                          Helper.toScreen(NewPageDetailsScreen(authorPageModel, isAdmin: false));
+                          Helper.toScreen(NewPageDetailsScreen(authorPageModel, isAdmin: false,index: index));
                         },
                         child: Container(
                           decoration: BoxDecoration(

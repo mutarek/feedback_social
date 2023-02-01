@@ -28,6 +28,7 @@ class PageDashboard extends StatefulWidget {
 
 class _PageDashboardState extends State<PageDashboard> {
   final keyController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +82,7 @@ class _PageDashboardState extends State<PageDashboard> {
                               backgroundColor: AppColors.primaryColorLight,
                               child: InkWell(
                                   onTap: () {
-                                    Helper.toScreen(EditPage1(widget.pageId));
+                                    // Helper.toScreen(EditPage1(widget.pageId));
                                   },
                                   child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white)))
                         ],
@@ -238,12 +239,11 @@ class _PageDashboardState extends State<PageDashboard> {
                                                         break;
                                                       }
                                                     }
-                                                    if(isSelectAtLeastOne==true){
+                                                    if (isSelectAtLeastOne == true) {
                                                       pageProvider.sentInviteFriend(int.parse(widget.pageId));
-                                                    }else{
+                                                    } else {
                                                       showMessage(message: 'Please Select at least one Friend');
                                                     }
-
                                                   },
                                                 ),
                                         ),
@@ -885,19 +885,15 @@ class _PageDashboardState extends State<PageDashboard> {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          Random random =Random();
+                                          Random random = Random();
                                           int randomNumber = random.nextInt(90) + 10;
                                           return Dialog(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(20.0)), //this right here
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
                                             child: SizedBox(
                                               height: 300,
                                               width: double.infinity,
                                               child: Card(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                    BorderRadius.circular(20.0)),
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
                                                 child: Padding(
                                                   padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
                                                   child: Column(
@@ -905,7 +901,8 @@ class _PageDashboardState extends State<PageDashboard> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                                        Text("Are you absolutely sure?", style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                        Text("Are you absolutely sure?",
+                                                            style: robotoStyle500Medium.copyWith(fontSize: 12)),
                                                         const Icon(Icons.auto_delete, color: Colors.red)
                                                       ]),
                                                       const Divider(thickness: 2, color: Colors.black),
@@ -919,7 +916,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                                         TextSpan(text: "To Confrim", style: robotoStyle300Light.copyWith(fontSize: 12)),
                                                       ])),
                                                       const SizedBox(height: 5),
-                                                       CustomTextField(
+                                                      CustomTextField(
                                                         hintText: 'Your Key Name',
                                                         isShowBorder: true,
                                                         borderRadius: 11,
@@ -928,11 +925,11 @@ class _PageDashboardState extends State<PageDashboard> {
                                                       ),
                                                       const SizedBox(height: 10),
                                                       CustomButton(
-                                                        backgroundColor: Colors.red,
+                                                          backgroundColor: Colors.red,
                                                           btnTxt: 'Delete Page',
                                                           onTap: () {
                                                             if (keyController.text == randomNumber.toString()) {
-                                                              pageProvider.deleteSinglePage(widget.pageId, (status) {
+                                                              pageProvider.deleteSinglePage(widget.pageId, 0, (status) {
                                                                 if (status) {
                                                                   Helper.toScreen(const PageHomeScreen());
                                                                 }

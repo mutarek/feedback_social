@@ -14,8 +14,9 @@ import 'package:provider/provider.dart';
 class PageHomeView extends StatefulWidget {
   final bool isAdmin;
   final AuthorPageModel authorPage;
+  final int index;
 
-  const PageHomeView(this.widget, this.authorPage, {this.isAdmin = false, Key? key}) : super(key: key);
+  const PageHomeView(this.widget, this.authorPage, {this.isAdmin = false,this.index = 0, Key? key}) : super(key: key);
   final Widget widget;
 
   @override
@@ -46,7 +47,7 @@ class _PageHomeViewState extends State<PageHomeView> {
               controller: controller,
               children: [
                 NewPageDetailsHeaderWidget(widget.authorPage),
-                NewPageLikeFollowingWidget(widget.authorPage, widget.isAdmin),
+                NewPageLikeFollowingWidget(widget.authorPage, widget.isAdmin,index: widget.index),
                 widget.widget,
                 SizedBox(
                     height: widget.authorPage.category!.isEmpty && widget.authorPage.email!.isEmpty && widget.authorPage.website!.isEmpty
