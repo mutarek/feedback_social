@@ -51,6 +51,7 @@ class AppConstant {
   static const String pageLikeAllURI = '/page/like-page-list/';
   static const String pageCategoryURI = '/page/category/list/';
   static const String pageURI = '/page/';
+  static const String pageCreateURI = '/page/create-or-list/';
   static const String postPageURI = '/page/post/';
   static const String emailUpdate = '/settings/change-email/';
   static const String blocklist = '/settings/block/';

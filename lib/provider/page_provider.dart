@@ -81,7 +81,7 @@ class PageProvider with ChangeNotifier {
     ApiResponse response = await pageRepo.getAllSuggestedPage();
     isLoading = false;
     if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
+      response.response.data['results'].forEach((element) {
         allSuggestPageList.add(AuthorPageModel.fromJson(element));
       });
     } else {
@@ -102,13 +102,12 @@ class PageProvider with ChangeNotifier {
     allSuggestPageList.clear();
     allSuggestPageList = [];
     ApiResponse response = await pageRepo.getAuthorPage();
-
     initializeLikedPageLists();
     initializeSuggestPage();
     isLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
+      response.response.data['results'].forEach((element) {
         authorPageLists.add(AuthorPageModel.fromJson(element));
       });
     } else {
