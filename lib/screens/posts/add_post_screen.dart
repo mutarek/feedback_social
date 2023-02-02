@@ -106,8 +106,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   onTap: () {
                     if (widget.isEditPost) {
                       postProvider
-                          .updatePost(descriptionController.text, widget.post!.id! as int,
-                              isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isForPage)
+                          .updatePost(descriptionController.text, widget.post!.commentUrl!,
+                              isFromGroup: widget.isFromGroupScreen, isFromPage: widget.isForPage)
                           .then((value) {
                         descriptionController.clear();
                         postProvider.clearImageVideo();

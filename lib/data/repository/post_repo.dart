@@ -21,9 +21,10 @@ class PostRepo {
     }
   }
 
-  Future<ApiResponse> updatePost(FormData formData, int id, {onSendProgress}) async {
+  Future<ApiResponse> updatePost(FormData formData, String url, {onSendProgress}) async {
     try {
-      response = await dioClient.patch("${AppConstant.postsUri}$id/", data: formData, onSendProgress: onSendProgress);
+      response = await dioClient.patch("${url.replaceAll("comment/", "").replaceAll('list/', '')}up-del-retr/",
+          data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -39,27 +40,9 @@ class PostRepo {
     }
   }
 
-  Future<ApiResponse> updatePostTOGroupBYUSINGGroupID(FormData formData, int groupID, int id, {onSendProgress}) async {
-    try {
-      response = await dioClient.patch("${AppConstant.postsGroupUri}$groupID/$id/", data: formData, onSendProgress: onSendProgress);
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
-
   Future<ApiResponse> submitPostTOPageBYUSINGPageID(FormData formData, int pageID, {onSendProgress}) async {
     try {
       response = await dioClient.post("${AppConstant.postPageURI}$pageID/list-create/", data: formData, onSendProgress: onSendProgress);
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
-
-  Future<ApiResponse> updatePostTOPageBYUSINGPageID(FormData formData, int pageID, int id, {onSendProgress}) async {
-    try {
-      response = await dioClient.patch("${AppConstant.postPageURI}$pageID/$id/", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

@@ -257,8 +257,9 @@ class PageProvider with ChangeNotifier {
   }
 
   updatePostOnTimeLine(int index, NewsFeedModel n) async {
-    pageAllPosts.removeAt(index);
-    pageAllPosts.insert(0, n);
+    pageAllPosts[index]=n;
+    // pageAllPosts.removeAt(index);
+    // pageAllPosts.insert(0, n);
     notifyListeners();
   }
 

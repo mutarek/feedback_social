@@ -7,11 +7,13 @@ import 'package:als_frontend/helper/url_checkig_helper.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/screens/post/single_post_screen1.dart';
 import 'package:als_frontend/screens/post/widget/photo_widget1.dart';
+import 'package:als_frontend/screens/posts/add_post_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/app_constant.dart';
@@ -115,7 +117,19 @@ class PostWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 isAdmin
-                                    ? PopUpMenuWidget(ImagesModel.reportIcons, 'Edit', () {})
+                                    ? PopUpMenuWidget(ImagesModel.reportIcons, 'Edit', () {
+                                        Navigator.of(context).pop();
+                                        Provider.of<PostProvider>(context, listen: false).clearImageVideo();
+                                        Provider.of<PostProvider>(context, listen: false).initializeImageVideo(newsFeedData);
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (_) => AddPostScreen(Provider.of<AuthProvider>(context, listen: false).profileImage,
+                                                isFromGroupScreen: isGroup,
+                                                isForPage: isPage,
+                                                isEditPost: true,
+                                                post: newsFeedData,
+                                                isFromProfileScreen: isProfileScreen,
+                                                index: index)));
+                                      })
                                     : PopUpMenuWidget(ImagesModel.saveIcons, 'Save', () {}),
                                 const SizedBox(height: 15),
                                 isAdmin

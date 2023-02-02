@@ -123,38 +123,45 @@ class PostProvider with ChangeNotifier {
     }
   }
 
-  Future<PostResponse> updatePost(String postText, int id, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
+  Future<PostResponse> updatePost(String postText, String url, {bool isFromGroup = false, bool isFromPage = false}) async {
     isLoading = true;
     calculateMultipartFile();
     ApiResponse apiResponse;
     formData.fields.add(MapEntry('description', postText));
     formData.fields.add(MapEntry('deleted_image', jsonEncode(deletedImagesIDS)));
     formData.fields.add(MapEntry('deleted_video', jsonEncode(deletedVideoIDS)));
+    apiResponse = await postRepo.updatePost(formData, url, onSendProgress: (int sentBytes, int totalBytes) {
+      progressPercent = sentBytes / totalBytes * 100;
+      if (progressPercent == 100) {
+        // dispose();
+      }
+    });
 
     if (isFromGroup) {
-      apiResponse =
-          await postRepo.updatePostTOGroupBYUSINGGroupID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
-        progressPercent = sentBytes / totalBytes * 100;
-        if (progressPercent == 100) {
-          // dispose();
-        }
-      });
+      // apiResponse =
+      //     await postRepo.updatePostTOGroupBYUSINGGroupID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
+      //   progressPercent = sentBytes / totalBytes * 100;
+      //   if (progressPercent == 100) {
+      //     // dispose();
+      //   }
+      // });
     } else if (isFromPage) {
-      apiResponse =
-          await postRepo.updatePostTOPageBYUSINGPageID(formData, groupPageID, id, onSendProgress: (int sentBytes, int totalBytes) {
-        progressPercent = sentBytes / totalBytes * 100;
-        if (progressPercent == 100) {
-          // dispose();
-        }
-      });
+      // apiResponse =
+      //     await postRepo.updatePostTOPageBYUSINGPageID(formData, url, onSendProgress: (int sentBytes, int totalBytes) {
+      //   progressPercent = sentBytes / totalBytes * 100;
+      //   if (progressPercent == 100) {
+      //     // dispose();
+      //   }
+      // });
     } else {
-      apiResponse = await postRepo.updatePost(formData, id, onSendProgress: (int sentBytes, int totalBytes) {
-        progressPercent = sentBytes / totalBytes * 100;
-        if (progressPercent == 100) {
-          // dispose();
-        }
-      });
+      // apiResponse = await postRepo.updatePost(formData, id, onSendProgress: (int sentBytes, int totalBytes) {
+      //   progressPercent = sentBytes / totalBytes * 100;
+      //   if (progressPercent == 100) {
+      //     // dispose();
+      //   }
+      // });
     }
+
     isLoading = false;
     if (apiResponse.response.statusCode == 201 || apiResponse.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Updated Successfully");
