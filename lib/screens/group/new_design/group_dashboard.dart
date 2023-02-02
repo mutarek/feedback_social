@@ -1,5 +1,4 @@
 import 'package:als_frontend/provider/group_provider.dart';
-import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';

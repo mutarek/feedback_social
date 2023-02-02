@@ -23,8 +23,10 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
+
 export 'dart:async';
 export 'dart:typed_data';
+
 export 'package:flutter/material.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter/services.dart';

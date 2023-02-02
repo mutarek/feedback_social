@@ -112,8 +112,6 @@ class _PostPhotoWidgetState extends State<PostPhotoWidget> {
               String url = '';
               if (index >= totalImage) {
                 isVideo = true;
-                print(
-                    'Shuvo ${index - totalImage}  | ${index}  |${totalImage} |${totalVideo} |${totalImageVideo} |${widget.newsfeedModel.videos!.length}');
                 url = widget.newsfeedModel.videos![index - totalImage].thumbnail!;
               } else {
                 isVideo = false;

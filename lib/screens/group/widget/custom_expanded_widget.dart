@@ -10,7 +10,7 @@ class CustomExpandedWidget extends StatelessWidget {
   final bool arrowValue;
   final GestureTapCallback? onTap;
 
-  CustomExpandedWidget(this.icon, this.widgetName, this.widgetSubText, this.arrowValue, this.onTap, {Key? key}) : super(key: key);
+  const CustomExpandedWidget(this.icon, this.widgetName, this.widgetSubText, this.arrowValue, this.onTap, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

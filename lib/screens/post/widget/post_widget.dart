@@ -143,9 +143,9 @@ class PostWidget extends StatelessWidget {
                                       })
                                     : PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {}),
                                 SizedBox(height: isAdmin ? 8 : 15),
-                                isAdmin ? SizedBox.shrink() : PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
+                                isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
                                 SizedBox(height: isAdmin ? 0 : 15),
-                                isAdmin ? SizedBox.shrink() : PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {}),
+                                isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {}),
                                 SizedBox(height: isAdmin ? 0 : 8)
                               ],
                             ),
@@ -315,7 +315,7 @@ class PostWidget extends StatelessWidget {
                         childAnchor: Alignment.centerLeft,
                       ),
                       isHideCommentButton
-                          ? SizedBox.shrink()
+                          ? const SizedBox.shrink()
                           : likeCommentShareButtonWidget(ImagesModel.commentIcons, "Comment", () {
                               Helper.toScreen(SinglePostScreen1(newsFeedData.id.toString(),
                                   index: index, isFromPage: isPage, commentUrl: newsFeedData.commentUrl!));

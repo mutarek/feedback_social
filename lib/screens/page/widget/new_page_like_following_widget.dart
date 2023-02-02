@@ -1,4 +1,3 @@
-import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/data/model/response/page/page_details_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/page_dashboard.dart';
