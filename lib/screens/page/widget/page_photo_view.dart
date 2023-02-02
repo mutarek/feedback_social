@@ -55,9 +55,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
                 itemCount: pageProvider.pagePhotosModel.length > 4 ? 4 :pageProvider.pagePhotosModel.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    height: 30,
-                    width: 100,
-                    color: Colors.yellow,
+               child: Image.network(pageProvider.pagePhotosModel[index].image.toString()),
                   );
                 },
               ),
@@ -85,7 +83,8 @@ class _PagePhotoViewState extends State<PagePhotoView> {
                             Container(
                               margin: const EdgeInsets.only(right: 1),
                               height: 250,
-                              color: AppColors.imageBGColorLight,
+                             decoration: BoxDecoration( color: AppColors.imageBGColorLight,image:DecorationImage(image:NetworkImage(""))),
+
                             ),
                             Align(
                               alignment: Alignment.center,
