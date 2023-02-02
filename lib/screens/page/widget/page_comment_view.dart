@@ -264,7 +264,7 @@ class PageCommentView extends StatelessWidget {
                   border: Border.all(color: AppColors.primaryColorLight),
                   image: const DecorationImage(image: AssetImage("assets/background/help.png"), fit: BoxFit.cover)),
             ),
-            Container(
+            const SizedBox(
               height: 50,
               width: 300,
             )

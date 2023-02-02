@@ -54,9 +54,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: pageProvider.pagePhotosModel.length > 4 ? 4 :pageProvider.pagePhotosModel.length,
                 itemBuilder: (context, index) {
-                  return Container(
-               child: Image.network(pageProvider.pagePhotosModel[index].image.toString()),
-                  );
+                  return Image.network(pageProvider.pagePhotosModel[index].image.toString());
                 },
               ),
             ),
@@ -83,7 +81,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
                             Container(
                               margin: const EdgeInsets.only(right: 1),
                               height: 250,
-                             decoration: BoxDecoration( color: AppColors.imageBGColorLight,image:DecorationImage(image:NetworkImage(""))),
+                             decoration: const BoxDecoration( color: AppColors.imageBGColorLight,image:DecorationImage(image:NetworkImage(""))),
 
                             ),
                             Align(

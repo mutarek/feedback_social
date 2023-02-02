@@ -224,7 +224,7 @@ class FeedBackGroups extends StatelessWidget {
                                           height: 15,
                                           width: 15,
                                         )),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 10,
                                     )
                                   ],
@@ -335,7 +335,7 @@ class FeedBackGroups extends StatelessWidget {
                                               height: 12,
                                               width: 12,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 2,
                                             ),
                                             Text(
@@ -343,7 +343,7 @@ class FeedBackGroups extends StatelessWidget {
                                               style:
                                               robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 2,
                                             ),
                                             SvgPicture.asset(
@@ -415,7 +415,7 @@ class FeedBackGroups extends StatelessWidget {
                                                               children: [
                                                                 Row(
                                                                   children: [
-                                                                    Icon(Icons.pending_actions),
+                                                                    const Icon(Icons.pending_actions),
                                                                     const SizedBox(
                                                                       width: 4,
                                                                     ),

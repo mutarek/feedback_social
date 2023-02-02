@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
+
 List<GroupPostModel> groupPostModelFromJson(String str) =>
     List<GroupPostModel>.from(
         json.decode(str).map((x) => GroupPostModel.fromJson(x)));
@@ -90,30 +92,6 @@ class GroupPostModel {
         "is_share": isShare,
         "post_type": postTypeValues.reverse[postType],
         "like": like,
-      };
-}
-
-class Author {
-  Author({
-    required this.id,
-    required this.fullName,
-    required this.profileImage,
-  });
-
-  int id;
-  String fullName;
-  String profileImage;
-
-  factory Author.fromJson(Map<String, dynamic> json) => Author(
-        id: json["id"],
-        fullName: json["full_name"],
-        profileImage: json["profile_image"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "full_name": fullName,
-        "profile_image": profileImage,
       };
 }
 

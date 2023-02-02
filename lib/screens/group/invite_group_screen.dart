@@ -98,12 +98,12 @@ class _InviteGroupScreenState extends State<InviteGroupScreen> {
                                           child: FriendListCard(
                                               verb: LocaleKeys.invite.tr(),
                                               onPressed: () {
-                                                groupProvider.sendInvitation(widget.groupID, groupProvider.friendsList[index].id, index);
+                                                groupProvider.sendInvitation(widget.groupID, groupProvider.friendsList[index].id as int, index);
                                               },
                                               width: width,
                                               height: height,
-                                              name: groupProvider.friendsList[index].fullName,
-                                              image: groupProvider.friendsList[index].profileImage),
+                                              name: groupProvider.friendsList[index].fullName!,
+                                              image: groupProvider.friendsList[index].profileImage!),
                                         );
                                       })
                                   :  Center(child: CustomText(title: LocaleKeys.no_Data_Found.tr(), color: Colors.black, fontSize: 18)),

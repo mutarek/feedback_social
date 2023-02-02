@@ -1,9 +1,4 @@
-import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/video/video_screen.dart';
-import 'package:als_frontend/util/helper.dart';
-import 'package:als_frontend/widgets/single_image_view.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

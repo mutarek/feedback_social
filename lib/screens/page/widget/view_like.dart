@@ -14,7 +14,7 @@ class ViewLike extends StatefulWidget {
 }
 
 class _ViewLikeState extends State<ViewLike> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return Consumer<PageProvider>(builder: (context, pageProvider, child) {

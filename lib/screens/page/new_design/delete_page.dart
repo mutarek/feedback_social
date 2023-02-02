@@ -1,10 +1,7 @@
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/page_home_screen.dart';
-import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
-import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +53,7 @@ class _DeletePageState extends State<DeletePage> {
                           TextSpan(text: " MyPage ", style: robotoStyle700Bold.copyWith(fontSize: 15)),
                           TextSpan(text: "To Confrim", style: robotoStyle300Light.copyWith(fontSize: 12)),
                         ])),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         CustomTextField(
                           hintText: 'Your Key Name',
                           isShowBorder: true,

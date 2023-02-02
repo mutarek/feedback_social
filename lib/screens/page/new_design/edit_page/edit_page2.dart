@@ -1,10 +1,7 @@
-import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/data/model/response/page/page_details_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/page_home_screen.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
-import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';

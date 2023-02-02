@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/comment_models.dart';
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/repository/comment_repo.dart';
 import 'package:als_frontend/util/app_constant.dart';
 import 'package:flutter/foundation.dart';

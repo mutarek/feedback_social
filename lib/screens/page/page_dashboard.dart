@@ -180,29 +180,27 @@ class _PageDashboardState extends State<PageDashboard> {
                                           child: ListView.builder(
                                               itemCount: pageProvider.invitePageAllLists.length,
                                               shrinkWrap: true,
-                                              physics: BouncingScrollPhysics(),
+                                              physics: const BouncingScrollPhysics(),
                                               itemBuilder: (context, index) {
-                                                return Container(
-                                                  child: Row(
-                                                    children: [
-                                                      SizedBox(
-                                                          width: 30,
-                                                          height: 30,
-                                                          child:
-                                                              circularImage(pageProvider.invitePageAllLists[index].profileImage!, 30, 30)),
-                                                      const SizedBox(width: 10),
-                                                      Expanded(
-                                                        child: Text(pageProvider.invitePageAllLists[index].fullName!,
-                                                            style: robotoStyle500Medium.copyWith(fontSize: 12)),
-                                                      ),
-                                                      Checkbox(
-                                                        value: pageProvider.invitePageFriendSelect[index],
-                                                        onChanged: (value) {
-                                                          pageProvider.changeInviteFriendSelectFriend(index, value!);
-                                                        },
-                                                      )
-                                                    ],
-                                                  ),
+                                                return Row(
+                                                  children: [
+                                                    SizedBox(
+                                                        width: 30,
+                                                        height: 30,
+                                                        child:
+                                                            circularImage(pageProvider.invitePageAllLists[index].profileImage!, 30, 30)),
+                                                    const SizedBox(width: 10),
+                                                    Expanded(
+                                                      child: Text(pageProvider.invitePageAllLists[index].fullName!,
+                                                          style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                    ),
+                                                    Checkbox(
+                                                      value: pageProvider.invitePageFriendSelect[index],
+                                                      onChanged: (value) {
+                                                        pageProvider.changeInviteFriendSelectFriend(index, value!);
+                                                      },
+                                                    )
+                                                  ],
                                                 );
                                               }),
                                         ),
@@ -225,11 +223,11 @@ class _PageDashboardState extends State<PageDashboard> {
                                                   )
                                                 : const SizedBox.shrink(),
                                         const SizedBox(height: 5),
-                                        Container(
+                                        SizedBox(
                                           height: 30,
                                           width: MediaQuery.of(context).size.width,
                                           child: pageProvider.isLoadingInviteFriend2
-                                              ? Center(child: CircularProgressIndicator())
+                                              ? const Center(child: CircularProgressIndicator())
                                               : CustomButton(
                                                   btnTxt: 'Send invitations',
                                                   height: 30,

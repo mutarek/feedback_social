@@ -4,7 +4,6 @@ import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
-import 'package:als_frontend/data/model/response/group/friends_list_model.dart';
 import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
@@ -484,8 +483,8 @@ class GroupProvider with ChangeNotifier {
   }
 
   // TODO: for Group members lists who's not member in this group
-  List<FriendListModel> friendsList = [];
-  List<FriendListModel> friendsListTemp = [];
+  List<Author> friendsList = [];
+  List<Author> friendsListTemp = [];
 
   callForGetAllGroupMemberWhoNotMember(int groupID) async {
     isLoading = true;
@@ -498,7 +497,7 @@ class GroupProvider with ChangeNotifier {
     isLoading = false;
     if (response.response.statusCode == 200) {
       response.response.data.forEach((element) {
-        friendsList.add(FriendListModel.fromJson(element));
+        friendsList.add(Author.fromJson(element));
       });
       friendsListTemp.addAll(friendsList);
     } else {
@@ -515,7 +514,7 @@ class GroupProvider with ChangeNotifier {
       notifyListeners();
     } else {
       for (var element in friendsListTemp) {
-        if (element.fullName.toLowerCase().toString().contains(query.toLowerCase().toString())) {
+        if (element.fullName!.toLowerCase().toString().contains(query.toLowerCase().toString())) {
           friendsList.add(element);
         }
       }
