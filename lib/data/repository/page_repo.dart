@@ -64,7 +64,7 @@ class PageRepo {
   Future<ApiResponse> createPageWithoutImageUpload(Map map) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.post(AppConstant.pageURI, data: map);
+      response = await dioClient.post(AppConstant.pageCreateURI, data: map);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -74,7 +74,7 @@ class PageRepo {
   Future<ApiResponse> createPageWithImageUpload(FormData formData) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.post(AppConstant.baseUrl + AppConstant.pageURI, data: formData);
+      response = await dioClient.post(AppConstant.pageCreateURI, data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

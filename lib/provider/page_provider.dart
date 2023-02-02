@@ -772,7 +772,6 @@ class PageProvider with ChangeNotifier {
     isLoadingFindPage = true;
     findPageModel.clear();
     findPageModel = [];
-
     //notifyListeners();
     ApiResponse response = await pageRepo.findPage(pageName);
     isLoadingFindPage = false;
@@ -793,7 +792,6 @@ class PageProvider with ChangeNotifier {
 
   pageDetails(int pageID) async {
     isLoadingPageDetails = true;
-
     //notifyListeners();
     ApiResponse response = await pageRepo.pageDetails(pageID);
     isLoadingPageDetails = false;
