@@ -29,9 +29,7 @@ class DeleteDialogue extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              //Space
               const SizedBox(height: 10),
-              //f
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(

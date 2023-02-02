@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/dialog_bottom_sheet/delete_dialogue.dart';
 import 'package:als_frontend/dialog_bottom_sheet/like_modal_bottom_sheet.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
@@ -36,6 +37,7 @@ class PostWidget extends StatelessWidget {
   final bool isGroup;
   final bool isPage;
   final bool isHideCommentButton;
+  final bool isAdmin;
 
   const PostWidget(this.newsFeedData,
       {required this.index,
@@ -44,6 +46,7 @@ class PostWidget extends StatelessWidget {
       this.isHideCommentButton = false,
       this.isGroup = false,
       this.isPage = false,
+      this.isAdmin = false,
       this.groupPageID = 0,
       Key? key})
       : super(key: key);
@@ -111,14 +114,25 @@ class PostWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                PopUpMenuWidget(ImagesModel.saveIcons, 'Save', () {}),
+                                isAdmin
+                                    ? PopUpMenuWidget(ImagesModel.reportIcons, 'Edit', () {})
+                                    : PopUpMenuWidget(ImagesModel.saveIcons, 'Save', () {}),
                                 const SizedBox(height: 15),
-                                PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {}),
-                                const SizedBox(height: 15),
-                                PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
-                                const SizedBox(height: 15),
-                                PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {}),
-                                const SizedBox(height: 8)
+                                isAdmin
+                                    ? PopUpMenuWidget(ImagesModel.hideIcons, 'Delete', () {
+                                        Navigator.of(context).pop();
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return DeleteDialogue(newsFeedData, index);
+                                            });
+                                      })
+                                    : PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {}),
+                                SizedBox(height: isAdmin ? 8 : 15),
+                                isAdmin ? SizedBox.shrink() : PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
+                                SizedBox(height: isAdmin ? 0 : 15),
+                                isAdmin ? SizedBox.shrink() : PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {}),
+                                SizedBox(height: isAdmin ? 0 : 8)
                               ],
                             ),
                           ),
@@ -256,6 +270,7 @@ class PostWidget extends StatelessWidget {
                         onReactionSelected: (val) {
                           Provider.of<PageProvider>(context, listen: false).addLike(val.id + 1, index);
                           if (newsFeedData.reaction != val.id) {
+                            print(newsFeedData.toJson());
                             commentProvider.addRealLike(newsFeedData.reaction == 1
                                 ? newsFeedData.likeReactUrl!
                                 : newsFeedData.reaction == 2

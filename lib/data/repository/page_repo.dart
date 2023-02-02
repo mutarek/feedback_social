@@ -113,17 +113,6 @@ class PageRepo {
 
   Future<ApiResponse> callForGetPageDetails(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
-      response = await dioClient.get("${AppConstant.pageURI}$pageID/up-del-retr/");
-
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
-
-  Future<ApiResponse> callForGetIndividualPageDetails(String pageID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.pageURI}$pageID/up-del-retr/");
       return ApiResponse.withSuccess(response);
@@ -164,8 +153,8 @@ class PageRepo {
 
   Future<ApiResponse> pageLikeUnlike(String pageId) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try{
-      response = await dioClient.post("/page/user/like/$pageId/create/",data: {});
+    try {
+      response = await dioClient.post("/page/user/like/$pageId/create/", data: {});
 
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -179,20 +168,6 @@ class PageRepo {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("/page/search/?q=$findPageName");
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
-
-  Future<ApiResponse> pageDetails(
-    int pageID,
-  ) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try {
-      response = await dioClient.get(
-        "/page/$pageID/",
-      );
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -222,18 +197,17 @@ class PageRepo {
   Future<ApiResponse> invitationCreate(int pageID, List<int> users) async {
     Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
-
       response = await dioClient.post(AppConstant.invitationCreateURI, data: {"page": pageID, "users": users});
-      response = await dioClient.get("/page/$pageID/up-del-retr/",);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-  Future<ApiResponse> pageAllPhotos(int pageID,) async {
+
+  Future<ApiResponse> pageAllPhotos(int pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get("/page/image/$pageID/list/",);
+      response = await dioClient.get("/page/image/$pageID/list/");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

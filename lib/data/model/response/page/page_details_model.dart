@@ -24,7 +24,8 @@ class PageDetailsModel {
     this.likedUserUrl,
     this.isFollowed,
     this.totalFollower,
-    this.followerUrl,});
+    this.followerUrl,
+  });
 
   PageDetailsModel.fromJson(dynamic json) {
     id = json['id'];
@@ -51,6 +52,7 @@ class PageDetailsModel {
     totalFollower = json['total_follower'];
     followerUrl = json['follower_url'];
   }
+
   num? id;
   String? name;
   String? bio;
@@ -104,5 +106,4 @@ class PageDetailsModel {
     map['follower_url'] = followerUrl;
     return map;
   }
-
 }

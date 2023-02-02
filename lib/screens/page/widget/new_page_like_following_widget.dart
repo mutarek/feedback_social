@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
+import 'package:als_frontend/data/model/response/page/page_details_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/page_dashboard.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
@@ -13,10 +14,10 @@ import 'package:provider/provider.dart';
 
 class NewPageLikeFollowingWidget extends StatelessWidget {
   final bool isAdmin;
-  final AuthorPageModel authorPage;
+  final PageDetailsModel pageDetails;
   final int index;
 
-  const NewPageLikeFollowingWidget(this.authorPage, this.isAdmin, {this.index = 0, Key? key}) : super(key: key);
+  const NewPageLikeFollowingWidget(this.pageDetails, this.isAdmin, {this.index = 0, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,9 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                   ? Expanded(
                       child: InkWell(
                         onTap: () {
-                          Provider.of<PageProvider>(context, listen: false).callForGetIndividualPageDetails(authorPage.id.toString());
+                          // Provider.of<PageProvider>(context, listen: false).callForGetIndividualPageDetails(authorPage.id.toString());
                           isAdmin
-                              ? Helper.toScreen(PageDashboard(authorPage.id.toString(), index))
+                              ? Helper.toScreen(PageDashboard(pageDetails.id.toString(), index))
                               : showMessage(message: "Ops You don't have access");
                         },
                         child: Container(
@@ -60,7 +61,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                               onTap: () {
                                 Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
                                     int.parse(
-                                      authorPage.id.toString(),
+                                      pageDetails.id.toString(),
                                     ),
                                     isFromSuggestedPage: true);
                               },

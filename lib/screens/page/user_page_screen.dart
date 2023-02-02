@@ -86,9 +86,9 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                               back: () {
                                                 Helper.back();
                                               },
-                                              coverPhoto: pageProvider.pageDetailsModel!.coverPhoto!,
+                                              coverPhoto: pageProvider.pageDetailsModel.coverPhoto!,
                                               viewCoverPhoto: () {
-                                                Helper.toScreen(SingleImageView(imageURL: pageProvider.pageDetailsModel!.coverPhoto!));
+                                                Helper.toScreen(SingleImageView(imageURL: pageProvider.pageDetailsModel.coverPhoto!));
                                               },
                                             ),
                                           ),
@@ -109,11 +109,11 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                 Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(pageProvider.pageDetailsModel!.name!,
+                                                    Text(pageProvider.pageDetailsModel.name!,
                                                         style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
                                                     Padding(
                                                         padding: EdgeInsets.only(right: width * 0.227),
-                                                        child: Text(pageProvider.pageDetailsModel!.category!)),
+                                                        child: Text(pageProvider.pageDetailsModel.category!)),
                                                     SizedBox(height: height * 0.01),
                                                     InkWell(
                                                       onTap: () {
@@ -126,7 +126,7 @@ class _UserPageScreenState extends State<UserPageScreen> {
                                                         mainAxisAlignment: MainAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            "${pageProvider.pageDetailsModel!.totalLike}",
+                                                            "${pageProvider.pageDetailsModel.totalLike}",
                                                             style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold),
                                                           ),
                                                           Text(LocaleKeys.followers.tr(),

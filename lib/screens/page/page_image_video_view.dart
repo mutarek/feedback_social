@@ -34,8 +34,8 @@ class _PageImageVideoViewState extends State<PageImageVideoView> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3, crossAxisSpacing: 5.0, mainAxisSpacing: 5.0),
             itemCount: widget.isForImage
-                ? pageProvider.pageDetailsModel!.photos!.length
-                : pageProvider.pageDetailsModel!.videos!.length,
+                ? pageProvider.pageDetailsModel.photos!.length
+                : pageProvider.pageDetailsModel.videos!.length,
             itemBuilder: (context, index) {
               return Container();
               // return InkWell(

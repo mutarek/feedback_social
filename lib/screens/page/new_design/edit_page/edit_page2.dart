@@ -38,7 +38,7 @@ class _EditPage2State extends State<EditPage2> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 0)).then((value) {
-      setOldValue(Provider.of<PageProvider>(context, listen: false).individualPageDetailsModel);
+      setOldValue(Provider.of<PageProvider>(context, listen: false).pageDetailsModel);
     });
     super.initState();
   }

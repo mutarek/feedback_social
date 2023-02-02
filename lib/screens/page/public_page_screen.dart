@@ -82,10 +82,10 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                 Helper.back();
                                               },
                                               coverPhoto:
-                                                  pageProvider.pageDetailsModel != null ? pageProvider.pageDetailsModel!.coverPhoto! : "",
+                                                  pageProvider.pageDetailsModel != null ? pageProvider.pageDetailsModel.coverPhoto! : "",
                                               viewCoverPhoto: () {
                                                 Helper.toScreen(SingleImageView(
-                                                  imageURL: pageProvider.pageDetailsModel!.coverPhoto!,
+                                                  imageURL: pageProvider.pageDetailsModel.coverPhoto!,
                                                 ));
                                               },
                                             ),
@@ -107,12 +107,12 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                 Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(pageProvider.pageDetailsModel != null ? pageProvider.pageDetailsModel!.name! : "",
+                                                    Text(pageProvider.pageDetailsModel != null ? pageProvider.pageDetailsModel.name! : "",
                                                         style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold)),
                                                     Padding(
                                                         padding: EdgeInsets.only(right: width * 0.227),
                                                         child: Text(pageProvider.pageDetailsModel != null
-                                                            ? pageProvider.pageDetailsModel!.category!
+                                                            ? pageProvider.pageDetailsModel.category!
                                                             : "")),
                                                     SizedBox(height: height * 0.01),
                                                     InkWell(
@@ -123,7 +123,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                         mainAxisAlignment: MainAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            "${pageProvider.pageDetailsModel!.totalLike}",
+                                                            "${pageProvider.pageDetailsModel.totalLike}",
                                                             style: TextStyle(fontSize: height * 0.03, fontWeight: FontWeight.bold),
                                                           ),
                                                           Text(LocaleKeys.followers.tr(),
@@ -152,7 +152,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                           height: height * 0.036,
                                                           width: width * 0.2,
                                                           decoration: BoxDecoration(
-                                                              color: (pageProvider.pageDetailsModel!.isLiked == false)
+                                                              color: (pageProvider.pageDetailsModel.isLiked == false)
                                                                   ? Palette.primary
                                                                   : Colors.green,
                                                               borderRadius: BorderRadius.circular(10)),
@@ -161,7 +161,7 @@ class _PublicPageScreenState extends State<PublicPageScreen> {
                                                             children: [
                                                               const Icon(Icons.thumb_up_sharp, size: 16, color: Colors.white),
                                                               Text(
-                                                                (pageProvider.pageDetailsModel!.isLiked == false)
+                                                                (pageProvider.pageDetailsModel.isLiked == false)
                                                                     ? LocaleKeys.likes.tr()
                                                                     : LocaleKeys.liked.tr(),
                                                                 style: TextStyle(fontSize: height * 0.015, color: Colors.white),

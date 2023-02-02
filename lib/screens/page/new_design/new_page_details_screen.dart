@@ -25,6 +25,7 @@ class NewPageDetailsScreen extends StatefulWidget {
 class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
   @override
   void initState() {
+    Provider.of<PageProvider>(context, listen: false).callForGetPageInformation(widget.authorPageModel.id.toString());
     Provider.of<PageProvider>(context, listen: false).callForGetAllPagePosts(widget.authorPageModel.id.toString());
     _pageController = PageController();
     super.initState();
@@ -43,25 +44,27 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Consumer<PageProvider>(builder: (context, pageProvider, child) {
-        return PageView(
-          controller: _pageController,
-          onPageChanged: (int i) {
-            FocusScope.of(context).requestFocus(FocusNode());
-            pageProvider.changeMenuValue(i);
-          },
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin, index: widget.index),
-            PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, widget.authorPageModel),
-            PagePhotoView(tabMenuWidget(pageProvider), widget.isAdmin,),
-          ],
-        );
+        return pageProvider.isLoading || pageProvider.isLoadingPageDetails
+            ? const Center(child: CircularProgressIndicator())
+            : PageView(
+                controller: _pageController,
+                onPageChanged: (int i) {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  pageProvider.changeMenuValue(i);
+                },
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin, index: widget.index),
+                  PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
+                  PagePhotoView(tabMenuWidget(pageProvider), widget.isAdmin),
+                ],
+              );
       }),
     );
   }
 
   Widget tabMenuWidget(PageProvider pageProvider) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

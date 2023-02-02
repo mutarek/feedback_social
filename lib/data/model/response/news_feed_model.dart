@@ -54,9 +54,9 @@ class NewsFeedModel {
     totalLiked = json['total_liked'];
     totalLoved = json['total_loved'];
     totalSad = json['total_sad'];
-    loveReactUrl = json['love_react_url'];
-    likeReactUrl = json['like_react_url'];
-    sadReactUrl = json['sad_react_url'];
+    loveReactUrl = json['love_react_user_url'];
+    likeReactUrl = json['like_react_user_url'];
+    sadReactUrl = json['sad_react_user_url'];
     allReactUserUrl = json['all_react_user_url'];
     reaction = json['reaction'] ?? -1;
     sharePost = json['share_post'] != null ? SharePost.fromJson(json['share_post']) : SharePost();
@@ -182,9 +182,9 @@ class ImagesData {
     totalLiked = json['total_liked'];
     totalLoved = json['total_loved'];
     totalSad = json['total_sad'];
-    loveReactUrl = json['love_react_url'];
-    likeReactUrl = json['like_react_url'];
-    sadReactUrl = json['sad_react_url'];
+    loveReactUrl = json['love_react_user_url'];
+    likeReactUrl = json['like_react_user_url'];
+    sadReactUrl = json['sad_react_user_url'];
     allReactUserUrl = json['all_react_user_url'];
     reaction = json['reaction'] ?? -1;
   }

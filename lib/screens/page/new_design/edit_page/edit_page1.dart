@@ -35,7 +35,7 @@ class _EditPage1State extends State<EditPage1> {
   void initState() {
     Provider.of<PageProvider>(context, listen: false).initializeCategory();
     Future.delayed(const Duration(seconds: 3)).then((value) {
-      setOldValue(Provider.of<PageProvider>(context, listen: false).individualPageDetailsModel);
+      setOldValue(Provider.of<PageProvider>(context, listen: false).pageDetailsModel);
     });
     super.initState();
   }
@@ -59,7 +59,7 @@ class _EditPage1State extends State<EditPage1> {
                     style: robotoStyle400Regular.copyWith(fontSize: 10)),
                 const SizedBox(height: 10),
                 CustomTextField(
-                  hintText: pageProvider.individualPageDetailsModel!.name.toString(),
+                  hintText: pageProvider.pageDetailsModel.name.toString(),
                   isShowBorder: true,
                   borderRadius: 11,
                   verticalSize: 14,
@@ -76,7 +76,7 @@ class _EditPage1State extends State<EditPage1> {
                 Text.rich(
                   TextSpan(children: [
                     TextSpan(text: "Old Page Category: ", style: robotoStyle500Medium.copyWith(fontSize: 15)),
-                    TextSpan(text: pageProvider.individualPageDetailsModel!.category, style: robotoStyle700Bold.copyWith(fontSize: 17))
+                    TextSpan(text: pageProvider.pageDetailsModel.category, style: robotoStyle700Bold.copyWith(fontSize: 17))
                   ]),
                 ),
                 const SizedBox(height: 10),
@@ -110,7 +110,7 @@ class _EditPage1State extends State<EditPage1> {
                     title: "Tell a little bit about your page .", textStyle: robotoStyle500Medium.copyWith(fontSize: 17), maxLines: 2),
                 const SizedBox(height: 10),
                 CustomTextField(
-                  hintText: pageProvider.individualPageDetailsModel!.bio,
+                  hintText: pageProvider.pageDetailsModel.bio,
                   isShowBorder: true,
                   borderRadius: 11,
                   verticalSize: 14,
@@ -122,7 +122,7 @@ class _EditPage1State extends State<EditPage1> {
                 CustomText(title: "Describe Your Page.", textStyle: robotoStyle500Medium.copyWith(fontSize: 17), maxLines: 1),
                 const SizedBox(height: 10),
                 CustomTextField(
-                  hintText: pageProvider.individualPageDetailsModel!.description,
+                  hintText: pageProvider.pageDetailsModel.description,
                   isShowBorder: true,
                   borderRadius: 11,
                   verticalSize: 14,
@@ -135,7 +135,7 @@ class _EditPage1State extends State<EditPage1> {
                 CustomButton(
                     btnTxt: 'Next Page',
                     onTap: () {
-                      if (pageProvider.categoryValue.id.toString() != pageProvider.individualPageDetailsModel!.category) {
+                      if (pageProvider.categoryValue.id.toString() != pageProvider.pageDetailsModel.category) {
                         Helper.toScreen(EditPage2(pageNameController.text, pageBioController.text, pageDetailsController.text,
                             pageProvider.categoryValue.id.toString(), widget.pageId,widget.index));
                       } else {
@@ -143,7 +143,7 @@ class _EditPage1State extends State<EditPage1> {
                             pageNameController.text,
                             pageBioController.text,
                             pageDetailsController.text,
-                            pageProvider.individualPageDetailsModel!.category.toString(),
+                            pageProvider.pageDetailsModel.category.toString(),
                             widget.pageId,
                             widget.index));
                       }

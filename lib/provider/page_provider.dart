@@ -37,8 +37,7 @@ class PageProvider with ChangeNotifier {
     }
   }
 
-
-  deleteSinglePage(String pageId,int index,Function callback) async {
+  deleteSinglePage(String pageId, int index, Function callback) async {
     isLoading = true;
     notifyListeners();
     ApiResponse apiResponse = await pageRepo.deleteSinglePage(pageId);
@@ -63,9 +62,11 @@ class PageProvider with ChangeNotifier {
     ApiResponse response = await pageRepo.getAllLikedPageLists();
     isLoading = false;
     if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
-        likedPageLists.add(AuthorPageModel.fromJson(element));
-      });
+      if (response.response.data['results'].isNotEmpty) {
+        response.response.data['results'].forEach((element) {
+          likedPageLists.add(AuthorPageModel.fromJson(element));
+        });
+      }
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
@@ -178,36 +179,22 @@ class PageProvider with ChangeNotifier {
   }
 
   //TODO: FOR GETTING INDIVIDUAL PAGE DETAILS
-  PageDetailsModel? individualPageDetailsModel;
 
-  callForGetIndividualPageDetails(String id) async {
-    isLoading = true;
-    individualPageDetailsModel = PageDetailsModel();
-    ApiResponse response = await pageRepo.callForGetIndividualPageDetails(id);
-    if (response.response.statusCode == 200) {
-      individualPageDetailsModel = PageDetailsModel.fromJson(response.response.data);
-    } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-    }
-    isLoading = false;
-    notifyListeners();
-  }
-
-  PageDetailsModel? pageDetailsModel;
+  PageDetailsModel pageDetailsModel = PageDetailsModel();
+  bool isLoadingPageDetails = false;
 
   callForGetPageInformation(String id) async {
-    isLoading = true;
-
+    isLoadingPageDetails = true;
     pageDetailsModel = PageDetailsModel();
     // notifyListeners();
     ApiResponse response = await pageRepo.callForGetPageDetails(id);
-
+    isLoadingPageDetails = false;
     if (response.response.statusCode == 200) {
       pageDetailsModel = PageDetailsModel.fromJson(response.response.data);
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
-    isLoading = false;
+
     notifyListeners();
   }
 
@@ -276,7 +263,7 @@ class PageProvider with ChangeNotifier {
   }
 
   editPage(String name, String bio, String desc, String category, String number, String email, String website, String address,
-      String pageId,int index, Function callBack) async {
+      String pageId, int index, Function callBack) async {
     isLoading = true;
     notifyListeners();
     ApiResponse response;
@@ -392,22 +379,21 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  pageLikeOrUnlike (String pageID) async{
+  pageLikeOrUnlike(String pageID) async {
     ApiResponse response = await pageRepo.pageLikeorUnlike(pageID.toString());
-    if(response.response.statusCode == 200){
+    if (response.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Liked");
-    }else{
+    } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
   }
-
 
   pageLikeUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
     ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString());
     if (response.response.statusCode == 200) {
       if (response.response.data['liked'] == true) {
-        pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
-        pageDetailsModel!.isLiked = true;
+        pageDetailsModel.totalLike = pageDetailsModel.totalLike! + 1;
+        pageDetailsModel.isLiked = true;
         if (isFromMyPageScreen) {
           authorPageLists[index].followers = authorPageLists[index].followers! + 1;
           likedPageLists.insert(0, authorPageLists[index]);
@@ -416,8 +402,8 @@ class PageProvider with ChangeNotifier {
           }
         }
       } else {
-        pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! - 1;
-        pageDetailsModel!.isLiked = false;
+        pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
+        pageDetailsModel.isLiked = false;
         if (isFromMyPageScreen) {
           authorPageLists[index].followers = authorPageLists[index].followers! - 1;
           allSuggestPageList.insert(index, authorPageLists[index]);
@@ -461,8 +447,8 @@ class PageProvider with ChangeNotifier {
 
   changeAllFollowerExpanded() {
     allFollower = !allFollower;
-    if(allFollower == true){
-      getAllFollowerList(isFirstTime: true,page: 1);
+    if (allFollower == true) {
+      getAllFollowerList(isFirstTime: true, page: 1);
     }
     notifyListeners();
   }
@@ -562,7 +548,6 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   //TODO: GETTING ALL FOLLOWER LIST
 
   bool isBottomLoadingPageFollowerList = false;
@@ -576,28 +561,26 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getAllFollowerList({int page = 1, bool isFirstTime = true}) async{
-    if(page ==1){
+  getAllFollowerList({int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
       pageFollowersList.clear();
       pageFollowersList = [];
       isPageFollowerList = true;
-      if(!isFirstTime){
+      if (!isFirstTime) {
         notifyListeners();
       }
-    }
-    else{
+    } else {
       isBottomLoadingPageFollowerList = true;
       notifyListeners();
     }
     ApiResponse apiResponse = await pageRepo.getAllPageFolloweList(1);
-    if(apiResponse.response.statusCode == 200){
+    if (apiResponse.response.statusCode == 200) {
       isPageFollowerList = true;
       hasNextDataPageFollowerList = apiResponse.response.data['next'] != null ? true : false;
-      apiResponse.response.data['results'].forEach((element){
+      apiResponse.response.data['results'].forEach((element) {
         pageFollowersList.add(element);
       });
-    }
-    else{
+    } else {
       isPageFollowerList = false;
       notifyListeners();
       Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
@@ -787,26 +770,11 @@ class PageProvider with ChangeNotifier {
   }
 
   //TODO: page details api instigation
-  PageDetailsModel? pageDetailsList ;
-  bool isLoadingPageDetails = false;
 
-  pageDetails(int pageID) async {
-    isLoadingPageDetails = true;
-    //notifyListeners();
-    ApiResponse response = await pageRepo.pageDetails(pageID);
-    isLoadingPageDetails = false;
-    if (response.response.statusCode == 200) {
-      pageDetailsList = PageDetailsModel.fromJson(response.response.data);
-        notifyListeners();
-
-    } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-    }
-    notifyListeners();
-  }
 //TODO: page Photos api instigation
   List<ImagesData> pagePhotosModel = [];
   bool isPhotosLoading = true;
+
   pageAllPhotos(int pageID) async {
     ApiResponse response = await pageRepo.pageAllPhotos(pageID);
     isPhotosLoading = false;
