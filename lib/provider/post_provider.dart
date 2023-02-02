@@ -127,7 +127,7 @@ class PostProvider with ChangeNotifier {
     isLoading = true;
     calculateMultipartFile();
     ApiResponse apiResponse;
-    formData.fields.add(MapEntry('description', postText));
+    formData.fields.add(MapEntry('description', jsonEncode(postText)));
     formData.fields.add(MapEntry('deleted_image', jsonEncode(deletedImagesIDS)));
     formData.fields.add(MapEntry('deleted_video', jsonEncode(deletedVideoIDS)));
     apiResponse = await postRepo.updatePost(formData, url, onSendProgress: (int sentBytes, int totalBytes) {

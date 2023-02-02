@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,36 +38,54 @@ class PageAboutWidget extends StatelessWidget {
                 const SizedBox(height: 3),
                 const Divider(height: 2),
                 const SizedBox(height: 3),
-                Padding(
-                  padding: const EdgeInsets.only(left: 18),
-                  child: Text(
-                    "Details",
-                    style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.primaryColorLight),
-                  ),
-                ),
-                const SizedBox(height: 15),
+                pageProvider.pageDetailsModel.category!.isEmpty &&
+                        pageProvider.pageDetailsModel.email!.isEmpty &&
+                        pageProvider.pageDetailsModel.website!.isEmpty &&
+                        pageProvider.pageDetailsModel.contact!.isEmpty &&
+                        pageProvider.pageDetailsModel.address!.isEmpty
+                    ? const SizedBox()
+                    : Padding(
+                        padding: const EdgeInsets.only(left: 18),
+                        child: Text("Details",
+                            style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 15, color: AppColors.primaryColorLight)),
+                      ),
+                SizedBox(
+                    height: pageProvider.pageDetailsModel.category!.isEmpty &&
+                            pageProvider.pageDetailsModel.email!.isEmpty &&
+                            pageProvider.pageDetailsModel.website!.isEmpty &&
+                            pageProvider.pageDetailsModel.contact!.isEmpty &&
+                            pageProvider.pageDetailsModel.address!.isEmpty
+                        ? 0
+                        : 15),
                 pageProvider.pageDetailsModel.category!.isNotEmpty
                     ? infoWidget(ImagesModel.categoryIcons, "news & media website",
                         Text('Category - ${pageProvider.pageDetailsModel.category}', style: robotoStyle800ExtraBold.copyWith(fontSize: 15)))
                     : const SizedBox.shrink(),
-                const SizedBox(height: 10),
+                SizedBox(height: pageProvider.pageDetailsModel.category!.isEmpty ? 0 : 10),
                 pageProvider.pageDetailsModel.email!.isNotEmpty
                     ? infoWidget(ImagesModel.emailIcons, pageProvider.pageDetailsModel.email!, const SizedBox.shrink())
                     : const SizedBox.shrink(),
-                const SizedBox(height: 10),
+                SizedBox(height: pageProvider.pageDetailsModel.email!.isEmpty ? 0 : 10),
                 pageProvider.pageDetailsModel.website!.isNotEmpty
                     ? infoWidget(ImagesModel.websiteIcons, pageProvider.pageDetailsModel.website!, const SizedBox.shrink())
                     : const SizedBox.shrink(),
-                const SizedBox(height: 10),
+                SizedBox(height: pageProvider.pageDetailsModel.website!.isEmpty ? 0 : 10),
                 pageProvider.pageDetailsModel.contact!.isNotEmpty
                     ? infoWidget(ImagesModel.callIcons, pageProvider.pageDetailsModel.contact!, const SizedBox.shrink())
                     : const SizedBox.shrink(),
-                const SizedBox(height: 10),
+                SizedBox(height: pageProvider.pageDetailsModel.contact!.isEmpty ? 0 : 10),
                 pageProvider.pageDetailsModel.address!.isNotEmpty
                     ? infoWidget(ImagesModel.locationIcons, pageProvider.pageDetailsModel.address!, const SizedBox.shrink())
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
-                infoWidget(ImagesModel.directionIcons, "", Text('Get Directions', style: robotoStyle800ExtraBold.copyWith(fontSize: 15))),
+                InkWell(
+                    onTap: () {
+                      if (pageProvider.pageDetailsModel.address!.isEmpty) {
+                        showMessage(message: 'There is no address');
+                      }
+                    },
+                    child: infoWidget(
+                        ImagesModel.directionIcons, "", Text('Get Directions', style: robotoStyle800ExtraBold.copyWith(fontSize: 15)))),
                 const SizedBox(height: 12),
                 const Divider(thickness: 1.8, color: Color(0xffE4E6EB)),
                 Padding(
@@ -88,8 +107,11 @@ class PageAboutWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 15), child: Text("Page Info", style: robotoStyle700Bold.copyWith(fontSize: 17))),
                 const SizedBox(height: 10),
                 pageProvider.pageDetailsModel.author!.fullName!.isNotEmpty
-                    ? infoWidget(ImagesModel.adminIcons, pageProvider.pageDetailsModel.author!.fullName!,
-                        Text('Admin - ', style: robotoStyle800ExtraBold.copyWith(fontSize: 15)))
+                    ? infoWidget(
+                        ImagesModel.adminIcons,
+                        pageProvider.pageDetailsModel.author!.fullName!,
+                        Text('Admin - ${pageProvider.pageDetailsModel.author!.fullName!}',
+                            style: robotoStyle800ExtraBold.copyWith(fontSize: 15)))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
                 infoWidget(ImagesModel.dateIcons, DateConverter.localDateToString(pageProvider.pageDetailsModel.createdAt!),

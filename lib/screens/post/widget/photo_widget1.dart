@@ -117,7 +117,6 @@ class _PostPhotoWidgetState extends State<PostPhotoWidget> {
                 isVideo = false;
                 url = widget.newsfeedModel.images![index].image!;
               }
-//Shuvo 0  | 1  |1 |1 |2 |1
               return InkWell(
                 onTap: () {
                   Provider.of<OtherProvider>(context, listen: false)

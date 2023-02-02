@@ -2,6 +2,7 @@ import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/view/page_about_view.dart';
 import 'package:als_frontend/screens/page/view/page_home_view.dart';
+import 'package:als_frontend/screens/page/view/page_upcomming_view.dart';
 import 'package:als_frontend/screens/page/widget/admin_post_view.dart';
 import 'package:als_frontend/screens/page/widget/page_photo_view.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -57,6 +58,9 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
                   PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin, index: widget.index),
                   PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
                   PagePhotoView(tabMenuWidget(pageProvider), widget.isAdmin),
+                  PageUpcomingView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
+                  PageUpcomingView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
+
                 ],
               );
       }),

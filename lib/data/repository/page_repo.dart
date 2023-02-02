@@ -162,9 +162,7 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> findPage(
-    String findPageName,
-  ) async {
+  Future<ApiResponse> findPage(String findPageName) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("/page/search/?q=$findPageName");
@@ -204,10 +202,10 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> pageAllPhotos(int pageID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+  Future<ApiResponse> pageAllPhotosVideo(String url) async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
-      response = await dioClient.get("/page/image/$pageID/list/");
+      response = await dioClient.get(url);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

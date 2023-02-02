@@ -257,7 +257,7 @@ class PageProvider with ChangeNotifier {
   }
 
   updatePostOnTimeLine(int index, NewsFeedModel n) async {
-    pageAllPosts[index]=n;
+    pageAllPosts[index] = n;
     // pageAllPosts.removeAt(index);
     // pageAllPosts.insert(0, n);
     notifyListeners();
@@ -774,18 +774,35 @@ class PageProvider with ChangeNotifier {
 
 //TODO: page Photos api instigation
   List<ImagesData> pagePhotosModel = [];
+  List<VideosData> videosLists = [];
   bool isPhotosLoading = true;
 
-  pageAllPhotos(int pageID) async {
-    ApiResponse response = await pageRepo.pageAllPhotos(pageID);
-    isPhotosLoading = false;
+  pageAllPhotos() async {
+    isPhotosLoading = true;
+    pagePhotosModel.clear();
+    pagePhotosModel = [];
+    videosLists.clear();
+    videosLists = [];
+    ApiResponse response = await pageRepo.pageAllPhotosVideo(pageDetailsModel.photos!);
+
     if (response.response.statusCode == 200) {
       response.response.data.forEach((element) {
         pagePhotosModel.add(ImagesData.fromJson(element));
       });
+      notifyListeners();
+      ApiResponse response1 = await pageRepo.pageAllPhotosVideo(pageDetailsModel.videos!);
+      isPhotosLoading = false;
+      if (response1.response.statusCode == 200) {
+        response1.response.data.forEach((element) {
+          videosLists.add(VideosData.fromJson(element));
+        });
+      } else {
+        Fluttertoast.showToast(msg: response1.response.statusMessage!);
+      }
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
+    isPhotosLoading = false;
     notifyListeners();
   }
 }

@@ -23,10 +23,11 @@ class PostRepo {
 
   Future<ApiResponse> updatePost(FormData formData, String url, {onSendProgress}) async {
     try {
-      response = await dioClient.patch("${url.replaceAll("comment/", "").replaceAll('list/', '')}up-del-retr/",
+      response = await dioClient.patch("${AppConstant.baseUrl}${url.replaceAll("comment/", "").replaceAll('list/', '')}up-del-retr/",
           data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
+      print(formData.fields);
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
