@@ -143,41 +143,6 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: for create and update Group
-  createPage(String groupName, File? file, Function callback) async {
-    isLoading = true;
-    notifyListeners();
-    ApiResponse response;
-    if (file != null) {
-      FormData formData = FormData();
-      formData.files.add(
-          MapEntry('cover_photo', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
-      formData.fields.add(MapEntry('name', groupName));
-      formData.fields.add(MapEntry('category', categoryValue.id.toString()));
-      response = await pageRepo.createPageWithImageUpload(formData);
-    } else {
-      response = await pageRepo.createPageWithoutImageUpload({"name": groupName, "category": categoryValue.id});
-    }
-    isLoading = false;
-    if (response.response.statusCode == 201) {
-      authorPageLists.insert(
-          0,
-          AuthorPageModel(
-              id: response.response.data['id'],
-              name: response.response.data['name'],
-              coverPhoto: response.response.data['cover_photo'],
-              avatar: response.response.data['avatar'],
-              followers: 0));
-
-      Fluttertoast.showToast(msg: "Page Created successfully");
-      callback(true);
-    } else {
-      callback(false);
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-    }
-    notifyListeners();
-  }
-
   //TODO: FOR GETTING INDIVIDUAL PAGE DETAILS
 
   PageDetailsModel pageDetailsModel = PageDetailsModel();
@@ -185,6 +150,7 @@ class PageProvider with ChangeNotifier {
 
   callForGetPageInformation(String id) async {
     isLoadingPageDetails = true;
+    isLoadingUpdateCover = false;
     pageDetailsModel = PageDetailsModel();
     // notifyListeners();
     ApiResponse response = await pageRepo.callForGetPageDetails(id);
@@ -294,36 +260,37 @@ class PageProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> updatePage(String groupName, File? file, int pageID, int index) async {
-    isLoading = true;
+  bool isLoadingUpdateCover = false;
+
+  Future<bool> updateCoverAndAvatar(File? file, int pageID, int index, bool isCover) async {
+    isLoadingUpdateCover = true;
     notifyListeners();
     ApiResponse response;
     FormData formData = FormData();
-    if (file != null) {
+    if (isCover) {
       formData.files.add(
-          MapEntry('cover_photo', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
-      formData.fields.add(MapEntry('name', groupName));
-      formData.fields.add(MapEntry('category', categoryValue.id.toString()));
-      response = await pageRepo.updatePageWithImageUpload(formData, pageID.toString());
+          MapEntry('cover_photo', MultipartFile(file!.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
     } else {
-      response = await pageRepo.updatePageWithoutImageUpload({"name": groupName, "category": categoryValue.id}, pageID);
+      formData.files
+          .add(MapEntry('avatar', MultipartFile(file!.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
     }
-    isLoading = false;
+    response = await pageRepo.updatePageWithImageUpload(formData, pageID.toString());
+    isLoadingUpdateCover = false;
+    notifyListeners();
     if (response.response.statusCode == 200) {
-      authorPageLists.removeAt(index);
-      authorPageLists.insert(
-          0,
-          AuthorPageModel(
-              id: response.response.data['id'],
-              coverPhoto: response.response.data['cover_photo'],
-              avatar: response.response.data['avatar'],
-              name: response.response.data['name'],
-              followers: response.response.data['total_like']));
+      pageDetailsModel = PageDetailsModel.fromJson(response.response.data);
+      authorPageLists[index] = AuthorPageModel(
+          id: pageDetailsModel.id,
+          coverPhoto: pageDetailsModel.coverPhoto,
+          avatar: pageDetailsModel.avatar,
+          name: pageDetailsModel.name,
+          followers: pageDetailsModel.totalFollower);
+
       Fluttertoast.showToast(msg: "Update successfully");
       notifyListeners();
       return true;
     } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
+      Fluttertoast.showToast(msg: 'Failed to update');
     }
     notifyListeners();
     return false;

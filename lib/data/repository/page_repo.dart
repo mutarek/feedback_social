@@ -91,25 +91,6 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> callForGetPageAllImages(String pageId) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try {
-      response = await dioClient.get("/page/$pageId/image/list/");
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
-
-  Future<ApiResponse> callForGetPageAllVideo(String pageID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try {
-      response = await dioClient.get("/page/$pageID/video/list/");
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
 
   Future<ApiResponse> callForGetPageDetails(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));

@@ -1,4 +1,5 @@
 import 'package:als_frontend/provider/other_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,12 @@ class ChooseImageAndCropImageView extends StatefulWidget {
   final int height;
   final bool isProfile;
   final bool isCover;
+  final bool isPage;
+  final int index;
+  final int pageID;
 
   const ChooseImageAndCropImageView(this.ratioX, this.ratioY, this.width, this.height,
-      {this.isCover = false, this.isProfile = false, Key? key})
+      {this.isCover = false, this.isProfile = false, this.index = 0, this.isPage = false, this.pageID = 0, Key? key})
       : super(key: key);
 
   @override
@@ -25,8 +29,8 @@ class ChooseImageAndCropImageView extends StatefulWidget {
 class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageView> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<OtherProvider>(
-        builder: (context, otherProvider, child) => Scaffold(
+    return Consumer2<OtherProvider, PageProvider>(
+        builder: (context, otherProvider, pageProvider, child) => Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
               elevation: 0,
@@ -34,9 +38,14 @@ class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageVie
               actions: [
                 IconButton(
                     onPressed: () {
-                      if (widget.isProfile) {
+                      if (widget.isPage == true) {
+                        pageProvider.updateCoverAndAvatar(widget.isCover ? otherProvider.pageCoverFile! : otherProvider.pageProfileFile,
+                            widget.pageID, widget.index, widget.isCover);
+                      }
+
+                      if (widget.isProfile == true) {
                         otherProvider.setProfile();
-                      } else if (widget.isCover) {
+                      } else if (widget.isCover == true) {
                         otherProvider.setCover();
                       } else {}
                       Navigator.of(context).pop();
@@ -59,19 +68,13 @@ class _ChooseImageAndCropImageViewState extends State<ChooseImageAndCropImageVie
                       children: <Widget>[
                         MaterialButton(
                             color: Colors.green,
-                            child: Text(
-                              LocaleKeys.camera.tr(),
-                              style: const TextStyle(color: Colors.white),
-                            ),
+                            child: Text(LocaleKeys.camera.tr(), style: const TextStyle(color: Colors.white)),
                             onPressed: () {
                               otherProvider.getImage(ImageSource.camera, widget.ratioX, widget.ratioY, widget.width, widget.height);
                             }),
                         MaterialButton(
                             color: Colors.deepOrange,
-                            child: Text(
-                              LocaleKeys.device.tr(),
-                              style: const TextStyle(color: Colors.white),
-                            ),
+                            child: Text(LocaleKeys.device.tr(), style: const TextStyle(color: Colors.white)),
                             onPressed: () {
                               otherProvider.getImage(ImageSource.gallery, widget.ratioX, widget.ratioY, widget.width, widget.height);
                             })

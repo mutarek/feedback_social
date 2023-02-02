@@ -46,7 +46,7 @@ class _PageHomeViewState extends State<PageHomeView> {
               physics: const BouncingScrollPhysics(),
               controller: controller,
               children: [
-                NewPageDetailsHeaderWidget(pageProvider.pageDetailsModel),
+                NewPageDetailsHeaderWidget(pageProvider.pageDetailsModel,widget.index),
                 NewPageLikeFollowingWidget(pageProvider.pageDetailsModel, widget.isAdmin, index: widget.index),
                 widget.widget,
                 SizedBox(

@@ -8,6 +8,7 @@ import 'package:als_frontend/screens/page/widget/page_photo_view.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
 class NewPageDetailsScreen extends StatefulWidget {
@@ -47,21 +48,23 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
       body: Consumer<PageProvider>(builder: (context, pageProvider, child) {
         return pageProvider.isLoading || pageProvider.isLoadingPageDetails
             ? const Center(child: CircularProgressIndicator())
-            : PageView(
-                controller: _pageController,
-                onPageChanged: (int i) {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  pageProvider.changeMenuValue(i);
-                },
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin, index: widget.index),
-                  PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
-                  PagePhotoView(tabMenuWidget(pageProvider), widget.isAdmin),
-                  PageUpcomingView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
-                  PageUpcomingView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
-
-                ],
+            : ModalProgressHUD(
+                inAsyncCall: pageProvider.isLoadingUpdateCover,
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (int i) {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    pageProvider.changeMenuValue(i);
+                  },
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin, index: widget.index),
+                    PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
+                    PagePhotoView(tabMenuWidget(pageProvider), widget.isAdmin),
+                    PageUpcomingView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
+                    PageUpcomingView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
+                  ],
+                ),
               );
       }),
     );

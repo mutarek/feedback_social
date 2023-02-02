@@ -890,7 +890,7 @@ class _PageDashboardState extends State<PageDashboard> {
                                           return Dialog(
                                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
                                             child: SizedBox(
-                                              height: 300,
+                                              height: 310,
                                               width: double.infinity,
                                               child: Card(
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),

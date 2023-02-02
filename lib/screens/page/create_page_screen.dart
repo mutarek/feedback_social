@@ -125,21 +125,9 @@ class _CreatePageScreenState extends State<CreatePageScreen> {
                           onTap: () {
                             if (pageNameController.text.isNotEmpty) {
                               if (widget.isUpdatePage) {
-                                pageProvider
-                                    .updatePage(pageNameController.text, otherProvider.selectedFile, widget.authorPage!.id as int, widget.index)
-                                    .then((value) {
-                                  if (value) {
-                                    pageNameController.clear();
-                                    Helper.back();
-                                  }
-                                });
+
                               } else {
-                                pageProvider.createPage(pageNameController.text, otherProvider.selectedFile, (bool status) {
-                                  if (status) {
-                                    pageNameController.clear();
-                                    Helper.back();
-                                  }
-                                });
+
                               }
                             } else {
                               Fluttertoast.showToast(msg: LocaleKeys.please_Write_Page_Name);

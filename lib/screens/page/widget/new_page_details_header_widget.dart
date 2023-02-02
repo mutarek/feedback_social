@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/page/page_details_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
+import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
 import 'package:als_frontend/util/image.dart';
@@ -11,13 +12,14 @@ import 'package:provider/provider.dart';
 
 class NewPageDetailsHeaderWidget extends StatelessWidget {
   final PageDetailsModel pageDetailsModel;
+  final int index;
 
-  const NewPageDetailsHeaderWidget(this.pageDetailsModel, {Key? key}) : super(key: key);
+  const NewPageDetailsHeaderWidget(this.pageDetailsModel, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<OtherProvider>(
-        builder: (context, otherProvider, child) => Column(
+    return Consumer2<OtherProvider, PageProvider>(
+        builder: (context, otherProvider, pageProvider, child) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 avatarAndCoverWidget(otherProvider, context),
@@ -38,7 +40,8 @@ class NewPageDetailsHeaderWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 2),
                       Text("Followers:", style: robotoStyle400Regular.copyWith(fontSize: 11, color: AppColors.primaryColorLight)),
-                      Text(" ${pageDetailsModel.totalFollower}", style: robotoStyle700Bold.copyWith(fontSize: 11, color: AppColors.primaryColorLight)),
+                      Text(" ${pageDetailsModel.totalFollower}",
+                          style: robotoStyle700Bold.copyWith(fontSize: 11, color: AppColors.primaryColorLight)),
                       const SizedBox(width: 10),
                       Container(
                         height: 15,
@@ -49,7 +52,12 @@ class NewPageDetailsHeaderWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 2),
                       Text("Likes:", style: robotoStyle400Regular.copyWith(fontSize: 11, color: AppColors.primaryColorLight)),
-                      Text(" ${pageDetailsModel.totalLike}", style: robotoStyle700Bold.copyWith(fontSize: 11, color: AppColors.primaryColorLight)),
+                      Text(" ${pageDetailsModel.totalLike}",
+                          style: robotoStyle700Bold.copyWith(fontSize: 11, color: AppColors.primaryColorLight)),
+
+
+                      const SizedBox(width: 10),
+
 
                     ],
                   ),
@@ -65,17 +73,25 @@ class NewPageDetailsHeaderWidget extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: 165,
-              decoration: BoxDecoration(border: Border.all(color: AppColors.primaryColorLight, width: 1)),
               child: Stack(
                 children: [
-                  customNetworkImage(pageDetailsModel.coverPhoto!, boxFit: BoxFit.fitWidth),
+                  customNetworkImage(pageDetailsModel.coverPhoto!, boxFit: BoxFit.fill),
                   InkWell(
                     onTap: () {
                       otherProvider.clearImage();
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) => const ChooseImageAndCropImageView(16, 9, 640, 260, isCover: true)));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => ChooseImageAndCropImageView(
+                                16,
+                                9,
+                                640,
+                                260,
+                                isCover: true,
+                                isPage: true,
+                                pageID: pageDetailsModel.id! as int,
+                                index: index,
+                              )));
                     },
                     child: Align(
                         alignment: Alignment.bottomRight,
@@ -102,21 +118,29 @@ class NewPageDetailsHeaderWidget extends StatelessWidget {
           child: Container(
             height: 90.0,
             width: 94.0,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primaryColorLight),
-              borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
             ),
             child: InkWell(
               onTap: () {
                 otherProvider.clearImage();
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => const ChooseImageAndCropImageView(1, 1, 150, 150, isProfile: true)));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => ChooseImageAndCropImageView(
+                          1,
+                          1,
+                          150,
+                          150,
+                          isProfile: true,
+                          isPage: true,
+                          pageID: pageDetailsModel.id! as int,
+                          index: index,
+                        )));
               },
               child: Stack(
                 children: [
                   ClipRRect(
                     borderRadius: const BorderRadius.only(topLeft: Radius.circular(14), topRight: Radius.circular(14)),
-                    child: customNetworkImage(pageDetailsModel.avatar!, boxFit: BoxFit.fitWidth),
+                    child: customNetworkImage(pageDetailsModel.avatar!, boxFit: BoxFit.fill),
                   ),
                   Align(
                       alignment: Alignment.bottomRight,
