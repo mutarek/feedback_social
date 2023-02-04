@@ -13,8 +13,9 @@ import 'package:provider/provider.dart';
 class NewPageDetailsHeaderWidget extends StatelessWidget {
   final PageDetailsModel pageDetailsModel;
   final int index;
+  final bool isAdmin;
 
-  const NewPageDetailsHeaderWidget(this.pageDetailsModel, this.index, {Key? key}) : super(key: key);
+  const NewPageDetailsHeaderWidget(this.pageDetailsModel, this.index, this.isAdmin, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +55,7 @@ class NewPageDetailsHeaderWidget extends StatelessWidget {
                       Text("Likes:", style: robotoStyle400Regular.copyWith(fontSize: 11, color: AppColors.primaryColorLight)),
                       Text(" ${pageDetailsModel.totalLike}",
                           style: robotoStyle700Bold.copyWith(fontSize: 11, color: AppColors.primaryColorLight)),
-
-
                       const SizedBox(width: 10),
-
-
                     ],
                   ),
                 ),
@@ -78,34 +75,36 @@ class NewPageDetailsHeaderWidget extends StatelessWidget {
               child: Stack(
                 children: [
                   customNetworkImage(pageDetailsModel.coverPhoto!, boxFit: BoxFit.fill),
-                  InkWell(
-                    onTap: () {
-                      otherProvider.clearImage();
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => ChooseImageAndCropImageView(
-                                16,
-                                9,
-                                640,
-                                260,
-                                isCover: true,
-                                isPage: true,
-                                pageID: pageDetailsModel.id! as int,
-                                index: index,
-                              )));
-                    },
-                    child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: Container(
-                            padding: const EdgeInsets.all(5),
-                            height: 35,
-                            width: 35,
-                            decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
-                            child: const Icon(Icons.camera_alt, color: Colors.white),
-                          ),
-                        )),
-                  ),
+                  !isAdmin
+                      ? SizedBox.shrink()
+                      : InkWell(
+                          onTap: () {
+                            otherProvider.clearImage();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => ChooseImageAndCropImageView(
+                                      16,
+                                      9,
+                                      640,
+                                      260,
+                                      isCover: true,
+                                      isPage: true,
+                                      pageID: pageDetailsModel.id! as int,
+                                      index: index,
+                                    )));
+                          },
+                          child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Container(
+                                  padding: const EdgeInsets.all(5),
+                                  height: 35,
+                                  width: 35,
+                                  decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                                  child: const Icon(Icons.camera_alt, color: Colors.white),
+                                ),
+                              )),
+                        ),
                 ],
               ),
             ),
@@ -121,41 +120,43 @@ class NewPageDetailsHeaderWidget extends StatelessWidget {
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
             ),
-            child: InkWell(
-              onTap: () {
-                otherProvider.clearImage();
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => ChooseImageAndCropImageView(
-                          1,
-                          1,
-                          150,
-                          150,
-                          isProfile: true,
-                          isPage: true,
-                          pageID: pageDetailsModel.id! as int,
-                          index: index,
-                        )));
-              },
-              child: Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(14), topRight: Radius.circular(14)),
-                    child: customNetworkImage(pageDetailsModel.avatar!, boxFit: BoxFit.fill),
-                  ),
-                  Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(3),
-                        child: Container(
-                          padding: const EdgeInsets.all(1),
-                          height: 25,
-                          width: 25,
-                          decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
-                          child: const Icon(Icons.camera_alt, color: Colors.white, size: 15),
-                        ),
-                      )),
-                ],
-              ),
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(14), topRight: Radius.circular(14)),
+                  child: customNetworkImage(pageDetailsModel.avatar!, boxFit: BoxFit.fill),
+                ),
+                !isAdmin
+                    ? SizedBox.shrink()
+                    : InkWell(
+                        onTap: () {
+                          otherProvider.clearImage();
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => ChooseImageAndCropImageView(
+                                    1,
+                                    1,
+                                    150,
+                                    150,
+                                    isProfile: true,
+                                    isPage: true,
+                                    pageID: pageDetailsModel.id! as int,
+                                    index: index,
+                                  )));
+                        },
+                        child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: Container(
+                                padding: const EdgeInsets.all(1),
+                                height: 25,
+                                width: 25,
+                                decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColorLight),
+                                child: const Icon(Icons.camera_alt, color: Colors.white, size: 15),
+                              ),
+                            )),
+                      ),
+              ],
             ),
           ),
         )

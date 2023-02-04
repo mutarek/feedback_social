@@ -244,6 +244,7 @@ class PageProvider with ChangeNotifier {
     formData.fields.add(MapEntry('website', website));
     formData.fields.add(MapEntry('address', address));
     response = await pageRepo.updatePageWithImageUpload(formData, pageId);
+    isLoading = false;
     if (response.response.statusCode == 200) {
       AuthorPageModel authorPageModel = authorPageLists[index];
       authorPageModel.name = response.response.data['name'];
@@ -256,7 +257,7 @@ class PageProvider with ChangeNotifier {
       isLoading = false;
       callBack(false);
       notifyListeners();
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
+      Fluttertoast.showToast(msg: "Failed to update");
     }
   }
 
@@ -393,6 +394,7 @@ class PageProvider with ChangeNotifier {
   }
 
   bool statusInviteFriendButton = false;
+  bool expandedYoursPages = false;
   bool adminAccessPage = false;
   bool allFollower = false;
   bool adminSectionAccess = false;
@@ -400,6 +402,7 @@ class PageProvider with ChangeNotifier {
 
   resetDashboardButton() {
     statusInviteFriendButton = false;
+    expandedYoursPages = false;
     adminAccessPage = false;
     allFollower = false;
     adminSectionAccess = false;
@@ -436,6 +439,11 @@ class PageProvider with ChangeNotifier {
     if (statusInviteFriendButton == true) {
       callForGetInviteFriendLists(isFirstTime: false);
     }
+    notifyListeners();
+  }
+
+  changeExpendedYourPages() {
+    expandedYoursPages = !expandedYoursPages;
     notifyListeners();
   }
 

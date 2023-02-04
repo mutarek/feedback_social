@@ -46,7 +46,7 @@ class _PageHomeViewState extends State<PageHomeView> {
               physics: const BouncingScrollPhysics(),
               controller: controller,
               children: [
-                NewPageDetailsHeaderWidget(pageProvider.pageDetailsModel,widget.index),
+                NewPageDetailsHeaderWidget(pageProvider.pageDetailsModel, widget.index, widget.isAdmin),
                 NewPageLikeFollowingWidget(pageProvider.pageDetailsModel, widget.isAdmin, index: widget.index),
                 widget.widget,
                 SizedBox(
@@ -80,10 +80,12 @@ class _PageHomeViewState extends State<PageHomeView> {
                     ? const SizedBox.shrink()
                     : infoWidget(ImagesModel.websiteIcons, pageProvider.pageDetailsModel.website!, const SizedBox.shrink()),
                 SizedBox(height: pageProvider.pageDetailsModel.website!.isEmpty ? 0 : 20),
-                Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                    decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color(0xffE4E6EB), width: 2))),
-                    child: createPostWidget(isForPage: true, groupPageID: pageProvider.pageDetailsModel.id as int)),
+                !widget.isAdmin
+                    ? SizedBox.shrink()
+                    : Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                        decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color(0xffE4E6EB), width: 2))),
+                        child: createPostWidget(isForPage: true, groupPageID: pageProvider.pageDetailsModel.id as int)),
                 const SizedBox(height: 15),
                 ListView.builder(
                     itemCount: pageProvider.pageAllPosts.length,

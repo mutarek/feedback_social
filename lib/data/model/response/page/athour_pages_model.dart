@@ -1,11 +1,11 @@
 class AuthorPageModel {
-  AuthorPageModel({this.id, this.name, this.coverPhoto, this.avatar, this.followers});
+  AuthorPageModel({this.id, this.name, this.coverPhoto, this.avatar='', this.followers});
 
   AuthorPageModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
     coverPhoto = json['cover_photo'];
-    avatar = json['avatar'];
+    avatar = json['avatar']??"";
     followers = json['followers'];
   }
 

@@ -49,7 +49,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                       decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
                       child: InkWell(
                         onTap: () {
-                          pageProvider.changeExpended();
+                          pageProvider.changeExpendedYourPages();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -77,7 +77,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                               CircleAvatar(
                                 radius: 15,
                                 backgroundColor: AppColors.primaryColorLight,
-                                child: pageProvider.statusInviteFriendButton != true
+                                child: pageProvider.expandedYoursPages != true
                                     ? const Icon(Icons.arrow_drop_down, color: Colors.white)
                                     : const Icon(Icons.arrow_drop_up, color: Colors.white),
                               )
@@ -87,7 +87,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    pageProvider.statusInviteFriendButton == true
+                    pageProvider.expandedYoursPages == true
                         ? SizedBox(
                             height: 300,
                             child: pageProvider.authorPageLists.isNotEmpty
