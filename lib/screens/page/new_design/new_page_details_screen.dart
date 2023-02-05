@@ -1,9 +1,7 @@
-import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/view/page_about_view.dart';
 import 'package:als_frontend/screens/page/view/page_home_view.dart';
 import 'package:als_frontend/screens/page/view/page_upcomming_view.dart';
-import 'package:als_frontend/screens/page/widget/admin_post_view.dart';
 import 'package:als_frontend/screens/page/widget/page_photo_view.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -13,11 +11,11 @@ import 'package:provider/provider.dart';
 
 class NewPageDetailsScreen extends StatefulWidget {
   final bool isAdmin;
-  final AuthorPageModel authorPageModel;
+  final String pageID;
   final int index;
   final bool isFromYourPage;
 
-  const NewPageDetailsScreen(this.authorPageModel, {this.isAdmin = false, this.index = 0, this.isFromYourPage = false, Key? key})
+  const NewPageDetailsScreen(this.pageID, {this.isAdmin = false, this.index = 0, this.isFromYourPage = false, Key? key})
       : super(key: key);
 
   @override
@@ -27,8 +25,8 @@ class NewPageDetailsScreen extends StatefulWidget {
 class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
   @override
   void initState() {
-    Provider.of<PageProvider>(context, listen: false).callForGetPageInformation(widget.authorPageModel.id.toString());
-    Provider.of<PageProvider>(context, listen: false).callForGetAllPagePosts(widget.authorPageModel.id.toString());
+    Provider.of<PageProvider>(context, listen: false).callForGetPageInformation(widget.pageID.toString());
+    Provider.of<PageProvider>(context, listen: false).callForGetAllPagePosts(widget.pageID.toString());
     _pageController = PageController();
     super.initState();
   }
@@ -58,7 +56,7 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
                   },
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    PageHomeView(tabMenuWidget(pageProvider), widget.authorPageModel, isAdmin: widget.isAdmin, index: widget.index),
+                    PageHomeView(tabMenuWidget(pageProvider), widget.pageID, isAdmin: widget.isAdmin, index: widget.index),
                     PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
                     PagePhotoView(tabMenuWidget(pageProvider), widget.isAdmin),
                     PageUpcomingView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
@@ -114,33 +112,4 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
     );
   }
 
-  ListView buildListView(PageProvider pageProvider, BuildContext context) {
-    return ListView(
-      children: [
-        tabMenuWidget(pageProvider),
-        SizedBox(
-          height: 1000,
-          child: PageView.builder(
-            itemCount: 1,
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            onPageChanged: (int i) {
-              FocusScope.of(context).requestFocus(FocusNode());
-              pageProvider.changeMenuValue(i);
-            },
-            itemBuilder: (context, index) {
-              return AdminPostView(
-                dicription:
-                    'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',
-                value: pageProvider.showMoreText,
-                showDescription: () {
-                  pageProvider.changeTextValue();
-                },
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
 }

@@ -9,7 +9,7 @@ import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
-import 'package:als_frontend/screens/page/public_page_screen.dart';
+import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/screens/post/single_post_screen1.dart';
 import 'package:als_frontend/screens/post/widget/photo_widget1.dart';
@@ -57,7 +57,7 @@ class PostWidget extends StatelessWidget {
     if (newsFeedData.postType == AppConstant.postTypeGroup && code == 0) {
       Helper.toScreen(PublicGroupScreen(newsFeedData.groupModel!.id.toString(), index: index));
     } else if (newsFeedData.postType == AppConstant.postTypePage && code == 1) {
-      Helper.toScreen(PublicPageScreen(newsFeedData.pageModel!.id.toString(), index: index));
+      Helper.toScreen(NewPageDetailsScreen(newsFeedData.pageModel!.id.toString(), index: index, isAdmin: isAdmin));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == newsFeedData.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
@@ -78,35 +78,99 @@ class PostWidget extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 36,
-                            width: 36,
-                            padding: const EdgeInsets.all(2),
-                            decoration: BoxDecoration(border: Border.all(color: AppColors.primaryColorLight), shape: BoxShape.circle),
-                            child: circularImage(isPage ? newsFeedData.pageModel!.avatar! : newsFeedData.author!.profileImage!, 36, 36),
-                          ),
-                          const SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(isPage ? newsFeedData.pageModel!.name! : newsFeedData.author!.fullName!, style: robotoStyle700Bold),
-                              Row(
+                      (newsFeedData.postType == AppConstant.postTypePage || newsFeedData.postType == AppConstant.postTypeGroup) &&
+                              !isPage &&
+                              !isGroup
+                          ? InkWell(
+                              onTap: () {
+                                if (newsFeedData.postType == AppConstant.postTypePage) {
+                                  route(context, 1);
+                                } else {
+                                  route(context, 0);
+                                }
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SvgPicture.asset(ImagesModel.timeIcons, width: 12, height: 13),
-                                  const SizedBox(width: 2),
-                                  Text("${getDate(newsFeedData.timestamp!, context)}  -",
-                                      style: robotoStyle500Medium.copyWith(fontSize: 10)),
-                                  const SizedBox(width: 3),
-                                  SvgPicture.asset(ImagesModel.globalIcons, width: 12, height: 12),
+                                  Container(
+                                    height: 36,
+                                    width: 36,
+                                    padding: const EdgeInsets.all(2),
+                                    decoration:
+                                        BoxDecoration(border: Border.all(color: AppColors.primaryColorLight), shape: BoxShape.circle),
+                                    child: circularImage(
+                                        newsFeedData.postType == AppConstant.postTypePage
+                                            ? newsFeedData.pageModel!.avatar!
+                                            : newsFeedData.groupModel!.coverPhoto!,
+                                        36,
+                                        36),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          newsFeedData.postType == AppConstant.postTypePage
+                                              ? newsFeedData.pageModel!.name!
+                                              : newsFeedData.groupModel!.name!,
+                                          style: robotoStyle700Bold),
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(ImagesModel.timeIcons, width: 12, height: 13),
+                                          const SizedBox(width: 2),
+                                          Text("${getDate(newsFeedData.timestamp!, context)}  -",
+                                              style: robotoStyle500Medium.copyWith(fontSize: 10)),
+                                          const SizedBox(width: 3),
+                                          SvgPicture.asset(ImagesModel.globalIcons, width: 12, height: 12),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ],
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+                              ),
+                            )
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 36,
+                                  width: 36,
+                                  padding: const EdgeInsets.all(2),
+                                  decoration: BoxDecoration(border: Border.all(color: AppColors.primaryColorLight), shape: BoxShape.circle),
+                                  child: circularImage(
+                                      isPage
+                                          ? newsFeedData.pageModel!.avatar!
+                                          : isGroup
+                                              ? newsFeedData.groupModel!.coverPhoto!
+                                              : newsFeedData.author!.profileImage!,
+                                      36,
+                                      36),
+                                ),
+                                const SizedBox(width: 8),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        isPage
+                                            ? newsFeedData.pageModel!.name!
+                                            : isGroup
+                                                ? newsFeedData.groupModel!.name!
+                                                : newsFeedData.author!.fullName!,
+                                        style: robotoStyle700Bold),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(ImagesModel.timeIcons, width: 12, height: 13),
+                                        const SizedBox(width: 2),
+                                        Text("${getDate(newsFeedData.timestamp!, context)}  -",
+                                            style: robotoStyle500Medium.copyWith(fontSize: 10)),
+                                        const SizedBox(width: 3),
+                                        SvgPicture.asset(ImagesModel.globalIcons, width: 12, height: 12),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                       const Spacer(),
                       PopupMenuButton(
                         itemBuilder: (context) => [

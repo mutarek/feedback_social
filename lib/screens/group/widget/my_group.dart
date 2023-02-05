@@ -1,5 +1,4 @@
 import 'package:als_frontend/provider/group_provider.dart';
-import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -32,7 +31,7 @@ class MyGroup extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Helper.toScreen(PublicPageScreen(groupProvider.authorGroupList[index].id.toString()));
+                    // Helper.toScreen(PublicPageScreen(groupProvider.authorGroupList[index].id.toString()));
                   },
                   child: ListTile(
                       leading: CircleAvatar(

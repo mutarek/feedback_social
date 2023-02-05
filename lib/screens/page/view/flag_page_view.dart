@@ -1,7 +1,5 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/widget/custom_group_page_button.dart.dart';
-import 'package:als_frontend/screens/page/public_page_screen.dart';
-import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
@@ -60,7 +58,7 @@ class FlagPageView extends StatelessWidget {
                                     return InkWell(
                                       onTap: () {
                                         provider.loadingStart();
-                                        Helper.toScreen(UserPageScreen(provider.authorPageLists[index2].id.toString(), index2));
+                                        // Helper.toScreen(UserPageScreen(provider.authorPageLists[index2].id.toString(), index2));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(6.0),
@@ -112,7 +110,7 @@ class FlagPageView extends StatelessWidget {
                               return CustomPageGroupButton(
                                   onTap: () {
                                     provider.loadingStart();
-                                    Helper.toScreen(PublicPageScreen(provider.authorPageLists[index].id.toString()));
+                                    // Helper.toScreen(PublicPageScreen(provider.authorPageLists[index].id.toString()));
                                   },
                                   goToGroupOrPage: () {},
                                   groupOrPageImage: provider.allSuggestPageList[index].coverPhoto!,

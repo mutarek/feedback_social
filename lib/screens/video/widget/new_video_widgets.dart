@@ -5,8 +5,6 @@ import 'package:als_frontend/provider/watch_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
-import 'package:als_frontend/screens/page/public_page_screen.dart';
-import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/post/single_post_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
@@ -144,10 +142,10 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                                           await videoPlayerController!.pause();
                                           if (Provider.of<AuthProvider>(context, listen: false).userID ==
                                               widget.model.user!.id.toString()) {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(builder: (_) => UserPageScreen(widget.model.page!.id.toString(), 0)));
+                                            // Navigator.of(context).push(
+                                            //     MaterialPageRoute(builder: (_) => UserPageScreen(widget.model.page!.id.toString(), 0)));
                                           } else {
-                                            Helper.toScreen(PublicPageScreen(widget.model.page!.id.toString()));
+                                            // Helper.toScreen(PublicPageScreen(widget.model.page!.id.toString()));
                                           }
                                         },
                                         child: ProfileAvatar(profileImageUrl: widget.model.page!.avatar.toString())),
@@ -165,10 +163,10 @@ class _NewVideoPlayerState extends State<NewVideoPlayer> {
                                                   await videoPlayerController!.pause();
                                                   if (Provider.of<AuthProvider>(context, listen: false).userID ==
                                                       widget.model.user!.id.toString()) {
-                                                    Navigator.of(context).push(MaterialPageRoute(
-                                                        builder: (_) => UserPageScreen(widget.model.page!.id.toString(), 0)));
+                                                    // Navigator.of(context).push(MaterialPageRoute(
+                                                    //     builder: (_) => UserPageScreen(widget.model.page!.id.toString(), 0)));
                                                   } else {
-                                                    Helper.toScreen(PublicPageScreen(widget.model.page!.id.toString()));
+                                                    // Helper.toScreen(PublicPageScreen(widget.model.page!.id.toString()));
                                                   }
                                                 },
                                                 child: Text(widget.model.page!.name.toString(),

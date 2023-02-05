@@ -30,7 +30,7 @@ class AppConstant {
   static const String uploadCoverImageURI = '/accounts/profile/update/cover-image/';
   static const String uploadProfileImageURI = '/accounts/profile/update/profile-image/';
   static const String editProfile = '/accounts/profile/update/';
-  static const String newsFeedURI = '/posts/newsfeeds?page=';
+  static const String newsFeedURI = '/newsfeeds/post/list/?page=';
   static const String watchListUri = '/watch/list/?size=10&page=';
   static const String postsUri = '/posts/';
   static const String postsGroupUri = '/posts/group/';

@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Provider.of<AuthProvider>(context, listen: false).getUserInfo();
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
@@ -63,8 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                child: createPostWidget(  isForGroup: false)),
+                                margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0), child: createPostWidget(isForGroup: false)),
                             postProvider.isLoading
                                 ? Visibility(
                                     visible: true,
@@ -88,11 +88,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           return const CupertinoActivityIndicator();
                         }
 
-                        return PostWidget(newsFeedProvider.newsFeedLists[index],
-                            index: index, isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
-                        //
-                        // return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
-                        //     isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
+                        return PostWidget(
+                          newsFeedProvider.newsFeedLists[index],
+                          index: index,
+                          isHomeScreen: true,
+                          groupPageID: newsFeedProvider.newsFeedLists[index].id! as int,
+                          isAdmin: authProvider.userID == newsFeedProvider.newsFeedLists[index].author!.id.toString() ? true : false,
+                        );
                       }, childCount: newsFeedProvider.newsFeedLists.length),
                     )
                   ],

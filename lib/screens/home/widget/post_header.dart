@@ -4,7 +4,6 @@ import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
-import 'package:als_frontend/screens/page/public_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
@@ -41,7 +40,7 @@ class PostHeaderWidget extends StatelessWidget {
     if (post.postType == AppConstant.postTypeGroup && code == 0) {
       Helper.toScreen(PublicGroupScreen(post.groupModel!.id.toString(), index: index));
     } else if (post.postType == AppConstant.postTypePage && code == 1) {
-      Helper.toScreen(  PublicPageScreen(post.pageModel!.id.toString(), index: index));
+      // Helper.toScreen(PublicPageScreen(post.pageModel!.id.toString(), index: index));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == post.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
@@ -69,7 +68,8 @@ class PostHeaderWidget extends StatelessWidget {
                       }
                     },
                     child: ProfileAvatar(
-                        profileImageUrl: post.postType == AppConstant.postTypePage ? post.pageModel!.avatar! : post.groupModel!.coverPhoto!),
+                        profileImageUrl:
+                            post.postType == AppConstant.postTypePage ? post.pageModel!.avatar! : post.groupModel!.coverPhoto!),
                   ),
                   const SizedBox(width: 8.0),
                   Expanded(
@@ -91,7 +91,7 @@ class PostHeaderWidget extends StatelessWidget {
                                   style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                               const SizedBox(width: 5),
                               CircleAvatar(
-                                  backgroundColor:feedback,
+                                  backgroundColor: feedback,
                                   radius: 10,
                                   child: CustomText(
                                       title: post.postType == AppConstant.postTypePage ? "P" : "G", color: Colors.white, fontSize: 12))
@@ -145,8 +145,9 @@ class PostHeaderWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          post.postType == AppConstant.postTypePage?Text(post.pageModel!.name!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)):
-                          Text(post.author!.fullName!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
+                          post.postType == AppConstant.postTypePage
+                              ? Text(post.pageModel!.name!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600))
+                              : Text(post.author!.fullName!, style: latoStyle500Medium.copyWith(fontWeight: FontWeight.w600)),
                           Row(
                             children: [
                               Text(getDate(post.timestamp!, context),

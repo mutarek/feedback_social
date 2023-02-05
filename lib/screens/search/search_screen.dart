@@ -2,8 +2,6 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
 import 'package:als_frontend/screens/group/user_group_screen.dart';
-import 'package:als_frontend/screens/page/public_page_screen.dart';
-import 'package:als_frontend/screens/page/user_page_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
@@ -248,13 +246,13 @@ class SearchScreen extends StatelessWidget {
                                                             BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(5)),
                                                         child: InkWell(
                                                           onTap: () {
-                                                            if (searchProvider.searchModel.pages![index].isAuthor == false) {
-                                                              Helper.toScreen( PublicPageScreen(
-                                                                  searchProvider.searchModel.pages![index].id.toString()));
-                                                            } else {
-                                                              Helper.toScreen( UserPageScreen(
-                                                                  searchProvider.searchModel.pages![index].id.toString(), index));
-                                                            }
+                                                            // if (searchProvider.searchModel.pages![index].isAuthor == false) {
+                                                            //   Helper.toScreen( PublicPageScreen(
+                                                            //       searchProvider.searchModel.pages![index].id.toString()));
+                                                            // } else {
+                                                            //   Helper.toScreen( UserPageScreen(
+                                                            //       searchProvider.searchModel.pages![index].id.toString(), index));
+                                                            // }
                                                           },
                                                           child: Row(
                                                             children: [

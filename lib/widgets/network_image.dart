@@ -133,11 +133,11 @@ Widget circularImage(String imageUrl, double height, double width) {
       cacheKey: imageUrl,
       cacheManager: CacheManager(Config(imageUrl, stalePeriod: const Duration(hours: 5))),
       placeholder: (context, url) => const Center(child: CupertinoActivityIndicator()),
-      errorWidget: (context, url, error) => Image.asset("assets/background/profile.png", fit: BoxFit.cover, width: height, height: width),
+      errorWidget: (context, url, error) => Image.asset("assets/background/profile.png", fit: BoxFit.fill, width: height, height: width),
       imageBuilder: (context, imageProvider) => Container(
           width: height,
           height: width,
-          decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: imageProvider, fit: BoxFit.contain))),
-      fit: BoxFit.contain,
+          decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: imageProvider, fit: BoxFit.cover))),
+      fit: BoxFit.fill,
       imageUrl: imageUrl);
 }

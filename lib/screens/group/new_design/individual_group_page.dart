@@ -1,6 +1,5 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/group/new_design/post_in_group.dart';
-import 'package:als_frontend/screens/page/widget/admin_post_view.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
@@ -93,33 +92,4 @@ class _NewPageDetailsScreenState extends State<IndividualGroupPage> {
     );
   }
 
-  ListView buildListView(PageProvider pageProvider, BuildContext context) {
-    return ListView(
-      children: [
-        tabMenuWidget(pageProvider),
-        SizedBox(
-          height: 1000,
-          child: PageView.builder(
-            itemCount: 1,
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            onPageChanged: (int i) {
-              FocusScope.of(context).requestFocus(FocusNode());
-              pageProvider.changeMenuValue(i);
-            },
-            itemBuilder: (context, index) {
-              return AdminPostView(
-                dicription:
-                'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the ..In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the\nIn publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to the',
-                value: pageProvider.showMoreText,
-                showDescription: () {
-                  pageProvider.changeTextValue();
-                },
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
 }

@@ -13,10 +13,10 @@ import 'package:provider/provider.dart';
 
 class PageHomeView extends StatefulWidget {
   final bool isAdmin;
-  final AuthorPageModel authorPage;
+  final String pageID;
   final int index;
 
-  const PageHomeView(this.widget, this.authorPage, {this.isAdmin = false, this.index = 0, Key? key}) : super(key: key);
+  const PageHomeView(this.widget, this.pageID, {this.isAdmin = false, this.index = 0, Key? key}) : super(key: key);
   final Widget widget;
 
   @override
@@ -34,7 +34,7 @@ class _PageHomeViewState extends State<PageHomeView> {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
           Provider.of<PageProvider>(context, listen: false).hasNextData) {
-        Provider.of<PageProvider>(context, listen: false).updatePageNo(widget.authorPage.id.toString());
+        Provider.of<PageProvider>(context, listen: false).updatePageNo(widget.pageID.toString());
       }
     });
   }
@@ -81,7 +81,7 @@ class _PageHomeViewState extends State<PageHomeView> {
                     : infoWidget(ImagesModel.websiteIcons, pageProvider.pageDetailsModel.website!, const SizedBox.shrink()),
                 SizedBox(height: pageProvider.pageDetailsModel.website!.isEmpty ? 0 : 20),
                 !widget.isAdmin
-                    ? SizedBox.shrink()
+                    ? const SizedBox.shrink()
                     : Container(
                         margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                         decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color(0xffE4E6EB), width: 2))),

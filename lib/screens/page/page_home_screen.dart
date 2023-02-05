@@ -99,7 +99,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                                           authorPageModel: pageProvider.authorPageLists[index],
                                           onTap: () {
                                             Helper.toScreen(NewPageDetailsScreen(
-                                              pageProvider.authorPageLists[index],
+                                              pageProvider.authorPageLists[index].id.toString(),
                                               isAdmin: true,
                                               index: index,
                                             ));
