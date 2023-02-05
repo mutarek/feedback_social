@@ -3,11 +3,13 @@ import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/dashboard_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/notication_provider.dart';
+import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/search_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/chat/chats_screen.dart';
 import 'package:als_frontend/screens/dashboard/friend_request_screen.dart';
 import 'package:als_frontend/screens/home/home_screen.dart';
+import 'package:als_frontend/screens/home/widget/post_status_widget.dart';
 import 'package:als_frontend/screens/more/more_screen.dart';
 import 'package:als_frontend/screens/notification/notification_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
@@ -48,8 +50,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer4<DashboardProvider, NotificationProvider, AuthProvider, SplashProvider>(
-        builder: (context, dashboardProvider, notificationProvider, authProvider, splashProvider, child) => WillPopScope(
+    return Consumer5<DashboardProvider, NotificationProvider, AuthProvider, SplashProvider,PostProvider>(
+        builder: (context, dashboardProvider, notificationProvider, authProvider, splashProvider,postProvider, child) => WillPopScope(
               onWillPop: () async {
                 if (dashboardProvider.selectIndex != 0) {
                   controller.jumpToPage(0);
@@ -72,15 +74,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       items: [
                         buildAnimatedBarItems(dashboardProvider, 0, LocaleKeys.home.tr(), ImagesModel.homeIcons),
                         buildAnimatedBarItems(dashboardProvider, 1, LocaleKeys.friend.tr(), ImagesModel.friendRequestIcons),
-
-
-                        // AnimatedBarItems(
-                        //     icon: SvgPicture.asset(ImagesModel.friendRequestURI,
-                        //         color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, width: 22, height: 22),
-                        //     selectedColor: Colors.blue,
-                        //     title: Text(LocaleKeys.friend.tr(),
-                        //         style: latoStyle600SemiBold.copyWith(
-                        //             color: dashboardProvider.selectIndex == 1 ? Colors.blue : Colors.grey, fontSize: 12))),
                         AnimatedBarItems(
                             icon: Stack(
                               clipBehavior: Clip.none,
@@ -168,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             : dashboardProvider.selectIndex == 3
                                                 ? 'Chats'
                                                 : 'Feedback',
-                                    color: feedback,
+                                    color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 27),
                                 backgroundColor: Colors.white,
@@ -207,6 +200,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     radius: 0,
                                     fontSize: 13,
                                   ),
+
+                        postProvider.isLoading || postProvider.status != 0 ? postStatusWidget(context) : SizedBox.shrink(),
+
                         Expanded(
                           child: PageView(
                             controller: controller,

@@ -9,12 +9,11 @@ class PostRepo {
 
   PostRepo({required this.dioClient});
 
-  Response response = Response(requestOptions: RequestOptions(path: '22222'));
+  Response response = Response(requestOptions: RequestOptions(path: ''));
 
   Future<ApiResponse> submitPost(FormData formData, {onSendProgress}) async {
     try {
-      response =
-          await dioClient.post("${AppConstant.baseUrl}${AppConstant.postsUri}user/create/", data: formData, onSendProgress: onSendProgress);
+      response = await dioClient.post("${AppConstant.baseUrl}${AppConstant.userPostUri}", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -27,7 +26,6 @@ class PostRepo {
           data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      print(formData.fields);
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }

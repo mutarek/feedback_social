@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<NewsFeedProvider, AuthProvider, PostProvider>(builder: (context, newsFeedProvider, authProvider, postProvider, child) {
+    return Consumer2<NewsFeedProvider, AuthProvider>(builder: (context, newsFeedProvider, authProvider, child) {
       return RefreshIndicator(
           onRefresh: () {
             return _refresh(context);
@@ -59,25 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       pinned: false,
                       delegate: _SliverAppBarDelegate(
                           child: PreferredSize(
-                        preferredSize: Size.fromHeight(postProvider.isLoading ? 200 : 120),
+                        preferredSize: Size.fromHeight(125),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
                                 margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0), child: createPostWidget(isForGroup: false)),
-                            postProvider.isLoading
-                                ? Visibility(
-                                    visible: true,
-                                    child: postProvider.isLoading
-                                        ? postStatusWidget(context, authProvider, postProvider, true, postProvider.status)
-                                        : postStatusWidget(context, authProvider, postProvider, false, postProvider.status),
-                                  )
-                                : Visibility(
-                                    visible: false,
-                                    child: postProvider.isLoading
-                                        ? postStatusWidget(context, authProvider, postProvider, true, postProvider.status)
-                                        : postStatusWidget(context, authProvider, postProvider, false, postProvider.status),
-                                  ),
                           ],
                         ),
                       )),
