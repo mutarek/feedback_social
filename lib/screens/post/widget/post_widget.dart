@@ -1,4 +1,5 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
+import 'package:als_frontend/dialog_bottom_sheet/add_dialogue.dart';
 import 'package:als_frontend/dialog_bottom_sheet/delete_dialogue.dart';
 import 'package:als_frontend/dialog_bottom_sheet/like_modal_bottom_sheet.dart';
 import 'package:als_frontend/helper/number_helper.dart';
@@ -145,7 +146,14 @@ class PostWidget extends StatelessWidget {
                                 SizedBox(height: isAdmin ? 8 : 15),
                                 isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
                                 SizedBox(height: isAdmin ? 0 : 15),
-                                isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {}),
+                                isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {
+                                  Navigator.of(context).pop();
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AddDialogue(newsFeedData);
+                                      });
+                                }),
                                 SizedBox(height: isAdmin ? 0 : 8)
                               ],
                             ),
