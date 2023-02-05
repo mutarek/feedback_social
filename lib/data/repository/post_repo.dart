@@ -22,7 +22,7 @@ class PostRepo {
 
   Future<ApiResponse> updatePost(FormData formData, String url, {onSendProgress}) async {
     try {
-      response = await dioClient.patch("${AppConstant.baseUrl}${url.replaceAll("comment/", "").replaceAll('list/', '')}up-del-retr/",
+      response = await dioClient.put("${AppConstant.baseUrl}${url.replaceAll("comment/", "").replaceAll('list/', '')}up-del-retr/",
           data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -48,27 +48,11 @@ class PostRepo {
     }
   }
 
-  Future<ApiResponse> reportPost(Map<String, String> body, int id) async {
+  Future<ApiResponse> reportPagePost(Map<String, String> body, int id, int status) async {
     try {
-      response = await dioClient.post("${AppConstant.postsUri}post-report/$id/", data: body);
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
+      String url = "/${status == 0 ? "page" : status == 1 ? "group" : "user"}/post/report/$id/create/";
 
-  Future<ApiResponse> reportPagePost(Map<String, String> body, int id) async {
-    try {
-      response = await dioClient.post("/page/post/report/$id/create/", data: body);
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
-
-  Future<ApiResponse> reportGroupPost(Map<String, String> body, int id) async {
-    try {
-      response = await dioClient.post("${AppConstant.postsUri}group-post-report/$id/", data: body);
+      response = await dioClient.post(url, data: body);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -86,7 +70,7 @@ class PostRepo {
 
   Future<ApiResponse> sharePost(String url, String description, {onSendProgress}) async {
     try {
-      response = await dioClient.post("${url.replaceAll("comment/", "")}share/",
+      response = await dioClient.post("${url.replaceAll("list/", "")}create/",
           data: {"description": description}, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {

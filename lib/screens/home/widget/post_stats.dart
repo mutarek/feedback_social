@@ -51,11 +51,11 @@ class PostStats extends StatelessWidget {
         return Container(
           alignment: Alignment.centerLeft,
           decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-              // boxShadow: [
-              //   BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
-              // ]
+            color: Colors.white,
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+            // boxShadow: [
+            //   BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))
+            // ]
           ),
           child: Column(
             children: [
@@ -74,7 +74,7 @@ class PostStats extends StatelessWidget {
                         children: [
                           LikeButton(
                             size: 30,
-                            isLiked:  post.reaction!=-1,
+                            isLiked: post.reaction != -1,
                             bubblesSize: 50,
                             // circleColor:
                             // CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
@@ -82,10 +82,11 @@ class PostStats extends StatelessWidget {
                             //   dotPrimaryColor: Color(0xff33b5e5),
                             //   dotSecondaryColor: Color(0xff0099cc),
                             // ),
-                            onTap: (bool isLiked) async{
+                            onTap: (bool isLiked) async {
                               if (isHomeScreen) {
                                 if (isGroup || isPage) {
-                                  feedProvider.addFakeLike(post.id!.toInt(), index, isGroup: isGroup, isFromPage: isPage, groupPageID: groupPageID);
+                                  feedProvider.addFakeLike(post.id!.toInt(), index,
+                                      isGroup: isGroup, isFromPage: isPage, groupPageID: groupPageID);
                                 } else {
                                   feedProvider.addFakeLike(post.id!.toInt(), index);
                                 }
@@ -97,16 +98,15 @@ class PostStats extends StatelessWidget {
                                 }
                               }
 
-                          return !isLiked;
-                          },
+                              return !isLiked;
+                            },
                             likeBuilder: (bool isLiked) {
                               return Icon(
-                               Icons.favorite ,
+                                Icons.favorite,
                                 color: isLiked ? Colors.red : Colors.grey,
-                                size:30,
+                                size: 30,
                               );
                             },
-
                           ),
 
                           //ToDo : like buttun
@@ -140,15 +140,14 @@ class PostStats extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                        Helper.toScreen(
-                            SinglePostScreen(post.commentUrl!,
-                                isHomeScreen: isHomeScreen,
-                                isProfileScreen: isFromProfile,
-                                index: index,
-                                postID: postID,
-                                groupID: groupPageID,
-                                isFromPage: isPage,
-                                isFromGroup: isGroup));
+                        Helper.toScreen(SinglePostScreen(post.commentUrl!,
+                            isHomeScreen: isHomeScreen,
+                            isProfileScreen: isFromProfile,
+                            index: index,
+                            postID: postID,
+                            groupID: groupPageID,
+                            isFromPage: isPage,
+                            isFromGroup: isGroup));
                       },
                       child: SizedBox(
                         width: 40,
@@ -184,7 +183,7 @@ class PostStats extends StatelessWidget {
                     const SizedBox(width: 1.0),
                     InkWell(
                       onTap: () {
-                        shareBottomSheet(context, post.isShare! ? post.sharePost!.postUrl! : post.commentUrl!, post);
+                        shareBottomSheet(context, post.isShare! ? post.sharePost!.postUrl! : post.sharedByUrl!, post);
                       },
                       child: SizedBox(
                         width: 35,
@@ -238,15 +237,14 @@ class PostStats extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   Provider.of<AuthProvider>(context, listen: false).getUserInfo();
-                                  Helper.toScreen(
-                                      SinglePostScreen(post.commentUrl!,
-                                          isHomeScreen: isHomeScreen,
-                                          isProfileScreen: isFromProfile,
-                                          index: index,
-                                          postID: postID,
-                                          groupID: groupPageID,
-                                          isFromPage: isPage,
-                                          isFromGroup: isGroup));
+                                  Helper.toScreen(SinglePostScreen(post.commentUrl!,
+                                      isHomeScreen: isHomeScreen,
+                                      isProfileScreen: isFromProfile,
+                                      index: index,
+                                      postID: postID,
+                                      groupID: groupPageID,
+                                      isFromPage: isPage,
+                                      isFromGroup: isGroup));
                                 },
                                 child: CustomText(
                                     title: post.totalComment == 0

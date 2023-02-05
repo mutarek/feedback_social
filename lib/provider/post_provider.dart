@@ -257,16 +257,10 @@ class PostProvider with ChangeNotifier {
   }
 
   //// for report post
-  Future<bool> reportPost(String report, int id, {bool isFromGroup = false, bool isFromPage = false}) async {
+  Future<bool> reportPost(String report, int id, int status) async {
     isLoading = true;
-    ApiResponse response;
-    if (isFromGroup) {
-      response = await postRepo.reportGroupPost({"report_note": report, "report_type": "1"}, id);
-    } else if (isFromPage) {
-      response = await postRepo.reportPagePost({"report_note": report, "report_type": "1"}, id);
-    } else {
-      response = await postRepo.reportPost({"report_note": report}, id);
-    }
+    ApiResponse response = await postRepo.reportPagePost({"report_note": report, "report_type": "1"}, id, status);
+
     isLoading = false;
     if (response.response.statusCode == 201 || response.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Report Added Successfully On this post");
@@ -296,12 +290,13 @@ class PostProvider with ChangeNotifier {
   }
 
   //// for Share post
+  bool isLoadingShare=false;
   Future<PostResponse> sharePost(String url, String description, NewsFeedModel newsfeedData) async {
-    isLoading = true;
+    isLoadingShare = true;
     notifyListeners();
     ApiResponse response = await postRepo.sharePost(url, description);
 
-    isLoading = false;
+    isLoadingShare = false;
     if (response.response.statusCode == 201) {
       Fluttertoast.showToast(msg: 'Post Share Successfully');
       SharePost n = SharePost.fromJson(response.response.data);

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void moreMenuBottomSheet(BuildContext context, NewsFeedModel newsFeedData, int index,
-    {bool isFromProfile = false, bool isFromGroupScreen = false, bool isForPage = false, int groupPageID = 0}) {
+    {bool isFromProfile = false, bool isFromHome = false, bool isFromGroupScreen = false, bool isForPage = false, int groupPageID = 0}) {
   String userID = Provider.of<AuthProvider>(context, listen: false).userID;
   double height = 0;
   if (userID == newsFeedData.author!.id.toString()) {
@@ -75,7 +75,7 @@ void moreMenuBottomSheet(BuildContext context, NewsFeedModel newsFeedData, int i
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return DeleteDialogue(newsFeedData, index);
+                                return DeleteDialogue(newsFeedData, index,isFromHome);
                               });
                         },
                         borderRadius: BorderRadius.circular(15),

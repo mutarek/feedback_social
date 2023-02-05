@@ -395,7 +395,7 @@ class PageModel {
   PageModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    avatar = json['avatar'];
+    avatar = json['avatar']??"";
   }
 
   num? id;

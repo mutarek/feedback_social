@@ -39,12 +39,11 @@ class AddDialogue extends StatelessWidget {
                     Image.asset(ImagesModel.logo, width: 30, height: 30),
                     const Expanded(
                       child: CustomText(
-                        title: 'Are you sure want to Report this post?',
-                        fontSize: 13,
-                        color: Colors.black,
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                      ),
+                          title: 'Are you sure want to Report this post?',
+                          fontSize: 13,
+                          color: Colors.black,
+                          maxLines: 2,
+                          textAlign: TextAlign.center),
                     ),
                     CustomInkWell(
                       onTap: () {
@@ -100,9 +99,16 @@ class AddDialogue extends StatelessWidget {
                                 } else {
                                   bool isFromGroup = newsFeedData.postType == 'group';
                                   bool isFromPage = newsFeedData.postType == 'page';
+
                                   postProvider
-                                      .reportPost(reportController.text.isEmpty ? "report post" : reportController.text, newsFeedData.id! as int,
-                                          isFromGroup: isFromGroup, isFromPage: isFromPage)
+                                      .reportPost(
+                                          reportController.text.isEmpty ? "report post" : reportController.text,
+                                          newsFeedData.id! as int,
+                                          isFromPage
+                                              ? 0
+                                              : isFromGroup
+                                                  ? 1
+                                                  : 2)
                                       .then((value) {
                                     if (value) {
                                       reportController.clear();

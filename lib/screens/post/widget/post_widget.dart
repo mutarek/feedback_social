@@ -204,7 +204,7 @@ class PostWidget extends StatelessWidget {
                                         showDialog(
                                             context: context,
                                             builder: (context) {
-                                              return DeleteDialogue(newsFeedData, index);
+                                              return DeleteDialogue(newsFeedData, index, isHomeScreen);
                                             });
                                       })
                                     : PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {}),

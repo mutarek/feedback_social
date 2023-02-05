@@ -34,7 +34,7 @@ void shareBottomSheet(BuildContext context, String url, NewsFeedModel newsfeedDa
                     inputAction: TextInputAction.done,
                   ),
                 ),
-                postProvider.isLoading
+                postProvider.isLoadingShare
                     ? const Center(child: CircularProgressIndicator())
                     : CustomButton(
                         btnTxt: 'share now',

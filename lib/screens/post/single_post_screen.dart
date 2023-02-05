@@ -451,7 +451,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                               shareBottomSheet(
                                                   context,
                                                   newsFeedProvider.singleNewsFeedModel.isShare!
-                                                      ? newsFeedProvider.singleNewsFeedModel.sharePost!.postUrl!
+                                                      ? newsFeedProvider.singleNewsFeedModel.sharedByUrl!
                                                       : newsFeedProvider.singleNewsFeedModel.commentUrl!,
                                                   newsFeedProvider.singleNewsFeedModel);
                                             },

@@ -3,8 +3,8 @@ class AuthorPageModel {
 
   AuthorPageModel.fromJson(dynamic json) {
     id = json['id'];
-    name = json['name'];
-    coverPhoto = json['cover_photo'];
+    name = json['name']??"";
+    coverPhoto = json['cover_photo']??"";
     avatar = json['avatar']??"";
     followers = json['followers'];
   }

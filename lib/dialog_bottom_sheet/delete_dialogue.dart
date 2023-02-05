@@ -1,8 +1,10 @@
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/provider/newsfeed_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
+import 'package:als_frontend/util/app_constant.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_inkwell_btn.dart';
@@ -13,8 +15,9 @@ import 'package:provider/provider.dart';
 class DeleteDialogue extends StatelessWidget {
   final NewsFeedModel newsFeedData;
   final int index;
+  final bool isFromHome;
 
-  const DeleteDialogue(this.newsFeedData, this.index, {Key? key}) : super(key: key);
+  const DeleteDialogue(this.newsFeedData, this.index, this.isFromHome, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +84,14 @@ class DeleteDialogue extends StatelessWidget {
                           Expanded(
                             child: CustomButton(
                               onTap: () {
-                                bool isFromGroup = newsFeedData.postType == 'group';
-                                bool isFromPage = newsFeedData.postType == 'page';
-                                bool isFromTimeline = newsFeedData.postType == 'timeline';
+                                bool isFromGroup = newsFeedData.postType == AppConstant.postTypeGroup;
+                                bool isFromPage = newsFeedData.postType == AppConstant.postTypePage;
+                                bool isFromTimeline = newsFeedData.postType == AppConstant.postTypeTimeline;
                                 postProvider.deletePost(newsFeedData.commentUrl!).then((value) {
                                   if (value) {
-                                    if (isFromGroup) {
+                                    if (isFromHome) {
+                                      Provider.of<NewsFeedProvider>(context, listen: false).deleteNewsfeedData(index);
+                                    } else if (isFromGroup) {
                                       Provider.of<GroupProvider>(context, listen: false).deleteNewsfeedData(index);
                                     } else if (isFromPage) {
                                       Provider.of<PageProvider>(context, listen: false).deleteNewsfeedData(index);
