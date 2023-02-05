@@ -427,10 +427,10 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeAllFollowerExpanded() {
+  changeAllFollowerExpanded(String pageId) {
     allFollower = !allFollower;
     if (allFollower == true) {
-      getAllFollowerList(isFirstTime: true, page: 1);
+      getAllFollowerList(pageId: pageId,isFirstTime: true, page: 1);
     }
     notifyListeners();
   }
@@ -548,7 +548,7 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getAllFollowerList({int page = 1, bool isFirstTime = true}) async {
+  getAllFollowerList({String pageId = "0",int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       pageFollowersList.clear();
       pageFollowersList = [];
@@ -560,7 +560,7 @@ class PageProvider with ChangeNotifier {
       isBottomLoadingPageFollowerList = true;
       notifyListeners();
     }
-    ApiResponse apiResponse = await pageRepo.getAllPageFolloweList(1,"6");
+    ApiResponse apiResponse = await pageRepo.getAllPageFolloweList(1,pageId);
     if (apiResponse.response.statusCode == 200) {
       isPageFollowerList = false;
       hasNextDataPageFollowerList = apiResponse.response.data['next'] != null ? true : false;
