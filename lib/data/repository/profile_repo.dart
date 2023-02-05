@@ -15,7 +15,7 @@ class ProfileRepo {
       String userID, int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get('/posts/user/$userID/?page=$page');
+      response = await dioClient.get('/user/post/$userID/list/?page=$page');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
