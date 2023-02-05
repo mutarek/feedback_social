@@ -61,7 +61,7 @@ class PostRepo {
 
   Future<ApiResponse> reportPagePost(Map<String, String> body, int id) async {
     try {
-      response = await dioClient.post("${AppConstant.postsUri}page-post-report/$id/", data: body);
+      response = await dioClient.post("/page/post/report/$id/create/", data: body);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
