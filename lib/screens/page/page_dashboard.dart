@@ -130,128 +130,131 @@ class _PageDashboardState extends State<PageDashboard> {
                         height: 350,
                         child: pageProvider.isLoadingInviteFriend
                             ? const Center(child: CircularProgressIndicator())
-                            : Padding(
-                                padding: const EdgeInsets.only(left: 20, right: 20),
-                                child: Card(
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
-                                    child: Column(
-                                      children: [
-                                        // Padding(
-                                        //   padding: const EdgeInsets.only(left: 20, right: 20),
-                                        //   child: Container(
-                                        //     height: 48.0,
-                                        //     width: double.infinity,
-                                        //     decoration: BoxDecoration(
-                                        //         border: Border.all(color: AppColors.primaryColorLight),
-                                        //         borderRadius: BorderRadius.circular(25)),
-                                        //     child: Row(
-                                        //       children: [
-                                        //         Expanded(
-                                        //           child: TextField(
-                                        //             decoration: const InputDecoration(
-                                        //                 border: InputBorder.none,
-                                        //                 hintText: "Search..",
-                                        //                 focusedBorder: InputBorder.none,
-                                        //                 hintStyle: TextStyle(color: Colors.black)),
-                                        //             onChanged: (value) {},
-                                        //           ),
-                                        //         ),
-                                        //         Padding(
-                                        //           padding: const EdgeInsets.all(2),
-                                        //           child: Container(
-                                        //             decoration: BoxDecoration(
-                                        //                 borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
-                                        //             height: 38,
-                                        //             width: 71,
-                                        //             child: Center(
-                                        //               child: Text('Search',
-                                        //                   style: robotoStyle300Light.copyWith(fontSize: 12, color: Colors.white)),
-                                        //             ),
-                                        //           ),
-                                        //         )
-                                        //       ],
-                                        //     ),
-                                        //   ),
-                                        // ),
-                                        // const SizedBox(height: 5),
-                                        Expanded(
-                                          child: ListView.builder(
-                                              itemCount: pageProvider.invitePageAllLists.length,
-                                              shrinkWrap: true,
-                                              physics: const BouncingScrollPhysics(),
-                                              itemBuilder: (context, index) {
-                                                return Row(
-                                                  children: [
-                                                    SizedBox(
-                                                        width: 30,
-                                                        height: 30,
-                                                        child:
-                                                            circularImage(pageProvider.invitePageAllLists[index].profileImage!, 30, 30)),
-                                                    const SizedBox(width: 10),
-                                                    Expanded(
-                                                      child: Text(pageProvider.invitePageAllLists[index].fullName!,
-                                                          style: robotoStyle500Medium.copyWith(fontSize: 12)),
-                                                    ),
-                                                    Checkbox(
-                                                      value: pageProvider.invitePageFriendSelect[index],
-                                                      onChanged: (value) {
-                                                        pageProvider.changeInviteFriendSelectFriend(index, value!);
-                                                      },
-                                                    )
-                                                  ],
-                                                );
-                                              }),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        pageProvider.isBottomLoadingInviteFriend
-                                            ? const CircularProgressIndicator()
-                                            : pageProvider.hasNextDataInviteFriend
-                                                ? InkWell(
-                                                    onTap: () {
-                                                      pageProvider.updateInviteFriendPageNo();
-                                                    },
-                                                    child: Container(
+                            : pageProvider.invitePageAllLists.isEmpty
+                                ? const Center(child: Text("Ops You have no friends to invite"))
+                                : Padding(
+                                    padding: const EdgeInsets.only(left: 20, right: 20),
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
+                                        child: Column(
+                                          children: [
+                                            // Padding(
+                                            //   padding: const EdgeInsets.only(left: 20, right: 20),
+                                            //   child: Container(
+                                            //     height: 48.0,
+                                            //     width: double.infinity,
+                                            //     decoration: BoxDecoration(
+                                            //         border: Border.all(color: AppColors.primaryColorLight),
+                                            //         borderRadius: BorderRadius.circular(25)),
+                                            //     child: Row(
+                                            //       children: [
+                                            //         Expanded(
+                                            //           child: TextField(
+                                            //             decoration: const InputDecoration(
+                                            //                 border: InputBorder.none,
+                                            //                 hintText: "Search..",
+                                            //                 focusedBorder: InputBorder.none,
+                                            //                 hintStyle: TextStyle(color: Colors.black)),
+                                            //             onChanged: (value) {},
+                                            //           ),
+                                            //         ),
+                                            //         Padding(
+                                            //           padding: const EdgeInsets.all(2),
+                                            //           child: Container(
+                                            //             decoration: BoxDecoration(
+                                            //                 borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
+                                            //             height: 38,
+                                            //             width: 71,
+                                            //             child: Center(
+                                            //               child: Text('Search',
+                                            //                   style: robotoStyle300Light.copyWith(fontSize: 12, color: Colors.white)),
+                                            //             ),
+                                            //           ),
+                                            //         )
+                                            //       ],
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                            // const SizedBox(height: 5),
+                                            Expanded(
+                                              child: ListView.builder(
+                                                  itemCount: pageProvider.invitePageAllLists.length,
+                                                  shrinkWrap: true,
+                                                  physics: const BouncingScrollPhysics(),
+                                                  itemBuilder: (context, index) {
+                                                    return Row(
+                                                      children: [
+                                                        SizedBox(
+                                                            width: 30,
+                                                            height: 30,
+                                                            child: circularImage(
+                                                                pageProvider.invitePageAllLists[index].profileImage!, 30, 30)),
+                                                        const SizedBox(width: 10),
+                                                        Expanded(
+                                                          child: Text(pageProvider.invitePageAllLists[index].fullName!,
+                                                              style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                        ),
+                                                        Checkbox(
+                                                          value: pageProvider.invitePageFriendSelect[index],
+                                                          onChanged: (value) {
+                                                            pageProvider.changeInviteFriendSelectFriend(index, value!);
+                                                          },
+                                                        )
+                                                      ],
+                                                    );
+                                                  }),
+                                            ),
+                                            const SizedBox(height: 5),
+                                            pageProvider.isBottomLoadingInviteFriend
+                                                ? const CircularProgressIndicator()
+                                                : pageProvider.hasNextDataInviteFriend
+                                                    ? InkWell(
+                                                        onTap: () {
+                                                          pageProvider.updateInviteFriendPageNo();
+                                                        },
+                                                        child: Container(
+                                                          height: 30,
+                                                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                                                          decoration: BoxDecoration(
+                                                              border: Border.all(color: colorText),
+                                                              borderRadius: BorderRadius.circular(22)),
+                                                          child: Text('Load more Friend',
+                                                              style: robotoStyle500Medium.copyWith(color: colorText)),
+                                                        ),
+                                                      )
+                                                    : const SizedBox.shrink(),
+                                            const SizedBox(height: 5),
+                                            SizedBox(
+                                              height: 30,
+                                              width: MediaQuery.of(context).size.width,
+                                              child: pageProvider.isLoadingInviteFriend2
+                                                  ? const Center(child: CircularProgressIndicator())
+                                                  : CustomButton(
+                                                      btnTxt: 'Send invitations',
                                                       height: 30,
-                                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: colorText), borderRadius: BorderRadius.circular(22)),
-                                                      child:
-                                                          Text('Load more Friend', style: robotoStyle500Medium.copyWith(color: colorText)),
+                                                      onTap: () {
+                                                        bool isSelectAtLeastOne = false;
+                                                        for (int i = 0; i < pageProvider.invitePageFriendSelect.length; i++) {
+                                                          if (pageProvider.invitePageFriendSelect[i] == true) {
+                                                            isSelectAtLeastOne = true;
+                                                            break;
+                                                          }
+                                                        }
+                                                        if (isSelectAtLeastOne == true) {
+                                                          pageProvider.sentInviteFriend(int.parse(widget.pageId));
+                                                        } else {
+                                                          showMessage(message: 'Please Select at least one Friend');
+                                                        }
+                                                      },
                                                     ),
-                                                  )
-                                                : const SizedBox.shrink(),
-                                        const SizedBox(height: 5),
-                                        SizedBox(
-                                          height: 30,
-                                          width: MediaQuery.of(context).size.width,
-                                          child: pageProvider.isLoadingInviteFriend2
-                                              ? const Center(child: CircularProgressIndicator())
-                                              : CustomButton(
-                                                  btnTxt: 'Send invitations',
-                                                  height: 30,
-                                                  onTap: () {
-                                                    bool isSelectAtLeastOne = false;
-                                                    for (int i = 0; i < pageProvider.invitePageFriendSelect.length; i++) {
-                                                      if (pageProvider.invitePageFriendSelect[i] == true) {
-                                                        isSelectAtLeastOne = true;
-                                                        break;
-                                                      }
-                                                    }
-                                                    if (isSelectAtLeastOne == true) {
-                                                      pageProvider.sentInviteFriend(int.parse(widget.pageId));
-                                                    } else {
-                                                      showMessage(message: 'Please Select at least one Friend');
-                                                    }
-                                                  },
-                                                ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ))
+                                  ))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
                 Card(
@@ -822,24 +825,49 @@ class _PageDashboardState extends State<PageDashboard> {
                                     height: 5,
                                   ),
                                   Expanded(
-                                    child: ListView.builder(
-                                        itemCount: 10,
-                                        itemBuilder: (context, index) {
-                                          return ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
-                                            ),
-                                            title: Text(
-                                              'Rafatul Islam',
-                                              style: GoogleFonts.roboto(
-                                                  fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.primaryColorLight),
-                                            ),
-                                          );
-                                        }),
+                                    child: pageProvider.isPageFollowerList
+                                        ? const Center(
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : pageProvider.pageFollowersList.isEmpty
+                                            ? const Center(
+                                                child: Text("Ops You page has no followers"),
+                                              )
+                                            : ListView.builder(
+                                                itemCount: pageProvider.pageFollowersList.length,
+                                                itemBuilder: (context, index) {
+                                                  var data = pageProvider.pageFollowersList[index];
+                                                  return ListTile(
+                                                    leading: SizedBox(
+                                                        width: 30,
+                                                        height: 30,
+                                                        child: circularImage(data.profileImage!, 30, 30)),
+                                                    title: Text(data.fullName!,
+                                                        style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                  );
+                                                }),
                                   ),
                                   const SizedBox(
                                     height: 5,
                                   ),
+                                  pageProvider.isBottomLoadingInviteFriend
+                                      ? const CircularProgressIndicator()
+                                      : pageProvider.hasNextDataInviteFriend
+                                      ? InkWell(
+                                    onTap: () {
+                                      pageProvider.updateInviteFriendPageNo();
+                                    },
+                                    child: Container(
+                                      height: 30,
+                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: colorText),
+                                          borderRadius: BorderRadius.circular(22)),
+                                      child: Text('Load more Follower',
+                                          style: robotoStyle500Medium.copyWith(color: colorText)),
+                                    ),
+                                  )
+                                      : const SizedBox.shrink(),
                                 ],
                               ),
                             ),

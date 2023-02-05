@@ -7,8 +7,8 @@ import Foundation
 
 import flutter_local_notifications
 import modal_progress_hud_nsn
-import path_provider_foundation
-import shared_preferences_foundation
+import path_provider_macos
+import shared_preferences_macos
 import smart_auth
 import sqflite
 import url_launcher_macos

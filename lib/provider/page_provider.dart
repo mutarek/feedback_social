@@ -349,7 +349,7 @@ class PageProvider with ChangeNotifier {
   }
 
   pageLikeOrUnlike(String pageID) async {
-    ApiResponse response = await pageRepo.pageLikeorUnlike(pageID.toString());
+    ApiResponse response = await pageRepo.pageLikeorUnlike(pageID);
     if (response.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Liked");
     } else {
@@ -529,7 +529,7 @@ class PageProvider with ChangeNotifier {
   bool isBottomLoadingPageFollowerList = false;
   bool isPageFollowerList = false;
   bool hasNextDataPageFollowerList = false;
-  List<String> pageFollowersList = [];
+  List<Author> pageFollowersList = [];
 
   updateFollowerListPageNo() {
     selectPage++;
@@ -549,13 +549,14 @@ class PageProvider with ChangeNotifier {
       isBottomLoadingPageFollowerList = true;
       notifyListeners();
     }
-    ApiResponse apiResponse = await pageRepo.getAllPageFolloweList(1);
+    ApiResponse apiResponse = await pageRepo.getAllPageFolloweList(1,"6");
     if (apiResponse.response.statusCode == 200) {
-      isPageFollowerList = true;
+      isPageFollowerList = false;
       hasNextDataPageFollowerList = apiResponse.response.data['next'] != null ? true : false;
       apiResponse.response.data['results'].forEach((element) {
-        pageFollowersList.add(element);
+        pageFollowersList.add(Author.fromJson(element));
       });
+      notifyListeners();
     } else {
       isPageFollowerList = false;
       notifyListeners();

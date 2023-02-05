@@ -163,10 +163,10 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> getAllPageFolloweList(int page) async {
+  Future<ApiResponse> getAllPageFolloweList(int perPage,String pageId) async {
     Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
-      response = await dioClient.get("${AppConstant.invitationFriendURI}?page=$page");
+      response = await dioClient.get("${AppConstant.pageFollowerListURI}$pageId/list/?page=$perPage");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
