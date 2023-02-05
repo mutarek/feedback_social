@@ -59,7 +59,11 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 if(pageDetails.isLiked ==true){
-                                  //UNLIKE THE PAGE
+                                  Provider.of<PageProvider>(context, listen: false).pageUnlike(
+                                      int.parse(
+                                        pageDetails.id.toString(),
+                                      ),
+                                      isFromSuggestedPage: true);
                                 }else{
                                   Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
                                       int.parse(
@@ -91,7 +95,11 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                             child: InkWell(
                               onTap: (){
                                 if(pageDetails.isLiked ==true){
-                                  //UNLIKE THE PAGE
+                                  Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
+                                      int.parse(
+                                        pageDetails.id.toString(),
+                                      ),
+                                      isFromSuggestedPage: true);
                                 }else{
                                   Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
                                       int.parse(

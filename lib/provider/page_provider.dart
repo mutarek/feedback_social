@@ -357,6 +357,17 @@ class PageProvider with ChangeNotifier {
     }
   }
 
+  pageUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
+    ApiResponse response = await pageRepo.pageUnlike(pageID.toString());
+    if(response.response.statusCode == 200) {
+      if(response.response.data['liked'] == false) {
+        pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
+        pageDetailsModel.isLiked = false;
+        notifyListeners();
+      }
+    }
+  }
+
   pageLikeUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
     ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString());
     if (response.response.statusCode == 200) {
