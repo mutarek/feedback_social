@@ -1,9 +1,7 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/newsfeed_provider.dart';
-import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/home/shimmer_effect/timeline_post_shimmer_widget.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
-import 'package:als_frontend/screens/home/widget/post_status_widget.dart';
 import 'package:als_frontend/screens/post/widget/post_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -59,14 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       pinned: false,
                       delegate: _SliverAppBarDelegate(
                           child: PreferredSize(
-                        preferredSize: Size.fromHeight(125),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0), child: createPostWidget(isForGroup: false)),
-                          ],
-                        ),
+                        preferredSize: const Size.fromHeight(125),
+                        child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0), child: createPostWidget(isForGroup: false)),
                       )),
                     ),
                     SliverList(
@@ -82,7 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           groupPageID: newsFeedProvider.newsFeedLists[index].id! as int,
                           isAdmin: authProvider.userID == newsFeedProvider.newsFeedLists[index].author!.id.toString() ? true : false,
                         );
-                      }, childCount: newsFeedProvider.newsFeedLists.length),
+                      },
+                          childCount: newsFeedProvider.newsFeedLists.length,
+                          semanticIndexOffset: 500,
+                          addSemanticIndexes: false,
+                          addRepaintBoundaries: false,
+                          addAutomaticKeepAlives: false),
                     )
                   ],
                 )

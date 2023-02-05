@@ -211,14 +211,16 @@ class PostWidget extends StatelessWidget {
                                 SizedBox(height: isAdmin ? 8 : 15),
                                 isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
                                 SizedBox(height: isAdmin ? 0 : 15),
-                                isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {
-                                  Navigator.of(context).pop();
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AddDialogue(newsFeedData);
-                                      });
-                                }),
+                                isAdmin
+                                    ? const SizedBox.shrink()
+                                    : PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {
+                                        Navigator.of(context).pop();
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AddDialogue(newsFeedData);
+                                            });
+                                      }),
                                 SizedBox(height: isAdmin ? 0 : 8)
                               ],
                             ),
@@ -239,35 +241,39 @@ class PostWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
-                SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 8.0 : 0),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                  child: Column(
-                    children: [
-                      newsFeedData.description != null && newsFeedData.description!.isNotEmpty && newsFeedData.description!.contains("http")
-                          ? MarkdownBody(
-                              onTapLink: (text, href, title) {
-                                href != null ? openNewLink(href) : null;
-                              },
-                              selectable: true,
-                              data: newsFeedData.description!,
-                              styleSheet: MarkdownStyleSheet(a: const TextStyle(fontSize: 17), p: robotoStyle600SemiBold))
-                          : const SizedBox(),
-                      SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 1.0 : 0),
-                      newsFeedData.description != null &&
-                              newsFeedData.description!.isNotEmpty &&
-                              newsFeedData.totalImage == 0 &&
-                              newsFeedData.description!.contains("http")
-                          ? AnyLinkPreviewGlobalWidget(extractdescription(newsFeedData.description!), 120.0, double.infinity, 10.0)
-                          : newsFeedData.description!.contains("http")
-                              ? const SizedBox()
-                              : Text(newsFeedData.description!, style: robotoStyle600SemiBold),
-                    ],
-                  ),
-                ),
-                SizedBox(height: newsFeedData.totalImage != 0 && newsFeedData.description != null ? 10.0 : 0),
-                const SizedBox(height: 7),
+                // const SizedBox(height: 5),
+                SizedBox(height: newsFeedData.description!.isNotEmpty ? 8.0 : 0),
+                newsFeedData.description!.isEmpty
+                    ? const SizedBox.shrink()
+                    : Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: Column(
+                          children: [
+                            newsFeedData.description != null &&
+                                    newsFeedData.description!.isNotEmpty &&
+                                    newsFeedData.description!.contains("http")
+                                ? MarkdownBody(
+                                    onTapLink: (text, href, title) {
+                                      href != null ? openNewLink(href) : null;
+                                    },
+                                    selectable: true,
+                                    data: newsFeedData.description!,
+                                    styleSheet: MarkdownStyleSheet(a: const TextStyle(fontSize: 17), p: robotoStyle600SemiBold))
+                                : const SizedBox(),
+                            SizedBox(height: newsFeedData.description != null && newsFeedData.description!.isNotEmpty ? 1.0 : 0),
+                            newsFeedData.description != null &&
+                                    newsFeedData.description!.isNotEmpty &&
+                                    newsFeedData.totalImage == 0 &&
+                                    newsFeedData.description!.contains("http")
+                                ? AnyLinkPreviewGlobalWidget(extractdescription(newsFeedData.description!), 120.0, double.infinity, 10.0)
+                                : newsFeedData.description!.contains("http")
+                                    ? const SizedBox()
+                                    : Text(newsFeedData.description!, style: robotoStyle600SemiBold),
+                          ],
+                        ),
+                      ),
+                SizedBox(height: newsFeedData.totalImage != 0 && newsFeedData.description!.isNotEmpty ? 10.0 : 10),
+                // const SizedBox(height: 7),
                 // if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoContainer(index, newsfeedModel: newsFeedData),
                 if ((newsFeedData.totalImage! + newsFeedData.totalVideo!) != 0) PostPhotoWidget(index, newsfeedModel: newsFeedData),
                 Padding(
@@ -401,7 +407,9 @@ class PostWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {shareBottomSheet(context,newsFeedData.sharedByUrl.toString(),newsFeedData);}, size: 18),
+                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {
+                                  shareBottomSheet(context, newsFeedData.sharedByUrl.toString(), newsFeedData);
+                                }, size: 18),
                                 const SizedBox(height: 18),
                                 PopUpMenuWidget(ImagesModel.shareMessageIcons, 'Share via message', () {}, size: 18),
                                 const SizedBox(height: 18),

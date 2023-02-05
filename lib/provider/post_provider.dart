@@ -61,14 +61,9 @@ class PostProvider with ChangeNotifier {
   int status = 0;
   double uploadPercent = 0.0;
 
-  changeLoadingValueStatus(bool status) {
-    isLoading = status;
-    notifyListeners();
-  }
-
   Future<PostResponse> addPost(String postText, {bool isFromGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
     body = postText;
-    changeLoadingValueStatus(true);
+    isLoading = true;
     uploadPercent = 0.0;
     status = -1;
     notifyListeners();
@@ -101,7 +96,7 @@ class PostProvider with ChangeNotifier {
       });
     } else {
       apiResponse = await postRepo.submitPost(formData, onSendProgress: (int sentBytes, int totalBytes) {
-        changeLoadingValueStatus(true);
+        notifyListeners();
         progressPercent = sentBytes / totalBytes * 100;
         uploadPercent = (progressPercent / 100);
 
@@ -109,22 +104,20 @@ class PostProvider with ChangeNotifier {
         if (progressPercent == 100) {
           uploadPercent = 1.0;
           showLog('finished');
-          changeLoadingValueStatus(false);
         }
         notifyListeners();
-        // showOneTimeNotification();
+        showOneTimeNotification();
       });
     }
     if (apiResponse.response.statusCode == 201 || apiResponse.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Posted");
       NewsFeedModel n = NewsFeedModel.fromJson(apiResponse.response.data);
-      changeLoadingValueStatus(false);
-
+      isLoading = false;
       status = 0;
       notifyListeners();
       return PostResponse(newsFeedData: n, status: true);
     } else {
-      changeLoadingValueStatus(true);
+      isLoading = true;
       status = 1;
       notifyListeners();
       Fluttertoast.showToast(msg: "Something went wrong!");

@@ -30,7 +30,7 @@ Widget postStatusWidget(BuildContext context) {
                           child: LiquidLinearProgressIndicator(
                             value: postProvider.uploadPercent,
                             valueColor: const AlwaysStoppedAnimation(colorText),
-                            backgroundColor: AppColors.facebookColor,
+                            backgroundColor: Colors.green,
                             borderRadius: 40.0,
                             direction: Axis.vertical,
                             center: Padding(
@@ -38,11 +38,11 @@ Widget postStatusWidget(BuildContext context) {
                               child: CustomText(
                                 title: "${(postProvider.uploadPercent * 100).toStringAsFixed(0)}%",
                                 color: postProvider.uploadPercent < 0.2
-                                    ? Colors.green.withOpacity(.7)
+                                    ? Colors.white.withOpacity(.7)
                                     : postProvider.uploadPercent < 0.4
-                                        ? Colors.green.withOpacity(.9)
+                                        ? Colors.white.withOpacity(.9)
                                         : postProvider.uploadPercent < 0.5
-                                            ? Colors.green
+                                            ? Colors.white
                                             : Colors.white,
                               ),
                             ),

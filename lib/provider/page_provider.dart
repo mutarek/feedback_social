@@ -224,8 +224,6 @@ class PageProvider with ChangeNotifier {
 
   updatePostOnTimeLine(int index, NewsFeedModel n) async {
     pageAllPosts[index] = n;
-    // pageAllPosts.removeAt(index);
-    // pageAllPosts.insert(0, n);
     notifyListeners();
   }
 
@@ -359,8 +357,8 @@ class PageProvider with ChangeNotifier {
 
   pageUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
     ApiResponse response = await pageRepo.pageUnlike(pageID.toString());
-    if(response.response.statusCode == 200) {
-      if(response.response.data['liked'] == false) {
+    if (response.response.statusCode == 200) {
+      if (response.response.data['liked'] == false) {
         pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
         pageDetailsModel.isLiked = false;
         notifyListeners();
@@ -430,7 +428,7 @@ class PageProvider with ChangeNotifier {
   changeAllFollowerExpanded(String pageId) {
     allFollower = !allFollower;
     if (allFollower == true) {
-      getAllFollowerList(pageId: pageId,isFirstTime: true, page: 1);
+      getAllFollowerList(pageId: pageId, isFirstTime: true, page: 1);
     }
     notifyListeners();
   }
@@ -548,7 +546,7 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getAllFollowerList({String pageId = "0",int page = 1, bool isFirstTime = true}) async {
+  getAllFollowerList({String pageId = "0", int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       pageFollowersList.clear();
       pageFollowersList = [];
@@ -560,7 +558,7 @@ class PageProvider with ChangeNotifier {
       isBottomLoadingPageFollowerList = true;
       notifyListeners();
     }
-    ApiResponse apiResponse = await pageRepo.getAllPageFolloweList(1,pageId);
+    ApiResponse apiResponse = await pageRepo.getAllPageFolloweList(1, pageId);
     if (apiResponse.response.statusCode == 200) {
       isPageFollowerList = false;
       hasNextDataPageFollowerList = apiResponse.response.data['next'] != null ? true : false;

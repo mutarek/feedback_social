@@ -119,14 +119,26 @@ class NewsFeedProvider with ChangeNotifier {
 
   NewsFeedModel newsFeedData = NewsFeedModel();
 
+  // addPostOnTimeLine(NewsFeedModel n) async {
+  //   List<NewsFeedModel> pagePostLists = [];
+  //   pagePostLists.addAll(newsFeedLists);
+  //   notifyListeners();
+  //   newsFeedLists.clear();
+  //   newsFeedLists = [];
+  //   notifyListeners();
+  //   newsFeedLists.insert(0, n);
+  //   newsFeedLists.insertAll(1,pagePostLists);
+  //   notifyListeners();
+  // }
+
   addPostOnTimeLine(NewsFeedModel n) async {
-    newsFeedLists.insert(0, n);
+    newsFeedLists.insert(0, NewsFeedModel());
+    newsFeedLists[0] = n;
     notifyListeners();
   }
 
   updatePostOnTimeLine(int index, NewsFeedModel n) async {
-    newsFeedLists.removeAt(index);
-    newsFeedLists.insert(0, n);
+    newsFeedLists[index] = n;
     notifyListeners();
   }
 

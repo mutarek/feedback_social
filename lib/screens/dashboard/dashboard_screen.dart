@@ -124,7 +124,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         dashboardProvider.selectIndex == 0
                             ? AppBar(
                                 title: CustomText(
-                                    title: LocaleKeys.feedback.tr(), color: feedback, fontWeight: FontWeight.bold, fontSize: 27),
+                                    title: LocaleKeys.feedback.tr(), color: colorText, fontWeight: FontWeight.bold, fontSize: 27),
                                 backgroundColor: Colors.white,
                                 elevation: 0,
                                 actions: [
@@ -161,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                             : dashboardProvider.selectIndex == 3
                                                 ? 'Chats'
                                                 : 'Feedback',
-                                    color: Colors.white,
+                                    color: colorText,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 27),
                                 backgroundColor: Colors.white,
