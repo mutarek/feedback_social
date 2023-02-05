@@ -203,6 +203,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                         postProvider.isLoading || postProvider.status != 0 ? postStatusWidget(context) : SizedBox.shrink(),
 
+
                         Expanded(
                           child: PageView(
                             controller: controller,
