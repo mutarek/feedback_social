@@ -2,6 +2,7 @@ import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/dialog_bottom_sheet/add_dialogue.dart';
 import 'package:als_frontend/dialog_bottom_sheet/delete_dialogue.dart';
 import 'package:als_frontend/dialog_bottom_sheet/like_modal_bottom_sheet.dart';
+import 'package:als_frontend/dialog_bottom_sheet/share_modal_bottom_sheet.dart';
 import 'package:als_frontend/helper/number_helper.dart';
 import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/helper/url_checkig_helper.dart';
@@ -400,7 +401,7 @@ class PostWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {}, size: 18),
+                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {shareBottomSheet(context,newsFeedData.sharedByUrl.toString(),newsFeedData);}, size: 18),
                                 const SizedBox(height: 18),
                                 PopUpMenuWidget(ImagesModel.shareMessageIcons, 'Share via message', () {}, size: 18),
                                 const SizedBox(height: 18),
