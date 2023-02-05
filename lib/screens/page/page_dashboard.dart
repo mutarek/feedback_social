@@ -761,7 +761,7 @@ class _PageDashboardState extends State<PageDashboard> {
                             backgroundColor: AppColors.primaryColorLight,
                             child: InkWell(
                                 onTap: () {
-                                  pageProvider.changeAllFollowerExpanded();
+                                  pageProvider.changeAllFollowerExpanded(widget.pageId);
                                   showLog(pageProvider.statusInviteFriendButton);
                                 },
                                 child: pageProvider.allFollower != true

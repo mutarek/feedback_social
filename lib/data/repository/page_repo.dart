@@ -132,6 +132,17 @@ class PageRepo {
     }
   }
 
+  Future<ApiResponse> pageUnlike(String pageId) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.delete("/page/user/unlike/$pageId/", data: {});
+
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
   Future<ApiResponse> pageLikeUnlike(String pageId) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
