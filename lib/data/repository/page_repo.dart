@@ -61,6 +61,16 @@ class PageRepo {
     }
   }
 
+  Future<ApiResponse> getInvitedPage() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.invitedPageURI);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
   Future<ApiResponse> createPageWithoutImageUpload(Map map) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {

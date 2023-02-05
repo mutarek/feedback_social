@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/find_page_screen.dart';
+import 'package:als_frontend/screens/page/new_design/invited_page.dart';
 import 'package:als_frontend/screens/page/new_design/new_my_liked_page_screen.dart';
 import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
 import 'package:als_frontend/screens/page/new_design/new_suggested_page_screen.dart';
@@ -142,8 +143,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                       name: "Invite Pages",
                       extraArguments: " 25 new invites",
                       onTap: () {
-                        showMessage(message: 'upcoming');
-                        // Helper.toScreen(const NewMyLikedPageScreen());
+                        Helper.toScreen(const InvitedPage());
                       },
                     ),
                     const SizedBox(height: 10),

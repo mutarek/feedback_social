@@ -15,6 +15,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../data/model/response/invited_page_models.dart';
+
 class PageProvider with ChangeNotifier {
   final PageRepo pageRepo;
   final NewsfeedRepo newsfeedRepo;
@@ -111,6 +113,25 @@ class PageProvider with ChangeNotifier {
       });
     } else {
       isLoading = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  //TODO: For Getting all inviting page
+
+  List<InvitedPageModel> invitedPageLists = [];
+
+  getAllInvitedPages()async {
+    isLoading = true;
+    invitedPageLists.clear();
+    ApiResponse response = await pageRepo.getInvitedPage();
+    isLoading = false;
+    if (response.response.statusCode == 200) {
+      response.response.data['results'].forEach((element) {
+        invitedPageLists.add(InvitedPageModel.fromJson(element));
+      });
+    } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
