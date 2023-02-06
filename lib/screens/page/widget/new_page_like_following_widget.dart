@@ -128,6 +128,20 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          PopUpMenuWidget(ImagesModel.addIcons,pageDetails.isLiked==true?"Unfollow":"Follow", () {
+                            pageDetails.isLiked==true?
+                            Provider.of<PageProvider>(context, listen: false).pageUnlike(
+                                int.parse(
+                                  pageDetails.id.toString(),
+                                ),
+                                isFromSuggestedPage: true,index: index):
+                            Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
+                                int.parse(
+                                  pageDetails.id.toString(),
+                                ),
+                                isFromSuggestedPage: true,index: index);
+                          }),
+                          const SizedBox(height: 15),
                           PopUpMenuWidget(ImagesModel.addIcons, "Invites Friends", () {}),
                           const SizedBox(height: 15),
                           PopUpMenuWidget(ImagesModel.copyIcons, "Copy Link", () {}),

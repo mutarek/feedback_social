@@ -120,15 +120,12 @@ class PageProvider with ChangeNotifier {
 
   acceptInvitation(String inviteId,int index) async {
     ApiResponse response = await pageRepo.acceptInvitation(inviteId);
-    InvitedPageModel invitedPageModel = invitedPageLists[index];
     if(response.response.statusCode == 200) {
       invitedPageLists.removeAt(index);
       AuthorPageModel authorPageModel = AuthorPageModel();
-      authorPageModel.id = invitedPageModel.id;
-      authorPageModel.name = invitedPageModel.page!.name;
-      authorPageModel.avatar = invitedPageModel.page!.avatar;
-      authorPageModel.coverPhoto = invitedPageModel.page!.avatar;
-      authorPageModel.followers = 3;
+      authorPageModel.id = invitedPageLists[index].id;
+      authorPageModel.name = invitedPageLists[index].page!.name;
+      authorPageModel.avatar = invitedPageLists[index].page!.avatar;
       likedPageLists.insert(0,authorPageModel);
       notifyListeners();
     }
@@ -429,11 +426,20 @@ class PageProvider with ChangeNotifier {
         pageDetailsModel.isLiked = true;
         if (isFromMyPageScreen) {
           authorPageLists[index].followers = authorPageLists[index].followers! + 1;
-          likedPageLists.insert(0, authorPageLists[index]);
+          AuthorPageModel invitedPageModel = AuthorPageModel();
+          invitedPageModel.id = authorPageLists[index].id;
+          invitedPageModel.name = authorPageLists[index].name;
+          invitedPageModel.avatar = authorPageLists[index].avatar;
+          likedPageLists.insert(0, invitedPageModel);
         }
-        if (isFromSuggestedPage) {
+        else if (isFromSuggestedPage) {
+          AuthorPageModel invitedPageModel = AuthorPageModel();
+          invitedPageModel.id = allSuggestPageList[index].id;
+          invitedPageModel.name = allSuggestPageList[index].name;
+          invitedPageModel.avatar = allSuggestPageList[index].avatar;
+          likedPageLists.insert(0,invitedPageModel);
           allSuggestPageList.removeAt(index);
-          likedPageLists.insert(0,authorPageLists[index]);
+          notifyListeners();
         }
       } else {
         pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
