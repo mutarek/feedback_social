@@ -118,6 +118,31 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  acceptInvitation(String inviteId,int index) async {
+    ApiResponse response = await pageRepo.acceptInvitation(inviteId);
+    if(response.response.statusCode == 200) {
+      invitedPageLists.removeAt(index);
+      AuthorPageModel authorPageModel = AuthorPageModel();
+      authorPageModel.id = invitedPageLists[index].id;
+      authorPageModel.name = invitedPageLists[index].page!.name;
+      authorPageModel.avatar = invitedPageLists[index].page!.avatar;
+      likedPageLists.insert(0,authorPageModel);
+      notifyListeners();
+    }
+    else
+      {
+        Fluttertoast.showToast(msg: response.response.statusMessage!);
+      }
+  }
+
+  cancelInvitation(String inviteId,int index) async {
+    ApiResponse response = await pageRepo.cancelInvitation(inviteId);
+    if(response.response.statusCode == 200) {
+      invitedPageLists.removeAt(index);
+
+    }
+  }
+
   //TODO: For Getting all inviting page
 
   List<InvitedPageModel> invitedPageLists = [];
@@ -383,6 +408,10 @@ class PageProvider with ChangeNotifier {
         pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
         pageDetailsModel.isLiked = false;
         notifyListeners();
+        if(isFromMyPageScreen) {
+          allSuggestPageList.removeAt(index);
+          notifyListeners();
+        }
       }
     }
   }
@@ -395,10 +424,20 @@ class PageProvider with ChangeNotifier {
         pageDetailsModel.isLiked = true;
         if (isFromMyPageScreen) {
           authorPageLists[index].followers = authorPageLists[index].followers! + 1;
-          likedPageLists.insert(0, authorPageLists[index]);
-          if (isFromSuggestedPage) {
-            allSuggestPageList.removeAt(index);
-          }
+          AuthorPageModel invitedPageModel = AuthorPageModel();
+          invitedPageModel.id = authorPageLists[index].id;
+          invitedPageModel.name = authorPageLists[index].name;
+          invitedPageModel.avatar = authorPageLists[index].avatar;
+          likedPageLists.insert(0, invitedPageModel);
+        }
+        else if (isFromSuggestedPage) {
+          AuthorPageModel invitedPageModel = AuthorPageModel();
+          invitedPageModel.id = allSuggestPageList[index].id;
+          invitedPageModel.name = allSuggestPageList[index].name;
+          invitedPageModel.avatar = allSuggestPageList[index].avatar;
+          likedPageLists.insert(0,invitedPageModel);
+          allSuggestPageList.removeAt(index);
+          notifyListeners();
         }
       } else {
         pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;

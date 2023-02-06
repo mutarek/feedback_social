@@ -2,6 +2,9 @@ class InvitedPageModel{
   num? id;
   Page? page;
 
+
+  InvitedPageModel({this.id, this.page});
+
   InvitedPageModel.fromJson(dynamic json) {
     id = json['id'];
     page = json['page'] != null ? Page.fromJson(json['page']) : null;

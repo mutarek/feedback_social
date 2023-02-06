@@ -63,13 +63,13 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                                       int.parse(
                                         pageDetails.id.toString(),
                                       ),
-                                      isFromSuggestedPage: true);
+                                      isFromSuggestedPage: true,index: index);
                                 }else{
                                   Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
                                       int.parse(
                                         pageDetails.id.toString(),
                                       ),
-                                      isFromSuggestedPage: true);
+                                      isFromSuggestedPage: true,index: index);
                                 }
                               },
                               child: Container(
@@ -94,19 +94,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                           Expanded(
                             child: InkWell(
                               onTap: (){
-                                if(pageDetails.isLiked ==true){
-                                  Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
-                                      int.parse(
-                                        pageDetails.id.toString(),
-                                      ),
-                                      isFromSuggestedPage: true);
-                                }else{
-                                  Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
-                                      int.parse(
-                                        pageDetails.id.toString(),
-                                      ),
-                                      isFromSuggestedPage: true);
-                                }
+
                               },
                               child: Container(
                                 height: 40,
@@ -117,7 +105,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                                   children: [
                                     SvgPicture.asset(ImagesModel.followingIcons, width: 15, height: 15, color: Colors.white),
                                     const SizedBox(width: 2),
-                                    Text(pageDetails.isLiked==true?"Following":"Follow", style: robotoStyle700Bold.copyWith(fontSize: 12, color: Colors.white)),
+                                    Text("Message", style: robotoStyle700Bold.copyWith(fontSize: 12, color: Colors.white)),
                                   ],
                                 ),
                               ),
@@ -140,6 +128,20 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          PopUpMenuWidget(ImagesModel.addIcons,pageDetails.isLiked==true?"Unfollow":"Follow", () {
+                            pageDetails.isLiked==true?
+                            Provider.of<PageProvider>(context, listen: false).pageUnlike(
+                                int.parse(
+                                  pageDetails.id.toString(),
+                                ),
+                                isFromSuggestedPage: true,index: index):
+                            Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
+                                int.parse(
+                                  pageDetails.id.toString(),
+                                ),
+                                isFromSuggestedPage: true,index: index);
+                          }),
+                          const SizedBox(height: 15),
                           PopUpMenuWidget(ImagesModel.addIcons, "Invites Friends", () {}),
                           const SizedBox(height: 15),
                           PopUpMenuWidget(ImagesModel.copyIcons, "Copy Link", () {}),

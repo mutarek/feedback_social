@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/invited_page_models.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/find_page_screen.dart';
 import 'package:als_frontend/screens/page/new_design/invited_page.dart';
@@ -96,8 +97,9 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                                     itemCount: pageProvider.authorPageLists.length,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context, index) {
+                                      var data = pageProvider.authorPageLists[index];
                                       return PageViewWidget(
-                                          authorPageModel: pageProvider.authorPageLists[index],
+                                          authorPageModel: data,
                                           onTap: () {
                                             Helper.toScreen(NewPageDetailsScreen(
                                               pageProvider.authorPageLists[index].id.toString(),

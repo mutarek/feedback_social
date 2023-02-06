@@ -61,6 +61,26 @@ class PageRepo {
     }
   }
 
+  Future<ApiResponse> acceptInvitation(String pageId) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post('${AppConstant.pageInvitation}$pageId/accept/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> cancelInvitation(String pageId) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.delete('${AppConstant.pageInvitation}$pageId/cancel/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
   Future<ApiResponse> getInvitedPage() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {

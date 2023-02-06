@@ -25,6 +25,7 @@ class ImagesModel {
   static const String groupAdminIcon = 'assets/svg/group_admin_svg.svg';
   static const String groupModeratorIcon = 'assets/svg/group_moderator_svg.svg';
   static const String groupPublicIcon = 'assets/svg/group_public_svg.svg';
+  static const String declinedIcons = 'assets/svg/declined_vector.svg';
 
   //Image
   static const String placeholderImageOne = 'assets/image/placeholder_image_one.png';
