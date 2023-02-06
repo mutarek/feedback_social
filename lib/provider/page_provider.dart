@@ -118,6 +118,34 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  acceptInvitation(String inviteId,int index) async {
+    ApiResponse response = await pageRepo.acceptInvitation(inviteId);
+    InvitedPageModel invitedPageModel = invitedPageLists[index];
+    if(response.response.statusCode == 200) {
+      invitedPageLists.removeAt(index);
+      AuthorPageModel authorPageModel = AuthorPageModel();
+      authorPageModel.id = invitedPageModel.id;
+      authorPageModel.name = invitedPageModel.page!.name;
+      authorPageModel.avatar = invitedPageModel.page!.avatar;
+      authorPageModel.coverPhoto = invitedPageModel.page!.avatar;
+      authorPageModel.followers = 3;
+      likedPageLists.insert(0,authorPageModel);
+      notifyListeners();
+    }
+    else
+      {
+        Fluttertoast.showToast(msg: response.response.statusMessage!);
+      }
+  }
+
+  cancelInvitation(String inviteId,int index) async {
+    ApiResponse response = await pageRepo.cancelInvitation(inviteId);
+    if(response.response.statusCode == 200) {
+      invitedPageLists.removeAt(index);
+
+    }
+  }
+
   //TODO: For Getting all inviting page
 
   List<InvitedPageModel> invitedPageLists = [];
@@ -385,6 +413,10 @@ class PageProvider with ChangeNotifier {
         pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
         pageDetailsModel.isLiked = false;
         notifyListeners();
+        if(isFromMyPageScreen) {
+          allSuggestPageList.removeAt(index);
+          notifyListeners();
+        }
       }
     }
   }

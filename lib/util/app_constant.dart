@@ -51,6 +51,7 @@ class AppConstant {
   static const String pageLikeAllURI = '/page/user/like/list/';
   static const String pageCategoryURI = '/page/category/list/';
   static const String invitedPageURI = '/page/invitation/list/';
+  static const String pageInvitation = '/page/invitation/';
   static const String pageURI = '/page/';
   static const String invitationFriendURI = '/page/invitation/friend/user/list/';
   static const String pageFollowerListURI = '/page/follower/';

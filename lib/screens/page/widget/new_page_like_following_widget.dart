@@ -69,7 +69,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                                       int.parse(
                                         pageDetails.id.toString(),
                                       ),
-                                      isFromSuggestedPage: true);
+                                      isFromSuggestedPage: true,index: index);
                                 }
                               },
                               child: Container(
