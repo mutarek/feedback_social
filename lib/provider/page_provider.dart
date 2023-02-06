@@ -430,9 +430,10 @@ class PageProvider with ChangeNotifier {
         if (isFromMyPageScreen) {
           authorPageLists[index].followers = authorPageLists[index].followers! + 1;
           likedPageLists.insert(0, authorPageLists[index]);
-          if (isFromSuggestedPage) {
-            allSuggestPageList.removeAt(index);
-          }
+        }
+        if (isFromSuggestedPage) {
+          allSuggestPageList.removeAt(index);
+          likedPageLists.insert(0,authorPageLists[index]);
         }
       } else {
         pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;

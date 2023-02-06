@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-
 import '../../../provider/page_provider.dart';
-import '../../../util/image.dart';
-import '../../../util/theme/app_colors.dart';
-import '../../../util/theme/text.styles.dart';
-import '../../../widgets/network_image.dart';
 import '../widget/invited_page_view_widget.dart';
 import '../widget/page_app_bar.dart';
-import '../widget/page_view_widget.dart';
 
 class InvitedPage extends StatefulWidget {
   const InvitedPage({Key? key}) : super(key: key);
@@ -45,18 +38,16 @@ class _InvitedPageState extends State<InvitedPage> {
                       itemCount: pageProvider.invitedPageLists.length,
                       itemBuilder: (_, index) {
                         var data = pageProvider.invitedPageLists[index];
-                        return InvitedPageViewWidget(invitedPageModel: data,
-                          onItemTap: (){
-
+                        return InvitedPageViewWidget(
+                          invitedPageModel: data,
+                          onAcceptTap: () {
+                            pageProvider.acceptInvitation(data.page!.id.toString(), index);
                           },
-                          onAcceptTap: (){
-                          pageProvider.acceptInvitation(data.page!.id.toString(),index);
-                          },
-                          onCancelTap: (){
-                          pageProvider.cancelInvitation(data.id.toString(),index);
-                          },
+                          onCancelTap: () {
+                            pageProvider.cancelInvitation(data.id.toString(), index);
+                          }
                         );
-                      },
+                      }
                     ),
         );
       }),

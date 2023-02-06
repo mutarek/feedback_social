@@ -63,7 +63,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                                       int.parse(
                                         pageDetails.id.toString(),
                                       ),
-                                      isFromSuggestedPage: true);
+                                      isFromSuggestedPage: true,index: index);
                                 }else{
                                   Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
                                       int.parse(
@@ -94,19 +94,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                           Expanded(
                             child: InkWell(
                               onTap: (){
-                                if(pageDetails.isLiked ==true){
-                                  Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
-                                      int.parse(
-                                        pageDetails.id.toString(),
-                                      ),
-                                      isFromSuggestedPage: true);
-                                }else{
-                                  Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
-                                      int.parse(
-                                        pageDetails.id.toString(),
-                                      ),
-                                      isFromSuggestedPage: true);
-                                }
+
                               },
                               child: Container(
                                 height: 40,
@@ -117,7 +105,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                                   children: [
                                     SvgPicture.asset(ImagesModel.followingIcons, width: 15, height: 15, color: Colors.white),
                                     const SizedBox(width: 2),
-                                    Text(pageDetails.isLiked==true?"Following":"Follow", style: robotoStyle700Bold.copyWith(fontSize: 12, color: Colors.white)),
+                                    Text("Message", style: robotoStyle700Bold.copyWith(fontSize: 12, color: Colors.white)),
                                   ],
                                 ),
                               ),
