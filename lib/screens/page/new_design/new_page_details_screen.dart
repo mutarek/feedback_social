@@ -1,4 +1,5 @@
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/page/shimmer_effect/new_page_details_screen_shimmer.dart';
 import 'package:als_frontend/screens/page/view/page_about_view.dart';
 import 'package:als_frontend/screens/page/view/page_home_view.dart';
 import 'package:als_frontend/screens/page/view/page_upcomming_view.dart';
@@ -45,7 +46,7 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
       backgroundColor: Colors.white,
       body: Consumer<PageProvider>(builder: (context, pageProvider, child) {
         return pageProvider.isLoading || pageProvider.isLoadingPageDetails
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(child: NewPageDetailsShimmer())
             : ModalProgressHUD(
                 inAsyncCall: pageProvider.isLoadingUpdateCover,
                 child: PageView(
