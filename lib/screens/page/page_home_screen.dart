@@ -5,6 +5,7 @@ import 'package:als_frontend/screens/page/new_design/invited_page.dart';
 import 'package:als_frontend/screens/page/new_design/new_my_liked_page_screen.dart';
 import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
 import 'package:als_frontend/screens/page/new_design/new_suggested_page_screen.dart';
+import 'package:als_frontend/screens/page/shimmer_effect/page_home_screen_shimmer_effect.dart';
 import 'package:als_frontend/screens/page/widget/like_invite_find.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/screens/page/widget/page_view_widget.dart';
@@ -43,7 +44,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Consumer<PageProvider>(builder: (context, pageProvider, child) {
           return pageProvider.isLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? const PageHomeScreenShimmer()
               : ListView(
                   children: [
                     const SizedBox(height: 10),

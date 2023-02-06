@@ -407,6 +407,7 @@ class PostWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {shareBottomSheet(context,"",newsFeedData);}, size: 18),
                                 PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {
                                   shareBottomSheet(context, newsFeedData.sharedByUrl.toString(), newsFeedData);
                                 }, size: 18),
