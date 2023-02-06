@@ -201,7 +201,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     fontSize: 13,
                                   ),
 
-                        postProvider.isLoading || postProvider.status != 0 ? postStatusWidget(context) : SizedBox.shrink(),
+                        postProvider.isLoading || postProvider.status != 0 ? postStatusWidget(context) : const SizedBox.shrink(),
 
 
                         Expanded(

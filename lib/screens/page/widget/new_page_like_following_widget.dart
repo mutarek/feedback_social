@@ -12,11 +12,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class NewPageLikeFollowingWidget extends StatelessWidget {
-  final bool isAdmin;
+
   final PageDetailsModel pageDetails;
   final int index;
 
-  const NewPageLikeFollowingWidget(this.pageDetails, this.isAdmin, {this.index = 0, Key? key}) : super(key: key);
+  const NewPageLikeFollowingWidget(this.pageDetails, {this.index = 0, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,12 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
           height: 40,
           child: Row(
             children: [
-              isAdmin
+              isMe(pageDetails.author!.id.toString())
                   ? Expanded(
                       child: InkWell(
                         onTap: () {
                           // Provider.of<PageProvider>(context, listen: false).callForGetIndividualPageDetails(authorPage.id.toString());
-                          isAdmin
+                          isMe(pageDetails.author!.id.toString())
                               ? Helper.toScreen(PageDashboard(pageDetails.id.toString(), index))
                               : showMessage(message: "Ops You don't have access");
                         },
@@ -58,19 +58,17 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                           Expanded(
                             child: InkWell(
                               onTap: () {
-                                if(pageDetails.isLiked ==true){
-                                  Provider.of<PageProvider>(context, listen: false).pageUnlike(
-                                      int.parse(
-                                        pageDetails.id.toString(),
-                                      ),
-                                      isFromSuggestedPage: true,index: index);
-                                }else{
-                                  Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
-                                      int.parse(
-                                        pageDetails.id.toString(),
-                                      ),
-                                      isFromSuggestedPage: true,index: index);
-                                }
+                                Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
+                                    int.parse(pageDetails.id.toString()), pageDetails.isLiked == true ? true : false,
+                                    index: index);
+
+                                // if (pageDetails.isLiked == true) {
+                                //   Provider.of<PageProvider>(context, listen: false)
+                                //       .pageLikeUnlike(int.parse(pageDetails.id.toString()), true, isFromSuggestedPage: true, index: index);
+                                // } else {
+                                //   Provider.of<PageProvider>(context, listen: false)
+                                //       .pageLikeUnlike(int.parse(pageDetails.id.toString()), false, isFromSuggestedPage: true, index: index);
+                                // }
                               },
                               child: Container(
                                 height: 40,
@@ -84,7 +82,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                                   children: [
                                     SvgPicture.asset(ImagesModel.likeIcons, width: 15, height: 15, color: colorText),
                                     const SizedBox(width: 2),
-                                    Text(pageDetails.isLiked ==true?"Liked":"Like", style: robotoStyle700Bold.copyWith(fontSize: 12))
+                                    Text(pageDetails.isLiked == true ? "Liked" : "Like", style: robotoStyle700Bold.copyWith(fontSize: 12))
                                   ],
                                 ),
                               ),
@@ -93,9 +91,7 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                           const SizedBox(width: 5),
                           Expanded(
                             child: InkWell(
-                              onTap: (){
-
-                              },
+                              onTap: () {},
                               child: Container(
                                 height: 40,
                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.primaryColorLight),
@@ -128,18 +124,12 @@ class NewPageLikeFollowingWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PopUpMenuWidget(ImagesModel.addIcons,pageDetails.isLiked==true?"Unfollow":"Follow", () {
-                            pageDetails.isLiked==true?
-                            Provider.of<PageProvider>(context, listen: false).pageUnlike(
-                                int.parse(
-                                  pageDetails.id.toString(),
-                                ),
-                                isFromSuggestedPage: true,index: index):
-                            Provider.of<PageProvider>(context, listen: false).pageLikeUnlike(
-                                int.parse(
-                                  pageDetails.id.toString(),
-                                ),
-                                isFromSuggestedPage: true,index: index);
+                          PopUpMenuWidget(ImagesModel.addIcons, pageDetails.isLiked == true ? "Unfollow" : "Follow", () {
+                            pageDetails.isLiked == true
+                                ? Provider.of<PageProvider>(context, listen: false)
+                                    .pageLikeUnlike(int.parse(pageDetails.id.toString()), true, index: index)
+                                : Provider.of<PageProvider>(context, listen: false)
+                                    .pageLikeUnlike(int.parse(pageDetails.id.toString()), false, index: index);
                           }),
                           const SizedBox(height: 15),
                           PopUpMenuWidget(ImagesModel.addIcons, "Invites Friends", () {}),

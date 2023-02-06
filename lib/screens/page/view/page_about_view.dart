@@ -4,9 +4,8 @@ import 'package:als_frontend/screens/page/widget/page_about_widget.dart';
 import 'package:flutter/material.dart';
 
 class PageAboutView extends StatelessWidget {
-  const PageAboutView(this.widget, this.isAdmin, this.pageDetailsModel, {Key? key}) : super(key: key);
+  const PageAboutView(this.widget, this.pageDetailsModel, {Key? key}) : super(key: key);
   final Widget widget;
-  final bool isAdmin;
   final PageDetailsModel pageDetailsModel;
 
   @override
@@ -15,7 +14,7 @@ class PageAboutView extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       children: [
         const SizedBox(height: 10),
-        NewPageLikeFollowingWidget(pageDetailsModel, isAdmin),
+        NewPageLikeFollowingWidget(pageDetailsModel),
         widget,
         const PageAboutWidget(),
       ],

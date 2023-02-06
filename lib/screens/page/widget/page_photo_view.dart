@@ -14,9 +14,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class PagePhotoView extends StatefulWidget {
-  const PagePhotoView(this.widget, this.isAdmin, {Key? key}) : super(key: key);
+  const PagePhotoView(this.widget,{Key? key}) : super(key: key);
   final Widget widget;
-  final bool isAdmin;
 
   @override
   State<PagePhotoView> createState() => _PagePhotoViewState();
@@ -36,7 +35,7 @@ class _PagePhotoViewState extends State<PagePhotoView> {
         physics: const BouncingScrollPhysics(),
         children: [
           const SizedBox(height: 15),
-          NewPageLikeFollowingWidget(pageProvider.pageDetailsModel, widget.isAdmin),
+          NewPageLikeFollowingWidget(pageProvider.pageDetailsModel),
           widget.widget,
           SizedBox(height: pageProvider.isPhotosLoading ? 100 : 0),
           pageProvider.isPhotosLoading

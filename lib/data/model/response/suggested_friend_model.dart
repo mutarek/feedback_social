@@ -1,10 +1,5 @@
 class SuggestFriendModel {
-  SuggestFriendModel({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.profileImage,
-  });
+  SuggestFriendModel({this.id, this.firstName, this.lastName, this.profileImage});
 
   SuggestFriendModel.fromJson(dynamic json) {
     id = json['id'];

@@ -1,13 +1,4 @@
 
-import 'dart:convert';
-
-List<PrivacyPolicyModel> privacyPolicyModelFromJson(String str) =>
-    List<PrivacyPolicyModel>.from(
-        json.decode(str).map((x) => PrivacyPolicyModel.fromJson(x)));
-
-String privacyPolicyModelToJson(List<PrivacyPolicyModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 class PrivacyPolicyModel {
   PrivacyPolicyModel({
      this.id,

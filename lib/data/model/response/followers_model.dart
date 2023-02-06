@@ -1,11 +1,5 @@
-
 class FollowersModel {
-  FollowersModel({
-    this.id,
-    this.fullName,
-    this.isFriend,
-    this.profileImage,
-  });
+  FollowersModel({this.id, this.fullName, this.isFriend, this.profileImage});
 
   FollowersModel.fromJson(dynamic json) {
     id = json['id'];

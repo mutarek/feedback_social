@@ -11,12 +11,12 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
 class NewPageDetailsScreen extends StatefulWidget {
-  final bool isAdmin;
+
   final String pageID;
   final int index;
   final bool isFromYourPage;
 
-  const NewPageDetailsScreen(this.pageID, {this.isAdmin = false, this.index = 0, this.isFromYourPage = false, Key? key})
+  const NewPageDetailsScreen(this.pageID, { this.index = 0, this.isFromYourPage = false, Key? key})
       : super(key: key);
 
   @override
@@ -57,11 +57,11 @@ class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
                   },
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    PageHomeView(tabMenuWidget(pageProvider), widget.pageID, isAdmin: widget.isAdmin, index: widget.index),
-                    PageAboutView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
-                    PagePhotoView(tabMenuWidget(pageProvider), widget.isAdmin),
-                    PageUpcomingView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
-                    PageUpcomingView(tabMenuWidget(pageProvider), widget.isAdmin, pageProvider.pageDetailsModel),
+                    PageHomeView(tabMenuWidget(pageProvider), widget.pageID,index: widget.index),
+                    PageAboutView(tabMenuWidget(pageProvider), pageProvider.pageDetailsModel),
+                    PagePhotoView(tabMenuWidget(pageProvider)),
+                    PageUpcomingView(tabMenuWidget(pageProvider),  pageProvider.pageDetailsModel),
+                    PageUpcomingView(tabMenuWidget(pageProvider),  pageProvider.pageDetailsModel),
                   ],
                 ),
               );

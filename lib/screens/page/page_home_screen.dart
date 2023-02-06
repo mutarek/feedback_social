@@ -1,4 +1,3 @@
-import 'package:als_frontend/data/model/response/invited_page_models.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/find_page_screen.dart';
 import 'package:als_frontend/screens/page/new_design/invited_page.dart';
@@ -14,7 +13,6 @@ import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
-import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -102,11 +100,8 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                                       return PageViewWidget(
                                           authorPageModel: data,
                                           onTap: () {
-                                            Helper.toScreen(NewPageDetailsScreen(
-                                              pageProvider.authorPageLists[index].id.toString(),
-                                              isAdmin: true,
-                                              index: index,
-                                            ));
+                                            Helper.toScreen(
+                                                NewPageDetailsScreen(pageProvider.authorPageLists[index].id.toString(), index: index));
                                           });
                                     })
                                 : const Center(child: CustomText(title: "You haven't any personal Page")))

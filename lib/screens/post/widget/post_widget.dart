@@ -59,7 +59,7 @@ class PostWidget extends StatelessWidget {
     if (newsFeedData.postType == AppConstant.postTypeGroup && code == 0) {
       Helper.toScreen(PublicGroupScreen(newsFeedData.groupModel!.id.toString(), index: index));
     } else if (newsFeedData.postType == AppConstant.postTypePage && code == 1) {
-      Helper.toScreen(NewPageDetailsScreen(newsFeedData.pageModel!.id.toString(), index: index, isAdmin: isAdmin));
+      Helper.toScreen(NewPageDetailsScreen(newsFeedData.pageModel!.id.toString(), index: index));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == newsFeedData.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
@@ -363,7 +363,6 @@ class PostWidget extends StatelessWidget {
                         onReactionSelected: (val) {
                           Provider.of<PageProvider>(context, listen: false).addLike(val.id + 1, index);
                           if (newsFeedData.reaction != val.id) {
-                            print(newsFeedData.toJson());
                             commentProvider.addRealLike(newsFeedData.reaction == 1
                                 ? newsFeedData.likeReactUrl!
                                 : newsFeedData.reaction == 2

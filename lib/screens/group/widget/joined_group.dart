@@ -1,6 +1,5 @@
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
-import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

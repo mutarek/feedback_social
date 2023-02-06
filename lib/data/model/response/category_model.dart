@@ -1,8 +1,5 @@
 class CategoryModel {
-  CategoryModel({
-    this.id,
-    this.name,
-  });
+  CategoryModel({this.id, this.name});
 
   CategoryModel.fromJson(dynamic json) {
     id = json['id'];

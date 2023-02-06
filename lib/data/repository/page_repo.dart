@@ -121,7 +121,6 @@ class PageRepo {
     }
   }
 
-
   Future<ApiResponse> callForGetPageDetails(String pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
@@ -152,31 +151,17 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> pageLikeorUnlike(String pageId) async {
+  Future<ApiResponse> pageLikeUnlike(String pageId, bool isLiked) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.post("/page/user/like/$pageId/create/", data: {});
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
-
-  Future<ApiResponse> pageUnlike(String pageId) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try {
-      response = await dioClient.delete("/page/user/unlike/$pageId/", data: {});
-
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
-
-  Future<ApiResponse> pageLikeUnlike(String pageId) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try {
-      response = await dioClient.post("/page/user/like/$pageId/create/", data: {});
+      String url = '';
+      if (isLiked) {
+        url = "/page/user/unlike/$pageId/";
+        response = await dioClient.delete(url, data: {});
+      } else {
+        url = "/page/user/like/$pageId/create/";
+        response = await dioClient.post(url, data: {});
+      }
 
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -204,7 +189,7 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> getAllPageFolloweList(int perPage,String pageId) async {
+  Future<ApiResponse> getAllPageFolloweList(int perPage, String pageId) async {
     Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
       response = await dioClient.get("${AppConstant.pageFollowerListURI}$pageId/list/?page=$perPage");

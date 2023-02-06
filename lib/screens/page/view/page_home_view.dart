@@ -1,9 +1,9 @@
-import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/home/widget/create_post_widget.dart';
 import 'package:als_frontend/screens/page/widget/new_page_details_header_widget.dart';
 import 'package:als_frontend/screens/page/widget/new_page_like_following_widget.dart';
 import 'package:als_frontend/screens/post/widget/post_widget.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -12,11 +12,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class PageHomeView extends StatefulWidget {
-  final bool isAdmin;
   final String pageID;
   final int index;
 
-  const PageHomeView(this.widget, this.pageID, {this.isAdmin = false, this.index = 0, Key? key}) : super(key: key);
+  const PageHomeView(this.widget, this.pageID, {this.index = 0, Key? key}) : super(key: key);
   final Widget widget;
 
   @override
@@ -46,8 +45,8 @@ class _PageHomeViewState extends State<PageHomeView> {
               physics: const BouncingScrollPhysics(),
               controller: controller,
               children: [
-                NewPageDetailsHeaderWidget(pageProvider.pageDetailsModel, widget.index, widget.isAdmin),
-                NewPageLikeFollowingWidget(pageProvider.pageDetailsModel, widget.isAdmin, index: widget.index),
+                NewPageDetailsHeaderWidget(pageProvider.pageDetailsModel, widget.index),
+                NewPageLikeFollowingWidget(pageProvider.pageDetailsModel,index: widget.index),
                 widget.widget,
                 SizedBox(
                     height: pageProvider.pageDetailsModel.category!.isEmpty &&
@@ -80,7 +79,7 @@ class _PageHomeViewState extends State<PageHomeView> {
                     ? const SizedBox.shrink()
                     : infoWidget(ImagesModel.websiteIcons, pageProvider.pageDetailsModel.website!, const SizedBox.shrink()),
                 SizedBox(height: pageProvider.pageDetailsModel.website!.isEmpty ? 0 : 20),
-                !widget.isAdmin
+                !isMe(pageProvider.pageDetailsModel.author!.id.toString())
                     ? const SizedBox.shrink()
                     : Container(
                         margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
@@ -92,7 +91,7 @@ class _PageHomeViewState extends State<PageHomeView> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return PostWidget(pageProvider.pageAllPosts[index], index: index, isPage: true, isAdmin: widget.isAdmin);
+                      return PostWidget(pageProvider.pageAllPosts[index], index: index, isPage: true);
                     })
               ],
             ));

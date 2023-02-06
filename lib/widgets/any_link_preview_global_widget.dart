@@ -3,6 +3,7 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AnyLinkPreviewGlobalWidget extends StatefulWidget {
   AnyLinkPreviewGlobalWidget(this.url,this.height,this.width,this.radius, {Key? key}) : super(key: key);
   double height;

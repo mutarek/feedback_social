@@ -3,6 +3,7 @@ import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -13,9 +14,8 @@ import 'package:provider/provider.dart';
 class NewPageDetailsHeaderWidget extends StatelessWidget {
   final PageDetailsModel pageDetailsModel;
   final int index;
-  final bool isAdmin;
 
-  const NewPageDetailsHeaderWidget(this.pageDetailsModel, this.index, this.isAdmin, {Key? key}) : super(key: key);
+  const NewPageDetailsHeaderWidget(this.pageDetailsModel, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +75,8 @@ class NewPageDetailsHeaderWidget extends StatelessWidget {
               child: Stack(
                 children: [
                   customNetworkImage(pageDetailsModel.coverPhoto!, boxFit: BoxFit.fill),
-                  !isAdmin
-                      ? SizedBox.shrink()
+                  !isMe(pageDetailsModel.author!.id.toString())
+                      ? const SizedBox.shrink()
                       : InkWell(
                           onTap: () {
                             otherProvider.clearImage();
@@ -126,8 +126,8 @@ class NewPageDetailsHeaderWidget extends StatelessWidget {
                   borderRadius: const BorderRadius.only(topLeft: Radius.circular(14), topRight: Radius.circular(14)),
                   child: customNetworkImage(pageDetailsModel.avatar!, boxFit: BoxFit.fill),
                 ),
-                !isAdmin
-                    ? SizedBox.shrink()
+                !isMe(pageDetailsModel.author!.id.toString())
+                    ? const SizedBox.shrink()
                     : InkWell(
                         onTap: () {
                           otherProvider.clearImage();

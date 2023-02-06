@@ -1,13 +1,12 @@
-class InvitedPageModel{
+class PageModel2 {
   num? id;
-  Page? page;
+  PageResponse? page;
 
+  PageModel2({this.id, this.page});
 
-  InvitedPageModel({this.id, this.page});
-
-  InvitedPageModel.fromJson(dynamic json) {
+  PageModel2.fromJson(dynamic json) {
     id = json['id'];
-    page = json['page'] != null ? Page.fromJson(json['page']) : null;
+    page = json['page'] != null ? PageResponse.fromJson(json['page']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -20,13 +19,13 @@ class InvitedPageModel{
   }
 }
 
-class Page {
-  Page({this.id, this.name, this.avatar});
+class PageResponse {
+  PageResponse({this.id, this.name, this.avatar});
 
-  Page.fromJson(dynamic json) {
+  PageResponse.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    avatar = json['avatar']??"";
+    avatar = json['avatar'] ?? "";
   }
 
   num? id;

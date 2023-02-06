@@ -3,7 +3,6 @@ class FriendModel {
   FriendModel({
     this.id,
     this.fullName,
-
     this.profileImage,
   });
 

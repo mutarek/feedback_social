@@ -15,7 +15,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../data/model/response/invited_page_models.dart';
+import '../data/model/response/page/page_model2.dart';
 
 class PageProvider with ChangeNotifier {
   final PageRepo pageRepo;
@@ -58,7 +58,7 @@ class PageProvider with ChangeNotifier {
   }
 
   //TODO: for get ALl Liked Page
-  List<AuthorPageModel> likedPageLists = [];
+  List<PageModel2> likedPageLists = [];
 
   initializeLikedPageLists() async {
     ApiResponse response = await pageRepo.getAllLikedPageLists();
@@ -66,7 +66,7 @@ class PageProvider with ChangeNotifier {
     if (response.response.statusCode == 200) {
       if (response.response.data['results'].isNotEmpty) {
         response.response.data['results'].forEach((element) {
-          likedPageLists.add(AuthorPageModel.fromJson(element));
+          likedPageLists.add(PageModel2.fromJson(element));
         });
       }
     } else {
@@ -77,10 +77,12 @@ class PageProvider with ChangeNotifier {
 
   //TODO: for get ALl Suggest Page
   List<AuthorPageModel> allSuggestPageList = [];
+  bool isLoadingSuggested = false;
 
   initializeSuggestPage() async {
+    isLoadingSuggested = true;
     ApiResponse response = await pageRepo.getAllSuggestedPage();
-    isLoading = false;
+    isLoadingSuggested = false;
     if (response.response.statusCode == 200) {
       response.response.data['results'].forEach((element) {
         allSuggestPageList.add(AuthorPageModel.fromJson(element));
@@ -104,7 +106,6 @@ class PageProvider with ChangeNotifier {
     allSuggestPageList = [];
     ApiResponse response = await pageRepo.getAuthorPage();
     initializeLikedPageLists();
-    initializeSuggestPage();
     isLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
@@ -118,43 +119,40 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  acceptInvitation(String inviteId,int index) async {
+  acceptInvitation(String inviteId, int index) async {
     ApiResponse response = await pageRepo.acceptInvitation(inviteId);
-    if(response.response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
       invitedPageLists.removeAt(index);
       AuthorPageModel authorPageModel = AuthorPageModel();
       authorPageModel.id = invitedPageLists[index].id;
       authorPageModel.name = invitedPageLists[index].page!.name;
       authorPageModel.avatar = invitedPageLists[index].page!.avatar;
-      likedPageLists.insert(0,authorPageModel);
+      // likedPageLists.insert(0,authorPageModel);
       notifyListeners();
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
-    else
-      {
-        Fluttertoast.showToast(msg: response.response.statusMessage!);
-      }
   }
 
-  cancelInvitation(String inviteId,int index) async {
+  cancelInvitation(String inviteId, int index) async {
     ApiResponse response = await pageRepo.cancelInvitation(inviteId);
-    if(response.response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
       invitedPageLists.removeAt(index);
-
     }
   }
 
   //TODO: For Getting all inviting page
 
-  List<InvitedPageModel> invitedPageLists = [];
+  List<PageModel2> invitedPageLists = [];
 
-  getAllInvitedPages()async {
+  getAllInvitedPages() async {
     isLoading = true;
     invitedPageLists.clear();
     ApiResponse response = await pageRepo.getInvitedPage();
     isLoading = false;
     if (response.response.statusCode == 200) {
       response.response.data['results'].forEach((element) {
-        invitedPageLists.add(InvitedPageModel.fromJson(element));
+        invitedPageLists.add(PageModel2.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
@@ -392,60 +390,94 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  pageLikeOrUnlike(String pageID) async {
-    ApiResponse response = await pageRepo.pageLikeorUnlike(pageID);
-    if (response.response.statusCode == 200) {
-      Fluttertoast.showToast(msg: "Liked");
+  // pageLikeOrUnlike(String pageID) async {
+  //   ApiResponse response = await pageRepo.pageLikeUnlike(pageID);
+  //   if (response.response.statusCode == 200) {
+  //     Fluttertoast.showToast(msg: "Liked");
+  //   } else {
+  //     Fluttertoast.showToast(msg: response.response.statusMessage!);
+  //   }
+  // }
+
+  // pageUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
+  //   ApiResponse response = await pageRepo.pageUnlike(pageID.toString());
+  //   if (response.response.statusCode == 200) {
+  //     if (response.response.data['liked'] == false) {
+  //       pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
+  //       pageDetailsModel.isLiked = false;
+  //       notifyListeners();
+  //       if (isFromMyPageScreen) {
+  //         allSuggestPageList.removeAt(index);
+  //         notifyListeners();
+  //       }
+  //     }
+  //   }
+  // }
+
+  bool isFromMyPage = false;
+  bool isFromSuggestedPage = false;
+  bool isFromSearchPage = false;
+
+  void changeSearchView(int value) {
+    if (value == 0) {
+      isFromMyPage = true;
+      isFromSuggestedPage = false;
+      isFromSearchPage = false;
+    } else if (value == 1) {
+      isFromMyPage = false;
+      isFromSuggestedPage = true;
+      isFromSearchPage = false;
+    } else if (value == 2) {
+      isFromMyPage = false;
+      isFromSuggestedPage = false;
+      isFromSearchPage = true;
     } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
+      isFromMyPage = false;
+      isFromSuggestedPage = false;
+      isFromSearchPage = false;
     }
+    notifyListeners();
   }
 
-  pageUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
-    ApiResponse response = await pageRepo.pageUnlike(pageID.toString());
-    if (response.response.statusCode == 200) {
-      if (response.response.data['liked'] == false) {
-        pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
-        pageDetailsModel.isLiked = false;
-        notifyListeners();
-        if(isFromMyPageScreen) {
-          allSuggestPageList.removeAt(index);
-          notifyListeners();
-        }
-      }
-    }
-  }
-
-  pageLikeUnlike(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
-    ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString());
+  pageLikeUnlike(int pageID, bool isLiked, {int index = 0, bool isGoDetails = true}) async {
+    ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString(), isLiked);
     if (response.response.statusCode == 200) {
       if (response.response.data['liked'] == true) {
-        pageDetailsModel.totalLike = pageDetailsModel.totalLike! + 1;
-        pageDetailsModel.isLiked = true;
-        if (isFromMyPageScreen) {
-          authorPageLists[index].followers = authorPageLists[index].followers! + 1;
-          AuthorPageModel invitedPageModel = AuthorPageModel();
-          invitedPageModel.id = authorPageLists[index].id;
-          invitedPageModel.name = authorPageLists[index].name;
-          invitedPageModel.avatar = authorPageLists[index].avatar;
-          likedPageLists.insert(0, invitedPageModel);
+        if (isGoDetails == true) {
+          pageDetailsModel.totalLike = pageDetailsModel.totalLike! + 1;
+          pageDetailsModel.totalFollower = pageDetailsModel.totalFollower! + 1;
+          pageDetailsModel.isLiked = true;
         }
-        else if (isFromSuggestedPage) {
-          AuthorPageModel invitedPageModel = AuthorPageModel();
-          invitedPageModel.id = allSuggestPageList[index].id;
-          invitedPageModel.name = allSuggestPageList[index].name;
-          invitedPageModel.avatar = allSuggestPageList[index].avatar;
-          likedPageLists.insert(0,invitedPageModel);
+
+        if (isFromMyPage) {
+          authorPageLists[index].followers = authorPageLists[index].followers! + 1;
+          PageModel2 invitedPageModel = likedPageLists[index];
+          likedPageLists.insert(0, invitedPageModel);
+        } else if (isFromSuggestedPage) {
+          PageModel2 pageModel2 = PageModel2(
+              id: 0,
+              page: PageResponse(
+                  id: allSuggestPageList[index].id, name: allSuggestPageList[index].name, avatar: allSuggestPageList[index].avatar));
+          likedPageLists.insert(0, pageModel2);
           allSuggestPageList.removeAt(index);
-          notifyListeners();
+        } else if (isFromSearchPage) {
+          PageModel2 pageModel2 =
+              PageModel2(id: 0, page: PageResponse(id: pageDetailsModel.id, name: pageDetailsModel.name, avatar: pageDetailsModel.avatar));
+          likedPageLists.insert(0, pageModel2);
         }
       } else {
-        pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
-        pageDetailsModel.isLiked = false;
-        if (isFromMyPageScreen) {
-          authorPageLists[index].followers = authorPageLists[index].followers! - 1;
-          allSuggestPageList.insert(index, authorPageLists[index]);
+        if (isGoDetails == true) {
+          pageDetailsModel.totalLike = pageDetailsModel.totalLike! - 1;
+          pageDetailsModel.totalFollower = pageDetailsModel.totalFollower! - 1;
+          pageDetailsModel.isLiked = false;
+        }
+
+        if (isFromMyPage) {
           likedPageLists.removeAt(index);
+        } else if (isFromSuggestedPage) {
+          likedPageLists.removeAt(index);
+        } else if (isFromSearchPage) {
+          likedPageLists.removeWhere((element) => element.id == pageDetailsModel.id);
         }
       }
       notifyListeners();
@@ -767,32 +799,32 @@ class PageProvider with ChangeNotifier {
     }
   }
 
-  pageLikeUnlike1(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
-    ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString());
-    if (response.response.statusCode == 200) {
-      if (response.response.data['liked'] == true) {
-        if (isFromSuggestedPage) {
-          allSuggestPageList.removeAt(index);
-        } else {}
-        // pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
-        // pageDetailsModel!.like = true;
-        // if (isFromMyPageScreen) {
-        //   authorPageLists[index].followers = authorPageLists[index].followers! + 1;
-        //   likedPageLists.insert(0, authorPageLists[index]);
-        //
-        // }
-      } else {
-        // pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! - 1;
-        // pageDetailsModel!.like = false;
-        // if (isFromMyPageScreen) {
-        //   authorPageLists[index].followers = authorPageLists[index].followers! - 1;
-        //   allSuggestPageList.insert(index, authorPageLists[index]);
-        //   likedPageLists.removeAt(index);
-        // }
-      }
-      notifyListeners();
-    }
-  }
+  // pageLikeUnlike1(int pageID, {bool isFromMyPageScreen = false, int index = 0, bool isFromSuggestedPage = false}) async {
+  //   ApiResponse response = await pageRepo.pageLikeUnlike(pageID.toString());
+  //   if (response.response.statusCode == 200) {
+  //     if (response.response.data['liked'] == true) {
+  //       if (isFromSuggestedPage) {
+  //         allSuggestPageList.removeAt(index);
+  //       } else {}
+  //       // pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! + 1;
+  //       // pageDetailsModel!.like = true;
+  //       // if (isFromMyPageScreen) {
+  //       //   authorPageLists[index].followers = authorPageLists[index].followers! + 1;
+  //       //   likedPageLists.insert(0, authorPageLists[index]);
+  //       //
+  //       // }
+  //     } else {
+  //       // pageDetailsModel!.totalLike = pageDetailsModel!.totalLike! - 1;
+  //       // pageDetailsModel!.like = false;
+  //       // if (isFromMyPageScreen) {
+  //       //   authorPageLists[index].followers = authorPageLists[index].followers! - 1;
+  //       //   allSuggestPageList.insert(index, authorPageLists[index]);
+  //       //   likedPageLists.removeAt(index);
+  //       // }
+  //     }
+  //     notifyListeners();
+  //   }
+  // }
 
   List<FindPageModel> findPageModel = [];
   bool isLoadingFindPage = false;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomInkWell extends StatelessWidget {
   CustomInkWell({this.onTap, this.child, Key? key}) : super(key: key);
   Function? onTap;

@@ -1,6 +1,6 @@
 import 'package:flutter_svg/svg.dart';
 
-import '../../../data/model/response/invited_page_models.dart';
+import '../../../data/model/response/page/page_model2.dart';
 import '../../../util/image.dart';
 import '../../../util/theme/app_colors.dart';
 import '../../../util/theme/text.styles.dart';
@@ -10,7 +10,7 @@ import '../../video/widget/new_video_widgets.dart';
 class InvitedPageViewWidget extends StatelessWidget {
   const InvitedPageViewWidget({required this.invitedPageModel, this.onItemTap, this.onAcceptTap, this.onCancelTap, Key? key})
       : super(key: key);
-  final InvitedPageModel invitedPageModel;
+  final PageModel2 invitedPageModel;
   final GestureTapCallback? onItemTap;
   final GestureTapCallback? onAcceptTap;
   final GestureTapCallback? onCancelTap;
