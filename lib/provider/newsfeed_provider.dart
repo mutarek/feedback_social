@@ -13,6 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import '../widgets/snackbar_message.dart';
+
 class NewsFeedProvider with ChangeNotifier {
   final NewsfeedRepo newsFeedRepo1;
   final AuthRepo authRepo1;
@@ -82,6 +84,16 @@ class NewsFeedProvider with ChangeNotifier {
     for (var element in mydataList) {
       newsFeedLists.add(NewsFeedModel.fromJson(element));
     }
+  }
+
+  hideNewsFeedData(index, String id){
+    newsFeedLists.removeAt(index);
+    notifyListeners();
+    hidePagePostFromDatabase(id).then((value){
+      if(value){
+        showMessage(message: "Post Hidden Successfully");
+      }else{}
+    });
   }
 
   addLike(int postID, int index, {bool isGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
@@ -258,6 +270,17 @@ class NewsFeedProvider with ChangeNotifier {
       };
       channel.sink.add(jsonEncode(map));
       sharedPreferences!.remove(AppConstant.chats);
+    }
+  }
+
+  Future<bool> hidePagePostFromDatabase(String id) async{
+    ApiResponse apiResponse = await newsFeedRepo1.hidePagePostFromDatabase(id);
+    if(apiResponse.response.statusCode == 200){
+      return true;
+    }
+    else{
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+      return false;
     }
   }
 }

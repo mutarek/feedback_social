@@ -32,6 +32,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/newsfeed_provider.dart';
+
 class PostWidget extends StatelessWidget {
   final NewsFeedModel newsFeedData;
   final int index;
@@ -71,8 +73,8 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CommentProvider>(
-        builder: (context, commentProvider, child) => Column(
+    return Consumer2<CommentProvider,NewsFeedProvider>(
+        builder: (context, commentProvider,newsFeedProvider, child) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -207,7 +209,9 @@ class PostWidget extends StatelessWidget {
                                               return DeleteDialogue(newsFeedData, index, isHomeScreen);
                                             });
                                       })
-                                    : PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {}),
+                                    : PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {
+                                      newsFeedProvider.hideNewsFeedData(index,newsFeedData.pageModel!.id.toString());
+                                }),
                                 SizedBox(height: isAdmin ? 8 : 15),
                                 isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
                                 SizedBox(height: isAdmin ? 0 : 15),
