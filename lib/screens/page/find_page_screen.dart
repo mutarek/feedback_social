@@ -1,5 +1,6 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
+import 'package:als_frontend/screens/page/shimmer_effect/invite_page_shimmer.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
@@ -75,7 +76,7 @@ class _FindPageScreenState extends State<FindPageScreen> {
                 child: ListView.builder(
                   itemCount: pageProvider.findPageModel.length,
                   itemBuilder: (_, index) {
-                    return InkWell(
+                    return pageProvider.isLoadingFindPage?const InvitePageShimmer():InkWell(
                       onTap: () {
                         pageProvider.changeSearchView(2);
                         String id = pageProvider.findPageModel[index].likedUrl.replaceAll("/page/like/user/", "").replaceAll("/list/", "");
