@@ -9,6 +9,7 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
+import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,12 +21,7 @@ class CreateGroup2 extends StatefulWidget {
 }
 
 class _CreateGroup2State extends State<CreateGroup2> {
-  final TextEditingController pageNameController = TextEditingController();
-  final TextEditingController pageBioController = TextEditingController();
-  final TextEditingController pageDetailsController = TextEditingController();
-  final FocusNode nameFocus = FocusNode();
-  final FocusNode bioFocus = FocusNode();
-  final FocusNode detailsFocus = FocusNode();
+  final TextEditingController groupAddressController = TextEditingController();
   List<String> privacyModel = ["Public","Private"];
   @override
   Widget build(BuildContext context) {
@@ -100,22 +96,23 @@ class _CreateGroup2State extends State<CreateGroup2> {
                   borderRadius: 11,
                   verticalSize: 14,
                   maxLines: 4,
-                  controller: pageDetailsController,
-                  focusNode: detailsFocus,
+                  controller: groupAddressController,
                   inputAction: TextInputAction.done,
                 ),
                 const SizedBox(height: 30),
                 CustomButton(
                     btnTxt: 'Next Page',
                     onTap: () {
-                      // if (pageNameController.text.isEmpty || pageBioController.text.isEmpty || pageDetailsController.text.isEmpty) {
-                      //   showMessage(message: 'Please write all the information');
-                      // } else if (pageBioController.text.length > 90) {
-                      //   showMessage(message: 'please insert BIO at Most 90 characters');
-                      // } else {
-                      //   //Helper.toScreen(const CreatePageScreen2());
-                      // }
-                      Helper.toScreen(const CreateGroup3());
+                      if(groupAddressController.text.isEmpty){
+                        showMessage(message: "Please enter your address first");
+                      }
+                      else{
+                        groupProvider.updateInsertGroupInfo(1,
+                          aGroupLocation: pageProvider.countryName,
+                          aAddress: groupAddressController.text,
+                        );
+                        Helper.toScreen(const CreateGroup3());
+                      }
                     },
                     radius: 100,
                     height: 48),

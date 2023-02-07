@@ -8,6 +8,7 @@ import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
+import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class _CreateGroup3State extends State<CreateGroup3> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const PageAppBar(title: 'Create Feedback Group'),
-      body: Consumer3<OtherProvider, GroupProvider,PageProvider>(builder: (context, otherProvider, groupProvider,pageProvider, child) {
+      body: Consumer3<OtherProvider, GroupProvider, PageProvider>(builder: (context, otherProvider, groupProvider, pageProvider, child) {
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(10),
@@ -35,8 +36,7 @@ class _CreateGroup3State extends State<CreateGroup3> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                        title: "Invite friends to this group ", maxLines: 2, textStyle: robotoStyle500Medium.copyWith(fontSize: 17)),
+                    CustomText(title: "Invite friends to this group ", maxLines: 2, textStyle: robotoStyle500Medium.copyWith(fontSize: 17)),
                     SizedBox(
                         height: 400,
                         child: Padding(
@@ -76,7 +76,7 @@ class _CreateGroup3State extends State<CreateGroup3> {
                                               child: Center(
                                                 child: Text('Search',
                                                     style:
-                                                    GoogleFonts.roboto(fontWeight: FontWeight.w300, fontSize: 12, color: Colors.white)),
+                                                        GoogleFonts.roboto(fontWeight: FontWeight.w300, fontSize: 12, color: Colors.white)),
                                               ),
                                             ),
                                           )
@@ -95,10 +95,11 @@ class _CreateGroup3State extends State<CreateGroup3> {
                                             leading: CircleAvatar(
                                               backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
                                             ),
-                                            title: Text('Rafatul Islam',style: GoogleFonts.roboto(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 12,
-                                                color: AppColors.primaryColorLight),),
+                                            title: Text(
+                                              'Rafatul Islam',
+                                              style: GoogleFonts.roboto(
+                                                  fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
+                                            ),
                                             trailing: SizedBox(
                                               height: 8,
                                               width: 8,
@@ -134,14 +135,7 @@ class _CreateGroup3State extends State<CreateGroup3> {
                 CustomButton(
                     btnTxt: 'Next Page',
                     onTap: () {
-                      // if (pageNameController.text.isEmpty || pageBioController.text.isEmpty || pageDetailsController.text.isEmpty) {
-                      //   showMessage(message: 'Please write all the information');
-                      // } else if (pageBioController.text.length > 90) {
-                      //   showMessage(message: 'please insert BIO at Most 90 characters');
-                      // } else {
-                      //   //Helper.toScreen(const CreatePageScreen2());
-                      // }
-                      Helper.toScreen(const CreateGroup4());
+                      Helper.toScreen(CreateGroup4());
                     },
                     radius: 100,
                     height: 48),

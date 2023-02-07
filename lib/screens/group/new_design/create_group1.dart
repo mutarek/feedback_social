@@ -11,6 +11,8 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../widgets/snackbar_message.dart';
+
 class CreateGroup1 extends StatefulWidget {
   const CreateGroup1({Key? key}) : super(key: key);
 
@@ -67,7 +69,7 @@ class _CreateGroup1State extends State<CreateGroup1> {
                   //decoration: BoxDecoration(color: const Color(0xFF656B87), borderRadius: BorderRadius.circular(15.0)),
                   child: DropdownButton<String>(
                     dropdownColor: textFieldFillColor,
-                    hint:  Text('Select Privacy',style: robotoStyle400Regular.copyWith(fontSize: 18,color: Colors.grey)),
+                    hint:  Text(groupProvider.privacy,style: robotoStyle400Regular.copyWith(fontSize: 18,color: Colors.grey)),
                     isExpanded: true,
                     underline: const SizedBox.shrink(),
                     icon: const Icon(Icons.arrow_drop_down_circle, color: AppColors.primaryColorLight),
@@ -81,7 +83,7 @@ class _CreateGroup1State extends State<CreateGroup1> {
                                 textStyle: robotoStyle400Regular.copyWith(fontSize: 18, color: AppColors.primaryColorLight)))))
                         .toList(),
                     onChanged: (item) {
-                      //pageProvider.changeGroupCategory(item!);
+                      groupProvider.changeGroupPrivacy(item!);
                     },
                   ),
                 ),
@@ -117,14 +119,22 @@ class _CreateGroup1State extends State<CreateGroup1> {
                 CustomButton(
                     btnTxt: 'Next Page',
                     onTap: () {
-                      // if (pageNameController.text.isEmpty || pageBioController.text.isEmpty || pageDetailsController.text.isEmpty) {
-                      //   showMessage(message: 'Please write all the information');
-                      // } else if (pageBioController.text.length > 90) {
-                      //   showMessage(message: 'please insert BIO at Most 90 characters');
-                      // } else {
-                      //   //Helper.toScreen(const CreatePageScreen2());
-                      // }
-                      Helper.toScreen(const CreateGroup2());
+                      if (pageNameController.text.isEmpty || pageBioController.text.isEmpty || pageDetailsController.text.isEmpty) {
+                        showMessage(message: 'Please write all the information');
+                      } else if (pageBioController.text.length > 90) {
+                        showMessage(message: 'please insert BIO at Most 90 characters');
+                      }else if(groupProvider.privacy =="Select Privacy"){
+                        showMessage(message: 'Please select privacy');
+                      }
+                      else {
+                        groupProvider.updateInsertGroupInfo(0,
+                            aGroupName: pageNameController.text,
+                            aGroupBio: pageBioController.text,
+                            aGroupDescription: pageDetailsController.text,
+                          aGroupPrivacy:  groupProvider.privacy
+                        );
+                        Helper.toScreen(const CreateGroup2());
+                      }
                     },
                     radius: 100,
                     height: 48),

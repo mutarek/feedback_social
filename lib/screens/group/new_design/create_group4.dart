@@ -10,6 +10,7 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../widgets/snackbar_message.dart';
 import 'individual_group_page.dart';
 
 class CreateGroup4 extends StatefulWidget {
@@ -100,14 +101,23 @@ class _CreateGroup4State extends State<CreateGroup4> {
                 CustomButton(
                     btnTxt: 'Next Page',
                     onTap: () {
-                      // if (pageNameController.text.isEmpty || pageBioController.text.isEmpty || pageDetailsController.text.isEmpty) {
-                      //   showMessage(message: 'Please write all the information');
-                      // } else if (pageBioController.text.length > 90) {
-                      //   showMessage(message: 'please insert BIO at Most 90 characters');
-                      // } else {
-                      //   //Helper.toScreen(const CreatePageScreen2());
-                      // }
-                      Helper.toScreen(const IndividualGroupPage());
+                      if (otherProvider.pageCoverFile == null) {
+                        showMessage(message: "Please Upload Group Cover Photo");
+                      } else {
+                        groupProvider.updateInsertGroupInfo(2, aCoverPhoto: otherProvider.pageCoverFile);
+                        groupProvider.createGroupNew().then((value){
+                          if (value){
+                            Helper.back();
+                            Helper.back();
+                            Helper.back();
+                          }
+                          else
+                          {
+
+                          }
+                        });
+                      }
+                      //Helper.toScreen(const IndividualGroupPage());
                     },
                     radius: 100,
                     height: 48),

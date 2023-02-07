@@ -36,37 +36,44 @@ class GroupProvider with ChangeNotifier {
   bool moderatorList = false;
   bool memberList = false;
 
-  changeMemberListGroupStatus(){
+  String privacy = "Select Privacy";
+
+  changeGroupPrivacy(String item) {
+    privacy = item;
+    notifyListeners();
+  }
+
+  changeMemberListGroupStatus() {
     memberList = !memberList;
     notifyListeners();
   }
 
-  changeModeratorListGroupStatus(){
+  changeModeratorListGroupStatus() {
     moderatorList = !moderatorList;
     notifyListeners();
   }
 
-  changeAdminListGroupStatus(){
+  changeAdminListGroupStatus() {
     adminList = !adminList;
     notifyListeners();
   }
 
-  changeEachJoinedGroupStatus(){
+  changeEachJoinedGroupStatus() {
     eachJoinedGroup = !eachJoinedGroup;
     notifyListeners();
   }
 
-  changeSuggestedGroupStatus(){
+  changeSuggestedGroupStatus() {
     suggestedGroup = !suggestedGroup;
     notifyListeners();
   }
 
-  changeJoinedGroupStatus(){
+  changeJoinedGroupStatus() {
     joinedGroup = !joinedGroup;
     notifyListeners();
   }
 
-  changeYourGroupStatus(){
+  changeYourGroupStatus() {
     yourGroup = !yourGroup;
     notifyListeners();
   }
@@ -202,15 +209,15 @@ class GroupProvider with ChangeNotifier {
   //TODO: Adding Value to Privacy Model
   List<PrivacyModel> privacyModels = [];
 
-  addTypeToModel(){
-    privacyModels.add(PrivacyModel(id: 1,name: "Public"));
-    privacyModels.add(PrivacyModel(id: 2,name: "Private"));
+  addTypeToModel() {
+    privacyModels.add(PrivacyModel(id: 1, name: "Public"));
+    privacyModels.add(PrivacyModel(id: 2, name: "Private"));
   }
 
   //TODO: For Group Privacy
   PrivacyModel privacyModel = PrivacyModel();
 
-  changePrivacyType(PrivacyModel value){
+  changePrivacyType(PrivacyModel value) {
     privacyModel = value;
     notifyListeners();
   }
@@ -229,7 +236,9 @@ class GroupProvider with ChangeNotifier {
     groupISPrivate = value;
     if (!isFirstTime) notifyListeners();
   }
+
   FormData formData = FormData();
+
   // TODO: for create and update Group
   createGroup(String groupName, File? file, Function callback) async {
     isLoading = true;
@@ -248,7 +257,7 @@ class GroupProvider with ChangeNotifier {
       response = await groupRepo.createGroupWithImageUpload(formData);
     } else {
       response =
-      await groupRepo.createGroupWithoutImageUpload({"name": groupName, "category": categoryValue.id, "is_private": groupISPrivate});
+          await groupRepo.createGroupWithoutImageUpload({"name": groupName, "category": categoryValue.id, "is_private": groupISPrivate});
     }
     isLoading = false;
     if (response.response.statusCode == 201) {
@@ -273,13 +282,14 @@ class GroupProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
     ApiResponse response;
-    if (file != null) {formData.files.add(
-        MapEntry('cover_photo', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
-    formData.fields.addAll([
-      MapEntry('name', groupName),
-      MapEntry('category', categoryValue.id.toString()),
-      MapEntry('is_private', groupISPrivate.toString()),
-    ]);
+    if (file != null) {
+      formData.files.add(
+          MapEntry('cover_photo', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+      formData.fields.addAll([
+        MapEntry('name', groupName),
+        MapEntry('category', categoryValue.id.toString()),
+        MapEntry('is_private', groupISPrivate.toString()),
+      ]);
       response = await groupRepo.updateGroupWithImageUpload(formData, groupID);
     } else {
       response = await groupRepo
@@ -590,4 +600,69 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  ///TODO: for create Page
+  String groupName = '';
+  String groupPrivacy = '';
+  String groupDescription = '';
+  String groupBio = '';
+  String groupLocation = '';
+  String groupAddress = '';
+  File? pageCoverPhoto;
+
+  updateInsertGroupInfo(int status,
+      {String aGroupName = '',
+        String aGroupBio = '',
+        String aGroupDescription = '',
+        String aGroupPrivacy = '',
+        String aGroupLocation = '',
+        String aAddress = '',
+        File? aCoverPhoto}) {
+    if (status == 0) {
+      groupName = aGroupName;
+      groupBio = aGroupBio;
+      groupDescription = aGroupDescription;
+    } else if (status == 1) {
+      groupLocation = aGroupLocation;
+      groupAddress = aAddress;
+    } else {
+      pageCoverPhoto = aCoverPhoto;
+    }
+    notifyListeners();
+  }
+
+  Future<bool> createGroupNew()async{
+    isLoading = true;
+    notifyListeners();
+    ApiResponse apiResponse;
+    FormData formData = FormData();
+    formData.files.add(MapEntry(
+        'image',
+        MultipartFile(pageCoverPhoto!.readAsBytes().asStream(), pageCoverPhoto!.lengthSync(),
+            filename: pageCoverPhoto!.path.split("/").last)));
+    formData.fields.add(MapEntry('name', groupName));
+    formData.fields.add(MapEntry('bio', groupBio));
+    formData.fields.add(MapEntry('description', groupDescription));
+    formData.fields.add(MapEntry('privacy', privacy));
+    formData.fields.add(MapEntry('location', groupLocation));
+    formData.fields.add(MapEntry('address', groupAddress));
+    apiResponse = await groupRepo.createGroup(formData);
+    isLoading = false;
+    if (apiResponse.response.statusCode == 201) {
+      // authorPageLists.insert(
+      //     0,
+      //     AuthorPageModel(
+      //         id: response.response.data['id'],
+      //         name: response.response.data['name'],
+      //         coverPhoto: response.response.data['cover_photo'],
+      //         avatar: response.response.data['avatar'],
+      //         followers: 0));
+      Fluttertoast.showToast(msg: "Page Created successfully");
+      notifyListeners();
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+      notifyListeners();
+      return false;
+    }
+  }
 }

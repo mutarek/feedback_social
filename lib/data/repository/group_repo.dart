@@ -57,6 +57,16 @@ class GroupRepo {
     }
   }
 
+  Future<ApiResponse> createGroup(FormData formData) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post(AppConstant.newGroupURI, data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
   Future<ApiResponse> createGroupWithImageUpload(FormData formData) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
