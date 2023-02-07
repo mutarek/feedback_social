@@ -38,7 +38,7 @@ class _NewSuggestedPageScreenState extends State<NewSuggestedPageScreen> {
         return Scaffold(
             backgroundColor: Colors.white,
             appBar: const PageAppBar(title: 'Suggested Page'),
-            body: pageProvider.isLoadingSuggested== false
+            body: pageProvider.isLoadingSuggested
                 ? const Center(child: NewSuggestPageShimmer())
                 : pageProvider.allSuggestPageList.isNotEmpty
                     ? MasonryGridView.count(
