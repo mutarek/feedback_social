@@ -94,21 +94,40 @@ class PageProvider with ChangeNotifier {
   }
 
   //TODO: for get ALl Author Page
+  updateAuthorPageNo() {
+    selectPage++;
+    initializeAuthorPageLists(page: selectPage);
+    notifyListeners();
+  }
   List<AuthorPageModel> authorPageLists = [];
+  int position = 0;
+  initializeAuthorPageLists({int page = 1, bool isFirstTime = true}) async {
 
-  initializeAuthorPageLists() async {
-    isLoading = true;
-    authorPageLists.clear();
-    authorPageLists = [];
-    likedPageLists.clear();
-    likedPageLists = [];
-    allSuggestPageList.clear();
-    allSuggestPageList = [];
+    if (page == 1) {
+      selectPage = 1;
+      authorPageLists.clear();
+      authorPageLists = [];
+      likedPageLists.clear();
+      likedPageLists = [];
+      allSuggestPageList.clear();
+      allSuggestPageList = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
     ApiResponse response = await pageRepo.getAuthorPage();
     initializeLikedPageLists();
     isLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
         authorPageLists.add(AuthorPageModel.fromJson(element));
       });

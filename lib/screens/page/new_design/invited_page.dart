@@ -1,3 +1,4 @@
+import 'package:als_frontend/screens/page/shimmer_effect/invite_page_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../provider/page_provider.dart';
@@ -27,9 +28,7 @@ class _InvitedPageState extends State<InvitedPage> {
         return Padding(
           padding: const EdgeInsets.all(5),
           child: pageProvider.isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+              ?  const InvitePageShimmer()
               : pageProvider.invitedPageLists.isEmpty
                   ? const Center(
                       child: Text("Ops You have no invited pages."),

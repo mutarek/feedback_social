@@ -2,6 +2,7 @@ import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
+import 'package:als_frontend/screens/page/shimmer_effect/suggestion_page_shimmer.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
@@ -38,7 +39,7 @@ class _NewSuggestedPageScreenState extends State<NewSuggestedPageScreen> {
             backgroundColor: Colors.white,
             appBar: const PageAppBar(title: 'Suggested Page'),
             body: pageProvider.isLoadingSuggested
-                ? const Center(child: CircularProgressIndicator())
+                ? const Center(child: NewSuggestPageShimmer())
                 : pageProvider.allSuggestPageList.isNotEmpty
                     ? MasonryGridView.count(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

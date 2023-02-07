@@ -26,11 +26,20 @@ class PageHomeScreen extends StatefulWidget {
 }
 
 class _PageHomeScreenState extends State<PageHomeScreen> {
+  ScrollController controller = ScrollController();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     Provider.of<PageProvider>(context, listen: false).initializeAuthorPageLists();
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange &&
+          Provider.of<PageProvider>(context, listen: false).hasNextData) {
+        Provider.of<PageProvider>(context, listen: false).updateAuthorPageNo();
+      }
+    });
   }
 
   @override
@@ -93,6 +102,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                             height: 300,
                             child: pageProvider.authorPageLists.isNotEmpty
                                 ? ListView.builder(
+                              controller: controller,
                                     itemCount: pageProvider.authorPageLists.length,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context, index) {
