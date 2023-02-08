@@ -762,7 +762,7 @@ class GroupProvider with ChangeNotifier {
     initializeAuthorGroupLists(page: selectPage);
     notifyListeners();
   }
-  List<JoinedGroupModel> suggestedGroupList = [];
+  List<AuthorGroupModel> suggestedGroupList = [];
 
   initializeSuggestedGroupLists({int page = 1, bool isFirstTime = true,}) async {
     if (page == 1) {
@@ -786,7 +786,7 @@ class GroupProvider with ChangeNotifier {
     if(response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        suggestedGroupList.add(JoinedGroupModel.fromJson(element));
+        suggestedGroupList.add(AuthorGroupModel.fromJson(element));
       });
     } else {
       isLoading = false;

@@ -53,7 +53,7 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
       if (suggestedGroupController.offset >= suggestedGroupController.position.maxScrollExtent &&
           !suggestedGroupController.position.outOfRange &&
           Provider.of<GroupProvider>(context, listen: false).hasNextData) {
-        Provider.of<GroupProvider>(context, listen: false).updatesuggestedPageNo();
+        Provider.of<GroupProvider>(context, listen: false).updateSuggestedPageNo();
       }
     });
     super.initState();
@@ -636,8 +636,8 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                           itemCount: groupProvider.suggestedGroupList.length,
                           itemBuilder: (_, index) {
-                            return SuggestedGroupViewCard(groupProvider.suggestedGroupList[index].results[index].name, "570K Members - 10+ Post a Day",
-                                "https://wander-lush.org/wp-content/uploads/2022/03/Beautiful-places-in-Bangladesh-WMC-hero.jpg");
+                            return SuggestedGroupViewCard(groupProvider.suggestedGroupList[index].name!, "${groupProvider.suggestedGroupList[index].totalMember!} Members - 10+ Post a Day",
+                                groupProvider.suggestedGroupList[index].coverPhoto!);
                           },
                         ),
                       )
