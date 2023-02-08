@@ -756,4 +756,42 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+//TODO: Get all suggested group
+  updateSuggestedPageNo() {
+    selectPage++;
+    initializeAuthorGroupLists(page: selectPage);
+    notifyListeners();
+  }
+  List<JoinedGroupModel> suggestedGroupList = [];
+
+  initializeSuggestedGroupLists({int page = 1, bool isFirstTime = true,}) async {
+    if (page == 1) {
+      selectPage = 1;
+      authorGroupLists.clear();
+      authorGroupLists = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    ApiResponse response = await groupRepo.getALLSuggestedGroups();
+    isLoading = false;
+    notifyListeners();
+    if(response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        suggestedGroupList.add(JoinedGroupModel.fromJson(element));
+      });
+    } else {
+      isLoading = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
 }

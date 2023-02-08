@@ -87,7 +87,16 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-
+// TODO: get all suggested group list
+  Future<ApiResponse> getALLSuggestedGroups() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.suggestedGroup);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
   Future<ApiResponse> createGroupWithImageUpload(FormData formData) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {

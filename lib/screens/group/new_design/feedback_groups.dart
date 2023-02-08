@@ -29,10 +29,12 @@ class FeedBackGroups extends StatefulWidget {
 class _FeedBackGroupsState extends State<FeedBackGroups> {
   ScrollController controller = ScrollController();
   ScrollController joinedGroupController = ScrollController();
+  ScrollController suggestedGroupController = ScrollController();
   @override
   void initState() {
     Provider.of<GroupProvider>(context, listen: false).initializeAuthorGroupLists();
     Provider.of<GroupProvider>(context, listen: false).initializeJoinedGroupLists();
+    Provider.of<GroupProvider>(context, listen: false).initializeSuggestedGroupLists();
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
@@ -45,6 +47,13 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
           !joinedGroupController.position.outOfRange &&
           Provider.of<GroupProvider>(context, listen: false).hasNextData) {
         Provider.of<GroupProvider>(context, listen: false).updateJoinedPageNo();
+      }
+    });
+    suggestedGroupController.addListener(() {
+      if (suggestedGroupController.offset >= suggestedGroupController.position.maxScrollExtent &&
+          !suggestedGroupController.position.outOfRange &&
+          Provider.of<GroupProvider>(context, listen: false).hasNextData) {
+        Provider.of<GroupProvider>(context, listen: false).updatesuggestedPageNo();
       }
     });
     super.initState();
@@ -623,10 +632,11 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                     ? SizedBox(
                         height: 500,
                         child: GridView.builder(
+                          controller: suggestedGroupController,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                          itemCount: 6,
+                          itemCount: groupProvider.suggestedGroupList.length,
                           itemBuilder: (_, index) {
-                            return SuggestedGroupViewCard("My Travels", "570K Members - 10+ Post a Day",
+                            return SuggestedGroupViewCard(groupProvider.suggestedGroupList[index].results[index].name, "570K Members - 10+ Post a Day",
                                 "https://wander-lush.org/wp-content/uploads/2022/03/Beautiful-places-in-Bangladesh-WMC-hero.jpg");
                           },
                         ),
