@@ -6,6 +6,7 @@ import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
+import 'package:als_frontend/data/model/response/group/joined_group_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/model/response/settings/privacy_model.dart';
@@ -717,4 +718,42 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
 }
+//TODO: Get all joined group
+  updateJoinedPageNo() {
+    selectPage++;
+    initializeAuthorGroupLists(page: selectPage);
+    notifyListeners();
+  }
+  List<JoinedGroupModel> joinedGroupModel = [];
+
+  initializeJoinedGroupLists({int page = 1, bool isFirstTime = true,}) async {
+    if (page == 1) {
+      selectPage = 1;
+      authorGroupLists.clear();
+      authorGroupLists = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    ApiResponse response = await groupRepo.getAllJoinedGroups();
+    isLoading = false;
+    notifyListeners();
+    if(response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        joinedGroupModel.add(JoinedGroupModel.fromJson(element));
+      });
+    } else {
+      isLoading = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
 }

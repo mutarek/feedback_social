@@ -77,6 +77,17 @@ class GroupRepo {
     }
   }
 
+  // TODO: get all joined group list
+  Future<ApiResponse> getAllJoinedGroups() async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get(AppConstant.newJoinedGroup);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
   Future<ApiResponse> createGroupWithImageUpload(FormData formData) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {

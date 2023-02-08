@@ -28,14 +28,23 @@ class FeedBackGroups extends StatefulWidget {
 
 class _FeedBackGroupsState extends State<FeedBackGroups> {
   ScrollController controller = ScrollController();
+  ScrollController joinedGroupController = ScrollController();
   @override
   void initState() {
     Provider.of<GroupProvider>(context, listen: false).initializeAuthorGroupLists();
+    Provider.of<GroupProvider>(context, listen: false).initializeJoinedGroupLists();
     controller.addListener(() {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
           Provider.of<GroupProvider>(context, listen: false).hasNextData) {
         Provider.of<GroupProvider>(context, listen: false).updateAuthorPageNo();
+      }
+    });
+    joinedGroupController.addListener(() {
+      if (joinedGroupController.offset >= joinedGroupController.position.maxScrollExtent &&
+          !joinedGroupController.position.outOfRange &&
+          Provider.of<GroupProvider>(context, listen: false).hasNextData) {
+        Provider.of<GroupProvider>(context, listen: false).updateJoinedPageNo();
       }
     });
     super.initState();
@@ -171,7 +180,8 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                     ? SizedBox(
                         height: 250,
                         child: ListView.builder(
-                            itemCount: 3,
+                          controller: joinedGroupController,
+                            itemCount: groupProvider.joinedGroupModel.length,
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
@@ -198,7 +208,7 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                                             borderRadius: BorderRadius.circular(20),
                                             child: Center(
                                                 child: Image.asset(
-                                              "assets/background/profile_placeholder.jpg",
+                                              groupProvider.joinedGroupModel[index].results[index].coverPhoto,
                                               height: 36,
                                               width: 36,
                                             ))),
@@ -207,7 +217,7 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text('Desh Travels', style: robotoStyle700Bold.copyWith(fontSize: 16)),
+                                            Text(groupProvider.joinedGroupModel[index].results[index].name, style: robotoStyle700Bold.copyWith(fontSize: 16)),
                                             const SizedBox(height: 5),
                                             Row(
                                               children: [
