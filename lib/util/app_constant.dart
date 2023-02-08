@@ -40,6 +40,8 @@ class AppConstant {
   static const String groupUri = '/group/';
   static const String newGroupURI = '/group/create-or-list/';
   static const String authorGroupURI = '/group/creator-group/5/list/';
+  static const String newJoinedGroup = '/group/joined-group/list/';
+  static const String suggestedGroup = '/group/suggested-group/list/';
   static const String groupCategoryUri = '/group/category/list/';
   static const String groupJoinAllURI = '/group/group-join-list/';
   static const String groupSuggestAllURI = '/group/suggest/all/';

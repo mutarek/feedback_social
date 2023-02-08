@@ -4,8 +4,10 @@ import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
+import 'package:als_frontend/data/model/response/group/find_group_model.dart';
 import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
+import 'package:als_frontend/data/model/response/group/joined_group_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/model/response/settings/privacy_model.dart';
@@ -787,6 +789,119 @@ class GroupProvider with ChangeNotifier {
       isLoading = false;
       notifyListeners();
       Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+    }
+  }
+
+//TODO: Get all joined group
+  updateJoinedPageNo() {
+    selectPage++;
+    initializeAuthorGroupLists(page: selectPage);
+    notifyListeners();
+  }
+
+  List<JoinedGroupModel> joinedGroupModel = [];
+
+  initializeJoinedGroupLists({int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      authorGroupLists.clear();
+      authorGroupLists = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    ApiResponse response = await groupRepo.getAllJoinedGroups();
+    isLoading = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        joinedGroupModel.add(JoinedGroupModel.fromJson(element));
+      });
+    } else {
+      isLoading = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+//TODO: Get all suggested group
+  updateSuggestedPageNo() {
+    selectPage++;
+    initializeAuthorGroupLists(page: selectPage);
+    notifyListeners();
+  }
+
+  List<AuthorGroupModel> suggestedGroupList = [];
+
+  initializeSuggestedGroupLists({int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      authorGroupLists.clear();
+      authorGroupLists = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    ApiResponse response = await groupRepo.getALLSuggestedGroups();
+    isLoading = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        suggestedGroupList.add(AuthorGroupModel.fromJson(element));
+      });
+    } else {
+      isLoading = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+//TODO:find group
+  updateFindPageNo() {
+    selectPage++;
+    initializeAuthorGroupLists(page: selectPage);
+    notifyListeners();
+  }
+
+  List<FindGroupModel> findGroupModel = [];
+  bool isLoadingFindPage = false;
+
+  findPage({String? groupName, int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      findGroupModel.clear();
+      findGroupModel = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      ApiResponse response = await groupRepo.findGroup(groupName.toString());
+      isLoadingFindPage = false;
+      if (response.response.statusCode == 200) {
+        response.response.data["results"].forEach((element) {
+          findGroupModel.add(FindGroupModel.fromJson(element));
+          notifyListeners();
+        });
+      } else {
+        Fluttertoast.showToast(msg: response.response.statusMessage!);
+      }
+      notifyListeners();
     }
   }
 }
