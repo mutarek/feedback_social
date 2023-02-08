@@ -19,9 +19,27 @@ import 'package:provider/provider.dart';
 
 import 'group_dashboard.dart';
 
-class FeedBackGroups extends StatelessWidget {
+class FeedBackGroups extends StatefulWidget {
   const FeedBackGroups({Key? key}) : super(key: key);
 
+  @override
+  State<FeedBackGroups> createState() => _FeedBackGroupsState();
+}
+
+class _FeedBackGroupsState extends State<FeedBackGroups> {
+  ScrollController controller = ScrollController();
+  @override
+  void initState() {
+    Provider.of<GroupProvider>(context, listen: false).initializeAuthorGroupLists();
+    controller.addListener(() {
+      if (controller.offset >= controller.position.maxScrollExtent &&
+          !controller.position.outOfRange &&
+          Provider.of<GroupProvider>(context, listen: false).hasNextData) {
+        Provider.of<GroupProvider>(context, listen: false).updateAuthorPageNo();
+      }
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,13 +150,14 @@ class FeedBackGroups extends StatelessWidget {
                     ? SizedBox(
                         height: 250,
                         child: ListView.builder(
-                            itemCount: 4,
+                            itemCount: groupProvider.authorGroupLists.length,
                             itemBuilder: (context, index) {
+                              var group = groupProvider.authorGroupLists[index];
                               return GroupViewCard(
                                   ontap: () {
                                     //Helper.toScreen(const PublicPageScreen2());
                                   },
-                                  name: 'City Travels',
+                                  name: group.name!,
                                   icon: Icons.favorite,
                                   message: 'Last active 50 minutes ago');
                             }))

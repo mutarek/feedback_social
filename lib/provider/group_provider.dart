@@ -17,6 +17,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../data/model/response/author_group_model.dart';
+
 class GroupProvider with ChangeNotifier {
   final GroupRepo groupRepo;
   final NewsfeedRepo newsfeedRepo;
@@ -678,13 +680,41 @@ class GroupProvider with ChangeNotifier {
   }
 
   //TODO: Get all author group
-  // updateAuthorPageNo() {
-  //   selectPage++;
-  //   initializeAuthorPageLists(page: selectPage);
-  //   notifyListeners();
-  // }
-  // List<AuthorGroupModel> authorPageLists = [];
-  // int position = 0;
-  //
-  // initializeAuthorGroupLists({int page = 1, bool isFirstTime = true}) async {
+  updateAuthorPageNo() {
+    selectPage++;
+    initializeAuthorGroupLists(page: selectPage);
+    notifyListeners();
+  }
+  List<AuthorGroupModel> authorGroupLists = [];
+
+  initializeAuthorGroupLists({int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      authorGroupLists.clear();
+      authorGroupLists = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    ApiResponse response = await groupRepo.getAllAuthorGroups();
+    isLoading = false;
+    notifyListeners();
+    if(response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        authorGroupLists.add(AuthorGroupModel.fromJson(element));
+      });
+    } else {
+      isLoading = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+}
 }
