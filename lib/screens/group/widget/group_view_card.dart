@@ -1,6 +1,7 @@
 import 'package:als_frontend/screens/video/widget/new_video_widgets.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class GroupViewCard extends StatelessWidget {
@@ -8,13 +9,13 @@ class GroupViewCard extends StatelessWidget {
     Key? key,
     required this.ontap,
     required this.name,
-    required this.icon,
+    required this.photo,
     required this.message,
   }) : super(key: key);
   final VoidCallback ontap;
   final String name;
   final String message;
-  final IconData icon;
+  final String  photo;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class GroupViewCard extends StatelessWidget {
           const SizedBox(width: 10,),
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
-               child: Center(child: Image.asset("assets/background/profile_placeholder.jpg",height: 36,width: 36,))),
+               child: Center(child: circularImage(photo, 36, 36))),
           const SizedBox(width: 15),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,

@@ -158,7 +158,7 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                                     //Helper.toScreen(const PublicPageScreen2());
                                   },
                                   name: group.name!,
-                                  icon: Icons.favorite,
+                                  photo: group.coverPhoto!,
                                   message: 'Last active 50 minutes ago');
                             }))
                     : const SizedBox.shrink(),
