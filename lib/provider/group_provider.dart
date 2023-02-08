@@ -19,6 +19,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../data/model/response/author_group_model.dart';
 import '../data/model/response/each_author_group_model.dart';
+import '../data/model/response/group_members.dart';
 
 class GroupProvider with ChangeNotifier {
   final GroupRepo groupRepo;
@@ -110,8 +111,11 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeAllFollowerExpanded() {
+  changeAllFollowerExpanded(String groupID) {
     allFollower = !allFollower;
+    if (allFollower == true) {
+      getGroupMembers(groupID, isFirstTime: true, page: 1);
+    }
     notifyListeners();
   }
 
@@ -750,6 +754,39 @@ class GroupProvider with ChangeNotifier {
     } else {
       Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
       return false;
+    }
+  }
+
+  //TODO: FOR GETTING INDIVIDUAL GROUP MEMBER
+  List<GroupMembers> groupMembersList = [];
+  bool isBottomGroupMemberLoading = false;
+  bool hasNextDataGroupMembers = false;
+
+  getGroupMembers(String groupId, {int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      groupMembersList.clear();
+      groupMembersList = [];
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomGroupMemberLoading = true;
+      notifyListeners();
+    }
+    isLoading = true;
+    notifyListeners();
+    ApiResponse apiResponse = await groupRepo.getGroupMembers(page, groupId);
+    isLoading = false;
+    notifyListeners();
+    if (apiResponse.response.statusCode == 200) {
+      hasNextDataGroupMembers = apiResponse.response.data['next'] != null ? true : false;
+      apiResponse.response.data['results'].forEach((member) {
+        groupMembersList.add(GroupMembers.fromJson(member));
+      });
+    } else {
+      isLoading = false;
+      notifyListeners();
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
     }
   }
 }

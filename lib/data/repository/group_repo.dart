@@ -227,4 +227,14 @@ class GroupRepo {
     }
   }
 
+  Future<ApiResponse> getGroupMembers(int page,String groupId) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.groupUri}member/$groupId/list/?page=$page");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
 }

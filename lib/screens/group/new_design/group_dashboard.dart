@@ -9,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../widgets/network_image.dart';
 import 'admin_tools_screen.dart';
 import 'setup_group.dart';
 
@@ -775,7 +776,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                             backgroundColor: AppColors.primaryColorLight,
                             child: InkWell(
                                 onTap: () {
-                                  groupProvider.changeAllFollowerExpanded();
+                                  groupProvider.changeAllFollowerExpanded(widget.authorGroupModel.id.toString());
                                 },
                                 child: groupProvider.allFollower != true
                                     ? const Icon(Icons.arrow_drop_down, color: Colors.white)
@@ -837,16 +838,24 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  Expanded(
+                                  groupProvider.isLoading?
+                                      const Center(
+                                        child: CircularProgressIndicator(),
+                                      ):groupProvider.groupMembersList.isEmpty?
+                                      const Center(
+                                        child: Text("Ops You have No Members"),
+                                      ):Expanded(
                                     child: ListView.builder(
-                                        itemCount: 10,
+                                        itemCount: groupProvider.groupMembersList.length,
                                         itemBuilder: (context, index) {
+                                          var members = groupProvider.groupMembersList[index];
                                           return ListTile(
                                             leading: CircleAvatar(
                                               backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
+                                              child: circularImage(members.member!.profileImage.toString(),36,36),
                                             ),
                                             title: Text(
-                                              'Rafatul Islam',
+                                              members.member!.fullName.toString(),
                                               style: GoogleFonts.roboto(
                                                   fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.primaryColorLight),
                                             ),
