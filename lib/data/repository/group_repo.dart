@@ -207,4 +207,24 @@ class GroupRepo {
     }
   }
 
+  Future<ApiResponse> getAuthorGroupById(String id) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.groupUri}/$id/up-del-retr/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> setupGroup(FormData formData,String groupId) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.patch("${AppConstant.groupUri}/$groupId/up-del-retr/",data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
 }

@@ -28,6 +28,7 @@ class FeedBackGroups extends StatefulWidget {
 
 class _FeedBackGroupsState extends State<FeedBackGroups> {
   ScrollController controller = ScrollController();
+
   @override
   void initState() {
     Provider.of<GroupProvider>(context, listen: false).initializeAuthorGroupLists();
@@ -40,6 +41,7 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,18 +151,20 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                 groupProvider.yourGroup
                     ? SizedBox(
                         height: 250,
-                        child: ListView.builder(
-                            itemCount: groupProvider.authorGroupLists.length,
-                            itemBuilder: (context, index) {
-                              var group = groupProvider.authorGroupLists[index];
-                              return GroupViewCard(
-                                  ontap: () {
-                                    Helper.toScreen(const GroupDashboard());
-                                  },
-                                  name: group.name!,
-                                  photo: group.coverPhoto!,
-                                  message: 'Last active 50 minutes ago');
-                            }))
+                        child: groupProvider.authorGroupLists.isEmpty
+                            ? const Center(child: Text("You Don't Have Any Group Yet"))
+                            : ListView.builder(
+                                itemCount: groupProvider.authorGroupLists.length,
+                                itemBuilder: (context, index) {
+                                  var group = groupProvider.authorGroupLists[index];
+                                  return GroupViewCard(
+                                      ontap: () {
+                                        Helper.toScreen(GroupDashboard(group));
+                                      },
+                                      name: group.name!,
+                                      photo: group.coverPhoto!,
+                                      message: 'Last active 50 minutes ago');
+                                }))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 5),
                 CustomExpandedWidget(ImagesModel.joinedGroupIcon, "Joined Groups", "You have been added to these groups.",
@@ -673,7 +677,7 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                   icon: ImagesModel.findPageIcons,
                   name: "DashBoard",
                   onTap: () {
-                    Helper.toScreen(const GroupDashboard());
+                    //Helper.toScreen( GroupDashboard());
                   },
                 ),
               ],

@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../data/model/response/author_group_model.dart';
+import '../data/model/response/each_author_group_model.dart';
 
 class GroupProvider with ChangeNotifier {
   final GroupRepo groupRepo;
@@ -604,7 +605,6 @@ class GroupProvider with ChangeNotifier {
 
   ///TODO: for create Page
 
-
   String groupName = '';
   String groupPrivacy = '';
   String groupDescription = '';
@@ -615,12 +615,12 @@ class GroupProvider with ChangeNotifier {
 
   updateInsertGroupInfo(int status,
       {String aGroupName = '',
-        String aGroupBio = '',
-        String aGroupDescription = '',
-        String aGroupPrivacy = '',
-        String aGroupLocation = '',
-        String aAddress = '',
-        File? aCoverPhoto}) {
+      String aGroupBio = '',
+      String aGroupDescription = '',
+      String aGroupPrivacy = '',
+      String aGroupLocation = '',
+      String aAddress = '',
+      File? aCoverPhoto}) {
     if (status == 0) {
       groupName = aGroupName;
       groupBio = aGroupBio;
@@ -634,17 +634,16 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> createGroupNew()async{
+  Future<bool> createGroupNew() async {
     isLoading = true;
     notifyListeners();
     bool isPrivate = false;
     ApiResponse apiResponse;
-    if(privacy == "Public"){
+    if (privacy == "Public") {
       isPrivate = false;
-    }else
-      {
-        isPrivate = true;
-      }
+    } else {
+      isPrivate = true;
+    }
     FormData formData = FormData();
     formData.files.add(MapEntry(
         'cover_photo',
@@ -654,21 +653,23 @@ class GroupProvider with ChangeNotifier {
     formData.fields.add(MapEntry('bio', groupBio));
     formData.fields.add(MapEntry('description', groupDescription));
     formData.fields.add(MapEntry('category', categoryValue.id.toString()));
-    formData.fields.add(MapEntry('is_private', isPrivate?"true":"false"));
+    formData.fields.add(MapEntry('is_private', isPrivate ? "true" : "false"));
     formData.fields.add(MapEntry('city', groupLocation));
     formData.fields.add(MapEntry('address', groupAddress));
     apiResponse = await groupRepo.createGroup(formData);
     if (apiResponse.response.statusCode == 201) {
       isLoading = false;
       notifyListeners();
-      authorGroupLists.insert(0,AuthorGroupModel(
-        id: apiResponse.response.data['id'],
-        name: apiResponse.response.data['name'],
-        coverPhoto: apiResponse.response.data['cover_photo'],
-        totalMember: apiResponse.response.data['total_member'],
-        visitGroupUrl:  apiResponse.response.data['visit_group_url'],
-        copyLinkUrl: apiResponse.response.data['copy_link_url'],
-      ));
+      authorGroupLists.insert(
+          0,
+          AuthorGroupModel(
+            id: apiResponse.response.data['id'],
+            name: apiResponse.response.data['name'],
+            coverPhoto: apiResponse.response.data['cover_photo'],
+            totalMember: apiResponse.response.data['total_member'],
+            visitGroupUrl: apiResponse.response.data['visit_group_url'],
+            copyLinkUrl: apiResponse.response.data['copy_link_url'],
+          ));
       Fluttertoast.showToast(msg: "Page Created successfully");
       return true;
     } else {
@@ -684,6 +685,7 @@ class GroupProvider with ChangeNotifier {
     initializeAuthorGroupLists(page: selectPage);
     notifyListeners();
   }
+
   List<AuthorGroupModel> authorGroupLists = [];
 
   initializeAuthorGroupLists({int page = 1, bool isFirstTime = true}) async {
@@ -705,7 +707,7 @@ class GroupProvider with ChangeNotifier {
     ApiResponse response = await groupRepo.getAllAuthorGroups();
     isLoading = false;
     notifyListeners();
-    if(response.response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
         authorGroupLists.add(AuthorGroupModel.fromJson(element));
@@ -715,5 +717,39 @@ class GroupProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
-}
+  }
+
+//TODO: Get Author Page By Id
+  AuthorEachGroupModel? authorEachGroupModel;
+
+  Future<bool> getAuthorGroupById(num id) async {
+    ApiResponse response = await groupRepo.getAuthorGroupById(id.toString());
+    if (response.response.statusCode == 200) {
+      authorEachGroupModel = AuthorEachGroupModel.fromJson(response.response.data);
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+      return false;
+    }
+  }
+
+  Future<bool> setupGroup(String name, String desc, String bio, String address) async {
+    isLoading = true;
+    notifyListeners();
+    ApiResponse apiResponse;
+    FormData formData = FormData();
+    formData.fields.add(MapEntry("name", name));
+    formData.fields.add(MapEntry("description", desc));
+    formData.fields.add(MapEntry("bio", bio));
+    formData.fields.add(MapEntry("address", address));
+    apiResponse = await groupRepo.setupGroup(formData, authorEachGroupModel!.id.toString());
+    if (apiResponse.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: "Group setup successfully!");
+      initializeAuthorGroupLists();
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+      return false;
+    }
+  }
 }
