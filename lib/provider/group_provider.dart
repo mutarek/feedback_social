@@ -661,16 +661,15 @@ class GroupProvider with ChangeNotifier {
     if (apiResponse.response.statusCode == 201) {
       isLoading = false;
       notifyListeners();
-      // authorPageLists.insert(
-      //     0,
-      //     AuthorPageModel(
-      //         id: response.response.data['id'],
-      //         name: response.response.data['name'],
-      //         coverPhoto: response.response.data['cover_photo'],
-      //         avatar: response.response.data['avatar'],
-      //         followers: 0));
+      authorGroupLists.insert(0,AuthorGroupModel(
+        id: apiResponse.response.data['id'],
+        name: apiResponse.response.data['name'],
+        coverPhoto: apiResponse.response.data['cover_photo'],
+        totalMember: apiResponse.response.data['total_member'],
+        visitGroupUrl:  apiResponse.response.data['visit_group_url'],
+        copyLinkUrl: apiResponse.response.data['copy_link_url'],
+      ));
       Fluttertoast.showToast(msg: "Page Created successfully");
-      notifyListeners();
       return true;
     } else {
       Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);

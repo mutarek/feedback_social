@@ -155,7 +155,7 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                               var group = groupProvider.authorGroupLists[index];
                               return GroupViewCard(
                                   ontap: () {
-                                    //Helper.toScreen(const PublicPageScreen2());
+                                    Helper.toScreen(const GroupDashboard());
                                   },
                                   name: group.name!,
                                   photo: group.coverPhoto!,
