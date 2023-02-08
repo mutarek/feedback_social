@@ -227,4 +227,14 @@ class GroupRepo {
     }
   }
 
+  Future<ApiResponse> findGroup(String findGroupName) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("/group/search/?q=$findGroupName");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
 }

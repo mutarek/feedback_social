@@ -4,6 +4,7 @@ import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
+import 'package:als_frontend/data/model/response/group/find_group_model.dart';
 import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
 import 'package:als_frontend/data/model/response/group/joined_group_model.dart';
@@ -794,4 +795,35 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
   }
-}
+
+//TODO:find group
+  updateFindPageNo() {
+    selectPage++;
+    initializeAuthorGroupLists(page: selectPage);
+    notifyListeners();
+  }
+  List<FindGroupModel> findGroupModel = [];
+  bool isLoadingFindPage = false;
+
+  findPage({String? groupName,int page = 1,}) async {
+    if (page == 1) {
+      selectPage = 1;
+      findGroupModel.clear();
+      findGroupModel = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      position = 0;
+      ApiResponse response = await groupRepo.findGroup(groupName.toString());
+      isLoadingFindPage = false;
+      if (response.response.statusCode == 200) {
+        response.response.data["results"].forEach((element) {
+          findGroupModel.add(FindGroupModel.fromJson(element));
+          notifyListeners();
+        });
+      } else {
+        Fluttertoast.showToast(msg: response.response.statusMessage!);
+      }
+      notifyListeners();
+    }
+}}
