@@ -11,6 +11,7 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../data/model/response/category_model.dart';
 import '../../../widgets/snackbar_message.dart';
 
 class CreateGroup1 extends StatefulWidget {
@@ -21,6 +22,13 @@ class CreateGroup1 extends StatefulWidget {
 }
 
 class _CreateGroup1State extends State<CreateGroup1> {
+
+  @override
+  void initState() {
+    Provider.of<GroupProvider>(context,listen: false).initializeCategory();
+    super.initState();
+  }
+
   final TextEditingController pageNameController = TextEditingController();
   final TextEditingController pageBioController = TextEditingController();
   final TextEditingController pageDetailsController = TextEditingController();
@@ -84,6 +92,36 @@ class _CreateGroup1State extends State<CreateGroup1> {
                         .toList(),
                     onChanged: (item) {
                       groupProvider.changeGroupPrivacy(item!);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 19),
+                CustomText(
+                    title: "Select a Group category",
+                    textStyle: robotoStyle500Medium.copyWith(fontSize: 17),
+                    maxLines: 2),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15), border: Border.all(color: colorText), color: textFieldFillColor),
+                  //decoration: BoxDecoration(color: const Color(0xFF656B87), borderRadius: BorderRadius.circular(15.0)),
+                  child: DropdownButton<CategoryModel>(
+                    dropdownColor: textFieldFillColor,
+                    value: groupProvider.categoryValue,
+                    isExpanded: true,
+                    underline: const SizedBox.shrink(),
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.primaryColorLight),
+                    items: groupProvider.items
+                        .map((item) => DropdownMenuItem<CategoryModel>(
+                        value: item,
+                        child: Container(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: CustomText(
+                                title: item.name,
+                                textStyle: robotoStyle400Regular.copyWith(fontSize: 18, color: AppColors.primaryColorLight)))))
+                        .toList(),
+                    onChanged: (item) {
+                      groupProvider.changeGroupCategory(item!);
                     },
                   ),
                 ),

@@ -124,498 +124,484 @@ class FeedBackGroups extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 CustomExpandedWidget(
-                    ImagesModel.yourGroupIcon,
-                    "Your Group",
-                    "View the all group that you manage.",
-                    groupProvider.yourGroup?true:false,
-                        (){
-                      groupProvider.changeYourGroupStatus();
-                    }
-                ),
+                    ImagesModel.yourGroupIcon, "Your Group", "View the all group that you manage.", groupProvider.yourGroup ? true : false,
+                    () {
+                  groupProvider.changeYourGroupStatus();
+                }),
                 groupProvider.yourGroup
                     ? SizedBox(
-                    height: 250,
-                    child: ListView.builder(
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return GroupViewCard(
-                              ontap: () {
-                                //Helper.toScreen(const PublicPageScreen2());
-                              },
-                              name: 'City Travels',
-                              icon: Icons.favorite,
-                              message: 'Last active 50 minutes ago');
-                        }))
+                        height: 250,
+                        child: ListView.builder(
+                            itemCount: 4,
+                            itemBuilder: (context, index) {
+                              return GroupViewCard(
+                                  ontap: () {
+                                    //Helper.toScreen(const PublicPageScreen2());
+                                  },
+                                  name: 'City Travels',
+                                  icon: Icons.favorite,
+                                  message: 'Last active 50 minutes ago');
+                            }))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 5),
-                CustomExpandedWidget(
-                    ImagesModel.joinedGroupIcon,
-                    "Joined Groups",
-                    "You have been added to these groups.",
-                    groupProvider.joinedGroup?true:false,
-                        (){
-                      groupProvider.changeJoinedGroupStatus();
-                    }
-                ),
+                CustomExpandedWidget(ImagesModel.joinedGroupIcon, "Joined Groups", "You have been added to these groups.",
+                    groupProvider.joinedGroup ? true : false, () {
+                  groupProvider.changeJoinedGroupStatus();
+                }),
                 groupProvider.joinedGroup
                     ? SizedBox(
-                    height: 250,
-                    child: ListView.builder(
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(8.0),
-                                margin: const EdgeInsets.only(top: 6, bottom: 6),
-                                decoration: BoxDecoration(
-                                    color: const Color(0xffFAFAFA),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey.withOpacity(.2),
-                                          blurRadius: 10.0,
-                                          spreadRadius: 3.0,
-                                          offset: const Offset(0.0, 0.0))
-                                    ],
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Center(
-                                            child: Image.asset(
+                        height: 250,
+                        child: ListView.builder(
+                            itemCount: 3,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    margin: const EdgeInsets.only(top: 6, bottom: 6),
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xffFAFAFA),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.grey.withOpacity(.2),
+                                              blurRadius: 10.0,
+                                              spreadRadius: 3.0,
+                                              offset: const Offset(0.0, 0.0))
+                                        ],
+                                        borderRadius: BorderRadius.circular(15)),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        ClipRRect(
+                                            borderRadius: BorderRadius.circular(20),
+                                            child: Center(
+                                                child: Image.asset(
                                               "assets/background/profile_placeholder.jpg",
                                               height: 36,
                                               width: 36,
                                             ))),
-                                    const SizedBox(width: 15),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Desh Travels', style: robotoStyle700Bold.copyWith(fontSize: 16)),
-                                        const SizedBox(height: 5),
-                                        Row(
+                                        const SizedBox(width: 15),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            SvgPicture.asset("assets/svg/last_minute_icon.svg", width: 14, height: 14),
-                                            const SizedBox(width: 2),
-                                            Text("My Message", style: robotoStyle500Medium.copyWith(fontSize: 9)),
+                                            Text('Desh Travels', style: robotoStyle700Bold.copyWith(fontSize: 16)),
+                                            const SizedBox(height: 5),
+                                            Row(
+                                              children: [
+                                                SvgPicture.asset("assets/svg/last_minute_icon.svg", width: 14, height: 14),
+                                                const SizedBox(width: 2),
+                                                Text("My Message", style: robotoStyle500Medium.copyWith(fontSize: 9)),
+                                              ],
+                                            )
                                           ],
+                                        ),
+                                        const Spacer(),
+                                        InkWell(
+                                            onTap: () {
+                                              groupProvider.changeEachJoinedGroupStatus();
+                                            },
+                                            child: groupProvider.eachJoinedGroup
+                                                ? SvgPicture.asset(
+                                                    "assets/svg/play_up_vector.svg",
+                                                    height: 15,
+                                                    width: 15,
+                                                  )
+                                                : SvgPicture.asset(
+                                                    "assets/svg/play_down_vector.svg",
+                                                    height: 15,
+                                                    width: 15,
+                                                  )),
+                                        const SizedBox(
+                                          width: 10,
                                         )
                                       ],
                                     ),
-                                    const Spacer(),
-                                    InkWell(
-                                        onTap: () {
-                                          groupProvider.changeEachJoinedGroupStatus();
-                                        },
-                                        child: groupProvider.eachJoinedGroup
-                                            ? SvgPicture.asset(
-                                          "assets/svg/play_up_vector.svg",
-                                          height: 15,
-                                          width: 15,
-                                        )
-                                            : SvgPicture.asset(
-                                          "assets/svg/play_down_vector.svg",
-                                          height: 15,
-                                          width: 15,
-                                        )),
-                                    const SizedBox(
-                                      width: 10,
-                                    )
-                                  ],
-                                ),
-                              ),
-                              groupProvider.eachJoinedGroup
-                                  ? Row(
-                                children: [
-                                  SizedBox(
-                                    height: 47,
-                                    width: 293,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                      child: PopupMenuButton(
-                                        itemBuilder: (context) => [
-                                          // PopupMenuItem 1
-                                          PopupMenuItem(
-                                            child: SizedBox(
-                                              width: 150,
-                                              height: 120,
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                        "assets/svg/notification_icon_svg.svg",
-                                                        height: 20,
-                                                        width: 20,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 4,
-                                                      ),
-                                                      Text(
-                                                        "Manage Notifications",
-                                                        style: robotoStyle500Medium.copyWith(
-                                                            fontSize: 12, color: AppColors.primaryColorLight),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                        "assets/svg/unfollow_svg.svg",
-                                                        height: 15,
-                                                        width: 15,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 4,
-                                                      ),
-                                                      Text(
-                                                        "Unfollow Group",
-                                                        style: robotoStyle500Medium.copyWith(
-                                                            fontSize: 12, color: AppColors.primaryColorLight),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 20,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                        "assets/svg/leave_group_svg.svg",
-                                                        height: 20,
-                                                        width: 20,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 4,
-                                                      ),
-                                                      Text(
-                                                        "Leave From Group",
-                                                        style: robotoStyle500Medium.copyWith(
-                                                            fontSize: 12, color: AppColors.primaryColorLight),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          // PopupMenuItem 2
-                                        ],
-                                        offset: const Offset(0, 58),
-                                        color: Colors.white,
-                                        elevation: 4,
-                                        shape:
-                                        const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                              "assets/svg/joined_svgs.svg",
-                                              height: 12,
-                                              width: 12,
-                                            ),
-                                            const SizedBox(
-                                              width: 2,
-                                            ),
-                                            Text(
-                                              'Joined',
-                                              style:
-                                              robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight),
-                                            ),
-                                            const SizedBox(
-                                              width: 2,
-                                            ),
-                                            SvgPicture.asset(
-                                              "assets/svg/up_arrow.svg",
-                                              height: 5,
-                                              width: 10,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
                                   ),
-                                  SizedBox(
-                                    height: 47,
-                                    width: 93,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                      child: PopupMenuButton(
-                                        itemBuilder: (context) => [
-                                          // PopupMenuItem 1
-                                          PopupMenuItem(
-                                            child: SizedBox(
-                                              width: 130,
-                                              height: 110,
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                        "assets/svg/pins_group_icon.svg",
-                                                        height: 20,
-                                                        width: 20,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 4,
-                                                      ),
-                                                      Text(
-                                                        "Pin Group",
-                                                        style: robotoStyle500Medium.copyWith(
-                                                            fontSize: 12, color: AppColors.primaryColorLight),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        "assets/svg/share.svg",
-                                                        height: 15,
-                                                        width: 15,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 4,
-                                                      ),
-                                                      PopupMenuButton(
-                                                        itemBuilder: (context) => [
-                                                          // PopupMenuItem 1
-                                                          PopupMenuItem(
-                                                            child: Column(
-                                                              mainAxisAlignment: MainAxisAlignment.start,
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                  groupProvider.eachJoinedGroup
+                                      ? Row(
+                                          children: [
+                                            SizedBox(
+                                              height: 47,
+                                              width: 293,
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                child: PopupMenuButton(
+                                                  itemBuilder: (context) => [
+                                                    // PopupMenuItem 1
+                                                    PopupMenuItem(
+                                                      child: SizedBox(
+                                                        width: 150,
+                                                        height: 120,
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Row(
                                                               children: [
-                                                                Row(
-                                                                  children: [
-                                                                    const Icon(Icons.pending_actions),
-                                                                    const SizedBox(
-                                                                      width: 4,
-                                                                    ),
-                                                                    Text(
-                                                                      "Share on your timeline",
-                                                                      style: robotoStyle500Medium.copyWith(
-                                                                          fontSize: 12, color: AppColors.primaryColorLight),
-                                                                    )
-                                                                  ],
+                                                                const SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                SvgPicture.asset(
+                                                                  "assets/svg/notification_icon_svg.svg",
+                                                                  height: 20,
+                                                                  width: 20,
                                                                 ),
                                                                 const SizedBox(
-                                                                  height: 18,
+                                                                  width: 4,
                                                                 ),
-                                                                Row(
-                                                                  children: [
-                                                                    // SvgPicture.asset("assets/svg/add.svg",height: 10,width:20,),
-                                                                    SvgPicture.asset(
-                                                                      "assets/svg/plane2.svg",
-                                                                      height: 18,
-                                                                      width: 18,
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 4,
-                                                                    ),
-                                                                    Text(
-                                                                      "Share via message",
-                                                                      style: robotoStyle500Medium.copyWith(
-                                                                          fontSize: 12, color: AppColors.primaryColorLight),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                                const SizedBox(
-                                                                  height: 18,
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    SvgPicture.asset(
-                                                                      "assets/svg/twoPeople.svg",
-                                                                      height: 13,
-                                                                      width: 13,
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 3,
-                                                                    ),
-                                                                    Text(
-                                                                      "Share to friends timeline",
-                                                                      style: robotoStyle500Medium.copyWith(
-                                                                          fontSize: 12, color: AppColors.primaryColorLight),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                                const SizedBox(
-                                                                  height: 18,
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    SvgPicture.asset(
-                                                                      "assets/svg/threePeople.svg",
-                                                                      height: 13,
-                                                                      width: 13,
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 4,
-                                                                    ),
-                                                                    Text(
-                                                                      "Share to a group",
-                                                                      style: robotoStyle500Medium.copyWith(
-                                                                          fontSize: 12, color: AppColors.primaryColorLight),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                                const SizedBox(
-                                                                  height: 18,
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    Image.asset(ImagesModel.pageIconsPng, width: 18, height: 18),
-                                                                    const SizedBox(
-                                                                      width: 4,
-                                                                    ),
-                                                                    Text(
-                                                                      "Share to a page",
-                                                                      style: robotoStyle500Medium.copyWith(
-                                                                          fontSize: 12, color: AppColors.primaryColorLight),
-                                                                    )
-                                                                  ],
+                                                                Text(
+                                                                  "Manage Notifications",
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
                                                                 )
                                                               ],
                                                             ),
-                                                          ),
-                                                          // PopupMenuItem 2
-                                                        ],
-                                                        offset: const Offset(0, 58),
-                                                        color: Colors.white,
-                                                        elevation: 4,
-                                                        shape: const RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                                                        child: Text(
-                                                          "Share",
-                                                          style: robotoStyle500Medium.copyWith(
-                                                              fontSize: 12, color: AppColors.primaryColorLight),
+                                                            const SizedBox(
+                                                              height: 20,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                const SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                SvgPicture.asset(
+                                                                  "assets/svg/unfollow_svg.svg",
+                                                                  height: 15,
+                                                                  width: 15,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 4,
+                                                                ),
+                                                                Text(
+                                                                  "Unfollow Group",
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 20,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                const SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                SvgPicture.asset(
+                                                                  "assets/svg/leave_group_svg.svg",
+                                                                  height: 20,
+                                                                  width: 20,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 4,
+                                                                ),
+                                                                Text(
+                                                                  "Leave From Group",
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ],
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      const Icon(
-                                                        Icons.copy,
-                                                        size: 15,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 4,
-                                                      ),
-                                                      Text(
-                                                        "Copy Link",
-                                                        style: robotoStyle500Medium.copyWith(
-                                                            fontSize: 12, color: AppColors.primaryColorLight),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
+                                                    ),
+                                                    // PopupMenuItem 2
+                                                  ],
+                                                  offset: const Offset(0, 58),
+                                                  color: Colors.white,
+                                                  elevation: 4,
+                                                  shape:
+                                                      const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
                                                     children: [
                                                       SvgPicture.asset(
-                                                        "assets/svg/leave_group_svg.svg",
-                                                        height: 15,
-                                                        width: 15,
+                                                        "assets/svg/joined_svgs.svg",
+                                                        height: 12,
+                                                        width: 12,
                                                       ),
                                                       const SizedBox(
-                                                        width: 4,
+                                                        width: 2,
                                                       ),
                                                       Text(
-                                                        "Leave",
-                                                        style: robotoStyle500Medium.copyWith(
-                                                            fontSize: 12, color: AppColors.primaryColorLight),
-                                                      )
+                                                        'Joined',
+                                                        style:
+                                                            robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 2,
+                                                      ),
+                                                      SvgPicture.asset(
+                                                        "assets/svg/up_arrow.svg",
+                                                        height: 5,
+                                                        width: 10,
+                                                      ),
                                                     ],
                                                   ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          // PopupMenuItem 2
-                                        ],
-                                        offset: const Offset(0, 58),
-                                        color: Colors.white,
-                                        elevation: 4,
-                                        shape:
-                                        const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                                        child: Container(
-                                          height: 24,
-                                          width: 30,
-                                          color: const Color(0x00e4e6eb),
-                                          child: const Icon(Icons.more_horiz),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                            SizedBox(
+                                              height: 47,
+                                              width: 93,
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                child: PopupMenuButton(
+                                                  itemBuilder: (context) => [
+                                                    // PopupMenuItem 1
+                                                    PopupMenuItem(
+                                                      child: SizedBox(
+                                                        width: 130,
+                                                        height: 110,
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                const SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                SvgPicture.asset(
+                                                                  "assets/svg/pins_group_icon.svg",
+                                                                  height: 20,
+                                                                  width: 20,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 4,
+                                                                ),
+                                                                Text(
+                                                                  "Pin Group",
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                SvgPicture.asset(
+                                                                  "assets/svg/share.svg",
+                                                                  height: 15,
+                                                                  width: 15,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 4,
+                                                                ),
+                                                                PopupMenuButton(
+                                                                  itemBuilder: (context) => [
+                                                                    // PopupMenuItem 1
+                                                                    PopupMenuItem(
+                                                                      child: Column(
+                                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          Row(
+                                                                            children: [
+                                                                              const Icon(Icons.pending_actions),
+                                                                              const SizedBox(
+                                                                                width: 4,
+                                                                              ),
+                                                                              Text(
+                                                                                "Share on your timeline",
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height: 18,
+                                                                          ),
+                                                                          Row(
+                                                                            children: [
+                                                                              // SvgPicture.asset("assets/svg/add.svg",height: 10,width:20,),
+                                                                              SvgPicture.asset(
+                                                                                "assets/svg/plane2.svg",
+                                                                                height: 18,
+                                                                                width: 18,
+                                                                              ),
+                                                                              const SizedBox(
+                                                                                width: 4,
+                                                                              ),
+                                                                              Text(
+                                                                                "Share via message",
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height: 18,
+                                                                          ),
+                                                                          Row(
+                                                                            children: [
+                                                                              SvgPicture.asset(
+                                                                                "assets/svg/twoPeople.svg",
+                                                                                height: 13,
+                                                                                width: 13,
+                                                                              ),
+                                                                              const SizedBox(
+                                                                                width: 3,
+                                                                              ),
+                                                                              Text(
+                                                                                "Share to friends timeline",
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height: 18,
+                                                                          ),
+                                                                          Row(
+                                                                            children: [
+                                                                              SvgPicture.asset(
+                                                                                "assets/svg/threePeople.svg",
+                                                                                height: 13,
+                                                                                width: 13,
+                                                                              ),
+                                                                              const SizedBox(
+                                                                                width: 4,
+                                                                              ),
+                                                                              Text(
+                                                                                "Share to a group",
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height: 18,
+                                                                          ),
+                                                                          Row(
+                                                                            children: [
+                                                                              Image.asset(ImagesModel.pageIconsPng, width: 18, height: 18),
+                                                                              const SizedBox(
+                                                                                width: 4,
+                                                                              ),
+                                                                              Text(
+                                                                                "Share to a page",
+                                                                                style: robotoStyle500Medium.copyWith(
+                                                                                    fontSize: 12, color: AppColors.primaryColorLight),
+                                                                              )
+                                                                            ],
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    // PopupMenuItem 2
+                                                                  ],
+                                                                  offset: const Offset(0, 58),
+                                                                  color: Colors.white,
+                                                                  elevation: 4,
+                                                                  shape: const RoundedRectangleBorder(
+                                                                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                                                  child: Text(
+                                                                    "Share",
+                                                                    style: robotoStyle500Medium.copyWith(
+                                                                        fontSize: 12, color: AppColors.primaryColorLight),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                const SizedBox(
+                                                                  height: 10,
+                                                                ),
+                                                                const Icon(
+                                                                  Icons.copy,
+                                                                  size: 15,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 4,
+                                                                ),
+                                                                Text(
+                                                                  "Copy Link",
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                SvgPicture.asset(
+                                                                  "assets/svg/leave_group_svg.svg",
+                                                                  height: 15,
+                                                                  width: 15,
+                                                                ),
+                                                                const SizedBox(
+                                                                  width: 4,
+                                                                ),
+                                                                Text(
+                                                                  "Leave",
+                                                                  style: robotoStyle500Medium.copyWith(
+                                                                      fontSize: 12, color: AppColors.primaryColorLight),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    // PopupMenuItem 2
+                                                  ],
+                                                  offset: const Offset(0, 58),
+                                                  color: Colors.white,
+                                                  elevation: 4,
+                                                  shape:
+                                                      const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                                                  child: Container(
+                                                    height: 24,
+                                                    width: 30,
+                                                    color: const Color(0x00e4e6eb),
+                                                    child: const Icon(Icons.more_horiz),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : const SizedBox.shrink(),
                                 ],
-                              )
-                                  : const SizedBox.shrink(),
-                            ],
-                          );
-                        }))
+                              );
+                            }))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
-                CustomExpandedWidget(
-                    ImagesModel.suggestedGroupIcon,
-                    "Suggested Group",
-                    "You might be interested in the following groups.",
-                    groupProvider.suggestedGroup?true:false,
-                        (){
-                      groupProvider.changeSuggestedGroupStatus();
-                    }
-                ),
+                CustomExpandedWidget(ImagesModel.suggestedGroupIcon, "Suggested Group", "You might be interested in the following groups.",
+                    groupProvider.suggestedGroup ? true : false, () {
+                  groupProvider.changeSuggestedGroupStatus();
+                }),
                 const SizedBox(height: 10),
                 groupProvider.suggestedGroup
                     ? SizedBox(
-                  height: 500,
-                  child: GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                    itemCount: 6,
-                    itemBuilder: (_, index) {
-                      return SuggestedGroupViewCard("My Travels", "570K Members - 10+ Post a Day",
-                          "https://wander-lush.org/wp-content/uploads/2022/03/Beautiful-places-in-Bangladesh-WMC-hero.jpg");
-                    },
-                  ),
-                )
+                        height: 500,
+                        child: GridView.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                          itemCount: 6,
+                          itemBuilder: (_, index) {
+                            return SuggestedGroupViewCard("My Travels", "570K Members - 10+ Post a Day",
+                                "https://wander-lush.org/wp-content/uploads/2022/03/Beautiful-places-in-Bangladesh-WMC-hero.jpg");
+                          },
+                        ),
+                      )
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
                 InkWell(

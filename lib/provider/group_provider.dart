@@ -601,6 +601,8 @@ class GroupProvider with ChangeNotifier {
   }
 
   ///TODO: for create Page
+
+
   String groupName = '';
   String groupPrivacy = '';
   String groupDescription = '';
@@ -633,21 +635,30 @@ class GroupProvider with ChangeNotifier {
   Future<bool> createGroupNew()async{
     isLoading = true;
     notifyListeners();
+    bool isPrivate = false;
     ApiResponse apiResponse;
+    if(privacy == "Public"){
+      isPrivate = false;
+    }else
+      {
+        isPrivate = true;
+      }
     FormData formData = FormData();
     formData.files.add(MapEntry(
-        'image',
+        'cover_photo',
         MultipartFile(pageCoverPhoto!.readAsBytes().asStream(), pageCoverPhoto!.lengthSync(),
             filename: pageCoverPhoto!.path.split("/").last)));
     formData.fields.add(MapEntry('name', groupName));
     formData.fields.add(MapEntry('bio', groupBio));
     formData.fields.add(MapEntry('description', groupDescription));
-    formData.fields.add(MapEntry('privacy', privacy));
-    formData.fields.add(MapEntry('location', groupLocation));
+    formData.fields.add(MapEntry('category', categoryValue.id.toString()));
+    formData.fields.add(MapEntry('is_private', isPrivate?"true":"false"));
+    formData.fields.add(MapEntry('city', groupLocation));
     formData.fields.add(MapEntry('address', groupAddress));
     apiResponse = await groupRepo.createGroup(formData);
-    isLoading = false;
     if (apiResponse.response.statusCode == 201) {
+      isLoading = false;
+      notifyListeners();
       // authorPageLists.insert(
       //     0,
       //     AuthorPageModel(
@@ -665,4 +676,15 @@ class GroupProvider with ChangeNotifier {
       return false;
     }
   }
+
+  //TODO: Get all author group
+  // updateAuthorPageNo() {
+  //   selectPage++;
+  //   initializeAuthorPageLists(page: selectPage);
+  //   notifyListeners();
+  // }
+  // List<AuthorGroupModel> authorPageLists = [];
+  // int position = 0;
+  //
+  // initializeAuthorGroupLists({int page = 1, bool isFirstTime = true}) async {
 }

@@ -102,7 +102,6 @@ class PageProvider with ChangeNotifier {
   List<AuthorPageModel> authorPageLists = [];
   int position = 0;
   initializeAuthorPageLists({int page = 1, bool isFirstTime = true}) async {
-
     if (page == 1) {
       selectPage = 1;
       authorPageLists.clear();

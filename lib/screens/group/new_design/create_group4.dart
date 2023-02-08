@@ -98,7 +98,10 @@ class _CreateGroup4State extends State<CreateGroup4> {
 
                   ],
                 ),
-                CustomButton(
+                groupProvider.isLoading?
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ):CustomButton(
                     btnTxt: 'Next Page',
                     onTap: () {
                       if (otherProvider.pageCoverFile == null) {
@@ -107,6 +110,7 @@ class _CreateGroup4State extends State<CreateGroup4> {
                         groupProvider.updateInsertGroupInfo(2, aCoverPhoto: otherProvider.pageCoverFile);
                         groupProvider.createGroupNew().then((value){
                           if (value){
+                            Helper.back();
                             Helper.back();
                             Helper.back();
                             Helper.back();
