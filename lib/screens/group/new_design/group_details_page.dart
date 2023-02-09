@@ -8,6 +8,7 @@ import '../../../util/theme/text.styles.dart';
 import '../../page/shimmer_effect/new_page_details_screen_shimmer.dart';
 import '../../video/widget/new_video_widgets.dart';
 import '../view/group_media_view.dart';
+import '../view/group_policy_view.dart';
 import 'group_media_view.dart';
 
 class GroupDetailsPage extends StatefulWidget {
@@ -57,10 +58,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
               GroupHomeView(tabMenuWidget(groupProvider),widget.groupID,index:widget.index),
               GroupAboutView(tabMenuWidget(groupProvider),widget.groupID,index:widget.index),
               GroupMediaView(tabMenuWidget(groupProvider),widget.groupID,index:widget.index),
-              // PageAboutView(tabMenuWidget(pageProvider), pageProvider.pageDetailsModel),
-              // PagePhotoView(tabMenuWidget(pageProvider)),
               // PageUpcomingView(tabMenuWidget(pageProvider),  pageProvider.pageDetailsModel),
-              // PageUpcomingView(tabMenuWidget(pageProvider),  pageProvider.pageDetailsModel),
+              GroupPolicyView(tabMenuWidget(groupProvider), widget.groupID,index:widget.index),
             ],
           ),
         );
@@ -79,7 +78,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           tabButtonWidget(1, "About", groupProvider),
           tabButtonWidget(2, "Media", groupProvider),
           tabButtonWidget(3, "People", groupProvider),
-          tabButtonWidget(4, "Community", groupProvider, ratio: 3), // 1.5
+          tabButtonWidget(4, "Policies", groupProvider, ratio: 3), // 1.5
         ],
       ),
     );

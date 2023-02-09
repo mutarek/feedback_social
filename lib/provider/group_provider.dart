@@ -955,14 +955,15 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
     ApiResponse response = await groupRepo.callForGetAllPhotos(newGroupDetailsModel.photos!);
     if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
+      response.response.data['results'].forEach((element) {
         groupPhotosModel.add(ImagesData.fromJson(element));
       });
+      isLoading = false;
+      isPhotosLoading = false;
       notifyListeners();
       ApiResponse response1 = await groupRepo.callForGetAllVideos(newGroupDetailsModel.videos!);
-      isPhotosLoading = false;
       if (response1.response.statusCode == 200) {
-        response1.response.data.forEach((element) {
+        response1.response.data['results'].forEach((element) {
           groupVideosModel.add(VideosData.fromJson(element));
         });
       } else {
@@ -971,6 +972,7 @@ class GroupProvider with ChangeNotifier {
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
+    isLoading = false;
     isPhotosLoading = false;
     notifyListeners();
   }
