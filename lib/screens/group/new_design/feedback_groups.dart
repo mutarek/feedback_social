@@ -16,8 +16,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
-import 'group_dashboard.dart';
 import 'group_details_page.dart';
 
 class FeedBackGroups extends StatefulWidget {
