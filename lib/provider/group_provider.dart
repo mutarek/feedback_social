@@ -945,24 +945,25 @@ class GroupProvider with ChangeNotifier {
   }
 
   //TODO: FOR GETTING INDIVIDUAL PHOTOS AND VIDEOS DETAILS
+  bool isPhotosLoading = false;
   List<ImagesData> groupPhotosModel = [];
+  List<VideosData> groupVideosModel = [];
 
 
-  getForGetAllPhotosVideos()async{
+  getForGetAllPhotosVideos() async{
     isLoading = true;
     notifyListeners();
     ApiResponse response = await groupRepo.callForGetAllPhotos(newGroupDetailsModel.photos!);
-
     if (response.response.statusCode == 200) {
       response.response.data.forEach((element) {
         groupPhotosModel.add(ImagesData.fromJson(element));
       });
       notifyListeners();
-      ApiResponse response1 = await pageRepo.pageAllPhotosVideo(pageDetailsModel.videos!);
+      ApiResponse response1 = await groupRepo.callForGetAllVideos(newGroupDetailsModel.videos!);
       isPhotosLoading = false;
       if (response1.response.statusCode == 200) {
         response1.response.data.forEach((element) {
-          videosLists.add(VideosData.fromJson(element));
+          groupVideosModel.add(VideosData.fromJson(element));
         });
       } else {
         Fluttertoast.showToast(msg: response1.response.statusMessage!);
@@ -973,6 +974,5 @@ class GroupProvider with ChangeNotifier {
     isPhotosLoading = false;
     notifyListeners();
   }
-
 
 }

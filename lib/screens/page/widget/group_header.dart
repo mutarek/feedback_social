@@ -1,4 +1,6 @@
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
+import 'package:als_frontend/screens/group/new_design/group_dashboard.dart';
+import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -7,12 +9,13 @@ import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../data/model/response/author_group_model.dart';
 import '../../../data/model/response/each_author_group_model.dart';
 
 class GroupHeaderWidget extends StatelessWidget {
   final AuthorEachGroupModel groupDetailsModel;
   final int index;
-   GroupHeaderWidget(this.groupDetailsModel, this.index, {Key? key}) : super(key: key);
+   const GroupHeaderWidget(this.groupDetailsModel, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +102,17 @@ class GroupHeaderWidget extends StatelessWidget {
                             const SizedBox(
                               width: 2,
                             ),
-                            Text(
-                              groupDetailsModel.isMember == true? "Joined" : "Join",
-                              style:
-                              robotoStyle700Bold.copyWith(fontSize: 15, color: Colors.white),
+                            InkWell(
+                              onTap: (){
+                                AuthorGroupModel authorGroupModel = AuthorGroupModel();
+                                authorGroupModel.id = groupDetailsModel.id;
+                                Helper.toScreen(GroupDashboard(authorGroupModel));
+                              },
+                              child: Text(
+                                groupDetailsModel.isMember == true? "Joined" : "Join",
+                                style:
+                                robotoStyle700Bold.copyWith(fontSize: 15, color: Colors.white),
+                              ),
                             ),
                           ],
                         ),
