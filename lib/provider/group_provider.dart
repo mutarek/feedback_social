@@ -880,29 +880,41 @@ class GroupProvider with ChangeNotifier {
   }
 
   List<FindGroupModel> findGroupModel = [];
-  bool isLoadingFindPage = false;
+  bool isLoadingFindGroup = false;
+  bool isBottomLoadingFindGroup = false;
 
-  findPage({String? groupName, int page = 1}) async {
+  updateFindGroupSearchNo(String query) {
+    selectPage++;
+    findGroup(query, page: selectPage);
+    notifyListeners();
+  }
+
+  findGroup(String query, {int page = 1}) async {
     if (page == 1) {
       selectPage = 1;
       findGroupModel.clear();
       findGroupModel = [];
-      isLoading = true;
+      isLoadingFindGroup = true;
       hasNextData = false;
-      isBottomLoading = false;
-      position = 0;
-      ApiResponse response = await groupRepo.findGroup(groupName.toString());
-      isLoadingFindPage = false;
-      if (response.response.statusCode == 200) {
-        response.response.data["results"].forEach((element) {
-          findGroupModel.add(FindGroupModel.fromJson(element));
-          notifyListeners();
-        });
-      } else {
-        Fluttertoast.showToast(msg: response.response.statusMessage!);
-      }
+      isBottomLoadingFindGroup = false;
+      notifyListeners();
+    } else {
+      isBottomLoadingFindGroup = true;
       notifyListeners();
     }
+    ApiResponse response = await groupRepo.findGroup(query, selectPage);
+    isLoadingFindGroup = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        findGroupModel.add(FindGroupModel.fromJson(element));
+      });
+    } else {
+      isLoading = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
   }
   newCallForGetAllGroupInformation(String groupID)async{
   }

@@ -26,20 +26,13 @@ class PageHomeScreen extends StatefulWidget {
 }
 
 class _PageHomeScreenState extends State<PageHomeScreen> {
-  ScrollController controller = ScrollController();
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<PageProvider>(context, listen: false).initializeAuthorPageLists();
-    controller.addListener(() {
-      if (controller.offset >= controller.position.maxScrollExtent &&
-          !controller.position.outOfRange &&
-          Provider.of<PageProvider>(context, listen: false).hasNextData) {
-        Provider.of<PageProvider>(context, listen: false).updateAuthorPageNo();
-      }
-    });
+    Provider.of<PageProvider>(context, listen: false).initializeAuthorPageLists(isFirstTime: true);
   }
 
   @override
@@ -102,7 +95,6 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                             height: 300,
                             child: pageProvider.authorPageLists.isNotEmpty
                                 ? ListView.builder(
-                              controller: controller,
                                     itemCount: pageProvider.authorPageLists.length,
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: (context, index) {
@@ -141,7 +133,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                     LikeInviteFindWidget(
                         icon: ImagesModel.likeIcons,
                         name: "Your liked pages",
-                        extraArguments: " ${pageProvider.likedPageLists.length} page${pageProvider.likedPageLists.length == 1 ? "" : "s"}",
+                        extraArguments: "${pageProvider.totalLikedPage} page${pageProvider.totalLikedPage <= 1 ? "" : "s"}",
                         onTap: () {
                           Helper.toScreen(const NewMyLikedPageScreen());
                         }),
@@ -149,7 +141,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                     LikeInviteFindWidget(
                       icon: ImagesModel.inviteFriendIcons,
                       name: "Invite Pages",
-                      extraArguments: " 25 new invites",
+                      extraArguments: "${pageProvider.totalInvitedPage} new invite${pageProvider.totalInvitedPage <= 1 ? "" : "s"}",
                       onTap: () {
                         Helper.toScreen(const InvitedPage());
                       },

@@ -40,7 +40,7 @@ class _InvitedPageState extends State<InvitedPage> {
                         return InvitedPageViewWidget(
                           invitedPageModel: data,
                           onAcceptTap: () {
-                            pageProvider.acceptInvitation(data.page!.id.toString(), index);
+                            pageProvider.acceptInvitation(data.id.toString(), index);
                           },
                           onCancelTap: () {
                             pageProvider.cancelInvitation(data.id.toString(), index);

@@ -1,6 +1,5 @@
+import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../../data/model/response/page/page_model2.dart';
 import '../../../util/image.dart';
 import '../../../util/theme/app_colors.dart';
 import '../../../util/theme/text.styles.dart';
@@ -10,7 +9,7 @@ import '../../video/widget/new_video_widgets.dart';
 class InvitedPageViewWidget extends StatelessWidget {
   const InvitedPageViewWidget({required this.invitedPageModel, this.onItemTap, this.onAcceptTap, this.onCancelTap, Key? key})
       : super(key: key);
-  final PageModel2 invitedPageModel;
+  final AuthorPageModel invitedPageModel;
   final GestureTapCallback? onItemTap;
   final GestureTapCallback? onAcceptTap;
   final GestureTapCallback? onCancelTap;
@@ -27,13 +26,13 @@ class InvitedPageViewWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          circularImage(invitedPageModel.page!.avatar!, 40, 40),
+          circularImage(invitedPageModel.avatar!, 40, 40),
           const SizedBox(width: 15),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(invitedPageModel.page!.name!, style: robotoStyle700Bold.copyWith(fontSize: 16)),
+              Text(invitedPageModel.name!, style: robotoStyle700Bold.copyWith(fontSize: 16)),
               const SizedBox(height: 5),
               Row(
                 children: [

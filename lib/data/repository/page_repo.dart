@@ -41,10 +41,10 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> getAllLikedPageLists() async {
+  Future<ApiResponse> getAllLikedPageLists(int pageNo) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get(AppConstant.pageLikeAllURI);
+      response = await dioClient.get("${AppConstant.pageLikeAllURI}?page=$pageNo");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -213,6 +213,16 @@ class PageRepo {
     Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
       response = await dioClient.get(url);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> pageSummery() async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
+    try {
+      response = await dioClient.get(AppConstant.pageSummeryURI);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

@@ -62,6 +62,7 @@ class AppConstant {
   static const String pagePostHideURI = '/page/post/hide/';
   static const String invitationCreateURI = '/page/invitation/create/';
   static const String pageCreateURI = '/page/create-or-list/';
+  static const String pageSummeryURI = '/page/summery/';
   static const String postPageURI = '/page/post/';
   static const String emailUpdate = '/settings/change-email/';
   static const String blocklist = '/settings/block/';
