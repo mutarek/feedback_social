@@ -1,13 +1,10 @@
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/page/photo_video_view_screen.dart';
-import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
 import '../../../data/model/response/each_author_group_model.dart';
-import '../../../data/model/response/watch_list_model.dart';
 import '../../../util/helper.dart';
 import '../../../util/image.dart';
 import '../../../util/theme/text.styles.dart';

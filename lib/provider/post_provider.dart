@@ -290,7 +290,8 @@ class PostProvider with ChangeNotifier {
   }
 
   //// for Share post
-  bool isLoadingShare=false;
+  bool isLoadingShare = false;
+
   Future<PostResponse> sharePost(String url, String description, NewsFeedModel newsfeedData) async {
     isLoadingShare = true;
     notifyListeners();
@@ -355,6 +356,17 @@ class PostProvider with ChangeNotifier {
     showLog("notification progress: =>  ${uploadPercent.toString()}");
     if (progressPercent == 100) {
       await fLutterLocalNotificationsPlugin!.cancel(0);
+    }
+  }
+
+  //TODO:: for Hide Post Section
+  Future<bool> hidePagePostFromDatabase(String postId, bool isPage, bool isGroup) async {
+    ApiResponse apiResponse = await postRepo.hidePagePostFromDatabase(postId, isPage, isGroup);
+    if (apiResponse.response.statusCode == 200) {
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+      return false;
     }
   }
 }

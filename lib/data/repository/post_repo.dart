@@ -70,8 +70,18 @@ class PostRepo {
 
   Future<ApiResponse> sharePost(String url, String description, {onSendProgress}) async {
     try {
-      response = await dioClient.post("${url.replaceAll("list/", "")}create/",
-          data: {"description": description}, onSendProgress: onSendProgress);
+      response =
+          await dioClient.post("${url.replaceAll("list/", "")}create/", data: {"description": description}, onSendProgress: onSendProgress);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> hidePagePostFromDatabase(String postId, bool isPage, bool isGroup) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post("/${isPage ? 'page' : isGroup ? "group" : 'user'}/post/hide/$postId/");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

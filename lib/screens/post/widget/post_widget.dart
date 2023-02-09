@@ -73,8 +73,8 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<CommentProvider,NewsFeedProvider>(
-        builder: (context, commentProvider,newsFeedProvider, child) => Column(
+    return Consumer3<CommentProvider, NewsFeedProvider, PostProvider>(
+        builder: (context, commentProvider, newsFeedProvider, postProvider, child) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -210,8 +210,18 @@ class PostWidget extends StatelessWidget {
                                             });
                                       })
                                     : PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {
-                                      newsFeedProvider.hideNewsFeedData(index,newsFeedData.pageModel!.id.toString());
-                                }),
+                                        postProvider
+                                            .hidePagePostFromDatabase(
+                                                newsFeedData.id.toString(),
+                                                AppConstant.postTypePage == newsFeedData.postType ? true : false,
+                                                AppConstant.postTypeGroup == newsFeedData.postType ? true : false)
+                                            .then((value) {
+                                          if (isHomeScreen == true) {
+                                            newsFeedProvider.hideNewsFeedData(index);
+                                          }
+                                        });
+                                        Helper.back();
+                                      }),
                                 SizedBox(height: isAdmin ? 8 : 15),
                                 isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
                                 SizedBox(height: isAdmin ? 0 : 15),
@@ -410,7 +420,9 @@ class PostWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {shareBottomSheet(context,"",newsFeedData);}, size: 18),
+                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {
+                                  shareBottomSheet(context, "", newsFeedData);
+                                }, size: 18),
                                 PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {
                                   shareBottomSheet(context, newsFeedData.sharedByUrl.toString(), newsFeedData);
                                 }, size: 18),

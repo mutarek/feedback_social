@@ -817,8 +817,6 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO: page details api instigation
-
 //TODO: page Photos api instigation
   List<ImagesData> pagePhotosModel = [];
   List<VideosData> videosLists = [];
