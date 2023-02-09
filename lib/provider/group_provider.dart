@@ -945,7 +945,7 @@ class GroupProvider with ChangeNotifier {
   }
 
   //TODO: FOR GETTING INDIVIDUAL PHOTOS AND VIDEOS DETAILS
-
+  List<ImagesData> groupPhotosModel = [];
 
 
   getForGetAllPhotosVideos()async{
@@ -955,7 +955,7 @@ class GroupProvider with ChangeNotifier {
 
     if (response.response.statusCode == 200) {
       response.response.data.forEach((element) {
-        pagePhotosModel.add(ImagesData.fromJson(element));
+        groupPhotosModel.add(ImagesData.fromJson(element));
       });
       notifyListeners();
       ApiResponse response1 = await pageRepo.pageAllPhotosVideo(pageDetailsModel.videos!);

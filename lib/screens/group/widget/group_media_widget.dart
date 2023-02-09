@@ -19,7 +19,7 @@ class GroupMediaWidget extends StatefulWidget {
 class _GroupMediaWidgetState extends State<GroupMediaWidget> {
   @override
   void initState() {
-    Provider.of<GroupProvider>(context, listen: false).pageAllPhotos();
+    //Provider.of<GroupProvider>(context, listen: false).pageAllPhotos();
     super.initState();
   }
   @override
