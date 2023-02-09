@@ -2,8 +2,13 @@ import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
 
+import '../../../data/model/response/each_author_group_model.dart';
+
 class GroupComuinityWidget extends StatelessWidget {
-  const GroupComuinityWidget({Key? key}) : super(key: key);
+  final AuthorEachGroupModel authorEachGroupModel;
+  final int index;
+
+  const GroupComuinityWidget(this.authorEachGroupModel, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
