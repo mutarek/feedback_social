@@ -1,6 +1,7 @@
 class NewsFeedModel {
   NewsFeedModel({
     this.id,
+    this.newsfeedID,
     this.description,
     this.author,
     this.totalImage,
@@ -27,6 +28,7 @@ class NewsFeedModel {
 
   NewsFeedModel.fromJson(dynamic json) {
     id = json['id'];
+    newsfeedID = json['newsfeed_id'] ?? json['bookmark_id'] ?? 0;
     description = json['description'] ?? "";
     author = json['author'] != null ? Author.fromJson(json['author']) : null;
     totalImage = json['total_image'];
@@ -65,6 +67,7 @@ class NewsFeedModel {
   }
 
   num? id;
+  num? newsfeedID;
   String? description;
   Author? author;
   num? totalImage;

@@ -77,6 +77,7 @@ class AppConstant {
   static const String faqQuestionUri = '/settings/faq/';
   static const String latestVersionUri = '/latest-version/';
   static const String helpDiskURI = '/settings/help-desk/';
+  static const String bookmarkURI = '/bookmark/post/';
 
   // Shared Key
   static const String theme = 'theme';
