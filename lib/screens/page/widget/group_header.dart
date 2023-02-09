@@ -35,9 +35,13 @@ class GroupHeaderWidget extends StatelessWidget {
                         child: customNetworkImage(groupProvider.groupDetailsModel.coverPhoto.toString(), boxFit: BoxFit.fitWidth),
                       ),
                     ),
-                    const Align(
+                    Align(
                         alignment: Alignment.topLeft,
-                        child: Padding(padding: EdgeInsets.all(15), child: Icon(Icons.arrow_back, color: colorText))),
+                        child: InkWell(
+                            onTap: () {
+                              Helper.back();
+                            },
+                            child: const Padding(padding: EdgeInsets.all(15), child: Icon(Icons.arrow_back, color: colorText)))),
                     !isMe(groupProvider.groupDetailsModel.creator!.id.toString())
                         ? const SizedBox.shrink()
                         : Positioned(
@@ -207,10 +211,10 @@ class GroupHeaderWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Divider(thickness: 1, color: Color(0xffE4E6EB))
                     ],
                   ),
                 ),
+                const Divider(thickness: 2, color: Color(0xffE4E6EB))
               ],
             ));
   }

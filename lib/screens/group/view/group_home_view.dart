@@ -1,17 +1,10 @@
 import 'package:als_frontend/provider/group_provider.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:als_frontend/screens/post/widget/post_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../../provider/page_provider.dart';
 import '../../../util/helper.dart';
-import '../../../util/image.dart';
-import '../../../util/theme/app_colors.dart';
-import '../../../util/theme/text.styles.dart';
 import '../../home/widget/create_post_widget.dart';
 import '../../page/widget/group_header.dart';
-import '../../page/widget/page_details_header_widget.dart';
-import '../../page/widget/new_page_like_following_widget.dart';
-import '../../post/widget/post_widget.dart';
 import '../../video/widget/new_video_widgets.dart';
 
 class GroupHomeView extends StatefulWidget {
@@ -49,8 +42,23 @@ class _GroupHomeViewState extends State<GroupHomeView> {
               children: [
                 GroupHeaderWidget(widget.index),
                 widget.widget,
+                SizedBox(height: isMe(groupProvider.groupDetailsModel.creator!.id.toString()) ? 6 : 0),
+                !isMe(groupProvider.groupDetailsModel.creator!.id.toString())
+                    ? const SizedBox.shrink()
+                    : Container(
+                        decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color(0xffE4E6EB), width: 2))),
+                        child: createPostWidget(isForGroup: true, groupPageID: groupProvider.groupDetailsModel.id as int)),
+
+                const SizedBox(height: 15),
+                ListView.builder(
+                    itemCount: groupProvider.groupAllPosts.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return PostWidget(groupProvider.groupAllPosts[index], index: index, isGroup: true);
+                    })
+
               ],
             ));
   }
-
 }

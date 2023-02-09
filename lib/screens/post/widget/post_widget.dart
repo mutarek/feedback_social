@@ -199,7 +199,7 @@ class PostWidget extends StatelessWidget {
                                                 builder: (_) => AddPostScreen(
                                                     Provider.of<AuthProvider>(context, listen: false).profileImage,
                                                     isFromGroupScreen: isGroup,
-                                                    isForPage: isPage,
+                                                    isFormPageScreen: isPage,
                                                     isEditPost: true,
                                                     post: newsFeedData,
                                                     isFromProfileScreen: isProfileScreen,

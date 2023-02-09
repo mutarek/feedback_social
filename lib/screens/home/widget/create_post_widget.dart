@@ -14,14 +14,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-Widget createPostWidget( {bool isForGroup = false, bool isForPage = false, int groupPageID = 0}) {
+Widget createPostWidget({bool isForGroup = false, bool isForPage = false, int groupPageID = 0}) {
   return Consumer2<AuthProvider, NewsFeedProvider>(
       builder: (context, authProvider, newsFeedProvider, child) => InkWell(
             onTap: () async {
               Provider.of<PostProvider>(context, listen: false).clearImageVideo();
-              Helper.toScreen(AddPostScreen(authProvider.profileImage,
-                  isFromGroupScreen: isForGroup, groupPageID: groupPageID, isForPage: isForPage));
-
+              Helper.toScreen(
+                  AddPostScreen(authProvider.profileImage, isFromGroupScreen: isForGroup, groupPageID: groupPageID, isFormPageScreen: isForPage));
             },
             child: Container(
               decoration: BoxDecoration(

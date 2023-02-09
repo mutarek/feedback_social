@@ -445,8 +445,15 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  addGroupPostTimeLine(NewsFeedModel n) async {
-    groupAllPosts.insert(0, n);
+
+  addGroupPostToTimeLine(NewsFeedModel n) async {
+    List<NewsFeedModel> groupPostLists = [];
+    groupPostLists.addAll(groupAllPosts);
+    groupAllPosts.clear();
+    groupAllPosts = [];
+    notifyListeners();
+    groupAllPosts.add(n);
+    groupAllPosts.addAll(groupPostLists);
     notifyListeners();
   }
 

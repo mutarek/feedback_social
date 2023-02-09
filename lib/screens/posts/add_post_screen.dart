@@ -22,7 +22,7 @@ class AddPostScreen extends StatefulWidget {
   final int groupPageID;
   final bool isFromGroupScreen;
   final bool isFromProfileScreen;
-  final bool isForPage;
+  final bool isFormPageScreen;
   final bool isEditPost;
   final NewsFeedModel? post;
   final int index;
@@ -32,7 +32,7 @@ class AddPostScreen extends StatefulWidget {
       this.index = 0,
       this.isFromGroupScreen = false,
       this.isEditPost = false,
-      this.isForPage = false,
+      this.isFormPageScreen = false,
       this.isFromProfileScreen = false,
       this.post,
       Key? key})
@@ -107,14 +107,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     if (widget.isEditPost) {
                       postProvider
                           .updatePost(descriptionController.text, widget.post!.commentUrl!,
-                              isFromGroup: widget.isFromGroupScreen, isFromPage: widget.isForPage)
+                              isFromGroup: widget.isFromGroupScreen, isFromPage: widget.isFormPageScreen)
                           .then((value) {
                         descriptionController.clear();
                         postProvider.clearImageVideo();
                         if (value.status!) {
                           if (widget.isFromGroupScreen) {
                             groupProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
-                          } else if (widget.isForPage) {
+                          } else if (widget.isFormPageScreen) {
                             pageProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
                           } else if (widget.isFromProfileScreen) {
                             profileProvider.updatePostOnTimeLine(widget.index, value.newsFeedData!);
@@ -126,16 +126,16 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     } else {
                       postProvider
                           .addPost(descriptionController.text,
-                              isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isForPage)
+                              isFromGroup: widget.isFromGroupScreen, groupPageID: widget.groupPageID, isFromPage: widget.isFormPageScreen)
                           .then((value) {
                         descriptionController.clear();
                         postProvider.clearImageVideo();
                         if (value.status!) {
                           if (widget.isFromGroupScreen) {
-                            groupProvider.addGroupPostTimeLine(value.newsFeedData!);
-                          } else if (widget.isForPage) {
+                            groupProvider.addGroupPostToTimeLine(value.newsFeedData!);
+                          } else if (widget.isFormPageScreen) {
                             pageProvider.addPagePostToTimeLine(value.newsFeedData!);
-                          } else {
+                          }  else {
                             newsfeedProvider.addPostOnTimeLine(value.newsFeedData!);
                           }
                         }

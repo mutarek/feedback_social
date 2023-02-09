@@ -1,7 +1,6 @@
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/new_design/group_about_view.dart';
 import 'package:als_frontend/screens/group/view/group_home_view.dart';
-import 'package:als_frontend/screens/page/view/page_upcomming_view.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +24,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
   @override
   void initState() {
     Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupInformation(widget.groupID);
-    // Provider.of<GroupProvider>(context, listen: false).newCallForGetAllGroupPosts(widget.groupID.toString());
+    Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupPosts(widget.groupID, isFirstTime: false);
     _pageController = PageController();
     super.initState();
   }
@@ -79,7 +78,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           tabButtonWidget(1, "About", groupProvider),
           tabButtonWidget(2, "Media", groupProvider),
           tabButtonWidget(3, "People", groupProvider),
-          tabButtonWidget(4, "Policies", groupProvider, ratio: 3), // 1.5
+          tabButtonWidget(4, "Policies", groupProvider), // 1.5
         ],
       ),
     );

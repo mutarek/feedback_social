@@ -34,7 +34,7 @@ class AppConstant {
   static const String watchListUri = '/watch/list/?size=10&page=';
   static const String postsUri = '/posts/';
   static const String userPostUri = '/user/post/create/';
-  static const String postsGroupUri = '/posts/group/';
+  static const String postsGroupUri = '/group/post/';
   static const String animalUri = '/animal/';
   static const String animalOwnerURI = '/animal/owner/';
   static const String groupUri = '/group/';

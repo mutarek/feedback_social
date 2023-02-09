@@ -50,7 +50,7 @@ void moreMenuBottomSheet(BuildContext context, NewsFeedModel newsFeedData, int i
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => AddPostScreen(Provider.of<AuthProvider>(context, listen: false).profileImage,
                                   isFromGroupScreen: isFromGroupScreen,
-                                  isForPage: isForPage,
+                                  isFormPageScreen: isForPage,
                                   isEditPost: true,
                                   post: newsFeedData,
                                   isFromProfileScreen: isFromProfile,

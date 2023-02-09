@@ -32,7 +32,7 @@ class PostRepo {
 
   Future<ApiResponse> submitPostTOGroupBYUSINGGroupID(FormData formData, int groupID, {onSendProgress}) async {
     try {
-      response = await dioClient.post("${AppConstant.postsGroupUri}$groupID/", data: formData, onSendProgress: onSendProgress);
+      response = await dioClient.post("${AppConstant.postsGroupUri}$groupID/create-list/", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
