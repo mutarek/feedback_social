@@ -1,5 +1,4 @@
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
-import 'package:als_frontend/data/model/response/page/page_model2.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
@@ -26,13 +25,12 @@ class NewMyLikedPageScreen extends StatelessWidget {
                     itemCount: pageProvider.likedPageLists.length,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
-                      PageModel2 pageModel2 = pageProvider.likedPageLists[index];
+                      AuthorPageModel pageModel2 = pageProvider.likedPageLists[index];
                       return PageViewWidget(
-                          authorPageModel:
-                              AuthorPageModel(id: pageModel2.page!.id, name: pageModel2.page!.name, avatar: pageModel2.page!.name),
+                          authorPageModel: AuthorPageModel(id: pageModel2.id, name: pageModel2.name, avatar: pageModel2.name),
                           onTap: () {
                             pageProvider.changeSearchView(0);
-                            Helper.toScreen(NewPageDetailsScreen(pageModel2.page!.id.toString(),  index: index));
+                            Helper.toScreen(NewPageDetailsScreen(pageModel2.id.toString(), index: index));
                           });
                     })
                 : const Center(child: CustomText(title: "You haven't any Liked Page")));

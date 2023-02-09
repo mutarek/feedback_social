@@ -15,7 +15,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../data/model/response/page/page_model2.dart';
 
 class PageProvider with ChangeNotifier {
   final PageRepo pageRepo;
@@ -58,7 +57,7 @@ class PageProvider with ChangeNotifier {
   }
 
   //TODO: for get ALl Liked Page
-  List<PageModel2> likedPageLists = [];
+  List<AuthorPageModel> likedPageLists = [];
 
   initializeLikedPageLists() async {
     ApiResponse response = await pageRepo.getAllLikedPageLists();
@@ -66,7 +65,7 @@ class PageProvider with ChangeNotifier {
     if (response.response.statusCode == 200) {
       if (response.response.data['results'].isNotEmpty) {
         response.response.data['results'].forEach((element) {
-          likedPageLists.add(PageModel2.fromJson(element));
+          likedPageLists.add(AuthorPageModel.fromJson(element));
         });
       }
     } else {
@@ -99,8 +98,10 @@ class PageProvider with ChangeNotifier {
     initializeAuthorPageLists(page: selectPage);
     notifyListeners();
   }
+
   List<AuthorPageModel> authorPageLists = [];
   int position = 0;
+
   initializeAuthorPageLists({int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
@@ -143,9 +144,8 @@ class PageProvider with ChangeNotifier {
       invitedPageLists.removeAt(index);
       AuthorPageModel authorPageModel = AuthorPageModel();
       authorPageModel.id = invitedPageLists[index].id;
-      authorPageModel.name = invitedPageLists[index].page!.name;
-      authorPageModel.avatar = invitedPageLists[index].page!.avatar;
-      // likedPageLists.insert(0,authorPageModel);
+      authorPageModel.name = invitedPageLists[index].name;
+      authorPageModel.avatar = invitedPageLists[index].avatar;
       notifyListeners();
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
@@ -161,7 +161,7 @@ class PageProvider with ChangeNotifier {
 
   //TODO: For Getting all inviting page
 
-  List<PageModel2> invitedPageLists = [];
+  List<AuthorPageModel> invitedPageLists = [];
 
   getAllInvitedPages() async {
     isLoading = true;
@@ -170,7 +170,7 @@ class PageProvider with ChangeNotifier {
     isLoading = false;
     if (response.response.statusCode == 200) {
       response.response.data['results'].forEach((element) {
-        invitedPageLists.add(PageModel2.fromJson(element));
+        invitedPageLists.add(AuthorPageModel.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
@@ -445,18 +445,16 @@ class PageProvider with ChangeNotifier {
 
         if (isFromMyPage) {
           authorPageLists[index].followers = authorPageLists[index].followers! + 1;
-          PageModel2 invitedPageModel = likedPageLists[index];
+          AuthorPageModel invitedPageModel = likedPageLists[index];
           likedPageLists.insert(0, invitedPageModel);
         } else if (isFromSuggestedPage) {
-          PageModel2 pageModel2 = PageModel2(
-              id: 0,
-              page: PageResponse(
-                  id: allSuggestPageList[index].id, name: allSuggestPageList[index].name, avatar: allSuggestPageList[index].avatar));
+          AuthorPageModel pageModel2 = AuthorPageModel(
+              id: allSuggestPageList[index].id, name: allSuggestPageList[index].name, avatar: allSuggestPageList[index].avatar);
           likedPageLists.insert(0, pageModel2);
           allSuggestPageList.removeAt(index);
         } else if (isFromSearchPage) {
-          PageModel2 pageModel2 =
-              PageModel2(id: 0, page: PageResponse(id: pageDetailsModel.id, name: pageDetailsModel.name, avatar: pageDetailsModel.avatar));
+          AuthorPageModel pageModel2 =
+              AuthorPageModel(id: pageDetailsModel.id, name: pageDetailsModel.name, avatar: pageDetailsModel.avatar);
           likedPageLists.insert(0, pageModel2);
         }
       } else {
