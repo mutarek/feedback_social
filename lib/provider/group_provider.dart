@@ -916,16 +916,31 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+
+  //TODO: FOR GETTING INDIVIDUAL PAGE DETAILS
+  bool isLoadingUpdateCover = false;
+  AuthorEachGroupModel newGroupDetailsModel = AuthorEachGroupModel();
+  bool isLoadingGroupDetails = false;
   newCallForGetAllGroupInformation(String groupID)async{
+    isLoading = true;
+    notifyListeners();
+    ApiResponse response = await groupRepo.callForGetGroupDetails(groupID);
+    isLoading = false;
+    notifyListeners();
+    if(response.response.statusCode == 200){
+      newGroupDetailsModel = AuthorEachGroupModel.fromJson(response.response.data);
+    }
+    else
+      {
+        isLoading = false;
+        notifyListeners();
+        Fluttertoast.showToast(msg: response.response.statusMessage!);
+      }
   }
   newCallForGetAllGroupPosts(String groupID)async{
 
   }
-
-  //TODO: FOR GETTING INDIVIDUAL PAGE DETAILS
-  bool isLoadingUpdateCover = false;
-  AuthorEachGroupModel pageDetailsModel = AuthorEachGroupModel();
-  bool isLoadingGroupDetails = false;
 
 
 }

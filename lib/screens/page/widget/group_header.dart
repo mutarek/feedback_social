@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -6,8 +7,12 @@ import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../data/model/response/each_author_group_model.dart';
+
 class GroupHeaderWidget extends StatelessWidget {
-  const GroupHeaderWidget({Key? key}) : super(key: key);
+  final AuthorEachGroupModel groupDetailsModel;
+  final int index;
+   GroupHeaderWidget(this.groupDetailsModel, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +26,11 @@ class GroupHeaderWidget extends StatelessWidget {
               width: double.infinity,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
+                  topLeft: Radius.circular(5),
+                  topRight: Radius.circular(5),
                 ),
                 child: customNetworkImage(
-                 "https://porzoton.com/wp-content/uploads/2020/12/Sajek-Valley-Sun-rises-over-the-clouds.jpg",
+                    groupDetailsModel.coverPhoto.toString(),
                     boxFit: BoxFit.fitWidth),
               ),
             ),
@@ -44,7 +49,7 @@ class GroupHeaderWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                  title: "Exam Helping BD",
+                  title: groupDetailsModel.name,
                   maxLines: 1,
                   textStyle: robotoStyle500Medium.copyWith(fontSize: 20, color: AppColors.primaryColorLight)),
               const SizedBox(height: 8),
@@ -53,13 +58,13 @@ class GroupHeaderWidget extends StatelessWidget {
                 children: [
                   SvgPicture.asset(ImagesModel.groupMemberIcon, height: 12, width: 20, color: AppColors.primaryColorLight),
                   const SizedBox(width: 5),
-                  const Text.rich(
+                   Text.rich(
                     TextSpan(
                       children: [
-                        TextSpan(text: 'Members: '),
+                        const TextSpan(text: 'Members: '),
                         TextSpan(
-                          text: '5M',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          text: groupDetailsModel.totalMember.toString(),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -67,7 +72,7 @@ class GroupHeaderWidget extends StatelessWidget {
                   const SizedBox(width: 10),
                   SvgPicture.asset(ImagesModel.publicGroupIcon, height: 12, width: 20, color: AppColors.primaryColorLight),
                   const SizedBox(width: 5),
-                  Text("Public Group",
+                  Text(groupDetailsModel.isPrivate ==true ? "Private Group" : "Public Group",
                       style: robotoStyle400Regular.copyWith(fontSize: 10)),
                 ],
               ),
@@ -95,7 +100,7 @@ class GroupHeaderWidget extends StatelessWidget {
                               width: 2,
                             ),
                             Text(
-                              'Joined',
+                              groupDetailsModel.isMember == true? "Joined" : "Join",
                               style:
                               robotoStyle700Bold.copyWith(fontSize: 15, color: Colors.white),
                             ),

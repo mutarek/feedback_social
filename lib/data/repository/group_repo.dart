@@ -132,7 +132,7 @@ class GroupRepo {
   Future<ApiResponse> callForGetGroupDetails(String groupID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get("${AppConstant.groupUri}$groupID/");
+      response = await dioClient.get("${AppConstant.groupUri}$groupID/up-del-retr/");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

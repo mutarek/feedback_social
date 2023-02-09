@@ -1,10 +1,14 @@
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/new_design/group_about_view.dart';
+import 'package:als_frontend/screens/group/view/group_home_view.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 import '../../../util/theme/app_colors.dart';
 import '../../../util/theme/text.styles.dart';
 import '../../page/shimmer_effect/new_page_details_screen_shimmer.dart';
 import '../../video/widget/new_video_widgets.dart';
+import '../view/group_media_view.dart';
+import 'group_media_view.dart';
 
 class GroupDetailsPage extends StatefulWidget {
   const GroupDetailsPage(this.groupID, {this.index = 0, this.isFromYourGroup = false, Key? key}) : super(key: key);
@@ -50,7 +54,9 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
             },
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              // PageHomeView(tabMenuWidget(pageProvider), widget.pageID,index: widget.index),
+              GroupHomeView(tabMenuWidget(groupProvider),widget.groupID,index:widget.index),
+              GroupAboutView(tabMenuWidget(groupProvider),widget.groupID,index:widget.index),
+              GroupMediaView(tabMenuWidget(groupProvider),widget.groupID,index:widget.index),
               // PageAboutView(tabMenuWidget(pageProvider), pageProvider.pageDetailsModel),
               // PagePhotoView(tabMenuWidget(pageProvider)),
               // PageUpcomingView(tabMenuWidget(pageProvider),  pageProvider.pageDetailsModel),
@@ -71,8 +77,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           // TODO: Post Container
           tabButtonWidget(0, "Home", groupProvider),
           tabButtonWidget(1, "About", groupProvider),
-          tabButtonWidget(2, "Photos", groupProvider),
-          tabButtonWidget(3, "Live", groupProvider),
+          tabButtonWidget(2, "Media", groupProvider),
+          tabButtonWidget(3, "People", groupProvider),
           tabButtonWidget(4, "Community", groupProvider, ratio: 3), // 1.5
         ],
       ),

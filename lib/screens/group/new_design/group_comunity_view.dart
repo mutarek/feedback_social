@@ -10,7 +10,7 @@ class GroupComunityView extends StatelessWidget {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
-        const GroupHeaderWidget(),
+        //const GroupHeaderWidget(),
         widget,
         const GroupComuinityWidget()
       ],

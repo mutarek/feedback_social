@@ -12,7 +12,7 @@ class JoinedGroupPage extends StatelessWidget {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: [
-        const GroupHeaderWidget(),
+        //const GroupHeaderWidget(),
         widget,
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),

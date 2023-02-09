@@ -1,3 +1,4 @@
+import 'package:als_frontend/data/model/response/each_author_group_model.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -8,7 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class GroupAboutViewWidget extends StatelessWidget {
-  const GroupAboutViewWidget({Key? key}) : super(key: key);
+  final AuthorEachGroupModel authorEachGroupModel;
+  final int index;
+  const GroupAboutViewWidget(this.authorEachGroupModel,this.index,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class GroupAboutViewWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 18),
               child: Text(
-                "This group is dedicated to helping student around bangladesh",
+                authorEachGroupModel.bio!,
                 style: robotoStyle400Regular.copyWith(fontSize: 12, color: AppColors.primaryColorLight),
               ),
             ),
@@ -57,7 +60,7 @@ class GroupAboutViewWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Private", style: robotoStyle800ExtraBold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
+                      Text(authorEachGroupModel.isPrivate==true?"Private":"Public", style: robotoStyle800ExtraBold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
                       const SizedBox(height: 2),
                       Text("Only members can see who is in the group and what they post.",
                           style: robotoStyle400Regular.copyWith(fontSize: 12)),
@@ -131,7 +134,7 @@ class GroupAboutViewWidget extends StatelessWidget {
                         TextSpan(
                           children: [
                             TextSpan(
-                                text: '151/7, Good Luck Center (7th & 8th)1205 Dhaka, Dhaka Division, Bangladesh',
+                                text: authorEachGroupModel.address,
                                 style: robotoStyle400Regular.copyWith(fontSize: 13)),
                           ],
                         ),
@@ -158,7 +161,7 @@ class GroupAboutViewWidget extends StatelessWidget {
                     children: [
                       TextSpan(
                           text:
-                              'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a commonly  to.used to thdfsde visual form of a commonly  to. placeholder text comsdsdfmonly used to the visual form of a comm only  to.u sed to ths dfsd  fezxxzc',
+                              authorEachGroupModel.description,
                           style: robotoStyle600SemiBold.copyWith(fontSize: 10)),
                       TextSpan(
                         text: '... View More ',
