@@ -15,7 +15,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
 class PageProvider with ChangeNotifier {
   final PageRepo pageRepo;
   final NewsfeedRepo newsfeedRepo;
@@ -58,11 +57,36 @@ class PageProvider with ChangeNotifier {
 
   //TODO: for get ALl Liked Page
   List<AuthorPageModel> likedPageLists = [];
+  bool isLoadingMyPage = false;
+  bool hasNextDataMyPage = false;
+  int mySelectPageNo = 0;
 
-  initializeLikedPageLists() async {
-    ApiResponse response = await pageRepo.getAllLikedPageLists();
-    isLoading = false;
+  updateMyLikedPageNo() {
+    mySelectPageNo++;
+    initializeAuthorPageLists(page: mySelectPageNo);
+    notifyListeners();
+  }
+
+  initializeLikedPageLists({int page = 1, bool isFirstTime = false}) async {
+    if (page == 1) {
+      mySelectPageNo = 1;
+      likedPageLists.clear();
+      likedPageLists = [];
+      isLoadingMyPage = true;
+      hasNextDataMyPage = false;
+      isBottomLoading = false;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    ApiResponse response = await pageRepo.getAllLikedPageLists(mySelectPageNo);
+    isLoadingMyPage = false;
+    notifyListeners();
     if (response.response.statusCode == 200) {
+      hasNextDataMyPage = response.response.data['next'] != null ? true : false;
       if (response.response.data['results'].isNotEmpty) {
         response.response.data['results'].forEach((element) {
           likedPageLists.add(AuthorPageModel.fromJson(element));
@@ -117,13 +141,15 @@ class PageProvider with ChangeNotifier {
       position = 0;
       if (!isFirstTime) {
         notifyListeners();
+      } else {
+        pageSummery();
       }
     } else {
       isBottomLoading = true;
       notifyListeners();
     }
     ApiResponse response = await pageRepo.getAuthorPage();
-    initializeLikedPageLists();
+    // initializeLikedPageLists();
     isLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
@@ -443,19 +469,8 @@ class PageProvider with ChangeNotifier {
           pageDetailsModel.isLiked = true;
         }
 
-        if (isFromMyPage) {
-          authorPageLists[index].followers = authorPageLists[index].followers! + 1;
-          AuthorPageModel invitedPageModel = likedPageLists[index];
-          likedPageLists.insert(0, invitedPageModel);
-        } else if (isFromSuggestedPage) {
-          AuthorPageModel pageModel2 = AuthorPageModel(
-              id: allSuggestPageList[index].id, name: allSuggestPageList[index].name, avatar: allSuggestPageList[index].avatar);
-          likedPageLists.insert(0, pageModel2);
-          allSuggestPageList.removeAt(index);
-        } else if (isFromSearchPage) {
-          AuthorPageModel pageModel2 =
-              AuthorPageModel(id: pageDetailsModel.id, name: pageDetailsModel.name, avatar: pageDetailsModel.avatar);
-          likedPageLists.insert(0, pageModel2);
+        if (isFromMyPage || isFromSuggestedPage || isFromSearchPage) {
+          totalLikedPage += 1;
         }
       } else {
         if (isGoDetails == true) {
@@ -464,12 +479,8 @@ class PageProvider with ChangeNotifier {
           pageDetailsModel.isLiked = false;
         }
 
-        if (isFromMyPage) {
-          likedPageLists.removeAt(index);
-        } else if (isFromSuggestedPage) {
-          likedPageLists.removeAt(index);
-        } else if (isFromSearchPage) {
-          likedPageLists.removeWhere((element) => element.id == pageDetailsModel.id);
+        if (isFromMyPage || isFromSuggestedPage || isFromSearchPage) {
+          totalLikedPage -= 1;
         }
       }
       notifyListeners();
@@ -845,6 +856,22 @@ class PageProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     isPhotosLoading = false;
+    notifyListeners();
+  }
+
+//TODO: page Summery
+  int totalLikedPage = 0;
+  int totalInvitedPage = 0;
+
+  pageSummery() async {
+    ApiResponse response = await pageRepo.pageSummery();
+
+    if (response.response.statusCode == 200) {
+      totalLikedPage = response.response.data['total_liked_page'];
+      totalInvitedPage = response.response.data['total_invited_page'];
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
     notifyListeners();
   }
 }
