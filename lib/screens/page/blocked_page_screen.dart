@@ -1,6 +1,7 @@
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
+import 'package:als_frontend/screens/page/shimmer_effect/find_page_shimmer.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/util/image.dart';
@@ -45,7 +46,7 @@ class _BlockedPageScreenState extends State<BlockedPageScreen> {
             backgroundColor: Colors.white,
             appBar: const PageAppBar(title: 'My Page Block'),
             body: pageProvider.isLoadingBlockPage
-                ? const Center(child: CircularProgressIndicator())
+                ? const FindPageShimmer()
                 : pageProvider.blockPageLists.isNotEmpty
                     ? ModalProgressHUD(
                         inAsyncCall: pageProvider.isLoadingBlockPage2,
