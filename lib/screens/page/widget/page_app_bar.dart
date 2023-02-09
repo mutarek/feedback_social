@@ -1,3 +1,5 @@
+import 'package:als_frontend/screens/page/blocked_page_screen.dart';
+import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/palette.dart';
@@ -58,7 +60,7 @@ class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Notifications Setting", style: latoStyle600SemiBold.copyWith(color: Palette.primary)),
+                            Text("Page Setting", style: latoStyle600SemiBold.copyWith(color: Palette.primary)),
                             Row(
                               children: [
                                 SvgPicture.asset(ImagesModel.notificationIcons, width: 18, height: 18),
@@ -71,7 +73,7 @@ class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     width: 30,
                                     child: FittedBox(
                                         fit: BoxFit.contain,
-                                        child: CupertinoSwitch(value: true, onChanged: (value) {}, activeColor: Palette.primary)))
+                                        child: CupertinoSwitch(value: true, onChanged: (value) {}, activeColor: Palette.primary))),
                               ],
                             ),
                             Row(
@@ -88,6 +90,12 @@ class PageAppBar extends StatelessWidget implements PreferredSizeWidget {
                                         child: CupertinoSwitch(value: true, onChanged: (value) {}, activeColor: Palette.primary)))
                               ],
                             ),
+                            const SizedBox(height: 6),
+                            PopUpMenuWidget(ImagesModel.blocksIcons, 'Block Page List', () {
+                              Helper.back();
+                              Helper.toScreen(const BlockedPageScreen());
+                            }),
+                            const SizedBox(height: 6),
                           ],
                         ),
                       ),

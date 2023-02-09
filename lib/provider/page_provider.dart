@@ -869,7 +869,7 @@ class PageProvider with ChangeNotifier {
   }
 
 //TODO: page Block And Unblock Systems
-  List<PageModel> blockPageLists = [];
+  List<AuthorPageModel> blockPageLists = [];
   int selectBlockPage = 0;
   bool isBottomLoadingBlockPage = false;
   bool isLoadingBlockPage = false;
@@ -905,7 +905,7 @@ class PageProvider with ChangeNotifier {
     if (response.response.statusCode == 200) {
       hasNextDataBlockPage = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        blockPageLists.add(PageModel.fromJson(element));
+        blockPageLists.add(AuthorPageModel.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
@@ -914,8 +914,13 @@ class PageProvider with ChangeNotifier {
   }
 
   Future<bool> createBlock(int pageID) async {
+    isLoadingBlockPage2 = true;
+    notifyListeners();
     ApiResponse response = await pageRepo.pageBlockCreate(pageID);
+    isLoadingBlockPage2 = false;
+    notifyListeners();
     if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: 'Page Block added Successfully');
       return response.response.data['is_blocked'];
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
@@ -929,10 +934,11 @@ class PageProvider with ChangeNotifier {
     ApiResponse response = await pageRepo.pageUnBlockCreate(pageID);
     isLoadingBlockPage2 = false;
     if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: 'Page UnBlock Successfully Complete');
       blockPageLists.removeAt(index);
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
-      return false;
     }
+    notifyListeners();
   }
 }
