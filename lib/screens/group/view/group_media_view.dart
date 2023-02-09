@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../provider/group_provider.dart';
 import '../../page/widget/group_header.dart';
+import '../widget/group_media_widget.dart';
 
 class GroupMediaView extends StatefulWidget {
   final String groupID;
@@ -37,9 +38,9 @@ class _GroupMediaViewState extends State<GroupMediaView> {
             physics: const BouncingScrollPhysics(),
             controller: controller,
             children: [
-              // GroupHeaderWidget(groupProvider.newGroupDetailsModel,widget.index),
-              // widget.widget,
-              GroupMediaViewWidget(groupProvider.newGroupDetailsModel,widget.index),
+              GroupHeaderWidget(groupProvider.newGroupDetailsModel,widget.index),
+              widget.widget,
+              GroupMediaWidget(groupProvider.newGroupDetailsModel,widget.index),
             ],
           );
         }

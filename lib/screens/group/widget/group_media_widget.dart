@@ -7,11 +7,21 @@ import 'package:provider/provider.dart';
 import '../../../data/model/response/each_author_group_model.dart';
 import '../../../util/theme/text.styles.dart';
 
-class GroupMediaWidget extends StatelessWidget {
+class GroupMediaWidget extends StatefulWidget {
   final AuthorEachGroupModel authorEachGroupModel;
   final int index;
   const GroupMediaWidget(this.authorEachGroupModel,this.index,{Key? key}) : super(key: key);
 
+  @override
+  State<GroupMediaWidget> createState() => _GroupMediaWidgetState();
+}
+
+class _GroupMediaWidgetState extends State<GroupMediaWidget> {
+  @override
+  void initState() {
+    Provider.of<GroupProvider>(context, listen: false).pageAllPhotos();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<GroupProvider>(builder: (context, groupProvider, child) {

@@ -268,4 +268,14 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+
+  Future<ApiResponse> callForGetAllPhotos(String url) async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
+    try {
+      response = await dioClient.get(url);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
 }

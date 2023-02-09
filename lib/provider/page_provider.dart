@@ -837,7 +837,6 @@ class PageProvider with ChangeNotifier {
     videosLists.clear();
     videosLists = [];
     ApiResponse response = await pageRepo.pageAllPhotosVideo(pageDetailsModel.photos!);
-
     if (response.response.statusCode == 200) {
       response.response.data.forEach((element) {
         pagePhotosModel.add(ImagesData.fromJson(element));
