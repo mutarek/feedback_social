@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
-import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
 import 'package:als_frontend/data/model/response/group/find_group_model.dart';
+import 'package:als_frontend/data/model/response/group/group_details_model.dart';
 import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
 import 'package:als_frontend/data/model/response/group/joined_group_model.dart';
@@ -327,21 +327,17 @@ class GroupProvider with ChangeNotifier {
   }
 
   //TODO: for User Group
-  AuthorGroupDetailsModel groupDetailsModel = AuthorGroupDetailsModel();
+  GroupDetailsModel groupDetailsModel = GroupDetailsModel();
 
   callForGetAllGroupInformation(String id) async {
     isLoading = true;
-    groupMembersLists.clear();
-    groupMembersLists = [];
-    groupAllPosts.clear();
-    groupAllPosts = [];
-    groupDetailsModel = AuthorGroupDetailsModel();
+    groupDetailsModel = GroupDetailsModel();
     // notifyListeners();
     ApiResponse response = await groupRepo.callForGetGroupDetails(id);
-    callForGetAllGroupMembers(id);
     isLoading = false;
     if (response.response.statusCode == 200) {
-      groupDetailsModel = AuthorGroupDetailsModel.fromJson(response.response.data);
+      groupDetailsModel = GroupDetailsModel.fromJson(response.response.data);
+      print('sshshs ${groupDetailsModel.creator.toString()}');
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
@@ -378,7 +374,7 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  updatePageNo(String id) {
+  updateGroupNo(String id) {
     selectPage++;
     callForGetAllGroupPosts(id, page: selectPage);
     notifyListeners();
@@ -710,7 +706,7 @@ class GroupProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    ApiResponse response = await groupRepo.getAllAuthorGroups();
+    ApiResponse response = await groupRepo.getAllAuthorGroups(selectPage);
     isLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
@@ -917,40 +913,42 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
-  //TODO: FOR GETTING INDIVIDUAL PAGE DETAILS
   bool isLoadingUpdateCover = false;
+
+  Future<bool> uploadGroupCover(File? file, int groupID, int index) async {
+    isLoadingUpdateCover = true;
+    notifyListeners();
+    ApiResponse response;
+    FormData formData = FormData();
+    formData.files.add(
+        MapEntry('cover_photo', MultipartFile(file!.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+    response = await groupRepo.updateGroupCoverPhoto(formData, groupID.toString());
+    isLoadingUpdateCover = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      groupDetailsModel = GroupDetailsModel.fromJson(response.response.data);
+      authorGroupLists[index] =
+          AuthorGroupModel(id: groupDetailsModel.id, coverPhoto: groupDetailsModel.coverPhoto, name: groupDetailsModel.name);
+
+      Fluttertoast.showToast(msg: "Update successfully");
+      notifyListeners();
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: 'Failed to update');
+    }
+    notifyListeners();
+    return false;
+  }
+
   AuthorEachGroupModel newGroupDetailsModel = AuthorEachGroupModel();
   bool isLoadingGroupDetails = false;
-  newCallForGetAllGroupInformation(String groupID)async{
-    isLoading = true;
-    notifyListeners();
-    ApiResponse response = await groupRepo.callForGetGroupDetails(groupID);
-    isLoading = false;
-    notifyListeners();
-    if(response.response.statusCode == 200){
-      newGroupDetailsModel = AuthorEachGroupModel.fromJson(response.response.data);
-    }
-    else
-      {
-        isLoading = false;
-        notifyListeners();
-        Fluttertoast.showToast(msg: response.response.statusMessage!);
-      }
-  }
-
-  //GROUP ALL POST
-  newCallForGetAllGroupPosts(String groupID)async{
-
-  }
 
   //TODO: FOR GETTING INDIVIDUAL PHOTOS AND VIDEOS DETAILS
   bool isPhotosLoading = false;
   List<ImagesData> groupPhotosModel = [];
   List<VideosData> groupVideosModel = [];
 
-
-  getForGetAllPhotosVideos() async{
+  getForGetAllPhotosVideos() async {
     isLoading = true;
     notifyListeners();
     ApiResponse response = await groupRepo.callForGetAllPhotos(newGroupDetailsModel.photos!);
@@ -976,5 +974,4 @@ class GroupProvider with ChangeNotifier {
     isPhotosLoading = false;
     notifyListeners();
   }
-
 }

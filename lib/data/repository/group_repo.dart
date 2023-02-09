@@ -12,10 +12,7 @@ class GroupRepo {
   final DioClient dioClient;
   final AuthRepo authRepo1;
 
-  GroupRepo({
-    required this.dioClient,
-    required this.authRepo1,
-  });
+  GroupRepo({required this.dioClient, required this.authRepo1});
 
   Future<ApiResponse> getAllSuggestGroup() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
@@ -67,10 +64,10 @@ class GroupRepo {
     }
   }
 
-  Future<ApiResponse> getAllAuthorGroups() async {
+  Future<ApiResponse> getAllAuthorGroups(int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get(AppConstant.authorGroupURI);
+      response = await dioClient.get("${AppConstant.authorGroupURI}?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -278,10 +275,21 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+
   Future<ApiResponse> callForGetAllVideos(String url) async {
     Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
       response = await dioClient.get(url);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> updateGroupCoverPhoto(FormData formData, String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.patch("${AppConstant.groupUri}$groupID/up-del-retr/", data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

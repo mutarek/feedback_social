@@ -4,7 +4,7 @@ import 'package:als_frontend/provider/notication_provider.dart';
 import 'package:als_frontend/provider/splash_provider.dart';
 import 'package:als_frontend/screens/animal/my_animal_screen.dart';
 import 'package:als_frontend/screens/auth/login_screen.dart';
-import 'package:als_frontend/screens/group/liked_group_suggested_group.dart';
+import 'package:als_frontend/screens/group/new_design/feedback_groups.dart';
 import 'package:als_frontend/screens/page/page_home_screen.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
 import 'package:als_frontend/screens/settings/widget/Settings_widget.dart';
@@ -74,7 +74,7 @@ class MoreScreen extends StatelessWidget {
                     subName: "",
                     isShowIconsColor: false,
                     goingScreen: () {
-                      Helper.toScreen(const LikedGroupSuggestedGroup());
+                      Helper.toScreen(const FeedBackGroups());
                     },
                   ),
 

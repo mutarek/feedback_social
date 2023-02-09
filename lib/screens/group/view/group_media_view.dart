@@ -24,7 +24,7 @@ class _GroupMediaViewState extends State<GroupMediaView> {
         if (controller.offset >= controller.position.maxScrollExtent &&
             !controller.position.outOfRange &&
             Provider.of<GroupProvider>(context, listen: false).hasNextData) {
-          Provider.of<GroupProvider>(context, listen: false).updatePageNo(widget.groupID.toString());
+          Provider.of<GroupProvider>(context, listen: false).updateGroupNo(widget.groupID.toString());
         }
       });
       super.initState();
@@ -38,7 +38,7 @@ class _GroupMediaViewState extends State<GroupMediaView> {
             physics: const BouncingScrollPhysics(),
             controller: controller,
             children: [
-              GroupHeaderWidget(groupProvider.newGroupDetailsModel,widget.index),
+              GroupHeaderWidget(widget.index),
               widget.widget,
               GroupMediaWidget(groupProvider.newGroupDetailsModel,widget.index),
             ],

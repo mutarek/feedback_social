@@ -1,5 +1,6 @@
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/author_group_details_model.dart';
+import 'package:als_frontend/data/model/response/group/group_details_model.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
@@ -19,10 +20,10 @@ import 'package:provider/provider.dart';
 
 class CreateGroupScreen extends StatefulWidget {
   final bool isUpdateGroup;
-  final AuthorGroupDetailsModel? authorGroup;
+  final GroupDetailsModel? groupDetailsModel;
   final int index;
 
-  const CreateGroupScreen({this.authorGroup, this.isUpdateGroup = false, this.index = 0, Key? key}) : super(key: key);
+  const CreateGroupScreen({this.groupDetailsModel, this.isUpdateGroup = false, this.index = 0, Key? key}) : super(key: key);
 
   @override
   State<CreateGroupScreen> createState() => _CreateGroupScreenState();
@@ -38,8 +39,8 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
     groupNameController = TextEditingController();
     Provider.of<GroupProvider>(context, listen: false).initializeCategory();
     if (widget.isUpdateGroup) {
-      groupNameController.text = widget.authorGroup!.name!;
-      Provider.of<GroupProvider>(context, listen: false).changeGroupPrivateStatus(widget.authorGroup!.isPrivate!, isFirstTime: true);
+      groupNameController.text = widget.groupDetailsModel!.name!;
+      Provider.of<GroupProvider>(context, listen: false).changeGroupPrivateStatus(widget.groupDetailsModel!.isPrivate!, isFirstTime: true);
     }
   }
 
@@ -63,7 +64,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                               ? Image.file(otherProvider.selectedFile!,
                                   width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
                               : widget.isUpdateGroup
-                                  ? Image.network(widget.authorGroup!.coverPhoto!,
+                                  ? Image.network(widget.groupDetailsModel!.coverPhoto!,
                                       width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.scaleDown)
                                   : Image.asset("assets/background/profile_placeholder.jpg",
                                       width: MediaQuery.of(context).size.width, height: 200, fit: BoxFit.fitWidth),
@@ -144,7 +145,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                     groupNameController.clear();
                                     Helper.back();
                                   }
-                                }, widget.authorGroup!.id as int, widget.index);
+                                }, widget.groupDetailsModel!.id as int, widget.index);
                               } else {
                                 groupProvider.createGroup(groupNameController.text, otherProvider.selectedFile, (bool status) {
                                   if (status) {

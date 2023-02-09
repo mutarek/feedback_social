@@ -88,7 +88,7 @@ class PageDetailsHeaderWidget extends StatelessWidget {
                                       260,
                                       isCover: true,
                                       isPage: true,
-                                      pageID: pageDetailsModel.id! as int,
+                                      pageGroupID: pageDetailsModel.id! as int,
                                       index: index,
                                     )));
                           },
@@ -139,7 +139,7 @@ class PageDetailsHeaderWidget extends StatelessWidget {
                                     150,
                                     isProfile: true,
                                     isPage: true,
-                                    pageID: pageDetailsModel.id! as int,
+                                    pageGroupID: pageDetailsModel.id! as int,
                                     index: index,
                                   )));
                         },

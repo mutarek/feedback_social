@@ -49,7 +49,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
           Provider.of<GroupProvider>(context, listen: false).hasNextData) {
-        Provider.of<GroupProvider>(context, listen: false).updatePageNo(widget.groupID);
+        Provider.of<GroupProvider>(context, listen: false).updateGroupNo(widget.groupID);
       }
     });
   }

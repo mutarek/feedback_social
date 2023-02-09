@@ -293,7 +293,7 @@ class AuthProvider with ChangeNotifier {
     profileImage = authRepo.getUserProfile();
     userID = authRepo.getUserID();
     userCode = authRepo.getUserCode();
-    notifyListeners();
+    // notifyListeners();
   }
 
 //TODO: for country code picker
