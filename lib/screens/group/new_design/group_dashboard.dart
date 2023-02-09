@@ -75,8 +75,8 @@ class _GroupDashboardState extends State<GroupDashboard> {
                               backgroundColor: AppColors.primaryColorLight,
                               child: InkWell(
                                   onTap: () {
-                                    groupProvider.getAuthorGroupById(widget.authorGroupModel.id!).then((value){
-                                      if(value){
+                                    groupProvider.getAuthorGroupById(widget.authorGroupModel.id!).then((value) {
+                                      if (value) {
                                         Helper.toScreen(SetupGroup());
                                       }
                                     });
@@ -838,30 +838,32 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  groupProvider.isLoading?
-                                      const Center(
-                                        child: CircularProgressIndicator(),
-                                      ):groupProvider.groupMembersList.isEmpty?
-                                      const Center(
-                                        child: Text("Ops You have No Members"),
-                                      ):Expanded(
-                                    child: ListView.builder(
-                                        itemCount: groupProvider.groupMembersList.length,
-                                        itemBuilder: (context, index) {
-                                          var members = groupProvider.groupMembersList[index];
-                                          return ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
-                                              child: circularImage(members.member!.profileImage.toString(),36,36),
+                                  groupProvider.isLoading
+                                      ? const Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : groupProvider.groupMembersList.isEmpty
+                                          ? const Center(
+                                              child: Text("Ops You have No Members"),
+                                            )
+                                          : Expanded(
+                                              child: ListView.builder(
+                                                  itemCount: groupProvider.groupMembersList.length,
+                                                  itemBuilder: (context, index) {
+                                                    var members = groupProvider.groupMembersList[index];
+                                                    return ListTile(
+                                                      leading: CircleAvatar(
+                                                        backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
+                                                        child: circularImage(members.member!.profileImage.toString(), 36, 36),
+                                                      ),
+                                                      title: Text(
+                                                        members.member!.fullName.toString(),
+                                                        style: GoogleFonts.roboto(
+                                                            fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.primaryColorLight),
+                                                      ),
+                                                    );
+                                                  }),
                                             ),
-                                            title: Text(
-                                              members.member!.fullName.toString(),
-                                              style: GoogleFonts.roboto(
-                                                  fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.primaryColorLight),
-                                            ),
-                                          );
-                                        }),
-                                  ),
                                   const SizedBox(
                                     height: 5,
                                   ),

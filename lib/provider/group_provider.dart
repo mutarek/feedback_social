@@ -904,4 +904,16 @@ class GroupProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+  newCallForGetAllGroupInformation(String groupID)async{
+  }
+  newCallForGetAllGroupPosts(String groupID)async{
+
+  }
+
+  //TODO: FOR GETTING INDIVIDUAL PAGE DETAILS
+  bool isLoadingUpdateCover = false;
+  AuthorEachGroupModel pageDetailsModel = AuthorEachGroupModel();
+  bool isLoadingGroupDetails = false;
+
+
 }
