@@ -87,6 +87,7 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+
 // TODO: get all suggested group list
   Future<ApiResponse> getALLSuggestedGroups() async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
@@ -97,6 +98,7 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+
   Future<ApiResponse> createGroupWithImageUpload(FormData formData) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
@@ -227,10 +229,10 @@ class GroupRepo {
     }
   }
 
-  Future<ApiResponse> findGroup(String findGroupName) async {
+  Future<ApiResponse> findGroup(String findGroupName, int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get("/group/search/?q=$findGroupName");
+      response = await dioClient.get("/group/search/?q=$findGroupName&page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -247,17 +249,17 @@ class GroupRepo {
     }
   }
 
-  Future<ApiResponse> setupGroup(FormData formData,String groupId) async {
+  Future<ApiResponse> setupGroup(FormData formData, String groupId) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.patch("${AppConstant.groupUri}/$groupId/up-del-retr/",data: formData);
+      response = await dioClient.patch("${AppConstant.groupUri}/$groupId/up-del-retr/", data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<ApiResponse> getGroupMembers(int page,String groupId) async {
+  Future<ApiResponse> getGroupMembers(int page, String groupId) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.groupUri}member/$groupId/list/?page=$page");
@@ -266,5 +268,4 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-
 }
