@@ -11,11 +11,11 @@ import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class NewPageDetailsHeaderWidget extends StatelessWidget {
+class PageDetailsHeaderWidget extends StatelessWidget {
   final PageDetailsModel pageDetailsModel;
   final int index;
 
-  const NewPageDetailsHeaderWidget(this.pageDetailsModel, this.index, {Key? key}) : super(key: key);
+  const PageDetailsHeaderWidget(this.pageDetailsModel, this.index, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

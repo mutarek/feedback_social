@@ -9,7 +9,7 @@ import '../../../util/theme/app_colors.dart';
 import '../../../util/theme/text.styles.dart';
 import '../../home/widget/create_post_widget.dart';
 import '../../page/widget/group_header.dart';
-import '../../page/widget/new_page_details_header_widget.dart';
+import '../../page/widget/page_details_header_widget.dart';
 import '../../page/widget/new_page_like_following_widget.dart';
 import '../../post/widget/post_widget.dart';
 import '../../video/widget/new_video_widgets.dart';

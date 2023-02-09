@@ -11,7 +11,7 @@ import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
-import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
+import 'package:als_frontend/screens/page/page_details_screen.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/screens/post/single_post_screen1.dart';
 import 'package:als_frontend/screens/post/widget/photo_widget1.dart';
@@ -61,7 +61,7 @@ class PostWidget extends StatelessWidget {
     if (newsFeedData.postType == AppConstant.postTypeGroup && code == 0) {
       Helper.toScreen(PublicGroupScreen(newsFeedData.groupModel!.id.toString(), index: index));
     } else if (newsFeedData.postType == AppConstant.postTypePage && code == 1) {
-      Helper.toScreen(NewPageDetailsScreen(newsFeedData.pageModel!.id.toString(), index: index));
+      Helper.toScreen(PageDetailsScreen(newsFeedData.pageModel!.id.toString(), index: index));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == newsFeedData.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));

@@ -14,7 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/custom_text_field.dart';
-import 'new_design/edit_page/edit_page1.dart';
+import 'edit_page/edit_page1.dart';
 
 class PageDashboard extends StatefulWidget {
   const PageDashboard(this.pageId, this.index, {Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
+import 'package:als_frontend/screens/page/page_details_screen.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/screens/page/widget/page_view_widget.dart';
 import 'package:als_frontend/util/helper.dart';
@@ -9,14 +9,14 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class NewMyLikedPageScreen extends StatefulWidget {
-  const NewMyLikedPageScreen({Key? key}) : super(key: key);
+class MyLikedPageScreen extends StatefulWidget {
+  const MyLikedPageScreen({Key? key}) : super(key: key);
 
   @override
-  State<NewMyLikedPageScreen> createState() => _NewMyLikedPageScreenState();
+  State<MyLikedPageScreen> createState() => _MyLikedPageScreenState();
 }
 
-class _NewMyLikedPageScreenState extends State<NewMyLikedPageScreen> {
+class _MyLikedPageScreenState extends State<MyLikedPageScreen> {
   ScrollController controller = ScrollController();
 
   @override
@@ -55,7 +55,7 @@ class _NewMyLikedPageScreenState extends State<NewMyLikedPageScreen> {
                               authorPageModel: AuthorPageModel(id: pageModel2.id, name: pageModel2.name, avatar: pageModel2.name),
                               onTap: () {
                                 pageProvider.changeSearchView(0);
-                                Helper.toScreen(NewPageDetailsScreen(pageModel2.id.toString(), index: index));
+                                Helper.toScreen(PageDetailsScreen(pageModel2.id.toString(), index: index));
                               });
                         })
                     : const Center(child: CustomText(title: "You haven't any Liked Page")));

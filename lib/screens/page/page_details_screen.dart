@@ -10,20 +10,20 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
-class NewPageDetailsScreen extends StatefulWidget {
+class PageDetailsScreen extends StatefulWidget {
 
   final String pageID;
   final int index;
   final bool isFromYourPage;
 
-  const NewPageDetailsScreen(this.pageID, { this.index = 0, this.isFromYourPage = false, Key? key})
+  const PageDetailsScreen(this.pageID, { this.index = 0, this.isFromYourPage = false, Key? key})
       : super(key: key);
 
   @override
-  State<NewPageDetailsScreen> createState() => _NewPageDetailsScreenState();
+  State<PageDetailsScreen> createState() => _PageDetailsScreenState();
 }
 
-class _NewPageDetailsScreenState extends State<NewPageDetailsScreen> {
+class _PageDetailsScreenState extends State<PageDetailsScreen> {
   @override
   void initState() {
     Provider.of<PageProvider>(context, listen: false).callForGetPageInformation(widget.pageID.toString());

@@ -37,17 +37,17 @@ class PageViewWidget extends StatelessWidget {
                   children: [
                     SvgPicture.asset(ImagesModel.messageIcons, width: 14, height: 14),
                     const SizedBox(width: 2),
-                    Text('20 message', style: robotoStyle500Medium.copyWith(fontSize: 9)),
+                    Text('0 message', style: robotoStyle500Medium.copyWith(fontSize: 9)),
                     const SizedBox(width: 20),
                     SvgPicture.asset(ImagesModel.notificationIcons, width: 14, height: 14),
                     const SizedBox(width: 2),
-                    Text("Notification", style: robotoStyle500Medium.copyWith(fontSize: 9)),
+                    Text("0 Notification", style: robotoStyle500Medium.copyWith(fontSize: 9)),
                   ],
                 )
               ],
             ),
             const Spacer(),
-            const CircleAvatar(radius: 15, backgroundColor: Color(0xffE4E6EB), child: Icon(Icons.more_horiz, color: colorText)),
+            // const CircleAvatar(radius: 15, backgroundColor: Color(0xffE4E6EB), child: Icon(Icons.more_horiz, color: colorText)),
             // ElevatedButton(
             //     onPressed: () {
             //       Helper.toScreen(AdminPageScreen());
