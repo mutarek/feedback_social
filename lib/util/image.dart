@@ -15,6 +15,7 @@ class ImagesModel {
   static const String notificationIcons2 = 'assets/svg/notification.svg';
   static const String searchIcons = 'assets/svg/search.svg';
   static const String addIcons = 'assets/svg/add.svg';
+  static const String yourFeedIcons = 'assets/svg/your_feed_icon.svg';
   static const String blocksIcons = 'assets/svg/block.svg';
   static const String saveIcons = 'assets/svg/save.svg';
   static const String visitGroupIcons = 'assets/svg/visit_group_svg.svg';

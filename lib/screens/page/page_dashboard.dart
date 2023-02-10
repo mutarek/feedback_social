@@ -736,7 +736,7 @@ class _PageDashboardState extends State<PageDashboard> {
                           ),
                         );
                       });
-                }, iconData: Icons.delete_forever, subTitle: "Once you delete a page, there is no going back. Please be certain."),
+                }, iconData: Icons.delete_forever, subTitle: "Once you delete a page, there is no going back. Please be certain.",isShowSubtitle: true),
               ],
             ),
           );
@@ -745,48 +745,51 @@ class _PageDashboardState extends State<PageDashboard> {
     );
   }
 
-  Widget dashboardWidget(String title, String leftIcon, bool hasExpanded, Function onTap,
-      {bool expandedCondition = false, IconData? iconData, String subTitle = ''}) {
-    return InkWell(
-      onTap: () {
-        onTap();
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        decoration: BoxDecoration(
-            color: const Color(0xffF0F2F5),
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: [BoxShadow(color: colorText.withOpacity(.13), blurRadius: 4.0, spreadRadius: 2.0, offset: const Offset(0.0, 0.0))]),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CircleAvatar(radius: 18, backgroundColor: Colors.white, child: SvgPicture.asset(leftIcon, height: 20, width: 25)),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: robotoStyle700Bold.copyWith(fontSize: 18)),
-                    hasExpanded ? const SizedBox.shrink() : Text(subTitle, style: robotoStyle500Medium.copyWith(fontSize: 8)),
-                  ],
-                ),
+
+}
+
+
+Widget dashboardWidget(String title, String leftIcon, bool hasExpanded, Function onTap,
+    {bool expandedCondition = false,bool isShowSubtitle = false, IconData? iconData, String subTitle = ''}) {
+  return InkWell(
+    onTap: () {
+      onTap();
+    },
+    child: Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      decoration: BoxDecoration(
+          color: const Color(0xffF0F2F5),
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [BoxShadow(color: colorText.withOpacity(.13), blurRadius: 4.0, spreadRadius: 2.0, offset: const Offset(0.0, 0.0))]),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CircleAvatar(radius: 18, backgroundColor: Colors.white, child: SvgPicture.asset(leftIcon, height: 20, width: 25)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: robotoStyle700Bold.copyWith(fontSize: 18)),
+                  !isShowSubtitle ? const SizedBox.shrink() : Text(subTitle, style: robotoStyle500Medium.copyWith(fontSize: 9)),
+                ],
               ),
-              const SizedBox(width: 10),
-              !hasExpanded
-                  ? CircleAvatar(radius: 15, backgroundColor: AppColors.primaryColorLight, child: Icon(iconData, color: Colors.white))
-                  : CircleAvatar(
-                      radius: 15,
-                      backgroundColor: AppColors.primaryColorLight,
-                      child: expandedCondition != true
-                          ? const Icon(Icons.arrow_drop_down, color: Colors.white)
-                          : const Icon(Icons.arrow_drop_up, color: Colors.white))
-            ],
-          ),
+            ),
+            const SizedBox(width: 10),
+            !hasExpanded
+                ? CircleAvatar(radius: 15, backgroundColor: AppColors.primaryColorLight, child: Icon(iconData, color: Colors.white))
+                : CircleAvatar(
+                radius: 15,
+                backgroundColor: AppColors.primaryColorLight,
+                child: expandedCondition != true
+                    ? const Icon(Icons.arrow_drop_down, color: Colors.white)
+                    : const Icon(Icons.arrow_drop_up, color: Colors.white))
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }

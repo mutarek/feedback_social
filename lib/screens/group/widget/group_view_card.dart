@@ -21,10 +21,10 @@ class GroupViewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      margin: const EdgeInsets.only(top: 6, bottom: 6),
+      margin: const EdgeInsets.only(top: 6, bottom: 6,left: 5,right: 5),
       decoration: BoxDecoration(
-          color: const Color(0xffFAFAFA),
-          boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.2), blurRadius: 10.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))],
+          color: Colors.white,
+          boxShadow: [BoxShadow(color: Colors.grey.withOpacity(.1), blurRadius: 3.0, spreadRadius: 3.0, offset: const Offset(0.0, 0.0))],
           borderRadius: BorderRadius.circular(15)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

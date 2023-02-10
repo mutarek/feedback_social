@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
@@ -7,7 +6,6 @@ import 'package:als_frontend/data/model/response/group/find_group_model.dart';
 import 'package:als_frontend/data/model/response/group/group_details_model.dart';
 import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
-import 'package:als_frontend/data/model/response/group/joined_group_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/model/response/settings/privacy_model.dart';
@@ -71,16 +69,31 @@ class GroupProvider with ChangeNotifier {
 
   changeSuggestedGroupStatus() {
     suggestedGroup = !suggestedGroup;
+    if (suggestedGroup) {
+      initializeSuggestedGroupLists();
+      yourGroup = false;
+      joinedGroup = false;
+    }
     notifyListeners();
   }
 
   changeJoinedGroupStatus() {
     joinedGroup = !joinedGroup;
+    if (joinedGroup) {
+      initializeJoinedGroupLists();
+      yourGroup = false;
+      suggestedGroup = false;
+    }
     notifyListeners();
   }
 
   changeYourGroupStatus() {
     yourGroup = !yourGroup;
+    if (yourGroup) {
+      initializeAuthorGroupLists();
+      joinedGroup = false;
+      suggestedGroup = false;
+    }
     notifyListeners();
   }
 
@@ -445,7 +458,6 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   addGroupPostToTimeLine(NewsFeedModel n) async {
     List<NewsFeedModel> groupPostLists = [];
     groupPostLists.addAll(groupAllPosts);
@@ -705,7 +717,6 @@ class GroupProvider with ChangeNotifier {
       isLoading = true;
       hasNextData = false;
       isBottomLoading = false;
-      position = 0;
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -715,6 +726,7 @@ class GroupProvider with ChangeNotifier {
     }
     ApiResponse response = await groupRepo.getAllAuthorGroups(selectPage);
     isLoading = false;
+    isBottomLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
@@ -798,21 +810,20 @@ class GroupProvider with ChangeNotifier {
 //TODO: Get all joined group
   updateJoinedPageNo() {
     selectPage++;
-    initializeAuthorGroupLists(page: selectPage);
+    initializeJoinedGroupLists(page: selectPage);
     notifyListeners();
   }
 
-  List<JoinedGroupModel> joinedGroupModel = [];
+  List<AuthorGroupModel> joinedGroupModel = [];
 
   initializeJoinedGroupLists({int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
-      authorGroupLists.clear();
-      authorGroupLists = [];
+      joinedGroupModel.clear();
+      joinedGroupModel = [];
       isLoading = true;
       hasNextData = false;
       isBottomLoading = false;
-      position = 0;
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -822,11 +833,12 @@ class GroupProvider with ChangeNotifier {
     }
     ApiResponse response = await groupRepo.getAllJoinedGroups();
     isLoading = false;
+    isBottomLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        joinedGroupModel.add(JoinedGroupModel.fromJson(element));
+        joinedGroupModel.add(AuthorGroupModel.fromJson(element));
       });
     } else {
       isLoading = false;
@@ -838,7 +850,7 @@ class GroupProvider with ChangeNotifier {
 //TODO: Get all suggested group
   updateSuggestedPageNo() {
     selectPage++;
-    initializeAuthorGroupLists(page: selectPage);
+    initializeSuggestedGroupLists(page: selectPage);
     notifyListeners();
   }
 
@@ -847,12 +859,11 @@ class GroupProvider with ChangeNotifier {
   initializeSuggestedGroupLists({int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
-      authorGroupLists.clear();
-      authorGroupLists = [];
+      suggestedGroupList.clear();
+      suggestedGroupList = [];
       isLoading = true;
       hasNextData = false;
       isBottomLoading = false;
-      position = 0;
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -862,6 +873,7 @@ class GroupProvider with ChangeNotifier {
     }
     ApiResponse response = await groupRepo.getALLSuggestedGroups();
     isLoading = false;
+    isBottomLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
