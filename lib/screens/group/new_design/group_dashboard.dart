@@ -76,7 +76,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                   onTap: () {
                                     groupProvider.getAuthorGroupById(groupProvider.groupDetailsModel.id!).then((value) {
                                       if (value) {
-                                        Helper.toScreen(SetupGroup());
+                                        Helper.toScreen(SetupGroup(groupProvider.groupDetailsModel));
                                       }
                                     });
                                   },
