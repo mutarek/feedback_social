@@ -39,7 +39,7 @@ class AppConstant {
   static const String animalOwnerURI = '/animal/owner/';
   static const String groupUri = '/group/';
   static const String newGroupURI = '/group/create-or-list/';
-  static const String authorGroupURI = '/group/creator-group/5/list/';
+  static const String authorGroupURI = '/group/creator-group/list/';
   static const String newJoinedGroup = '/group/joined-group/list/';
   static const String suggestedGroup = '/group/suggested-group/list/';
   static const String groupCategoryUri = '/group/category/list/';
