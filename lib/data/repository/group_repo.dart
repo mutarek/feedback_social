@@ -305,4 +305,31 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+  Future<ApiResponse> getAllFriendsForInvite(String groupID,int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.groupInvitationUri}friend/user/$groupID/list/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+  Future<ApiResponse> invitationCreate(int groupID, List<int> users) async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
+    try {
+      response = await dioClient.post("${AppConstant.groupInvitationUri}create/", data: {"group": groupID, "users": users});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+  Future<ApiResponse> getInvitedGroups(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.groupInvitationUri}list/?page=$page");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
 }

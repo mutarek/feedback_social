@@ -78,5 +78,8 @@ class ImagesModel {
   static const String shareMessageIcons = 'assets/icons/share_message.svg';
   static const String shareFriendIcons = 'assets/icons/share_friend.svg';
   static const String shareGroupIcons = 'assets/icons/share_group.svg';
+  static const String groupAccess = "assets/svg/page_access.svg";
+  static const String inviteFriends = "assets/svg/invite_friends.svg";
+  static const String setupGroup = "assets/svg/setup_group_svg.svg";
 
 }
