@@ -1,6 +1,7 @@
 class NewsFeedModel {
   NewsFeedModel({
     this.id,
+    this.newsfeedID,
     this.description,
     this.author,
     this.totalImage,
@@ -27,7 +28,8 @@ class NewsFeedModel {
 
   NewsFeedModel.fromJson(dynamic json) {
     id = json['id'];
-    description = json['description']??"";
+    newsfeedID = json['newsfeed_id'] ?? json['bookmark_id'] ?? 0;
+    description = json['description'] ?? "";
     author = json['author'] != null ? Author.fromJson(json['author']) : null;
     totalImage = json['total_image'];
     if (json['images'] != null) {
@@ -65,6 +67,7 @@ class NewsFeedModel {
   }
 
   num? id;
+  num? newsfeedID;
   String? description;
   Author? author;
   num? totalImage;
@@ -386,16 +389,12 @@ class GroupModel {
 }
 
 class PageModel {
-  PageModel({
-    this.id,
-    this.name,
-    this.avatar,
-  });
+  PageModel({this.id, this.name, this.avatar});
 
   PageModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    avatar = json['avatar']??"";
+    avatar = json['avatar'] ?? "";
   }
 
   num? id;

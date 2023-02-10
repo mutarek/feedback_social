@@ -32,7 +32,7 @@ class PostRepo {
 
   Future<ApiResponse> submitPostTOGroupBYUSINGGroupID(FormData formData, int groupID, {onSendProgress}) async {
     try {
-      response = await dioClient.post("${AppConstant.postsGroupUri}$groupID/", data: formData, onSendProgress: onSendProgress);
+      response = await dioClient.post("${AppConstant.postsGroupUri}$groupID/create-list/", data: formData, onSendProgress: onSendProgress);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -70,8 +70,55 @@ class PostRepo {
 
   Future<ApiResponse> sharePost(String url, String description, {onSendProgress}) async {
     try {
-      response = await dioClient.post("${url.replaceAll("list/", "")}create/",
-          data: {"description": description}, onSendProgress: onSendProgress);
+      response =
+          await dioClient.post("${url.replaceAll("list/", "")}create/", data: {"description": description}, onSendProgress: onSendProgress);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> hidePagePostFromDatabase(String postId, bool isPage, bool isGroup) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post("/${isPage ? 'page' : isGroup ? "group" : 'user'}/post/hide/$postId/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> bookmarkCreate(int postId, bool isPage, bool isGroup) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post("${AppConstant.bookmarkURI}create", data: {
+        "post_id": postId,
+        "post_type": isPage
+            ? 3
+            : isGroup
+                ? 2
+                : 1
+      });
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> bookmarkDelete(int bookmarkID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.delete("${AppConstant.bookmarkURI}$bookmarkID/delete");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> bookmarkLists(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.bookmarkURI}list/?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

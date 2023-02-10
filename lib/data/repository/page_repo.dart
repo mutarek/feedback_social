@@ -21,10 +21,10 @@ class PageRepo {
     }
   }
 
-  Future<ApiResponse> getAuthorPage() async {
+  Future<ApiResponse> getAuthorPage(int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get(AppConstant.pageAuthorURI);
+      response = await dioClient.get("${AppConstant.pageAuthorURI}?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -223,6 +223,36 @@ class PageRepo {
     Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
       response = await dioClient.get(AppConstant.pageSummeryURI);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> pageBlockCreate(int pageID) async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
+    try {
+      response = await dioClient.post("${AppConstant.pageBlockURI}$pageID/create/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> pageUnBlockCreate(int pageID) async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
+    try {
+      response = await dioClient.delete(AppConstant.pageUnBlockURI.replaceAll("{page_id}", "$pageID"));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> pageBlockLists(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: ''));
+    try {
+      response = await dioClient.get("${AppConstant.pageBlockURI}list/?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

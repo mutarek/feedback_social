@@ -148,9 +148,10 @@ class PageProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    ApiResponse response = await pageRepo.getAuthorPage();
+    ApiResponse response = await pageRepo.getAuthorPage(page);
     // initializeLikedPageLists();
     isLoading = false;
+    isBottomLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
@@ -695,13 +696,6 @@ class PageProvider with ChangeNotifier {
         });
   }
 
-  bool showMoreText = true;
-
-  changeTextValue() {
-    showMoreText = !showMoreText;
-    notifyListeners();
-  }
-
   ///TODO: for create Page
   String pageName = '';
   String pageBio = '';
@@ -823,8 +817,6 @@ class PageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO: page details api instigation
-
 //TODO: page Photos api instigation
   List<ImagesData> pagePhotosModel = [];
   List<VideosData> videosLists = [];
@@ -868,6 +860,80 @@ class PageProvider with ChangeNotifier {
     if (response.response.statusCode == 200) {
       totalLikedPage = response.response.data['total_liked_page'];
       totalInvitedPage = response.response.data['total_invited_page'];
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+//TODO: page Block And Unblock Systems
+  List<AuthorPageModel> blockPageLists = [];
+  int selectBlockPage = 0;
+  bool isBottomLoadingBlockPage = false;
+  bool isLoadingBlockPage = false;
+  bool isLoadingBlockPage2 = false;
+  bool hasNextDataBlockPage = false;
+
+  updateBlockPageNo() {
+    selectBlockPage++;
+    callForGetPageBlockLists(page: selectBlockPage);
+    notifyListeners();
+  }
+
+  callForGetPageBlockLists({int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectBlockPage = 1;
+      blockPageLists.clear();
+      blockPageLists = [];
+      isLoadingBlockPage = true;
+      hasNextDataBlockPage = false;
+      isBottomLoadingBlockPage = false;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoadingBlockPage = true;
+      notifyListeners();
+    }
+
+    ApiResponse response = await pageRepo.pageBlockLists(selectPage);
+
+    isLoadingBlockPage = false;
+    isBottomLoadingBlockPage = false;
+    if (response.response.statusCode == 200) {
+      hasNextDataBlockPage = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        blockPageLists.add(AuthorPageModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  Future<bool> createBlock(int pageID) async {
+    isLoadingBlockPage2 = true;
+    notifyListeners();
+    ApiResponse response = await pageRepo.pageBlockCreate(pageID);
+    isLoadingBlockPage2 = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: 'Page Block added Successfully');
+      return response.response.data['is_blocked'];
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+      return false;
+    }
+  }
+
+  createUnBlock(int pageID, int index) async {
+    isLoadingBlockPage2 = true;
+    notifyListeners();
+    ApiResponse response = await pageRepo.pageUnBlockCreate(pageID);
+    isLoadingBlockPage2 = false;
+    if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: 'Page UnBlock Successfully Complete');
+      blockPageLists.removeAt(index);
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }

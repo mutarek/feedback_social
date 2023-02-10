@@ -1,9 +1,9 @@
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/find_page_screen.dart';
-import 'package:als_frontend/screens/page/new_design/invited_page.dart';
-import 'package:als_frontend/screens/page/new_design/new_my_liked_page_screen.dart';
-import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
-import 'package:als_frontend/screens/page/new_design/new_suggested_page_screen.dart';
+import 'package:als_frontend/screens/page/invited_page.dart';
+import 'package:als_frontend/screens/page/my_liked_page_screen.dart';
+import 'package:als_frontend/screens/page/page_details_screen.dart';
+import 'package:als_frontend/screens/page/suggested_page_screen.dart';
 import 'package:als_frontend/screens/page/shimmer_effect/page_home_screen_shimmer_effect.dart';
 import 'package:als_frontend/screens/page/widget/like_invite_find.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
@@ -16,7 +16,7 @@ import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'new_design/create_page1.dart';
+import 'create_page1.dart';
 
 class PageHomeScreen extends StatefulWidget {
   const PageHomeScreen({Key? key}) : super(key: key);
@@ -26,8 +26,6 @@ class PageHomeScreen extends StatefulWidget {
 }
 
 class _PageHomeScreenState extends State<PageHomeScreen> {
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -94,18 +92,41 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                         ? SizedBox(
                             height: 300,
                             child: pageProvider.authorPageLists.isNotEmpty
-                                ? ListView.builder(
-                                    itemCount: pageProvider.authorPageLists.length,
-                                    physics: const BouncingScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      var data = pageProvider.authorPageLists[index];
-                                      return PageViewWidget(
-                                          authorPageModel: data,
-                                          onTap: () {
-                                            Helper.toScreen(
-                                                NewPageDetailsScreen(pageProvider.authorPageLists[index].id.toString(), index: index));
-                                          });
-                                    })
+                                ? Column(
+                                    children: [
+                                      Expanded(
+                                        child: ListView.builder(
+                                            itemCount: pageProvider.authorPageLists.length,
+                                            physics: const BouncingScrollPhysics(),
+                                            itemBuilder: (context, index) {
+                                              var data = pageProvider.authorPageLists[index];
+                                              return PageViewWidget(
+                                                  authorPageModel: data,
+                                                  onTap: () {
+                                                    Helper.toScreen(PageDetailsScreen(pageProvider.authorPageLists[index].id.toString(),
+                                                        index: index));
+                                                  });
+                                            }),
+                                      ),
+                                      SizedBox(height: pageProvider.hasNextData || pageProvider.isBottomLoading ? 5 : 0),
+                                      pageProvider.isBottomLoading
+                                          ? const CircularProgressIndicator()
+                                          : pageProvider.hasNextData
+                                              ? InkWell(
+                                                  onTap: () {
+                                                    pageProvider.updateAuthorPageNo();
+                                                  },
+                                                  child: Container(
+                                                    height: 30,
+                                                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(color: colorText), borderRadius: BorderRadius.circular(22)),
+                                                    child: Text('Load more Pages', style: robotoStyle500Medium.copyWith(color: colorText)),
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink(),
+                                    ],
+                                  )
                                 : const Center(child: CustomText(title: "You haven't any personal Page")))
                         : const SizedBox.shrink(),
                     const SizedBox(height: 10),
@@ -135,7 +156,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                         name: "Your liked pages",
                         extraArguments: "${pageProvider.totalLikedPage} page${pageProvider.totalLikedPage <= 1 ? "" : "s"}",
                         onTap: () {
-                          Helper.toScreen(const NewMyLikedPageScreen());
+                          Helper.toScreen(const MyLikedPageScreen());
                         }),
                     const SizedBox(height: 10),
                     LikeInviteFindWidget(
@@ -151,7 +172,7 @@ class _PageHomeScreenState extends State<PageHomeScreen> {
                       icon: ImagesModel.suggestPageIcons,
                       name: "Suggest Page",
                       onTap: () {
-                        Helper.toScreen(const NewSuggestedPageScreen());
+                        Helper.toScreen(const SuggestedPageScreen());
                       },
                     ),
                     const SizedBox(height: 10),

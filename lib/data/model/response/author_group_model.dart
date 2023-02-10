@@ -1,5 +1,3 @@
-
-
 class AuthorGroupModel {
   num? id;
   String? name;

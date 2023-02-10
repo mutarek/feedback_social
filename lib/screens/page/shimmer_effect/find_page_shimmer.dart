@@ -15,66 +15,24 @@ class FindPageShimmer extends StatelessWidget {
       child: Scaffold(
           body: Padding(
               padding: const EdgeInsets.only(top: 20,left: 10,right: 10),
-              child: Column(
-                children: [
-                  Shimmer.fromColors(
-                      baseColor: Colors.black.withOpacity(.1),
-                      highlightColor: Colors.grey.withOpacity(.1),
-                      child:Container(
-                        height: 50,
-                        width: width,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)
-                        ),
+              child: ListView.builder(
+                itemCount: 10,
+                  itemBuilder: (context,index){return Padding(
+                    padding: const EdgeInsets.only(top: 3),
+                    child: Shimmer.fromColors(
+                    baseColor: Colors.black.withOpacity(.1),
+                    highlightColor: Colors.grey.withOpacity(.1),
+                    child:Container(
+                      height: 50,
+                      width: width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)
+                      ),
 
-                      )
-                  ),
-                  const SizedBox(height: 10,),
-                  Shimmer.fromColors(
-                      baseColor: Colors.black.withOpacity(.1),
-                      highlightColor: Colors.grey.withOpacity(.1),
-                      child:Container(
-                        height: 50,
-                        width: width,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)
-                        ),
-
-                      )
-                  ),
-                  const SizedBox(height: 10,),
-                  Shimmer.fromColors(
-                      baseColor: Colors.black.withOpacity(.1),
-                      highlightColor: Colors.grey.withOpacity(.1),
-                      child:Container(
-                        height: 50,
-                        width: width,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)
-                        ),
-
-                      )
-                  ),
-                  const SizedBox(height: 10,),
-                  Shimmer.fromColors(
-                      baseColor: Colors.black.withOpacity(.1),
-                      highlightColor: Colors.grey.withOpacity(.1),
-                      child:Container(
-                        height: 50,
-                        width: width,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)
-                        ),
-
-                      )
-                  ),
-                  const SizedBox(height: 10,)
-                ],
-              )
+                    )
+              ),
+                  );})
           )
       ),
     );

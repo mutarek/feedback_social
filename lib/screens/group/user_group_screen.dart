@@ -52,7 +52,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
       if (controller.offset >= controller.position.maxScrollExtent &&
           !controller.position.outOfRange &&
           Provider.of<GroupProvider>(context, listen: false).hasNextData) {
-        Provider.of<GroupProvider>(context, listen: false).updatePageNo(widget.groupID);
+        Provider.of<GroupProvider>(context, listen: false).updateGroupNo(widget.groupID);
       }
     });
   }
@@ -202,7 +202,7 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                               Navigator.of(context).pop();
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => CreateGroupScreen(
-                                      authorGroup: groupProvider.groupDetailsModel, isUpdateGroup: true, index: widget.index)));
+                                      groupDetailsModel: groupProvider.groupDetailsModel, isUpdateGroup: true, index: widget.index)));
 
                               // editGroupProvider.groupId = groupProvider.groupDetails!.id as int;
                               // Get.to(() => const EditGroup());

@@ -1,6 +1,7 @@
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/timeline_widget.dart';
+import 'package:als_frontend/screens/profile/bookmark_screen.dart';
 import 'package:als_frontend/screens/profile/followers_page.dart';
 import 'package:als_frontend/screens/profile/friend_screen.dart';
 import 'package:als_frontend/screens/profile/shimmer_effect/profile_post_%20shimmer_widget.dart';
@@ -12,6 +13,7 @@ import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
+import 'package:als_frontend/widgets/custom_button.dart';
 import 'package:als_frontend/widgets/single_image_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -127,8 +129,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       children: [
                                         Text(
                                           "${profileProvider.userprofileData.friends!.length}",
-                                          style: GoogleFonts.lato(
-                                              fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
+                                          style:
+                                              GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, color: Palette.notificationColor),
                                         ),
                                         Text(LocaleKeys.friends.tr(), style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500)),
                                       ],
@@ -138,7 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Expanded(
                                   flex: 1,
                                   child: GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       Helper.toScreen(const FollowersPage());
                                     },
                                     child: Row(
@@ -158,8 +160,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: height * 0.01,
+                        SizedBox(height: height * 0.01),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: CustomButton(
+                              btnTxt: 'My Bookmarks',
+                              onTap: () {
+                                Helper.toScreen(BookmarkScreen());
+                              }),
                         ),
                         ProfileDetailsCard(userProfileModel: profileProvider.userprofileData),
                         const SizedBox(height: 10),

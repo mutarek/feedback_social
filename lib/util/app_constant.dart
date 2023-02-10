@@ -34,7 +34,7 @@ class AppConstant {
   static const String watchListUri = '/watch/list/?size=10&page=';
   static const String postsUri = '/posts/';
   static const String userPostUri = '/user/post/create/';
-  static const String postsGroupUri = '/posts/group/';
+  static const String postsGroupUri = '/group/post/';
   static const String animalUri = '/animal/';
   static const String animalOwnerURI = '/animal/owner/';
   static const String groupUri = '/group/';
@@ -54,12 +54,13 @@ class AppConstant {
   static const String pageSuggestedURI = '/page/suggested-page/list/';
   static const String pageLikeAllURI = '/page/user/like/list/';
   static const String pageCategoryURI = '/page/category/list/';
+  static const String pageBlockURI = '/page/block/';
+  static const String pageUnBlockURI = '/page/unblock/{page_id}/';
   static const String invitedPageURI = '/page/invitation/list/';
   static const String pageInvitation = '/page/invitation/';
   static const String pageURI = '/page/';
   static const String invitationFriendURI = '/page/invitation/friend/user/list/';
   static const String pageFollowerListURI = '/page/follower/';
-  static const String pagePostHideURI = '/page/post/hide/';
   static const String invitationCreateURI = '/page/invitation/create/';
   static const String pageCreateURI = '/page/create-or-list/';
   static const String pageSummeryURI = '/page/summery/';
@@ -76,6 +77,7 @@ class AppConstant {
   static const String faqQuestionUri = '/settings/faq/';
   static const String latestVersionUri = '/latest-version/';
   static const String helpDiskURI = '/settings/help-desk/';
+  static const String bookmarkURI = '/bookmark/post/';
 
   // Shared Key
   static const String theme = 'theme';

@@ -45,119 +45,128 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer2<NewsFeedProvider, AuthProvider>(builder: (context, newsFeedProvider, authProvider, child) {
       return RefreshIndicator(
-          onRefresh: () {
-            return _refresh(context);
-          },
-          child: newsFeedProvider.isLoading
-              ? const TimeLinePostShimmerWidget(20)
-              : CustomScrollView(
-                  controller: controller,
-                  slivers: [
-                    SliverPersistentHeader(
-                      pinned: false,
-                      delegate: _SliverAppBarDelegate(
-                          child: PreferredSize(
-                        preferredSize: const Size.fromHeight(125),
-                        child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0), child: createPostWidget(isForGroup: false)),
-                      )),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        if (index == newsFeedProvider.newsFeedLists.length) {
-                          return const CupertinoActivityIndicator();
-                        }
-
-                        return PostWidget(
-                          newsFeedProvider.newsFeedLists[index],
-                          index: index,
-                          isHomeScreen: true,
-                          groupPageID: newsFeedProvider.newsFeedLists[index].id! as int,
-                          isAdmin: authProvider.userID == newsFeedProvider.newsFeedLists[index].author!.id.toString() ? true : false,
-                        );
-                      },
-                          childCount: newsFeedProvider.newsFeedLists.length,
-                          semanticIndexOffset: 500,
-                          addSemanticIndexes: false,
-                          addRepaintBoundaries: false,
-                          addAutomaticKeepAlives: false),
-                    )
-                  ],
-                )
-          // ListView(
-          //         controller: controller,
-          //         children: [
-          //           Container(
-          //               margin: const EdgeInsets.symmetric(
-          //                   horizontal: 10, vertical: 5),
-          //               child: createPostWidget(context, authProvider,
-          //                   newsFeedProvider: newsFeedProvider,
-          //                   isForGroup: false)),
-          //           postProvider.isLoading
-          //               ? Visibility(
-          //                   visible: true,
-          //                   child: postProvider.isLoading
-          //                       ? postStatusWidget(context, authProvider,
-          //                           postProvider, true, postProvider.status)
-          //                       : postStatusWidget(context, authProvider,
-          //                           postProvider, false, postProvider.status),
-          //                 )
-          //               : Visibility(
-          //                   visible: false,
-          //                   child: postProvider.isLoading
-          //                       ? postStatusWidget(context, authProvider,
-          //                           postProvider, true, postProvider.status)
-          //                       : postStatusWidget(context, authProvider,
-          //                           postProvider, false, postProvider.status),
-          //                 ),
-          //           CustomScrollView(
-          //             slivers: [
-          //               SliverList(
-          //                 delegate: SliverChildBuilderDelegate((context, index) {
-          //                   print("Item printed: $index");
-          //                   return TimeLineWidget(
-          //                     newsFeedProvider.newsFeedLists[index],
-          //                     index,
-          //                     newsFeedProvider,
-          //                     isHomeScreen: true,
-          //                     groupPageID: newsFeedProvider
-          //                         .newsFeedLists[index].id! as int,
-          //                   );
-          //                 }, childCount: newsFeedProvider.newsFeedLists.length),
-          //               )
-          //             ],
-          //           ),
-          //           // ListView.builder(
-          //           //     physics: const NeverScrollableScrollPhysics(),
-          //           //     shrinkWrap: true,
-          //           //     itemCount: newsFeedProvider.newsFeedLists.length,
-          //           //     itemBuilder: (context, index) {
-          //           //       print(newsFeedProvider.newsFeedLists.length);
-          //           //       print(index);
-          //           //       if (index == newsFeedProvider.newsFeedLists.length) {
-          //           //         return const CupertinoActivityIndicator();
-          //           //       }
-          //           //
-          //           //       return TimeLineWidget(
-          //           //           newsFeedProvider.newsFeedLists[index],
-          //           //           index,
-          //           //           newsFeedProvider,
-          //           //           isHomeScreen: true,
-          //           //           groupPageID: newsFeedProvider
-          //           //               .newsFeedLists[index].id! as int);
-          //           //       // return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
-          //           //       //     isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
-          //           //     }),
-          //           // newsFeedProvider.isBottomLoading
-          //           //     ? Container(
-          //           //         width: MediaQuery.of(context).size.width,
-          //           //         height: 100,
-          //           //         alignment: Alignment.center,
-          //           //         child: const CupertinoActivityIndicator())
-          //           //     : const SizedBox.shrink()
-          //         ],
-          //       ),
-          );
+        onRefresh: () {
+          return _refresh(context);
+        },
+        child: newsFeedProvider.isLoading
+            ? const TimeLinePostShimmerWidget(20)
+            : CustomScrollView(
+                controller: controller,
+                slivers: [
+                  SliverPersistentHeader(
+                    pinned: false,
+                    delegate: _SliverAppBarDelegate(
+                        child: PreferredSize(
+                      preferredSize: const Size.fromHeight(125),
+                      child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0), child: createPostWidget(isForGroup: false)),
+                    )),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return PostWidget(
+                        newsFeedProvider.newsFeedLists[index],
+                        index: index,
+                        isHomeScreen: true,
+                        groupPageID: newsFeedProvider.newsFeedLists[index].id! as int,
+                        isAdmin: authProvider.userID == newsFeedProvider.newsFeedLists[index].author!.id.toString() ? true : false,
+                      );
+                    },
+                        childCount: newsFeedProvider.newsFeedLists.length,
+                        semanticIndexOffset: 500,
+                        addSemanticIndexes: false,
+                        addRepaintBoundaries: false,
+                        addAutomaticKeepAlives: false),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
+                          alignment: Alignment.center,
+                          child: const CupertinoActivityIndicator());
+                    },
+                        childCount: newsFeedProvider.isBottomLoading ? 1 : 0,
+                        addSemanticIndexes: false,
+                        addRepaintBoundaries: false,
+                        addAutomaticKeepAlives: false),
+                  ),
+                ],
+              ),
+        // ListView(
+        //         controller: controller,
+        //         children: [
+        //           Container(
+        //               margin: const EdgeInsets.symmetric(
+        //                   horizontal: 10, vertical: 5),
+        //               child: createPostWidget(context, authProvider,
+        //                   newsFeedProvider: newsFeedProvider,
+        //                   isForGroup: false)),
+        //           postProvider.isLoading
+        //               ? Visibility(
+        //                   visible: true,
+        //                   child: postProvider.isLoading
+        //                       ? postStatusWidget(context, authProvider,
+        //                           postProvider, true, postProvider.status)
+        //                       : postStatusWidget(context, authProvider,
+        //                           postProvider, false, postProvider.status),
+        //                 )
+        //               : Visibility(
+        //                   visible: false,
+        //                   child: postProvider.isLoading
+        //                       ? postStatusWidget(context, authProvider,
+        //                           postProvider, true, postProvider.status)
+        //                       : postStatusWidget(context, authProvider,
+        //                           postProvider, false, postProvider.status),
+        //                 ),
+        //           CustomScrollView(
+        //             slivers: [
+        //               SliverList(
+        //                 delegate: SliverChildBuilderDelegate((context, index) {
+        //                   print("Item printed: $index");
+        //                   return TimeLineWidget(
+        //                     newsFeedProvider.newsFeedLists[index],
+        //                     index,
+        //                     newsFeedProvider,
+        //                     isHomeScreen: true,
+        //                     groupPageID: newsFeedProvider
+        //                         .newsFeedLists[index].id! as int,
+        //                   );
+        //                 }, childCount: newsFeedProvider.newsFeedLists.length),
+        //               )
+        //             ],
+        //           ),
+        //           // ListView.builder(
+        //           //     physics: const NeverScrollableScrollPhysics(),
+        //           //     shrinkWrap: true,
+        //           //     itemCount: newsFeedProvider.newsFeedLists.length,
+        //           //     itemBuilder: (context, index) {
+        //           //       print(newsFeedProvider.newsFeedLists.length);
+        //           //       print(index);
+        //           //       if (index == newsFeedProvider.newsFeedLists.length) {
+        //           //         return const CupertinoActivityIndicator();
+        //           //       }
+        //           //
+        //           //       return TimeLineWidget(
+        //           //           newsFeedProvider.newsFeedLists[index],
+        //           //           index,
+        //           //           newsFeedProvider,
+        //           //           isHomeScreen: true,
+        //           //           groupPageID: newsFeedProvider
+        //           //               .newsFeedLists[index].id! as int);
+        //           //       // return TimeLineWidget(newsFeedProvider.newsFeedLists[index], index, newsFeedProvider,
+        //           //       //     isHomeScreen: true, groupPageID: newsFeedProvider.newsFeedLists[index].id! as int);
+        //           //     }),
+        //           // newsFeedProvider.isBottomLoading
+        //           //     ? Container(
+        //           //         width: MediaQuery.of(context).size.width,
+        //           //         height: 100,
+        //           //         alignment: Alignment.center,
+        //           //         child: const CupertinoActivityIndicator())
+        //           //     : const SizedBox.shrink()
+        //         ],
+        //       ),
+      );
     });
   }
 }

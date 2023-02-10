@@ -16,7 +16,7 @@ class GroupAboutView extends StatelessWidget {
         return ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            GroupHeaderWidget(groupProvider.newGroupDetailsModel,index),
+            GroupHeaderWidget(index),
             widget,
             GroupAboutViewWidget(groupProvider.newGroupDetailsModel,index),
           ],

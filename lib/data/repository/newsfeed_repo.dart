@@ -79,13 +79,4 @@ class NewsfeedRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-  Future<ApiResponse> hidePagePostFromDatabase(String postId) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try {
-      response = await dioClient.post("${AppConstant.pagePostHideURI}$postId/");
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
 }

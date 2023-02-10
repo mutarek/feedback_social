@@ -14,8 +14,7 @@ import 'admin_tools_screen.dart';
 import 'setup_group.dart';
 
 class GroupDashboard extends StatefulWidget {
-  const GroupDashboard(this.authorGroupModel, {Key? key}) : super(key: key);
-  final AuthorGroupModel authorGroupModel;
+  const GroupDashboard({Key? key}) : super(key: key);
 
   @override
   State<GroupDashboard> createState() => _GroupDashboardState();
@@ -75,7 +74,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                               backgroundColor: AppColors.primaryColorLight,
                               child: InkWell(
                                   onTap: () {
-                                    groupProvider.getAuthorGroupById(widget.authorGroupModel.id!).then((value) {
+                                    groupProvider.getAuthorGroupById(groupProvider.groupDetailsModel.id!).then((value) {
                                       if (value) {
                                         Helper.toScreen(SetupGroup());
                                       }
@@ -776,7 +775,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                             backgroundColor: AppColors.primaryColorLight,
                             child: InkWell(
                                 onTap: () {
-                                  groupProvider.changeAllFollowerExpanded(widget.authorGroupModel.id.toString());
+                                  groupProvider.changeAllFollowerExpanded(groupProvider.groupDetailsModel.id.toString());
                                 },
                                 child: groupProvider.allFollower != true
                                     ? const Icon(Icons.arrow_drop_down, color: Colors.white)

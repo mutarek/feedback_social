@@ -1,5 +1,5 @@
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
+import 'package:als_frontend/screens/page/page_details_screen.dart';
 import 'package:als_frontend/screens/page/shimmer_effect/invite_page_shimmer.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
@@ -80,7 +80,7 @@ class _FindPageScreenState extends State<FindPageScreen> {
                       onTap: () {
                         pageProvider.changeSearchView(2);
                         String id = pageProvider.findPageModel[index].likedUrl.replaceAll("/page/like/user/", "").replaceAll("/list/", "");
-                        Helper.toScreen(NewPageDetailsScreen(id, index: index));
+                        Helper.toScreen(PageDetailsScreen(id, index: index));
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

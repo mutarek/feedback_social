@@ -290,7 +290,8 @@ class PostProvider with ChangeNotifier {
   }
 
   //// for Share post
-  bool isLoadingShare=false;
+  bool isLoadingShare = false;
+
   Future<PostResponse> sharePost(String url, String description, NewsFeedModel newsfeedData) async {
     isLoadingShare = true;
     notifyListeners();
@@ -356,5 +357,84 @@ class PostProvider with ChangeNotifier {
     if (progressPercent == 100) {
       await fLutterLocalNotificationsPlugin!.cancel(0);
     }
+  }
+
+  //TODO:: for Hide Post Section
+  Future<bool> hidePagePostFromDatabase(String postId, bool isPage, bool isGroup) async {
+    ApiResponse apiResponse = await postRepo.hidePagePostFromDatabase(postId, isPage, isGroup);
+    if (apiResponse.response.statusCode == 200) {
+      return true;
+    } else {
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+      return false;
+    }
+  }
+
+  //TODO:: for Book Mark Section
+  addBookMark(int postId, bool isPage, bool isGroup) async {
+    ApiResponse apiResponse = await postRepo.bookmarkCreate(postId, isPage, isGroup);
+    if (apiResponse.response.statusCode == 201) {
+      Fluttertoast.showToast(msg: "Bookmark created successfully");
+    } else {
+      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
+    }
+  }
+
+  int selectPage = 0;
+  bool hasNextData = false;
+  bool isBottomLoading = false;
+  bool isLoading2 = false;
+
+  updateBookmarkPageNo() {
+    selectPage++;
+    initializeBookmarkLists(page: selectPage);
+    notifyListeners();
+  }
+
+  List<NewsFeedModel> bookmarkLists = [];
+
+  initializeBookmarkLists({int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      bookmarkLists.clear();
+      bookmarkLists = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    ApiResponse response = await postRepo.bookmarkLists(page);
+    isLoading = false;
+    isBottomLoading = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        bookmarkLists.add(NewsFeedModel.fromJson(element));
+      });
+    } else {
+      isLoading = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  deleteBookMark(int pageID, int index) async {
+    isLoading2 = true;
+    notifyListeners();
+    ApiResponse response = await postRepo.bookmarkDelete(pageID);
+    isLoading2 = false;
+    if (response.response.statusCode == 204) {
+      Fluttertoast.showToast(msg: 'Bookmark deleted successfully');
+      bookmarkLists.removeAt(index);
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
   }
 }

@@ -23,7 +23,7 @@ class _GroupPolicyViewState extends State<GroupPolicyView> {
           return ListView(
             physics: const BouncingScrollPhysics(),
             children: [
-              GroupHeaderWidget(groupProvider.newGroupDetailsModel,widget.index),
+              GroupHeaderWidget(widget.index),
               widget.widget,
               GroupComuinityWidget(groupProvider.newGroupDetailsModel,widget.index),
             ],

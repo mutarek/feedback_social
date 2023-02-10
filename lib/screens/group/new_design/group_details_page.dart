@@ -3,19 +3,18 @@ import 'package:als_frontend/screens/group/new_design/group_about_view.dart';
 import 'package:als_frontend/screens/group/view/group_home_view.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
+
 import '../../../util/theme/app_colors.dart';
 import '../../../util/theme/text.styles.dart';
 import '../../page/shimmer_effect/new_page_details_screen_shimmer.dart';
 import '../../video/widget/new_video_widgets.dart';
 import '../view/group_media_view.dart';
 import '../view/group_policy_view.dart';
-import 'group_media_view.dart';
 
 class GroupDetailsPage extends StatefulWidget {
-  const GroupDetailsPage(this.groupID, {this.index = 0, this.isFromYourGroup = false, Key? key}) : super(key: key);
+  const GroupDetailsPage(this.groupID, {this.index = 0, Key? key}) : super(key: key);
   final int index;
   final String groupID;
-  final bool isFromYourGroup;
 
   @override
   State<GroupDetailsPage> createState() => _GroupDetailsPageState();
@@ -24,8 +23,8 @@ class GroupDetailsPage extends StatefulWidget {
 class _GroupDetailsPageState extends State<GroupDetailsPage> {
   @override
   void initState() {
-    Provider.of<GroupProvider>(context, listen: false).newCallForGetAllGroupInformation(widget.groupID.toString());
-    Provider.of<GroupProvider>(context, listen: false).newCallForGetAllGroupPosts(widget.groupID.toString());
+    Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupInformation(widget.groupID);
+    Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupPosts(widget.groupID, isFirstTime: false);
     _pageController = PageController();
     super.initState();
   }
@@ -46,26 +45,27 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
         return groupProvider.isLoading || groupProvider.isLoadingGroupDetails
             ? const Center(child: NewPageDetailsShimmer())
             : ModalProgressHUD(
-          inAsyncCall: groupProvider.isLoadingUpdateCover,
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (int i) {
-              FocusScope.of(context).requestFocus(FocusNode());
-              groupProvider.changeMenuValue(i);
-            },
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              GroupHomeView(tabMenuWidget(groupProvider),widget.groupID,index:widget.index),
-              GroupAboutView(tabMenuWidget(groupProvider),widget.groupID,index:widget.index),
-              GroupMediaView(tabMenuWidget(groupProvider),widget.groupID,index:widget.index),
-              // PageUpcomingView(tabMenuWidget(pageProvider),  pageProvider.pageDetailsModel),
-              GroupPolicyView(tabMenuWidget(groupProvider), widget.groupID,index:widget.index),
-            ],
-          ),
-        );
+                inAsyncCall: groupProvider.isLoadingUpdateCover,
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (int i) {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    groupProvider.changeMenuValue(i);
+                  },
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    GroupHomeView(tabMenuWidget(groupProvider), widget.groupID, index: widget.index),
+                    GroupAboutView(tabMenuWidget(groupProvider), widget.groupID, index: widget.index),
+                    GroupMediaView(tabMenuWidget(groupProvider), widget.groupID, index: widget.index),
+                    GroupPolicyView(tabMenuWidget(groupProvider), widget.groupID, index: widget.index),
+                    // PageUpcomingView(tabMenuWidget(pageProvider),  pageProvider.pageDetailsModel),
+                  ],
+                ),
+              );
       }),
     );
   }
+
   Widget tabMenuWidget(GroupProvider groupProvider) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -78,7 +78,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           tabButtonWidget(1, "About", groupProvider),
           tabButtonWidget(2, "Media", groupProvider),
           tabButtonWidget(3, "People", groupProvider),
-          tabButtonWidget(4, "Policies", groupProvider, ratio: 3), // 1.5
+          tabButtonWidget(4, "Policies", groupProvider), // 1.5
         ],
       ),
     );

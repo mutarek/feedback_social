@@ -1,6 +1,6 @@
 import 'package:als_frontend/data/model/response/watch_list_model.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/new_design/photo_video_view_screen.dart';
+import 'package:als_frontend/screens/page/photo_video_view_screen.dart';
 import 'package:als_frontend/screens/page/widget/new_page_like_following_widget.dart';
 import 'package:als_frontend/screens/video/video_screen.dart';
 import 'package:als_frontend/util/helper.dart';

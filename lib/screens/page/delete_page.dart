@@ -5,7 +5,7 @@ import 'package:als_frontend/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widget/page_app_bar.dart';
+import 'widget/page_app_bar.dart';
 
 class DeletePage extends StatefulWidget {
   const DeletePage(this.pageId, this.index,{Key? key}) : super(key: key);

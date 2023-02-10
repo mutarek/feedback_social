@@ -11,7 +11,7 @@ import 'package:als_frontend/provider/comment_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
-import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
+import 'package:als_frontend/screens/page/page_details_screen.dart';
 import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/screens/post/single_post_screen1.dart';
 import 'package:als_frontend/screens/post/widget/photo_widget1.dart';
@@ -44,12 +44,14 @@ class PostWidget extends StatelessWidget {
   final bool isPage;
   final bool isHideCommentButton;
   final bool isAdmin;
+  final bool isFromMyBookMark;
 
   const PostWidget(this.newsFeedData,
       {required this.index,
       this.isHomeScreen = false,
       this.isProfileScreen = false,
       this.isHideCommentButton = false,
+      this.isFromMyBookMark = false,
       this.isGroup = false,
       this.isPage = false,
       this.isAdmin = false,
@@ -61,7 +63,7 @@ class PostWidget extends StatelessWidget {
     if (newsFeedData.postType == AppConstant.postTypeGroup && code == 0) {
       Helper.toScreen(PublicGroupScreen(newsFeedData.groupModel!.id.toString(), index: index));
     } else if (newsFeedData.postType == AppConstant.postTypePage && code == 1) {
-      Helper.toScreen(NewPageDetailsScreen(newsFeedData.pageModel!.id.toString(), index: index));
+      Helper.toScreen(PageDetailsScreen(newsFeedData.pageModel!.id.toString(), index: index));
     } else {
       if (Provider.of<AuthProvider>(context, listen: false).userID == newsFeedData.author!.id.toString()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ProfileScreen()));
@@ -73,8 +75,8 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<CommentProvider,NewsFeedProvider>(
-        builder: (context, commentProvider,newsFeedProvider, child) => Column(
+    return Consumer3<CommentProvider, NewsFeedProvider, PostProvider>(
+        builder: (context, commentProvider, newsFeedProvider, postProvider, child) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
@@ -185,47 +187,86 @@ class PostWidget extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 isAdmin
-                                    ? PopUpMenuWidget(ImagesModel.reportIcons, 'Edit', () {
-                                        Navigator.of(context).pop();
-                                        Provider.of<PostProvider>(context, listen: false).clearImageVideo();
-                                        Provider.of<PostProvider>(context, listen: false).initializeImageVideo(newsFeedData);
-                                        Navigator.of(context).push(MaterialPageRoute(
-                                            builder: (_) => AddPostScreen(Provider.of<AuthProvider>(context, listen: false).profileImage,
-                                                isFromGroupScreen: isGroup,
-                                                isForPage: isPage,
-                                                isEditPost: true,
-                                                post: newsFeedData,
-                                                isFromProfileScreen: isProfileScreen,
-                                                index: index)));
-                                      })
-                                    : PopUpMenuWidget(ImagesModel.saveIcons, 'Save', () {}),
-                                const SizedBox(height: 15),
-                                isAdmin
-                                    ? PopUpMenuWidget(ImagesModel.hideIcons, 'Delete', () {
-                                        Navigator.of(context).pop();
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return DeleteDialogue(newsFeedData, index, isHomeScreen);
-                                            });
-                                      })
-                                    : PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {
-                                      newsFeedProvider.hideNewsFeedData(index,newsFeedData.pageModel!.id.toString());
-                                }),
-                                SizedBox(height: isAdmin ? 8 : 15),
-                                isAdmin ? const SizedBox.shrink() : PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
-                                SizedBox(height: isAdmin ? 0 : 15),
-                                isAdmin
-                                    ? const SizedBox.shrink()
-                                    : PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {
-                                        Navigator.of(context).pop();
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AddDialogue(newsFeedData);
-                                            });
-                                      }),
-                                SizedBox(height: isAdmin ? 0 : 8)
+                                    ? Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          PopUpMenuWidget(ImagesModel.reportIcons, 'Edit', () {
+                                            Navigator.of(context).pop();
+                                            Provider.of<PostProvider>(context, listen: false).clearImageVideo();
+                                            Provider.of<PostProvider>(context, listen: false).initializeImageVideo(newsFeedData);
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (_) => AddPostScreen(
+                                                    Provider.of<AuthProvider>(context, listen: false).profileImage,
+                                                    isFromGroupScreen: isGroup,
+                                                    isFormPageScreen: isPage,
+                                                    isEditPost: true,
+                                                    post: newsFeedData,
+                                                    isFromProfileScreen: isProfileScreen,
+                                                    index: index)));
+                                          }),
+                                          const SizedBox(height: 15),
+                                          PopUpMenuWidget(ImagesModel.hideIcons, 'Delete', () {
+                                            Navigator.of(context).pop();
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return DeleteDialogue(newsFeedData, index, isHomeScreen);
+                                                });
+                                          }),
+                                          const SizedBox(height: 8),
+                                        ],
+                                      )
+                                    : isFromMyBookMark
+                                        ? Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              PopUpMenuWidget(ImagesModel.hideIcons, 'Delete Bookmark', () {
+                                                postProvider.deleteBookMark(newsFeedData.newsfeedID as int, index);
+                                                Navigator.of(context).pop();
+                                              }),
+                                            ],
+                                          )
+                                        : Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              PopUpMenuWidget(ImagesModel.saveIcons, 'Save', () {
+                                                postProvider.addBookMark(
+                                                    newsFeedData.id as int,
+                                                    AppConstant.postTypePage == newsFeedData.postType ? true : false,
+                                                    AppConstant.postTypeGroup == newsFeedData.postType ? true : false);
+                                                Helper.back();
+                                              }),
+                                              const SizedBox(height: 15),
+                                              PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {
+                                                postProvider
+                                                    .hidePagePostFromDatabase(
+                                                        newsFeedData.id.toString(),
+                                                        AppConstant.postTypePage == newsFeedData.postType ? true : false,
+                                                        AppConstant.postTypeGroup == newsFeedData.postType ? true : false)
+                                                    .then((value) {
+                                                  if (isHomeScreen == true) {
+                                                    newsFeedProvider.hideNewsFeedData(index);
+                                                  }
+                                                });
+                                                Helper.back();
+                                              }),
+                                              const SizedBox(height: 15),
+                                              PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
+                                              const SizedBox(height: 15),
+                                              PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {
+                                                Navigator.of(context).pop();
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AddDialogue(newsFeedData);
+                                                    });
+                                              }),
+                                              const SizedBox(height: 8),
+                                            ],
+                                          ),
                               ],
                             ),
                           ),
@@ -410,7 +451,9 @@ class PostWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {shareBottomSheet(context,"",newsFeedData);}, size: 18),
+                                PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {
+                                  shareBottomSheet(context, "", newsFeedData);
+                                }, size: 18),
                                 PopUpMenuWidget(ImagesModel.shareTimelinesIcons, 'Share on your timeline', () {
                                   shareBottomSheet(context, newsFeedData.sharedByUrl.toString(), newsFeedData);
                                 }, size: 18),

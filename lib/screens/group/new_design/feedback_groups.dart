@@ -16,8 +16,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
-import 'group_dashboard.dart';
 import 'group_details_page.dart';
 
 class FeedBackGroups extends StatefulWidget {
@@ -178,7 +176,7 @@ class _FeedBackGroupsState extends State<FeedBackGroups> {
                                   var group = groupProvider.authorGroupLists[index];
                                   return GroupViewCard(
                                       ontap: () {
-                                        Helper.toScreen(GroupDetailsPage(group.id.toString(),index: index,isFromYourGroup: true));
+                                        Helper.toScreen(GroupDetailsPage(group.id.toString(),index: index));
                                       },
                                       name: group.name!,
                                       photo: group.coverPhoto!,

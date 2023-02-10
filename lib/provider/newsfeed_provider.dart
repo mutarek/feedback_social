@@ -16,10 +16,10 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import '../widgets/snackbar_message.dart';
 
 class NewsFeedProvider with ChangeNotifier {
-  final NewsfeedRepo newsFeedRepo1;
+  final NewsfeedRepo newsFeedRepo;
   final AuthRepo authRepo1;
 
-  NewsFeedProvider({required this.newsFeedRepo1, required this.authRepo1});
+  NewsFeedProvider({required this.newsFeedRepo, required this.authRepo1});
 
   int position = 0;
   List<NewsFeedModel> newsFeedLists = [];
@@ -53,7 +53,7 @@ class NewsFeedProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    ApiResponse response = await newsFeedRepo1.getNewsFeedData(page);
+    ApiResponse response = await newsFeedRepo.getNewsFeedData(page);
     isLoading = false;
     isBottomLoading = false;
     if (response.response.statusCode == 200) {
@@ -86,14 +86,9 @@ class NewsFeedProvider with ChangeNotifier {
     }
   }
 
-  hideNewsFeedData(index, String id){
+  hideNewsFeedData(index) {
     newsFeedLists.removeAt(index);
     notifyListeners();
-    hidePagePostFromDatabase(id).then((value){
-      if(value){
-        showMessage(message: "Post Hidden Successfully");
-      }else{}
-    });
   }
 
   addLike(int postID, int index, {bool isGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
@@ -105,7 +100,7 @@ class NewsFeedProvider with ChangeNotifier {
     //   newsFeedLists[index].isLiked = false;
     // }
     notifyListeners();
-    await newsFeedRepo1.addLike(postID, isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
+    await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
   }
 
   changeLikeStatus(int value, int index) async {
@@ -171,7 +166,7 @@ class NewsFeedProvider with ChangeNotifier {
     isLoadingSinglePost = true;
     singleNewsFeedModel = NewsFeedModel();
     //notifyListeners();
-    ApiResponse response = await newsFeedRepo1.callForSinglePostFromNotification(id);
+    ApiResponse response = await newsFeedRepo.callForSinglePostFromNotification(id);
     isLoadingSinglePost = false;
     if (response.response.statusCode == 200) {
       singleNewsFeedModel = NewsFeedModel.fromJson(response.response.data);
@@ -193,7 +188,7 @@ class NewsFeedProvider with ChangeNotifier {
     // }
     notifyListeners();
 
-    await newsFeedRepo1.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
+    await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromLike, groupPageID: groupID);
   }
 
   void updateSingleCommentDataCount() {
@@ -228,7 +223,7 @@ class NewsFeedProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    ApiResponse response = await newsFeedRepo1.callForgetLikedShareUser(url, page);
+    ApiResponse response = await newsFeedRepo.callForgetLikedShareUser(url, page);
     isLoadingLiked = false;
     isBottomLoadingLiked = false;
     if (response.response.statusCode == 200) {
@@ -270,17 +265,6 @@ class NewsFeedProvider with ChangeNotifier {
       };
       channel.sink.add(jsonEncode(map));
       sharedPreferences!.remove(AppConstant.chats);
-    }
-  }
-
-  Future<bool> hidePagePostFromDatabase(String id) async{
-    ApiResponse apiResponse = await newsFeedRepo1.hidePagePostFromDatabase(id);
-    if(apiResponse.response.statusCode == 200){
-      return true;
-    }
-    else{
-      Fluttertoast.showToast(msg: apiResponse.response.statusMessage!);
-      return false;
     }
   }
 }

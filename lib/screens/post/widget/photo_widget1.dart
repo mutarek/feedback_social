@@ -96,27 +96,51 @@ class _PostPhotoWidgetState extends State<PostPhotoWidget> {
     }
   }
 
+  videoRoute(int index) {
+    User user = User(
+        id: widget.newsfeedModel.author!.id,
+        fullName: widget.newsfeedModel.author!.fullName,
+        profileImage: widget.newsfeedModel.author!.profileImage);
+    WatchListModel watchListModel = WatchListModel(
+        watchId: 1,
+        postId: widget.newsfeedModel.id,
+        headerText: imageVideoLists[index].title,
+        createdAt: widget.newsfeedModel.timestamp,
+        thumbnail: imageVideoLists[index].url,
+        video: imageVideoLists[index].url2,
+        user: user,
+        totalComment: widget.newsfeedModel.totalComment,
+        commentUrl: widget.newsfeedModel.commentUrl,
+        isLiked: widget.newsfeedModel.reaction != -1,
+        likedByUrl: widget.newsfeedModel.likeReactUrl,
+        sharedByUrl: widget.newsfeedModel.sharedByUrl,
+        totalLiked: widget.newsfeedModel.totalLiked,
+        totalShared: widget.newsfeedModel.totalShared);
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoScreen(watchListModel)));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return totalImageVideo == 0
+    return imageVideoLists.isEmpty
         ? const SizedBox.shrink()
         : MasonryGridView.count(
-            crossAxisCount: totalImageVideo > 1 ? 2 : 1,
+            crossAxisCount: imageVideoLists.length > 1 ? 2 : 1,
             crossAxisSpacing: 8,
             mainAxisSpacing: 10,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: totalImageVideo > 4 ? 4 : totalImageVideo,
+            itemCount: imageVideoLists.length > 4 ? 4 : imageVideoLists.length,
             itemBuilder: (context, index) {
-              bool isVideo = false;
-              String url = '';
-              if (index >= totalImage) {
-                isVideo = true;
-                url = widget.newsfeedModel.videos![index - totalImage].thumbnail!;
-              } else {
-                isVideo = false;
-                url = widget.newsfeedModel.images![index].image!;
-              }
+              // bool isVideo = false;
+              // String url = '';
+              // if (index >= totalImage) {
+              //   isVideo = true;
+              //   url = widget.newsfeedModel.videos![index - totalImage].thumbnail!;
+              // } else {
+              //   isVideo = false;
+              //   url = widget.newsfeedModel.images![index].image!;
+              // }
               return InkWell(
                 onTap: () {
                   Provider.of<OtherProvider>(context, listen: false)
@@ -125,8 +149,8 @@ class _PostPhotoWidgetState extends State<PostPhotoWidget> {
                 },
                 child: Stack(
                   children: [
-                    ClipRRect(borderRadius: BorderRadius.circular(4), child: customNetworkImage(url)),
-                    isVideo == true
+                    ClipRRect(borderRadius: BorderRadius.circular(4), child: customNetworkImage(imageVideoLists[index].url)),
+                    imageVideoLists[index].isImage == false
                         ? Positioned(
                             left: 0,
                             right: 0,
@@ -138,27 +162,7 @@ class _PostPhotoWidgetState extends State<PostPhotoWidget> {
                               decoration: BoxDecoration(color: Colors.white.withOpacity(.3)),
                               child: IconButton(
                                 onPressed: () {
-                                  User user = User(
-                                      id: widget.newsfeedModel.author!.id,
-                                      fullName: widget.newsfeedModel.author!.fullName,
-                                      profileImage: widget.newsfeedModel.author!.profileImage);
-                                  WatchListModel watchListModel = WatchListModel(
-                                      watchId: 1,
-                                      postId: widget.newsfeedModel.id,
-                                      headerText: imageVideoLists[0].title,
-                                      createdAt: "2022-12-19T13:45:20.855137",
-                                      thumbnail: imageVideoLists[0].url,
-                                      video: imageVideoLists[0].url2,
-                                      user: user,
-                                      totalComment: widget.newsfeedModel.totalComment,
-                                      commentUrl: widget.newsfeedModel.commentUrl,
-                                      isLiked: widget.newsfeedModel.reaction != -1,
-                                      likedByUrl: widget.newsfeedModel.likeReactUrl,
-                                      sharedByUrl: widget.newsfeedModel.sharedByUrl,
-                                      totalLiked: widget.newsfeedModel.totalLiked,
-                                      totalShared: widget.newsfeedModel.totalShared);
-
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => VideoScreen(watchListModel)));
+                                  videoRoute(index);
                                 },
                                 icon: SvgPicture.asset(ImagesModel.videoIcons),
                                 // icon: Icon(Icons.video_collection_rounded, color: Colors.grey.withOpacity(.7), size: 38),

@@ -1,7 +1,7 @@
 import 'package:als_frontend/data/model/response/page/athour_pages_model.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
-import 'package:als_frontend/screens/page/new_design/new_page_details_screen.dart';
+import 'package:als_frontend/screens/page/page_details_screen.dart';
 import 'package:als_frontend/screens/page/shimmer_effect/suggestion_page_shimmer.dart';
 import 'package:als_frontend/screens/page/widget/page_app_bar.dart';
 import 'package:als_frontend/util/helper.dart';
@@ -16,14 +16,14 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class NewSuggestedPageScreen extends StatefulWidget {
-  const NewSuggestedPageScreen({Key? key}) : super(key: key);
+class SuggestedPageScreen extends StatefulWidget {
+  const SuggestedPageScreen({Key? key}) : super(key: key);
 
   @override
-  State<NewSuggestedPageScreen> createState() => _NewSuggestedPageScreenState();
+  State<SuggestedPageScreen> createState() => _SuggestedPageScreenState();
 }
 
-class _NewSuggestedPageScreenState extends State<NewSuggestedPageScreen> {
+class _SuggestedPageScreenState extends State<SuggestedPageScreen> {
   @override
   void initState() {
     // TODO: implement initState
@@ -53,7 +53,7 @@ class _NewSuggestedPageScreenState extends State<NewSuggestedPageScreen> {
                           AuthorPageModel authorPageModel = pageProvider.allSuggestPageList[index];
                           return InkWell(
                             onTap: () {
-                              Helper.toScreen(NewPageDetailsScreen(authorPageModel.id.toString(),  index: index));
+                              Helper.toScreen(PageDetailsScreen(authorPageModel.id.toString(), index: index));
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -106,7 +106,7 @@ class _NewSuggestedPageScreenState extends State<NewSuggestedPageScreen> {
                                       padding: 0,
                                       onPress: () {
                                         pageProvider.changeSearchView(1);
-                                        pageProvider.pageLikeUnlike(authorPageModel.id as int, false, index: index,isGoDetails: false);
+                                        pageProvider.pageLikeUnlike(authorPageModel.id as int, false, index: index, isGoDetails: false);
                                       },
                                       backgroundColor: MaterialStateProperty.all(colorText),
                                       boarderRadius: 100,

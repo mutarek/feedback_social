@@ -2,8 +2,8 @@ import 'package:als_frontend/screens/page/shimmer_effect/invite_page_shimmer.dar
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../provider/page_provider.dart';
-import '../widget/invited_page_view_widget.dart';
-import '../widget/page_app_bar.dart';
+import 'widget/invited_page_view_widget.dart';
+import 'widget/page_app_bar.dart';
 
 class InvitedPage extends StatefulWidget {
   const InvitedPage({Key? key}) : super(key: key);
