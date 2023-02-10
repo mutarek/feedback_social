@@ -40,7 +40,7 @@ class _GroupMediaViewState extends State<GroupMediaView> {
             children: [
               GroupHeaderWidget(widget.index),
               widget.widget,
-              GroupMediaWidget(groupProvider.newGroupDetailsModel,widget.index),
+              GroupMediaWidget(groupProvider.groupDetailsModel,widget.index),
             ],
           );
         }

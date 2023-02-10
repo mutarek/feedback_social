@@ -18,7 +18,7 @@ class GroupAboutView extends StatelessWidget {
           children: [
             GroupHeaderWidget(index),
             widget,
-            GroupAboutViewWidget(groupProvider.newGroupDetailsModel,index),
+            GroupAboutViewWidget(groupProvider.groupDetailsModel,index),
           ],
         );
       }

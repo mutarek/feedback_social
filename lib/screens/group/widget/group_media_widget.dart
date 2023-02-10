@@ -1,10 +1,10 @@
+import 'package:als_frontend/data/model/response/group/group_details_model.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/page/photo_video_view_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import '../../../data/model/response/each_author_group_model.dart';
 import '../../../util/helper.dart';
 import '../../../util/image.dart';
 import '../../../util/theme/text.styles.dart';
@@ -12,7 +12,7 @@ import '../../../widgets/network_image.dart';
 import '../../../widgets/single_image_view.dart';
 
 class GroupMediaWidget extends StatefulWidget {
-  final AuthorEachGroupModel authorEachGroupModel;
+  final GroupDetailsModel authorEachGroupModel;
   final int index;
 
   const GroupMediaWidget(this.authorEachGroupModel, this.index, {Key? key}) : super(key: key);

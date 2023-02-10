@@ -103,13 +103,13 @@ class _UserGroupScreenState extends State<UserGroupScreen> {
                             Column(
                               children: [
                                 menuRow(width, groupProvider, height, context),
-                                GroupImageVideoView(int.parse(widget.groupID)),
+                                // GroupImageVideoView(int.parse(widget.groupID)),
                               ],
                             ),
                             Column(
                               children: [
                                 menuRow(width, groupProvider, height, context),
-                                GroupImageVideoView(int.parse(widget.groupID), isForImage: false),
+                                // GroupImageVideoView(int.parse(widget.groupID), isForImage: false),
                               ],
                             ),
                             Column(

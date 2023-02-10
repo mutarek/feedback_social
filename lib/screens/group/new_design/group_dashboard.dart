@@ -74,11 +74,11 @@ class _GroupDashboardState extends State<GroupDashboard> {
                               backgroundColor: AppColors.primaryColorLight,
                               child: InkWell(
                                   onTap: () {
-                                    groupProvider.getAuthorGroupById(groupProvider.groupDetailsModel.id!).then((value) {
-                                      if (value) {
-                                        Helper.toScreen(SetupGroup(groupProvider.groupDetailsModel));
-                                      }
-                                    });
+                                    // groupProvider.getAuthorGroupById(groupProvider.groupDetailsModel.id!).then((value) {
+                                    //   if (value) {
+                                    //     Helper.toScreen(SetupGroup(groupProvider.groupDetailsModel));
+                                    //   }
+                                    // });
                                   },
                                   child: const CircleAvatar(
                                     backgroundColor: AppColors.primaryColorLight,

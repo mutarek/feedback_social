@@ -146,10 +146,20 @@ class GroupRepo {
     }
   }
 
+  Future<ApiResponse> leaveGroup(String groupID, int memberID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.delete("/group/member/$groupID/$memberID/delete/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
   Future<ApiResponse> callForGetGroupAllPosts(String groupID, int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get("/posts/group/$groupID/?page=$page");
+      response = await dioClient.get("/group/post/$groupID/create-list/?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -196,15 +206,6 @@ class GroupRepo {
     }
   }
 
-  Future<ApiResponse> leaveGroup(String groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
-    try {
-      response = await dioClient.delete("/group/$groupID/member/leave/");
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
-    }
-  }
 
   Future<ApiResponse> sendInvitation(String groupID, int userID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
@@ -290,6 +291,15 @@ class GroupRepo {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.patch("${AppConstant.groupUri}$groupID/up-del-retr/", data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+  Future<ApiResponse> pinGroup(String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post("/group/pin/$groupID/create/");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

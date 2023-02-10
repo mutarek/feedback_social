@@ -61,7 +61,7 @@ class _SetupGroupState extends State<SetupGroup> {
                       CustomText(title: "Change your group name.", maxLines: 2, textStyle: robotoStyle500Medium.copyWith(fontSize: 17)),
                       const SizedBox(height: 10),
                       CustomTextField(
-                        hintText: groupProvider.authorEachGroupModel!.name,
+                        hintText: groupProvider.groupDetailsModel.name,
                         isShowBorder: true,
                         borderRadius: 11,
                         verticalSize: 14,
@@ -78,7 +78,7 @@ class _SetupGroupState extends State<SetupGroup> {
                         child: DropdownButton<String>(
                           dropdownColor: textFieldFillColor,
                           hint: Text(groupProvider.privacy=="Select Privacy"?
-                              groupProvider.authorEachGroupModel!.isPrivate==true?"Private":"Public":groupProvider.privacy, style: robotoStyle400Regular.copyWith(fontSize: 18, color: Colors.grey)),
+                              groupProvider.groupDetailsModel.isPrivate==true?"Private":"Public":groupProvider.privacy, style: robotoStyle400Regular.copyWith(fontSize: 18, color: Colors.grey)),
                           isExpanded: true,
                           underline: const SizedBox.shrink(),
                           icon: const Icon(Icons.arrow_drop_down_circle, color: AppColors.primaryColorLight),
@@ -101,7 +101,7 @@ class _SetupGroupState extends State<SetupGroup> {
                       CustomText(title: "Change descriptions", maxLines: 2, textStyle: robotoStyle500Medium.copyWith(fontSize: 17)),
                       const SizedBox(height: 5),
                       CustomTextField(
-                        hintText: groupProvider.authorEachGroupModel!.description,
+                        hintText: groupProvider.groupDetailsModel.description,
                         isShowBorder: true,
                         borderRadius: 11,
                         verticalSize: 14,
@@ -112,7 +112,7 @@ class _SetupGroupState extends State<SetupGroup> {
                       CustomText(title: "Change intro of your group", maxLines: 2, textStyle: robotoStyle500Medium.copyWith(fontSize: 17)),
                       const SizedBox(height: 5),
                       CustomTextField(
-                        hintText: groupProvider.authorEachGroupModel!.bio,
+                        hintText: groupProvider.groupDetailsModel.bio,
                         isShowBorder: true,
                         borderRadius: 11,
                         verticalSize: 14,
@@ -122,7 +122,7 @@ class _SetupGroupState extends State<SetupGroup> {
                       CustomText(title: "Change address", maxLines: 2, textStyle: robotoStyle500Medium.copyWith(fontSize: 17)),
                       const SizedBox(height: 5),
                       CustomTextField(
-                        hintText: groupProvider.authorEachGroupModel!.city,
+                        hintText: groupProvider.groupDetailsModel.city,
                         isShowBorder: true,
                         borderRadius: 11,
                         verticalSize: 14,

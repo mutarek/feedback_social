@@ -1,13 +1,12 @@
 import 'dart:io';
+
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
 import 'package:als_frontend/data/model/response/group/find_group_model.dart';
 import 'package:als_frontend/data/model/response/group/group_details_model.dart';
-import 'package:als_frontend/data/model/response/group/group_images_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
-import 'package:als_frontend/data/model/response/profile_video_model.dart';
 import 'package:als_frontend/data/model/response/settings/privacy_model.dart';
 import 'package:als_frontend/data/repository/auth_repo.dart';
 import 'package:als_frontend/data/repository/group_repo.dart';
@@ -18,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../data/model/response/author_group_model.dart';
-import '../data/model/response/each_author_group_model.dart';
 import '../data/model/response/group_members.dart';
 
 class GroupProvider with ChangeNotifier {
@@ -35,7 +33,6 @@ class GroupProvider with ChangeNotifier {
   bool yourGroup = false;
   bool joinedGroup = false;
   bool suggestedGroup = false;
-  bool eachJoinedGroup = false;
   bool adminList = false;
   bool moderatorList = false;
   bool memberList = false;
@@ -59,11 +56,6 @@ class GroupProvider with ChangeNotifier {
 
   changeAdminListGroupStatus() {
     adminList = !adminList;
-    notifyListeners();
-  }
-
-  changeEachJoinedGroupStatus() {
-    eachJoinedGroup = !eachJoinedGroup;
     notifyListeners();
   }
 
@@ -331,7 +323,6 @@ class GroupProvider with ChangeNotifier {
     isLoading = false;
     if (response.response.statusCode == 200) {
       groupDetailsModel = GroupDetailsModel.fromJson(response.response.data);
-      print('sshshs ${groupDetailsModel.creator.toString()}');
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
@@ -456,47 +447,6 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: for Group Image
-  List<GroupImagesModel> groupImagesLists = [];
-  bool isLoadingForGroupImageVideo = false;
-
-  callForGetAllGroupImage(int groupID) async {
-    isLoadingForGroupImageVideo = true;
-    groupImagesLists.clear();
-    groupImagesLists = [];
-    //notifyListeners();
-    ApiResponse response = await groupRepo.callForGetGroupAllImages(groupID.toString());
-    isLoadingForGroupImageVideo = false;
-    if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
-        groupImagesLists.add(GroupImagesModel.fromJson(element));
-      });
-    } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-    }
-    notifyListeners();
-  }
-
-  // TODO: for Group Video
-  List<ProfileVideoModel> groupVideoLists = [];
-
-  callForGetAllGroupVideo(int groupID) async {
-    isLoadingForGroupImageVideo = true;
-    groupVideoLists.clear();
-    groupVideoLists = [];
-    //notifyListeners();
-    ApiResponse response = await groupRepo.callForGetGroupAllVideo(groupID.toString());
-    isLoadingForGroupImageVideo = false;
-    if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
-        groupVideoLists.add(ProfileVideoModel.fromJson(element));
-      });
-    } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-    }
-    notifyListeners();
-  }
-
   // TODO: for Group members lists who's not member in this group
   List<Author> friendsList = [];
   List<Author> friendsListTemp = [];
@@ -552,8 +502,25 @@ class GroupProvider with ChangeNotifier {
   }
 
 // TODO: for member Join
-  memberJoin(int groupID,
-      {bool isFromDetails = false, bool isFromMySuggestedGroup = false, bool isFromMyGroup = false, int index = 0}) async {
+
+  bool isFromMySuggestedGroup = false;
+  bool isFromMyGroup = false;
+
+  trackJoinGroup(int value) {
+    if (value == 0) {
+      isFromMySuggestedGroup = true;
+      isFromMyGroup = false;
+    } else if (value == 1) {
+      isFromMySuggestedGroup = false;
+      isFromMyGroup = true;
+    } else {
+      isFromMySuggestedGroup = false;
+      isFromMyGroup = false;
+    }
+    notifyListeners();
+  }
+
+  memberJoin(int groupID, {bool isFromDetails = false, int index = 0}) async {
     ApiResponse response = await groupRepo.memberJoin(groupID.toString());
 
     if (response.response.statusCode == 201) {
@@ -563,7 +530,13 @@ class GroupProvider with ChangeNotifier {
         groupDetailsModel.isMember = true;
       }
       if (isFromMyGroup) {
-        myGroupList.removeAt(index);
+        myGroupList.add(AllGroupModel(
+            id: groupDetailsModel.id as int,
+            name: groupDetailsModel.name!,
+            category: groupDetailsModel.category!,
+            coverPhoto: groupDetailsModel.coverPhoto!,
+            isPrivate: groupDetailsModel.isPrivate!,
+            totalMember: groupDetailsModel.totalMember! as int));
       } else if (isFromMySuggestedGroup) {
         suggestedGroupList.removeAt(index);
       }
@@ -573,18 +546,16 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
 // TODO: for member Join
-  leaveGroup(int groupID, {int index = 0, bool isFromMYGroup = false}) async {
-    ApiResponse response = await groupRepo.leaveGroup(groupID.toString());
+  leaveGroup(int groupID, int memberId, {int index = 0}) async {
+    ApiResponse response = await groupRepo.leaveGroup(groupID.toString(), memberId);
 
     if (response.response.statusCode == 204) {
       Fluttertoast.showToast(msg: 'Successfully leave this group');
       groupDetailsModel.totalMember = groupDetailsModel.totalMember! - 1;
       groupDetailsModel.isMember = false;
-      callForGetAllGroupMembers(groupID.toString());
-      if (isFromMYGroup) {
-        // suggestedGroupList.insert(0, myGroupList[index]);
+
+      if (isFromMyGroup) {
         myGroupList.removeAt(index);
       }
     } else {
@@ -717,20 +688,6 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-//TODO: Get Author Page By Id
-  AuthorEachGroupModel? authorEachGroupModel;
-
-  Future<bool> getAuthorGroupById(num id) async {
-    ApiResponse response = await groupRepo.getAuthorGroupById(id.toString());
-    if (response.response.statusCode == 200) {
-      authorEachGroupModel = AuthorEachGroupModel.fromJson(response.response.data);
-      return true;
-    } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-      return false;
-    }
-  }
-
   Future<bool> setupGroup(String name, String desc, String bio, String address) async {
     isLoading = true;
     notifyListeners();
@@ -740,7 +697,7 @@ class GroupProvider with ChangeNotifier {
     formData.fields.add(MapEntry("description", desc));
     formData.fields.add(MapEntry("bio", bio));
     formData.fields.add(MapEntry("address", address));
-    apiResponse = await groupRepo.setupGroup(formData, authorEachGroupModel!.id.toString());
+    apiResponse = await groupRepo.setupGroup(formData, groupDetailsModel.id.toString());
     if (apiResponse.response.statusCode == 200) {
       Fluttertoast.showToast(msg: "Group setup successfully!");
       initializeAuthorGroupLists();
@@ -936,7 +893,6 @@ class GroupProvider with ChangeNotifier {
     return false;
   }
 
-  AuthorEachGroupModel newGroupDetailsModel = AuthorEachGroupModel();
   bool isLoadingGroupDetails = false;
 
   //TODO: FOR GETTING INDIVIDUAL PHOTOS AND VIDEOS DETAILS
@@ -947,7 +903,7 @@ class GroupProvider with ChangeNotifier {
   getForGetAllPhotosVideos() async {
     isLoading = true;
     notifyListeners();
-    ApiResponse response = await groupRepo.callForGetAllPhotos(newGroupDetailsModel.photos!);
+    ApiResponse response = await groupRepo.callForGetAllPhotos(groupDetailsModel.photos!);
     if (response.response.statusCode == 200) {
       response.response.data['results'].forEach((element) {
         groupPhotosModel.add(ImagesData.fromJson(element));
@@ -955,7 +911,7 @@ class GroupProvider with ChangeNotifier {
       isLoading = false;
       isPhotosLoading = false;
       notifyListeners();
-      ApiResponse response1 = await groupRepo.callForGetAllVideos(newGroupDetailsModel.videos!);
+      ApiResponse response1 = await groupRepo.callForGetAllVideos(groupDetailsModel.videos!);
       if (response1.response.statusCode == 200) {
         response1.response.data['results'].forEach((element) {
           groupVideosModel.add(VideosData.fromJson(element));
@@ -970,4 +926,62 @@ class GroupProvider with ChangeNotifier {
     isPhotosLoading = false;
     notifyListeners();
   }
+
+  //TODO: For Pin Group
+  bool isLoadingForPin = false;
+
+  callForPinGroup() async {
+    isLoadingForPin = true;
+    notifyListeners();
+    ApiResponse response = await groupRepo.pinGroup(groupDetailsModel.photos!);
+    isLoadingForPin = false;
+    if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: 'Pin group is successfully Added');
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+
+  updatePinGroupNo() {
+    selectPage++;
+    initializePinGroupLists(page: selectPage);
+    notifyListeners();
+  }
+
+  List<AuthorGroupModel> pinGroupLists = [];
+
+  initializePinGroupLists({int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      authorGroupLists.clear();
+      authorGroupLists = [];
+      isLoading = true;
+      hasNextData = false;
+      isBottomLoading = false;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoading = true;
+      notifyListeners();
+    }
+    ApiResponse response = await groupRepo.getAllAuthorGroups(selectPage);
+    isLoading = false;
+    isBottomLoading = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        authorGroupLists.add(AuthorGroupModel.fromJson(element));
+      });
+    } else {
+      isLoading = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+
 }

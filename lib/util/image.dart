@@ -36,6 +36,8 @@ class ImagesModel {
   // Icons
   static const String findPageIcons = 'assets/icons/find_page.svg';
   static const String earthIcons = 'assets/icons/earth.svg';
+  static const String shareIcons = 'assets/icons/share.svg';
+  static const String leaveIcons = 'assets/icons/leave.svg';
   static const String photoAdd = 'assets/icons/photos.svg';
   static const String videoAdd = 'assets/icons/play.svg';
   static const String inviteFriendIcons = 'assets/icons/invite_friend.svg';

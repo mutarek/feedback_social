@@ -25,7 +25,7 @@ class _GroupPolicyViewState extends State<GroupPolicyView> {
             children: [
               GroupHeaderWidget(widget.index),
               widget.widget,
-              GroupComuinityWidget(groupProvider.newGroupDetailsModel,widget.index),
+              GroupComuinityWidget(groupProvider.groupDetailsModel,widget.index),
             ],
           );
         }

@@ -1,7 +1,9 @@
+import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/other_provider.dart';
 import 'package:als_frontend/screens/group/new_design/group_dashboard.dart';
 import 'package:als_frontend/screens/other/choose_image_and_crop_image_view.dart';
+import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -196,17 +198,58 @@ class GroupHeaderWidget extends StatelessWidget {
                                   ),
                                 ),
                           const SizedBox(width: 5),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: const Color(0xff080C2F)),
-                                borderRadius: BorderRadius.circular(8),
-                                color: const Color(0xffE7F3FF)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [Icon(Icons.more_horiz, color: AppColors.primaryColorLight, size: 12)],
+                          PopupMenuButton(
+                            itemBuilder: (context) => [
+                              // PopupMenuItem 1
+                              PopupMenuItem(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    PopUpMenuWidget(ImagesModel.pins_the_group, 'Pin Group', () {
+                                      Navigator.of(context).pop();
+                                    }, size: 18),
+                                    const SizedBox(height: 13),
+                                    PopUpMenuWidget(ImagesModel.shareIcons, 'Share', () {
+                                      Navigator.of(context).pop();
+                                    }, size: 11),
+                                    const SizedBox(height: 13),
+                                    PopUpMenuWidget(ImagesModel.copyIcons, 'Copy', () {
+                                      Navigator.of(context).pop();
+                                    }, size: 18),
+                                    const SizedBox(height: 13),
+                                    !groupProvider.groupDetailsModel.isMember!
+                                        ? const SizedBox.shrink()
+                                        : PopUpMenuWidget(ImagesModel.leaveIcons, 'Leave ', () {
+                                            groupProvider.leaveGroup(
+                                              groupProvider.groupDetailsModel.id as int,
+                                              int.parse(Provider.of<AuthProvider>(context, listen: false).userID),
+                                              index: index,
+                                            );
+                                            Navigator.of(context).pop();
+                                          }, size: 18),
+                                    SizedBox(height: !groupProvider.groupDetailsModel.isMember! ? 0 : 5),
+                                  ],
+                                ),
+                              ),
+                              // PopupMenuItem 2
+                            ],
+                            offset: const Offset(0, 58),
+                            color: Colors.white,
+                            elevation: 4,
+                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: const Color(0xff080C2F)),
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: const Color(0xffE7F3FF)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: const [Icon(Icons.more_horiz, color: AppColors.primaryColorLight, size: 12)],
+                              ),
                             ),
                           ),
                         ],

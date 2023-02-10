@@ -24,7 +24,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
   @override
   void initState() {
     Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupInformation(widget.groupID);
-    Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupPosts(widget.groupID, isFirstTime: false);
+    Provider.of<GroupProvider>(context, listen: false).callForGetAllGroupPosts(widget.groupID);
     _pageController = PageController();
     super.initState();
   }

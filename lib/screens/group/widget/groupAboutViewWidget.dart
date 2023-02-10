@@ -1,4 +1,4 @@
-import 'package:als_frontend/data/model/response/each_author_group_model.dart';
+import 'package:als_frontend/data/model/response/group/group_details_model.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class GroupAboutViewWidget extends StatelessWidget {
-  final AuthorEachGroupModel authorEachGroupModel;
+  final GroupDetailsModel authorEachGroupModel;
   final int index;
   const GroupAboutViewWidget(this.authorEachGroupModel,this.index,{Key? key}) : super(key: key);
 

@@ -97,8 +97,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                 },
                                                 coverPhoto: groupProvider.groupDetailsModel.coverPhoto!,
                                                 viewCoverPhoto: () {
-                                                  Helper.toScreen(
-                                                      SingleImageView(imageURL: groupProvider.groupDetailsModel.coverPhoto!));
+                                                  Helper.toScreen(SingleImageView(imageURL: groupProvider.groupDetailsModel.coverPhoto!));
                                                 },
                                               ),
                                             ),
@@ -128,7 +127,6 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                       InkWell(
                                                         onTap: () {
                                                           Helper.toScreen(InviteGroupScreen(int.parse(widget.groupID)));
-
                                                         },
                                                         child: CircleAvatar(
                                                           backgroundColor: Palette.notificationColor,
@@ -156,12 +154,11 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                                         SizedBox(height: height * 0.014),
                                                         InkWell(
                                                           onTap: () {
+
                                                             if (groupProvider.groupDetailsModel.isMember == false) {
-                                                              groupProvider.memberJoin(int.parse(widget.groupID),
-                                                                  index: widget.index, isFromMyGroup: widget.isFromMYGroup);
+                                                              groupProvider.memberJoin(int.parse(widget.groupID), index: widget.index);
                                                             } else {
-                                                              groupProvider.leaveGroup(int.parse(widget.groupID),
-                                                                  index: widget.index, isFromMYGroup: widget.isFromMYGroup);
+
                                                             }
                                                           },
                                                           child: Container(
@@ -230,7 +227,7 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                   children: [
                                     groupProvider.groupDetailsModel.isMember == false
                                         ? const SizedBox.shrink()
-                                        : createPostWidget( isForGroup: true, groupPageID: int.parse(widget.groupID)),
+                                        : createPostWidget(isForGroup: true, groupPageID: int.parse(widget.groupID)),
 
                                     /*----------------------------------------Newsfeed---------------------------------*/
                                     const SizedBox(height: 15),
@@ -247,8 +244,8 @@ class _PublicGroupScreenState extends State<PublicGroupScreen> {
                                   ],
                                 ),
                               ),
-                              GroupImageVideoView(int.parse(widget.groupID)),
-                              GroupImageVideoView(int.parse(widget.groupID), isForImage: false),
+                              // GroupImageVideoView(int.parse(widget.groupID)),
+                              // GroupImageVideoView(int.parse(widget.groupID), isForImage: false),
                               const GroupMemberView(),
                             ],
                           ),
