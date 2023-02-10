@@ -14,8 +14,9 @@ class GroupRepo {
 
   GroupRepo({required this.dioClient, required this.authRepo1});
 
+  Response response = Response(requestOptions: RequestOptions(path: ''));
+
   Future<ApiResponse> getAllSuggestGroup() async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get(AppConstant.groupSuggestAllURI);
       return ApiResponse.withSuccess(response);
@@ -25,7 +26,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> getAllJoinGroup() async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get(AppConstant.groupJoinAllURI);
       return ApiResponse.withSuccess(response);
@@ -35,7 +35,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> getOwnGroupList() async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.groupCreatorAllURI}${authRepo1.getUserID()}/all");
       return ApiResponse.withSuccess(response);
@@ -45,7 +44,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> createGroupWithoutImageUpload(Map map) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.post(AppConstant.groupUri, data: map);
       return ApiResponse.withSuccess(response);
@@ -55,7 +53,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> createGroup(FormData formData) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.post(AppConstant.newGroupURI, data: formData);
       return ApiResponse.withSuccess(response);
@@ -65,7 +62,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> getAllAuthorGroups(int page) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.authorGroupURI}?page=$page");
       return ApiResponse.withSuccess(response);
@@ -76,7 +72,6 @@ class GroupRepo {
 
   // TODO: get all joined group list
   Future<ApiResponse> getAllJoinedGroups(int page) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.newJoinedGroup}?page=$page");
       return ApiResponse.withSuccess(response);
@@ -87,7 +82,6 @@ class GroupRepo {
 
 // TODO: get all suggested group list
   Future<ApiResponse> getALLSuggestedGroups(int page) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.suggestedGroup}?page=$page");
       return ApiResponse.withSuccess(response);
@@ -97,7 +91,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> createGroupWithImageUpload(FormData formData) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.post(AppConstant.groupUri, data: formData);
       return ApiResponse.withSuccess(response);
@@ -107,7 +100,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> updateGroupWithoutImageUpload(Map map, int groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.patch("${AppConstant.groupUri}$groupID/", data: map);
       return ApiResponse.withSuccess(response);
@@ -117,7 +109,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> updateGroupWithImageUpload(FormData formData, int groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.patch("${AppConstant.groupUri}$groupID/", data: formData);
       return ApiResponse.withSuccess(response);
@@ -127,7 +118,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> callForGetGroupDetails(String groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.groupUri}$groupID/up-del-retr/");
       return ApiResponse.withSuccess(response);
@@ -137,7 +127,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> callForGetGroupMembers(String groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.groupUri}$groupID/member/all/");
       return ApiResponse.withSuccess(response);
@@ -147,7 +136,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> leaveGroup(String groupID, int memberID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.delete("/group/member/$groupID/$memberID/delete/");
       return ApiResponse.withSuccess(response);
@@ -157,7 +145,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> callForGetGroupAllPosts(String groupID, int page) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("/group/post/$groupID/create-list/?page=$page");
       return ApiResponse.withSuccess(response);
@@ -167,7 +154,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> callForGetGroupAllImages(String groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("/group/$groupID/image/list/");
       return ApiResponse.withSuccess(response);
@@ -177,7 +163,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> callForGetGroupAllVideo(String groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("/group/$groupID/video/list/");
       return ApiResponse.withSuccess(response);
@@ -187,7 +172,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> callForGetAllGroupMemberWhoNotMember(String groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("/group/$groupID/friend/list/");
       return ApiResponse.withSuccess(response);
@@ -197,7 +181,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> memberJoin(String groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.post("/group/member/join/$groupID/create/", data: {});
       return ApiResponse.withSuccess(response);
@@ -206,9 +189,7 @@ class GroupRepo {
     }
   }
 
-
   Future<ApiResponse> sendInvitation(String groupID, int userID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.post("/group/$groupID/$userID/invitation-send/", data: {});
       return ApiResponse.withSuccess(response);
@@ -218,7 +199,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> getCategory() async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get(AppConstant.groupCategoryUri);
       return ApiResponse.withSuccess(response);
@@ -228,7 +208,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> findGroup(String findGroupName, int page) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("/group/search/?q=$findGroupName&page=$page");
       return ApiResponse.withSuccess(response);
@@ -238,7 +217,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> getAuthorGroupById(String id) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.groupUri}/$id/up-del-retr/");
       return ApiResponse.withSuccess(response);
@@ -248,7 +226,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> setupGroup(FormData formData, String groupId) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.patch("${AppConstant.groupUri}/$groupId/up-del-retr/", data: formData);
       return ApiResponse.withSuccess(response);
@@ -258,7 +235,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> getGroupMembers(int page, String groupId) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.groupUri}member/$groupId/list/?page=$page");
       return ApiResponse.withSuccess(response);
@@ -268,7 +244,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> callForGetAllPhotos(String url) async {
-    Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
       response = await dioClient.get(url);
       return ApiResponse.withSuccess(response);
@@ -278,7 +253,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> callForGetAllVideos(String url) async {
-    Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
       response = await dioClient.get(url);
       return ApiResponse.withSuccess(response);
@@ -288,7 +262,6 @@ class GroupRepo {
   }
 
   Future<ApiResponse> updateGroupCoverPhoto(FormData formData, String groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.patch("${AppConstant.groupUri}$groupID/up-del-retr/", data: formData);
       return ApiResponse.withSuccess(response);
@@ -296,17 +269,35 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-  Future<ApiResponse> pinGroup(String groupID) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+
+  Future<ApiResponse> pinGroupList(int page) async {
     try {
-      response = await dioClient.post("/group/pin/$groupID/create/");
+      response = await dioClient.get("${AppConstant.pinGroupUri}?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-  Future<ApiResponse> getAllFriendsForInvite(String groupID,int page) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+
+  Future<ApiResponse> pinGroup(int groupID) async {
+    try {
+      response = await dioClient.post('/group/pin/$groupID/create/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> deletePinGroup(int groupID) async {
+    try {
+      response = await dioClient.delete('/group/unpin/$groupID/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> getAllFriendsForInvite(String groupID, int page) async {
     try {
       response = await dioClient.get("${AppConstant.groupInvitationUri}friend/user/$groupID/list/");
       return ApiResponse.withSuccess(response);
@@ -314,8 +305,8 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+
   Future<ApiResponse> invitationCreate(int groupID, List<int> users) async {
-    Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
       response = await dioClient.post("${AppConstant.groupInvitationUri}create/", data: {"group": groupID, "users": users});
       return ApiResponse.withSuccess(response);
@@ -323,8 +314,8 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+
   Future<ApiResponse> getInvitedGroups(int page) async {
-    Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.get("${AppConstant.groupInvitationUri}list/?page=$page");
       return ApiResponse.withSuccess(response);

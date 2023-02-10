@@ -207,6 +207,7 @@ class GroupHeaderWidget extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     PopUpMenuWidget(ImagesModel.pins_the_group, 'Pin Group', () {
+                                      groupProvider.callForPinGroup();
                                       Navigator.of(context).pop();
                                     }, size: 18),
                                     const SizedBox(height: 13),

@@ -525,6 +525,13 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  resetTrackJoinGroup() {
+    isFromMySuggestedGroup = false;
+    isFromMyGroup = false;
+    joinedGroup = false;
+    notifyListeners();
+  }
+
   memberJoin(int groupID, {bool isFromDetails = false, int index = 0}) async {
     ApiResponse response = await groupRepo.memberJoin(groupID.toString());
 
@@ -934,11 +941,12 @@ class GroupProvider with ChangeNotifier {
 
   //TODO: For Pin Group
   bool isLoadingForPin = false;
+  bool isLoadingForPin2 = false;
 
   callForPinGroup() async {
     isLoadingForPin = true;
     notifyListeners();
-    ApiResponse response = await groupRepo.pinGroup(groupDetailsModel.photos!);
+    ApiResponse response = await groupRepo.pinGroup(groupDetailsModel.id! as int);
     isLoadingForPin = false;
     if (response.response.statusCode == 200) {
       Fluttertoast.showToast(msg: 'Pin group is successfully Added');
@@ -959,9 +967,9 @@ class GroupProvider with ChangeNotifier {
   initializePinGroupLists({int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
-      authorGroupLists.clear();
-      authorGroupLists = [];
-      isLoading = true;
+      pinGroupLists.clear();
+      pinGroupLists = [];
+      isLoadingForPin = true;
       hasNextData = false;
       isBottomLoading = false;
       if (!isFirstTime) {
@@ -971,17 +979,31 @@ class GroupProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    ApiResponse response = await groupRepo.getAllAuthorGroups(selectPage);
-    isLoading = false;
+    ApiResponse response = await groupRepo.pinGroupList(selectPage);
+    isLoadingForPin = false;
     isBottomLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        authorGroupLists.add(AuthorGroupModel.fromJson(element));
+        pinGroupLists.add(AuthorGroupModel.fromJson(element));
       });
     } else {
-      isLoading = false;
+      isLoadingForPin = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  deletePinGroup(int groupID, int index) async {
+    isLoadingForPin2 = true;
+    notifyListeners();
+    ApiResponse response = await groupRepo.deletePinGroup(groupID);
+    isLoadingForPin2 = false;
+    if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: 'Pin group is successfully Deleted');
+      pinGroupLists.removeAt(index);
+    } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();

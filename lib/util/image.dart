@@ -48,6 +48,7 @@ class ImagesModel {
   static const String joinedGroupIcon = 'assets/svg/joined_groups_icon.svg';
   static const String createDateIcon = 'assets/svg/created_date_svg.svg';
   static const String groupMemberIcon = 'assets/svg/group_member_vector.svg';
+  static const String lastMinuteIcon = "assets/svg/last_minute_icon.svg";
   static const String videoPlayIcon = 'assets/svg/page_video_play_icon.svg';
   static const String groupLocationIcon = 'assets/svg/group_location_svg.svg';
   static const String publicGroupIcon = 'assets/svg/public_group_svg.svg';

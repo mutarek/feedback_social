@@ -289,6 +289,7 @@ class FeedBackGroups extends StatelessWidget {
                   icon: ImagesModel.pins_the_group,
                   name: "Pins Group",
                   onTap: () {
+                    groupProvider.resetTrackJoinGroup();
                     Helper.toScreen(const PinsGroup());
                   },
                 ),
@@ -296,8 +297,9 @@ class FeedBackGroups extends StatelessWidget {
                 LikeInviteFindWidget(
                   icon: ImagesModel.inviteFriendIcons,
                   name: "Invite Group",
-                  extraArguments: " 25 new invites",
+                  extraArguments: "1+ new invites",
                   onTap: () {
+                    groupProvider.resetTrackJoinGroup();
                     Helper.toScreen(const InvitesGroup());
                   },
                 ),
@@ -306,6 +308,7 @@ class FeedBackGroups extends StatelessWidget {
                   icon: ImagesModel.findPageIcons,
                   name: "Find Group",
                   onTap: () {
+                    groupProvider.resetTrackJoinGroup();
                     Helper.toScreen(const FindGroup());
                   },
                 ),
@@ -316,28 +319,28 @@ class FeedBackGroups extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget loadMoreGroup(bool hasNextData, bool isBottomLoading, Function onTap, String title) {
-    return Column(
-      children: [
-        SizedBox(height: hasNextData || isBottomLoading ? 5 : 0),
-        isBottomLoading
-            ? const CircularProgressIndicator()
-            : hasNextData
-                ? InkWell(
-                    onTap: () {
-                      onTap();
-                    },
-                    child: Container(
-                      height: 30,
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-                      decoration: BoxDecoration(border: Border.all(color: colorText), borderRadius: BorderRadius.circular(22)),
-                      child: Text(title, style: robotoStyle500Medium.copyWith(color: colorText)),
-                    ),
-                  )
-                : const SizedBox.shrink(),
-        SizedBox(height: hasNextData || isBottomLoading ? 10 : 0),
-      ],
-    );
-  }
+Widget loadMoreGroup(bool hasNextData, bool isBottomLoading, Function onTap, String title) {
+  return Column(
+    children: [
+      SizedBox(height: hasNextData || isBottomLoading ? 5 : 0),
+      isBottomLoading
+          ? const CupertinoActivityIndicator()
+          : hasNextData
+              ? InkWell(
+                  onTap: () {
+                    onTap();
+                  },
+                  child: Container(
+                    height: 30,
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                    decoration: BoxDecoration(border: Border.all(color: colorText), borderRadius: BorderRadius.circular(22)),
+                    child: Text(title, style: robotoStyle500Medium.copyWith(color: colorText)),
+                  ),
+                )
+              : const SizedBox.shrink(),
+      SizedBox(height: hasNextData || isBottomLoading ? 10 : 0),
+    ],
+  );
 }
