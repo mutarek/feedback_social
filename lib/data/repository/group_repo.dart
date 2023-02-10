@@ -75,10 +75,10 @@ class GroupRepo {
   }
 
   // TODO: get all joined group list
-  Future<ApiResponse> getAllJoinedGroups() async {
+  Future<ApiResponse> getAllJoinedGroups(int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get(AppConstant.newJoinedGroup);
+      response = await dioClient.get("${AppConstant.newJoinedGroup}?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -86,10 +86,10 @@ class GroupRepo {
   }
 
 // TODO: get all suggested group list
-  Future<ApiResponse> getALLSuggestedGroups() async {
+  Future<ApiResponse> getALLSuggestedGroups(int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get(AppConstant.suggestedGroup);
+      response = await dioClient.get("${AppConstant.suggestedGroup}?page=$page");
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -189,7 +189,7 @@ class GroupRepo {
   Future<ApiResponse> memberJoin(String groupID) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.post("/group/$groupID/member/join/", data: {});
+      response = await dioClient.post("/group/member/join/$groupID/create/", data: {});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

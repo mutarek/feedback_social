@@ -26,7 +26,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
     _pageController = PageController();
     super.initState();
     Provider.of<GroupProvider>(context, listen: false).initializeMyGroup();
-    Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
+    // Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
   }
 
   PageController _pageController = PageController();
@@ -299,46 +299,7 @@ class _LikedGroupSuggestedGroupState extends State<LikedGroupSuggestedGroup> {
                         ),
                       ],
                     ),
-                    ListView.builder(
-                        itemCount: groupProvider.allSuggestGroupList.length,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Helper.toScreen(PublicGroupScreen(groupProvider.allSuggestGroupList[index].id.toString()));
-                            },
-                            child: ListTile(
-                                leading: CircleAvatar(
-                                  radius: 24,
-                                  backgroundColor: Colors.black12,
-                                  backgroundImage: CachedNetworkImageProvider(groupProvider.allSuggestGroupList[index].coverPhoto),
-                                ),
-                                trailing: Container(
-                                  height: height * 0.027,
-                                  width: width * 0.15,
-                                  decoration: BoxDecoration(color: const Color(0xff090D2A), borderRadius: BorderRadius.circular(4)),
-                                  child: Center(
-                                      child: Text(
-                                    LocaleKeys.join.tr(),
-                                    style: latoStyle600SemiBold.copyWith(color: Colors.white, fontSize: 10),
-                                  )),
-                                ),
-                                title: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: height * 0.01,
-                                    ),
-                                    Text(groupProvider.allSuggestGroupList[index].name, style: latoStyle700Bold),
-                                    const SizedBox(
-                                      height: 2,
-                                    ),
-                                    Text("${groupProvider.allSuggestGroupList[index].totalMember.toString()} ${LocaleKeys.followers.tr()}",
-                                        style: latoStyle100Thin.copyWith(fontSize: 10)),
-                                  ],
-                                )),
-                          );
-                        }),
+
                   ],
                 ),
               ),

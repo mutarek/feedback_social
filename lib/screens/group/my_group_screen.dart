@@ -29,7 +29,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
     super.initState();
     _pageController = PageController();
     Provider.of<GroupProvider>(context, listen: false).initializeMyGroup();
-    Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
+    // Provider.of<GroupProvider>(context, listen: false).initializeSuggestGroup();
   }
 
   PageController _pageController = PageController();
@@ -210,25 +210,7 @@ class _MyGroupScreenState extends State<MyGroupScreen> with SingleTickerProvider
   Widget mySuggestedView(GroupProvider provider) {
     return ConstrainedBox(
       constraints: const BoxConstraints.expand(),
-      child: provider.isLoadingSuggestedGroup
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(top: 15),
-              itemCount: provider.allSuggestGroupList.length,
-              itemBuilder: (context, index) {
-                return CustomPageGroupButton(
-                    onTap: () {
-                      provider.loadingStart();
-                      Helper.toScreen(
-                          PublicGroupScreen(provider.allSuggestGroupList[index].id.toString(), index: index, isFromMYGroup: true));
-                    },
-                    goToGroupOrPage: () {},
-                    groupOrPageImage: provider.allSuggestGroupList[index].coverPhoto,
-                    groupOrPageName: provider.allSuggestGroupList[index].name,
-                    groupOrPageLikes: "${provider.allSuggestGroupList[index].totalMember} Members");
-              }),
+
     );
   }
 

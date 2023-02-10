@@ -12,6 +12,7 @@ import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/palette.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
+import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -160,13 +161,13 @@ class FeedBackGroups extends StatelessWidget {
                         height: 290,
                         child: groupProvider.isLoading
                             ? const Center(child: CircularProgressIndicator())
-                            : groupProvider.joinedGroupModel.isNotEmpty
+                            : groupProvider.joinedGroupList.isNotEmpty
                                 ? Column(
                                     children: [
                                       Expanded(
                                         child: ListView.builder(
                                             physics: const BouncingScrollPhysics(),
-                                            itemCount: groupProvider.joinedGroupModel.length,
+                                            itemCount: groupProvider.joinedGroupList.length,
                                             itemBuilder: (context, index) {
                                               return Column(
                                                 children: [
@@ -186,32 +187,19 @@ class FeedBackGroups extends StatelessWidget {
                                                     child: Row(
                                                       mainAxisAlignment: MainAxisAlignment.start,
                                                       children: [
-                                                        const SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        // ClipRRect(
-                                                        //     borderRadius: BorderRadius.circular(20),
-                                                        //     child: Center(
-                                                        //         child: Image.asset(
-                                                        //       groupProvider.joinedGroupModel[index].results[index].coverPhoto,
-                                                        //       height: 36,
-                                                        //       width: 36,
-                                                        //     ))),
                                                         const SizedBox(width: 15),
-                                                        Column(
+                                                        Row(
                                                           mainAxisAlignment: MainAxisAlignment.start,
-                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
                                                           children: [
-                                                            // Text(groupProvider.joinedGroupModel[index].results[index].name,
-                                                            //     style: robotoStyle700Bold.copyWith(fontSize: 16)),
-                                                            const SizedBox(height: 5),
-                                                            Row(
-                                                              children: [
-                                                                SvgPicture.asset("assets/svg/last_minute_icon.svg", width: 14, height: 14),
-                                                                const SizedBox(width: 2),
-                                                                Text("My Message", style: robotoStyle500Medium.copyWith(fontSize: 9)),
-                                                              ],
-                                                            )
+                                                            ClipRRect(
+                                                                borderRadius: BorderRadius.circular(20),
+                                                                child: Center(
+                                                                    child: circularImage(
+                                                                        groupProvider.joinedGroupList[index].coverPhoto!, 25, 25))),
+                                                            const SizedBox(width: 5),
+                                                            Text(groupProvider.joinedGroupList[index].name!,
+                                                                style: robotoStyle500Medium.copyWith(fontSize: 13))
                                                           ],
                                                         ),
                                                         const Spacer(),
@@ -220,19 +208,10 @@ class FeedBackGroups extends StatelessWidget {
                                                               groupProvider.changeEachJoinedGroupStatus();
                                                             },
                                                             child: groupProvider.eachJoinedGroup
-                                                                ? SvgPicture.asset(
-                                                                    "assets/svg/play_up_vector.svg",
-                                                                    height: 15,
-                                                                    width: 15,
-                                                                  )
-                                                                : SvgPicture.asset(
-                                                                    "assets/svg/play_down_vector.svg",
-                                                                    height: 15,
-                                                                    width: 15,
-                                                                  )),
-                                                        const SizedBox(
-                                                          width: 10,
-                                                        )
+                                                                ? SvgPicture.asset("assets/svg/play_up_vector.svg", height: 15, width: 15)
+                                                                : SvgPicture.asset("assets/svg/play_down_vector.svg",
+                                                                    height: 15, width: 15)),
+                                                        const SizedBox(width: 10)
                                                       ],
                                                     ),
                                                   ),
@@ -636,10 +615,7 @@ class FeedBackGroups extends StatelessWidget {
                                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                                           itemCount: groupProvider.suggestedGroupList.length,
                                           itemBuilder: (_, index) {
-                                            return SuggestedGroupViewCard(
-                                                groupProvider.suggestedGroupList[index].name!,
-                                                "${groupProvider.suggestedGroupList[index].totalMember!} Members - 0+ Post a Day",
-                                                groupProvider.suggestedGroupList[index].coverPhoto!);
+                                            return SuggestedGroupViewCard(groupProvider.suggestedGroupList[index], index);
                                           },
                                         ),
                                       ),

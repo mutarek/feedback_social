@@ -105,22 +105,7 @@ class FlagGroupView extends StatelessWidget {
                             Container(height: 3, margin: const EdgeInsets.only(bottom: 15)),
                           ],
                         ),
-                        ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: provider.allSuggestGroupList.length,
-                            itemBuilder: (context, index) {
-                              return CustomPageGroupButton(
-                                  onTap: () {
-                                    provider.loadingStart();
-                                    Helper.toScreen(PublicGroupScreen(provider.allSuggestGroupList[index].id.toString()));
 
-                                  },
-                                  goToGroupOrPage: () {},
-                                  groupOrPageImage: provider.allSuggestGroupList[index].coverPhoto,
-                                  groupOrPageName: provider.allSuggestGroupList[index].name,
-                                  groupOrPageLikes: "${provider.allSuggestGroupList[index].totalMember} Members");
-                            }),
                       ],
                     ),
                   )),

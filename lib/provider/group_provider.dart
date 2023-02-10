@@ -150,31 +150,12 @@ class GroupProvider with ChangeNotifier {
   }
 
   //TODO: for get ALl Suggest Group
-  List<AllGroupModel> allSuggestGroupList = [];
-
-  initializeSuggestGroup() async {
-    isLoadingSuggestedGroup = true;
-    ApiResponse response = await groupRepo.getAllSuggestGroup();
-    isLoadingSuggestedGroup = false;
-    if (response.response.statusCode == 200) {
-      response.response.data.forEach((element) {
-        allSuggestGroupList.add(AllGroupModel.fromJson(element));
-      });
-    } else {
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-    }
-    notifyListeners();
-  }
-
-  //TODO: for get ALl Suggest Group
   List<AllGroupModel> myGroupList = [];
 
   initializeMyGroup() async {
     isLoading = true;
     myGroupList.clear();
     myGroupList = [];
-    allSuggestGroupList.clear();
-    allSuggestGroupList = [];
     menuValue = 0;
     ApiResponse response = await groupRepo.getAllJoinGroup();
 
@@ -571,25 +552,20 @@ class GroupProvider with ChangeNotifier {
   }
 
 // TODO: for member Join
-  memberJoin(int groupID, {bool isFromMyGroup = false, int index = 0}) async {
+  memberJoin(int groupID,
+      {bool isFromDetails = false, bool isFromMySuggestedGroup = false, bool isFromMyGroup = false, int index = 0}) async {
     ApiResponse response = await groupRepo.memberJoin(groupID.toString());
 
     if (response.response.statusCode == 201) {
       Fluttertoast.showToast(msg: response.response.data['message']);
-      groupDetailsModel.totalMember = groupDetailsModel.totalMember! + 1;
-      groupDetailsModel.isMember = true;
-      callForGetAllGroupMembers(groupID.toString());
+      if (isFromDetails) {
+        groupDetailsModel.totalMember = groupDetailsModel.totalMember! + 1;
+        groupDetailsModel.isMember = true;
+      }
       if (isFromMyGroup) {
-        allSuggestGroupList.removeAt(index);
-        myGroupList.insert(
-            0,
-            AllGroupModel(
-                id: groupDetailsModel.id as int,
-                name: groupDetailsModel.name!,
-                category: groupDetailsModel.category!,
-                coverPhoto: groupDetailsModel.coverPhoto!,
-                isPrivate: groupDetailsModel.isPrivate!,
-                totalMember: groupDetailsModel.totalMember! as int));
+        myGroupList.removeAt(index);
+      } else if (isFromMySuggestedGroup) {
+        suggestedGroupList.removeAt(index);
       }
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
@@ -607,7 +583,7 @@ class GroupProvider with ChangeNotifier {
       groupDetailsModel.isMember = false;
       callForGetAllGroupMembers(groupID.toString());
       if (isFromMYGroup) {
-        allSuggestGroupList.insert(0, myGroupList[index]);
+        // suggestedGroupList.insert(0, myGroupList[index]);
         myGroupList.removeAt(index);
       }
     } else {
@@ -814,13 +790,13 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<AuthorGroupModel> joinedGroupModel = [];
+  List<AuthorGroupModel> joinedGroupList = [];
 
   initializeJoinedGroupLists({int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
-      joinedGroupModel.clear();
-      joinedGroupModel = [];
+      joinedGroupList.clear();
+      joinedGroupList = [];
       isLoading = true;
       hasNextData = false;
       isBottomLoading = false;
@@ -831,14 +807,14 @@ class GroupProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    ApiResponse response = await groupRepo.getAllJoinedGroups();
+    ApiResponse response = await groupRepo.getAllJoinedGroups(selectPage);
     isLoading = false;
     isBottomLoading = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        joinedGroupModel.add(AuthorGroupModel.fromJson(element));
+        joinedGroupList.add(AuthorGroupModel.fromJson(element));
       });
     } else {
       isLoading = false;
@@ -871,7 +847,7 @@ class GroupProvider with ChangeNotifier {
       isBottomLoading = true;
       notifyListeners();
     }
-    ApiResponse response = await groupRepo.getALLSuggestedGroups();
+    ApiResponse response = await groupRepo.getALLSuggestedGroups(selectPage);
     isLoading = false;
     isBottomLoading = false;
     notifyListeners();
