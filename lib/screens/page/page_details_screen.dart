@@ -14,9 +14,8 @@ class PageDetailsScreen extends StatefulWidget {
 
   final String pageID;
   final int index;
-  final bool isFromYourPage;
 
-  const PageDetailsScreen(this.pageID, { this.index = 0, this.isFromYourPage = false, Key? key})
+  const PageDetailsScreen(this.pageID, { this.index = 0, Key? key})
       : super(key: key);
 
   @override

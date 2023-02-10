@@ -39,6 +39,8 @@ class ImagesModel {
   static const String videoAdd = 'assets/icons/play.svg';
   static const String inviteFriendIcons = 'assets/icons/invite_friend.svg';
   static const String suggestedGroupIcon = 'assets/svg/suggested_group_icon.svg';
+  static const String inviteFriendsIcons = "assets/svg/invite_friends.svg";
+  static const String pageAccessIcons = "assets/svg/page_access.svg";
   static const String yourGroupIcon = 'assets/svg/your_group_icon.svg';
   static const String joinedGroupIcon = 'assets/svg/joined_groups_icon.svg';
   static const String createDateIcon = 'assets/svg/created_date_svg.svg';

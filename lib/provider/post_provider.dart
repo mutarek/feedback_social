@@ -360,8 +360,8 @@ class PostProvider with ChangeNotifier {
   }
 
   //TODO:: for Hide Post Section
-  Future<bool> hidePagePostFromDatabase(String postId, bool isPage, bool isGroup) async {
-    ApiResponse apiResponse = await postRepo.hidePagePostFromDatabase(postId, isPage, isGroup);
+  Future<bool> hidePagePostFromDatabase(String url) async {
+    ApiResponse apiResponse = await postRepo.hidePostFromDatabase(url);
     if (apiResponse.response.statusCode == 200) {
       return true;
     } else {

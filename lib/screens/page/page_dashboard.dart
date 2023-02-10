@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/screens/page/page_home_screen.dart';
 import 'package:als_frontend/util/helper.dart';
+import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_button.dart';
@@ -31,14 +32,13 @@ class _PageDashboardState extends State<PageDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const CustomText(title: "Dashboard", color: AppColors.primaryColorLight, fontWeight: FontWeight.bold, fontSize: 24),
         backgroundColor: Colors.white,
         elevation: 0.3,
         centerTitle: true,
-        leading: const BackButton(
-          color: Colors.black, // <-- SEE HERE
-        ),
+        leading: const BackButton(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
@@ -47,84 +47,12 @@ class _PageDashboardState extends State<PageDashboard> {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  child: Container(
-                    decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.white,
-                            child: SvgPicture.asset(
-                              "assets/svg/invite_friends.svg",
-                              height: 20,
-                              width: 34,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Edit Page", style: robotoStyle700Bold.copyWith(fontSize: 22)),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          CircleAvatar(
-                              radius: 15,
-                              backgroundColor: AppColors.primaryColorLight,
-                              child: InkWell(
-                                  onTap: () {
-                                    Helper.toScreen(EditPage1(
-                                      widget.pageId,
-                                      index: widget.index,
-                                    ));
-                                  },
-                                  child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white)))
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  child: Container(
-                    decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.white,
-                            child: SvgPicture.asset("assets/svg/invite_friends.svg", height: 20, width: 34),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(child: Text("Invites Friend", style: robotoStyle700Bold.copyWith(fontSize: 22))),
-                          const SizedBox(width: 10),
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundColor: AppColors.primaryColorLight,
-                            child: InkWell(
-                                onTap: () {
-                                  pageProvider.changeExpended();
-                                },
-                                child: pageProvider.statusInviteFriendButton != true
-                                    ? const Icon(Icons.arrow_drop_down, color: Colors.white)
-                                    : const Icon(Icons.arrow_drop_up, color: Colors.white)),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                dashboardWidget("Edit Page", ImagesModel.suggestPageIcons, false, () {
+                  Helper.toScreen(EditPage1(widget.pageId, index: widget.index));
+                }, iconData: Icons.edit_note),
+                dashboardWidget("Invites Friend", ImagesModel.inviteFriendsIcons, true, () {
+                  pageProvider.changeExpended();
+                }, expandedCondition: pageProvider.statusInviteFriendButton),
                 pageProvider.statusInviteFriendButton == true
                     ? SizedBox(
                         height: 350,
@@ -257,51 +185,9 @@ class _PageDashboardState extends State<PageDashboard> {
                                   ))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
-                Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  child: Container(
-                    decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.white,
-                            child: SvgPicture.asset(
-                              "assets/svg/page_access.svg",
-                              height: 20,
-                              width: 34,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Page Access", style: robotoStyle700Bold.copyWith(fontSize: 22)),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundColor: AppColors.primaryColorLight,
-                            child: InkWell(
-                                onTap: () {
-                                  pageProvider.changeAdminAccessExpanded();
-                                },
-                                child: pageProvider.adminAccessPage != true
-                                    ? const Icon(Icons.arrow_drop_down, color: Colors.white)
-                                    : const Icon(Icons.arrow_drop_up, color: Colors.white)),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                dashboardWidget("Page Access", ImagesModel.pageAccessIcons, true, () {
+                  pageProvider.changeAdminAccessExpanded();
+                }, expandedCondition: pageProvider.adminAccessPage),
                 pageProvider.adminAccessPage == true
                     ? SizedBox(
                         height: 1000,
@@ -517,53 +403,11 @@ class _PageDashboardState extends State<PageDashboard> {
                                 ),
                               ),
                             ),
-                            Card(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                              child: Container(
-                                width: 260,
-                                height: 38,
-                                decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 20,
-                                        backgroundColor: Colors.white,
-                                        child: SvgPicture.asset(
-                                          "assets/svg/page_access.svg",
-                                          height: 20,
-                                          width: 34,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Modarator Section", style: robotoStyle700Bold.copyWith(fontSize: 12)),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      CircleAvatar(
-                                        radius: 15,
-                                        backgroundColor: AppColors.primaryColorLight,
-                                        child: InkWell(
-                                            onTap: () {
-                                              pageProvider.changeModeratorSectionAccessExpanded();
-                                            },
-                                            child: pageProvider.moderatorSectionAccess != true
-                                                ? const Icon(Icons.arrow_drop_down, color: Colors.white)
-                                                : const Icon(Icons.arrow_drop_up, color: Colors.white)),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+
+                            dashboardWidget("Moderator Section", ImagesModel.pageAccessIcons, true, () {
+                              pageProvider.changeModeratorSectionAccessExpanded();
+                            }, expandedCondition: pageProvider.moderatorSectionAccess),
+
                             pageProvider.moderatorSectionAccess
                                 ? Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -727,52 +571,10 @@ class _PageDashboardState extends State<PageDashboard> {
                           ],
                         ))
                     : const SizedBox.shrink(),
-                Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  child: Container(
-                    decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.white,
-                            child: SvgPicture.asset(
-                              "assets/svg/invite_friends.svg",
-                              height: 20,
-                              width: 34,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("All follower", style: robotoStyle700Bold.copyWith(fontSize: 22)),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundColor: AppColors.primaryColorLight,
-                            child: InkWell(
-                                onTap: () {
-                                  pageProvider.changeAllFollowerExpanded(widget.pageId);
-                                  showLog(pageProvider.statusInviteFriendButton);
-                                },
-                                child: pageProvider.allFollower != true
-                                    ? const Icon(Icons.arrow_drop_down, color: Colors.white)
-                                    : const Icon(Icons.arrow_drop_up, color: Colors.white)),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                dashboardWidget("All follower", ImagesModel.inviteFriendsIcons, true, () {
+                  pageProvider.changeAllFollowerExpanded(widget.pageId);
+                  showLog(pageProvider.statusInviteFriendButton);
+                }, expandedCondition: pageProvider.allFollower),
                 pageProvider.allFollower
                     ? SizedBox(
                         height: 300,
@@ -838,12 +640,9 @@ class _PageDashboardState extends State<PageDashboard> {
                                                 itemBuilder: (context, index) {
                                                   var data = pageProvider.pageFollowersList[index];
                                                   return ListTile(
-                                                    leading: SizedBox(
-                                                        width: 30,
-                                                        height: 30,
-                                                        child: circularImage(data.profileImage!, 30, 30)),
-                                                    title: Text(data.fullName!,
-                                                        style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                    leading:
+                                                        SizedBox(width: 30, height: 30, child: circularImage(data.profileImage!, 30, 30)),
+                                                    title: Text(data.fullName!, style: robotoStyle500Medium.copyWith(fontSize: 12)),
                                                   );
                                                 }),
                                   ),
@@ -853,139 +652,140 @@ class _PageDashboardState extends State<PageDashboard> {
                                   pageProvider.isBottomLoadingInviteFriend
                                       ? const CircularProgressIndicator()
                                       : pageProvider.hasNextDataInviteFriend
-                                      ? InkWell(
-                                    onTap: () {
-                                      pageProvider.updateInviteFriendPageNo();
-                                    },
-                                    child: Container(
-                                      height: 30,
-                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(color: colorText),
-                                          borderRadius: BorderRadius.circular(22)),
-                                      child: Text('Load more Follower',
-                                          style: robotoStyle500Medium.copyWith(color: colorText)),
-                                    ),
-                                  )
-                                      : const SizedBox.shrink(),
+                                          ? InkWell(
+                                              onTap: () {
+                                                pageProvider.updateInviteFriendPageNo();
+                                              },
+                                              child: Container(
+                                                height: 30,
+                                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(color: colorText), borderRadius: BorderRadius.circular(22)),
+                                                child: Text('Load more Follower', style: robotoStyle500Medium.copyWith(color: colorText)),
+                                              ),
+                                            )
+                                          : const SizedBox.shrink(),
                                 ],
                               ),
                             ),
                           ),
                         ))
                     : const SizedBox.shrink(),
-                Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  child: Container(
-                    decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.white,
-                            child: SvgPicture.asset(
-                              "assets/svg/invite_friends.svg",
-                              height: 20,
-                              width: 34,
+                dashboardWidget("Delete Page", ImagesModel.findPageIcons, false, () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        Random random = Random();
+                        int randomNumber = random.nextInt(90) + 10;
+                        return Dialog(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
+                          child: SizedBox(
+                            height: 310,
+                            width: double.infinity,
+                            child: Card(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                      Text("Are you absolutely sure?", style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                      const Icon(Icons.auto_delete, color: Colors.red)
+                                    ]),
+                                    const Divider(thickness: 2, color: Colors.black),
+                                    Text(
+                                        "This action cannot be undone. This will permanently delete the mutarek/sasasas repository, wiki, issues, comments, packages, secrets, workflow runs, and remove all collaborator associations.",
+                                        style: robotoStyle400Regular.copyWith(fontSize: 16)),
+                                    const SizedBox(height: 10),
+                                    Text.rich(TextSpan(children: [
+                                      TextSpan(text: "Please Type", style: robotoStyle300Light.copyWith(fontSize: 12)),
+                                      TextSpan(text: " $randomNumber ", style: robotoStyle700Bold.copyWith(fontSize: 15)),
+                                      TextSpan(text: "To Confrim", style: robotoStyle300Light.copyWith(fontSize: 12)),
+                                    ])),
+                                    const SizedBox(height: 5),
+                                    CustomTextField(
+                                      hintText: 'Your Key Name',
+                                      isShowBorder: true,
+                                      borderRadius: 11,
+                                      verticalSize: 14,
+                                      controller: keyController,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    CustomButton(
+                                        backgroundColor: Colors.red,
+                                        btnTxt: 'Delete Page',
+                                        onTap: () {
+                                          if (keyController.text == randomNumber.toString()) {
+                                            pageProvider.deleteSinglePage(widget.pageId, 0, (status) {
+                                              if (status) {
+                                                Helper.toScreen(const PageHomeScreen());
+                                              }
+                                            });
+                                          } else {
+                                            showMessage(message: 'Not Matched');
+                                          }
+                                        },
+                                        radius: 100,
+                                        height: 48)
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Delete Page", style: robotoStyle700Bold.copyWith(fontSize: 20)),
-                                Text("Once you delete a page, there is no going back. Please be certain.",
-                                    style: robotoStyle700Bold.copyWith(fontSize: 8)),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          CircleAvatar(
-                              radius: 15,
-                              backgroundColor: AppColors.primaryColorLight,
-                              child: InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          Random random = Random();
-                                          int randomNumber = random.nextInt(90) + 10;
-                                          return Dialog(
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
-                                            child: SizedBox(
-                                              height: 310,
-                                              width: double.infinity,
-                                              child: Card(
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                                        Text("Are you absolutely sure?",
-                                                            style: robotoStyle500Medium.copyWith(fontSize: 12)),
-                                                        const Icon(Icons.auto_delete, color: Colors.red)
-                                                      ]),
-                                                      const Divider(thickness: 2, color: Colors.black),
-                                                      Text(
-                                                          "This action cannot be undone. This will permanently delete the mutarek/sasasas repository, wiki, issues, comments, packages, secrets, workflow runs, and remove all collaborator associations.",
-                                                          style: robotoStyle400Regular.copyWith(fontSize: 16)),
-                                                      const SizedBox(height: 10),
-                                                      Text.rich(TextSpan(children: [
-                                                        TextSpan(text: "Please Type", style: robotoStyle300Light.copyWith(fontSize: 12)),
-                                                        TextSpan(text: " $randomNumber ", style: robotoStyle700Bold.copyWith(fontSize: 15)),
-                                                        TextSpan(text: "To Confrim", style: robotoStyle300Light.copyWith(fontSize: 12)),
-                                                      ])),
-                                                      const SizedBox(height: 5),
-                                                      CustomTextField(
-                                                        hintText: 'Your Key Name',
-                                                        isShowBorder: true,
-                                                        borderRadius: 11,
-                                                        verticalSize: 14,
-                                                        controller: keyController,
-                                                      ),
-                                                      const SizedBox(height: 10),
-                                                      CustomButton(
-                                                          backgroundColor: Colors.red,
-                                                          btnTxt: 'Delete Page',
-                                                          onTap: () {
-                                                            if (keyController.text == randomNumber.toString()) {
-                                                              pageProvider.deleteSinglePage(widget.pageId, 0, (status) {
-                                                                if (status) {
-                                                                  Helper.toScreen(const PageHomeScreen());
-                                                                }
-                                                              });
-                                                            } else {
-                                                              showMessage(message: 'Not Matched');
-                                                            }
-                                                          },
-                                                          radius: 100,
-                                                          height: 48)
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        });
-                                  },
-                                  child: const Icon(Icons.arrow_circle_right_rounded, color: Colors.white)))
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                        );
+                      });
+                }, iconData: Icons.delete_forever, subTitle: "Once you delete a page, there is no going back. Please be certain."),
               ],
             ),
           );
         }),
+      ),
+    );
+  }
+
+  Widget dashboardWidget(String title, String leftIcon, bool hasExpanded, Function onTap,
+      {bool expandedCondition = false, IconData? iconData, String subTitle = ''}) {
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+            color: const Color(0xffF0F2F5),
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [BoxShadow(color: colorText.withOpacity(.13), blurRadius: 4.0, spreadRadius: 2.0, offset: const Offset(0.0, 0.0))]),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CircleAvatar(radius: 18, backgroundColor: Colors.white, child: SvgPicture.asset(leftIcon, height: 20, width: 25)),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: robotoStyle700Bold.copyWith(fontSize: 18)),
+                    hasExpanded ? const SizedBox.shrink() : Text(subTitle, style: robotoStyle500Medium.copyWith(fontSize: 8)),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+              !hasExpanded
+                  ? CircleAvatar(radius: 15, backgroundColor: AppColors.primaryColorLight, child: Icon(iconData, color: Colors.white))
+                  : CircleAvatar(
+                      radius: 15,
+                      backgroundColor: AppColors.primaryColorLight,
+                      child: expandedCondition != true
+                          ? const Icon(Icons.arrow_drop_down, color: Colors.white)
+                          : const Icon(Icons.arrow_drop_up, color: Colors.white))
+            ],
+          ),
+        ),
       ),
     );
   }

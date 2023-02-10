@@ -78,10 +78,10 @@ class PostRepo {
     }
   }
 
-  Future<ApiResponse> hidePagePostFromDatabase(String postId, bool isPage, bool isGroup) async {
+  Future<ApiResponse> hidePostFromDatabase(String url) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.post("/${isPage ? 'page' : isGroup ? "group" : 'user'}/post/hide/$postId/");
+      response = await dioClient.post(url);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

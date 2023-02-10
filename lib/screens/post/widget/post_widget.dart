@@ -26,9 +26,11 @@ import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/any_link_preview_global_widget.dart';
 import 'package:als_frontend/widgets/network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_feed_reaction/flutter_feed_reaction.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -241,12 +243,7 @@ class PostWidget extends StatelessWidget {
                                               }),
                                               const SizedBox(height: 15),
                                               PopUpMenuWidget(ImagesModel.hideIcons, 'Hide this post', () {
-                                                postProvider
-                                                    .hidePagePostFromDatabase(
-                                                        newsFeedData.id.toString(),
-                                                        AppConstant.postTypePage == newsFeedData.postType ? true : false,
-                                                        AppConstant.postTypeGroup == newsFeedData.postType ? true : false)
-                                                    .then((value) {
+                                                postProvider.hidePagePostFromDatabase(newsFeedData.postHideUrl!).then((value) {
                                                   if (isHomeScreen == true) {
                                                     newsFeedProvider.hideNewsFeedData(index);
                                                   }
@@ -254,7 +251,11 @@ class PostWidget extends StatelessWidget {
                                                 Helper.back();
                                               }),
                                               const SizedBox(height: 15),
-                                              PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {}),
+                                              PopUpMenuWidget(ImagesModel.copyIcons, 'Copy Link', () {
+                                                Clipboard.setData(ClipboardData(text: AppConstant.baseUrl + newsFeedData.copyUrl!));
+                                                Fluttertoast.showToast(msg: 'Copy Successfully');
+                                                Helper.back();
+                                              }),
                                               const SizedBox(height: 15),
                                               PopUpMenuWidget(ImagesModel.reportIcons, 'Report Post', () {
                                                 Navigator.of(context).pop();

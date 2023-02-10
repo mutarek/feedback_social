@@ -23,6 +23,8 @@ class NewsFeedModel {
     this.allReactUserUrl,
     this.likeReactUrl,
     this.sadReactUrl,
+    this.postHideUrl,
+    this.copyUrl,
     this.reaction,
   });
 
@@ -60,6 +62,8 @@ class NewsFeedModel {
     likeReactUrl = json['like_react_user_url'];
     sadReactUrl = json['sad_react_user_url'];
     allReactUserUrl = json['all_react_user_url'];
+    postHideUrl = json['post_hide_url'];
+    copyUrl = json['copy_url'];
     reaction = json['reaction'] ?? -1;
     sharePost = json['share_post'] != null ? SharePost.fromJson(json['share_post']) : SharePost();
     groupModel = json['group'] != null ? GroupModel.fromJson(json['group']) : GroupModel();
@@ -89,6 +93,8 @@ class NewsFeedModel {
   String? likeReactUrl;
   String? sadReactUrl;
   String? allReactUserUrl;
+  String? copyUrl;
+  String? postHideUrl;
   int? reaction;
   SharePost? sharePost;
   GroupModel? groupModel;
