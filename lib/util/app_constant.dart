@@ -57,7 +57,9 @@ class AppConstant {
   static const String pageLikeAllURI = '/page/user/like/list/';
   static const String pageCategoryURI = '/page/category/list/';
   static const String pageBlockURI = '/page/block/';
+  static const String groupBlockURI = '/group/block/';
   static const String pageUnBlockURI = '/page/unblock/{page_id}/';
+  static const String groupUnBlockURI = '/group/unblock/{group_id}/';
   static const String invitedPageURI = '/page/invitation/list/';
   static const String pageInvitation = '/page/invitation/';
   static const String pageURI = '/page/';

@@ -321,11 +321,11 @@ class GroupProvider with ChangeNotifier {
   GroupDetailsModel groupDetailsModel = GroupDetailsModel();
 
   callForGetAllGroupInformation(String id) async {
-    isLoading = true;
+    isLoadingGroupDetails = true;
     groupDetailsModel = GroupDetailsModel();
     // notifyListeners();
     ApiResponse response = await groupRepo.callForGetGroupDetails(id);
-    isLoading = false;
+    isLoadingGroupDetails = false;
     if (response.response.statusCode == 200) {
       groupDetailsModel = GroupDetailsModel.fromJson(response.response.data);
     } else {
@@ -380,6 +380,7 @@ class GroupProvider with ChangeNotifier {
       isBottomLoading = false;
       position = 0;
       menuValue = 0;
+      callForGetAllGroupInformation(id);
       if (!isFirstTime) {
         notifyListeners();
       }
@@ -1124,6 +1125,80 @@ class GroupProvider with ChangeNotifier {
     } else {
       isLoadingFindGroup = false;
       notifyListeners();
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+//TODO: Group Block And Unblock Systems
+  List<AuthorPageModel> blockGroupLists = [];
+  int selectBlockGroup = 0;
+  bool isBottomLoadingBlockPage = false;
+  bool isLoadingBlockGroup = false;
+  bool isLoadingBlockGroup2 = false;
+  bool hasNextDataBlockGroup = false;
+
+  updateBlockGroupNo() {
+    selectBlockGroup++;
+    callForGetGroupBlockLists(page: selectBlockGroup);
+    notifyListeners();
+  }
+
+  callForGetGroupBlockLists({int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectBlockGroup = 1;
+      blockGroupLists.clear();
+      blockGroupLists = [];
+      isLoadingBlockGroup = true;
+      hasNextDataBlockGroup = false;
+      isBottomLoadingBlockPage = false;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoadingBlockPage = true;
+      notifyListeners();
+    }
+
+    ApiResponse response = await groupRepo.groupBlockLists(selectPage);
+
+    isLoadingBlockGroup = false;
+    isBottomLoadingBlockPage = false;
+    if (response.response.statusCode == 200) {
+      hasNextDataBlockGroup = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        blockGroupLists.add(AuthorPageModel.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  Future<bool> createBlock() async {
+    isLoadingBlockGroup2 = true;
+    notifyListeners();
+    ApiResponse response = await groupRepo.groupBlockCreate(groupDetailsModel.id as int);
+    isLoadingBlockGroup2 = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: 'Grouped Block added Successfully');
+      return response.response.data['is_blocked'];
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+      return false;
+    }
+  }
+
+  createUnBlock(int pageID, int index) async {
+    isLoadingBlockGroup2 = true;
+    notifyListeners();
+    ApiResponse response = await groupRepo.groupUnBlockCreate(pageID);
+    isLoadingBlockGroup2 = false;
+    if (response.response.statusCode == 200) {
+      Fluttertoast.showToast(msg: 'Grouped UnBlock Successfully Complete');
+      blockGroupLists.removeAt(index);
+    } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();

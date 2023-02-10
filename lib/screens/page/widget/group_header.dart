@@ -219,6 +219,15 @@ class GroupHeaderWidget extends StatelessWidget {
                                       Navigator.of(context).pop();
                                     }, size: 18),
                                     const SizedBox(height: 13),
+                                    PopUpMenuWidget(ImagesModel.blocksIcons, "Block", () {
+                                      groupProvider.createBlock().then((value) {
+                                        if (value) {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                        }
+                                      });
+                                    }),
+                                    const SizedBox(height: 13),
                                     !groupProvider.groupDetailsModel.isMember!
                                         ? const SizedBox.shrink()
                                         : PopUpMenuWidget(ImagesModel.leaveIcons, 'Leave ', () {
