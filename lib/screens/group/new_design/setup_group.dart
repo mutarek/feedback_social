@@ -77,7 +77,8 @@ class _SetupGroupState extends State<SetupGroup> {
                         //decoration: BoxDecoration(color: const Color(0xFF656B87), borderRadius: BorderRadius.circular(15.0)),
                         child: DropdownButton<String>(
                           dropdownColor: textFieldFillColor,
-                          hint: Text(groupProvider.authorEachGroupModel!.isPrivate==true?"Private":"Public", style: robotoStyle400Regular.copyWith(fontSize: 18, color: Colors.grey)),
+                          hint: Text(groupProvider.privacy=="Select Privacy"?
+                              groupProvider.authorEachGroupModel!.isPrivate==true?"Private":"Public":groupProvider.privacy, style: robotoStyle400Regular.copyWith(fontSize: 18, color: Colors.grey)),
                           isExpanded: true,
                           underline: const SizedBox.shrink(),
                           icon: const Icon(Icons.arrow_drop_down_circle, color: AppColors.primaryColorLight),
@@ -92,7 +93,7 @@ class _SetupGroupState extends State<SetupGroup> {
                                           textStyle: robotoStyle400Regular.copyWith(fontSize: 18, color: AppColors.primaryColorLight)))))
                               .toList(),
                           onChanged: (item) {
-                            //pageProvider.changeGroupCategory(item);
+                            groupProvider.changeGroupPrivacy(item!);
                           },
                         ),
                       ),
@@ -144,9 +145,13 @@ class _SetupGroupState extends State<SetupGroup> {
             ):CustomButton(
                 btnTxt: 'Setup Group',
                 onTap: () {
+                  if(groupProvider.privacy =="Select Privacy"){
+                    groupProvider.privacy = widget.groupDetailsModel.isPrivate==true?"Private":"Public";
+                  }
                   groupProvider.setupGroup(groupNameController.text, groupDescriptionController.text, groupBioController.text,
                       groupAddressController.text).then((value) {
                     if(value){
+                      groupProvider.privacy ="Select Privacy";
                       Helper.back();
                       Helper.back();
                       Helper.back();
