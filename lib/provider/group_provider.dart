@@ -138,10 +138,10 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeExpended(String groupID) {
+  changeExpended() {
     pageExpended = !pageExpended;
     if (pageExpended) {
-      callForGetInviteFriendLists(groupID: groupID, isFirstTime: true);
+      callForGetInviteFriendLists(isFirstTime: true);
     }
     notifyListeners();
   }
@@ -1025,7 +1025,7 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  callForGetInviteFriendLists({String groupID = "1", int page = 1, bool isFirstTime = true}) async {
+  callForGetInviteFriendLists({int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
       invitePageAllLists.clear();
@@ -1043,7 +1043,7 @@ class GroupProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    ApiResponse response = await groupRepo.getAllFriendsForInvite(groupID, selectPage);
+    ApiResponse response = await groupRepo.getAllFriendsForInvite(groupDetailsModel.id.toString(), selectPage);
 
     isLoadingInviteFriend = false;
     if (response.response.statusCode == 200) {
@@ -1109,21 +1109,22 @@ class GroupProvider with ChangeNotifier {
       isLoadingInvitedGroups = true;
       hasInvitedGroupsNextData = false;
       isBottomLoadingInvitedGroup = false;
-      notifyListeners();
+      if (!isFirstTime) notifyListeners();
     } else {
       isBottomLoadingInvitedGroup = true;
       notifyListeners();
     }
     ApiResponse response = await groupRepo.getInvitedGroups(selectPage);
-    isLoadingFindGroup = false;
+    isLoadingInvitedGroups = false;
+    isBottomLoadingInvitedGroup = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
-      hasNextData = response.response.data['next'] != null ? true : false;
+      hasInvitedGroupsNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
         invitedGroupList.add(AuthorPageModel.fromJson(element));
       });
     } else {
-      isLoadingFindGroup = false;
+      isLoadingInvitedGroups = false;
       notifyListeners();
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
