@@ -1,4 +1,5 @@
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/blocked_group_screen.dart';
 import 'package:als_frontend/screens/group/new_design/create_group1.dart';
 import 'package:als_frontend/screens/group/new_design/find_group.dart';
 import 'package:als_frontend/screens/group/new_design/invite_group.dart';
@@ -7,6 +8,7 @@ import 'package:als_frontend/screens/group/widget/group_view_card.dart';
 import 'package:als_frontend/screens/group/widget/suggested_group_view_card.dart';
 import 'package:als_frontend/screens/page/page_dashboard.dart';
 import 'package:als_frontend/screens/page/widget/like_invite_find.dart';
+import 'package:als_frontend/screens/page/widget/popup_menu_widget.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/palette.dart';
@@ -37,7 +39,6 @@ class FeedBackGroups extends StatelessWidget {
             icon: const CircleAvatar(
                 backgroundColor: AppColors.primaryColorLight, radius: 20, child: Icon(Icons.settings, color: Colors.white)),
             itemBuilder: (context) => [
-              // PopupMenuItem 1
               PopupMenuItem(
                 value: 1,
                 child: Column(
@@ -71,6 +72,12 @@ class FeedBackGroups extends StatelessWidget {
                                 child: CupertinoSwitch(value: true, onChanged: (value) {}, activeColor: Palette.primary)))
                       ],
                     ),
+                    const SizedBox(height: 6),
+                    PopUpMenuWidget(ImagesModel.blocksIcons, 'Block Group List', () {
+                      Helper.back();
+                      Helper.toScreen(const BlockedGroupScreen());
+                    }),
+                    const SizedBox(height: 6),
                   ],
                 ),
               ),

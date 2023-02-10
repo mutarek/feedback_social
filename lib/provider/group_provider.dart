@@ -1131,9 +1131,9 @@ class GroupProvider with ChangeNotifier {
   }
 
 //TODO: Group Block And Unblock Systems
-  List<AuthorPageModel> blockGroupLists = [];
+  List<AuthorGroupModel> blockGroupLists = [];
   int selectBlockGroup = 0;
-  bool isBottomLoadingBlockPage = false;
+  bool isBottomLoadingBlockGroup = false;
   bool isLoadingBlockGroup = false;
   bool isLoadingBlockGroup2 = false;
   bool hasNextDataBlockGroup = false;
@@ -1151,23 +1151,23 @@ class GroupProvider with ChangeNotifier {
       blockGroupLists = [];
       isLoadingBlockGroup = true;
       hasNextDataBlockGroup = false;
-      isBottomLoadingBlockPage = false;
+      isBottomLoadingBlockGroup = false;
       if (!isFirstTime) {
         notifyListeners();
       }
     } else {
-      isBottomLoadingBlockPage = true;
+      isBottomLoadingBlockGroup = true;
       notifyListeners();
     }
 
     ApiResponse response = await groupRepo.groupBlockLists(selectPage);
 
     isLoadingBlockGroup = false;
-    isBottomLoadingBlockPage = false;
+    isBottomLoadingBlockGroup = false;
     if (response.response.statusCode == 200) {
       hasNextDataBlockGroup = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        blockGroupLists.add(AuthorPageModel.fromJson(element));
+        blockGroupLists.add(AuthorGroupModel.fromJson(element));
       });
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);

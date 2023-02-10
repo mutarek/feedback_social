@@ -96,7 +96,7 @@ class _BlockedPageScreenState extends State<BlockedPageScreen> {
                                                   mainAxisAlignment: MainAxisAlignment.start,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    PopUpMenuWidget(ImagesModel.blocksIcons, 'Unblock Post', () {
+                                                    PopUpMenuWidget(ImagesModel.blocksIcons, 'Unblock Page', () {
                                                       pageProvider.createUnBlock(pageModel2.id as int, index);
                                                       Navigator.of(context).pop();
                                                     }),
