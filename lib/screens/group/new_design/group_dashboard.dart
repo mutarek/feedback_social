@@ -9,7 +9,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../util/image.dart';
+import '../../../widgets/custom_button.dart';
 import '../../../widgets/network_image.dart';
+import '../../../widgets/snackbar_message.dart';
 import 'admin_tools_screen.dart';
 import 'setup_group.dart';
 
@@ -53,7 +56,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                             radius: 20,
                             backgroundColor: const Color(0xffF0F2F5),
                             child: SvgPicture.asset(
-                              "assets/svg/setup_group_svg.svg",
+                            ImagesModel.setupGroup,
                               height: 20,
                               width: 34,
                             ),
@@ -103,9 +106,10 @@ class _GroupDashboardState extends State<GroupDashboard> {
                             radius: 20,
                             backgroundColor: const Color(0xffF0F2F5),
                             child: SvgPicture.asset(
-                              "assets/svg/invite_friends.svg",
+                              ImagesModel.adminIcons,
                               height: 20,
                               width: 34,
+                              color: AppColors.primaryColorLight,
                             ),
                           ),
                           const SizedBox(width: 12),
@@ -148,8 +152,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                           CircleAvatar(
                             radius: 20,
                             backgroundColor: Colors.white,
-                            child: SvgPicture.asset(
-                              "assets/svg/invite_friends.svg",
+                            child: SvgPicture.asset(ImagesModel.inviteFriends,
                               height: 20,
                               width: 34,
                             ),
@@ -170,7 +173,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                             backgroundColor: AppColors.primaryColorLight,
                             child: InkWell(
                                 onTap: () {
-                                  groupProvider.changeExpended();
+                                  groupProvider.changeExpended(groupProvider.groupDetailsModel.id!.toString());
                                 },
                                 child: groupProvider.pageExpended != true
                                     ? const Icon(Icons.arrow_drop_down, color: Colors.white)
@@ -181,94 +184,136 @@ class _GroupDashboardState extends State<GroupDashboard> {
                     ),
                   ),
                 ),
-                groupProvider.pageExpended == true
-                    ? SizedBox(
-                        height: 250,
+                groupProvider.pageExpended == true?
+                SizedBox(
+                    height: 350,
+                    child: groupProvider.isLoadingInviteFriend
+                        ? const Center(child: CircularProgressIndicator())
+                        : groupProvider.invitePageAllLists.isEmpty
+                        ? const Center(child: Text("Ops You have no friends to invite"))
+                        : Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Card(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20, right: 20),
-                                    child: Container(
-                                      height: 48.0,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: AppColors.primaryColorLight),
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Row(
+                          padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
+                          child: Column(
+                            children: [
+                              // Padding(
+                              //   padding: const EdgeInsets.only(left: 20, right: 20),
+                              //   child: Container(
+                              //     height: 48.0,
+                              //     width: double.infinity,
+                              //     decoration: BoxDecoration(
+                              //         border: Border.all(color: AppColors.primaryColorLight),
+                              //         borderRadius: BorderRadius.circular(25)),
+                              //     child: Row(
+                              //       children: [
+                              //         Expanded(
+                              //           child: TextField(
+                              //             decoration: const InputDecoration(
+                              //                 border: InputBorder.none,
+                              //                 hintText: "Search..",
+                              //                 focusedBorder: InputBorder.none,
+                              //                 hintStyle: TextStyle(color: Colors.black)),
+                              //             onChanged: (value) {},
+                              //           ),
+                              //         ),
+                              //         Padding(
+                              //           padding: const EdgeInsets.all(2),
+                              //           child: Container(
+                              //             decoration: BoxDecoration(
+                              //                 borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
+                              //             height: 38,
+                              //             width: 71,
+                              //             child: Center(
+                              //               child: Text('Search',
+                              //                   style: robotoStyle300Light.copyWith(fontSize: 12, color: Colors.white)),
+                              //             ),
+                              //           ),
+                              //         )
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                              // const SizedBox(height: 5),
+                              Expanded(
+                                child: ListView.builder(
+                                    itemCount: groupProvider.invitePageAllLists.length,
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return Row(
                                         children: [
-                                          const Expanded(
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintText: "Search..",
-                                                  hintStyle: TextStyle(color: Colors.black)),
-                                            ),
+                                          SizedBox(
+                                              width: 30,
+                                              height: 30,
+                                              child: circularImage(
+                                                  groupProvider.invitePageAllLists[index].profileImage!, 30, 30)),
+                                          const SizedBox(width: 10),
+                                          Expanded(
+                                            child: Text(groupProvider.invitePageAllLists[index].fullName!,
+                                                style: robotoStyle500Medium.copyWith(fontSize: 12)),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(2),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
-                                              height: 38,
-                                              width: 71,
-                                              child: Center(
-                                                child: Text('Search',
-                                                    style:
-                                                        GoogleFonts.roboto(fontWeight: FontWeight.w300, fontSize: 12, color: Colors.white)),
-                                              ),
-                                            ),
+                                          Checkbox(
+                                            value: groupProvider.invitePageFriendSelect[index],
+                                            onChanged: (value) {
+                                              groupProvider.changeInviteFriendSelectFriend(index, value!);
+                                            },
                                           )
                                         ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Expanded(
-                                    child: ListView.builder(
-                                        itemCount: 10,
-                                        itemBuilder: (context, index) {
-                                          return ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
-                                            ),
-                                            title: Text(
-                                              'Rafatul Islam',
-                                              style: GoogleFonts.roboto(
-                                                  fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.primaryColorLight),
-                                            ),
-                                            trailing: Checkbox(
-                                              value: index % 2 == 0 ? true : false,
-                                              onChanged: (value) {},
-                                            ),
-                                          );
-                                        }),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    height: 25,
-                                    width: 250,
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(45), color: AppColors.primaryColorLight),
-                                    child: Center(
-                                      child: Text('Send invitations',
-                                          style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 13, color: Colors.white)),
-                                    ),
-                                  )
-                                ],
+                                      );
+                                    }),
                               ),
-                            ),
+                              const SizedBox(height: 5),
+                              groupProvider.isBottomLoadingInviteFriend
+                                  ? const CircularProgressIndicator()
+                                  : groupProvider.hasNextDataInviteFriend
+                                  ? InkWell(
+                                onTap: () {
+                                  groupProvider.updateInviteFriendPageNo();
+                                },
+                                child: Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: colorText),
+                                      borderRadius: BorderRadius.circular(22)),
+                                  child: Text('Load more Friend',
+                                      style: robotoStyle500Medium.copyWith(color: colorText)),
+                                ),
+                              )
+                                  : const SizedBox.shrink(),
+                              const SizedBox(height: 5),
+                              SizedBox(
+                                height: 30,
+                                width: MediaQuery.of(context).size.width,
+                                child: groupProvider.isLoadingInviteFriend2
+                                    ? const Center(child: CircularProgressIndicator())
+                                    : CustomButton(
+                                  btnTxt: 'Send invitations',
+                                  height: 30,
+                                  onTap: () {
+                                    bool isSelectAtLeastOne = false;
+                                    for (int i = 0; i < groupProvider.invitePageFriendSelect.length; i++) {
+                                      if (groupProvider.invitePageFriendSelect[i] == true) {
+                                        isSelectAtLeastOne = true;
+                                        break;
+                                      }
+                                    }
+                                    if (isSelectAtLeastOne == true) {
+                                      groupProvider.sentInviteFriend(int.parse(groupProvider.groupDetailsModel.id.toString()));
+                                    } else {
+                                      showMessage(message: 'Please Select at least one Friend');
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
-                        ))
+                        ),
+                      ),
+                    ))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
                 Card(
@@ -283,8 +328,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                           CircleAvatar(
                             radius: 20,
                             backgroundColor: Colors.white,
-                            child: SvgPicture.asset(
-                              "assets/svg/page_access.svg",
+                            child: SvgPicture.asset(ImagesModel.groupAccess,
                               height: 20,
                               width: 34,
                             ),
@@ -754,7 +798,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                             radius: 20,
                             backgroundColor: Colors.white,
                             child: SvgPicture.asset(
-                              "assets/svg/invite_friends.svg",
+                              ImagesModel.inviteFriends,
                               height: 20,
                               width: 34,
                             ),

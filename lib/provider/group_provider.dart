@@ -20,6 +20,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../data/model/response/author_group_model.dart';
 import '../data/model/response/each_author_group_model.dart';
 import '../data/model/response/group_members.dart';
+import '../widgets/snackbar_message.dart';
 
 class GroupProvider with ChangeNotifier {
   final GroupRepo groupRepo;
@@ -144,8 +145,11 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeExpended() {
+  changeExpended(String groupID) {
     pageExpended = !pageExpended;
+    if(pageExpended){
+      callForGetInviteFriendLists(groupID: groupID,isFirstTime: true);
+    }
     notifyListeners();
   }
 
@@ -968,6 +972,83 @@ class GroupProvider with ChangeNotifier {
     }
     isLoading = false;
     isPhotosLoading = false;
+    notifyListeners();
+  }
+
+  //TODO: Get Group Invite Friends List
+  int selectPageInviteFriend = 1;
+  bool isLoadingInviteFriend = false;
+  bool isLoadingInviteFriend2 = false;
+  bool hasNextDataInviteFriend = false;
+  bool isBottomLoadingInviteFriend = false;
+  List<Author> invitePageAllLists = [];
+  List<bool> invitePageFriendSelect = [];
+
+  updateInviteFriendPageNo() {
+    selectPage++;
+    callForGetInviteFriendLists(page: selectPage);
+    notifyListeners();
+  }
+  callForGetInviteFriendLists({String groupID = "1",int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPage = 1;
+      invitePageAllLists.clear();
+      invitePageAllLists = [];
+      invitePageFriendSelect.clear();
+      invitePageFriendSelect = [];
+      isLoadingInviteFriend = true;
+      hasNextDataInviteFriend = false;
+      isBottomLoadingInviteFriend = false;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoadingInviteFriend = true;
+      notifyListeners();
+    }
+
+    ApiResponse response = await groupRepo.getAllFriendsForInvite(groupID,selectPage);
+
+    isLoadingInviteFriend = false;
+    if (response.response.statusCode == 200) {
+      hasNextDataInviteFriend = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        invitePageAllLists.add(Author.fromJson(element));
+        invitePageFriendSelect.add(false);
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  changeInviteFriendSelectFriend(int index, bool value) {
+    invitePageFriendSelect[index] = value;
+    notifyListeners();
+  }
+
+  sentInviteFriend(int pageID) async {
+    isLoadingInviteFriend2 = true;
+    notifyListeners();
+    List<int> users = [];
+    for (int i = 0; i < invitePageAllLists.length; i++) {
+      if (invitePageFriendSelect[i] == true) {
+        users.add(invitePageAllLists[i].id as int);
+      }
+    }
+
+    ApiResponse response = await groupRepo.invitationCreate(pageID, users);
+
+    isLoadingInviteFriend2 = false;
+    if (response.response.statusCode == 201) {
+      showMessage(message: 'Invite Send Successfully!');
+      invitePageAllLists.clear();
+      invitePageAllLists = [];
+      invitePageFriendSelect.clear();
+      invitePageFriendSelect = [];
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
     notifyListeners();
   }
 }
