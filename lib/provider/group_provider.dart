@@ -1207,6 +1207,7 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
   //TODO: Get All Friends From List
   bool isLoadingFriends = false;
   bool isBottomLoadingFriends = false;
@@ -1218,6 +1219,11 @@ class GroupProvider with ChangeNotifier {
   updateAllFriendsPage() {
     selectPage++;
     callForGetAllFriendsPagination(page: selectPage);
+    notifyListeners();
+  }
+
+  changeAddAdminSelectionValue(int index, bool value) {
+    makeAdminFriendsSelect[index] = value;
     notifyListeners();
   }
 
@@ -1251,12 +1257,6 @@ class GroupProvider with ChangeNotifier {
       notifyListeners();
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
-
-    notifyListeners();
-  }
-
-  changeAddAdminSelectionValue(int index, bool value) {
-    invitePageFriendSelect[index] = value;
     notifyListeners();
   }
 }
