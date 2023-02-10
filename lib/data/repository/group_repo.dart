@@ -313,4 +313,13 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+  Future<ApiResponse> getInvitedGroups(int page) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get("${AppConstant.groupInvitationUri}list/?page=$page");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
 }

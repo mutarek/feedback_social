@@ -20,6 +20,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../data/model/response/author_group_model.dart';
 import '../data/model/response/each_author_group_model.dart';
 import '../data/model/response/group_members.dart';
+import '../data/model/response/page/athour_pages_model.dart';
 import '../widgets/snackbar_message.dart';
 
 class GroupProvider with ChangeNotifier {
@@ -147,8 +148,8 @@ class GroupProvider with ChangeNotifier {
 
   changeExpended(String groupID) {
     pageExpended = !pageExpended;
-    if(pageExpended){
-      callForGetInviteFriendLists(groupID: groupID,isFirstTime: true);
+    if (pageExpended) {
+      callForGetInviteFriendLists(groupID: groupID, isFirstTime: true);
     }
     notifyListeners();
   }
@@ -577,7 +578,6 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
 // TODO: for member Join
   leaveGroup(int groupID, {int index = 0, bool isFromMYGroup = false}) async {
     ApiResponse response = await groupRepo.leaveGroup(groupID.toString());
@@ -989,7 +989,8 @@ class GroupProvider with ChangeNotifier {
     callForGetInviteFriendLists(page: selectPage);
     notifyListeners();
   }
-  callForGetInviteFriendLists({String groupID = "1",int page = 1, bool isFirstTime = true}) async {
+
+  callForGetInviteFriendLists({String groupID = "1", int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
       invitePageAllLists.clear();
@@ -1007,7 +1008,7 @@ class GroupProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    ApiResponse response = await groupRepo.getAllFriendsForInvite(groupID,selectPage);
+    ApiResponse response = await groupRepo.getAllFriendsForInvite(groupID, selectPage);
 
     isLoadingInviteFriend = false;
     if (response.response.statusCode == 200) {
@@ -1047,6 +1048,48 @@ class GroupProvider with ChangeNotifier {
       invitePageFriendSelect.clear();
       invitePageFriendSelect = [];
     } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  //TODO: GET ALL INVITED GROUPS
+
+  List<AuthorPageModel> invitedGroupList = [];
+  bool isLoadingInvitedGroups = false;
+  bool isBottomLoadingInvitedGroup = false;
+  bool hasInvitedGroupsNextData = false;
+
+  updateInvitedGroupsPageNo() {
+    selectPage++;
+    getAllInvitedGroups(page: selectPage);
+    notifyListeners();
+  }
+
+  getAllInvitedGroups({int page = 1, bool isFirstTime = true}) async{
+    if (page == 1) {
+      selectPage = 1;
+      invitedGroupList.clear();
+      invitedGroupList = [];
+      isLoadingInvitedGroups = true;
+      hasInvitedGroupsNextData = false;
+      isBottomLoadingInvitedGroup = false;
+      notifyListeners();
+    } else {
+      isBottomLoadingInvitedGroup = true;
+      notifyListeners();
+    }
+    ApiResponse response = await groupRepo.getInvitedGroups(selectPage);
+    isLoadingFindGroup = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      hasNextData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        invitedGroupList.add(AuthorPageModel.fromJson(element));
+      });
+    } else {
+      isLoadingFindGroup = false;
+      notifyListeners();
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
