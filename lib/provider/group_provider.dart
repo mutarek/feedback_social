@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../data/model/response/author_group_model.dart';
+import '../data/model/response/friend_model.dart';
 import '../data/model/response/group_members.dart';
 import '../data/model/response/page/athour_pages_model.dart';
 import '../widgets/snackbar_message.dart';
@@ -135,6 +136,9 @@ class GroupProvider with ChangeNotifier {
 
   changeAdminAccessExpanded() {
     adminAccessPage = !adminAccessPage;
+    if(adminAccessPage){
+      callForGetAllFriendsPagination(page: 1);
+    }
     notifyListeners();
   }
 
@@ -1201,6 +1205,58 @@ class GroupProvider with ChangeNotifier {
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
+    notifyListeners();
+  }
+  //TODO: Get All Friends From List
+  bool isLoadingFriends = false;
+  bool isBottomLoadingFriends = false;
+  List<FriendModel> friendsListModel = [];
+  bool hasNextFriendData = false;
+  List<bool> makeAdminFriendsSelect = [];
+
+
+  updateAllFriendsPage() {
+    selectPage++;
+    callForGetAllFriendsPagination(page: selectPage);
+    notifyListeners();
+  }
+
+
+  callForGetAllFriendsPagination({int page = 1}) async {
+    if (page == 1) {
+      selectPage = 1;
+      friendsListModel.clear();
+      friendsListModel = [];
+      isLoadingFriends = true;
+      isBottomLoadingFriends = false;
+      makeAdminFriendsSelect.clear();
+      makeAdminFriendsSelect =[];
+      hasNextFriendData = false;
+    } else {
+      isBottomLoadingFriends = true;
+      notifyListeners();
+    }
+    ApiResponse response = await groupRepo.getAllFriends(page);
+    isLoadingFriends = false;
+    isBottomLoadingFriends = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      hasNextFriendData = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        friendsListModel.add(FriendModel.fromJson(element));
+      });
+    } else {
+      isLoadingFriends = false;
+      isBottomLoadingFriends = false;
+      notifyListeners();
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+
+    notifyListeners();
+  }
+
+  changeAddAdminSelectionValue(int index, bool value) {
+    invitePageFriendSelect[index] = value;
     notifyListeners();
   }
 }

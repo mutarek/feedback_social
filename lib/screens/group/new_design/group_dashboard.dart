@@ -495,67 +495,124 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                     padding: const EdgeInsets.only(top: 5, left: 10, right: 10, bottom: 5),
                                     child: Column(
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 20, right: 20),
-                                          child: Container(
-                                            height: 48.0,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: AppColors.primaryColorLight),
-                                              borderRadius: BorderRadius.circular(25),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                const Expanded(
-                                                  child: TextField(
-                                                    decoration: InputDecoration(
-                                                        border: InputBorder.none,
-                                                        hintText: "Search..",
-                                                        hintStyle: TextStyle(color: Colors.black)),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(2),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
-                                                    height: 38,
-                                                    width: 71,
-                                                    child: Center(
-                                                      child: Text('Search',
-                                                          style: GoogleFonts.roboto(
-                                                              fontWeight: FontWeight.w300, fontSize: 12, color: Colors.white)),
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
+                                        // Padding(
+                                        //   padding: const EdgeInsets.only(left: 20, right: 20),
+                                        //   child: Container(
+                                        //     height: 48.0,
+                                        //     width: double.infinity,
+                                        //     decoration: BoxDecoration(
+                                        //       border: Border.all(color: AppColors.primaryColorLight),
+                                        //       borderRadius: BorderRadius.circular(25),
+                                        //     ),
+                                        //     child: Row(
+                                        //       children: [
+                                        //         const Expanded(
+                                        //           child: TextField(
+                                        //             decoration: InputDecoration(
+                                        //                 border: InputBorder.none,
+                                        //                 hintText: "Search..",
+                                        //                 hintStyle: TextStyle(color: Colors.black)),
+                                        //           ),
+                                        //         ),
+                                        //         Padding(
+                                        //           padding: const EdgeInsets.all(2),
+                                        //           child: Container(
+                                        //             decoration: BoxDecoration(
+                                        //                 borderRadius: BorderRadius.circular(100), color: AppColors.primaryColorLight),
+                                        //             height: 38,
+                                        //             width: 71,
+                                        //             child: Center(
+                                        //               child: Text('Search',
+                                        //                   style: GoogleFonts.roboto(
+                                        //                       fontWeight: FontWeight.w300, fontSize: 12, color: Colors.white)),
+                                        //             ),
+                                        //           ),
+                                        //         )
+                                        //       ],
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                        // const SizedBox(
+                                        //   height: 5,
+                                        // ),
                                         Expanded(
-                                          child: ListView.builder(
-                                              itemCount: 10,
-                                              itemBuilder: (context, index) {
-                                                return ListTile(
-                                                  leading: CircleAvatar(
-                                                    backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
-                                                  ),
-                                                  title: const Text('Rafatul Islam'),
-                                                  trailing: SizedBox(
-                                                    height: 8,
-                                                    width: 8,
-                                                    child: Checkbox(
-                                                      activeColor: Colors.black,
-                                                      value: index % 2 == 0 ? true : false,
-                                                      onChanged: (value) {},
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
+                                          child: groupProvider.isLoadingFriends?
+                                              const Center(
+                                                child: CircularProgressIndicator(),
+                                              ):
+                                              groupProvider.friendsListModel.isEmpty?
+                                                  const Center(
+                                                    child: Text("Ops You have no friends"),
+                                                  ):ListView.builder(
+                                                  itemCount: groupProvider.friendsListModel.length,
+                                                  shrinkWrap: true,
+                                                  physics: const BouncingScrollPhysics(),
+                                                  itemBuilder: (context, position) {
+                                                    return Row(
+                                                      children: [
+                                                        SizedBox(
+                                                            width: 30,
+                                                            height: 30,
+                                                            child: circularImage(groupProvider.friendsListModel[position].profileImage!, 30, 30)),
+                                                        const SizedBox(width: 10),
+                                                        Expanded(
+                                                          child: Text("",
+                                                              style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                        ),
+                                                        Checkbox(
+                                                          value: groupProvider.makeAdminFriendsSelect[position],
+                                                          onChanged: (value) {
+                                                            groupProvider.changeAddAdminSelectionValue(position, value!);
+                                                          },
+                                                        )
+                                                      ],
+                                                    );
+                                                  }),
                                         ),
+                                        const SizedBox(height: 5),
+                                        groupProvider.isBottomLoadingFriends
+                                            ? const CircularProgressIndicator()
+                                            : groupProvider.hasNextFriendData
+                                            ? InkWell(
+                                          onTap: () {
+                                            groupProvider.updateAllFriendsPage();
+                                          },
+                                          child: Container(
+                                            height: 30,
+                                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                                            decoration: BoxDecoration(
+                                                border: Border.all(color: colorText),
+                                                borderRadius: BorderRadius.circular(22)),
+                                            child: Text('Load more Friend',
+                                                style: robotoStyle500Medium.copyWith(color: colorText)),
+                                          ),
+                                        )
+                                            : const SizedBox.shrink(),
+                                        const SizedBox(height: 5),
+                                        // SizedBox(
+                                        //   height: 30,
+                                        //   width: MediaQuery.of(context).size.width,
+                                        //   child: groupProvider.isLoadingInviteFriend2
+                                        //       ? const Center(child: CircularProgressIndicator())
+                                        //       : CustomButton(
+                                        //     btnTxt: 'Send invitations',
+                                        //     height: 30,
+                                        //     onTap: () {
+                                        //       bool isSelectAtLeastOne = false;
+                                        //       for (int i = 0; i < groupProvider.invitePageFriendSelect.length; i++) {
+                                        //         if (groupProvider.invitePageFriendSelect[i] == true) {
+                                        //           isSelectAtLeastOne = true;
+                                        //           break;
+                                        //         }
+                                        //       }
+                                        //       if (isSelectAtLeastOne == true) {
+                                        //         groupProvider.sentInviteFriend(int.parse(groupProvider.groupDetailsModel.id.toString()));
+                                        //       } else {
+                                        //         showMessage(message: 'Please Select at least one Friend');
+                                        //       }
+                                        //     },
+                                        //   ),
+                                        // ),
                                         const SizedBox(
                                           height: 5,
                                         ),
