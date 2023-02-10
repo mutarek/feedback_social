@@ -1,7 +1,6 @@
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/widget/friend_list_card.dart';
 import 'package:als_frontend/screens/page/shimmer_effect/invite_page_shimmer.dart';
-import 'package:als_frontend/screens/page/shimmer_effect/suggestion_page_shimmer.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/translations/locale_keys.g.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
@@ -84,7 +83,7 @@ class _InviteGroupScreenState extends State<InviteGroupScreen> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      groupProvider.isLoading== false
+                      groupProvider.isLoading == false
                           ? const InvitePageShimmer()
                           : Expanded(
                               child: groupProvider.friendsList.isNotEmpty
@@ -100,7 +99,8 @@ class _InviteGroupScreenState extends State<InviteGroupScreen> {
                                           child: FriendListCard(
                                               verb: LocaleKeys.invite.tr(),
                                               onPressed: () {
-                                                groupProvider.sendInvitation(widget.groupID, groupProvider.friendsList[index].id as int, index);
+                                                groupProvider.sendInvitation(
+                                                    widget.groupID, groupProvider.friendsList[index].id as int, index);
                                               },
                                               width: width,
                                               height: height,
@@ -108,7 +108,7 @@ class _InviteGroupScreenState extends State<InviteGroupScreen> {
                                               image: groupProvider.friendsList[index].profileImage!),
                                         );
                                       })
-                                  :  Center(child: CustomText(title: LocaleKeys.no_Data_Found.tr(), color: Colors.black, fontSize: 18)),
+                                  : Center(child: CustomText(title: LocaleKeys.no_Data_Found.tr(), color: Colors.black, fontSize: 18)),
                             )
                     ],
                   ),

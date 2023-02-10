@@ -1,4 +1,3 @@
-import 'package:als_frontend/data/model/response/author_group_model.dart';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
@@ -14,7 +13,6 @@ import '../../../widgets/custom_button.dart';
 import '../../../widgets/network_image.dart';
 import '../../../widgets/snackbar_message.dart';
 import 'admin_tools_screen.dart';
-import 'setup_group.dart';
 
 class GroupDashboard extends StatefulWidget {
   const GroupDashboard({Key? key}) : super(key: key);

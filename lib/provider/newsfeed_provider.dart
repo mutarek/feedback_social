@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../widgets/snackbar_message.dart';
 
 class NewsFeedProvider with ChangeNotifier {
   final NewsfeedRepo newsFeedRepo;

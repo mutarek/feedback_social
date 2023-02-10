@@ -19,7 +19,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../data/model/response/author_group_model.dart';
 import '../data/model/response/friend_model.dart';
 import '../data/model/response/group_members.dart';
-import '../data/model/response/page/athour_pages_model.dart';
 import '../widgets/snackbar_message.dart';
 
 class GroupProvider with ChangeNotifier {
@@ -136,7 +135,7 @@ class GroupProvider with ChangeNotifier {
 
   changeAdminAccessExpanded() {
     adminAccessPage = !adminAccessPage;
-    if(adminAccessPage){
+    if (adminAccessPage) {
       callForGetAllFriendsPagination(page: 1);
     }
     notifyListeners();
@@ -1094,8 +1093,9 @@ class GroupProvider with ChangeNotifier {
 
   //TODO: GET ALL INVITED GROUPS
 
-  List<AuthorPageModel> invitedGroupList = [];
+  List<AuthorGroupModelWithID> invitedGroupList = [];
   bool isLoadingInvitedGroups = false;
+  bool isLoadingInvitedGroups2 = false;
   bool isBottomLoadingInvitedGroup = false;
   bool hasInvitedGroupsNextData = false;
 
@@ -1125,11 +1125,39 @@ class GroupProvider with ChangeNotifier {
     if (response.response.statusCode == 200) {
       hasInvitedGroupsNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        invitedGroupList.add(AuthorPageModel.fromJson(element));
+        invitedGroupList.add(AuthorGroupModelWithID.fromJson(element));
       });
     } else {
-      isLoadingInvitedGroups = false;
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  joinInviteGroup(String invitationID, String groupID, String userID, int index) async {
+    isLoadingInvitedGroups2 = true;
+    ApiResponse response = await groupRepo.acceptInvitation(invitationID, groupID, userID);
+    isLoadingInvitedGroups2 = false;
+    notifyListeners();
+    if (response.response.statusCode == 201) {
+      invitedGroupList.removeAt(index);
+      Fluttertoast.showToast(msg: 'Joined successfully');
       notifyListeners();
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  cancelInviteGroup(String invitationID, int index) async {
+    isLoadingInvitedGroups2 = true;
+    ApiResponse response = await groupRepo.cancelInvitation(invitationID);
+    isLoadingInvitedGroups2 = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      invitedGroupList.removeAt(index);
+      Fluttertoast.showToast(msg: 'Cancel Invitation Success');
+      notifyListeners();
+    } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
@@ -1216,7 +1244,6 @@ class GroupProvider with ChangeNotifier {
   bool hasNextFriendData = false;
   List<bool> makeAdminFriendsSelect = [];
 
-
   updateAllFriendsPage() {
     selectPage++;
     callForGetAllFriendsPagination(page: selectPage);
@@ -1228,7 +1255,6 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-
   callForGetAllFriendsPagination({int page = 1}) async {
     if (page == 1) {
       selectPage = 1;
@@ -1237,7 +1263,7 @@ class GroupProvider with ChangeNotifier {
       isLoadingFriends = true;
       isBottomLoadingFriends = false;
       makeAdminFriendsSelect.clear();
-      makeAdminFriendsSelect =[];
+      makeAdminFriendsSelect = [];
       hasNextFriendData = false;
     } else {
       isBottomLoadingFriends = true;

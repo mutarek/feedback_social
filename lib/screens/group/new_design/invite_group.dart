@@ -5,6 +5,7 @@ import 'package:als_frontend/screens/page/shimmer_effect/find_page_shimmer.dart'
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../page/widget/page_app_bar.dart';
@@ -50,19 +51,21 @@ class _InvitesGroupState extends State<InvitesGroup> {
                           child: ListView(
                             physics: const BouncingScrollPhysics(),
                             children: [
-                              GridView.builder(
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                              MasonryGridView.count(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 6,
+                                mainAxisSpacing: 14,
                                 itemCount: groupProvider.invitedGroupList.length,
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemBuilder: (_, index) {
                                   var data = groupProvider.invitedGroupList[index];
-                                  return InviteGroupCard(data.coverPhoto!, data.name!, "${data.followers} Members", "Mehedi invited you");
+                                  return InviteGroupCard(data, groupProvider, index);
                                 },
                               ),
                               groupProvider.hasInvitedGroupsNextData
                                   ? loadMoreGroup(groupProvider.hasInvitedGroupsNextData, groupProvider.isBottomLoadingInvitedGroup, () {
-                                      groupProvider.updateBlockGroupNo();
+                                      groupProvider.updateInvitedGroupsPageNo();
                                     }, 'Load more Invite Groups')
                                   : const SizedBox.shrink()
                             ],

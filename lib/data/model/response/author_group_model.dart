@@ -17,3 +17,15 @@ class AuthorGroupModel {
     copyLinkUrl = json['copy_link_url'];
   }
 }
+
+class AuthorGroupModelWithID {
+  num? id;
+  AuthorGroupModel? authorGroupModel;
+
+  AuthorGroupModelWithID({this.id, this.authorGroupModel});
+
+  AuthorGroupModelWithID.fromJson(dynamic json) {
+    id = json['id'];
+    authorGroupModel = json['group'] != null ? AuthorGroupModel.fromJson(json['group']) : AuthorGroupModel();
+  }
+}

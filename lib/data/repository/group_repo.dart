@@ -198,6 +198,25 @@ class GroupRepo {
     }
   }
 
+  Future<ApiResponse> acceptInvitation(String invitationID, String groupID, String memberID) async {
+    try {
+      response = await dioClient.post("/group/invitation/$invitationID/accept/",
+          data: {"group": groupID, "member": memberID, "member_status": "Member", "is_joined": true, "is_blocked": false});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> cancelInvitation(String invitationID) async {
+    try {
+      response = await dioClient.delete("/group/invitation/$invitationID/cancel/");
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
   Future<ApiResponse> getCategory() async {
     try {
       response = await dioClient.get(AppConstant.groupCategoryUri);
@@ -324,7 +343,6 @@ class GroupRepo {
     }
   }
 
-
   Future<ApiResponse> groupBlockCreate(int pageID) async {
     Response response = Response(requestOptions: RequestOptions(path: ''));
     try {
@@ -358,12 +376,10 @@ class GroupRepo {
   Future<ApiResponse> getAllFriends(int page) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response =
-      await dioClient.get('${AppConstant.friendListsURI}$page');
+      response = await dioClient.get('${AppConstant.friendListsURI}$page');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-
 }

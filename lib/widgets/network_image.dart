@@ -15,7 +15,7 @@ Widget customNetworkImage(String imageUrl, {double? height, BoxFit boxFit = BoxF
     height: height == 0 ? MediaQuery.of(Helper.navigatorKey.currentState!.context).size.height : height,
     cacheKey: imageUrl,
     cacheManager: CacheManager(Config(imageUrl, stalePeriod: const Duration(hours: 5))),
-    errorWidget: (context, url, error) => Image.asset("assets/logo/logo.jpeg", fit: BoxFit.fill),
+    errorWidget: (context, url, error) => Image.asset("assets/logo/logo.jpeg", fit: BoxFit.scaleDown),
     placeholder: ((context, url) => Center(
           child: Stack(
             children: [
