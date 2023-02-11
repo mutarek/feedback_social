@@ -18,7 +18,6 @@ import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/network_image.dart';
 import '../../../widgets/snackbar_message.dart';
 import '../../dashboard/dashboard_screen.dart';
-import '../../more/more_screen.dart';
 import 'admin_tools_screen.dart';
 
 class GroupDashboard extends StatefulWidget {
