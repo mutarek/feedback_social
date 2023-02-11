@@ -12,7 +12,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class GroupAccessView extends StatelessWidget {
-  const GroupAccessView({Key? key}) : super(key: key);
+  final bool isFromPage;
+
+  const GroupAccessView(this.isFromPage, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class GroupAccessView extends StatelessWidget {
                               width: screenWeight() * 0.7,
                               height: 48,
                               child: dashboardWidget("Admin Section", ImagesModel.groupAccess, true, () {
-                                groupProvider.changeAdminSectionAccessExpanded();
+                                groupProvider.changeAdminSectionAccessExpanded(isFromPage);
                               }, expandedCondition: groupProvider.adminSectionAccess, fontSize: 14),
                             ),
 
@@ -63,7 +65,8 @@ class GroupAccessView extends StatelessWidget {
                                               width: screenWeight(),
                                               child: groupProvider.isLoadingAdminModerator
                                                   ? const CircularProgressIndicator()
-                                                  : Text('Admin Not Available in this group', style: robotoStyle500Medium))
+                                                  : Text('Admin Not Available in this ${isFromPage ? 'page' : 'group'}',
+                                                      style: robotoStyle500Medium))
                                           : ListView.builder(
                                               itemCount: groupProvider.adminModeratorLists.length,
                                               shrinkWrap: true,
@@ -117,7 +120,7 @@ class GroupAccessView extends StatelessWidget {
                               width: screenWeight() * 0.7,
                               height: 48,
                               child: dashboardWidget("Moderator Section", ImagesModel.groupAccess, true, () {
-                                groupProvider.changeModeratorSectionAccessExpanded();
+                                groupProvider.changeModeratorSectionAccessExpanded(isFromPage);
                               }, expandedCondition: groupProvider.moderatorSectionAccess, fontSize: 14),
                             ),
 
@@ -142,7 +145,7 @@ class GroupAccessView extends StatelessWidget {
                                               width: screenWeight(),
                                               child: groupProvider.isLoadingAdminModerator
                                                   ? const CircularProgressIndicator()
-                                                  : Text('Moderator Not Available in this group', style: robotoStyle500Medium))
+                                                  : Text('Moderator Not Available in this ${isFromPage?'page':'group'}', style: robotoStyle500Medium))
                                           : ListView.builder(
                                               itemCount: groupProvider.adminModeratorLists.length,
                                               shrinkWrap: true,
@@ -151,7 +154,7 @@ class GroupAccessView extends StatelessWidget {
                                                 return Container(
                                                   padding: const EdgeInsets.all(4),
                                                   width: screenWeight() * 0.6,
-                                                  margin: const EdgeInsets.only(bottom: 5,top: 5),
+                                                  margin: const EdgeInsets.only(bottom: 5, top: 5),
                                                   decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                                                   child: Row(
                                                     children: [
@@ -268,21 +271,22 @@ class GroupAccessView extends StatelessWidget {
                       }
                     }
                     if (isSelectAtLeastOne == true) {
-                      groupProvider.makeAdminModerator(userIds, isAdmin);
+                      groupProvider.makeAdminModerator(userIds, isAdmin, isFromPage);
                     } else {
                       showMessage(message: 'Please Select at least one Friend');
                     }
                   },
-                  child: groupProvider.isLoadingAdminModerator2?const Center(child: CircularProgressIndicator()):
-                  Container(
-                    height: 25,
-                    width: screenWeight()*0.7,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(45), color: AppColors.primaryColorLight),
-                    child: Center(
-                      child: Text('Make ${isAdmin ? "Admin" : "Moderator"}',
-                          style: robotoStyle700Bold.copyWith(fontSize: 13, color: Colors.white)),
-                    ),
-                  ),
+                  child: groupProvider.isLoadingAdminModerator2
+                      ? const Center(child: CircularProgressIndicator())
+                      : Container(
+                          height: 25,
+                          width: screenWeight() * 0.7,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(45), color: AppColors.primaryColorLight),
+                          child: Center(
+                            child: Text('Make ${isAdmin ? "Admin" : "Moderator"}',
+                                style: robotoStyle700Bold.copyWith(fontSize: 13, color: Colors.white)),
+                          ),
+                        ),
                 )
               ],
             ),

@@ -383,20 +383,22 @@ class GroupRepo {
     }
   }
 
-  Future<ApiResponse> adminModeratorCreate(int groupID, List<int> users, bool isAdmin) async {
+  Future<ApiResponse> adminModeratorCreate(int groupID, List<int> users, bool isAdmin, bool isFromPage) async {
     try {
-      response = await dioClient.post("${isAdmin ? AppConstant.groupAdminURI : AppConstant.groupModeratorURI}create/",
-          data: {"group": groupID, "members": users});
+      response = await dioClient.post(
+          "${isAdmin ? '/${isFromPage ? 'page' : 'group'}/admin/user/' : '/${isFromPage ? 'page' : 'group'}/moderator/user/'}create/",
+          data: {isFromPage ? 'page' : 'group': groupID, "members": users});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
 
-  Future<ApiResponse> groupModeratorAdminLists(int groupNO, int page, bool isAdmin) async {
+  Future<ApiResponse> groupModeratorAdminLists(int groupNO, int page, bool isAdmin, bool isFromPage) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
-      response = await dioClient.get('${isAdmin ? AppConstant.groupAdminURI : AppConstant.groupModeratorURI}$groupNO/list/?page=$page');
+      response = await dioClient.get(
+          '${isAdmin ? '/${isFromPage ? 'page' : 'group'}/admin/user/' : '/${isFromPage ? 'page' : 'group'}/moderator/user/'}$groupNO/list/?page=$page');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);

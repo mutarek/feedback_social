@@ -114,12 +114,12 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeModeratorSectionAccessExpanded() {
+  changeModeratorSectionAccessExpanded(bool isFromPage) {
     moderatorSectionAccess = !moderatorSectionAccess;
     adminSectionAccess = false;
     addNewContent = false;
     if (moderatorSectionAccess) {
-      callForGetAdminModerator(isFirstTime: false);
+      callForGetAdminModerator(isFromPage, isFirstTime: false);
     }
     notifyListeners();
   }
@@ -132,12 +132,12 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  changeAdminSectionAccessExpanded() {
+  changeAdminSectionAccessExpanded(bool isFromPage) {
     adminSectionAccess = !adminSectionAccess;
     moderatorSectionAccess = false;
     addNewContent = false;
     if (adminSectionAccess) {
-      callForGetAdminModerator(isFirstTime: false);
+      callForGetAdminModerator(isFromPage, isFirstTime: false);
     }
 
     notifyListeners();
@@ -173,13 +173,13 @@ class GroupProvider with ChangeNotifier {
   int selectPageAccess = 1;
   bool hasNextDataAdminModerator = false;
 
-  updateAdminModeratorNo() {
+  updateAdminModeratorNo(bool isFromPage) {
     selectPageAccess++;
-    callForGetAdminModerator(page: selectPageAccess);
+    callForGetAdminModerator(isFromPage, page: selectPageAccess);
     notifyListeners();
   }
 
-  callForGetAdminModerator({int page = 1, bool isFirstTime = true}) async {
+  callForGetAdminModerator(bool isFromPage, {int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPageAccess = 1;
       adminModeratorLists.clear();
@@ -195,7 +195,8 @@ class GroupProvider with ChangeNotifier {
       notifyListeners();
     }
 
-    ApiResponse response = await groupRepo.groupModeratorAdminLists(groupDetailsModel.id as int, selectPage, adminSectionAccess);
+    ApiResponse response =
+        await groupRepo.groupModeratorAdminLists(groupDetailsModel.id as int, selectPage, adminSectionAccess, isFromPage);
 
     isLoadingAdminModerator = false;
     isBottomLoadingAdminModerator = false;
@@ -211,11 +212,11 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  makeAdminModerator(List<int> users, bool isAdmin) async {
+  makeAdminModerator(List<int> users, bool isAdmin, bool isFromPage) async {
     isLoadingAdminModerator2 = true;
     notifyListeners();
 
-    ApiResponse response = await groupRepo.adminModeratorCreate(groupDetailsModel.id as int, users, isAdmin);
+    ApiResponse response = await groupRepo.adminModeratorCreate(groupDetailsModel.id as int, users, isAdmin, isFromPage);
 
     isLoadingAdminModerator2 = false;
     if (response.response.statusCode == 201) {

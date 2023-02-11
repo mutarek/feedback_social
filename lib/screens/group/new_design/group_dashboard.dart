@@ -31,6 +31,7 @@ class GroupDashboard extends StatefulWidget {
 
 class _GroupDashboardState extends State<GroupDashboard> {
   final keyController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +46,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
-        child: Consumer2<GroupProvider,AuthProvider>(builder: (context, groupProvider,authProvider, child) {
+        child: Consumer2<GroupProvider, AuthProvider>(builder: (context, groupProvider, authProvider, child) {
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -84,8 +85,10 @@ class _GroupDashboardState extends State<GroupDashboard> {
                               backgroundColor: AppColors.primaryColorLight,
                               child: InkWell(
                                   onTap: () {
-                                    groupProvider.callForGetAllGroupInformation(groupProvider.groupDetailsModel.id.toString()).then((value) {
-                                        Helper.toScreen(SetupGroup(groupProvider.groupDetailsModel));
+                                    groupProvider
+                                        .callForGetAllGroupInformation(groupProvider.groupDetailsModel.id.toString())
+                                        .then((value) {
+                                      Helper.toScreen(SetupGroup(groupProvider.groupDetailsModel));
                                     });
                                   },
                                   child: const CircleAvatar(
@@ -323,7 +326,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                   ))
                     : const SizedBox.shrink(),
                 const SizedBox(height: 10),
-                GroupAccessView(),
+                GroupAccessView(false),
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   child: Container(
@@ -434,14 +437,13 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                                   itemBuilder: (context, index) {
                                                     var members = groupProvider.groupMembersList[index];
                                                     return ListTile(
-                                                      onTap: (){
-                                                        if(authProvider.userID==members.member!.id){
+                                                      onTap: () {
+                                                        if (authProvider.userID == members.member!.id) {
                                                           Helper.toScreen(const ProfileScreen());
+                                                        } else {
+                                                          Helper.toScreen(PublicProfileScreen(members.member!.id.toString(),
+                                                              isFromFriendRequestScreen: false, isFromFriendScreen: false));
                                                         }
-                                                        else
-                                                          {
-                                                            Helper.toScreen(PublicProfileScreen(members.member!.id.toString(),isFromFriendRequestScreen: false,isFromFriendScreen: false));
-                                                          }
                                                       },
                                                       leading: CircleAvatar(
                                                         backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
@@ -518,7 +520,8 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                                        Text("Are you absolutely sure?", style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                        Text("Are you absolutely sure?",
+                                                            style: robotoStyle500Medium.copyWith(fontSize: 12)),
                                                         const Icon(Icons.auto_delete, color: Colors.red)
                                                       ]),
                                                       const Divider(thickness: 2, color: Colors.black),
@@ -544,14 +547,12 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                                           backgroundColor: Colors.red,
                                                           btnTxt: 'Delete Group',
                                                           onTap: () {
-                                                            groupProvider.deleteSingleGroup(groupProvider.groupDetailsModel.id.toString()).then((value){
-                                                              if(value){
-                                                               Helper.toRemoveUntilScreen(const DashboardScreen());
-                                                              }
-                                                              else
-                                                                {
-
-                                                                }
+                                                            groupProvider
+                                                                .deleteSingleGroup(groupProvider.groupDetailsModel.id.toString())
+                                                                .then((value) {
+                                                              if (value) {
+                                                                Helper.toRemoveUntilScreen(const DashboardScreen());
+                                                              } else {}
                                                             });
                                                             // if (keyController.text == randomNumber.toString()) {
                                                             //   pageProvider.deleteSinglePage(widget.pageId, 0, (status) {
