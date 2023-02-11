@@ -17,6 +17,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../data/model/response/author_group_model.dart';
 import '../data/model/response/group_members.dart';
+import '../data/model/response/group_policy_model.dart';
 import '../widgets/snackbar_message.dart';
 
 class GroupProvider with ChangeNotifier {
@@ -106,6 +107,9 @@ class GroupProvider with ChangeNotifier {
 
   changeGroupPolicyExpanded() {
     groupPolicy = !groupPolicy;
+    if (groupPolicy) {
+      getAllGroupPolicies(groupDetailsModel.id.toString());
+    }
     notifyListeners();
   }
 
@@ -1354,5 +1358,51 @@ class GroupProvider with ChangeNotifier {
       showMessage(message: response.response.statusMessage!);
       return false;
     }
+  }
+
+  //TODO: FOR GETTING ALL GROUP POLICIES
+  bool isGroupPolicyLoading = false;
+  List<GroupPolicyModel> groupPolicyList = [];
+
+  getAllGroupPolicies(String groupID) async {
+    isGroupPolicyLoading = true;
+    groupPolicyList.clear();
+    notifyListeners();
+    ApiResponse response = await groupRepo.getGroupPolicies(groupID);
+    isGroupPolicyLoading = false;
+    notifyListeners();
+    if (response.response.statusCode == 200) {
+      response.response.data['results'].forEach((policy) {
+        groupPolicyList.add(GroupPolicyModel.fromJson(policy));
+      });
+    } else {
+      showMessage(message: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  //TODO: create a new task
+  bool isLoadingCreatePolicy = false;
+
+  Future<bool> createPolicy(String title, String description) async {
+    isLoadingCreatePolicy = true;
+    notifyListeners();
+    FormData formData = FormData();
+    formData.fields.add(MapEntry("title", title));
+    formData.fields.add(MapEntry("description", description));
+    ApiResponse response = await groupRepo.createGroupPolicy(groupDetailsModel.id.toString(),formData);
+    isLoadingCreatePolicy = false;
+    notifyListeners();
+    if(response.response.statusCode == 201) {
+      showMessage(message: "A New Policy Created");
+      groupPolicyList.insert(0,GroupPolicyModel(id: 0,title: title,description: description));
+      notifyListeners();
+      return true;
+    }
+    else
+      {
+        showMessage(message: response.response.statusMessage!);
+        return false;
+      }
   }
 }

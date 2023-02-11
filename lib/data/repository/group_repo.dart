@@ -414,4 +414,23 @@ class GroupRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+  Future<ApiResponse> getGroupPolicies(String groupID) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.get('${AppConstant.groupUri}rule/$groupID/create-or-list/');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
+
+  Future<ApiResponse> createGroupPolicy(String groupID,FormData formdata) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post('${AppConstant.groupUri}rule/$groupID/create-or-list/',data: formdata);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
 }
