@@ -490,27 +490,45 @@ class GroupProvider with ChangeNotifier {
 
   // for LIKE comment
 
-  addLike(int groupID, int postID, int index) async {
-    // if (groupAllPosts[index].isLiked == false) {
-    //   groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! + 1;
-    //   groupAllPosts[index].isLiked = true;
-    // } else {
-    //   groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! - 1;
-    //   groupAllPosts[index].isLiked = false;
-    // }
+  addLike(int reactStatusID, int index) async {
+    if (reactStatusID == 1 || reactStatusID == 2 || reactStatusID == 3) {
+      if (groupAllPosts[index].reaction == -1) groupAllPosts[index].totalReaction = groupAllPosts[index].totalReaction! + 1;
 
+      if (reactStatusID == 1) {
+        groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! + 1;
+        if (groupAllPosts[index].reaction! == 2) groupAllPosts[index].totalLoved = groupAllPosts[index].totalLoved! - 1;
+        if (groupAllPosts[index].reaction! == 3) groupAllPosts[index].totalSad = groupAllPosts[index].totalSad! - 1;
+      } else if (reactStatusID == 2) {
+        groupAllPosts[index].totalLoved = groupAllPosts[index].totalLoved! + 1;
+        if (groupAllPosts[index].reaction! == 1) groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! - 1;
+        if (groupAllPosts[index].reaction! == 3) groupAllPosts[index].totalSad = groupAllPosts[index].totalSad! - 1;
+      } else {
+        groupAllPosts[index].totalSad = groupAllPosts[index].totalSad! + 1;
+        if (groupAllPosts[index].reaction! == 1) groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! - 1;
+        if (groupAllPosts[index].reaction! == 2) groupAllPosts[index].totalLoved = groupAllPosts[index].totalLoved! - 1;
+      }
+
+      groupAllPosts[index].reaction = reactStatusID;
+    } else {
+      groupAllPosts[index].totalReaction = groupAllPosts[index].totalReaction! - 1;
+      groupAllPosts[index].reaction = reactStatusID;
+    }
     notifyListeners();
-    await newsfeedRepo.addLikeONGroup(postID, groupID);
   }
+  
 
-  changeLikeStatus(int value, int index) async {
-    // if (value == 1) {
-    //   groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! + 1;
-    //   groupAllPosts[index].isLiked = true;
-    // } else {
-    //   groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! - 1;
-    //   groupAllPosts[index].isLiked = false;
-    // }
+  changeLikeStatus(int index) async {
+    if (groupAllPosts[index].reaction != -1) {
+      groupAllPosts[index].totalReaction = groupAllPosts[index].totalReaction! - 1;
+      if (groupAllPosts[index].reaction == 1) {
+        groupAllPosts[index].totalLiked = groupAllPosts[index].totalLiked! - 1;
+      } else if (groupAllPosts[index].reaction == 2) {
+        groupAllPosts[index].totalLoved = groupAllPosts[index].totalLoved! - 1;
+      } else {
+        groupAllPosts[index].totalSad = groupAllPosts[index].totalSad! - 1;
+      }
+      groupAllPosts[index].reaction = -1;
+    }
     notifyListeners();
   }
 

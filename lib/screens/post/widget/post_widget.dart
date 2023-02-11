@@ -8,6 +8,7 @@ import 'package:als_frontend/helper/open_call_url_map_sms_helper.dart';
 import 'package:als_frontend/helper/url_checkig_helper.dart';
 import 'package:als_frontend/provider/auth_provider.dart';
 import 'package:als_frontend/provider/comment_provider.dart';
+import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/provider/page_provider.dart';
 import 'package:als_frontend/provider/post_provider.dart';
 import 'package:als_frontend/screens/group/public_group_screen.dart';
@@ -407,7 +408,14 @@ class PostWidget extends StatelessWidget {
                         ],
                         dragSpace: 40.0,
                         onReactionSelected: (val) {
-                          Provider.of<PageProvider>(context, listen: false).addLike(val.id + 1, index);
+                          if (isPage) {
+                            Provider.of<PageProvider>(context, listen: false).addLike(val.id + 1, index);
+                          } else if (isGroup) {
+                            Provider.of<GroupProvider>(context, listen: false).addLike(val.id + 1, index);
+                          } else if (isHomeScreen) {
+                            Provider.of<NewsFeedProvider>(context, listen: false).addLike(val.id + 1, index);
+                          }
+
                           if (newsFeedData.reaction != val.id) {
                             commentProvider.addRealLike(newsFeedData.reaction == 1
                                 ? newsFeedData.likeReactUrl!
@@ -433,7 +441,13 @@ class PostWidget extends StatelessWidget {
                               : newsFeedData.reaction == 2
                                   ? newsFeedData.loveReactUrl!
                                   : newsFeedData.sadReactUrl!);
-                          Provider.of<PageProvider>(context, listen: false).changeLikeStatus(index);
+                          if (isPage) {
+                            Provider.of<PageProvider>(context, listen: false).changeLikeStatus(index);
+                          } else if (isGroup) {
+                            Provider.of<GroupProvider>(context, listen: false).changeLikeStatus(index);
+                          } else if (isHomeScreen) {
+                            Provider.of<NewsFeedProvider>(context, listen: false).changeLikeStatus(index);
+                          }
                         }, status: newsFeedData.reaction!),
                         containerWidth: 140.0,
                         childAnchor: Alignment.centerLeft,

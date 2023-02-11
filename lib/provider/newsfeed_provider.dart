@@ -89,27 +89,44 @@ class NewsFeedProvider with ChangeNotifier {
     newsFeedLists.removeAt(index);
     notifyListeners();
   }
+  addLike(int reactStatusID, int index) async {
+    if (reactStatusID == 1 || reactStatusID == 2 || reactStatusID == 3) {
+      if (newsFeedLists[index].reaction == -1) newsFeedLists[index].totalReaction = newsFeedLists[index].totalReaction! + 1;
 
-  addLike(int postID, int index, {bool isGroup = false, bool isFromPage = false, int groupPageID = 0}) async {
-    // if (newsFeedLists[index].isLiked == false) {
-    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
-    //   newsFeedLists[index].isLiked = true;
-    // } else {
-    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
-    //   newsFeedLists[index].isLiked = false;
-    // }
+      if (reactStatusID == 1) {
+        newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
+        if (newsFeedLists[index].reaction! == 2) newsFeedLists[index].totalLoved = newsFeedLists[index].totalLoved! - 1;
+        if (newsFeedLists[index].reaction! == 3) newsFeedLists[index].totalSad = newsFeedLists[index].totalSad! - 1;
+      } else if (reactStatusID == 2) {
+        newsFeedLists[index].totalLoved = newsFeedLists[index].totalLoved! + 1;
+        if (newsFeedLists[index].reaction! == 1) newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+        if (newsFeedLists[index].reaction! == 3) newsFeedLists[index].totalSad = newsFeedLists[index].totalSad! - 1;
+      } else {
+        newsFeedLists[index].totalSad = newsFeedLists[index].totalSad! + 1;
+        if (newsFeedLists[index].reaction! == 1) newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+        if (newsFeedLists[index].reaction! == 2) newsFeedLists[index].totalLoved = newsFeedLists[index].totalLoved! - 1;
+      }
+
+      newsFeedLists[index].reaction = reactStatusID;
+    } else {
+      newsFeedLists[index].totalReaction = newsFeedLists[index].totalReaction! - 1;
+      newsFeedLists[index].reaction = reactStatusID;
+    }
     notifyListeners();
-    await newsFeedRepo.addLike(postID, isGroup: isGroup, isFromLike: isFromPage, groupPageID: groupPageID);
   }
 
-  changeLikeStatus(int value, int index) async {
-    // if (value == 1) {
-    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! + 1;
-    //   newsFeedLists[index].isLiked = true;
-    // } else {
-    //   newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
-    //   newsFeedLists[index].isLiked = false;
-    // }
+  changeLikeStatus(int index) async {
+    if (newsFeedLists[index].reaction != -1) {
+      newsFeedLists[index].totalReaction = newsFeedLists[index].totalReaction! - 1;
+      if (newsFeedLists[index].reaction == 1) {
+        newsFeedLists[index].totalLiked = newsFeedLists[index].totalLiked! - 1;
+      } else if (newsFeedLists[index].reaction == 2) {
+        newsFeedLists[index].totalLoved = newsFeedLists[index].totalLoved! - 1;
+      } else {
+        newsFeedLists[index].totalSad = newsFeedLists[index].totalSad! - 1;
+      }
+      newsFeedLists[index].reaction = -1;
+    }
     notifyListeners();
   }
 

@@ -407,13 +407,13 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                       onTap: () {
                                         newsFeedProvider.singlePostLike(newsFeedProvider.singleNewsFeedModel.id! as int, (bool status) {
                                           if (widget.isHomeScreen) {
-                                            newsFeedProvider.changeLikeStatus(status ? 1 : 0, widget.index);
+                                            // newsFeedProvider.changeLikeStatus(status ? 1 : 0, widget.index);
                                           } else if (widget.isProfileScreen) {
                                             Provider.of<ProfileProvider>(context, listen: false)
                                                 .changeLikeStatus(status ? 1 : 0, widget.index);
                                           } else if (widget.isFromGroup) {
-                                            Provider.of<GroupProvider>(context, listen: false)
-                                                .changeLikeStatus(status ? 1 : 0, widget.index);
+                                            // Provider.of<GroupProvider>(context, listen: false)
+                                            //     .changeLikeStatus(status ? 1 : 0, widget.index);
                                           }
                                         }, isGroup: widget.isFromGroup, groupID: widget.groupID);
                                       },
