@@ -1,3 +1,5 @@
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
+
 class GroupDetailsModel {
   GroupDetailsModel({
     this.id,
@@ -18,6 +20,7 @@ class GroupDetailsModel {
     this.videos,
     this.copyUrl,
     this.isMember,
+    this.createAt,
   });
 
   GroupDetailsModel.fromJson(dynamic json) {
@@ -31,7 +34,7 @@ class GroupDetailsModel {
     city = json['city'];
     address = json['address'];
     postApprovedByAdmin = json['post_approved_by_admin'];
-    creator = json['creator'] != null ? Creator.fromJson(json['creator']) : Creator();
+    creator = json['creator'] != null ? Author.fromJson(json['creator']) : Author();
     totalMember = json['total_member'];
     members = json['members'];
     posts = json['posts'];
@@ -39,6 +42,7 @@ class GroupDetailsModel {
     videos = json['videos'];
     copyUrl = json['copy_url'];
     isMember = json['is_member'];
+    createAt = json['created_at'];
   }
 
   num? id;
@@ -51,27 +55,14 @@ class GroupDetailsModel {
   String? city;
   String? address;
   bool? postApprovedByAdmin;
-  Creator? creator;
+  Author? creator;
   num? totalMember;
   String? members;
   String? posts;
   String? photos;
   String? videos;
   String? copyUrl;
+  String? createAt;
   bool? isMember;
 
-}
-
-class Creator {
-  Creator({this.id, this.fullName, this.profileImage});
-
-  Creator.fromJson(dynamic json) {
-    id = json['id'];
-    fullName = json['full_name'];
-    profileImage = json['profile_image'];
-  }
-
-  num? id;
-  String? fullName;
-  String? profileImage;
 }

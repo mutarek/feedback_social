@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/followers_model.dart';
-import 'package:als_frontend/data/model/response/friend_model.dart';
 import 'package:als_frontend/data/model/response/send_friend_request_model.dart';
 import 'package:als_frontend/data/model/response/suggested_friend_model.dart';
 import 'package:als_frontend/data/model/response/user_profile_model.dart';
@@ -18,12 +17,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/model/response/news_feed_model.dart';
 
-class ProfileProvider with ChangeNotifier{
+class ProfileProvider with ChangeNotifier {
   final ProfileRepo profileRepo;
   final NewsfeedRepo newsfeedRepo;
   final AuthRepo authRepo;
 
-  ProfileProvider({required this.profileRepo,required this.newsfeedRepo,required this.authRepo});
+  ProfileProvider({required this.profileRepo, required this.newsfeedRepo, required this.authRepo});
 
   bool _isLoading = false;
 
@@ -163,7 +162,7 @@ class ProfileProvider with ChangeNotifier{
       userprofileData.firstName = response.response.data['first_name'];
       userprofileData.lastName = response.response.data['last_name'];
       userprofileData.gender = response.response.data['gender'];
-      userprofileData.livesInAddress =response.response.data['lives_in_address'];
+      userprofileData.livesInAddress = response.response.data['lives_in_address'];
       userprofileData.fromAddress = response.response.data['from_address'];
       userprofileData.religion = response.response.data['religion'];
       userprofileData.presentCompany = response.response.data['company'];
@@ -199,9 +198,11 @@ class ProfileProvider with ChangeNotifier{
     isLoadingForUploadPhoto = true;
     FormData formData = FormData();
     if (isCover) {
-      formData.files.add(MapEntry('cover_image',MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+      formData.files.add(
+          MapEntry('cover_image', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
     } else {
-      formData.files.add(MapEntry('profile_image',MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
+      formData.files.add(
+          MapEntry('profile_image', MultipartFile(file.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split("/").last)));
     }
     notifyListeners();
     ApiResponse response = await profileRepo.uploadPhoto(formData, isCover: isCover);
@@ -400,9 +401,11 @@ class ProfileProvider with ChangeNotifier{
     }
     notifyListeners();
   }
+
 //TODO:   for get All Friend
 
-  List<FriendModel> paginationFriendLists = [];
+  List<Author> myFriendLists = [];
+  List<bool> makeAdminFriendsSelect = [];
 
   updateAllFriendsPage() {
     selectPage++;
@@ -410,14 +413,22 @@ class ProfileProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  callForGetAllFriendsPagination({int page = 1}) async {
+  changeAddAdminSelectionValue(int index, bool value) {
+    makeAdminFriendsSelect[index] = value;
+    notifyListeners();
+  }
+
+  callForGetAllFriendsPagination({int page = 1, bool isFirstTime = true}) async {
     if (page == 1) {
       selectPage = 1;
-      paginationFriendLists.clear();
-      paginationFriendLists = [];
+      myFriendLists.clear();
+      myFriendLists = [];
       isLoadingSuggestedFriend = true;
       isBottomLoading = false;
       hasNextData = false;
+      makeAdminFriendsSelect.clear();
+      makeAdminFriendsSelect = [];
+      if (!isFirstTime) notifyListeners();
     } else {
       isBottomLoading = true;
       notifyListeners();
@@ -425,11 +436,13 @@ class ProfileProvider with ChangeNotifier{
     ApiResponse response = await profileRepo.getAllFriends(page);
     isLoadingSuggestedFriend = false;
     isBottomLoading = false;
+    notifyListeners();
     if (response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        FriendModel friendModel = FriendModel.fromJson(element);
-        paginationFriendLists.add(friendModel);
+        Author friendModel = Author.fromJson(element);
+        myFriendLists.add(friendModel);
+        makeAdminFriendsSelect.add(false);
       });
     } else {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
@@ -473,6 +486,7 @@ class ProfileProvider with ChangeNotifier{
 
     notifyListeners();
   }
+
   removeFollowers(int index) {
     followersModelList.removeAt(index);
     userprofileData.followers!.removeAt(index);
@@ -481,9 +495,8 @@ class ProfileProvider with ChangeNotifier{
   }
 
   removeFriend(int index) {
-    paginationFriendLists.removeAt(index);
+    myFriendLists.removeAt(index);
     userprofileData.friends!.removeAt(index);
     notifyListeners();
   }
-
 }
