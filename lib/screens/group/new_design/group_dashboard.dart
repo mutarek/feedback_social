@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/new_design/setup_group.dart';
+import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -11,6 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/auth_provider.dart';
 import '../../../util/image.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_text_field.dart';
@@ -43,7 +46,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
-        child: Consumer<GroupProvider>(builder: (context, groupProvider, child) {
+        child: Consumer2<GroupProvider,AuthProvider>(builder: (context, groupProvider,authProvider, child) {
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -960,6 +963,15 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                                   itemBuilder: (context, index) {
                                                     var members = groupProvider.groupMembersList[index];
                                                     return ListTile(
+                                                      onTap: (){
+                                                        if(authProvider.userID==members.member!.id){
+                                                          Helper.toScreen(const ProfileScreen());
+                                                        }
+                                                        else
+                                                          {
+                                                            Helper.toScreen(PublicProfileScreen(members.member!.id.toString(),isFromFriendRequestScreen: false,isFromFriendScreen: false));
+                                                          }
+                                                      },
                                                       leading: CircleAvatar(
                                                         backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
                                                         child: circularImage(members.member!.profileImage.toString(), 36, 36),
