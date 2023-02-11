@@ -83,5 +83,6 @@ class ImagesModel {
   static const String groupAccess = "assets/svg/page_access.svg";
   static const String inviteFriends = "assets/svg/invite_friends.svg";
   static const String setupGroup = "assets/svg/setup_group_svg.svg";
+  static const String pendingApprovals = "assets/svg/pending_approval_svg.svg";
 
 }

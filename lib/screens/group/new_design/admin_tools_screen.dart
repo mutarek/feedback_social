@@ -1,8 +1,10 @@
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/util/image.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:als_frontend/widgets/custom_text.dart';
 import 'package:als_frontend/widgets/custom_text_field.dart';
+import 'package:als_frontend/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +17,8 @@ class AdminToolsScreen extends StatefulWidget {
 }
 
 class _AdminToolsScreenState extends State<AdminToolsScreen> {
-  final TextEditingController pageNameController = TextEditingController();
-  final TextEditingController pageBioController = TextEditingController();
-  final TextEditingController pageDetailsController = TextEditingController();
-  final FocusNode nameFocus = FocusNode();
-  final FocusNode bioFocus = FocusNode();
-  final FocusNode detailsFocus = FocusNode();
+  final TextEditingController policyTitle = TextEditingController();
+  final TextEditingController policyDesc = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +57,7 @@ class _AdminToolsScreenState extends State<AdminToolsScreen> {
                               radius: 20,
                               backgroundColor: Colors.white,
                               child: SvgPicture.asset(
-                                "assets/svg/pending_approval_svg.svg",
+                                ImagesModel.pendingApprovals,
                                 height: 20,
                                 width: 20,
                               ),
@@ -198,7 +196,7 @@ class _AdminToolsScreenState extends State<AdminToolsScreen> {
                               radius: 20,
                               backgroundColor: Colors.white,
                               child: SvgPicture.asset(
-                                "assets/svg/pending_approval_svg.svg",
+                                ImagesModel.pendingApprovals,
                                 height: 20,
                                 width: 20,
                               ),
@@ -233,57 +231,51 @@ class _AdminToolsScreenState extends State<AdminToolsScreen> {
                   const SizedBox(height: 10),
                   groupProvider.groupPolicy
                       ? SizedBox(
-                          height: 500,
+                          height: 600,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 15),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 12),
-                                child: Text("Admin group policies",
-                                    style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
-                              ),
-                              const SizedBox(height: 5),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Column(
-                                  children: [
-                                    Text("1 .No Promotion or spam",
-                                        style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 18),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                        "We're all in this together to create a welcoming environment. Let's treat everyone with respect. Healthy debates are natural, but kindness irequired ... See more",
-                                        style: robotoStyle500Medium.copyWith(fontSize: 12, color: AppColors.primaryColorLight)),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Column(
-                                  children: [
-                                    Text("2. No hate speech",
-                                        style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 18),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                        "We're all in this together to create a welcoming environment. Let's treat everyone with respect. Healthy debates are natural, but kindnessrequired... See more.",
-                                        style: robotoStyle500Medium.copyWith(fontSize: 12, color: AppColors.primaryColorLight)),
-                                  ],
+                              SizedBox(
+                                  height: 200,
+                                child: groupProvider.isGroupPolicyLoading?
+                                    const Center(
+                                      child: CircularProgressIndicator(),
+                                    ):groupProvider.groupPolicyList.isEmpty?
+                                    const Center(
+                                      child: Text("Ops No Group Policy Found"),
+                                    ):
+                                ListView.builder(
+                                  itemCount: groupProvider.groupPolicyList.length,
+                                  itemBuilder: (_,index){
+                                    var rules = groupProvider.groupPolicyList[index];
+                                    return Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 12),
+                                            child: Text("${index+1}. ${rules.title}",
+                                                style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 18),
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                    "${rules.description} See more.",
+                                                    style: robotoStyle500Medium.copyWith(fontSize: 12, color: AppColors.primaryColorLight)),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                               const SizedBox(
@@ -321,9 +313,7 @@ class _AdminToolsScreenState extends State<AdminToolsScreen> {
                                           isShowBorder: true,
                                           borderRadius: 11,
                                           verticalSize: 14,
-                                          controller: pageBioController,
-                                          focusNode: bioFocus,
-                                          nextFocus: detailsFocus,
+                                          controller: policyTitle,
                                         ),
                                         const SizedBox(height: 10),
                                         CustomTextField(
@@ -331,9 +321,7 @@ class _AdminToolsScreenState extends State<AdminToolsScreen> {
                                           isShowBorder: true,
                                           borderRadius: 11,
                                           verticalSize: 14,
-                                          controller: pageBioController,
-                                          focusNode: bioFocus,
-                                          nextFocus: detailsFocus,
+                                          controller: policyDesc,
                                           maxLines: 4,
                                         ),
                                       ],
@@ -344,12 +332,34 @@ class _AdminToolsScreenState extends State<AdminToolsScreen> {
                               const SizedBox(height: 10),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                                child: Container(
-                                  height: 40,
-                                  width: 80,
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: AppColors.primaryColorLight),
-                                  child: Center(
-                                    child: Text("Save", style: robotoStyle700Bold.copyWith(fontSize: 14, color: AppColors.whiteColorLight)),
+                                child: InkWell(
+                                  onTap: (){
+                                    if(policyTitle.text.isNotEmpty && policyDesc.text.isNotEmpty){
+                                      groupProvider.createPolicy(policyTitle.text.trim(), policyDesc.text.trim()).then((value){
+                                        if(value){
+                                          policyTitle.clear();
+                                          policyDesc.clear();
+                                        }
+                                        else
+                                          {
+
+                                          }
+                                      });
+                                    }
+                                    else
+                                      {
+                                        showMessage(message: "Please fill in all fields");
+                                      }
+                                  },
+                                  child: groupProvider.isLoadingCreatePolicy?
+                                      const CircularProgressIndicator():
+                                  Container(
+                                    height: 40,
+                                    width: 80,
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: AppColors.primaryColorLight),
+                                    child: Center(
+                                      child: Text("Save", style: robotoStyle700Bold.copyWith(fontSize: 14, color: AppColors.whiteColorLight)),
+                                    ),
                                   ),
                                 ),
                               )
