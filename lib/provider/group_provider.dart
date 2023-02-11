@@ -1286,4 +1286,20 @@ class GroupProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  //TODO: FOR DELETE A GROUP
+
+  Future<bool> deleteSingleGroup(String groupId) async {
+    ApiResponse response = await groupRepo.deleteGroup(groupId);
+    if(response.response.statusCode == 200) {
+      yourGroup = false;
+      showMessage(message: "Group deleted successfully!");
+      return true;
+    }
+    else
+      {
+        showMessage(message: response.response.statusMessage!);
+        return false;
+      }
+  }
 }

@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:als_frontend/provider/group_provider.dart';
+import 'package:als_frontend/screens/group/new_design/setup_group.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -10,8 +13,11 @@ import 'package:provider/provider.dart';
 
 import '../../../util/image.dart';
 import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/network_image.dart';
 import '../../../widgets/snackbar_message.dart';
+import '../../dashboard/dashboard_screen.dart';
+import '../../more/more_screen.dart';
 import 'admin_tools_screen.dart';
 
 class GroupDashboard extends StatefulWidget {
@@ -22,6 +28,7 @@ class GroupDashboard extends StatefulWidget {
 }
 
 class _GroupDashboardState extends State<GroupDashboard> {
+  final keyController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -537,58 +544,58 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                         //   height: 5,
                                         // ),
                                         Expanded(
-                                          child: groupProvider.isLoadingFriends?
-                                              const Center(
-                                                child: CircularProgressIndicator(),
-                                              ):
-                                              groupProvider.friendsListModel.isEmpty?
-                                                  const Center(
-                                                    child: Text("Ops You have no friends"),
-                                                  ):ListView.builder(
-                                                  itemCount: groupProvider.friendsListModel.length,
-                                                  shrinkWrap: true,
-                                                  physics: const BouncingScrollPhysics(),
-                                                  itemBuilder: (context, position) {
-                                                    return Row(
-                                                      children: [
-                                                        SizedBox(
-                                                            width: 30,
-                                                            height: 30,
-                                                            child: circularImage(groupProvider.friendsListModel[position].profileImage!, 30, 30)),
-                                                        const SizedBox(width: 10),
-                                                        Expanded(
-                                                          child: Text("",
-                                                              style: robotoStyle500Medium.copyWith(fontSize: 12)),
-                                                        ),
-                                                        Checkbox(
-                                                          value: groupProvider.makeAdminFriendsSelect[position],
-                                                          onChanged: (value) {
-                                                            groupProvider.changeAddAdminSelectionValue(position, value!);
-                                                          },
-                                                        )
-                                                      ],
-                                                    );
-                                                  }),
+                                          child: groupProvider.isLoadingFriends
+                                              ? const Center(
+                                                  child: CircularProgressIndicator(),
+                                                )
+                                              : groupProvider.friendsListModel.isEmpty
+                                                  ? const Center(
+                                                      child: Text("Ops You have no friends"),
+                                                    )
+                                                  : ListView.builder(
+                                                      itemCount: groupProvider.friendsListModel.length,
+                                                      shrinkWrap: true,
+                                                      physics: const BouncingScrollPhysics(),
+                                                      itemBuilder: (context, position) {
+                                                        return Row(
+                                                          children: [
+                                                            SizedBox(
+                                                                width: 30,
+                                                                height: 30,
+                                                                child: circularImage(
+                                                                    groupProvider.friendsListModel[position].profileImage!, 30, 30)),
+                                                            const SizedBox(width: 10),
+                                                            Expanded(
+                                                              child: Text("", style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                            ),
+                                                            Checkbox(
+                                                              value: groupProvider.makeAdminFriendsSelect[position],
+                                                              onChanged: (value) {
+                                                                groupProvider.changeAddAdminSelectionValue(position, value!);
+                                                              },
+                                                            )
+                                                          ],
+                                                        );
+                                                      }),
                                         ),
                                         const SizedBox(height: 5),
                                         groupProvider.isBottomLoadingFriends
                                             ? const CircularProgressIndicator()
                                             : groupProvider.hasNextFriendData
-                                            ? InkWell(
-                                          onTap: () {
-                                            groupProvider.updateAllFriendsPage();
-                                          },
-                                          child: Container(
-                                            height: 30,
-                                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: colorText),
-                                                borderRadius: BorderRadius.circular(22)),
-                                            child: Text('Load more Friend',
-                                                style: robotoStyle500Medium.copyWith(color: colorText)),
-                                          ),
-                                        )
-                                            : const SizedBox.shrink(),
+                                                ? InkWell(
+                                                    onTap: () {
+                                                      groupProvider.updateAllFriendsPage();
+                                                    },
+                                                    child: Container(
+                                                      height: 30,
+                                                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: colorText), borderRadius: BorderRadius.circular(22)),
+                                                      child:
+                                                          Text('Load more Friend', style: robotoStyle500Medium.copyWith(color: colorText)),
+                                                    ),
+                                                  )
+                                                : const SizedBox.shrink(),
                                         const SizedBox(height: 5),
                                         // SizedBox(
                                         //   height: 30,
@@ -973,7 +980,126 @@ class _GroupDashboardState extends State<GroupDashboard> {
                             ),
                           ),
                         ))
-                    : const SizedBox.shrink()
+                    : const SizedBox.shrink(),
+                const SizedBox(height: 10),
+                Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  child: Container(
+                    decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: const Color(0xffF0F2F5),
+                            child: SvgPicture.asset(
+                              ImagesModel.declinedIcons,
+                              height: 20,
+                              width: 34,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Delete Group", style: robotoStyle700Bold.copyWith(fontSize: 22)),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          CircleAvatar(
+                              radius: 15,
+                              backgroundColor: AppColors.primaryColorLight,
+                              child: InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          Random random = Random();
+                                          int randomNumber = random.nextInt(90) + 10;
+                                          return Dialog(
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
+                                            child: SizedBox(
+                                              height: 310,
+                                              width: double.infinity,
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                                        Text("Are you absolutely sure?", style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                        const Icon(Icons.auto_delete, color: Colors.red)
+                                                      ]),
+                                                      const Divider(thickness: 2, color: Colors.black),
+                                                      Text(
+                                                          "This action cannot be undone. This will permanently delete the Group, wiki, issues, comments, packages, secrets, workflow runs, and remove all collaborator associations.",
+                                                          style: robotoStyle400Regular.copyWith(fontSize: 16)),
+                                                      const SizedBox(height: 10),
+                                                      Text.rich(TextSpan(children: [
+                                                        TextSpan(text: "Please Type", style: robotoStyle300Light.copyWith(fontSize: 12)),
+                                                        TextSpan(text: " $randomNumber ", style: robotoStyle700Bold.copyWith(fontSize: 15)),
+                                                        TextSpan(text: "To Confirm", style: robotoStyle300Light.copyWith(fontSize: 12)),
+                                                      ])),
+                                                      const SizedBox(height: 5),
+                                                      CustomTextField(
+                                                        hintText: 'Your Key Name',
+                                                        isShowBorder: true,
+                                                        borderRadius: 11,
+                                                        verticalSize: 14,
+                                                        controller: keyController,
+                                                      ),
+                                                      const SizedBox(height: 10),
+                                                      CustomButton(
+                                                          backgroundColor: Colors.red,
+                                                          btnTxt: 'Delete Group',
+                                                          onTap: () {
+                                                            groupProvider.deleteSingleGroup(groupProvider.groupDetailsModel.id.toString()).then((value){
+                                                              if(value){
+                                                               Helper.toRemoveUntilScreen(const DashboardScreen());
+                                                              }
+                                                              else
+                                                                {
+
+                                                                }
+                                                            });
+                                                            // if (keyController.text == randomNumber.toString()) {
+                                                            //   pageProvider.deleteSinglePage(widget.pageId, 0, (status) {
+                                                            //     if (status) {
+                                                            //       Helper.toScreen(const PageHomeScreen());
+                                                            //     }
+                                                            //   });
+                                                            // } else {
+                                                            //   showMessage(message: 'Not Matched');
+                                                            // }
+                                                          },
+                                                          radius: 100,
+                                                          height: 48)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  child: const CircleAvatar(
+                                    backgroundColor: AppColors.primaryColorLight,
+                                    radius: 20,
+                                    child: Icon(Icons.play_arrow_rounded, color: Colors.white),
+                                  )))
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           );
