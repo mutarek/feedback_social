@@ -1,5 +1,9 @@
+import 'dart:math';
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/dashboard/view/group_access_view.dart';
+import 'package:als_frontend/screens/group/new_design/setup_group.dart';
+import 'package:als_frontend/screens/profile/profile_screen.dart';
+import 'package:als_frontend/screens/profile/public_profile_screen.dart';
 import 'package:als_frontend/util/helper.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
@@ -8,11 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
+import '../../../provider/auth_provider.dart';
 import '../../../util/image.dart';
 import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/network_image.dart';
 import '../../../widgets/snackbar_message.dart';
+import '../../dashboard/dashboard_screen.dart';
+import '../../more/more_screen.dart';
 import 'admin_tools_screen.dart';
 
 class GroupDashboard extends StatefulWidget {
@@ -23,6 +30,7 @@ class GroupDashboard extends StatefulWidget {
 }
 
 class _GroupDashboardState extends State<GroupDashboard> {
+  final keyController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +45,7 @@ class _GroupDashboardState extends State<GroupDashboard> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
-        child: Consumer<GroupProvider>(builder: (context, groupProvider, child) {
+        child: Consumer2<GroupProvider,AuthProvider>(builder: (context, groupProvider,authProvider, child) {
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -76,11 +84,9 @@ class _GroupDashboardState extends State<GroupDashboard> {
                               backgroundColor: AppColors.primaryColorLight,
                               child: InkWell(
                                   onTap: () {
-                                    // groupProvider.getAuthorGroupById(groupProvider.groupDetailsModel.id!).then((value) {
-                                    //   if (value) {
-                                    //     Helper.toScreen(SetupGroup(groupProvider.groupDetailsModel));
-                                    //   }
-                                    // });
+                                    groupProvider.callForGetAllGroupInformation(groupProvider.groupDetailsModel.id.toString()).then((value) {
+                                        Helper.toScreen(SetupGroup(groupProvider.groupDetailsModel));
+                                    });
                                   },
                                   child: const CircleAvatar(
                                     backgroundColor: AppColors.primaryColorLight,
@@ -428,6 +434,15 @@ class _GroupDashboardState extends State<GroupDashboard> {
                                                   itemBuilder: (context, index) {
                                                     var members = groupProvider.groupMembersList[index];
                                                     return ListTile(
+                                                      onTap: (){
+                                                        if(authProvider.userID==members.member!.id){
+                                                          Helper.toScreen(const ProfileScreen());
+                                                        }
+                                                        else
+                                                          {
+                                                            Helper.toScreen(PublicProfileScreen(members.member!.id.toString(),isFromFriendRequestScreen: false,isFromFriendScreen: false));
+                                                          }
+                                                      },
                                                       leading: CircleAvatar(
                                                         backgroundColor: index % 2 == 0 ? Colors.amber : Colors.teal,
                                                         child: circularImage(members.member!.profileImage.toString(), 36, 36),
@@ -448,7 +463,126 @@ class _GroupDashboardState extends State<GroupDashboard> {
                             ),
                           ),
                         ))
-                    : const SizedBox.shrink()
+                    : const SizedBox.shrink(),
+                const SizedBox(height: 10),
+                Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  child: Container(
+                    decoration: BoxDecoration(color: const Color(0xffF0F2F5), borderRadius: BorderRadius.circular(30)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            backgroundColor: const Color(0xffF0F2F5),
+                            child: SvgPicture.asset(
+                              ImagesModel.declinedIcons,
+                              height: 20,
+                              width: 34,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Delete Group", style: robotoStyle700Bold.copyWith(fontSize: 22)),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          CircleAvatar(
+                              radius: 15,
+                              backgroundColor: AppColors.primaryColorLight,
+                              child: InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          Random random = Random();
+                                          int randomNumber = random.nextInt(90) + 10;
+                                          return Dialog(
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
+                                            child: SizedBox(
+                                              height: 310,
+                                              width: double.infinity,
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                                        Text("Are you absolutely sure?", style: robotoStyle500Medium.copyWith(fontSize: 12)),
+                                                        const Icon(Icons.auto_delete, color: Colors.red)
+                                                      ]),
+                                                      const Divider(thickness: 2, color: Colors.black),
+                                                      Text(
+                                                          "This action cannot be undone. This will permanently delete the Group, wiki, issues, comments, packages, secrets, workflow runs, and remove all collaborator associations.",
+                                                          style: robotoStyle400Regular.copyWith(fontSize: 16)),
+                                                      const SizedBox(height: 10),
+                                                      Text.rich(TextSpan(children: [
+                                                        TextSpan(text: "Please Type", style: robotoStyle300Light.copyWith(fontSize: 12)),
+                                                        TextSpan(text: " $randomNumber ", style: robotoStyle700Bold.copyWith(fontSize: 15)),
+                                                        TextSpan(text: "To Confirm", style: robotoStyle300Light.copyWith(fontSize: 12)),
+                                                      ])),
+                                                      const SizedBox(height: 5),
+                                                      CustomTextField(
+                                                        hintText: 'Your Key Name',
+                                                        isShowBorder: true,
+                                                        borderRadius: 11,
+                                                        verticalSize: 14,
+                                                        controller: keyController,
+                                                      ),
+                                                      const SizedBox(height: 10),
+                                                      CustomButton(
+                                                          backgroundColor: Colors.red,
+                                                          btnTxt: 'Delete Group',
+                                                          onTap: () {
+                                                            groupProvider.deleteSingleGroup(groupProvider.groupDetailsModel.id.toString()).then((value){
+                                                              if(value){
+                                                               Helper.toRemoveUntilScreen(const DashboardScreen());
+                                                              }
+                                                              else
+                                                                {
+
+                                                                }
+                                                            });
+                                                            // if (keyController.text == randomNumber.toString()) {
+                                                            //   pageProvider.deleteSinglePage(widget.pageId, 0, (status) {
+                                                            //     if (status) {
+                                                            //       Helper.toScreen(const PageHomeScreen());
+                                                            //     }
+                                                            //   });
+                                                            // } else {
+                                                            //   showMessage(message: 'Not Matched');
+                                                            // }
+                                                          },
+                                                          radius: 100,
+                                                          height: 48)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  child: const CircleAvatar(
+                                    backgroundColor: AppColors.primaryColorLight,
+                                    radius: 20,
+                                    child: Icon(Icons.play_arrow_rounded, color: Colors.white),
+                                  )))
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           );

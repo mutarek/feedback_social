@@ -1002,6 +1002,8 @@ class GroupProvider with ChangeNotifier {
 
   getForGetAllPhotosVideos() async {
     isLoading = true;
+    groupPhotosModel.clear();
+    groupVideosModel.clear();
     notifyListeners();
     ApiResponse response = await groupRepo.callForGetAllPhotos(groupDetailsModel.photos!);
     if (response.response.statusCode == 200) {
@@ -1319,5 +1321,19 @@ class GroupProvider with ChangeNotifier {
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
+  }
+
+  //TODO: FOR DELETE A GROUP
+
+  Future<bool> deleteSingleGroup(String groupId) async {
+    ApiResponse response = await groupRepo.deleteGroup(groupId);
+    if (response.response.statusCode == 200) {
+      yourGroup = false;
+      showMessage(message: "Group deleted successfully!");
+      return true;
+    } else {
+      showMessage(message: response.response.statusMessage!);
+      return false;
+    }
   }
 }
