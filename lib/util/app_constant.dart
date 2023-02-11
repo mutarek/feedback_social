@@ -82,6 +82,8 @@ class AppConstant {
   static const String latestVersionUri = '/latest-version/';
   static const String helpDiskURI = '/settings/help-desk/';
   static const String bookmarkURI = '/bookmark/post/';
+  static const String groupModeratorURI = '/group/moderator/user/';
+  static const String groupAdminURI = '/group/admin/user/';
 
   // Shared Key
   static const String theme = 'theme';

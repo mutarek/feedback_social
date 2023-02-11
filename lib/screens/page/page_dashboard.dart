@@ -750,7 +750,7 @@ class _PageDashboardState extends State<PageDashboard> {
 }
 
 Widget dashboardWidget(String title, String leftIcon, bool hasExpanded, Function onTap,
-    {bool expandedCondition = false, bool isShowSubtitle = false, IconData? iconData, String subTitle = ''}) {
+    {bool expandedCondition = false, bool isShowSubtitle = false, IconData? iconData, String subTitle = '',double fontSize=18}) {
   return InkWell(
     onTap: () {
       onTap();
@@ -770,10 +770,10 @@ Widget dashboardWidget(String title, String leftIcon, bool hasExpanded, Function
             const SizedBox(width: 12),
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: robotoStyle700Bold.copyWith(fontSize: 18)),
+                  Text(title, style: robotoStyle700Bold.copyWith(fontSize: fontSize)),
                   !isShowSubtitle ? const SizedBox.shrink() : Text(subTitle, style: robotoStyle500Medium.copyWith(fontSize: 9)),
                 ],
               ),

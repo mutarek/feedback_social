@@ -393,7 +393,7 @@ class _AdminToolsScreenState extends State<AdminToolsScreen> {
                               backgroundColor: AppColors.whiteColorLight,
                               child: InkWell(
                                   onTap: () {
-                                    groupProvider.changeRepotedContentExpanded();
+                                    groupProvider.changeReportedContentExpanded();
                                   },
                                   child: groupProvider.reportedContent != true
                                       ? const Icon(Icons.arrow_drop_down, color: Colors.black)

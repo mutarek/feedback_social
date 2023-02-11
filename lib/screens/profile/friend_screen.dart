@@ -1,4 +1,4 @@
-import 'package:als_frontend/data/model/response/friend_model.dart';
+import 'package:als_frontend/data/model/response/news_feed_model.dart';
 import 'package:als_frontend/provider/profile_provider.dart';
 import 'package:als_frontend/screens/home/widget/profile_avatar.dart';
 import 'package:als_frontend/screens/profile/public_profile_screen.dart';
@@ -60,16 +60,16 @@ class _FriendScreenState extends State<FriendScreen> {
                   children: [
                     Center(
                         child: CustomText(
-                      title: '${LocaleKeys.you_Have.tr()}(${profileProvider.paginationFriendLists.length}) ${LocaleKeys.friend.tr()}',
+                      title: '${LocaleKeys.you_Have.tr()}(${profileProvider.myFriendLists.length}) ${LocaleKeys.friend.tr()}',
                       textStyle: latoStyle600SemiBold.copyWith(fontSize: 16),
                     )),
                     const SizedBox(height: 10),
                     ListView.builder(
-                        itemCount: profileProvider.paginationFriendLists.length,
+                        itemCount: profileProvider.myFriendLists.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          FriendModel friendModel = profileProvider.paginationFriendLists[index];
+                          Author friendModel = profileProvider.myFriendLists[index];
                           return Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             margin: const EdgeInsets.only(bottom: 10),

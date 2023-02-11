@@ -15,6 +15,14 @@ bool isMe(String id) {
   return id == Provider.of<AuthProvider>(Helper.navigatorKey.currentState!.context, listen: false).userID;
 }
 
+double screenHeight() {
+  return MediaQuery.of(Helper.navigatorKey.currentState!.context).size.height;
+}
+
+double screenWeight() {
+  return MediaQuery.of(Helper.navigatorKey.currentState!.context).size.width;
+}
+
 class Helper {
   static final navigatorKey = GlobalKey<NavigatorState>();
 

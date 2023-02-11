@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../data/model/response/author_group_model.dart';
-import '../data/model/response/friend_model.dart';
 import '../data/model/response/group_members.dart';
 import '../widgets/snackbar_message.dart';
 
@@ -98,8 +97,9 @@ class GroupProvider with ChangeNotifier {
   bool pendingApprovals = false;
   bool groupPolicy = false;
   bool reportedContent = false;
+  bool addNewContent = false;
 
-  changeRepotedContentExpanded() {
+  changeReportedContentExpanded() {
     reportedContent = !reportedContent;
     notifyListeners();
   }
@@ -116,6 +116,11 @@ class GroupProvider with ChangeNotifier {
 
   changeModeratorSectionAccessExpanded() {
     moderatorSectionAccess = !moderatorSectionAccess;
+    adminSectionAccess = false;
+    addNewContent = false;
+    if (moderatorSectionAccess) {
+      callForGetAdminModerator(isFirstTime: false);
+    }
     notifyListeners();
   }
 
@@ -129,14 +134,26 @@ class GroupProvider with ChangeNotifier {
 
   changeAdminSectionAccessExpanded() {
     adminSectionAccess = !adminSectionAccess;
+    moderatorSectionAccess = false;
+    addNewContent = false;
+    if (adminSectionAccess) {
+      callForGetAdminModerator(isFirstTime: false);
+    }
+
     notifyListeners();
+  }
+
+  bool changeAddNewContentSection() {
+    addNewContent = !addNewContent;
+    notifyListeners();
+    return addNewContent;
   }
 
   changeAdminAccessExpanded() {
     adminAccessPage = !adminAccessPage;
-    if (adminAccessPage) {
-      callForGetAllFriendsPagination(page: 1);
-    }
+    adminSectionAccess = false;
+    moderatorSectionAccess = false;
+    addNewContent = false;
     notifyListeners();
   }
 
@@ -144,6 +161,69 @@ class GroupProvider with ChangeNotifier {
     pageExpended = !pageExpended;
     if (pageExpended) {
       callForGetInviteFriendLists(isFirstTime: true);
+    }
+    notifyListeners();
+  }
+
+  // TODO:: for Admin and Moderators
+  List<Author> adminModeratorLists = [];
+  bool isBottomLoadingAdminModerator = false;
+  bool isLoadingAdminModerator = false;
+  bool isLoadingAdminModerator2 = false;
+  int selectPageAccess = 1;
+  bool hasNextDataAdminModerator = false;
+
+  updateAdminModeratorNo() {
+    selectPageAccess++;
+    callForGetAdminModerator(page: selectPageAccess);
+    notifyListeners();
+  }
+
+  callForGetAdminModerator({int page = 1, bool isFirstTime = true}) async {
+    if (page == 1) {
+      selectPageAccess = 1;
+      adminModeratorLists.clear();
+      adminModeratorLists = [];
+      isLoadingAdminModerator = true;
+      hasNextDataAdminModerator = false;
+      isBottomLoadingAdminModerator = false;
+      if (!isFirstTime) {
+        notifyListeners();
+      }
+    } else {
+      isBottomLoadingAdminModerator = true;
+      notifyListeners();
+    }
+
+    ApiResponse response = await groupRepo.groupModeratorAdminLists(groupDetailsModel.id as int, selectPage, adminSectionAccess);
+
+    isLoadingAdminModerator = false;
+    isBottomLoadingAdminModerator = false;
+
+    if (response.response.statusCode == 200) {
+      hasNextDataAdminModerator = response.response.data['next'] != null ? true : false;
+      response.response.data['results'].forEach((element) {
+        adminModeratorLists.add(Author.fromJson(element));
+      });
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
+    }
+    notifyListeners();
+  }
+
+  makeAdminModerator(List<int> users, bool isAdmin) async {
+    isLoadingAdminModerator2 = true;
+    notifyListeners();
+
+    ApiResponse response = await groupRepo.adminModeratorCreate(groupDetailsModel.id as int, users, isAdmin);
+
+    isLoadingAdminModerator2 = false;
+    if (response.response.statusCode == 201) {
+      showMessage(message: 'Successfully Added');
+      moderatorSectionAccess = false;
+      adminSectionAccess = false;
+    } else {
+      Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();
   }
@@ -1243,69 +1323,17 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //TODO: Get All Friends From List
-  bool isLoadingFriends = false;
-  bool isBottomLoadingFriends = false;
-  List<FriendModel> friendsListModel = [];
-  bool hasNextFriendData = false;
-  List<bool> makeAdminFriendsSelect = [];
-
-  updateAllFriendsPage() {
-    selectPage++;
-    callForGetAllFriendsPagination(page: selectPage);
-    notifyListeners();
-  }
-
-  changeAddAdminSelectionValue(int index, bool value) {
-    makeAdminFriendsSelect[index] = value;
-    notifyListeners();
-  }
-
-  callForGetAllFriendsPagination({int page = 1}) async {
-    if (page == 1) {
-      selectPage = 1;
-      friendsListModel.clear();
-      friendsListModel = [];
-      isLoadingFriends = true;
-      isBottomLoadingFriends = false;
-      makeAdminFriendsSelect.clear();
-      makeAdminFriendsSelect = [];
-      hasNextFriendData = false;
-    } else {
-      isBottomLoadingFriends = true;
-      notifyListeners();
-    }
-    ApiResponse response = await groupRepo.getAllFriends(page);
-    isLoadingFriends = false;
-    isBottomLoadingFriends = false;
-    notifyListeners();
-    if (response.response.statusCode == 200) {
-      hasNextFriendData = response.response.data['next'] != null ? true : false;
-      response.response.data['results'].forEach((element) {
-        friendsListModel.add(FriendModel.fromJson(element));
-      });
-    } else {
-      isLoadingFriends = false;
-      isBottomLoadingFriends = false;
-      notifyListeners();
-      Fluttertoast.showToast(msg: response.response.statusMessage!);
-    }
-    notifyListeners();
-  }
-
   //TODO: FOR DELETE A GROUP
 
   Future<bool> deleteSingleGroup(String groupId) async {
     ApiResponse response = await groupRepo.deleteGroup(groupId);
-    if(response.response.statusCode == 200) {
+    if (response.response.statusCode == 200) {
       yourGroup = false;
       showMessage(message: "Group deleted successfully!");
       return true;
+    } else {
+      showMessage(message: response.response.statusMessage!);
+      return false;
     }
-    else
-      {
-        showMessage(message: response.response.statusMessage!);
-        return false;
-      }
   }
 }
