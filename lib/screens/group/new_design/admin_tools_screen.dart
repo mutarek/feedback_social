@@ -251,7 +251,7 @@ class _AdminToolsScreenState extends State<AdminToolsScreen> {
                                   itemBuilder: (_,index){
                                     var rules = groupProvider.groupPolicyList[index];
                                     return Padding(
-                                      padding: EdgeInsets.all(5),
+                                      padding: const EdgeInsets.all(5),
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,

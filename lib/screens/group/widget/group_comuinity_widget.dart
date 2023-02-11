@@ -1,87 +1,72 @@
 import 'package:als_frontend/data/model/response/group/group_details_model.dart';
+import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/util/theme/app_colors.dart';
 import 'package:als_frontend/util/theme/text.styles.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class GroupComuinityWidget extends StatelessWidget {
+class GroupComuinityWidget extends StatefulWidget {
   final GroupDetailsModel authorEachGroupModel;
   final int index;
 
   const GroupComuinityWidget(this.authorEachGroupModel, this.index, {Key? key}) : super(key: key);
 
   @override
+  State<GroupComuinityWidget> createState() => _GroupComuinityWidgetState();
+}
+
+class _GroupComuinityWidgetState extends State<GroupComuinityWidget> {
+  @override
+  void initState() {
+    Provider.of<GroupProvider>(context,listen: false).getAllGroupPolicies(widget.authorEachGroupModel.id.toString());
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(height: 15),
-        Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: Text("Admin group policies", style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
-        ),
-        const SizedBox(height: 5),
-        Padding(
-          padding: const EdgeInsets.only(left: 15),
-          child: Column(
-            children: [
-              Text("1 .No Promotion or spam", style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
-            ],
+    return Consumer<GroupProvider>(
+      builder: (context, groupProvider,child) {
+        return SizedBox(
+          height: 300,
+          child: groupProvider.isGroupPolicyLoading?
+          const Center(
+            child: CircularProgressIndicator(),
+          ):groupProvider.groupPolicyList.isEmpty?
+          const Center(
+            child: Text("Ops No Group Policy Found"),
+          ):
+          ListView.builder(
+            itemCount: groupProvider.groupPolicyList.length,
+            itemBuilder: (_,index){
+              var rules = groupProvider.groupPolicyList[index];
+              return Padding(
+                padding: const EdgeInsets.all(5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: Text("${index+1}. ${rules.title}",
+                          style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
+                    ),
+                    const SizedBox(height: 5),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 18),
+                      child: Column(
+                        children: [
+                          Text(
+                              "${rules.description} See more.",
+                              style: robotoStyle500Medium.copyWith(fontSize: 12, color: AppColors.primaryColorLight)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 18),
-          child: Column(
-            children: [
-              Text(
-                  "We're all in this together to create a welcoming environment. Let's treat everyone with respect. Healthy debates are natural, but kindness irequired ... See more",
-                  style: robotoStyle500Medium.copyWith(fontSize: 12, color: AppColors.primaryColorLight)),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 15),
-          child: Column(
-            children: [
-              Text("2. No hate speech", style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 18),
-          child: Column(
-            children: [
-              Text(
-                  "We're all in this together to create a welcoming environment. Let's treat everyone with respect. Healthy debates are natural, but kindnessrequired... See more.",
-                  style: robotoStyle500Medium.copyWith(fontSize: 12, color: AppColors.primaryColorLight)),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 15),
-          child: Column(
-            children: [
-              Text("3. Respect everyone", style: robotoStyle700Bold.copyWith(fontSize: 15, color: AppColors.primaryColorLight)),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 18),
-          child: Column(
-            children: [
-              Text(
-                  "We're all in this together to create a welcoming environment. Let's treat everyone with respect. Healthy debates are natural, but kindnessrequired... See more.",
-                  style: robotoStyle500Medium.copyWith(fontSize: 12, color: AppColors.primaryColorLight)),
-            ],
-          ),
-        ),
-      ],
+        );
+      }
     );
   }
 }
