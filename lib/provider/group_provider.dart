@@ -922,6 +922,8 @@ class GroupProvider with ChangeNotifier {
 
   getForGetAllPhotosVideos() async {
     isLoading = true;
+    groupPhotosModel.clear();
+    groupVideosModel.clear();
     notifyListeners();
     ApiResponse response = await groupRepo.callForGetAllPhotos(groupDetailsModel.photos!);
     if (response.response.statusCode == 200) {

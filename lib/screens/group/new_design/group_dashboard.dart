@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:als_frontend/provider/group_provider.dart';
 import 'package:als_frontend/screens/group/new_design/setup_group.dart';
 import 'package:als_frontend/screens/profile/profile_screen.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import '../../../provider/auth_provider.dart';
 import '../../../util/image.dart';
 import '../../../widgets/custom_button.dart';
@@ -85,11 +83,9 @@ class _GroupDashboardState extends State<GroupDashboard> {
                               backgroundColor: AppColors.primaryColorLight,
                               child: InkWell(
                                   onTap: () {
-                                    // groupProvider.getAuthorGroupById(groupProvider.groupDetailsModel.id!).then((value) {
-                                    //   if (value) {
-                                    //     Helper.toScreen(SetupGroup(groupProvider.groupDetailsModel));
-                                    //   }
-                                    // });
+                                    groupProvider.callForGetAllGroupInformation(groupProvider.groupDetailsModel.id.toString()).then((value) {
+                                        Helper.toScreen(SetupGroup(groupProvider.groupDetailsModel));
+                                    });
                                   },
                                   child: const CircleAvatar(
                                     backgroundColor: AppColors.primaryColorLight,
