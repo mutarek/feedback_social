@@ -9,6 +9,7 @@ import '../../../util/theme/text.styles.dart';
 import '../../page/shimmer_effect/new_page_details_screen_shimmer.dart';
 import '../../video/widget/new_video_widgets.dart';
 import '../view/group_media_view.dart';
+import '../view/group_people_view.dart';
 import '../view/group_policy_view.dart';
 
 class GroupDetailsPage extends StatefulWidget {
@@ -56,6 +57,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                     GroupHomeView(tabMenuWidget(groupProvider), widget.groupID, index: widget.index),
                     GroupAboutView(tabMenuWidget(groupProvider), widget.groupID, index: widget.index),
                     GroupMediaView(tabMenuWidget(groupProvider), widget.groupID, index: widget.index),
+                    GroupPeopleView(tabMenuWidget(groupProvider), widget.groupID, index: widget.index),
                     GroupPolicyView(tabMenuWidget(groupProvider), widget.groupID, index: widget.index),
                     // PageUpcomingView(tabMenuWidget(pageProvider),  pageProvider.pageDetailsModel),
                   ],

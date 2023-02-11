@@ -36,7 +36,8 @@ class _GroupHomeViewState extends State<GroupHomeView> {
   @override
   Widget build(BuildContext context) {
     return Consumer<GroupProvider>(
-        builder: (context, groupProvider, child) => ListView(
+        builder: (context, groupProvider, child) =>
+            ListView(
               physics: const BouncingScrollPhysics(),
               controller: controller,
               children: [
