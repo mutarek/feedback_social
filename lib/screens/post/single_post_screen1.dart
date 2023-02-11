@@ -229,6 +229,7 @@ class _SinglePostScreen1State extends State<SinglePostScreen1> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 PostWidget(newsFeedProvider.singleNewsFeedModel, index: widget.index),
+
                                 Align(
                                   alignment: Alignment.topCenter,
                                   child: commentProvider.comments.isEmpty
