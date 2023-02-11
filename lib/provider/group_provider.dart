@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:als_frontend/data/model/response/base/api_response.dart';
 import 'package:als_frontend/data/model/response/category_model.dart';
 import 'package:als_frontend/data/model/response/group/all_group_model.dart';
-import 'package:als_frontend/data/model/response/group/find_group_model.dart';
 import 'package:als_frontend/data/model/response/group/group_details_model.dart';
 import 'package:als_frontend/data/model/response/group/group_memebers_model.dart';
 import 'package:als_frontend/data/model/response/news_feed_model.dart';
@@ -844,7 +843,7 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<FindGroupModel> findGroupModel = [];
+  List<AuthorGroupModel> findGroupLists = [];
   bool isLoadingFindGroup = false;
   bool isBottomLoadingFindGroup = false;
 
@@ -854,11 +853,16 @@ class GroupProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  resetSearchHistory() {
+    findGroupLists.clear();
+    findGroupLists = [];
+  }
+
   findGroup(String query, {int page = 1}) async {
     if (page == 1) {
       selectPage = 1;
-      findGroupModel.clear();
-      findGroupModel = [];
+      findGroupLists.clear();
+      findGroupLists = [];
       isLoadingFindGroup = true;
       hasNextData = false;
       isBottomLoadingFindGroup = false;
@@ -869,14 +873,14 @@ class GroupProvider with ChangeNotifier {
     }
     ApiResponse response = await groupRepo.findGroup(query, selectPage);
     isLoadingFindGroup = false;
+    isBottomLoadingFindGroup = false;
     notifyListeners();
     if (response.response.statusCode == 200) {
       hasNextData = response.response.data['next'] != null ? true : false;
       response.response.data['results'].forEach((element) {
-        findGroupModel.add(FindGroupModel.fromJson(element));
+        findGroupLists.add(AuthorGroupModel.fromJson(element));
       });
     } else {
-      isLoading = false;
       Fluttertoast.showToast(msg: response.response.statusMessage!);
     }
     notifyListeners();

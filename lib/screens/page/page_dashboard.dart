@@ -736,7 +736,10 @@ class _PageDashboardState extends State<PageDashboard> {
                           ),
                         );
                       });
-                }, iconData: Icons.delete_forever, subTitle: "Once you delete a page, there is no going back. Please be certain.",isShowSubtitle: true),
+                },
+                    iconData: Icons.delete_forever,
+                    subTitle: "Once you delete a page, there is no going back. Please be certain.",
+                    isShowSubtitle: true),
               ],
             ),
           );
@@ -744,13 +747,10 @@ class _PageDashboardState extends State<PageDashboard> {
       ),
     );
   }
-
-
 }
 
-
 Widget dashboardWidget(String title, String leftIcon, bool hasExpanded, Function onTap,
-    {bool expandedCondition = false,bool isShowSubtitle = false, IconData? iconData, String subTitle = ''}) {
+    {bool expandedCondition = false, bool isShowSubtitle = false, IconData? iconData, String subTitle = ''}) {
   return InkWell(
     onTap: () {
       onTap();
@@ -793,3 +793,5 @@ Widget dashboardWidget(String title, String leftIcon, bool hasExpanded, Function
     ),
   );
 }
+
+
